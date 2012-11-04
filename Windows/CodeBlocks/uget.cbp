@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="uget" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="Debug/uget" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="Debug/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="Release/uget" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="Release/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-DHAVE_GLIB" />
+			<Add directory="../../uglib" />
+			<Add directory="../../uget" />
+			<Add directory="D:/devpack/curl-mingw/include" />
+			<Add directory="D:/devpack/gtk3/include/glib-2.0" />
+			<Add directory="D:/devpack/gtk3/lib/glib-2.0/include" />
+			<Add directory="D:/devpack/gtk3/include" />
+		</Compiler>
+		<Linker>
+			<Add library="curldll" />
+			<Add directory="D:/devpack/curl-mingw/lib" />
+		</Linker>
+		<Unit filename="../../uget/UgetA2cf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetA2cf.h" />
+		<Unit filename="../../uget/UgetApp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetApp.h" />
+		<Unit filename="../../uget/UgetAria2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetAria2.h" />
+		<Unit filename="../../uget/UgetCurl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetCurl.h" />
+		<Unit filename="../../uget/UgetData.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetData.h" />
+		<Unit filename="../../uget/UgetEvent.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetEvent.h" />
+		<Unit filename="../../uget/UgetIpc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetIpc.h" />
+		<Unit filename="../../uget/UgetNode-compare.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetNode.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetNode.h" />
+		<Unit filename="../../uget/UgetPlugin.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetPlugin.h" />
+		<Unit filename="../../uget/UgetPluginAria2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetPluginAria2.h" />
+		<Unit filename="../../uget/UgetPluginCurl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetPluginCurl.h" />
+		<Unit filename="../../uget/UgetPluginEmpty.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetPluginEmpty.h" />
+		<Unit filename="../../uget/UgetRss.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetRss.h" />
+		<Unit filename="../../uget/UgetTask.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetTask.h" />
+		<Unit filename="../../uget/UgetHash.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetHash.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+			<envvars />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

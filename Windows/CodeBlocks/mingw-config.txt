@@ -1,0 +1,13 @@
+﻿--- include dir ---
+..\..\uglib
+D:\devpack\gtk2\include\glib-2.0
+D:\devpack\gtk2\lib\glib-2.0\include
+
+--- lib dir ---
+D:\devpack\gtk2\lib
+Debug
+Release
+
+--- lib ---
+uglib
+glib-2.0.dll

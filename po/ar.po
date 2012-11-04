@@ -1,0 +1,1240 @@
+# LANGUAGE NAME - Version of Language Release
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Safa <safaalfulaij@hotmail.com>, 2013.
+# صفا الفليج <safaalfulaij@hotmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: uGet 3.10.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2013-05-30 07:44+0300\n"
+"Last-Translator: صفا الفليج <safaalfulaij@hotmail.com>\n"
+"Language-Team: Arabeyes\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Virtaal 0.7.0\n"
+"X-Poedit-Language: Arabic\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#. UG_MESSAGE_INFO_CUSTOM
+#: ../uglib/UgMessage.c:52
+msgid "Connecting..."
+msgstr "يتّصل..."
+
+#. UG_MESSAGE_INFO_CONNECT
+#: ../uglib/UgMessage.c:53
+msgid "Transmitting..."
+msgstr "يحيل..."
+
+#. UG_MESSAGE_INFO_TRANSMIT,
+#: ../uglib/UgMessage.c:54
+#: ../uget-gtk/UgDownloadWidget.c:896
+msgid "Retry"
+msgstr "الإعادة"
+
+#. UG_MESSAGE_INFO_RETRY,
+#: ../uglib/UgMessage.c:55
+msgid "Download completed"
+msgstr "اكتمل التنزيل"
+
+#. UG_MESSAGE_INFO_COMPLETE,
+#: ../uglib/UgMessage.c:56
+#: ../uget-gtk/UgCategoryWidget.c:45
+msgid "Finished"
+msgstr "انتهى"
+
+#. UG_MESSAGE_INFO_FINISH,
+#. resumable
+#: ../uglib/UgMessage.c:58
+msgid "Resumable"
+msgstr "قابل للاستئناف"
+
+#. UG_MESSAGE_INFO_RESUMABLE,
+#: ../uglib/UgMessage.c:59
+#: ../uglib/UgPlugin-aria2.c:863
+msgid "Not Resumable"
+msgstr "غير قابل للاستئناف"
+
+#. UG_MESSAGE_WARNING_CUSTOM
+#: ../uglib/UgMessage.c:67
+#: ../uglib/UgPlugin-aria2.c:887
+msgid "Output file can't be renamed."
+msgstr "الملف المُخرج لا يمكن إعادة اسمه."
+
+#. UG_MESSAGE_ERROR_CUSTOM
+#: ../uglib/UgMessage.c:75
+msgid "couldn't connect to host."
+msgstr "تعذّر الاتصال بالمضيف."
+
+#. UG_MESSAGE_ERROR_CONNECT_FAILED
+#: ../uglib/UgMessage.c:76
+msgid "Folder can't be created."
+msgstr "تعذّر إنشاء المجلد."
+
+#. UG_MESSAGE_ERROR_FOLDER_CREATE_FAILED
+#: ../uglib/UgMessage.c:77
+msgid "File can't be created (bad filename or file exist)."
+msgstr "تعذّر إنشاء الملف (اسم ملف سيئ أو موجود مسبقًا)."
+
+#. UG_MESSAGE_ERROR_FILE_CREATE_FAILED
+#: ../uglib/UgMessage.c:78
+msgid "File can't be opened."
+msgstr "تعذّر فتح الملف."
+
+#. UG_MESSAGE_ERROR_FILE_OPEN_FAILED
+#: ../uglib/UgMessage.c:79
+msgid "Out of resource (disk full or run out of memory)."
+msgstr ""
+
+#. UG_MESSAGE_ERROR_OUT_OF_RESOURCE
+#: ../uglib/UgMessage.c:80
+msgid "No output file."
+msgstr "لا ملف مخرج."
+
+#. UG_MESSAGE_ERROR_NO_OUTPUT_FILE
+#: ../uglib/UgMessage.c:81
+msgid "No output setting."
+msgstr "لا إعدادات مخرجة."
+
+#. UG_MESSAGE_ERROR_NO_OUTPUT_SETTING
+#: ../uglib/UgMessage.c:82
+msgid "Too many retries."
+msgstr ""
+
+#. UG_MESSAGE_ERROR_TOO_MANY_RETRIES
+#: ../uglib/UgMessage.c:83
+msgid "Unsupported scheme (protocol)."
+msgstr "مخطط (ميفاق) غير مدعوم."
+
+#. UG_MESSAGE_ERROR_UNSUPPORTED_SCHEME
+#: ../uglib/UgMessage.c:84
+msgid "Unsupported file."
+msgstr "ملف غير مدعوم"
+
+#. UG_MESSAGE_ERROR_HTTP_MEMBER_CUSTOM
+#: ../uglib/UgMessage.c:102
+msgid "Too many redirections."
+msgstr "إعادات توجيه كثيرة."
+
+#. UG_MESSAGE_ERROR_HTTP_MEMBER_TOO_MANY_REDIRECTIONS
+#: ../uglib/UgMessage.c:103
+msgid "Failed to open posted file."
+msgstr ""
+
+#: ../uglib/UgRunning.c:91
+msgid "No plug-in support this scheme or file."
+msgstr "لا توجد ملحقة تدعم هذا المخطط أو الملف."
+
+#: ../uget-gtk/UgApp-gtk.c:508
+#: ../uget-gtk/UgApp-gtk-timeout.c:527
+msgid "tasks"
+msgstr "المهام"
+
+#: ../uget-gtk/UgApp-gtk.c:553
+#, c-format
+msgid "Selected %d items"
+msgstr "%d من العناصر مختارة"
+
+#. create confirmation dialog
+#: ../uget-gtk/UgApp-gtk.c:623
+msgid "Really Quit?"
+msgstr "الخروج بالفعل؟"
+
+#: ../uget-gtk/UgApp-gtk.c:640
+msgid "Are you sure you want to quit?"
+msgstr "أأنت متأكد من الخروج؟"
+
+#: ../uget-gtk/UgApp-gtk.c:645
+msgid "Remember this action"
+msgstr "تذكّر هذا الفعل"
+
+#. radio button
+#: ../uget-gtk/UgApp-gtk.c:650
+msgid "Minimize to tray"
+msgstr "تصغير لصينية النظام"
+
+#: ../uget-gtk/UgApp-gtk.c:652
+msgid "Exit uGet"
+msgstr "إغلاق uGet"
+
+#. create confirmation dialog
+#: ../uget-gtk/UgApp-gtk.c:707
+msgid "Really delete files?"
+msgstr "مسح الملفات بالفعل؟"
+
+#: ../uget-gtk/UgApp-gtk.c:725
+msgid "Are you sure you want to delete files?"
+msgstr "أأنت متأكد من حذف الملفات؟"
+
+#: ../uget-gtk/UgApp-gtk.c:730
+msgid "Do not ask me again"
+msgstr "لا تسألني ثانيةً"
+
+#: ../uget-gtk/UgApp-gtk.c:772
+#: ../uget-gtk/UgApp-gtk-callback.c:567
+#: ../uget-gtk/UgApp-gtk-callback.c:600
+msgid "Error"
+msgstr "خطأ"
+
+#: ../uget-gtk/UgApp-gtk.c:780
+#: ../uget-gtk/UgSummary.c:173
+msgid "Message"
+msgstr ""
+
+#: ../uget-gtk/UgApp-gtk-aria2.c:303
+msgid "failed to launch aria2."
+msgstr "تعذّر بدء aria2."
+
+#: ../uget-gtk/UgApp-gtk-callback.c:66
+msgid "Download Manager"
+msgstr "مدير تنزيلات"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:68
+msgid "translator-credits"
+msgstr "صفا الفليج\t<safaalfulaij@hotmail.com>"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:118
+#: ../uget-gtk/UgApp-gtk-callback.c:131
+msgid "New Category"
+msgstr "فئة جديدة"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:126
+msgid "Copy - "
+msgstr "نسخة - "
+
+#: ../uget-gtk/UgApp-gtk-callback.c:181
+msgid "Category Properties"
+msgstr "خصائص الفئة"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:270
+#: ../uget-gtk/UgApp-gtk-timeout.c:258
+msgid "New Download"
+msgstr "تنزيل جديد"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:298
+msgid "URL Sequence batch"
+msgstr "دفعة عناوين URL متسلسلة"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:321
+msgid "No URLs found in clipboard."
+msgstr "لا توجد عناوين URL في الحافظة."
+
+#: ../uget-gtk/UgApp-gtk-callback.c:325
+msgid "Clipboard batch"
+msgstr "دفعة من الحافظة"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:333
+#: ../uget-gtk/UgApp-gtk-timeout.c:168
+#: ../uget-gtk/UgSettingDialog.c:80
+msgid "Clipboard"
+msgstr "الحافظة"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:359
+msgid "New Torrent"
+msgstr "تورنت جديد"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:381
+msgid "Open Torrent file"
+msgstr "فتح ملف تورنت"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:404
+msgid "New Metalink"
+msgstr ""
+
+#: ../uget-gtk/UgApp-gtk-callback.c:427
+msgid "Open Metalink file"
+msgstr ""
+
+#: ../uget-gtk/UgApp-gtk-callback.c:561
+#, c-format
+msgid "Can't launch default application for file '%s'."
+msgstr "تعذّر تشغيل التطبيق الافتراضي للملف \"%s\"."
+
+#: ../uget-gtk/UgApp-gtk-callback.c:594
+#, c-format
+msgid "'%s' - This folder does not exist."
+msgstr "\"%s\" - الملف هذا غير موجود."
+
+#: ../uget-gtk/UgApp-gtk-callback.c:674
+msgid "Download Properties"
+msgstr "خصائص التنزيل"
+
+#. add link
+#: ../uget-gtk/UgApp-gtk-callback.c:906
+msgid "Link <A>"
+msgstr "رابط <A>"
+
+#. add image
+#: ../uget-gtk/UgApp-gtk-callback.c:911
+msgid "Image <IMG>"
+msgstr "صورة <IMG>"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:927
+msgid "Import URLs from HTML file"
+msgstr "استيراد عناوين URL من ملف HTML"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:968
+msgid "Text File"
+msgstr "ملف نصّي"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:984
+msgid "Import URLs from text file"
+msgstr "استيراد عناوين URL من ملف نصّي"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:1030
+#: ../uget-gtk/UgApp-gtk-callback.c:1031
+msgid "Export to"
+msgstr "تصدير إلى"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:1128
+msgid "Settings"
+msgstr "إعدادات"
+
+#. New Download
+#. New Download (accelerators)
+#: ../uget-gtk/UgApp-gtk-gui.c:100
+#: ../uget-gtk/UgApp-gtk-gui.c:289
+msgid "New _Download..."
+msgstr "تن_زيل جديد..."
+
+#. New Clipboard batch
+#: ../uget-gtk/UgApp-gtk-gui.c:107
+#: ../uget-gtk/UgApp-gtk-gui.c:302
+msgid "New Clipboard _batch..."
+msgstr "دف_عة جديدة من الحافظة..."
+
+#. New Torrent
+#: ../uget-gtk/UgApp-gtk-gui.c:116
+#: ../uget-gtk/UgApp-gtk-gui.c:319
+msgid "New Torrent..."
+msgstr "تورنت جديد..."
+
+#. New Metalink
+#: ../uget-gtk/UgApp-gtk-gui.c:123
+#: ../uget-gtk/UgApp-gtk-gui.c:326
+msgid "New Metalink..."
+msgstr ""
+
+#. Settings
+#. menu_item = gtk_menu_item_new_with_mnemonic (_("_Settings..."));
+#: ../uget-gtk/UgApp-gtk-gui.c:132
+#: ../uget-gtk/UgApp-gtk-gui.c:520
+msgid "_Settings..."
+msgstr "إ_عدادات..."
+
+#. Show window
+#: ../uget-gtk/UgApp-gtk-gui.c:146
+msgid "Show window"
+msgstr "إظهار النافذة"
+
+#. Offline mode
+#: ../uget-gtk/UgApp-gtk-gui.c:151
+#: ../uget-gtk/UgApp-gtk-gui.c:489
+msgid "_Offline Mode"
+msgstr ""
+
+#: ../uget-gtk/UgApp-gtk-gui.c:279
+msgid "Create new download"
+msgstr "إنشاء تنزيل جديد"
+
+#. New Category
+#: ../uget-gtk/UgApp-gtk-gui.c:296
+msgid "New _Category..."
+msgstr "_فئة جديدة..."
+
+#. New URL Sequence batch
+#: ../uget-gtk/UgApp-gtk-gui.c:309
+msgid "New _URL Sequence batch..."
+msgstr "دفعة _عناوين URL متسلسلة جديدة..."
+
+#: ../uget-gtk/UgApp-gtk-gui.c:335
+msgid "Save all"
+msgstr "حفظ الكل"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:343
+msgid "Set selected download runnable"
+msgstr "تعيين التنزيلات المحددة لتكون قابلة للتشغيل"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:348
+msgid "Set selected download to pause"
+msgstr "إيقاف التنزيلات المحددة مؤقتًا"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:353
+msgid "Set selected download properties"
+msgstr "تعيين خصائص التنزيلات المحددة"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:361
+msgid "Move selected download up"
+msgstr "تحريك التنزيل المحدد لأعلى"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:366
+msgid "Move selected download down"
+msgstr "تحريك التنزيل المحدد لأسفل"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:371
+msgid "Move selected download to top"
+msgstr "تحريك التنزيل المحدد للأعلى"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:376
+msgid "Move selected download to bottom"
+msgstr "تحريك التنزيل المحدد للأسفل"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:399
+msgid "_File"
+msgstr "_ملف"
+
+#. New - Download (accelerators)
+#: ../uget-gtk/UgApp-gtk-gui.c:411
+msgid "_Download..."
+msgstr "تن_زيل..."
+
+#. New - Category
+#: ../uget-gtk/UgApp-gtk-gui.c:418
+msgid "_Category..."
+msgstr "_فئة..."
+
+#. New - Torrent
+#: ../uget-gtk/UgApp-gtk-gui.c:426
+msgid "Torrent..."
+msgstr "_تورنت..."
+
+#. New - Metalink
+#: ../uget-gtk/UgApp-gtk-gui.c:432
+msgid "Metalink..."
+msgstr ""
+
+#. New --- end ---
+#. Batch Downloads --- start ---
+#: ../uget-gtk/UgApp-gtk-gui.c:440
+msgid "_Batch Downloads"
+msgstr "د_فعة تنزيلات"
+
+#. Batch downloads - Clipboard batch
+#: ../uget-gtk/UgApp-gtk-gui.c:446
+msgid "_Clipboard batch..."
+msgstr "دفعة من الحاف_ظة..."
+
+#. Batch downloads - URL Sequence batch
+#: ../uget-gtk/UgApp-gtk-gui.c:452
+msgid "_URL Sequence batch..."
+msgstr "دفعة _عناوين URL متسلسلة..."
+
+#. Batch downloads - Text file import (.txt)
+#: ../uget-gtk/UgApp-gtk-gui.c:458
+msgid "_Text file import (.txt)..."
+msgstr "استيراد ملف _نصّي (.txt)..."
+
+#. Batch downloads - HTML file import (.html)
+#: ../uget-gtk/UgApp-gtk-gui.c:464
+msgid "_HTML file import (.html)..."
+msgstr "استيراد ملف HTML (.html)..."
+
+#. Batch downloads - Export to Text file (.txt)
+#: ../uget-gtk/UgApp-gtk-gui.c:472
+msgid "_Export to Text file (.txt)..."
+msgstr "ت_صدير إلى ملف نصّي (.txt)..."
+
+#: ../uget-gtk/UgApp-gtk-gui.c:500
+msgid "_Edit"
+msgstr "ت_حرير"
+
+#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
+#: ../uget-gtk/UgApp-gtk-gui.c:505
+msgid "Clipboard _Monitor"
+msgstr "مرا_قبة الحافظة"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:509
+msgid "_Clipboard Option..."
+msgstr "خيارات الحاف_ظة..."
+
+#: ../uget-gtk/UgApp-gtk-gui.c:515
+msgid "Shutdown when downloads complete"
+msgstr "إيقاف التشغيل عند اكتمال التنزيلات"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:529
+msgid "_View"
+msgstr "_عرض"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:533
+msgid "_Toolbar"
+msgstr "شر_يط الأدوات"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:538
+msgid "Statusbar"
+msgstr "شريط الحالة"
+
+#. Summary Items - Category
+#. Download Columns - Category
+#: ../uget-gtk/UgApp-gtk-gui.c:543
+#: ../uget-gtk/UgApp-gtk-gui.c:571
+#: ../uget-gtk/UgApp-gtk-gui.c:656
+#: ../uget-gtk/UgCategoryWidget.c:129
+#: ../uget-gtk/UgCategoryWidget.c:440
+#: ../uget-gtk/UgDownloadDialog.c:205
+#: ../uget-gtk/UgDownloadWidget.c:911
+#: ../uget-gtk/UgSummary.c:140
+msgid "Category"
+msgstr "الفئة"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:548
+msgid "_Summary"
+msgstr "مل_خص"
+
+#. Summary Items --- start ---
+#: ../uget-gtk/UgApp-gtk-gui.c:556
+msgid "Summary _Items"
+msgstr "ع_ناصر الملخص"
+
+#. Summary Items - Name
+#: ../uget-gtk/UgApp-gtk-gui.c:561
+msgid "_Name"
+msgstr "الا_سم"
+
+#. Summary Items - Folder
+#: ../uget-gtk/UgApp-gtk-gui.c:566
+msgid "_Folder"
+msgstr "الم_جلد"
+
+#. Summary Items - Elapsed
+#. menu_item = gtk_check_menu_item_new_with_mnemonic (_("_Elapsed"));
+#. gtk_check_menu_item_set_active ((GtkCheckMenuItem*) menu_item, TRUE);
+#. gtk_menu_shell_append ((GtkMenuShell*) sub_menu, menu_item);
+#. menubar->view.summary_items.elapsed = menu_item;
+#. Summary Items - URL
+#. Download Columns - URL
+#: ../uget-gtk/UgApp-gtk-gui.c:581
+#: ../uget-gtk/UgApp-gtk-gui.c:661
+msgid "_URL"
+msgstr "عن_وان URL"
+
+#. Summary Items - Message
+#: ../uget-gtk/UgApp-gtk-gui.c:586
+msgid "_Message"
+msgstr "ال_رسالة"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:601
+msgid "Download _Columns"
+msgstr "أ_عمدة التنزيل"
+
+#. Download Columns - Completed
+#: ../uget-gtk/UgApp-gtk-gui.c:606
+msgid "_Complete"
+msgstr "م_كتمل"
+
+#. Download Columns - Total
+#: ../uget-gtk/UgApp-gtk-gui.c:611
+msgid "_Size"
+msgstr "الح_جم"
+
+#. Download Columns - Percent (%)
+#: ../uget-gtk/UgApp-gtk-gui.c:616
+msgid "_Percent '%'"
+msgstr "ال_نسبة \"%\""
+
+#. Download Columns - Elapsed
+#: ../uget-gtk/UgApp-gtk-gui.c:621
+msgid "_Elapsed"
+msgstr "المنق_ضي"
+
+#. Download Columns - Left
+#: ../uget-gtk/UgApp-gtk-gui.c:626
+msgid "_Left"
+msgstr "المتب_قي"
+
+#. Download Columns - Speed
+#: ../uget-gtk/UgApp-gtk-gui.c:631
+#: ../uget-gtk/UgDownloadWidget.c:840
+msgid "Speed"
+msgstr "السرعة"
+
+#. Download Columns - Up Speed
+#: ../uget-gtk/UgApp-gtk-gui.c:636
+#: ../uget-gtk/UgDownloadWidget.c:854
+msgid "Up Speed"
+msgstr "سرعة الرفع"
+
+#. Download Columns - Uploaded
+#: ../uget-gtk/UgApp-gtk-gui.c:641
+#: ../uget-gtk/UgDownloadWidget.c:868
+msgid "Uploaded"
+msgstr "المرفوع"
+
+#. Download Columns - Ratio
+#: ../uget-gtk/UgApp-gtk-gui.c:646
+#: ../uget-gtk/UgDownloadWidget.c:882
+msgid "Ratio"
+msgstr "النسبة"
+
+#. Download Columns - Retry
+#: ../uget-gtk/UgApp-gtk-gui.c:651
+msgid "_Retry"
+msgstr ""
+
+#. Download Columns - Added On
+#: ../uget-gtk/UgApp-gtk-gui.c:666
+#: ../uget-gtk/UgDownloadWidget.c:939
+msgid "Added On"
+msgstr "مضاف في"
+
+#. Download Columns - Completed On
+#: ../uget-gtk/UgApp-gtk-gui.c:671
+#: ../uget-gtk/UgDownloadWidget.c:953
+msgid "Completed On"
+msgstr "منتهي في"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:680
+msgid "_Category"
+msgstr "_فئة"
+
+#. New Category
+#: ../uget-gtk/UgApp-gtk-gui.c:685
+msgid "_New Category..."
+msgstr "فئة _جديدة..."
+
+#. Delete Category
+#: ../uget-gtk/UgApp-gtk-gui.c:691
+msgid "_Delete Category"
+msgstr "ح_ذف الفئة"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:705
+msgid "_Download"
+msgstr "تن_زيل"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:724
+msgid "Delete _File and Data"
+msgstr "حذف ال_ملف والبيانات"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:739
+msgid "Open _containing folder"
+msgstr "فتح المجلد الم_حتوي"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:748
+msgid "Force Start"
+msgstr "إجبار البدء"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:754
+#: ../uget-gtk/UgDownloadForm.c:206
+msgid "_Runnable"
+msgstr "قابل للتش_غيل"
+
+#. Move to --- start ---
+#: ../uget-gtk/UgApp-gtk-gui.c:770
+msgid "_Move To"
+msgstr "ن_قل إلى"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:821
+msgid "_Help"
+msgstr "م_ساعدة"
+
+#. only 1 url matched
+#: ../uget-gtk/UgApp-gtk-timeout.c:153
+#: ../uget-gtk/UgApp-gtk-timeout.c:162
+msgid "New from Clipboard"
+msgstr "جديد من الحافظة"
+
+#: ../uget-gtk/UgApp-gtk-timeout.c:154
+msgid "only one matched"
+msgstr "تطابق واحد فقط"
+
+#: ../uget-gtk/UgApp-gtk-timeout.c:266
+msgid "Command line"
+msgstr "سطر الأوامر"
+
+#: ../uget-gtk/UgApp-gtk-timeout.c:464
+msgid ""
+"Failed to connect to aria2.\n"
+"Is aria2 shutdown? or aria2 launch failed."
+msgstr ""
+"تعذّر الاتصال بـ aria2.\n"
+"هل aria2 مطفي؟ لربما فشل بدء aria2."
+
+#: ../uget-gtk/UgApp-gtk-timeout.c:733
+msgid "Download Starting"
+msgstr "يبدأ التنزيل"
+
+#: ../uget-gtk/UgApp-gtk-timeout.c:734
+msgid "Starting download queue."
+msgstr "بدء طابور التنزيل."
+
+#: ../uget-gtk/UgApp-gtk-timeout.c:735
+msgid "Download Completed"
+msgstr "اكتمل التنزيل"
+
+#: ../uget-gtk/UgApp-gtk-timeout.c:736
+msgid "All queuing downloads have been completed."
+msgstr "جميع التنزيلات المصطفّة اكتملت."
+
+#. URL - label
+#: ../uget-gtk/UgBatchForm.c:63
+#: ../uget-gtk/UgDownloadForm.c:131
+msgid "_URL:"
+msgstr "عن_وان URL:"
+
+#. e.g.
+#: ../uget-gtk/UgBatchForm.c:74
+msgid "e.g."
+msgstr "مثال"
+
+#. -------------------------------------------------------
+#. radio "From"
+#: ../uget-gtk/UgBatchForm.c:85
+msgid "_From:"
+msgstr "_من:"
+
+#. label "To"
+#: ../uget-gtk/UgBatchForm.c:108
+msgid "To:"
+msgstr "إلى"
+
+#. label "digits"
+#: ../uget-gtk/UgBatchForm.c:123
+msgid "digits:"
+msgstr "الخانات:"
+
+#: ../uget-gtk/UgBatchForm.c:132
+msgid "F_rom:"
+msgstr "م_ن:"
+
+#. label case-sensitive
+#: ../uget-gtk/UgBatchForm.c:162
+msgid "case-sensitive"
+msgstr "حسّاس للأحرف"
+
+#: ../uget-gtk/UgBatchForm.c:188
+msgid "No wildcard(*) character in URL entry."
+msgstr "لا حرف بدل (*) في مدخلة عنوان URL."
+
+#: ../uget-gtk/UgBatchForm.c:192
+msgid "URL is not valid."
+msgstr "عنوان URL غير صالح."
+
+#: ../uget-gtk/UgBatchForm.c:196
+msgid "No character in 'From' or 'To' entry."
+msgstr "لا محارف في مدخلات \"من\" أو \"إلى\"."
+
+#: ../uget-gtk/UgBatchForm.c:305
+msgid "Preview"
+msgstr "معاينة"
+
+#: ../uget-gtk/UgCategoryDialog.c:62
+msgid "Category settings"
+msgstr "إعدادات الفئة"
+
+#: ../uget-gtk/UgCategoryDialog.c:64
+msgid "Default for new download 1"
+msgstr "الافتراضي للتنزيل الجديد 1"
+
+#: ../uget-gtk/UgCategoryDialog.c:66
+msgid "Default 2"
+msgstr "الافتراضي 2"
+
+#: ../uget-gtk/UgCategoryForm.c:53
+msgid "Category _name:"
+msgstr "ا_سم الفئة:"
+
+#: ../uget-gtk/UgCategoryForm.c:68
+msgid "Active _downloads:"
+msgstr "التن_زيلات النشطة:"
+
+#: ../uget-gtk/UgCategoryForm.c:76
+msgid "Capacity of Finished:"
+msgstr "كمية التنزيلات المنتهية:"
+
+#: ../uget-gtk/UgCategoryForm.c:85
+msgid "Capacity of Recycled:"
+msgstr "كمية التنزيلات المنتهية:"
+
+#: ../uget-gtk/UgCategoryWidget.c:42
+#: ../uget-gtk/UgSelector.c:292
+msgid "All"
+msgstr "الكل"
+
+#: ../uget-gtk/UgCategoryWidget.c:43
+msgid "Active"
+msgstr "نشط"
+
+#: ../uget-gtk/UgCategoryWidget.c:44
+msgid "Queuing"
+msgstr "مصطف"
+
+#: ../uget-gtk/UgCategoryWidget.c:46
+msgid "Recycled"
+msgstr ""
+
+#: ../uget-gtk/UgCategoryWidget.c:461
+msgid "Quantity"
+msgstr "الكمية"
+
+#: ../uget-gtk/UgDownloadForm.c:92
+msgid "General"
+msgstr "عام"
+
+#: ../uget-gtk/UgDownloadForm.c:93
+msgid "Advanced"
+msgstr "متقدم"
+
+#. File - label
+#: ../uget-gtk/UgDownloadForm.c:147
+#: ../uget-gtk/UgProxyForm.c:339
+msgid "File:"
+msgstr "الملف:"
+
+#: ../uget-gtk/UgDownloadForm.c:162
+#: ../uget-gtk/UgDownloadForm.c:882
+msgid "Select Folder"
+msgstr "اختيار مجلد"
+
+#. Folder - label
+#: ../uget-gtk/UgDownloadForm.c:170
+msgid "_Folder:"
+msgstr "ال_مجلد:"
+
+#. Referrer - label
+#: ../uget-gtk/UgDownloadForm.c:185
+msgid "Referrer:"
+msgstr ""
+
+#. ----------------------------------------------------
+#. frame for Status (start mode)
+#: ../uget-gtk/UgDownloadForm.c:200
+msgid "Status"
+msgstr "الحالة"
+
+#: ../uget-gtk/UgDownloadForm.c:208
+msgid "P_ause"
+msgstr ""
+
+#. ----------------------------------------------------
+#. frame for login
+#: ../uget-gtk/UgDownloadForm.c:214
+msgid "Login"
+msgstr "ولوج"
+
+#. User - label
+#. user label & entry
+#: ../uget-gtk/UgDownloadForm.c:228
+#: ../uget-gtk/UgProxyForm.c:143
+msgid "User:"
+msgstr "اسم المستخدم:"
+
+#. Password - label
+#. password label & entry
+#: ../uget-gtk/UgDownloadForm.c:244
+#: ../uget-gtk/UgProxyForm.c:154
+msgid "Password:"
+msgstr "كلمة السر:"
+
+#. dform->password_label = widget;
+#. ----------------------------------------------------
+#. frame for option
+#: ../uget-gtk/UgDownloadForm.c:252
+msgid "Options"
+msgstr "خيارات"
+
+#. Retry limit - label
+#: ../uget-gtk/UgDownloadForm.c:267
+msgid "Retry _limit:"
+msgstr "_حدود الإعادة:"
+
+#. counts - label
+#: ../uget-gtk/UgDownloadForm.c:273
+msgid "counts"
+msgstr "مرة"
+
+#. Retry delay - label
+#: ../uget-gtk/UgDownloadForm.c:287
+msgid "Retry _delay:"
+msgstr ""
+
+#. seconds - label
+#: ../uget-gtk/UgDownloadForm.c:293
+msgid "seconds"
+msgstr "ثانية"
+
+#. "Connections per server" - title label
+#: ../uget-gtk/UgDownloadForm.c:306
+msgid "Connections per server"
+msgstr "اتصال لكل خادم"
+
+#. connections - label
+#: ../uget-gtk/UgDownloadForm.c:319
+msgid "connections"
+msgstr "اتصال"
+
+#. label - cookie file
+#: ../uget-gtk/UgDownloadForm.c:346
+msgid "Cookie file:"
+msgstr "ملف الكعكات:"
+
+#: ../uget-gtk/UgDownloadForm.c:358
+#: ../uget-gtk/UgDownloadForm.c:938
+msgid "Select Cookie File"
+msgstr "اختر ملف الكعكات"
+
+#. label - post file
+#: ../uget-gtk/UgDownloadForm.c:367
+msgid "Post file:"
+msgstr ""
+
+#: ../uget-gtk/UgDownloadForm.c:379
+#: ../uget-gtk/UgDownloadForm.c:994
+msgid "Select Post File"
+msgstr ""
+
+#. label - user agent
+#: ../uget-gtk/UgDownloadForm.c:389
+msgid "User Agent:"
+msgstr "وكيل المستخدم:"
+
+#. label - Max upload speed
+#: ../uget-gtk/UgDownloadForm.c:405
+msgid "Max upload speed:"
+msgstr "أقصى حد للرفع:"
+
+#. label - "KiB/s"
+#: ../uget-gtk/UgDownloadForm.c:416
+#: ../uget-gtk/UgDownloadForm.c:433
+#: ../uget-gtk/UgSettingForm.c:469
+#: ../uget-gtk/UgSettingForm.c:480
+msgid "KiB/s"
+msgstr "ك.بايت/ث"
+
+#. label - Max download speed
+#: ../uget-gtk/UgDownloadForm.c:422
+msgid "Max download speed:"
+msgstr "أقصى حد للتنزيل:"
+
+#. Retrieve timestamp
+#: ../uget-gtk/UgDownloadForm.c:439
+msgid "Retrieve timestamp"
+msgstr ""
+
+#: ../uget-gtk/UgDownloadWidget.c:378
+#: ../uget-gtk/UgSummary.c:116
+msgid "unnamed"
+msgstr "غير معنون"
+
+#: ../uget-gtk/UgDownloadWidget.c:745
+#: ../uget-gtk/UgSummary.c:105
+msgid "Name"
+msgstr "الاسم"
+
+#: ../uget-gtk/UgDownloadWidget.c:769
+msgid "Complete"
+msgstr "مكتمل"
+
+#: ../uget-gtk/UgDownloadWidget.c:783
+msgid "Size"
+msgstr "الحجم"
+
+#: ../uget-gtk/UgDownloadWidget.c:798
+msgid "%"
+msgstr "%"
+
+#: ../uget-gtk/UgDownloadWidget.c:812
+msgid "Elapsed"
+msgstr "المنقضي"
+
+#: ../uget-gtk/UgDownloadWidget.c:826
+msgid "Left"
+msgstr "المتبقي"
+
+#: ../uget-gtk/UgDownloadWidget.c:925
+#: ../uget-gtk/UgSelector.c:487
+#: ../uget-gtk/UgSummary.c:151
+msgid "URL"
+msgstr "عنوان URL"
+
+#. proxy type label & combo box
+#: ../uget-gtk/UgProxyForm.c:64
+msgid "Proxy:"
+msgstr "الوسيط:"
+
+#: ../uget-gtk/UgProxyForm.c:67
+msgid "Don't use"
+msgstr "لا تستخدم"
+
+#: ../uget-gtk/UgProxyForm.c:69
+msgid "Default"
+msgstr "الافتراضي"
+
+#. host label & entry
+#: ../uget-gtk/UgProxyForm.c:116
+msgid "Host:"
+msgstr "المضيف:"
+
+#. port label & entry
+#: ../uget-gtk/UgProxyForm.c:127
+msgid "Port:"
+msgstr "المنفذ:"
+
+#: ../uget-gtk/UgProxyForm.c:329
+msgid "Socket:"
+msgstr "المقبس:"
+
+#: ../uget-gtk/UgProxyForm.c:353
+msgid "Element:"
+msgstr "العنصر:"
+
+#: ../uget-gtk/UgScheduleForm.c:66
+msgid "Mon"
+msgstr "الإثنين"
+
+#: ../uget-gtk/UgScheduleForm.c:67
+msgid "Tue"
+msgstr "الثلاثاء"
+
+#: ../uget-gtk/UgScheduleForm.c:68
+msgid "Wed"
+msgstr "الأربعاء"
+
+#: ../uget-gtk/UgScheduleForm.c:69
+msgid "Thu"
+msgstr "الخميس"
+
+#: ../uget-gtk/UgScheduleForm.c:70
+msgid "Fri"
+msgstr "الجمعة"
+
+#: ../uget-gtk/UgScheduleForm.c:71
+msgid "Sat"
+msgstr "السبت"
+
+#: ../uget-gtk/UgScheduleForm.c:72
+msgid "Sun"
+msgstr "الأحد"
+
+#: ../uget-gtk/UgScheduleForm.c:99
+msgid "_Enable Scheduler"
+msgstr "تم_كين الجدولة"
+
+#. Turn off - label
+#: ../uget-gtk/UgScheduleForm.c:141
+msgid "Turn off"
+msgstr "مطفي"
+
+#. Turn off - help label
+#: ../uget-gtk/UgScheduleForm.c:146
+msgid "- stop all task"
+msgstr "- إيقاف كل المهام"
+
+#. Normal - label
+#: ../uget-gtk/UgScheduleForm.c:156
+msgid "Normal"
+msgstr "عادي"
+
+#. Normal - help label
+#: ../uget-gtk/UgScheduleForm.c:161
+msgid "- run task normally"
+msgstr "- تشغيل المهمة اعتياديًا"
+
+#: ../uget-gtk/UgSelector.c:94
+msgid "Base hypertext reference"
+msgstr ""
+
+#. select all
+#: ../uget-gtk/UgSelector.c:110
+msgid "Mark _All"
+msgstr "تعليم ال_كل"
+
+#. select none
+#: ../uget-gtk/UgSelector.c:116
+msgid "Mark _None"
+msgstr "تعليم لا _شيء"
+
+#. select by filter
+#: ../uget-gtk/UgSelector.c:122
+msgid "_Mark by filter..."
+msgstr ""
+
+#: ../uget-gtk/UgSelector.c:297
+msgid "None"
+msgstr "لاشيء"
+
+#: ../uget-gtk/UgSelector.c:314
+msgid "Mark by filter"
+msgstr ""
+
+#: ../uget-gtk/UgSelector.c:332
+msgid "Mark URLs by host AND filename extension."
+msgstr "تعليم عناوين URL بالمضيف وامتداد الملف."
+
+#: ../uget-gtk/UgSelector.c:335
+msgid "This will reset all marks of URLs."
+msgstr "هذا سيُعيد جميع علامات عناوين URL."
+
+#. filter view -----------------------
+#. left side
+#: ../uget-gtk/UgSelector.c:343
+msgid "Host"
+msgstr "المضيف"
+
+#. right side (filename extension)
+#: ../uget-gtk/UgSelector.c:347
+msgid "File Ext."
+msgstr "الملف موجود"
+
+#: ../uget-gtk/UgSettingDialog.c:71
+msgid "UI Settings"
+msgstr "إعدادات واجهة المستخدم"
+
+#: ../uget-gtk/UgSettingDialog.c:87
+msgid "Scheduler"
+msgstr "الجدولة"
+
+#: ../uget-gtk/UgSettingDialog.c:95
+msgid "Plug-in"
+msgstr "الإضافات"
+
+#: ../uget-gtk/UgSettingDialog.c:103
+msgid "Others"
+msgstr "أخرى"
+
+#: ../uget-gtk/UgSettingForm.c:72
+msgid "_Monitor clipboard for specified file types:"
+msgstr ""
+
+#: ../uget-gtk/UgSettingForm.c:87
+#: ../uget-gtk/UgSettingForm.c:242
+msgid "Separate the types with character '|'."
+msgstr "افصل الأنواع بالمحرف \"|\"."
+
+#: ../uget-gtk/UgSettingForm.c:92
+#: ../uget-gtk/UgSettingForm.c:247
+msgid "You can use regular expressions here."
+msgstr "تستطيع استعمال التعبيرات الاعتيادية هنا."
+
+#: ../uget-gtk/UgSettingForm.c:100
+msgid "_Quiet mode"
+msgstr ""
+
+#: ../uget-gtk/UgSettingForm.c:109
+msgid "Add URL to Nth category"
+msgstr "إضافة عنوان URL إلى الفئة النونية"
+
+#. check button
+#: ../uget-gtk/UgSettingForm.c:147
+msgid "Show confirmation dialog on close"
+msgstr "إظهار مربع حوار تأكيد عند الإغلاق"
+
+#: ../uget-gtk/UgSettingForm.c:150
+msgid "Confirm when deleting files"
+msgstr "إظهار تأكيد عند حذف الملفات"
+
+#: ../uget-gtk/UgSettingForm.c:153
+msgid "Always show tray icon"
+msgstr "إظهار صينية النظام دائمًا"
+
+#: ../uget-gtk/UgSettingForm.c:156
+msgid "Minimize to tray on startup"
+msgstr "التصغير إلى الصينية عند بدء التشغيل"
+
+#: ../uget-gtk/UgSettingForm.c:159
+msgid "Enable offline mode on startup"
+msgstr ""
+
+#: ../uget-gtk/UgSettingForm.c:162
+msgid "Download starting notification"
+msgstr "إخطار بدء التنزيل"
+
+#: ../uget-gtk/UgSettingForm.c:165
+msgid "Sound when download is finished"
+msgstr "صدور صوت عند انتهاء التنزيل"
+
+#: ../uget-gtk/UgSettingForm.c:168
+msgid "Apply recently download settings"
+msgstr "تطبيق إعدادات التنزيل الأخيرة"
+
+#: ../uget-gtk/UgSettingForm.c:229
+msgid "_Launch default application for specified file types:"
+msgstr "أ_طلق التطبيق الافتراضي لأنواع الملفات المحددة:"
+
+#: ../uget-gtk/UgSettingForm.c:288
+msgid "_Auto save"
+msgstr "الحف_ظ التلقائي"
+
+#. auto save spin & label (interval)
+#: ../uget-gtk/UgSettingForm.c:294
+msgid "minutes"
+msgstr "دقيقة"
+
+#. auto save label
+#: ../uget-gtk/UgSettingForm.c:301
+msgid "_Interval:"
+msgstr "ال_مدة:"
+
+#: ../uget-gtk/UgSettingForm.c:337
+msgid "Commandline Settings"
+msgstr "إعدادات سطر الأوامر"
+
+#. --quiet
+#: ../uget-gtk/UgSettingForm.c:341
+msgid "Use '--quiet' by default"
+msgstr "استخدام \"--quiet\" افتراضيًا"
+
+#: ../uget-gtk/UgSettingForm.c:347
+msgid "'--category-index' default value"
+msgstr "قيمة \"--category-index\" الافتراضية"
+
+#: ../uget-gtk/UgSettingForm.c:410
+msgid "_Enable aria2 plug-in"
+msgstr "ت_فعيل إضافة aria2"
+
+#: ../uget-gtk/UgSettingForm.c:417
+msgid "_Launch aria2 on startup"
+msgstr "_بدء aria2 عند بدء التشغيل"
+
+#: ../uget-gtk/UgSettingForm.c:423
+msgid "_Shutdown aria2 on exit"
+msgstr "إي_قاف تشغيل aria2 عند الخروج"
+
+#: ../uget-gtk/UgSettingForm.c:439
+msgid "Path"
+msgstr "المسار"
+
+#: ../uget-gtk/UgSettingForm.c:447
+msgid "Arguments"
+msgstr "المُعطيات"
+
+#. aria2 plug-in hint
+#: ../uget-gtk/UgSettingForm.c:454
+msgid "You must restart uGet after modifying 'Arguments'."
+msgstr "يجب عليك إعادة تشغيل uGet بعد تعديل \"المُعطيات\"."
+
+#: ../uget-gtk/UgSettingForm.c:461
+msgid "Speed Limits"
+msgstr "حدود السرعة"
+
+#: ../uget-gtk/UgSettingForm.c:467
+msgid "Upload"
+msgstr "الرفع"
+
+#: ../uget-gtk/UgSettingForm.c:478
+msgid "Download"
+msgstr "التنزيل"
+
+#: ../uget-gtk/UgSummary.c:109
+msgid "File"
+msgstr "ملف"
+
+#: ../uget-gtk/UgSummary.c:129
+msgid "Folder"
+msgstr "مجلد"
+
+#: ../uget-gtk/UgSummary.c:259
+msgid "Item"
+msgstr "عنصر"
+
+#: ../uget-gtk/UgSummary.c:264
+msgid "Value"
+msgstr "قيمة"
+
+#. Copy All
+#: ../uget-gtk/UgSummary.c:296
+msgid "Copy _All"
+msgstr "نسخ ال_كل"

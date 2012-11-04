@@ -1,0 +1,1248 @@
+# LANGUAGE NAME - Version of Language Release
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: uGet 1.10.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-10-16 13:29+0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kurják Richárd <kurjak.richard@gmail.com>\n"
+"Language-Team: \n"
+"Language: hu_HU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#. UG_MESSAGE_INFO_CUSTOM
+#: ../uglib/UgMessage.c:52
+msgid "Connecting..."
+msgstr "Kapcsolódás..."
+
+#. UG_MESSAGE_INFO_CONNECT
+#: ../uglib/UgMessage.c:53
+msgid "Transmitting..."
+msgstr "Átvitel..."
+
+#. UG_MESSAGE_INFO_TRANSMIT,
+#: ../uglib/UgMessage.c:54 ../uget-gtk/UgDownloadWidget.c:896
+msgid "Retry"
+msgstr "Újra"
+
+#. UG_MESSAGE_INFO_RETRY,
+#: ../uglib/UgMessage.c:55
+msgid "Download completed"
+msgstr "A letöltés kész."
+
+#. UG_MESSAGE_INFO_COMPLETE,
+#: ../uglib/UgMessage.c:56 ../uget-gtk/UgCategoryWidget.c:45
+msgid "Finished"
+msgstr "Kész"
+
+#. UG_MESSAGE_INFO_FINISH,
+#. resumable
+#: ../uglib/UgMessage.c:58
+msgid "Resumable"
+msgstr "Folytatható"
+
+#. UG_MESSAGE_INFO_RESUMABLE,
+#: ../uglib/UgMessage.c:59 ../uglib/UgPlugin-aria2.c:882
+msgid "Not Resumable"
+msgstr "Nem folytatható"
+
+#. UG_MESSAGE_WARNING_CUSTOM
+#: ../uglib/UgMessage.c:67 ../uglib/UgPlugin-aria2.c:906
+msgid "Output file can't be renamed."
+msgstr "A kimeneti fájl nem nevezhető át."
+
+#. UG_MESSAGE_ERROR_CUSTOM
+#: ../uglib/UgMessage.c:75
+msgid "couldn't connect to host."
+msgstr "kapcsolódás a kiszolgálóhoz sikertelen"
+
+#. UG_MESSAGE_ERROR_CONNECT_FAILED
+#: ../uglib/UgMessage.c:76
+msgid "Folder can't be created."
+msgstr "A mappa nem hozható létre."
+
+#. UG_MESSAGE_ERROR_FOLDER_CREATE_FAILED
+#: ../uglib/UgMessage.c:77
+msgid "File can't be created (bad filename or file exist)."
+msgstr "A fájl nem hozható létre (hibás fájlnév vagy a fájl létezik)."
+
+#. UG_MESSAGE_ERROR_FILE_CREATE_FAILED
+#: ../uglib/UgMessage.c:78
+msgid "File can't be opened."
+msgstr "A fájl nem nyitható meg."
+
+#. UG_MESSAGE_ERROR_FILE_OPEN_FAILED
+#: ../uglib/UgMessage.c:79
+msgid "Out of resource (disk full or run out of memory)."
+msgstr "Az forrás nem érhető el (a lemez vagy a memória megtelt)."
+
+#. UG_MESSAGE_ERROR_OUT_OF_RESOURCE
+#: ../uglib/UgMessage.c:80
+msgid "No output file."
+msgstr "Nincs kimeneti fájl."
+
+#. UG_MESSAGE_ERROR_NO_OUTPUT_FILE
+#: ../uglib/UgMessage.c:81
+msgid "No output setting."
+msgstr "Nincs kimeneti beállításl."
+
+#. UG_MESSAGE_ERROR_NO_OUTPUT_SETTING
+#: ../uglib/UgMessage.c:82
+msgid "Too many retries."
+msgstr "Túl sok újrapróbálkozás."
+
+#. UG_MESSAGE_ERROR_TOO_MANY_RETRIES
+#: ../uglib/UgMessage.c:83
+msgid "Unsupported scheme (protocol)."
+msgstr "Nem támogatott rendszer (protokol)."
+
+#. UG_MESSAGE_ERROR_UNSUPPORTED_SCHEME
+#: ../uglib/UgMessage.c:84
+msgid "Unsupported file."
+msgstr "Nem támogatott fájl."
+
+#. UG_MESSAGE_ERROR_HTTP_MEMBER_CUSTOM
+#: ../uglib/UgMessage.c:102
+msgid "Too many redirections."
+msgstr "Túl sok átirányítás."
+
+#. UG_MESSAGE_ERROR_HTTP_MEMBER_TOO_MANY_REDIRECTIONS
+#: ../uglib/UgMessage.c:103
+msgid "Failed to open posted file."
+msgstr "A mentett fájl nem nyitható meg."
+
+#: ../uglib/UgRunning.c:91
+msgid "No plug-in support this scheme or file."
+msgstr "Nincs plug-in támogatás ehhez az összeállításhoz vagy fájlhoz"
+
+#: ../uget-gtk/UgApp-gtk.c:508 ../uget-gtk/UgApp-gtk-timeout.c:529
+msgid "tasks"
+msgstr "feladatok"
+
+#: ../uget-gtk/UgApp-gtk.c:553
+#, c-format
+msgid "Selected %d items"
+msgstr "Kiválasztott %d elemek"
+
+#. create confirmation dialog
+#: ../uget-gtk/UgApp-gtk.c:623
+msgid "Really Quit?"
+msgstr "Biztosan kilép?"
+
+#: ../uget-gtk/UgApp-gtk.c:640
+msgid "Are you sure you want to quit?"
+msgstr "Tényleg kilépsz?"
+
+#: ../uget-gtk/UgApp-gtk.c:645
+msgid "Remember this action"
+msgstr "Emlékezz erre műveletre"
+
+#. radio button
+#: ../uget-gtk/UgApp-gtk.c:650
+msgid "Minimize to tray"
+msgstr "Minimalizálás tálcára"
+
+#: ../uget-gtk/UgApp-gtk.c:652
+msgid "Exit uGet"
+msgstr "Kilépés az uGet-ből"
+
+#. create confirmation dialog
+#: ../uget-gtk/UgApp-gtk.c:707
+msgid "Really delete files?"
+msgstr "Tényleg törlöd a fájlokat?"
+
+#: ../uget-gtk/UgApp-gtk.c:725
+msgid "Are you sure you want to delete files?"
+msgstr "Tényleg törlöd a fájlokat?"
+
+#: ../uget-gtk/UgApp-gtk.c:730
+msgid "Do not ask me again"
+msgstr "Ne kérdezd meg újra"
+
+#: ../uget-gtk/UgApp-gtk.c:772 ../uget-gtk/UgApp-gtk-callback.c:567
+#: ../uget-gtk/UgApp-gtk-callback.c:600
+msgid "Error"
+msgstr "Hiba"
+
+#: ../uget-gtk/UgApp-gtk.c:780 ../uget-gtk/UgSummary.c:173
+msgid "Message"
+msgstr "Üzenet"
+
+#: ../uget-gtk/UgApp-gtk-aria2.c:303
+msgid "failed to launch aria2."
+msgstr "aria2 nem futtatható"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:66
+msgid "Download Manager"
+msgstr "Letöltéskezelő"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:68
+msgid "translator-credits"
+msgstr "Fordítók listája"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:118 ../uget-gtk/UgApp-gtk-callback.c:131
+msgid "New Category"
+msgstr "Új kategória"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:126
+msgid "Copy - "
+msgstr "Másolás -"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:181
+msgid "Category Properties"
+msgstr "Kategória beállítások"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:270 ../uget-gtk/UgApp-gtk-timeout.c:258
+msgid "New Download"
+msgstr "Új letöltés"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:298
+msgid "URL Sequence batch"
+msgstr "Új kötegelt letöltés"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:321
+msgid "No URLs found in clipboard."
+msgstr "Nincs hivatkozás a vágólapon"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:325
+msgid "Clipboard batch"
+msgstr "_Kötegelt letöltés"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:333 ../uget-gtk/UgApp-gtk-timeout.c:168
+#: ../uget-gtk/UgSettingDialog.c:80
+msgid "Clipboard"
+msgstr "Vágólap"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:359
+msgid "New Torrent"
+msgstr "Új torrent"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:381
+msgid "Open Torrent file"
+msgstr "Torrent fájl megnyitása"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:404
+msgid "New Metalink"
+msgstr "Új metalink"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:427
+msgid "Open Metalink file"
+msgstr "Metalink fájl megnyitása"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:561
+#, c-format
+msgid "Can't launch default application for file '%s'."
+msgstr "Az alapértelmezett alkalmazás nem futtatható a '%s' fájlhoz."
+
+#: ../uget-gtk/UgApp-gtk-callback.c:594
+#, c-format
+msgid "'%s' - This folder does not exist."
+msgstr "'%s' - A mappa nem létezik."
+
+#: ../uget-gtk/UgApp-gtk-callback.c:674
+msgid "Download Properties"
+msgstr "Letöltési beállítások"
+
+#. add link
+#: ../uget-gtk/UgApp-gtk-callback.c:906
+msgid "Link <A>"
+msgstr "Link <A>"
+
+#. add image
+#: ../uget-gtk/UgApp-gtk-callback.c:911
+msgid "Image <IMG>"
+msgstr "Kép <IMG>"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:927
+msgid "Import URLs from HTML file"
+msgstr "Hivatkozás import HTML fájlból"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:968
+msgid "Text File"
+msgstr "Szöveg fájl"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:984
+msgid "Import URLs from text file"
+msgstr "Hivatkozás import vágólapról"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:1030 ../uget-gtk/UgApp-gtk-callback.c:1031
+msgid "Export to"
+msgstr "Exportálás"
+
+#: ../uget-gtk/UgApp-gtk-callback.c:1128
+msgid "Settings"
+msgstr "Beállítások"
+
+#. New Download
+#. New Download (accelerators)
+#: ../uget-gtk/UgApp-gtk-gui.c:100 ../uget-gtk/UgApp-gtk-gui.c:292
+msgid "New _Download..."
+msgstr "Új _letöltés..."
+
+#. New Clipboard batch
+#: ../uget-gtk/UgApp-gtk-gui.c:107 ../uget-gtk/UgApp-gtk-gui.c:305
+msgid "New Clipboard _batch..."
+msgstr "Új kötegelt letöltés"
+
+#. New Torrent
+#: ../uget-gtk/UgApp-gtk-gui.c:116 ../uget-gtk/UgApp-gtk-gui.c:322
+msgid "New Torrent..."
+msgstr "Új torrent..."
+
+#. New Metalink
+#: ../uget-gtk/UgApp-gtk-gui.c:123 ../uget-gtk/UgApp-gtk-gui.c:329
+msgid "New Metalink..."
+msgstr "Új metalink..."
+
+#. Settings
+#. menu_item = gtk_menu_item_new_with_mnemonic (_("_Settings..."));
+#: ../uget-gtk/UgApp-gtk-gui.c:132 ../uget-gtk/UgApp-gtk-gui.c:523
+msgid "_Settings..."
+msgstr "_Beállítások..."
+
+#. Show window
+#: ../uget-gtk/UgApp-gtk-gui.c:146
+msgid "Show window"
+msgstr "Mutasd az ablakot"
+
+#. Offline mode
+#: ../uget-gtk/UgApp-gtk-gui.c:151 ../uget-gtk/UgApp-gtk-gui.c:492
+msgid "_Offline Mode"
+msgstr "_Kapcsolat nélküli mód"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:282
+msgid "Create new download"
+msgstr "Új letöltés létrehozása"
+
+#. New Category
+#: ../uget-gtk/UgApp-gtk-gui.c:299
+msgid "New _Category..."
+msgstr "Új _Kategória..."
+
+#. New URL Sequence batch
+#: ../uget-gtk/UgApp-gtk-gui.c:312
+msgid "New _URL Sequence batch..."
+msgstr "Új _URL sorozatfájlból"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:338
+msgid "Save all"
+msgstr "Összes mentése"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:346
+msgid "Set selected download runnable"
+msgstr "Kiválasztott letöltés indítása"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:351
+msgid "Set selected download to pause"
+msgstr "Kiválasztott letöltés megállítása"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:356
+msgid "Set selected download properties"
+msgstr "Kiválasztott letöltés tulajdonságai"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:364
+msgid "Move selected download up"
+msgstr "Rangsor növelés"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:369
+msgid "Move selected download down"
+msgstr "Rangsor csökkentés"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:374
+msgid "Move selected download to top"
+msgstr "Rangsor legmagasabb"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:379
+msgid "Move selected download to bottom"
+msgstr "Rangsor legalacsonyabb"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:402
+msgid "_File"
+msgstr "_Fájl"
+
+#. New - Download (accelerators)
+#: ../uget-gtk/UgApp-gtk-gui.c:414
+msgid "_Download..."
+msgstr "_Letöltés..."
+
+#. New - Category
+#: ../uget-gtk/UgApp-gtk-gui.c:421
+msgid "_Category..."
+msgstr "_Kategória..."
+
+#. New - Torrent
+#: ../uget-gtk/UgApp-gtk-gui.c:429
+msgid "Torrent..."
+msgstr "Torrent..."
+
+#. New - Metalink
+#: ../uget-gtk/UgApp-gtk-gui.c:435
+msgid "Metalink..."
+msgstr "Metalink..."
+
+#. New --- end ---
+#. Batch Downloads --- start ---
+#: ../uget-gtk/UgApp-gtk-gui.c:443
+msgid "_Batch Downloads"
+msgstr "Aktív _letöltések:"
+
+#. Batch downloads - Clipboard batch
+#: ../uget-gtk/UgApp-gtk-gui.c:449
+msgid "_Clipboard batch..."
+msgstr "_Kötegelt letöltés"
+
+#. Batch downloads - URL Sequence batch
+#: ../uget-gtk/UgApp-gtk-gui.c:455
+msgid "_URL Sequence batch..."
+msgstr "Új kötegelt letöltés"
+
+#. Batch downloads - Text file import (.txt)
+#: ../uget-gtk/UgApp-gtk-gui.c:461
+msgid "_Text file import (.txt)..."
+msgstr "Hivatkozás import vágólapról"
+
+#. Batch downloads - HTML file import (.html)
+#: ../uget-gtk/UgApp-gtk-gui.c:467
+msgid "_HTML file import (.html)..."
+msgstr "HTML _fájl importálás"
+
+#. Batch downloads - Export to Text file (.txt)
+#: ../uget-gtk/UgApp-gtk-gui.c:475
+msgid "_Export to Text file (.txt)..."
+msgstr "_Export szövegfájlba (.txt)..."
+
+#: ../uget-gtk/UgApp-gtk-gui.c:503
+msgid "_Edit"
+msgstr "_Szerkesztés"
+
+#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
+#: ../uget-gtk/UgApp-gtk-gui.c:508
+msgid "Clipboard _Monitor"
+msgstr "Vágólap _figyelő"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:512
+msgid "_Clipboard Option..."
+msgstr "_Vágólap beállítások"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:518
+msgid "Shutdown when downloads complete"
+msgstr "A számítógép leállítása a letöltés végén"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:532
+msgid "_View"
+msgstr "_Nézet"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:536
+msgid "_Toolbar"
+msgstr "_Eszköztár"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:541
+msgid "Statusbar"
+msgstr "Állapotjelző"
+
+#. Summary Items - Category
+#. Download Columns - Category
+#: ../uget-gtk/UgApp-gtk-gui.c:546 ../uget-gtk/UgApp-gtk-gui.c:574
+#: ../uget-gtk/UgApp-gtk-gui.c:659 ../uget-gtk/UgCategoryWidget.c:129
+#: ../uget-gtk/UgCategoryWidget.c:440 ../uget-gtk/UgDownloadDialog.c:205
+#: ../uget-gtk/UgDownloadWidget.c:911 ../uget-gtk/UgSummary.c:140
+msgid "Category"
+msgstr "Kategória"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:551
+msgid "_Summary"
+msgstr "_Összegzés"
+
+#. Summary Items --- start ---
+#: ../uget-gtk/UgApp-gtk-gui.c:559
+msgid "Summary _Items"
+msgstr "Elemek _tulajdonságai"
+
+#. Summary Items - Name
+#: ../uget-gtk/UgApp-gtk-gui.c:564
+msgid "_Name"
+msgstr "_Név"
+
+#. Summary Items - Folder
+#: ../uget-gtk/UgApp-gtk-gui.c:569
+msgid "_Folder"
+msgstr "_Mappa"
+
+#. Summary Items - Elapsed
+#. menu_item = gtk_check_menu_item_new_with_mnemonic (_("_Elapsed"));
+#. gtk_check_menu_item_set_active ((GtkCheckMenuItem*) menu_item, TRUE);
+#. gtk_menu_shell_append ((GtkMenuShell*) sub_menu, menu_item);
+#. menubar->view.summary_items.elapsed = menu_item;
+#. Summary Items - URL
+#. Download Columns - URL
+#: ../uget-gtk/UgApp-gtk-gui.c:584 ../uget-gtk/UgApp-gtk-gui.c:664
+msgid "_URL"
+msgstr "_URL"
+
+#. Summary Items - Message
+#: ../uget-gtk/UgApp-gtk-gui.c:589
+msgid "_Message"
+msgstr "_Üzenet"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:604
+msgid "Download _Columns"
+msgstr "Letöltési _oszlopok"
+
+#. Download Columns - Completed
+#: ../uget-gtk/UgApp-gtk-gui.c:609
+msgid "_Complete"
+msgstr "_Teljes"
+
+#. Download Columns - Total
+#: ../uget-gtk/UgApp-gtk-gui.c:614
+msgid "_Size"
+msgstr "_Méret"
+
+#. Download Columns - Percent (%)
+#: ../uget-gtk/UgApp-gtk-gui.c:619
+msgid "_Percent '%'"
+msgstr "_Százalék '%'"
+
+#. Download Columns - Elapsed
+#: ../uget-gtk/UgApp-gtk-gui.c:624
+msgid "_Elapsed"
+msgstr "_Eltelt idő"
+
+#. Download Columns - Left
+#: ../uget-gtk/UgApp-gtk-gui.c:629
+msgid "_Left"
+msgstr "_Hátralévő"
+
+#. Download Columns - Speed
+#: ../uget-gtk/UgApp-gtk-gui.c:634 ../uget-gtk/UgDownloadWidget.c:840
+msgid "Speed"
+msgstr "Sebesség"
+
+#. Download Columns - Up Speed
+#: ../uget-gtk/UgApp-gtk-gui.c:639 ../uget-gtk/UgDownloadWidget.c:854
+msgid "Up Speed"
+msgstr "Sebesség növelés"
+
+#. Download Columns - Uploaded
+#: ../uget-gtk/UgApp-gtk-gui.c:644 ../uget-gtk/UgDownloadWidget.c:868
+msgid "Uploaded"
+msgstr "Feltöltés"
+
+#. Download Columns - Ratio
+#: ../uget-gtk/UgApp-gtk-gui.c:649 ../uget-gtk/UgDownloadWidget.c:882
+msgid "Ratio"
+msgstr "Arány"
+
+#. Download Columns - Retry
+#: ../uget-gtk/UgApp-gtk-gui.c:654
+msgid "_Retry"
+msgstr "_Újra"
+
+#. Download Columns - Added On
+#: ../uget-gtk/UgApp-gtk-gui.c:669 ../uget-gtk/UgDownloadWidget.c:939
+msgid "Added On"
+msgstr "Hozzáadott"
+
+#. Download Columns - Completed On
+#: ../uget-gtk/UgApp-gtk-gui.c:674 ../uget-gtk/UgDownloadWidget.c:953
+msgid "Completed On"
+msgstr "Befejezett"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:683
+msgid "_Category"
+msgstr "_Kategória"
+
+#. New Category
+#: ../uget-gtk/UgApp-gtk-gui.c:688
+msgid "_New Category..."
+msgstr "_Új kategória..."
+
+#. Delete Category
+#: ../uget-gtk/UgApp-gtk-gui.c:694
+msgid "_Delete Category"
+msgstr "_Kategória törlése"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:708
+msgid "_Download"
+msgstr "_Letöltés"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:727
+msgid "Delete _File and Data"
+msgstr "Törlés _a listáról és a lemezről"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:742
+msgid "Open _containing folder"
+msgstr "Letöltési _mappa megnyitása"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:751
+msgid "Force Start"
+msgstr "Kényszerített indítás"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:757 ../uget-gtk/UgDownloadForm.c:225
+msgid "_Runnable"
+msgstr "_Indítás"
+
+#. Move to --- start ---
+#: ../uget-gtk/UgApp-gtk-gui.c:773
+msgid "_Move To"
+msgstr "_Áthelyez"
+
+#: ../uget-gtk/UgApp-gtk-gui.c:824
+msgid "_Help"
+msgstr "_Segítség"
+
+#. Get Help Online
+#: ../uget-gtk/UgApp-gtk-gui.c:829
+msgid "Get Help Online"
+msgstr ""
+
+#. Documentation
+#: ../uget-gtk/UgApp-gtk-gui.c:836
+msgid "Documentation"
+msgstr ""
+
+#. Support Forum
+#: ../uget-gtk/UgApp-gtk-gui.c:843
+msgid "Support Forum"
+msgstr ""
+
+#. Submit Feedback
+#: ../uget-gtk/UgApp-gtk-gui.c:850
+msgid "Submit Feedback"
+msgstr ""
+
+#. Report a Bug
+#: ../uget-gtk/UgApp-gtk-gui.c:857
+msgid "Report a Bug"
+msgstr ""
+
+#. Check for Updates
+#: ../uget-gtk/UgApp-gtk-gui.c:864
+msgid "Check for Updates"
+msgstr ""
+
+#. only 1 url matched
+#: ../uget-gtk/UgApp-gtk-timeout.c:153 ../uget-gtk/UgApp-gtk-timeout.c:162
+msgid "New from Clipboard"
+msgstr "Új vágólapról"
+
+#: ../uget-gtk/UgApp-gtk-timeout.c:154
+msgid "only one matched"
+msgstr "csak "
+
+#: ../uget-gtk/UgApp-gtk-timeout.c:266
+msgid "Command line"
+msgstr "Parancssor"
+
+#: ../uget-gtk/UgApp-gtk-timeout.c:464
+msgid ""
+"Failed to connect to aria2.\n"
+"Is aria2 shutdown? or aria2 launch failed."
+msgstr ""
+"Nem lehet kapcsolódni az aria2.\n"
+"ls aria2 leállítás? vagy aria2 futtatás meghiúsult."
+
+#: ../uget-gtk/UgApp-gtk-timeout.c:735
+msgid "Download Starting"
+msgstr "Letöltés indítása"
+
+#: ../uget-gtk/UgApp-gtk-timeout.c:736
+msgid "Starting download queue."
+msgstr "Letöltési sor indítása."
+
+#: ../uget-gtk/UgApp-gtk-timeout.c:737
+msgid "Download Completed"
+msgstr "Letöltés kész"
+
+#: ../uget-gtk/UgApp-gtk-timeout.c:738
+msgid "All queuing downloads have been completed."
+msgstr "Minden sorban álló letöltés befejeződött."
+
+#: ../uget-gtk/UgBanner.c:102 ../uget-gtk/UgBanner.c:120
+msgid "Attention uGetters:"
+msgstr ""
+
+#: ../uget-gtk/UgBanner.c:109
+msgid "HERE"
+msgstr ""
+
+#: ../uget-gtk/UgBanner.c:123
+msgid "please fill out this quick User Survery for uGet."
+msgstr ""
+
+#: ../uget-gtk/UgBanner.c:126
+msgid "click here to take survery"
+msgstr ""
+
+#. URL - label
+#: ../uget-gtk/UgBatchForm.c:63 ../uget-gtk/UgDownloadForm.c:131
+msgid "_URL:"
+msgstr "_URL:"
+
+#. e.g.
+#: ../uget-gtk/UgBatchForm.c:74
+msgid "e.g."
+msgstr "pl"
+
+#. -------------------------------------------------------
+#. radio "From"
+#: ../uget-gtk/UgBatchForm.c:85
+msgid "_From:"
+msgstr "_Innen:"
+
+#. label "To"
+#: ../uget-gtk/UgBatchForm.c:108
+msgid "To:"
+msgstr "To:"
+
+#. label "digits"
+#: ../uget-gtk/UgBatchForm.c:123
+msgid "digits:"
+msgstr "számjegyek:"
+
+#: ../uget-gtk/UgBatchForm.c:132
+msgid "F_rom:"
+msgstr "F_rom:"
+
+#. label case-sensitive
+#: ../uget-gtk/UgBatchForm.c:162
+msgid "case-sensitive"
+msgstr "nagybetű-érzékeny"
+
+#: ../uget-gtk/UgBatchForm.c:188
+msgid "No wildcard(*) character in URL entry."
+msgstr "Nincs joker(*) karakter az URL bejegyzés"
+
+#: ../uget-gtk/UgBatchForm.c:192
+msgid "URL is not valid."
+msgstr "A hivatkozás hibás."
+
+#: ../uget-gtk/UgBatchForm.c:196
+msgid "No character in 'From' or 'To' entry."
+msgstr "Nincs karakter a 'From' vagy a 'To' bejegyzésben."
+
+#: ../uget-gtk/UgBatchForm.c:305
+msgid "Preview"
+msgstr "Előnézet"
+
+#: ../uget-gtk/UgCategoryDialog.c:62
+msgid "Category settings"
+msgstr "Kategória beállítások"
+
+#: ../uget-gtk/UgCategoryDialog.c:64
+msgid "Default for new download 1"
+msgstr "Alapértelmezett letöltés 1"
+
+#: ../uget-gtk/UgCategoryDialog.c:66
+msgid "Default 2"
+msgstr "Alapértelmezett 2"
+
+#: ../uget-gtk/UgCategoryForm.c:53
+msgid "Category _name:"
+msgstr "Kategória _név:"
+
+#: ../uget-gtk/UgCategoryForm.c:68
+msgid "Active _downloads:"
+msgstr "Aktív _letöltések:"
+
+#: ../uget-gtk/UgCategoryForm.c:76
+msgid "Capacity of Finished:"
+msgstr "Befejezett"
+
+#: ../uget-gtk/UgCategoryForm.c:85
+msgid "Capacity of Recycled:"
+msgstr "Töröltek:"
+
+#: ../uget-gtk/UgCategoryWidget.c:42 ../uget-gtk/UgSelector.c:292
+msgid "All"
+msgstr "Összes"
+
+#: ../uget-gtk/UgCategoryWidget.c:43
+msgid "Active"
+msgstr "Aktív"
+
+#: ../uget-gtk/UgCategoryWidget.c:44
+msgid "Queuing"
+msgstr "Várólista"
+
+#: ../uget-gtk/UgCategoryWidget.c:46
+msgid "Recycled"
+msgstr "Törölt"
+
+#: ../uget-gtk/UgCategoryWidget.c:461
+msgid "Quantity"
+msgstr "Mennyiség"
+
+#: ../uget-gtk/UgDownloadForm.c:92
+msgid "General"
+msgstr "Általános"
+
+#: ../uget-gtk/UgDownloadForm.c:93
+msgid "Advanced"
+msgstr "Haladó"
+
+#. Mirrors - label
+#: ../uget-gtk/UgDownloadForm.c:150
+#, fuzzy
+msgid "Mirrors:"
+msgstr "Hiba"
+
+#. File - label
+#: ../uget-gtk/UgDownloadForm.c:166 ../uget-gtk/UgProxyForm.c:369
+msgid "File:"
+msgstr "Fájl:"
+
+#: ../uget-gtk/UgDownloadForm.c:181 ../uget-gtk/UgDownloadForm.c:916
+msgid "Select Folder"
+msgstr "Mappa választás"
+
+#. Folder - label
+#: ../uget-gtk/UgDownloadForm.c:189
+msgid "_Folder:"
+msgstr "_Mappa:"
+
+#. Referrer - label
+#: ../uget-gtk/UgDownloadForm.c:204
+msgid "Referrer:"
+msgstr "Hivatkozó:"
+
+#. ----------------------------------------------------
+#. frame for Status (start mode)
+#: ../uget-gtk/UgDownloadForm.c:219
+msgid "Status"
+msgstr "Állapot"
+
+#: ../uget-gtk/UgDownloadForm.c:227
+msgid "P_ause"
+msgstr "Szün_et"
+
+#. ----------------------------------------------------
+#. frame for login
+#: ../uget-gtk/UgDownloadForm.c:233
+msgid "Login"
+msgstr "Belépés"
+
+#. User - label
+#. user label & entry
+#: ../uget-gtk/UgDownloadForm.c:247 ../uget-gtk/UgProxyForm.c:143
+msgid "User:"
+msgstr "Felhasználó:"
+
+#. Password - label
+#. password label & entry
+#: ../uget-gtk/UgDownloadForm.c:263 ../uget-gtk/UgProxyForm.c:154
+msgid "Password:"
+msgstr "Jelszó:"
+
+#. dform->password_label = widget;
+#. ----------------------------------------------------
+#. frame for option
+#: ../uget-gtk/UgDownloadForm.c:271
+msgid "Options"
+msgstr "Beállítások"
+
+#. Retry limit - label
+#: ../uget-gtk/UgDownloadForm.c:286
+msgid "Retry _limit:"
+msgstr "Újracsatlakozások _korlátozása"
+
+#. counts - label
+#: ../uget-gtk/UgDownloadForm.c:292
+msgid "counts"
+msgstr "db"
+
+#. Retry delay - label
+#: ../uget-gtk/UgDownloadForm.c:306
+msgid "Retry _delay:"
+msgstr "Késleltetett _próbálkozás:"
+
+#. seconds - label
+#: ../uget-gtk/UgDownloadForm.c:312
+msgid "seconds"
+msgstr "másodpercek"
+
+#. "Connections per server" - title label
+#: ../uget-gtk/UgDownloadForm.c:325
+msgid "Connections per server"
+msgstr "Kapcsolatok/server"
+
+#. connections - label
+#: ../uget-gtk/UgDownloadForm.c:338
+msgid "connections"
+msgstr "kapcsolatok"
+
+#. label - cookie file
+#: ../uget-gtk/UgDownloadForm.c:365
+msgid "Cookie file:"
+msgstr "Cookie fájl:"
+
+#: ../uget-gtk/UgDownloadForm.c:377 ../uget-gtk/UgDownloadForm.c:972
+msgid "Select Cookie File"
+msgstr "Cookie fájl kiválasztás"
+
+#. label - post file
+#: ../uget-gtk/UgDownloadForm.c:386
+msgid "Post file:"
+msgstr "Post fájl:"
+
+#: ../uget-gtk/UgDownloadForm.c:398 ../uget-gtk/UgDownloadForm.c:1028
+msgid "Select Post File"
+msgstr "Post fájl kiválasztása"
+
+#. label - user agent
+#: ../uget-gtk/UgDownloadForm.c:408
+msgid "User Agent:"
+msgstr "Felhasználói ügynök:"
+
+#. label - Max upload speed
+#: ../uget-gtk/UgDownloadForm.c:424
+msgid "Max upload speed:"
+msgstr "Maximális feltöltési sebesség:"
+
+#. label - "KiB/s"
+#: ../uget-gtk/UgDownloadForm.c:435 ../uget-gtk/UgDownloadForm.c:452
+#: ../uget-gtk/UgSettingForm.c:469 ../uget-gtk/UgSettingForm.c:480
+msgid "KiB/s"
+msgstr "KiB/s"
+
+#. label - Max download speed
+#: ../uget-gtk/UgDownloadForm.c:441
+msgid "Max download speed:"
+msgstr "Maximális letöltés sebesség:"
+
+#. Retrieve timestamp
+#: ../uget-gtk/UgDownloadForm.c:458
+msgid "Retrieve timestamp"
+msgstr "Időbélyeg kinyerése"
+
+#: ../uget-gtk/UgDownloadWidget.c:378 ../uget-gtk/UgSummary.c:116
+msgid "unnamed"
+msgstr "névtelen"
+
+#: ../uget-gtk/UgDownloadWidget.c:745 ../uget-gtk/UgSummary.c:105
+msgid "Name"
+msgstr "Név"
+
+#: ../uget-gtk/UgDownloadWidget.c:769
+msgid "Complete"
+msgstr "Kész"
+
+#: ../uget-gtk/UgDownloadWidget.c:783
+msgid "Size"
+msgstr "Méret"
+
+#: ../uget-gtk/UgDownloadWidget.c:798
+msgid "%"
+msgstr "%"
+
+#: ../uget-gtk/UgDownloadWidget.c:812
+msgid "Elapsed"
+msgstr "Eltelt idő"
+
+#: ../uget-gtk/UgDownloadWidget.c:826
+msgid "Left"
+msgstr "Hátralévő"
+
+#: ../uget-gtk/UgDownloadWidget.c:925 ../uget-gtk/UgSelector.c:487
+#: ../uget-gtk/UgSummary.c:151
+msgid "URL"
+msgstr "URL"
+
+#. proxy type label & combo box
+#: ../uget-gtk/UgProxyForm.c:64
+msgid "Proxy:"
+msgstr "Proxy:"
+
+#: ../uget-gtk/UgProxyForm.c:67
+msgid "Don't use"
+msgstr "Ne használd"
+
+#: ../uget-gtk/UgProxyForm.c:69
+msgid "Default"
+msgstr "Alapértelmezett"
+
+#. host label & entry
+#: ../uget-gtk/UgProxyForm.c:116
+msgid "Host:"
+msgstr "Host:"
+
+#. port label & entry
+#: ../uget-gtk/UgProxyForm.c:127
+msgid "Port:"
+msgstr "Port:"
+
+#: ../uget-gtk/UgProxyForm.c:335
+msgid "Socket:"
+msgstr "Socket:"
+
+#: ../uget-gtk/UgProxyForm.c:345
+#, fuzzy
+msgid "Socket args:"
+msgstr "Socket:"
+
+#: ../uget-gtk/UgProxyForm.c:355
+msgid "Element:"
+msgstr "Elem:"
+
+#: ../uget-gtk/UgScheduleForm.c:66
+msgid "Mon"
+msgstr "Hét"
+
+#: ../uget-gtk/UgScheduleForm.c:67
+msgid "Tue"
+msgstr "Ked"
+
+#: ../uget-gtk/UgScheduleForm.c:68
+msgid "Wed"
+msgstr "Sze"
+
+#: ../uget-gtk/UgScheduleForm.c:69
+msgid "Thu"
+msgstr "Csü"
+
+#: ../uget-gtk/UgScheduleForm.c:70
+msgid "Fri"
+msgstr "Pén"
+
+#: ../uget-gtk/UgScheduleForm.c:71
+msgid "Sat"
+msgstr "Szo"
+
+#: ../uget-gtk/UgScheduleForm.c:72
+msgid "Sun"
+msgstr "Vas"
+
+#: ../uget-gtk/UgScheduleForm.c:99
+msgid "_Enable Scheduler"
+msgstr "_Ütemező engedélyezése"
+
+#. Turn off - label
+#: ../uget-gtk/UgScheduleForm.c:141
+msgid "Turn off"
+msgstr "Kikapcsolás"
+
+#. Turn off - help label
+#: ../uget-gtk/UgScheduleForm.c:146
+msgid "- stop all task"
+msgstr "- minden folyamat leállítása"
+
+#. Normal - label
+#: ../uget-gtk/UgScheduleForm.c:156
+msgid "Normal"
+msgstr "Normál"
+
+#. Normal - help label
+#: ../uget-gtk/UgScheduleForm.c:161
+msgid "- run task normally"
+msgstr "- folyamat futtatása normál módban"
+
+#: ../uget-gtk/UgSelector.c:94
+msgid "Base hypertext reference"
+msgstr "Alap hypertext hivatkozás"
+
+#. select all
+#: ../uget-gtk/UgSelector.c:110
+msgid "Mark _All"
+msgstr "Összes _kijelölése"
+
+#. select none
+#: ../uget-gtk/UgSelector.c:116
+msgid "Mark _None"
+msgstr "Egyik _sem kijelölése"
+
+#. select by filter
+#: ../uget-gtk/UgSelector.c:122
+msgid "_Mark by filter..."
+msgstr "_Kijelölés szűrővel..."
+
+#: ../uget-gtk/UgSelector.c:297
+msgid "None"
+msgstr "Egyik sem"
+
+#: ../uget-gtk/UgSelector.c:314
+msgid "Mark by filter"
+msgstr "Kijelölés szűrővel"
+
+#: ../uget-gtk/UgSelector.c:332
+msgid "Mark URLs by host AND filename extension."
+msgstr "URL-ek megjelölése a kiszolgáló által ÉS fájlnév kiterjesztés."
+
+#: ../uget-gtk/UgSelector.c:335
+msgid "This will reset all marks of URLs."
+msgstr "Az összes URL kijelölés megszüntetése"
+
+#. filter view -----------------------
+#. left side
+#: ../uget-gtk/UgSelector.c:343
+msgid "Host"
+msgstr "Szerver"
+
+#. right side (filename extension)
+#: ../uget-gtk/UgSelector.c:347
+msgid "File Ext."
+msgstr "Fájl kiterj."
+
+#: ../uget-gtk/UgSettingDialog.c:71
+msgid "UI Settings"
+msgstr "UI beállítások"
+
+#: ../uget-gtk/UgSettingDialog.c:87
+msgid "Scheduler"
+msgstr "Ütemező"
+
+#: ../uget-gtk/UgSettingDialog.c:95
+msgid "Plug-in"
+msgstr "Beépülő"
+
+#: ../uget-gtk/UgSettingDialog.c:103
+msgid "Others"
+msgstr "Egyebek"
+
+#: ../uget-gtk/UgSettingForm.c:72
+msgid "_Monitor clipboard for specified file types:"
+msgstr "_Vágólap figyelés megadott fájltípusok után:"
+
+#: ../uget-gtk/UgSettingForm.c:87 ../uget-gtk/UgSettingForm.c:242
+msgid "Separate the types with character '|'."
+msgstr "Típusok elválasztása '|' karakterrel"
+
+#: ../uget-gtk/UgSettingForm.c:92 ../uget-gtk/UgSettingForm.c:247
+msgid "You can use regular expressions here."
+msgstr "Reguláris kifejezés használható."
+
+#: ../uget-gtk/UgSettingForm.c:100
+msgid "_Quiet mode"
+msgstr "_Néma üzemmód"
+
+#: ../uget-gtk/UgSettingForm.c:109
+msgid "Add URL to Nth category"
+msgstr "URL hozzáadása a Nth kategóriához"
+
+#. check button
+#: ../uget-gtk/UgSettingForm.c:147
+msgid "Show confirmation dialog on close"
+msgstr "Megerősítés kérése bezáráskor"
+
+#: ../uget-gtk/UgSettingForm.c:150
+msgid "Confirm when deleting files"
+msgstr "Megerősítés fájlok törlésekor"
+
+#: ../uget-gtk/UgSettingForm.c:153
+msgid "Always show tray icon"
+msgstr "Mindig mutassa a tray ikont"
+
+#: ../uget-gtk/UgSettingForm.c:156
+msgid "Minimize to tray on startup"
+msgstr "Indítás minimódban a tálcán"
+
+#: ../uget-gtk/UgSettingForm.c:159
+msgid "Enable offline mode on startup"
+msgstr "Offline mód engedélyezése induláskor"
+
+#: ../uget-gtk/UgSettingForm.c:162
+msgid "Download starting notification"
+msgstr "Értesítés a letöltés megkezdésekor"
+
+#: ../uget-gtk/UgSettingForm.c:165
+msgid "Sound when download is finished"
+msgstr "Hangjelzés a letöltés végén"
+
+#: ../uget-gtk/UgSettingForm.c:168
+msgid "Apply recently download settings"
+msgstr "Alkalmazd a legújabb letöltési beállításokat"
+
+#: ../uget-gtk/UgSettingForm.c:229
+msgid "_Launch default application for specified file types:"
+msgstr "_Alapértelmezett alkalmazás futtatása bizonyos fájltípusoknál:"
+
+#: ../uget-gtk/UgSettingForm.c:288
+msgid "_Auto save"
+msgstr "_Automatikus mentés"
+
+#. auto save spin & label (interval)
+#: ../uget-gtk/UgSettingForm.c:294
+msgid "minutes"
+msgstr "percek"
+
+#. auto save label
+#: ../uget-gtk/UgSettingForm.c:301
+msgid "_Interval:"
+msgstr "_Intervallum:"
+
+#: ../uget-gtk/UgSettingForm.c:337
+msgid "Commandline Settings"
+msgstr "Parancssori beállítások"
+
+#. --quiet
+#: ../uget-gtk/UgSettingForm.c:341
+msgid "Use '--quiet' by default"
+msgstr "Használd a '--csendes módot' alapértelmezetten"
+
+#: ../uget-gtk/UgSettingForm.c:347
+msgid "'--category-index' default value"
+msgstr "'--kategória-index' az alapértelmezett érték"
+
+#: ../uget-gtk/UgSettingForm.c:410
+msgid "_Enable aria2 plug-in"
+msgstr "_Aria2 kiegészítő engedélyezése"
+
+#: ../uget-gtk/UgSettingForm.c:417
+msgid "_Launch aria2 on startup"
+msgstr "_Aria2 futtatása indításkor"
+
+#: ../uget-gtk/UgSettingForm.c:423
+msgid "_Shutdown aria2 on exit"
+msgstr "_Aria2 leállítása kilépéskor"
+
+#: ../uget-gtk/UgSettingForm.c:439
+msgid "Path"
+msgstr "Útvonal"
+
+#: ../uget-gtk/UgSettingForm.c:447
+msgid "Arguments"
+msgstr "Paraméterek"
+
+#. aria2 plug-in hint
+#: ../uget-gtk/UgSettingForm.c:454
+msgid "You must restart uGet after modifying 'Arguments'."
+msgstr "Az uGet újraindítása szükséges a 'Paraméterek' érvényesítéséhez."
+
+#: ../uget-gtk/UgSettingForm.c:461
+msgid "Speed Limits"
+msgstr "Sebesség korlátozások"
+
+#: ../uget-gtk/UgSettingForm.c:467
+msgid "Upload"
+msgstr "Feltöltés"
+
+#: ../uget-gtk/UgSettingForm.c:478
+msgid "Download"
+msgstr "Letöltés"
+
+#: ../uget-gtk/UgSummary.c:109
+msgid "File"
+msgstr "Fájl"
+
+#: ../uget-gtk/UgSummary.c:129
+msgid "Folder"
+msgstr "Mappa"
+
+#: ../uget-gtk/UgSummary.c:259
+msgid "Item"
+msgstr "Elem"
+
+#: ../uget-gtk/UgSummary.c:264
+msgid "Value"
+msgstr "Érték"
+
+#. Copy All
+#: ../uget-gtk/UgSummary.c:296
+msgid "Copy _All"
+msgstr "Összes _másolás"

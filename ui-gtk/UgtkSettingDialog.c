@@ -1,0 +1,236 @@
+/*
+ *
+ *   Copyright (C) 2005-2014 by C.H. Huang
+ *   plushuang.tw@gmail.com
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ *  ---
+ *
+ *  In addition, as a special exception, the copyright holders give
+ *  permission to link the code of portions of this program with the
+ *  OpenSSL library under certain conditions as described in each
+ *  individual source file, and distribute linked combinations
+ *  including the two.
+ *  You must obey the GNU Lesser General Public License in all respects
+ *  for all of the code used other than OpenSSL.  If you modify
+ *  file(s) with this exception, you may extend this exception to your
+ *  version of the file(s), but you are not obligated to do so.  If you
+ *  do not wish to do so, delete this exception statement from your
+ *  version.  If you delete this exception statement from all source
+ *  files in the program, then also delete it here.
+ *
+ */
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <UgUtil.h>
+#include <UgtkSettingDialog.h>
+
+#include <glib/gi18n.h>
+
+// Callback
+static void	on_cursor_changed (GtkTreeView* view, UgtkSettingDialog* sdialog);
+static void on_response (GtkDialog *dialog, gint response_id, UgtkSettingDialog* sdialog);
+
+UgtkSettingDialog*  ugtk_setting_dialog_new (const gchar* title, GtkWindow* parent)
+{
+	UgtkSettingDialog*  dialog;
+	GtkCellRenderer*    renderer;
+	GtkWidget*  widget;
+	GtkBox*     vbox;
+	GtkBox*     hbox;
+
+	dialog = g_malloc0 (sizeof (UgtkSettingDialog));
+	dialog->self = (GtkDialog*) gtk_dialog_new_with_buttons (title, parent,
+			GTK_DIALOG_DESTROY_WITH_PARENT,
+			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			GTK_STOCK_OK,     GTK_RESPONSE_OK,
+			NULL);
+	gtk_dialog_set_default_response (dialog->self, GTK_RESPONSE_OK);
+	vbox = (GtkBox*) gtk_dialog_get_content_area (dialog->self);
+	hbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+	gtk_box_pack_start (vbox, GTK_WIDGET (hbox), FALSE, FALSE, 2);
+	// Notebook
+	widget = gtk_notebook_new ();
+	gtk_widget_set_size_request (widget, 430, 320);
+	gtk_box_pack_end (hbox, widget, FALSE, FALSE, 0);
+	dialog->notebook = (GtkNotebook*) widget;
+	gtk_notebook_set_show_tabs (dialog->notebook, FALSE);
+	// TreeView
+	dialog->list_store = gtk_list_store_new (1, G_TYPE_STRING);
+	widget = gtk_tree_view_new_with_model (
+			GTK_TREE_MODEL (dialog->list_store));
+	gtk_widget_set_size_request (widget, 130, 120);
+	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 0);
+	dialog->tree_view = (GtkTreeView*) widget;
+	gtk_tree_view_set_headers_visible (dialog->tree_view, FALSE);
+	renderer = gtk_cell_renderer_text_new ();
+	gtk_tree_view_insert_column_with_attributes (
+			dialog->tree_view, 0,
+			_("Name"), renderer,
+			"text", 0,
+			NULL);
+	g_signal_connect (dialog->tree_view, "cursor-changed",
+			G_CALLBACK (on_cursor_changed), dialog);
+
+	// ------------------------------------------------------------------------
+	// UI settings page
+	vbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+	ugtk_user_interface_form_init (&dialog->ui);
+	gtk_box_pack_start (vbox, dialog->ui.self, FALSE, FALSE, 2);
+	ugtk_setting_dialog_add (dialog, _("User Interface"), (GtkWidget*) vbox);
+
+	// ------------------------------------------------------------------------
+	// Clipboard settings page
+	ugtk_clipboard_form_init (&dialog->clipboard);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog->clipboard.self), 2);
+	ugtk_setting_dialog_add (dialog, _("Clipboard"), dialog->clipboard.self);
+
+	// ------------------------------------------------------------------------
+	// Bandwidth settings page
+	ugtk_bandwidth_form_init (&dialog->bandwidth);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog->bandwidth.self), 2);
+	ugtk_setting_dialog_add (dialog, _("Bandwidth"), dialog->bandwidth.self);
+
+	// ------------------------------------------------------------------------
+	// Scheduler settings page
+	ugtk_schedule_form_init (&dialog->scheduler);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog->scheduler.self), 2);
+	ugtk_setting_dialog_add (dialog, _("Scheduler"), dialog->scheduler.self);
+
+	// ------------------------------------------------------------------------
+	// Plugin settings page
+	ugtk_plugin_form_init (&dialog->plugin);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog->plugin.self), 2);
+	ugtk_setting_dialog_add (dialog, _("Plug-in"), dialog->plugin.self);
+
+	// ------------------------------------------------------------------------
+	// Others settings page
+	vbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+	ugtk_setting_dialog_add (dialog, _("Others"), (GtkWidget*) vbox);
+
+	ugtk_commandline_form_init (&dialog->commandline);
+	gtk_box_pack_start (vbox, dialog->commandline.self, FALSE, FALSE, 4);
+	gtk_box_pack_start (vbox, gtk_label_new (""), FALSE, FALSE, 0);
+	ugtk_auto_save_form_init (&dialog->auto_save);
+	gtk_box_pack_start (vbox, dialog->auto_save.self, FALSE, FALSE, 2);
+	gtk_box_pack_start (vbox, gtk_label_new (""), FALSE, FALSE, 0);
+	ugtk_completion_form_init (&dialog->completion);
+	gtk_box_pack_start (vbox, dialog->completion.self, FALSE, FALSE, 2);
+
+	gtk_widget_show_all ((GtkWidget*) hbox);
+//	gtk_container_set_focus_child (GTK_CONTAINER (dialog->self), dialog->pattern_entry);
+//	g_signal_connect (dialog->pattern_entry, "key-press-event", G_CALLBACK (on_key_press_event), dialog);
+
+	return dialog;
+}
+
+void  ugtk_setting_dialog_free (UgtkSettingDialog* dialog)
+{
+	gtk_widget_destroy ((GtkWidget*) dialog->self);
+	g_free (dialog);
+}
+
+void  ugtk_setting_dialog_run (UgtkSettingDialog* dialog, UgtkApp* app)
+{
+	dialog->app = app;
+	g_signal_connect (dialog->self, "response",
+			G_CALLBACK (on_response), dialog);
+	gtk_widget_show ((GtkWidget*) dialog->self);
+}
+
+void  ugtk_setting_dialog_set (UgtkSettingDialog* dialog, UgtkSetting* setting)
+{
+	ugtk_schedule_form_set (&dialog->scheduler, setting);
+	ugtk_clipboard_form_set (&dialog->clipboard, setting);
+	ugtk_bandwidth_form_set (&dialog->bandwidth, setting);
+	ugtk_user_interface_form_set (&dialog->ui, setting);
+	ugtk_completion_form_set (&dialog->completion, setting);
+	ugtk_auto_save_form_set (&dialog->auto_save, setting);
+	ugtk_commandline_form_set (&dialog->commandline, setting);
+	ugtk_plugin_form_set (&dialog->plugin, setting);
+}
+
+void  ugtk_setting_dialog_get (UgtkSettingDialog* dialog, UgtkSetting* setting)
+{
+	ugtk_schedule_form_get (&dialog->scheduler, setting);
+	ugtk_clipboard_form_get (&dialog->clipboard, setting);
+	ugtk_bandwidth_form_get (&dialog->bandwidth, setting);
+	ugtk_user_interface_form_get (&dialog->ui, setting);
+	ugtk_completion_form_get (&dialog->completion, setting);
+	ugtk_auto_save_form_get (&dialog->auto_save, setting);
+	ugtk_commandline_form_get (&dialog->commandline, setting);
+	ugtk_plugin_form_get (&dialog->plugin, setting);
+}
+
+void  ugtk_setting_dialog_add (UgtkSettingDialog* sdialog,
+                               const gchar* title,
+                               GtkWidget*   page)
+{
+	GtkTreeIter  iter;
+
+	gtk_list_store_append (sdialog->list_store, &iter);
+	gtk_list_store_set (sdialog->list_store, &iter, 0, title, -1);
+	gtk_notebook_append_page (sdialog->notebook, page, gtk_label_new (title));
+}
+
+void  ugtk_setting_dialog_set_page (UgtkSettingDialog* sdialog, int nth)
+{
+	GtkTreePath* path;
+
+	path = gtk_tree_path_new_from_indices (nth, -1);
+	gtk_tree_view_set_cursor (sdialog->tree_view, path, NULL, FALSE);
+	gtk_tree_path_free (path);
+	gtk_notebook_set_current_page (sdialog->notebook, nth);
+}
+
+// ----------------------------------------------------------------------------
+// Callback
+
+static void	on_cursor_changed (GtkTreeView* view, UgtkSettingDialog* sdialog)
+{
+	GtkTreePath*   path;
+	int            nth;
+
+	gtk_tree_view_get_cursor (view, &path, NULL);
+	if (path == NULL)
+		return;
+	nth = *gtk_tree_path_get_indices (path);
+	gtk_tree_path_free (path);
+	gtk_notebook_set_current_page (sdialog->notebook, nth);
+}
+
+static void on_response (GtkDialog *dialog, gint response_id, UgtkSettingDialog* sdialog)
+{
+	UgtkApp*  app;
+
+	app = sdialog->app;
+	if (app)
+		app->dialogs.setting = NULL;
+
+	if (response_id == GTK_RESPONSE_OK) {
+		ugtk_setting_dialog_get (sdialog, &app->setting);
+		ugtk_app_set_ui_setting (app, &app->setting);
+		ugtk_app_set_menu_setting (app, &app->setting);
+		ugtk_app_set_other_setting (app, &app->setting);
+		ugtk_app_set_plugin_setting (app, &app->setting);
+	}
+	ugtk_setting_dialog_free (sdialog);
+}
