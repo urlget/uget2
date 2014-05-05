@@ -432,19 +432,23 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 	temp.common = ug_info_realloc (&node->info, UgetCommonInfo);
 	// add nodes by files
 	if (plugin->files_per_gid_prev != plugin->files_per_gid) {
+#ifndef NDEBUG
 		// debug
 		if (temp.common->debug_level) {
 			printf ("n_files: old %d - new %d\n",
 					plugin->files_per_gid_prev,
 					plugin->files_per_gid);
 		}
+#endif
 		// add child node if aria2 add/create more files
 		index = plugin->files_per_gid_prev;
 		for (;  index < plugin->files.length;  index++) {
 			if (plugin_insert_node (plugin, plugin->files.at[index].path, FALSE)) {
+#ifndef NDEBUG
 				// debug
 				if (temp.common->debug_level)
 					printf ("new child node name = %s\n", plugin->files.at[index].path);
+#endif
 			}
 		}
 		plugin->files_per_gid_prev  = plugin->files_per_gid;
@@ -461,9 +465,11 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 				node->name = ug_uri_get_file (&plugin->uri_part);
 				uget_plugin_post ((UgetPlugin*) plugin,
 						uget_event_new (UGET_EVENT_NAME));
+#ifndef NDEBUG
 				// debug
 				if (temp.common->debug_level)
 					printf ("base node name = %s\n", node->name);
+#endif
 			}
 		}
 	}
@@ -473,11 +479,13 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 		if (plugin->uploadLength > 0 &&
 		    plugin->totalLength  == plugin->completedLength)
 		{
+#ifndef NDEBUG
 			// debug
 			if (temp.common->debug_level) {
 				if ((node->state & UGET_STATE_UPLOADING) == 0)
 					printf ("uploading...\n");
 			}
+#endif
 			node->state |= UGET_STATE_UPLOADING;
 		}
 		break;
@@ -505,9 +513,11 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 				uget_node_set_name_by_uri_string (node, temp.common->uri);
 				// set node type
 				node->children->type = UGET_NODE_ATTACHMENT;
+#ifndef NDEBUG
 				// debug
 				if (temp.common->debug_level)
 					printf ("uri followed to %s\n", temp.common->uri);
+#endif
 			}
 		}
 		// If no followed gid, it was completed.
@@ -535,9 +545,11 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 			if (temp.common->retry_count < temp.common->retry_limit || temp.common->retry_limit == 0) {
 				temp.common->retry_count++;
 				plugin->restart = TRUE;
+#ifndef NDEBUG
 				// debug
 				if (temp.common->debug_level)
 					printf ("retry %d\n", temp.common->retry_count);
+#endif
 			}
 			else {
 				plugin->node->state |= UGET_STATE_ERROR;
@@ -581,9 +593,11 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 	if (plugin->gids.length > 0)
 		plugin->restart = FALSE;
 	else {
+#ifndef NDEBUG
 		// debug
 		if (temp.common->debug_level)
 			printf ("gids.length = %d\n", plugin->gids.length);
+#endif
 		// If no followed gid and no need to retry, it must stop.
 		if (plugin->restart == FALSE)
 			plugin->stopped = TRUE;
@@ -679,8 +693,10 @@ restart_thread:
 				continue;
 			}
 			recycle_status_request (req);
+#ifndef NDEBUG
 			// debug
 			printf ("thread restart\n");
+#endif
 			goto restart_thread;
 		}
 		if (plugin->synced == FALSE) {
@@ -823,8 +839,10 @@ static void  add_gids_by_value_array (UgArrayStr* gids, UgValueArray* varray)
 	UgValue*  value;
 	int       index;
 
+#ifndef NDEBUG
 	// debug
 	printf ("add %d gids\n", varray->length);
+#endif
 	for (index = 0;  index < varray->length;  index++) {
 		value = varray->at + index;
 		*(char**) ug_array_alloc (gids, 1) = value->c.string;

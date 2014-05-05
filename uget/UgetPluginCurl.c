@@ -596,10 +596,12 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 					ugcurl->stopped = TRUE;
 					ugcurl->end = ugcurl->beg;
 					ugcurl->pos = ugcurl->beg;
+#ifndef NDEBUG
 					if (common->debug_level) {
 						printf ("\n" "overwrite %u KiB\n",
 								(unsigned) ugcurl->beg / 1024);
 					}
+#endif
 				}
 				else if (ugcurl->state == UGET_CURL_RUN) {
 					ugcurl->split = FALSE;
@@ -608,10 +610,12 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 						ugcurl->prev->pos = ugcurl->beg;
 						ugcurl->prev->stopped = TRUE;
 					}
+#ifndef NDEBUG
 					if (common->debug_level) {
 						printf ("\n" "split %u KiB\n",
 								(unsigned) ugcurl->beg / 1024);
 					}
+#endif
 				}
 			}
 			// if user want to stop plugin, it must stop all UgetCurl in list.
@@ -938,6 +942,7 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 		uget_plugin_post ((UgetPlugin*) plugin,
 				uget_event_new_normal (UGET_EVENT_NORMAL_NOT_RESUMABLE, NULL));
 	}
+#ifndef NDEBUG
 	if (common->debug_level) {
 		printf ("CURL message = %s\n", ugcurl->error_string);
 		printf ("plugin->file.path = %s\n", plugin->file.path);
@@ -945,6 +950,7 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 		printf ("plugin->file.time = %d\n", (int)plugin->file.time);
 		printf ("resumable = %d\n", ugcurl->resumable);
 	}
+#endif
 
 	// set flags to UriLink
 	if (ugcurl->header.uri) {
@@ -1126,11 +1132,13 @@ static int split_download (UgetPluginCurl* plugin, UgetCurl* ugcurl)
 	cur = plugin->seg.beg;
 	if (uget_a2cf_lack (&plugin->aria2.ctrl, &cur, &end)) {
 		plugin->seg.beg = end;
+#ifndef NDEBUG
 		if (plugin->common->debug_level) {
 			printf ("\n" "lack %u-%u KiB\n",
 					(unsigned) cur / 1024,
 					(unsigned) end / 1024);
 		}
+#endif
 	}
 	else {
 		// if no unused space, try to split current download
@@ -1153,11 +1161,13 @@ static int split_download (UgetPluginCurl* plugin, UgetCurl* ugcurl)
 		if (cur & 16383)
 			cur += 16384 - (cur & 16383);
 
+#ifndef NDEBUG
 		if (plugin->common->debug_level) {
 			printf ("\n" "split %u-%u KiB\n",
 					(unsigned) cur / 1024,
 					(unsigned) end / 1024);
 		}
+#endif
 	}
 
 	// reuse or create UgetCurl

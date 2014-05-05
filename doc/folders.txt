@@ -8,6 +8,8 @@ uget (LGPL)
 This is is application core logic. (see UgetApp.h)
 It contains curl and aria2 plug-in, download control, command line, and Queuing.
 This folder has Android.mk, user can use it to build static library in Android.
+Add definition NDEBUG to disable debug code & message in plug-in.
+Add definition NO_RETRY_IF_CONNECT_FAILED to disable retry if connection failed.
 
 ui-gtk (LGPL)
 This is GTK+ user interface for uget.
