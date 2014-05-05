@@ -8,7 +8,7 @@
 
  Root -+- Category1 -+- Download1 (URI) -+- File
        |             |                   |
-       |             |                   +  cookie or post file (attachment)
+       |             |                   +  X cookie or post file (attachment)
        |             |
        |             +- Download2 (URI) -+- File1
        |             |  (torrent path)   |
@@ -46,19 +46,7 @@
 
 -------------------------------------------------------------------------------
 
-   Tree Node <-- auto select category <----+--- Node Info from CLI or JSON-RPC
-       ^                                   |                   clipboard
-       |                                   V
-       +-------- user select category <-- GUI <----- Node Info from GUI
-
--------------------------------------------------------------------------------
-
-   Tree Node --> auto select tasks --> match plugin --> activate --> sync
-                                                           |           |
-                                                           +--> GUI <--+
-
--------------------
-1 category has 1 json file.
+1 category has 1 json file. Below is sample file.
 
 Category-Home.json
 {

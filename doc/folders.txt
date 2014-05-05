@@ -1,0 +1,18 @@
+uglib (LGPL)
+This is low-level library for uget.
+It based on Standard C library, POSIX/Windows threads, Socket API, and libcurl.
+User can add definition HAVE_GLIB if your program works with glib.
+This folder has Android.mk, user can use it to build static library in Android.
+
+uget (LGPL)
+This is is application core logic. (see UgetApp.h)
+It contains curl and aria2 plug-in, download control, command line, and Queuing.
+This folder has Android.mk, user can use it to build static library in Android.
+
+ui-gtk (LGPL)
+This is GTK+ user interface for uget.
+Some platform (or library) dependent code place here.
+
+ui-gtk-1to2 (LGPL)
+It can convert uGet for GTK+ data file from 1.10.x to 2.x
+

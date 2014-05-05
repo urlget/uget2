@@ -1,4 +1,4 @@
 EXTRA_DIST = \
-	uget.txt  \
-	uglib.txt
+	uget.txt    \
+	folders.txt
 

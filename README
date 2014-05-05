@@ -1,0 +1,37 @@
+What's changed in uGet2: (2014-05-05)
+
+Part 1. curl plug-in:
+1. support multi-thread downloading.
+2. support mirrors.
+3. support aria2 control file format ver 1 (aria2 v1.4.1).
+4. It can create a large file before downloading.
+5. uGet1's downloaded file can't be resumed by uGet2. It is not compatiable.
+
+Part 2. aria2 plug-in:
+1. support JSON-RPC batch request to improve remote aria2 downloading.
+2. support aria2 "--out" argument to set output filename.
+3. better BitTorrent and metalink support.
+
+Part 3. Application:
+1. Every category has it's data file. (file format is JSON)
+2. Program can set priority for each download in global speed limit mode.
+3. Auto classifier by file extension, host, and scheme.
+4. User can change category order.
+5. All data files use JSON format. (not compatiable with uGet 1)
+6. All plug-ins can do global speed control.
+7. Skip existing URLs from clipboard and command-line.
+8. Banner can show uGet RSS message.
+9. provide uget-1to2 (or uget-gtk-1to2) to convert setting from old uGet files.
+
+Part 4. GTK+ User interface:
+1. New setting dialog.
+2. Adjust category selector in main window for touch screen.
+3. Remember category selection and paned position.
+4. Program can launch custom command when download complete.
+5. Remove launching app for specified file types.
+6. Don't notify completed if error occurs. It will notify error.
+
+Part 5. Future version
+1. Database for Downloaded URIs
+2. RSS Monitor
+3. Scheduler Per Category
