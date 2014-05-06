@@ -184,6 +184,10 @@ static void ugtk_menubar_edit_init (UgtkMenubar* menubar)
 	gtk_menu_shell_append ((GtkMenuShell*)menu, menu_item);
 	menubar->edit.commandline_quiet = menu_item;
 
+	menu_item = gtk_check_menu_item_new_with_mnemonic (_("Skip existing URI"));
+	gtk_menu_shell_append ((GtkMenuShell*)menu, menu_item);
+	menubar->edit.skip_existing = menu_item;
+
 	gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_separator_menu_item_new() );
 
 	// --- Completion Auto-Actions --- start ---

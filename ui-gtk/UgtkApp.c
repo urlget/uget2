@@ -341,6 +341,9 @@ void  ugtk_app_set_menu_setting (UgtkApp* app, UgtkSetting* setting)
 	gtk_check_menu_item_set_active (
 			(GtkCheckMenuItem*) app->menubar.edit.commandline_quiet,
 			setting->commandline.quiet);
+	gtk_check_menu_item_set_active (
+			(GtkCheckMenuItem*) app->menubar.edit.skip_existing,
+			setting->ui.skip_existing);
 
 	switch (app->setting.completion.action) {
 	default:

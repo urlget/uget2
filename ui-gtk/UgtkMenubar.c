@@ -94,6 +94,14 @@ static void on_commandline_quiet (GtkWidget* widget, UgtkApp* app)
 	app->setting.commandline.quiet = active;
 }
 
+static void on_skip_existing (GtkWidget* widget, UgtkApp* app)
+{
+	gboolean	active;
+
+	active = gtk_check_menu_item_get_active ((GtkCheckMenuItem*) widget);
+	app->setting.ui.skip_existing = active;
+}
+
 static void on_config_completion (GtkWidget* widget, UgtkApp* app)
 {
 	if (widget == app->menubar.edit.completion.disable)
@@ -630,6 +638,8 @@ void ugtk_menubar_init_callback (UgtkMenubar* menubar, UgtkApp* app)
 			G_CALLBACK (on_clipboard_quiet), app);
 	g_signal_connect (menubar->edit.commandline_quiet, "activate",
 			G_CALLBACK (on_commandline_quiet), app);
+	g_signal_connect (menubar->edit.skip_existing, "activate",
+			G_CALLBACK (on_skip_existing), app);
 	g_signal_connect (menubar->edit.completion.disable, "activate",
 			G_CALLBACK (on_config_completion), app);
 	g_signal_connect (menubar->edit.completion.hibernate, "activate",
