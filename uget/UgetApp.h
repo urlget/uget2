@@ -121,7 +121,12 @@ int   uget_app_activate_download (UgetApp* app, UgetNode* dnode);
 int   uget_app_pause_download (UgetApp* app, UgetNode* dnode);
 int   uget_app_queue_download (UgetApp* app, UgetNode* dnode);
 void  uget_app_reset_download_name (UgetApp* app, UgetNode* dnode);
-void  uget_app_use_uri_hash (UgetApp* app);
+
+#ifdef NO_URI_HASH
+#define uget_app_use_uri_hash(app)
+#else
+void    uget_app_use_uri_hash (UgetApp* app);
+#endif
 
 // plugin functions
 // uget_app_find_plugin() return TRUE or FALSE

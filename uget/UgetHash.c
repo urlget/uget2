@@ -39,9 +39,9 @@
 #include <UgetData.h>
 #include <UgetHash.h>
 
-#undef HAVE_GLIB
+#if defined NO_URI_HASH
 
-#if defined HAVE_GLIB
+#elif defined HAVE_GLIB
 
 #define ug_hash_table_destroy    g_hash_table_destroy
 #define ug_hash_table_lookup     g_hash_table_lookup
@@ -313,18 +313,18 @@ ug_hash_table_resize (UgHashTable *hash_table)
   old_size = hash_table->size;
   ug_hash_table_set_shift_from_size (hash_table, hash_table->nnodes * 2);
 
-  new_keys = g_new0 (gpointer, hash_table->size);
+  new_keys = ug_malloc0 (sizeof (void*) * hash_table->size);
   if (hash_table->keys == hash_table->values)
     new_values = new_keys;
   else
-    new_values = g_new0 (gpointer, hash_table->size);
-  new_hashes = g_new0 (guint, hash_table->size);
+    new_values = ug_malloc0 (sizeof (void*) * hash_table->size);
+  new_hashes = ug_malloc0 (sizeof (unsigned int) * hash_table->size);
 
   for (i = 0; i < old_size; i++)
     {
-      guint node_hash = hash_table->hashes[i];
-      guint hash_val;
-      guint step = 0;
+      unsigned int node_hash = hash_table->hashes[i];
+      unsigned int hash_val;
+      unsigned int step = 0;
 
       if (!HASH_IS_REAL (node_hash))
         continue;
@@ -344,10 +344,10 @@ ug_hash_table_resize (UgHashTable *hash_table)
     }
 
   if (hash_table->keys != hash_table->values)
-    g_free (hash_table->values);
+    ug_free (hash_table->values);
 
-  g_free (hash_table->keys);
-  g_free (hash_table->hashes);
+  ug_free (hash_table->keys);
+  ug_free (hash_table->hashes);
 
   hash_table->keys = new_keys;
   hash_table->values = new_values;
@@ -375,7 +375,7 @@ UgHashTable*  ug_hash_table_new (UgHashFunc hash_func, UgCompareFunc compare_fun
   ug_hash_table_set_shift (hash_table, HASH_TABLE_MIN_SHIFT);
   hash_table->nnodes             = 0;
   hash_table->noccupied          = 0;
-  hash_table->hash_func          = hash_func ? hash_func : g_direct_hash;
+  hash_table->hash_func          = hash_func ? hash_func : NULL;
   hash_table->compare_func       = compare_func;
   hash_table->ref_count          = 1;
   hash_table->key_destroy_func   = NULL;
@@ -400,8 +400,10 @@ ug_hash_table_insert_node (UgHashTable* hash_table,
   void*        old_key;
   void*        old_value;
 
-  if (hash_table->keys == hash_table->values && key != value)
-    hash_table->values = g_memdup (hash_table->keys, sizeof (void*) * hash_table->size);
+  if (hash_table->keys == hash_table->values && key != value) {
+    hash_table->values = ug_malloc0 (sizeof (void*) * hash_table->size);
+    memcpy (hash_table->values, hash_table->keys, sizeof (void*) * hash_table->size);
+  }
 
   old_hash = hash_table->hashes[node_index];
   old_key = hash_table->keys[node_index];

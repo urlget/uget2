@@ -874,6 +874,7 @@ void  uget_app_reset_download_name (UgetApp* app, UgetNode* dnode)
 	}
 }
 
+#ifndef NO_URI_HASH
 void  uget_app_use_uri_hash (UgetApp* app)
 {
 	UgetNode*  cnode;
@@ -883,6 +884,7 @@ void  uget_app_use_uri_hash (UgetApp* app)
 	for (cnode = app->real.children;  cnode;  cnode = cnode->next)
 		uget_uri_hash_add_category (app->uri_hash, cnode);
 }
+#endif // NO_URI_HASH
 
 // ----------------------------------------------------------------------------
 // plug-in
@@ -979,10 +981,12 @@ UgetPluginInfo*  uget_app_match_plugin (UgetApp* app, UgetNode* node)
 	}
 
 	// detect file type by plug-in
-	if (matched.count == 0 && matched.info->file_exts &&
-	    matched.info->file_exts[0] == NULL)
-	{
-		return NULL;
+	if (matched.count == 0) {
+		if (matched.info->file_exts    == NULL ||
+		    matched.info->file_exts[0] == NULL)
+	    {
+			return NULL;
+	    }
 	}
 	return matched.info;
 }

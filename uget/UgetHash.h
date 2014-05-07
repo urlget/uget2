@@ -46,6 +46,23 @@ extern "C" {
 // ----------------------------------------------------------------------------
 // URI hash table
 
+#ifdef NO_URI_HASH
+
+#define uget_uri_hash_new()
+#define uget_uri_hash_free(uuhash)
+
+#define uget_uri_hash_find(uuhash, uri)
+#define uget_uri_hash_add(uuhash, uri)      FALSE
+#define uget_uri_hash_remove(uuhash, uri)
+
+#define uget_uri_hash_add_download(uuhash, dnode)
+#define uget_uri_hash_remove_download(uuhash, dnode)
+
+#define uget_uri_hash_add_category(uuhash, cnode)
+#define uget_uri_hash_remove_category(uuhash, cnode)
+
+#else
+
 void* uget_uri_hash_new (void);
 void  uget_uri_hash_free (void* uuhash);
 
@@ -58,6 +75,8 @@ void  uget_uri_hash_remove_download (void* uuhash, UgetNode* dnode);
 
 void  uget_uri_hash_add_category (void* uuhash, UgetNode* cnode);
 void  uget_uri_hash_remove_category (void* uuhash, UgetNode* cnode);
+
+#endif  // End of NO_URI_HASH
 
 #ifdef __cplusplus
 }
