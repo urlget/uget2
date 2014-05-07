@@ -977,6 +977,13 @@ UgetPluginInfo*  uget_app_match_plugin (UgetApp* app, UgetNode* node)
 				break;
 		}
 	}
+
+	// detect file type by plug-in
+	if (matched.count == 0 && matched.info->file_exts &&
+	    matched.info->file_exts[0] == NULL)
+	{
+		return NULL;
+	}
 	return matched.info;
 }
 
