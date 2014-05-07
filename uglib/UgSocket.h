@@ -74,6 +74,7 @@ extern "C" {
 //void  ug_socket_shutdown (SOCKET fd, int how);
 #define ug_socket_shutdown    shutdown
 
+// recv() return  0 if remote disconnected.
 //int   ug_socket_send (SOCKET fd, char* buffer, int buffer_len, int flag);
 //int   ug_socket_recv (SOCKET fd, char* buffer, int buffer_len, int flag);
 #define ug_socket_send        send;

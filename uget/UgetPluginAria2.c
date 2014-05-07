@@ -1095,7 +1095,7 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 
 	// Don't set connection limit if max_connections is 0.
 	if (temp.common->max_connections != 0) {
-//		if (temp.common->mirrors == NULL) {
+		if (temp.common->mirrors == NULL) {
 			// aria2 doesn't accept this value large than 16.
 			if (temp.common->max_connections > 16)
 				temp.common->max_connections = 16;
@@ -1103,8 +1103,7 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 			member->name = "max-connection-per-server";
 			member->type = UG_VALUE_STRING;
 			member->c.string = ug_strdup_printf ("%u", temp.common->max_connections);
-//		}
-#if 0
+		}
 		else if (plugin->uri_type == URI_NET) {
 			// max-concurrent-downloads must >= 1
 			member = ug_value_alloc (value, 1);
@@ -1112,7 +1111,6 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 			member->type = UG_VALUE_STRING;
 			member->c.string = ug_strdup_printf ("%u", temp.common->max_connections);
 		}
-#endif
 	}
 
 	temp.proxy = ug_info_get (&node->info, UgetProxyInfo);
@@ -1229,17 +1227,43 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 
 static int  decide_file_type (UgetPluginAria2* plugin)
 {
-	const char* ext;
+	char  buf[11];
+	union {
+		const char* ext;
+		int   fd;
+		int   path;
+	} temp;
 
-	if (ug_uri_part_file_ext (&plugin->uri_part, &ext) == 0)
-		return URI_UNSUPPORTED;
+	plugin->uri_type = URI_UNSUPPORTED;
+	// handle URI file:///
+	temp.path = plugin->uri_part.path;
+	if (temp.path > 0 && plugin->uri_part.uri[temp.path] != 0)
+		temp.path++;
+	// 
+	temp.fd = ug_open (plugin->uri_part.uri + temp.path,
+			UG_O_READONLY | UG_O_BINARY, UG_S_IREAD);
+	if (temp.fd != -1 && ug_read (temp.fd, buf, 11) == 11) {
+		if (strncmp (buf, "d8:announce", 11) == 0)
+			plugin->uri_type = URI_TORRENT;
+		else {
+			buf[10] = 0;
+			if (strchr (buf, '<'))
+				plugin->uri_type = URI_METALINK;
+		}
+	}
+	ug_close (temp.fd);
 
-	if (ext[0] == 'm' || ext[0] == 'M')
-		plugin->uri_type = URI_METALINK;
-	else if (ext[0] == 't' || ext[0] == 'T')
-		plugin->uri_type = URI_TORRENT;
-	else
-		plugin->uri_type = URI_UNSUPPORTED;
+	if (plugin->uri_type == URI_UNSUPPORTED &&
+	    ug_uri_part_file_ext (&plugin->uri_part, &temp.ext))
+	{
+		if (temp.ext[0] == 'm' || temp.ext[0] == 'M')
+			plugin->uri_type = URI_METALINK;
+		else if (temp.ext[0] == 't' || temp.ext[0] == 'T')
+			plugin->uri_type = URI_TORRENT;
+		else
+			plugin->uri_type = URI_UNSUPPORTED;
+	}
+
 	return plugin->uri_type;
 }
 

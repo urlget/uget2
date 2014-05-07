@@ -167,6 +167,7 @@ int  ug_creat (const char* filename_utf8, int mode);
 int  ug_truncate (int fd, int64_t length);
 #endif
 
+// ug_read() return 0 if end-of-file. return -1 on error.
 #if defined _WIN32 || defined _WIN64
 #  define  ug_close     _close
 #  define  ug_read      _read
