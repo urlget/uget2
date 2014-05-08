@@ -619,6 +619,7 @@ static int  plugin_insert_node (UgetPluginAria2* plugin,
                                 const char* fpath, int is_attachment)
 {
 	UgetNode*  node;
+	char*      ctrl_file;
 
 	for (node = plugin->node->children;  node;  node = node->next) {
 		if (strcmp (node->name, fpath) == 0)
@@ -630,6 +631,16 @@ static int  plugin_insert_node (UgetPluginAria2* plugin,
 	uget_node_prepend (plugin->node, node);
 	if (is_attachment)
 		node->type = UGET_NODE_ATTACHMENT;
+	// aria2 control file
+	ctrl_file = ug_malloc (strlen (fpath) + 6 + 1);  // + ".aria2" + '\0'
+	ctrl_file[0] = 0;
+	strcat (ctrl_file, fpath);
+	strcat (ctrl_file, ".aria2");
+	node = uget_node_new (NULL);
+	node->name = ctrl_file;
+	node->type = UGET_NODE_ATTACHMENT;
+	uget_node_prepend (plugin->node, node);
+
 	return TRUE;
 }
 
@@ -1239,7 +1250,7 @@ static int  decide_file_type (UgetPluginAria2* plugin)
 	temp.path = plugin->uri_part.path;
 	if (temp.path > 0 && plugin->uri_part.uri[temp.path] != 0)
 		temp.path++;
-	// 
+	//
 	temp.fd = ug_open (plugin->uri_part.uri + temp.path,
 			UG_O_READONLY | UG_O_BINARY, UG_S_IREAD);
 	if (temp.fd != -1 && ug_read (temp.fd, buf, 11) == 11) {
