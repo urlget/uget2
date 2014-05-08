@@ -75,7 +75,7 @@ const char* get_user_name (void)
 	return "";
 }
 
-#ifndef __linux__
+#if !(defined __linux__ && defined USE_ABSTRACT_SOCKET)
 const char* get_tmp_dir (void)
 {
 	static char*  tmp_dir = NULL;
@@ -109,7 +109,7 @@ static const char* get_unix_socket_path (int* result)
 #if defined __ANDROID__
 		path = "\0" UGET_IPC_NAME_ABS;
 		path_len = sizeof (UGET_IPC_NAME_ABS);
-#elif defined __linux__
+#elif defined __linux__ && defined USE_ABSTRACT_SOCKET
 		const char* user_name = get_user_name ();
 
 		// abstract socket names (begin with 0) are not null terminated
