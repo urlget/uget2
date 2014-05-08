@@ -761,7 +761,7 @@ void  ugtk_download_form_complete_entry (UgtkDownloadForm* dform)
 	if (upart.host != -1) {
 		// disable changed flags
 		dform->changed.enable = FALSE;
-/*
+#if 0
 		// complete file entry
 		text = gtk_entry_get_text ((GtkEntry*) dform->file_entry);
 		if (text[0] == 0 || dform->changed.file == FALSE) {
@@ -786,17 +786,23 @@ void  ugtk_download_form_complete_entry (UgtkDownloadForm* dform)
 					(temp) ? temp : "");
 			g_free (temp);
 		}
-*/
+#endif
 		// enable changed flags
 		dform->changed.enable = TRUE;
 		// status
 		completed = TRUE;
 	}
+#if 1    // check existing for file name
+	else if (ug_uri_part_file (&upart, &text) > 0) {
+		completed = TRUE;
+	}
+#else    // file extension
 	else if (ug_uri_part_file_ext (&upart, &text) > 0) {
 		// torrent or metalink file path
 		if (*text == 'm' || *text == 'M' || *text == 't' || *text == 'T')
 			completed = TRUE;
 	}
+#endif
 	else if (gtk_widget_is_sensitive (dform->uri_entry) == FALSE)
 		completed = TRUE;
 
