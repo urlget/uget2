@@ -485,6 +485,9 @@ void  ugtk_traveler_set_sorting (UgtkTraveler*  traveler,
 		gtk_tree_view_column_set_sort_indicator (column, FALSE);
 	}
 
+	if (nth_col >= UGTK_NODE_N_COLUMNS)
+		return;
+
 	selected = ugtk_traveler_get_selected (traveler);
 	if (nth_col <= 0)
 		uget_app_set_sorting ((UgetApp*) traveler->app, NULL, FALSE);
