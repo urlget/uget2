@@ -52,11 +52,26 @@ static void register_iface (void)
 	ug_data1_interface_register (&ug_relation_iface);
 }
 
-int  main (void)
+int  main (int argc, char** argv)
 {
 	Ugtk1to2*  u1t2;
+	char*      path;
 	int        n;
 
+	path = g_build_filename (g_get_user_config_dir (),
+			"uGet", NULL);
+	puts ("\n"
+	      "Convert uGet for GTK+ data file from 1.10.x to 2.x" "\n");
+	puts ("Usage:");
+	printf ("  %s [config directory]" "\n\n", argv[0]);
+	printf ("e.g." "\n"
+	        "  %s \"%s\"" "\n\n",
+	        argv[0], path);
+	g_free (path);
+	if (argc == 1)
+		return EXIT_SUCCESS;
+
+	// starting convert
 	register_iface ();
 	u1t2 = ugtk_1to2_new ();
 
