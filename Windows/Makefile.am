@@ -4,8 +4,12 @@ EXTRA_DIST = \
 	msvc/msvc-config.txt   \
 	msvc/stdint.h          \
 	msvc/test-json.vcxproj \
+	msvc/test-jsonrpc.vcxproj  \
+	msvc/test-plugin+app.vcxproj  \
+	msvc/test-uget.vcxproj \
+	msvc/test-uglib.vcxproj  \
+	msvc/uget.sln          \
 	msvc/uget.vcxproj      \
-	msvc/uglib.sln         \
 	msvc/uglib.vcxproj     \
 	msvc/ui-gtk.vcxproj    \
 	CodeBlocks/mingw-config.txt     \
@@ -19,5 +23,7 @@ EXTRA_DIST = \
 	CodeBlocks/test-uglib-cxx.cbp   \
 	CodeBlocks/uget.cbp             \
 	CodeBlocks/uglib.cbp            \
-	CodeBlocks/uglib.workspace
+	CodeBlocks/ui-gtk.cbp           \
+	CodeBlocks/ui-gtk-1to2.cbp      \
+	CodeBlocks/uget.workspace
 
