@@ -24,7 +24,7 @@ noinst_HEADERS = \
 	UgDefine.h   \
 	UgJson.h  UgBuffer.h  UgValue.h  UgEntry.h  UgArray.h  UgList.h  \
 	UgJson-custom.h  UgJsonFile.h  \
-	UgJsonrpc.h  UgJsonrpcSocket.c  UgJsonrpcCurl.h  \
+	UgJsonrpc.h  UgJsonrpcSocket.h  UgJsonrpcCurl.h  \
 	UgData.h  UgRegistry.h  UgSLink.h  UgInfo.h  \
 	UgNode.h  UgThread.h  UgStdio.h  UgUri.h  \
 	UgUtil.h  UgString.h  UgSocket.h  \
