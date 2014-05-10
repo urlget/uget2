@@ -626,12 +626,7 @@ static int  plugin_insert_node (UgetPluginAria2* plugin,
 			return FALSE;
 	}
 
-	node = uget_node_new (NULL);
-	node->name = ug_strdup (fpath);
-	uget_node_prepend (plugin->node, node);
-	if (is_attachment)
-		node->type = UGET_NODE_ATTACHMENT;
-	// aria2 control file
+	// aria2 control file must add first
 	ctrl_file = ug_malloc (strlen (fpath) + 6 + 1);  // + ".aria2" + '\0'
 	ctrl_file[0] = 0;
 	strcat (ctrl_file, fpath);
@@ -640,6 +635,12 @@ static int  plugin_insert_node (UgetPluginAria2* plugin,
 	node->name = ctrl_file;
 	node->type = UGET_NODE_ATTACHMENT;
 	uget_node_prepend (plugin->node, node);
+	// download file
+	node = uget_node_new (NULL);
+	node->name = ug_strdup (fpath);
+	uget_node_prepend (plugin->node, node);
+	if (is_attachment)
+		node->type = UGET_NODE_ATTACHMENT;
 
 	return TRUE;
 }
