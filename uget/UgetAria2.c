@@ -513,7 +513,53 @@ void uget_aria2_set_speed (UgetAria2* uaria2, int dl_speed, int ul_speed)
 	uaria2->limit_count++;
 }
 
-#if defined _WIN32 || defined _WIN64
+#ifdef __ANDROID__
+
+#if 1  // __ANDROID__
+
+int  uget_aria2_launch (UgetAria2* uaria2)
+{
+	return uaria2->launched;
+}
+
+#else
+typedef struct {
+	UgetAria2* uaria2;
+	char       cmd[1];
+} Aria2LaunchData;
+
+static UG_THREAD_RETURN_TYPE aria2_launch_thread (Aria2LaunchData* uald)
+{
+	int  result;
+
+	result = system (uald->cmd);
+	if (result == -1)
+		uald->uaria2->launched = FALSE;
+	else
+		uald->uaria2->launched = TRUE;
+	ug_free (uald);
+	return UG_THREAD_RETURN_VALUE;
+}
+
+int  uget_aria2_launch (UgetAria2* uaria2)
+{
+	Aria2LaunchData* uald;
+	UgThread  thread;
+
+	uald = ug_malloc (sizeof (Aria2LaunchData) +
+			strlen (uaria2->path) + strlen (uaria2->args) + 1);
+	uald->uaria2 = uaria2;
+	uald->cmd[0] = 0;
+	strcat (uald->cmd, uaria2->path);
+	strcat (uald->cmd, " ");
+	strcat (uald->cmd, uaria2->args);
+	ug_thread_create (&thread, (UgThreadFunc)aria2_launch_thread, uald);
+	ug_thread_unjoin (&thread);
+	return uaria2->launched;
+}
+#endif  // __ANDROID__
+
+#elif (defined _WIN32 || defined _WIN64)
 
 int  uget_aria2_launch (UgetAria2* uaria2)
 {
