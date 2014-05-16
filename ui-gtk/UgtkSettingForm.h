@@ -166,6 +166,7 @@ struct UgtkPluginForm
 	GtkToggleButton*    launch;
 	GtkToggleButton*    shutdown;
 	GtkEntry*           uri;
+	GtkEntry*           token;
 	GtkWidget*          local;  // GtkFrame
 	GtkEntry*           path;
 	GtkWidget*          args;   // GtkTextView

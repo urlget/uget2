@@ -548,6 +548,15 @@ void  ugtk_plugin_form_init (struct UgtkPluginForm* psform)
 	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
 	gtk_box_pack_start (hbox, widget, TRUE,  TRUE,  4);
 	psform->uri = (GtkEntry*) widget;
+	// Token entry
+	hbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+	gtk_box_pack_start (vbox, (GtkWidget*) hbox, FALSE, TRUE, 2);
+	widget = gtk_label_new ("RPC authorization secret token");
+	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 2);
+	widget = gtk_entry_new ();
+	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
+	gtk_box_pack_start (hbox, widget, TRUE,  TRUE,  4);
+	psform->token = (GtkEntry*) widget;
 
 	// ------------------------------------------------------------------------
 	// Speed Limits
@@ -645,6 +654,8 @@ void  ugtk_plugin_form_set (struct UgtkPluginForm* psform, UgtkSetting* setting)
 
 	if (setting->aria2.uri)
 		gtk_entry_set_text (psform->uri,  setting->aria2.uri);
+	if (setting->aria2.token)
+		gtk_entry_set_text (psform->token,  setting->aria2.token);
 	if (setting->aria2.path)
 		gtk_entry_set_text (psform->path, setting->aria2.path);
 //	if (setting->aria2.args)
@@ -660,7 +671,7 @@ void  ugtk_plugin_form_get (struct UgtkPluginForm* psform, UgtkSetting* setting)
 {
 	GtkTextIter  iter1;
 	GtkTextIter  iter2;
-	char*        pos;
+	char*        temp;
 
 	setting->plugin_order = gtk_combo_box_get_active ((GtkComboBox*) psform->order);
 
@@ -668,16 +679,22 @@ void  ugtk_plugin_form_get (struct UgtkPluginForm* psform, UgtkSetting* setting)
 	setting->aria2.shutdown = gtk_toggle_button_get_active (psform->shutdown);
 
 	ug_free (setting->aria2.uri);
+	ug_free (setting->aria2.token);
 	ug_free (setting->aria2.path);
 	ug_free (setting->aria2.args);
-	setting->aria2.uri  = ug_strdup (gtk_entry_get_text (psform->uri));
+	setting->aria2.uri = ug_strdup (gtk_entry_get_text (psform->uri));
+	temp = gtk_entry_get_text (psform->token);
+	if (temp[0] == 0)
+		setting->aria2.token = NULL;
+	else
+		setting->aria2.token = ug_strdup (temp);
 	setting->aria2.path = ug_strdup (gtk_entry_get_text (psform->path));
 //	setting->aria2.args = ug_strdup (gtk_entry_get_text (psform->args));
 	gtk_text_buffer_get_start_iter (psform->args_buffer, &iter1);
 	gtk_text_buffer_get_end_iter (psform->args_buffer, &iter2);
 	setting->aria2.args = gtk_text_buffer_get_text (psform->args_buffer, &iter1, &iter2, FALSE);
-	while ( (pos = strchr (setting->aria2.args, '\n')) )
-		*pos = ' ';
+	while ( (temp = strchr (setting->aria2.args, '\n')) )
+		*temp = ' ';
 
 	setting->aria2.limit.upload   = (guint) gtk_spin_button_get_value (psform->upload);
 	setting->aria2.limit.download = (guint) gtk_spin_button_get_value (psform->download);

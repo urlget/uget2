@@ -299,6 +299,8 @@ void  ugtk_app_set_plugin_setting (UgtkApp* app, UgtkSetting* setting)
 		                 setting->aria2.path);
 		uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_ARIA2_ARGUMENT,
 		                 setting->aria2.args);
+		uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_ARIA2_TOKEN,
+		                 setting->aria2.token);
 		uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_ARIA2_LAUNCH,
 		                 (void*)(intptr_t) setting->aria2.launch);
 		uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_ARIA2_SHUTDOWN,

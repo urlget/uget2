@@ -195,7 +195,7 @@ static int  uget_aria2_thread_request (UgetAria2Thread* uathread)
 			ujobj = uathread->queuing.at[index++];
 			uathread->request.at[counts] = ujobj;
 			if (ujobj->id.type != UG_VALUE_NONE) {
-				ujobj = uget_aria2_alloc (uaria2, FALSE);
+				ujobj = uget_aria2_alloc (uaria2, FALSE, FALSE);
 				*(void**) ug_array_alloc (&uathread->response, 1) = ujobj;
 			}
 		}
@@ -221,9 +221,10 @@ static UgJsonrpcObject*  add_limit_request (UgetAria2* uaria2)
 	UgValue*          vobj;
 	UgValue*          value;
 
-	jobj = uget_aria2_alloc (uaria2, TRUE);
+	jobj = uget_aria2_alloc (uaria2, TRUE, TRUE);
 	jobj->method_static = "aria2.changeGlobalOption";
-	ug_value_init_array (&jobj->params, 2);
+	if (jobj->params.type == UG_VALUE_NONE)
+		ug_value_init_array (&jobj->params, 2);
 	vobj = ug_value_alloc (&jobj->params, 1);
 	ug_value_init_object (vobj, 2);
 
@@ -254,7 +255,7 @@ static UgJsonrpcObject*  add_speed_request (UgetAria2* uaria2)
 {
 	UgJsonrpcObject*  jobj;
 
-	jobj = uget_aria2_alloc (uaria2, TRUE);
+	jobj = uget_aria2_alloc (uaria2, TRUE, TRUE);
 	jobj->method_static = "aria2.getGlobalStat";
 
 	uget_aria2_request (uaria2, jobj);
@@ -267,7 +268,7 @@ static void  recycle_speed_request (UgetAria2* uaria2, UgJsonrpcObject* jreq)
 	UgValue*          value;
 
 	jres = uget_aria2_respond (uaria2, jreq);
-	if (jres) {
+	if (jres && jres->error.code == 0) {
 		ug_value_sort_name (&jres->result);
 		value = ug_value_find_name (&jres->result, "downloadSpeed");
 		uaria2->speed.download = ug_value_get_int (value);
@@ -294,7 +295,7 @@ static UG_THREAD_RETURN_TYPE  uget_aria2_thread (UgetAria2Thread* uathread)
 		if (uathread->finalized) {
 			// shutdown request
 			if (uaria2->shutdown && jreq_shutdown == NULL) {
-				jreq_shutdown = uget_aria2_alloc (uaria2, TRUE);
+				jreq_shutdown = uget_aria2_alloc (uaria2, TRUE, TRUE);
 				jreq_shutdown->method_static = "aria2.shutdown";
 				uget_aria2_request (uaria2, jreq_shutdown);
 			}
@@ -374,7 +375,7 @@ UgetAria2* uget_aria2_new ()
 	uaria2->ref_count = 1;
 	uaria2->batch_len = RPC_BATCH_LEN;
 	uaria2->polling_interval = RPC_INTERVAL;
-	uaria2->speed_required = TRUE;
+	uaria2->speed_required = FALSE;
 	uaria2->limit_required = FALSE;
 	uaria2->uri = ug_strdup (RPC_URI);
 	uaria2->path = ug_strdup (ARIA2_PATH);
@@ -494,7 +495,7 @@ void uget_aria2_set_path (UgetAria2* uaria2, const char* path)
 {
 //	ug_mutex_lock (&uaria2->mutex);
 	ug_free (uaria2->path);
-	uaria2->path = ug_strdup (path);
+	uaria2->path = (path) ? ug_strdup (path) : NULL;
 //	ug_mutex_unlock (&uaria2->mutex);
 }
 
@@ -502,8 +503,16 @@ void uget_aria2_set_args (UgetAria2* uaria2, const char* args)
 {
 //	ug_mutex_lock (&uaria2->mutex);
 	ug_free (uaria2->args);
-	uaria2->args = ug_strdup (args);
+	uaria2->args = (args) ? ug_strdup (args) : NULL;
 //	ug_mutex_unlock (&uaria2->mutex);
+}
+
+void uget_aria2_set_token (UgetAria2* uaria2, const char* token)
+{
+	ug_mutex_lock (&uaria2->mutex);
+	ug_free (uaria2->token);
+	uaria2->token = (token) ? ug_strdup (token) : NULL;
+	ug_mutex_unlock (&uaria2->mutex);
 }
 
 void uget_aria2_set_speed (UgetAria2* uaria2, int dl_speed, int ul_speed)
@@ -651,7 +660,7 @@ void uget_aria2_shutdown (UgetAria2* uaria2)
 	UgJsonrpcObject*  jreq;
 	UgJsonrpcObject*  jres;
 
-	jreq = uget_aria2_alloc (uaria2, TRUE);
+	jreq = uget_aria2_alloc (uaria2, TRUE, TRUE);
 	jreq->method_static = "aria2.shutdown";
 	uget_aria2_request (uaria2, jreq);
 	jres = uget_aria2_respond (uaria2, jreq);
@@ -659,9 +668,10 @@ void uget_aria2_shutdown (UgetAria2* uaria2)
 	uget_aria2_recycle (uaria2, jres);
 }
 
-UgJsonrpcObject*  uget_aria2_alloc (UgetAria2* uaria2, int has_response)
+UgJsonrpcObject*  uget_aria2_alloc (UgetAria2* uaria2, int is_request, int has_response)
 {
 	UgJsonrpcObject* result;
+	UgValue*         rpc_token = NULL;
 
 	ug_mutex_lock (&uaria2->mutex);
 	if (uaria2->recycled.length == 0)
@@ -669,6 +679,21 @@ UgJsonrpcObject*  uget_aria2_alloc (UgetAria2* uaria2, int has_response)
 	else
 		result = uaria2->recycled.at[--uaria2->recycled.length];
 	ug_mutex_unlock (&uaria2->mutex);
+
+	// RPC authorization secret token (aria2 v1.18.4)
+	if (is_request) {
+		ug_mutex_lock (&uaria2->mutex);
+		if (uaria2->token) {
+			ug_value_init_array (&result->params, 4);
+			rpc_token = ug_value_alloc (&result->params, 1);
+			rpc_token->type = UG_VALUE_STRING;
+			rpc_token->c.string = ug_malloc (strlen (uaria2->token) + 7); // "token:"
+			rpc_token->c.string[0] = 0;
+			strcat (rpc_token->c.string, "token:");
+			strcat (rpc_token->c.string, uaria2->token);
+		}
+		ug_mutex_unlock (&uaria2->mutex);
+	}
 
 	if (has_response)
 		result->id.type = UG_VALUE_INT;
@@ -728,3 +753,22 @@ void  uget_aria2_recycle (UgetAria2* uaria2, UgJsonrpcObject* jobject)
 	}
 }
 
+UgValue*  uget_aria2_clear_token (UgJsonrpcObject* jobject)
+{
+	UgValue*  rpc_token;
+
+	if (jobject->params.type == UG_VALUE_ARRAY) {
+		rpc_token = jobject->params.c.array->at;
+		if (rpc_token->type == UG_VALUE_STRING && 
+			strncmp (rpc_token->c.string, "token:", 6) == 0)
+		{
+			ug_free (rpc_token->c.string);
+			rpc_token->c.string = NULL;
+			rpc_token->type = UG_VALUE_NONE;
+			return rpc_token + 1;
+		}
+		return jobject->params.c.array->at;
+	}
+
+	return NULL;
+}

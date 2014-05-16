@@ -58,6 +58,7 @@ typedef enum {
 //	UGET_PLUGIN_ARIA2_LOCAL,     // set parameter = (int* )
 	UGET_PLUGIN_ARIA2_PATH,      // set parameter = (char* )
 	UGET_PLUGIN_ARIA2_ARGUMENT,  // set parameter = (char* )
+	UGET_PLUGIN_ARIA2_TOKEN,     // set parameter = (char* )
 	UGET_PLUGIN_ARIA2_LAUNCH,    // get/set parameter = (int* )
 	UGET_PLUGIN_ARIA2_SHUTDOWN,  // set parameter = (int* )
 } UgetPluginAria2Code;

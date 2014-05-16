@@ -90,7 +90,6 @@ struct UgetAria2
 	uint8_t       connect_fail:1;
 	uint8_t       speed_required:1;
 	uint8_t       limit_required:1;
-	uint8_t       local:1;
 	uint8_t       launched:1;
 	uint8_t       shutdown:1;
 	uint8_t       uri_changed:1;
@@ -99,6 +98,7 @@ struct UgetAria2
 	char*     uri;
 	char*     path;
 	char*     args;
+	char*     token;  // --rpc-secret=<TOKEN>
 
 	struct {
 		int   download;
@@ -119,6 +119,7 @@ void uget_aria2_stop_thread  (UgetAria2* uaria2);
 void uget_aria2_set_uri  (UgetAria2* uaria2, const char* uri);
 void uget_aria2_set_path (UgetAria2* uaria2, const char* path);
 void uget_aria2_set_args (UgetAria2* uaria2, const char* args);
+void uget_aria2_set_token (UgetAria2* uaria2, const char* token);
 void uget_aria2_set_speed (UgetAria2* uaria2, int dl_speed, int ul_speed);
 
 int  uget_aria2_launch   (UgetAria2* aria2);
@@ -126,10 +127,11 @@ void uget_aria2_shutdown (UgetAria2* aria2);
 
 // If you want to get response, set request->id.type = UG_VALUE_INT
 // If you don't need response, set request->id.type = UG_VALUE_NONE
-UgJsonrpcObject*  uget_aria2_alloc   (UgetAria2* aria2, int has_response);
+UgJsonrpcObject*  uget_aria2_alloc   (UgetAria2* aria2, int is_request, int has_response);
 void              uget_aria2_request (UgetAria2* aria2, UgJsonrpcObject* request);
 UgJsonrpcObject*  uget_aria2_respond (UgetAria2* aria2, UgJsonrpcObject* request);
 void              uget_aria2_recycle (UgetAria2* aria2, UgJsonrpcObject* jobject);
+UgValue*          uget_aria2_clear_token (UgJsonrpcObject* jobject);
 
 #ifdef __cplusplus
 }

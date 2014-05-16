@@ -127,6 +127,43 @@ UgValue* ug_value_alloc (UgValue* uvalue, int nValue)
 	return uvalue;
 }
 
+#if 0
+UgValue* ug_value_alloc_front (UgValue* uvalue, int nValue)
+{
+	int       len;
+	UgValue*  value;
+	UgValueArray*  varray;
+
+//	if (uvalue->type != UG_VALUE_ARRAY)
+//		return NULL;
+
+	varray = uvalue->c.array;
+	len = varray->length + nValue;
+	if (len > varray->allocated) {
+		len *= 2;
+//		if (len < 16)
+//			len = 16;
+		varray->allocated = len + 1;
+		uvalue->c.array = ug_realloc (varray,
+				sizeof (UgValueArray) + sizeof (UgValue[1]) * len);
+		varray = uvalue->c.array;
+	}
+
+	memmove (varray->at + nValue, varray->at,
+			sizeof (UgValue) * varray->length);
+	varray->length += nValue;
+
+	value = varray->at;
+	while (nValue--) {
+		value->name = NULL;
+		value->type = UG_VALUE_NONE;
+//		value->c.pointer = NULL;
+		value++;
+	}
+	return varray->at;
+}
+#endif
+
 UgValue* ug_value_find_name (UgValue* value, const char* name)
 {
 	UgValue  temp;

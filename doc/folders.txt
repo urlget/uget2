@@ -1,3 +1,5 @@
+Source code folders:
+
 uglib (LGPL)
 This is low-level library for uget.
 It based on Standard C library, POSIX/Windows threads, Socket API, and libcurl.

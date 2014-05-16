@@ -347,12 +347,12 @@ void test_uget_aria2_rpc_object (UgetAria2* uaria2)
 	UgJsonrpcObject*  res2;
 
 	// request 1
-	req1 = uget_aria2_alloc (uaria2, TRUE);
+	req1 = uget_aria2_alloc (uaria2, TRUE, TRUE);
 	req1->method_static = "aria2.getGlobalStat";
 	uget_aria2_request (uaria2, req1);
 
 	// request 2
-	req2 = uget_aria2_alloc (uaria2, TRUE);
+	req2 = uget_aria2_alloc (uaria2, TRUE, TRUE);
 	req2->method_static = "aria2.changeGlobalOption";
 	ug_value_init_array (&req2->params, 2);
 	vobj = ug_value_alloc (&req2->params, 1);

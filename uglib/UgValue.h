@@ -116,7 +116,9 @@ void  ug_value_init_object (UgValue* value, int nMembers);
 
 // You can use this if UgValue.type == UG_VALUE_ARRAY or UG_VALUE_OBJECT.
 UgValue* ug_value_alloc (UgValue* uvalue, int nValue);
-
+#if 0
+UgValue* ug_value_alloc_front (UgValue* uvalue, int nValue);
+#endif
 
 // void ug_value_sort (UgValue* value, UgCompareFunc compare);
 #define ug_value_sort(varray, compareFunc)   \

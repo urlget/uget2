@@ -207,6 +207,7 @@ struct UgtkSetting
 		// aria2 options
 		int    launch;
 		int    shutdown;
+		char*  token;
 		char*  path;
 		char*  args;
 		char*  uri;

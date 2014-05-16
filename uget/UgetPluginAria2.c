@@ -186,6 +186,11 @@ static UgetResult  global_set (int option, void* parameter)
 			uget_aria2_set_args (global.data, parameter);
 		break;
 
+	case UGET_PLUGIN_ARIA2_TOKEN:
+		if (parameter)
+			uget_aria2_set_token (global.data, parameter);
+		break;
+
 	case UGET_PLUGIN_ARIA2_LAUNCH:
 		if (parameter != NULL)
 			if (uget_aria2_launch (global.data) == FALSE)
@@ -743,6 +748,13 @@ restart_thread:
 			plugin->node->state |= UGET_STATE_ERROR;
 			goto exit;
 		}
+		if (res->error.code) {
+			uget_plugin_post ((UgetPlugin*)plugin,
+					uget_event_new_error(0, res->error.message));
+			uget_aria2_recycle (global.data, res);
+			plugin->node->state |= UGET_STATE_ERROR;
+			goto exit;
+		}
 
 		// parse status response --- start ---
 		ug_value_sort_name (&res->result);
@@ -823,14 +835,15 @@ restart_thread:
 	// update status --- end ---
 
 	if (plugin->gids.length) {
-		req = uget_aria2_alloc (global.data, TRUE);
+		req = uget_aria2_alloc (global.data, TRUE, TRUE);
 		req->method_static = "aria2.remove";
 		value = &req->params;
-		ug_value_init_array (value, plugin->gids.length);
-		ug_value_alloc (value, plugin->gids.length);
-		for (index = 0;  index < plugin->gids.length;  index++) {
-			value->c.array->at[index].type = UG_VALUE_STRING;
-			value->c.array->at[index].c.string = ug_strdup (plugin->gids.at[index]);
+		if (value->type == UG_VALUE_NONE)
+			ug_value_init_array (value, plugin->gids.length);
+		value = ug_value_alloc (value, plugin->gids.length);
+		for (index = 0;  index < plugin->gids.length;  index++, value++) {
+			value->type = UG_VALUE_STRING;
+			value->c.string = ug_strdup (plugin->gids.at[index]);
 		}
 		uget_aria2_request (global.data, req);
 		res = uget_aria2_respond (global.data, req);
@@ -870,9 +883,10 @@ static UgJsonrpcObject*  alloc_speed_request (UgetPluginAria2* plugin)
 	UgValue*          options;
 	UgValue*          value;
 
-	object = uget_aria2_alloc (global.data, TRUE);
+	object = uget_aria2_alloc (global.data, TRUE, TRUE);
 	object->method_static = "aria2.changeOption";
-	ug_value_init_array (&object->params, 2);
+	if (object->params.type == UG_VALUE_NONE)
+		ug_value_init_array (&object->params, 2);
 	// gid
 	value = ug_value_alloc (&object->params, 1);
 	value->type = UG_VALUE_STRING;
@@ -898,8 +912,9 @@ static void  recycle_speed_request (UgJsonrpcObject* object)
 {
 	UgValue*  value;
 
+	value = uget_aria2_clear_token (object);
 	// params[0] is gid
-	value = object->params.c.array->at;
+//	value = object->params.c.array->at;
 	value->type = UG_VALUE_NONE;
 	value->c.array = NULL;
 	// ready to recycle it
@@ -913,10 +928,11 @@ static UgJsonrpcObject*  alloc_status_request (UgValue** gid)
 	UgValue*  keys;
 
 	// prepare JSON-RPC object for "aria2.tellStatus"
-	object = uget_aria2_alloc (global.data, TRUE);
+	object = uget_aria2_alloc (global.data, TRUE, TRUE);
 	object->method_static = "aria2.tellStatus";
 	params = &object->params;
-	ug_value_init_array (params, 2);
+	if (params->type == UG_VALUE_NONE)
+		ug_value_init_array (params, 2);
 	// gid
 	gid[0] = ug_value_alloc (params, 1);
 	gid[0]->type = UG_VALUE_STRING;
@@ -933,12 +949,14 @@ static void  recycle_status_request (UgJsonrpcObject* object)
 {
 	UgValue*  value;
 
+	value = uget_aria2_clear_token (object);
 	// params[0] is gid
-	value = object->params.c.array->at;
+//	value = object->params.c.array->at;
 	value->type = UG_VALUE_NONE;
 	value->c.array = NULL;
 	// params[1] is keys of status
-	value = object->params.c.array->at + 1;
+//	value = object->params.c.array->at + 1;
+	value++;
 	value->type = UG_VALUE_NONE;
 	value->c.array = NULL;
 	// ready to recycle it
@@ -1000,8 +1018,9 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 		}
 	}
 
-	request = uget_aria2_alloc (global.data, TRUE);
-	ug_value_init_array (&request->params, 3);
+	request = uget_aria2_alloc (global.data, TRUE, TRUE);
+	if (request->params.type == UG_VALUE_NONE)
+		ug_value_init_array (&request->params, 3);
 
 	switch (plugin->uri_type) {
 	case URI_NET:

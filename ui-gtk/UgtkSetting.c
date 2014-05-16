@@ -242,6 +242,8 @@ static const UgEntry  UgtkPluginAria2SettingEntry[] =
 			UG_ENTRY_BOOL,  NULL,   NULL},
 	{"shutdown",  offsetof (struct UgtkPluginAria2Setting, shutdown),
 			UG_ENTRY_BOOL,  NULL,   NULL},
+	{"token",     offsetof (struct UgtkPluginAria2Setting, token),
+			UG_ENTRY_STRING,  NULL,   NULL},
 	{"path",      offsetof (struct UgtkPluginAria2Setting, path),
 			UG_ENTRY_STRING,  NULL,   NULL},
 	{"arguments", offsetof (struct UgtkPluginAria2Setting, args),
