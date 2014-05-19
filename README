@@ -1,17 +1,26 @@
-What's changed in uGet2: (2014-05-05)
+uGet 1.93:
+1. aria2 plug-in: support RPC authorization secret token (Aria2 v1.8.4 new feature)
+2. update uGet RSS every 30 minutes.
+
+uGet 1.91:
+First uGet2 beta version.
+
+----------
+
+What's changed in uGet2: (2014-05-18)
 
 Part 1. curl plug-in:
 1. support multi-thread downloading.
 2. support mirrors.
 3. support aria2 control file format ver 1 (aria2 v1.4.1).
-4. It can create a large file before downloading.
+4. It can allocate file by its size before downloading.
 5. uGet1's downloaded file can't be resumed by uGet2. It is not compatiable.
 
 Part 2. aria2 plug-in:
-1. support JSON-RPC batch request to improve remote aria2 downloading.
-2. support aria2 "--out" argument to set output filename.
-3. better BitTorrent and metalink support.
-4. support RPC authorization secret token (Aria2 v1.8.4+)
+1. better BitTorrent and metalink support.
+2. support JSON-RPC batch request to improve remote aria2 downloading.
+3. support aria2 "--out" argument to set output filename.
+4. support RPC authorization secret token (Aria2 v1.8.4 new feature)
 
 Part 3. Application:
 1. Every category has it's data file. (file format is JSON)
@@ -19,9 +28,8 @@ Part 3. Application:
 3. Auto classifier by file extension, host, and scheme.
 4. User can change category order.
 5. All data files use JSON format. (not compatiable with uGet 1)
-6. All plug-ins can do global speed control.
+6. Global speed control can affect all plug-ins.
 7. Skip existing URLs from clipboard and command-line.
-8. Banner can show uGet RSS message.
 
 Part 4. GTK+ User interface:
 1. New setting dialog.
@@ -30,9 +38,11 @@ Part 4. GTK+ User interface:
 4. Program can launch custom command when download complete.
 5. Remove launching app for specified file types.
 6. Don't notify completed if error occurs. It will notify error.
-7. provide uget-1to2 (or uget-gtk-1to2) to convert setting from old uGet files.
+7. Banner can show uGet RSS message.
+8. provide uget-1to2 (or uget-gtk-1to2) to convert setting from old uGet files.
 
-Part 5. Future version
+Part 5. Future version: (After uGet 2.0)
 1. Database for Downloaded URIs
 2. RSS Monitor
 3. Scheduler Per Category
+

@@ -257,7 +257,7 @@ void  ugtk_bandwidth_form_init (struct UgtkBandwidthForm* bwform)
 
 	box = (GtkBox*) gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 	bwform->self = (GtkWidget*) box;
-	widget = gtk_label_new ("These will affect all plug-ins.");
+	widget = gtk_label_new (_("These will affect all plug-ins."));
 	gtk_box_pack_start (box, widget, FALSE, FALSE, 2);
 	widget = gtk_label_new ("");
 	gtk_box_pack_start (box, widget, FALSE, FALSE, 2);
@@ -542,7 +542,7 @@ void  ugtk_plugin_form_init (struct UgtkPluginForm* psform)
 	// URI entry
 	hbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_box_pack_start (vbox, (GtkWidget*) hbox, FALSE, TRUE, 2);
-	widget = gtk_label_new ("URI");
+	widget = gtk_label_new (_("URI"));
 	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 2);
 	widget = gtk_entry_new ();
 	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
@@ -551,7 +551,7 @@ void  ugtk_plugin_form_init (struct UgtkPluginForm* psform)
 	// Token entry
 	hbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_box_pack_start (vbox, (GtkWidget*) hbox, FALSE, TRUE, 2);
-	widget = gtk_label_new ("RPC authorization secret token");
+	widget = gtk_label_new (_("RPC authorization secret token"));
 	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 2);
 	widget = gtk_entry_new ();
 	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);

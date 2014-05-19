@@ -381,6 +381,9 @@ static UG_THREAD_RETURN_TYPE  uget_rss_thread (UgetRss* urss)
 	UgetRssItem*  item;
 
 	curl = curl_easy_init();
+	// disable peer SSL certificate verification
+	curl_easy_setopt (curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+	// others
 	curl_easy_setopt (curl, CURLOPT_NOSIGNAL, 1);
 	curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION,
 			(curl_write_callback) uget_rss_curl_write);
