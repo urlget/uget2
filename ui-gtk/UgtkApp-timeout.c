@@ -83,10 +83,10 @@ void  ugtk_app_init_timeout (UgtkApp* app)
 			(GSourceFunc) ugtk_app_timeout_queuing, app, NULL);
 	// 2 seconds
 	g_timeout_add_seconds_full (G_PRIORITY_DEFAULT_IDLE, 2,
-			(GSourceFunc) ugtk_app_timeout_rss, app, NULL);
-	// 2 seconds
-	g_timeout_add_seconds_full (G_PRIORITY_DEFAULT_IDLE, 2,
 			(GSourceFunc) ugtk_app_timeout_clipboard, app, NULL);
+	// 3 seconds
+	g_timeout_add_seconds_full (G_PRIORITY_DEFAULT_IDLE, 3,
+			(GSourceFunc) ugtk_app_timeout_rss, app, NULL);
 	// 1 minutes
 	g_timeout_add_seconds_full (G_PRIORITY_DEFAULT_IDLE, 60,
 			(GSourceFunc) ugtk_app_timeout_autosave, app, NULL);
@@ -557,13 +557,27 @@ exit:
 // ----------------------------------------------------------------------------
 // RSS
 
+static gboolean  ugtk_app_timeout_rss_update (UgtkApp* app)
+{
+	uget_rss_update (&app->rss_buildin, FALSE);
+	// check RSS ready every 3 seconds
+	g_timeout_add_seconds_full (G_PRIORITY_DEFAULT_IDLE, 3,
+			(GSourceFunc) ugtk_app_timeout_rss, app, NULL);
+	// return FALSE if the source should be removed.
+	return FALSE;
+}
+
 static gboolean  ugtk_app_timeout_rss (UgtkApp* app)
 {
-	static int   count = 0;
-
-	if (app->rss_buildin.updating == FALSE && app->rss_buildin.n_updated > 0) {
-		ugtk_banner_show_rss (&app->banner, &app->rss_buildin);
-		app->rss_buildin.n_updated = 0;
+	if (app->rss_buildin.updating == FALSE) {
+		if (app->rss_buildin.n_updated > 0) {
+			ugtk_banner_show_rss (&app->banner, &app->rss_buildin);
+			app->rss_buildin.n_updated = 0;
+		}
+		// update RSS every 30 minutes
+		g_timeout_add_seconds_full (G_PRIORITY_DEFAULT_IDLE, 60 * 30,
+				(GSourceFunc) ugtk_app_timeout_rss_update, app, NULL);
+		// return FALSE if the source should be removed.
 		return FALSE;
 	}
 	return TRUE;
