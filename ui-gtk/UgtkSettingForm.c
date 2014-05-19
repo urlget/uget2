@@ -39,6 +39,8 @@
 
 #include <glib/gi18n.h>
 
+static void remove_line_breaks (gchar* buffer, gint len);
+
 // ----------------------------------------------------------------------------
 // UgtkClipboardForm
 //
@@ -131,6 +133,8 @@ void  ugtk_clipboard_form_get (struct UgtkClipboardForm* csform, UgtkSetting* se
 	setting->clipboard.monitor = gtk_toggle_button_get_active (csform->monitor);
 	setting->clipboard.quiet = gtk_toggle_button_get_active (csform->quiet);
 	setting->clipboard.nth_category = gtk_spin_button_get_value_as_int (csform->nth_spin);
+	// remove line break
+	remove_line_breaks (setting->clipboard.pattern, -1);
 }
 
 // ----------------------------------------------------------------------------
@@ -671,7 +675,7 @@ void  ugtk_plugin_form_get (struct UgtkPluginForm* psform, UgtkSetting* setting)
 {
 	GtkTextIter  iter1;
 	GtkTextIter  iter2;
-	char*        temp;
+	const char*  token;
 
 	setting->plugin_order = gtk_combo_box_get_active ((GtkComboBox*) psform->order);
 
@@ -683,20 +687,35 @@ void  ugtk_plugin_form_get (struct UgtkPluginForm* psform, UgtkSetting* setting)
 	ug_free (setting->aria2.path);
 	ug_free (setting->aria2.args);
 	setting->aria2.uri = ug_strdup (gtk_entry_get_text (psform->uri));
-	temp = gtk_entry_get_text (psform->token);
-	if (temp[0] == 0)
+	token = gtk_entry_get_text (psform->token);
+	if (token[0] == 0)
 		setting->aria2.token = NULL;
 	else
-		setting->aria2.token = ug_strdup (temp);
+		setting->aria2.token = ug_strdup (token);
 	setting->aria2.path = ug_strdup (gtk_entry_get_text (psform->path));
 //	setting->aria2.args = ug_strdup (gtk_entry_get_text (psform->args));
 	gtk_text_buffer_get_start_iter (psform->args_buffer, &iter1);
 	gtk_text_buffer_get_end_iter (psform->args_buffer, &iter2);
 	setting->aria2.args = gtk_text_buffer_get_text (psform->args_buffer, &iter1, &iter2, FALSE);
-	while ( (temp = strchr (setting->aria2.args, '\n')) )
-		*temp = ' ';
+	remove_line_breaks (setting->aria2.args, -1);
 
 	setting->aria2.limit.upload   = (guint) gtk_spin_button_get_value (psform->upload);
 	setting->aria2.limit.download = (guint) gtk_spin_button_get_value (psform->download);
 }
 
+// ----------------------------------------------------------------------------
+
+static void remove_line_breaks (gchar* buffer, gint len)
+{
+	gchar*  cur;
+	gchar*  end;
+
+	if (len == -1)
+		len = strlen (buffer);
+	cur = buffer;
+	end = buffer + len;
+	while ( (cur = strchr (cur, '\n')) ) {
+		memmove (cur, cur + 1, end - cur);
+		end--;
+	}	
+}
