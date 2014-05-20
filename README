@@ -1,3 +1,7 @@
+uGet 1.95:
+1. curl plug-in: Program must get file timestamp even if file has existed.
+2. Remove line breaks from clipboard pattern and aria2 arguments.
+
 uGet 1.93:
 1. aria2 plug-in: support RPC authorization secret token (Aria2 v1.8.4 new feature)
 2. update uGet RSS every 30 minutes.

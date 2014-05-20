@@ -44,3 +44,8 @@ noinst_HEADERS = \
 	UgetPluginAria2.h  \
 	UgetPluginCurl.h
 
+if WITH_LIBPWMD
+libuget_a_CFLAGS += @LIBPWMD_CFLAGS@
+libuget_a_SOURCES += pwmd.c
+noinst_HEADERS += pwmd.h
+endif
