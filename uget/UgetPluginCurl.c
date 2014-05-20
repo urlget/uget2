@@ -201,6 +201,7 @@ static void plugin_init (UgetPluginCurl* plugin)
 		global_ref ();
 
 	ug_list_init (&plugin->seg.list);
+	plugin->file.time = -1;
 	plugin->synced = TRUE;
 	plugin->stopped = TRUE;
 }
@@ -783,7 +784,9 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 static int prepare_existed (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 {
 	double  fsize;
+	long    ftime;
 
+	// file.size
 	if (plugin->file.size) {
 		curl_easy_getinfo (ugcurl->curl,
 				CURLINFO_CONTENT_LENGTH_DOWNLOAD, &fsize);
@@ -794,6 +797,11 @@ static int prepare_existed (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 				plugin->base.download = uget_a2cf_completed (&plugin->aria2.ctrl);
 			return FALSE;
 		}
+	}
+	// file.time
+	if (plugin->file.time == -1) {
+		curl_easy_getinfo (ugcurl->curl, CURLINFO_FILETIME, &ftime);
+		plugin->file.time = (time_t) ftime;
 	}
 
 	if (uget_curl_open_file (ugcurl, plugin->file.path))
@@ -820,10 +828,7 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 
 	// file.time
 	curl_easy_getinfo (ugcurl->curl, CURLINFO_FILETIME, &temp.ftime);
-	if (temp.ftime == -1)
-		plugin->file.time = time (NULL);
-	else
-		plugin->file.time = (time_t) temp.ftime;
+	plugin->file.time = (time_t) temp.ftime;
 	// file.size
 	curl_easy_getinfo (ugcurl->curl,
 			CURLINFO_CONTENT_LENGTH_DOWNLOAD, &temp.fsize);
