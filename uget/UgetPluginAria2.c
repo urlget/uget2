@@ -1126,22 +1126,19 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 
 	// Don't set connection limit if max_connections is 0.
 	if (temp.common->max_connections != 0) {
-		if (temp.common->mirrors == NULL) {
-			// aria2 doesn't accept this value large than 16.
-			if (temp.common->max_connections > 16)
-				temp.common->max_connections = 16;
-			member = ug_value_alloc (value, 1);
-			member->name = "max-connection-per-server";
-			member->type = UG_VALUE_STRING;
-			member->c.string = ug_strdup_printf ("%u", temp.common->max_connections);
-		}
-		else if (plugin->uri_type == URI_NET) {
-			// max-concurrent-downloads must >= 1
-			member = ug_value_alloc (value, 1);
-			member->name = "max-concurrent-downloads";
-			member->type = UG_VALUE_STRING;
-			member->c.string = ug_strdup_printf ("%u", temp.common->max_connections);
-		}
+		// aria2 doesn't accept "max-connection-per-server" large than 16.
+		member = ug_value_alloc (value, 1);
+		member->name = "max-connection-per-server";
+		member->type = UG_VALUE_STRING;
+		member->c.string = ug_strdup_printf ("%u",
+				(temp.common->max_connections <= 16) ?
+				 temp.common->max_connections : 16);
+		// split
+		member = ug_value_alloc (value, 1);
+		member->name = "split";
+		member->type = UG_VALUE_STRING;
+		member->c.string = ug_strdup_printf ("%u",
+				temp.common->max_connections);
 	}
 
 	temp.proxy = ug_info_get (&node->info, UgetProxyInfo);
