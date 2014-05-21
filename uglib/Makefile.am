@@ -30,3 +30,5 @@ noinst_HEADERS = \
 	UgUtil.h  UgString.h  UgSocket.h  \
 	UgHtml.h  UgHtmlEntry.h  UgHtmlFilter.h  \
 	UgOption.h
+
+EXTRA_DIST = Android.mk
