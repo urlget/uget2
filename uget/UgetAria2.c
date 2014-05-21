@@ -236,6 +236,11 @@ static UgJsonrpcObject*  add_limit_request (UgetAria2* uaria2)
 	value->name = "max-overall-upload-limit";
 	value->type = UG_VALUE_STRING;
 	value->c.string = ug_strdup_printf ("%dk", uaria2->limit.upload / 1024);
+	// max-concurrent-downloads must >= 1
+//	value = ug_value_alloc (vobj, 1);
+//	value->name = "max-concurrent-downloads";
+//	value->type = UG_VALUE_STRING;
+//	value->c.string = ug_strdup_printf ("%u", uaria2->limit.connections);
 
 	uget_aria2_request (uaria2, jobj);
 	return jobj;
