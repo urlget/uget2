@@ -1,6 +1,9 @@
 uGet 1.95:
 1. curl plug-in: Program must get file timestamp even if file has existed.
-2. Remove line breaks from clipboard pattern and aria2 arguments.
+2. aria2 plug-in: "max-concurrent-downloads" is global option, don't use it with gid.
+3. aria2 plug-in: add "split" option to avoid less connections if user specify mirrors.
+4. Remove line breaks from setting of clipboard monitor and aria2 arguments.
+5. Add missing Android.mk files.
 
 uGet 1.93:
 1. aria2 plug-in: support RPC authorization secret token (Aria2 v1.8.4 new feature)
@@ -11,7 +14,11 @@ First uGet2 beta version.
 
 ----------
 
-What's changed in uGet2: (2014-05-18)
+Browse Git: http://sourceforge.net/p/urlget/uget2/ci/master/tree/
+
+----------
+
+What's changed in uGet2: (2014-05-22)
 
 Part 1. curl plug-in:
 1. support multi-thread downloading.
@@ -25,6 +32,7 @@ Part 2. aria2 plug-in:
 2. support JSON-RPC batch request to improve remote aria2 downloading.
 3. support aria2 "--out" argument to set output filename.
 4. support RPC authorization secret token (Aria2 v1.8.4 new feature)
+5. add "split" option to avoid less connections if user specify mirrors.
 
 Part 3. Application:
 1. Every category has it's data file. (file format is JSON)

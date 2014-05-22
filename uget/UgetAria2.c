@@ -50,7 +50,7 @@
 #endif // _WIN32 || _WIN64
 
 #define RPC_URI              "http://localhost:6800/jsonrpc"
-#define RPC_BATCH_LEN        4
+#define RPC_BATCH_LEN        5
 #define RPC_INTERVAL         500
 #define ARIA2_PATH           "aria2c"
 #define ARIA2_ARGS           "--enable-rpc=true -D --check-certificate=false"

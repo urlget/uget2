@@ -173,22 +173,19 @@ static UgetResult  global_set (int option, void* parameter)
 
 	case UGET_PLUGIN_ARIA2_URI:
 		if (parameter)
-			uget_aria2_set_uri (global.data, parameter);
+			uget_aria2_set_uri (global.data, (char*) parameter);
 		break;
 
 	case UGET_PLUGIN_ARIA2_PATH:
-		if (parameter)
-			uget_aria2_set_path (global.data, parameter);
+		uget_aria2_set_path (global.data, (char*) parameter);
 		break;
 
 	case UGET_PLUGIN_ARIA2_ARGUMENT:
-		if (parameter)
-			uget_aria2_set_args (global.data, parameter);
+		uget_aria2_set_args (global.data, (char*) parameter);
 		break;
 
 	case UGET_PLUGIN_ARIA2_TOKEN:
-		if (parameter)
-			uget_aria2_set_token (global.data, parameter);
+		uget_aria2_set_token (global.data, (char*) parameter);
 		break;
 
 	case UGET_PLUGIN_ARIA2_LAUNCH:
@@ -202,6 +199,11 @@ static UgetResult  global_set (int option, void* parameter)
 			global.data->shutdown = TRUE;
 		else
 			global.data->shutdown = FALSE;
+		break;
+
+	case UGET_PLUGIN_ARIA2_SHUTDOWN_NOW:
+		if (parameter && global.data)
+			uget_aria2_shutdown (global.data);
 		break;
 
 	case UGET_PLUGIN_SETTING:

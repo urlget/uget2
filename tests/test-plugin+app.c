@@ -89,7 +89,7 @@ void  download_node (UgetNode* node, const UgetPluginInfo* info)
 				string[0], string[1], progress->percent,
 				string[3], string[2], string[4]);
 		for (integer[0] = 0;  integer[0] < 5;  integer[0]++)
-			free (string[integer[0]]);
+			ug_free (string[integer[0]]);
 	}
 	// these data may changed, print them.
 	common = ug_info_get (&node->info, UgetCommonInfo);
@@ -275,8 +275,8 @@ void  start_app (UgetApp* app)
 		string[0] = ug_str_from_int_unit (app->task.speed.download, "/s");
 		string[1] = ug_str_from_int_unit (app->task.speed.upload, "/s");
 		printf ("\r" "DL: %s | UL %s" "    ", string[0], string[1]);
-		free (string[0]);
-		free (string[1]);
+		ug_free (string[0]);
+		ug_free (string[1]);
 	}
 	puts ("uget_app_grow() return 0");
 
@@ -354,10 +354,11 @@ int   main (void)
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) TRUE);
 //	test_setup_plugin_aria2 ();
 
-	test_node_download ();
+//	test_node_download ();
 //	test_task ();
 //	test_app ();
 
+	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_ARIA2_SHUTDOWN_NOW, (void*) TRUE);
 	// finalize plugin
 	uget_plugin_set (UgetPluginCurlInfo, UGET_PLUGIN_INIT, (void*) FALSE);
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) FALSE);

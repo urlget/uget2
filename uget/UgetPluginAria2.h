@@ -61,6 +61,7 @@ typedef enum {
 	UGET_PLUGIN_ARIA2_TOKEN,     // set parameter = (char* )
 	UGET_PLUGIN_ARIA2_LAUNCH,    // get/set parameter = (int* )
 	UGET_PLUGIN_ARIA2_SHUTDOWN,  // set parameter = (int* )
+	UGET_PLUGIN_ARIA2_SHUTDOWN_NOW,  // set parameter = (int* )
 } UgetPluginAria2Code;
 
 typedef enum {
