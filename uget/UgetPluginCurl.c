@@ -712,7 +712,7 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 							uget_event_new_normal (
 									UGET_EVENT_NORMAL_NOT_RESUMABLE, NULL));
 					common->retry_count++;
-					if (common->retry_count < common->retry_limit) {
+					if (common->retry_count < common->retry_limit || common->retry_limit == 0) {
 						plugin->base.download = 0;
 						ugcurl->beg = 0;
 						ugcurl->end = plugin->file.size;
@@ -764,7 +764,7 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 			}
 		}
 		// retry
-		if (common->retry_count >= common->retry_limit) {
+		if (common->retry_count >= common->retry_limit && common->retry_limit != 0) {
 			uget_plugin_post ((UgetPlugin*) plugin,
 					uget_event_new_error (
 							UGET_EVENT_ERROR_TOO_MANY_RETRIES, NULL));
