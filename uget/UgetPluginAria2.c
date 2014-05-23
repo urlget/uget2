@@ -48,6 +48,11 @@
 #include <UgetAria2.h>
 #include <UgetPluginAria2.h>
 
+#ifdef HAVE_LIBPWMD
+#include "pwmd.h"
+static gboolean	uget_plugin_aria2_set_proxy_pwmd (UgetPluginAria2 *plugin, UgValue* options);
+#endif
+
 #if defined _WIN32 || defined _WIN64
 #include <windows.h> // Sleep()
 #define  ug_sleep       Sleep
@@ -1144,6 +1149,13 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 	}
 
 	temp.proxy = ug_info_get (&node->info, UgetProxyInfo);
+#ifdef HAVE_LIBPWMD
+	if (temp.proxy && temp.proxy->type == UGET_PROXY_PWMD) {
+		if (uget_plugin_aria2_set_proxy_pwmd (plugin, member) == FALSE)
+			return FALSE;
+	}
+	else
+#endif
 	if (temp.proxy && temp.proxy->host) {
 		member = ug_value_alloc (value, 1);
 		member->name = "all-proxy";
@@ -1317,6 +1329,64 @@ static void  add_uri_mirrors (UgValue* varray, const char* mirrors)
 		strncpy (value->c.string, prev, curr - prev);
 	}
 }
+
+// ----------------------------------------------------------------------------
+// PWMD
+//
+#ifdef HAVE_LIBPWMD
+static gboolean	uget_plugin_aria2_set_proxy_pwmd (UgetPluginAria2 *plugin, UgValue* options)
+{
+       struct pwmd_proxy_s pwmd;
+       gpg_error_t rc;
+       UgetEvent *message;
+       UgetProxy *proxy;
+
+       memset(&pwmd, 0, sizeof(pwmd));
+       proxy = ug_info_get (&plugin->node->info, UgetProxyInfo);
+       rc = ug_set_pwmd_proxy_options(&pwmd, proxy);
+
+       if (rc)
+               goto fail;
+
+       // proxy host and port
+	// host
+	UgValue *value = ug_value_alloc (options, 1);
+	value->name = ug_strdup ("all-proxy");
+	value->type = UG_VALUE_STRING;
+       if (pwmd.port == 0)
+               value->c.string = ug_strdup (pwmd.hostname);
+	else {
+		value->c.string = ug_strdup_printf ("%s:%u", pwmd.hostname, pwmd.port);
+	}
+
+	// proxy user and password
+       if (pwmd.username || pwmd.password) {
+		// user
+		value = ug_value_alloc (options, 1);
+		value->name = ug_strdup ("all-proxy-user");
+		value->type = UG_VALUE_STRING;
+               value->c.string = ug_strdup (pwmd.username ? pwmd.username : "");
+		// password
+		value = ug_value_alloc (options, 1);
+		value->name = ug_strdup ("all-proxy-password");
+		value->type = UG_VALUE_STRING;
+               value->c.string = ug_strdup (pwmd.password ? pwmd.password : "");
+	}
+
+       ug_close_pwmd(&pwmd);
+       return TRUE;
+
+fail:
+       ug_close_pwmd(&pwmd);
+       gchar *e = g_strdup_printf("Pwmd ERR %i: %s", rc, gpg_strerror(rc));
+       message = uget_event_new_error (UGET_EVENT_ERROR_CUSTOM, e);
+       uget_plugin_post ((UgetPlugin*) plugin, message);
+       fprintf(stderr, "%s\n", e);
+       g_free(e);
+       return FALSE;
+}
+
+#endif	// HAVE_LIBPWMD
 
 // ----------------------------------------------------------------------------
 // static utility functions

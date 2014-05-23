@@ -231,11 +231,11 @@ static UgJsonrpcObject*  add_limit_request (UgetAria2* uaria2)
 	value = ug_value_alloc (vobj, 1);
 	value->name = "max-overall-download-limit";
 	value->type = UG_VALUE_STRING;
-	value->c.string = ug_strdup_printf ("%dk", uaria2->limit.download / 1024);
+	value->c.string = ug_strdup_printf ("%dK", uaria2->limit.download / 1024);
 	value = ug_value_alloc (vobj, 1);
 	value->name = "max-overall-upload-limit";
 	value->type = UG_VALUE_STRING;
-	value->c.string = ug_strdup_printf ("%dk", uaria2->limit.upload / 1024);
+	value->c.string = ug_strdup_printf ("%dK", uaria2->limit.upload / 1024);
 	// max-concurrent-downloads must >= 1
 //	value = ug_value_alloc (vobj, 1);
 //	value->name = "max-concurrent-downloads";
@@ -764,7 +764,7 @@ UgValue*  uget_aria2_clear_token (UgJsonrpcObject* jobject)
 
 	if (jobject->params.type == UG_VALUE_ARRAY) {
 		rpc_token = jobject->params.c.array->at;
-		if (rpc_token->type == UG_VALUE_STRING && 
+		if (rpc_token->type == UG_VALUE_STRING &&
 			strncmp (rpc_token->c.string, "token:", 6) == 0)
 		{
 			ug_free (rpc_token->c.string);
