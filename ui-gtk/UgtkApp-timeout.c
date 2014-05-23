@@ -63,9 +63,9 @@
 
 #include <glib/gi18n.h>
 
-static void	ugtk_app_notify_error (UgtkApp* app);
-static void	ugtk_app_notify_starting (UgtkApp* app);
-static void	ugtk_app_notify_completed (UgtkApp* app);
+static void ugtk_app_notify_error (UgtkApp* app);
+static void ugtk_app_notify_starting (UgtkApp* app);
+static void ugtk_app_notify_completed (UgtkApp* app);
 // GSourceFunc
 static gboolean  ugtk_app_timeout_rss (UgtkApp* app);
 static gboolean  ugtk_app_timeout_ipc (UgtkApp* app);
@@ -92,7 +92,7 @@ void  ugtk_app_init_timeout (UgtkApp* app)
 			(GSourceFunc) ugtk_app_timeout_autosave, app, NULL);
 }
 
-static gboolean	ugtk_app_timeout_autosave (UgtkApp* app)
+static gboolean  ugtk_app_timeout_autosave (UgtkApp* app)
 {
 	static int  counts = 0;
 
@@ -111,7 +111,7 @@ static gboolean	ugtk_app_timeout_autosave (UgtkApp* app)
 // Queuing
 
 // scheduler
-static gboolean	ugtk_app_decide_schedule_state (UgtkApp* app)
+static gboolean  ugtk_app_decide_schedule_state (UgtkApp* app)
 {
 	struct tm*	timem;
 	time_t		timet;
@@ -163,7 +163,7 @@ static gboolean	ugtk_app_decide_schedule_state (UgtkApp* app)
 	return changed;
 }
 
-static gboolean	ugtk_app_timeout_queuing (UgtkApp* app)
+static gboolean  ugtk_app_timeout_queuing (UgtkApp* app)
 {
 	static int  n_counts = 0;
 	static int  n_active_prev = 0;
@@ -293,7 +293,7 @@ static gboolean	ugtk_app_timeout_queuing (UgtkApp* app)
 // Clipboard
 //
 
-static void	on_keep_above_window_show (GtkWindow *window, gpointer  user_data)
+static void  on_keep_above_window_show (GtkWindow *window, gpointer  user_data)
 {
 	gtk_window_present (window);
 	gtk_window_set_keep_above (window, FALSE);
@@ -481,7 +481,7 @@ static void add_uris_from_file (UgtkApp* app, UgList* uris, char* file)
 	g_free (file);
 }
 
-static gboolean	ugtk_app_timeout_ipc (UgtkApp* app)
+static gboolean  ugtk_app_timeout_ipc (UgtkApp* app)
 {
 	UgetNode*   infonode;
 	UgList      uris;
@@ -756,7 +756,7 @@ static void ugtk_app_notify (UgtkApp* app, const gchar* title, const gchar* info
 #define	NOTIFICATION_COMPLETED_TITLE   _("Download Completed")
 #define	NOTIFICATION_COMPLETED_STRING  _("All queuing downloads have been completed.")
 
-static void	ugtk_app_notify_error (UgtkApp* app)
+static void ugtk_app_notify_error (UgtkApp* app)
 {
 	gchar*	path;
 
@@ -772,7 +772,7 @@ static void	ugtk_app_notify_error (UgtkApp* app)
 	}
 }
 
-static void	ugtk_app_notify_completed (UgtkApp* app)
+static void ugtk_app_notify_completed (UgtkApp* app)
 {
 	gchar*	path;
 
@@ -788,7 +788,7 @@ static void	ugtk_app_notify_completed (UgtkApp* app)
 	}
 }
 
-static void	ugtk_app_notify_starting (UgtkApp* app)
+static void ugtk_app_notify_starting (UgtkApp* app)
 {
 //	gchar*	path;
 

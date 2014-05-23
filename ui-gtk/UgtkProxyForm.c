@@ -40,13 +40,13 @@
 
 #include <glib/gi18n.h>
 
-static void	ugtk_proxy_form_std_init (UgtkProxyForm* pform);
+static void ugtk_proxy_form_std_init (UgtkProxyForm* pform);
 //	signal handler
 static void on_type_changed (GtkComboBox* widget, UgtkProxyForm* pform);
 static void on_entry_std_changed  (GtkEditable* editable, UgtkProxyForm* pform);
 
 #ifdef HAVE_LIBPWMD
-static void	ugtk_proxy_form_pwmd_init (struct UgtkProxyFormPwmd* pfp, UgtkProxyForm* pform);
+static void ugtk_proxy_form_pwmd_init (struct UgtkProxyFormPwmd* pfp, UgtkProxyForm* pform);
 static void on_entry_pwmd_changed (GtkEditable* editable, UgtkProxyForm* pform);
 #endif
 

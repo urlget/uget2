@@ -43,17 +43,17 @@
 #include <glib/gi18n.h>
 
 
-static void	ugtk_download_form_init_page1 (UgtkDownloadForm* dform, UgtkProxyForm* proxy);
-static void	ugtk_download_form_init_page2 (UgtkDownloadForm* dform);
+static void ugtk_download_form_init_page1 (UgtkDownloadForm* dform, UgtkProxyForm* proxy);
+static void ugtk_download_form_init_page2 (UgtkDownloadForm* dform);
 static void ugtk_download_form_decide_sensitive (UgtkDownloadForm* dform);	// aria2
 //	signal handler
-static void	on_spin_changed (GtkEditable *editable, UgtkDownloadForm* dform);
-static void	on_entry_changed (GtkEditable *editable, UgtkDownloadForm* dform);
-static void	on_uri_entry_changed (GtkEditable *editable, UgtkDownloadForm* dform);
-static void	on_http_entry_changed (GtkEditable *editable, UgtkDownloadForm* dform);
-static void	on_select_folder (GtkEntry* entry, GtkEntryIconPosition icon_pos, GdkEvent* event, UgtkDownloadForm* dform);
-static void	on_select_cookie (GtkEntry* entry, GtkEntryIconPosition icon_pos, GdkEvent* event, UgtkDownloadForm* dform);
-static void	on_select_post   (GtkEntry* entry, GtkEntryIconPosition icon_pos, GdkEvent* event, UgtkDownloadForm* dform);
+static void on_spin_changed (GtkEditable *editable, UgtkDownloadForm* dform);
+static void on_entry_changed (GtkEditable *editable, UgtkDownloadForm* dform);
+static void on_uri_entry_changed (GtkEditable *editable, UgtkDownloadForm* dform);
+static void on_http_entry_changed (GtkEditable *editable, UgtkDownloadForm* dform);
+static void on_select_folder (GtkEntry* entry, GtkEntryIconPosition icon_pos, GdkEvent* event, UgtkDownloadForm* dform);
+static void on_select_cookie (GtkEntry* entry, GtkEntryIconPosition icon_pos, GdkEvent* event, UgtkDownloadForm* dform);
+static void on_select_post   (GtkEntry* entry, GtkEntryIconPosition icon_pos, GdkEvent* event, UgtkDownloadForm* dform);
 
 
 void  ugtk_download_form_init (UgtkDownloadForm* dform, UgtkProxyForm* proxy, GtkWindow* parent)
@@ -811,7 +811,7 @@ void  ugtk_download_form_complete_entry (UgtkDownloadForm* dform)
 
 // ----------------------------------------------------------------------------
 // signal handler
-static void	on_spin_changed (GtkEditable* editable, UgtkDownloadForm* dform)
+static void on_spin_changed (GtkEditable* editable, UgtkDownloadForm* dform)
 {
 	if (dform->changed.enable) {
 		if (editable == GTK_EDITABLE (dform->spin_retry))
@@ -835,7 +835,7 @@ static void on_entry_changed (GtkEditable* editable, UgtkDownloadForm* dform)
 	}
 }
 
-static void	on_uri_entry_changed (GtkEditable* editable, UgtkDownloadForm* dform)
+static void on_uri_entry_changed (GtkEditable* editable, UgtkDownloadForm* dform)
 {
 	if (dform->changed.enable) {
 		dform->changed.uri = TRUE;
@@ -843,7 +843,7 @@ static void	on_uri_entry_changed (GtkEditable* editable, UgtkDownloadForm* dform
 	}
 }
 
-static void	on_http_entry_changed (GtkEditable* editable, UgtkDownloadForm* dform)
+static void on_http_entry_changed (GtkEditable* editable, UgtkDownloadForm* dform)
 {
 	if (dform->changed.enable) {
 		if (editable == GTK_EDITABLE (dform->referrer_entry))
@@ -875,7 +875,7 @@ static void on_select_folder_response (GtkDialog* chooser, gint response, UgtkDo
 		gtk_widget_set_sensitive ((GtkWidget*) dform->parent, TRUE);
 }
 
-static void	on_select_folder (GtkEntry* entry, GtkEntryIconPosition icon_pos, GdkEvent* event, UgtkDownloadForm* dform)
+static void on_select_folder (GtkEntry* entry, GtkEntryIconPosition icon_pos, GdkEvent* event, UgtkDownloadForm* dform)
 {
 	GtkWidget*	chooser;
 	gchar*		path;
@@ -931,7 +931,7 @@ static void on_select_cookie_response (GtkDialog* chooser, gint response, UgtkDo
 		gtk_widget_set_sensitive ((GtkWidget*) dform->parent, TRUE);
 }
 
-static void	on_select_cookie (GtkEntry* entry, GtkEntryIconPosition icon_pos, GdkEvent* event, UgtkDownloadForm* dform)
+static void on_select_cookie (GtkEntry* entry, GtkEntryIconPosition icon_pos, GdkEvent* event, UgtkDownloadForm* dform)
 {
 	GtkWidget*	chooser;
 	gchar*		path;
@@ -987,7 +987,7 @@ static void on_select_post_response (GtkDialog* chooser, gint response, UgtkDown
 		gtk_widget_set_sensitive ((GtkWidget*) dform->parent, TRUE);
 }
 
-static void	on_select_post (GtkEntry* entry, GtkEntryIconPosition icon_pos, GdkEvent* event, UgtkDownloadForm* dform)
+static void on_select_post (GtkEntry* entry, GtkEntryIconPosition icon_pos, GdkEvent* event, UgtkDownloadForm* dform)
 {
 	GtkWidget*	chooser;
 	gchar*		path;

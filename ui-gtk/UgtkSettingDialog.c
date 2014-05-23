@@ -44,7 +44,7 @@
 #include <glib/gi18n.h>
 
 // Callback
-static void	on_cursor_changed (GtkTreeView* view, UgtkSettingDialog* sdialog);
+static void on_cursor_changed (GtkTreeView* view, UgtkSettingDialog* sdialog);
 static void on_response (GtkDialog *dialog, gint response_id, UgtkSettingDialog* sdialog);
 
 UgtkSettingDialog*  ugtk_setting_dialog_new (const gchar* title, GtkWindow* parent)
@@ -204,7 +204,7 @@ void  ugtk_setting_dialog_set_page (UgtkSettingDialog* sdialog, int nth)
 // ----------------------------------------------------------------------------
 // Callback
 
-static void	on_cursor_changed (GtkTreeView* view, UgtkSettingDialog* sdialog)
+static void on_cursor_changed (GtkTreeView* view, UgtkSettingDialog* sdialog)
 {
 	GtkTreePath*   path;
 	int            nth;

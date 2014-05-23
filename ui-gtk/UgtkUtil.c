@@ -300,7 +300,7 @@ GList*	ugtk_uri_list_remove_scheme (GList* list, const gchar* scheme)
 #define UG_BOM_UTF16LE          "\xFF\xFE"
 #define	UG_BOM_UTF16LE_LEN      2
 
-const char*	ugtk_io_channel_decide_encoding (GIOChannel* channel)
+const char* ugtk_io_channel_decide_encoding (GIOChannel* channel)
 {
 	gchar*  encoding;
 	gchar   bom[4];

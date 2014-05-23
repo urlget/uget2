@@ -40,11 +40,11 @@
 #include <glib/gi18n.h>
 
 // static functions
-static void	ugtk_sequencer_preview_init (struct UgtkSequencerPreview* preview);
-static void	ugtk_sequencer_preview_show (struct UgtkSequencerPreview* preview, const gchar* message);
+static void ugtk_sequencer_preview_init (struct UgtkSequencerPreview* preview);
+static void ugtk_sequencer_preview_show (struct UgtkSequencerPreview* preview, const gchar* message);
 // signal handlers
-static void	on_radio1_clicked (GtkWidget* widget, UgtkSequencer* seqer);
-static void	on_radio2_clicked (GtkWidget* widget, UgtkSequencer* seqer);
+static void on_radio1_clicked (GtkWidget* widget, UgtkSequencer* seqer);
+static void on_radio2_clicked (GtkWidget* widget, UgtkSequencer* seqer);
 
 void  ugtk_sequencer_init (UgtkSequencer* seqer)
 {
@@ -175,7 +175,7 @@ void  ugtk_sequencer_init (UgtkSequencer* seqer)
 	gtk_widget_show_all (seqer->self);
 }
 
-void	ugtk_sequencer_update_preview (UgtkSequencer* seqer)
+void  ugtk_sequencer_update_preview (UgtkSequencer* seqer)
 {
 	GtkTreeIter		iter;
 	GList*			list;
@@ -214,7 +214,7 @@ void	ugtk_sequencer_update_preview (UgtkSequencer* seqer)
 	return;
 }
 
-GList*	ugtk_sequencer_get_list (UgtkSequencer* seqer, gboolean preview)
+GList*  ugtk_sequencer_get_list (UgtkSequencer* seqer, gboolean preview)
 {
 	GString*     gstr;
 	GList*       list;
@@ -283,7 +283,7 @@ GList*	ugtk_sequencer_get_list (UgtkSequencer* seqer, gboolean preview)
 // ----------------------------------------------------------------------------
 //	static functions
 //
-static void	ugtk_sequencer_preview_init (struct UgtkSequencerPreview* preview)
+static void ugtk_sequencer_preview_init (struct UgtkSequencerPreview* preview)
 {
 	GtkScrolledWindow*	scrolled;
 	GtkCellRenderer*	renderer;
@@ -314,7 +314,7 @@ static void	ugtk_sequencer_preview_init (struct UgtkSequencerPreview* preview)
 	gtk_container_add (GTK_CONTAINER (scrolled), GTK_WIDGET (preview->view));
 }
 
-static void	ugtk_sequencer_preview_show (struct UgtkSequencerPreview* preview, const gchar* message)
+static void ugtk_sequencer_preview_show (struct UgtkSequencerPreview* preview, const gchar* message)
 {
 	GtkTreeIter		iter;
 

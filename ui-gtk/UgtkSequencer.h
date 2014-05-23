@@ -83,9 +83,9 @@ struct UgtkSequencer
 	} notify;
 };
 
-void	ugtk_sequencer_init (UgtkSequencer* seqer);
-void	ugtk_sequencer_update_preview (UgtkSequencer* seqer);
-GList*	ugtk_sequencer_get_list (UgtkSequencer* seqer, gboolean preview);
+void   ugtk_sequencer_init (UgtkSequencer* seqer);
+void   ugtk_sequencer_update_preview (UgtkSequencer* seqer);
+GList* ugtk_sequencer_get_list (UgtkSequencer* seqer, gboolean preview);
 
 
 #ifdef __cplusplus

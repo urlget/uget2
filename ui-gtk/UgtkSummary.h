@@ -69,12 +69,12 @@ struct UgtkSummary
 	} visible;
 };
 
-void	ugtk_summary_init (UgtkSummary* summary, GtkAccelGroup* accel_group);
-void	ugtk_summary_show (UgtkSummary* summary, UgetNode* node);
+void  ugtk_summary_init (UgtkSummary* summary, GtkAccelGroup* accel_group);
+void  ugtk_summary_show (UgtkSummary* summary, UgetNode* node);
 
 // call g_free() to free returned string.
-gchar*	ugtk_summary_get_text_selected (UgtkSummary* summary);
-gchar*	ugtk_summary_get_text_all (UgtkSummary* summary);
+gchar* ugtk_summary_get_text_selected (UgtkSummary* summary);
+gchar* ugtk_summary_get_text_all (UgtkSummary* summary);
 
 
 #ifdef __cplusplus

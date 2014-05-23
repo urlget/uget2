@@ -41,8 +41,8 @@
 
 #include <glib/gi18n.h>
 
-static void	ugtk_statusbar_init_ui (struct UgtkStatusbar* app_statusbar);
-static void	ugtk_toolbar_init_ui   (struct UgtkToolbar* app_toolbar, GtkAccelGroup* accel_group);
+static void ugtk_statusbar_init_ui (struct UgtkStatusbar* app_statusbar);
+static void ugtk_toolbar_init_ui   (struct UgtkToolbar* app_toolbar, GtkAccelGroup* accel_group);
 static void ugtk_window_init_ui    (struct UgtkWindow* window, UgtkApp* app);
 
 void  ugtk_app_init_ui (UgtkApp* app)

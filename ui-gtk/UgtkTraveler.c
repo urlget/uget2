@@ -38,9 +38,9 @@
 #include <UgtkApp.h>
 
 // signal handler
-static void	on_state_cursor_changed (GtkTreeView* view, UgtkTraveler* traveler);
-static void	on_category_cursor_changed (GtkTreeView* view, UgtkTraveler* traveler);
-static void	on_download_cursor_changed (GtkTreeView* view, UgtkTraveler* traveler);
+static void on_state_cursor_changed (GtkTreeView* view, UgtkTraveler* traveler);
+static void on_category_cursor_changed (GtkTreeView* view, UgtkTraveler* traveler);
+static void on_download_cursor_changed (GtkTreeView* view, UgtkTraveler* traveler);
 static void on_category_row_deleted (GtkTreeModel* model, GtkTreePath* path, UgtkTraveler* traveler);
 static void on_download_row_deleted (GtkTreeModel* model, GtkTreePath* path, UgtkTraveler* traveler);
 // static data
@@ -506,7 +506,7 @@ void  ugtk_traveler_set_sorting (UgtkTraveler*  traveler,
 
 // ----------------------------------------------------------------------------
 // signal handler
-static void	on_state_cursor_changed (GtkTreeView* view, UgtkTraveler* traveler)
+static void on_state_cursor_changed (GtkTreeView* view, UgtkTraveler* traveler)
 {
 	GtkTreeModel*  model;
 	GtkTreePath*   path;
@@ -543,7 +543,7 @@ static void	on_state_cursor_changed (GtkTreeView* view, UgtkTraveler* traveler)
 	}
 }
 
-static void	on_category_cursor_changed (GtkTreeView* view, UgtkTraveler* traveler)
+static void on_category_cursor_changed (GtkTreeView* view, UgtkTraveler* traveler)
 {
 	GtkTreeModel*  model;
 	GtkTreePath*   path;
@@ -577,7 +577,7 @@ static void	on_category_cursor_changed (GtkTreeView* view, UgtkTraveler* travele
 	// call on_state_cursor_changed()
 }
 
-static void	on_download_cursor_changed (GtkTreeView* view, UgtkTraveler* traveler)
+static void on_download_cursor_changed (GtkTreeView* view, UgtkTraveler* traveler)
 {
 	GtkTreeModel*  model;
 	GtkTreePath*   path;
@@ -676,82 +676,82 @@ static void ugtk_tree_view_column_clicked (GtkTreeViewColumn* column,
 	gtk_widget_queue_draw ((GtkWidget*) traveler->download.view);
 }
 
-static void	on_state_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
+static void on_state_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
 {
 	ugtk_tree_view_column_clicked (column, UGTK_NODE_COLUMN_STATE, traveler);
 }
 
-static void	on_name_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
+static void on_name_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
 {
 	ugtk_tree_view_column_clicked (column, UGTK_NODE_COLUMN_NAME, traveler);
 }
 
-static void	on_complete_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
+static void on_complete_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
 {
 	ugtk_tree_view_column_clicked (column, UGTK_NODE_COLUMN_COMPLETE, traveler);
 }
 
-static void	on_size_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
+static void on_size_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
 {
 	ugtk_tree_view_column_clicked (column, UGTK_NODE_COLUMN_SIZE, traveler);
 }
 
-static void	on_percent_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
+static void on_percent_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
 {
 	ugtk_tree_view_column_clicked (column, UGTK_NODE_COLUMN_PERCENT, traveler);
 }
 
-static void	on_elapsed_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
+static void on_elapsed_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
 {
 	ugtk_tree_view_column_clicked (column, UGTK_NODE_COLUMN_ELAPSED, traveler);
 }
 
-static void	on_left_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
+static void on_left_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
 {
 	ugtk_tree_view_column_clicked (column, UGTK_NODE_COLUMN_LEFT, traveler);
 }
 
-static void	on_speed_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
+static void on_speed_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
 {
 	ugtk_tree_view_column_clicked (column, UGTK_NODE_COLUMN_SPEED, traveler);
 }
 
-static void	on_upload_speed_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
+static void on_upload_speed_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
 {
 	ugtk_tree_view_column_clicked (column, UGTK_NODE_COLUMN_UPLOAD_SPEED, traveler);
 }
 
-static void	on_uploaded_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
+static void on_uploaded_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
 {
 	ugtk_tree_view_column_clicked (column, UGTK_NODE_COLUMN_UPLOADED, traveler);
 }
 
-static void	on_ratio_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
+static void on_ratio_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
 {
 	ugtk_tree_view_column_clicked (column, UGTK_NODE_COLUMN_RATIO, traveler);
 }
 
-static void	on_retry_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
+static void on_retry_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
 {
 	ugtk_tree_view_column_clicked (column, UGTK_NODE_COLUMN_RETRY, traveler);
 }
 
-static void	on_category_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
+static void on_category_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
 {
 	ugtk_tree_view_column_clicked (column, UGTK_NODE_COLUMN_CATEGORY, traveler);
 }
 
-static void	on_url_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
+static void on_url_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
 {
 	ugtk_tree_view_column_clicked (column, UGTK_NODE_COLUMN_URI, traveler);
 }
 
-static void	on_added_on_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
+static void on_added_on_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
 {
 	ugtk_tree_view_column_clicked (column, UGTK_NODE_COLUMN_ADDED_ON, traveler);
 }
 
-static void	on_completed_on_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
+static void on_completed_on_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
 {
 	ugtk_tree_view_column_clicked (column, UGTK_NODE_COLUMN_COMPLETED_ON, traveler);
 }

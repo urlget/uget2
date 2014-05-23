@@ -45,8 +45,8 @@ static void ugtk_node_dialog_init_ui (UgtkNodeDialog* ndialog,
 static void ugtk_node_dialog_init_list_ui (UgtkNodeDialog* ndialog,
                                            UgetNode* root);
 // Callback
-static void	on_cursor_changed (GtkTreeView* view, UgtkNodeDialog* ndialog);
-static void	after_uri_entry_changed (GtkEditable *editable,
+static void on_cursor_changed (GtkTreeView* view, UgtkNodeDialog* ndialog);
+static void after_uri_entry_changed (GtkEditable *editable,
                                      UgtkNodeDialog* ndialog);
 static void on_response_new_category (GtkDialog *dialog, gint response_id,
                                       UgtkNodeDialog* ndialog);
@@ -398,7 +398,7 @@ static void ugtk_node_dialog_init_list_ui (UgtkNodeDialog* ndialog,
 // ----------------------------------------------------------------------------
 // Callback
 
-static void	on_cursor_changed (GtkTreeView* view, UgtkNodeDialog* ndialog)
+static void on_cursor_changed (GtkTreeView* view, UgtkNodeDialog* ndialog)
 {
 	GtkTreeModel*  model;
 	GtkTreePath*   path;
@@ -417,7 +417,7 @@ static void	on_cursor_changed (GtkTreeView* view, UgtkNodeDialog* ndialog)
 	ugtk_download_form_set (&ndialog->download, node, TRUE);
 }
 
-static void	after_uri_entry_changed (GtkEditable *editable,
+static void after_uri_entry_changed (GtkEditable *editable,
                                      UgtkNodeDialog* ndialog)
 {
 	gtk_dialog_set_response_sensitive (ndialog->self,

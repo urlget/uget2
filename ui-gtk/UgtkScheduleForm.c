@@ -61,7 +61,7 @@ static const gdouble  colors[UGTK_SCHEDULE_N_STATE][3] =
 	{0.0,   0.758, 0.0},        // UGTK_SCHEDULE_NORMAL
 };
 
-static const gchar*	week_days[7] =
+static const gchar*  week_days[7] =
 {
 	N_("Mon"),
 	N_("Tue"),

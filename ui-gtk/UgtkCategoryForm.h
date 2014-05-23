@@ -46,7 +46,7 @@ extern "C" {
 #endif
 
 
-typedef struct	UgtkCategoryForm		UgtkCategoryForm;
+typedef struct UgtkCategoryForm    UgtkCategoryForm;
 
 struct UgtkCategoryForm
 {
@@ -66,11 +66,11 @@ struct UgtkCategoryForm
 	GtkWidget*  types_entry;
 };
 
-void	ugtk_category_form_init (UgtkCategoryForm* cform);
-void	ugtk_category_form_get  (UgtkCategoryForm* cform, UgetNode* cnode);
-void	ugtk_category_form_set  (UgtkCategoryForm* cform, UgetNode* cnode);
+void  ugtk_category_form_init (UgtkCategoryForm* cform);
+void  ugtk_category_form_get  (UgtkCategoryForm* cform, UgetNode* cnode);
+void  ugtk_category_form_set  (UgtkCategoryForm* cform, UgetNode* cnode);
 
-void	ugtk_category_form_set_multiple (UgtkCategoryForm* cform, gboolean multiple_mode);
+void  ugtk_category_form_set_multiple (UgtkCategoryForm* cform, gboolean multiple_mode);
 
 
 #ifdef __cplusplus

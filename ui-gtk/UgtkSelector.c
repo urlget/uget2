@@ -265,7 +265,7 @@ static GtkWidget*  ugtk_selector_filter_view_init (GtkTreeView* item_view)
 	return (GtkWidget*) vbox;
 }
 
-static void	ugtk_selector_filter_init (struct UgtkSelectorFilter* filter, UgtkSelector* selector)
+static void ugtk_selector_filter_init (struct UgtkSelectorFilter* filter, UgtkSelector* selector)
 {
 	GtkDialog*  dialog;
 	GtkWidget*  widget;
@@ -313,7 +313,7 @@ static void	ugtk_selector_filter_init (struct UgtkSelectorFilter* filter, UgtkSe
 	gtk_widget_show_all (GTK_WIDGET (vbox));
 }
 
-static void	ugtk_selector_filter_show (struct UgtkSelectorFilter* filter, UgtkSelectorPage* page)
+static void ugtk_selector_filter_show (struct UgtkSelectorFilter* filter, UgtkSelectorPage* page)
 {
 	GtkWindow* parent;
 
@@ -335,7 +335,7 @@ static void	ugtk_selector_filter_show (struct UgtkSelectorFilter* filter, UgtkSe
 }
 
 //	signal handler ------------------------------
-static void	on_selector_item_toggled (GtkCellRendererToggle* cell, gchar* path_str, UgtkSelector* selector)
+static void on_selector_item_toggled (GtkCellRendererToggle* cell, gchar* path_str, UgtkSelector* selector)
 {
 	UgtkSelectorPage*  page;
 	UgtkSelectorItem*  item;
@@ -502,7 +502,7 @@ int  ugtk_selector_page_add_uris (UgtkSelectorPage* page, GList* uris)
 	return counts;
 }
 
-static void	ugtk_selector_page_add_filter (UgtkSelectorPage* page, GtkListStore* filter_store, gchar* key, UgtkSelectorItem* value)
+static void ugtk_selector_page_add_filter (UgtkSelectorPage* page, GtkListStore* filter_store, gchar* key, UgtkSelectorItem* value)
 {
 	UgtkSelectorItem* filter_item;
 	GtkTreeIter  iter;
@@ -566,7 +566,7 @@ void  ugtk_selector_page_make_filter (UgtkSelectorPage* page)
 	g_slice_free1 (sizeof (UgUri), upart);
 }
 
-static void	ugtk_selector_page_mark_by_filter (UgtkSelectorPage* page, GtkListStore* filter_store)
+static void ugtk_selector_page_mark_by_filter (UgtkSelectorPage* page, GtkListStore* filter_store)
 {
 	UgtkSelectorItem*  item;
 	GList*  related;
@@ -636,7 +636,7 @@ static GList*  ugtk_selector_store_get_marked (GtkListStore* store, GList* list)
 	return list;
 }
 
-static void	ugtk_selector_store_set_mark_all (GtkListStore* store, gboolean mark)
+static void ugtk_selector_store_set_mark_all (GtkListStore* store, gboolean mark)
 {
 	UgtkSelectorItem*  item;
 	GtkTreeModel*  model;
@@ -652,7 +652,7 @@ static void	ugtk_selector_store_set_mark_all (GtkListStore* store, gboolean mark
 	}
 }
 
-static void	ugtk_selector_store_clear (GtkListStore* store)
+static void ugtk_selector_store_clear (GtkListStore* store)
 {
 	UgtkSelectorItem*  item;
 	GtkTreeModel*   model;
@@ -712,7 +712,7 @@ static void on_cell_toggled (GtkCellRendererToggle* cell,
 	item->mark ^= 1;
 }
 
-static GtkTreeView*	ugtk_selector_view_new (const gchar* title, gboolean active_toggled)
+static GtkTreeView* ugtk_selector_view_new (const gchar* title, gboolean active_toggled)
 {
 	GtkTreeView*       view;
 	GtkCellRenderer*   renderer;
@@ -752,7 +752,7 @@ static GtkTreeView*	ugtk_selector_view_new (const gchar* title, gboolean active_
 	return view;
 }
 
-static GtkCellRenderer*	ugtk_selector_view_get_renderer_toggle (GtkTreeView* view)
+static GtkCellRenderer* ugtk_selector_view_get_renderer_toggle (GtkTreeView* view)
 {
 	GtkCellRenderer*   renderer;
 	GtkTreeViewColumn* column;

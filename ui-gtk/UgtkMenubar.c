@@ -50,12 +50,12 @@
 
 // ----------------------------------------------------------------------------
 // UgtkFileMenu
-static void	on_create_download (GtkWidget* widget, UgtkApp* app)
+static void on_create_download (GtkWidget* widget, UgtkApp* app)
 {
 	ugtk_app_create_download (app, NULL, NULL);
 }
 
-static void	on_offline_mode (GtkWidget* widget, UgtkApp* app)
+static void on_offline_mode (GtkWidget* widget, UgtkApp* app)
 {
 	UgetNode* cnode;
 
@@ -123,7 +123,7 @@ static void on_config_completion_help (GtkWidget* widget, UgtkApp* app)
 	ugtk_launch_uri ("http://ugetdm.com/documentation/on-complete");
 }
 
-static void	on_config_settings (GtkWidget* widget, UgtkApp* app)
+static void on_config_settings (GtkWidget* widget, UgtkApp* app)
 {
 	UgtkSettingDialog*  sdialog;
 	gchar*              title;
@@ -291,7 +291,7 @@ static void  on_change_visible_column (GtkWidget* widget, UgtkApp* app)
 // ----------------------------------------------------------------------------
 // UgtkCategoryMenu
 
-static void	on_move_category_up (GtkWidget* widget, UgtkApp* app)
+static void on_move_category_up (GtkWidget* widget, UgtkApp* app)
 {
 	UgetNode* cnode;
 
@@ -305,7 +305,7 @@ static void	on_move_category_up (GtkWidget* widget, UgtkApp* app)
 	gtk_widget_queue_draw ((GtkWidget*) app->traveler.category.view);
 }
 
-static void	on_move_category_down (GtkWidget* widget, UgtkApp* app)
+static void on_move_category_down (GtkWidget* widget, UgtkApp* app)
 {
 	UgetNode* cnode;
 
@@ -322,12 +322,12 @@ static void	on_move_category_down (GtkWidget* widget, UgtkApp* app)
 // ----------------------------------------------------------------------------
 // UgtkDownloadMenu
 
-static void	on_delete_download(GtkWidget* widget, UgtkApp* app)
+static void on_delete_download(GtkWidget* widget, UgtkApp* app)
 {
 	ugtk_app_delete_download (app, FALSE);
 }
 
-static void	on_delete_download_file (GtkWidget* widget, UgtkApp* app)
+static void on_delete_download_file (GtkWidget* widget, UgtkApp* app)
 {
 	UgtkConfirmDialog*  cdialog;
 
@@ -340,7 +340,7 @@ static void	on_delete_download_file (GtkWidget* widget, UgtkApp* app)
 	}
 }
 
-static void	on_open_download_file (GtkWidget* widget, UgtkApp* app)
+static void on_open_download_file (GtkWidget* widget, UgtkApp* app)
 {
 	UgetCommon*   common;
 	UgetNode*     node;
@@ -370,7 +370,7 @@ static void	on_open_download_file (GtkWidget* widget, UgtkApp* app)
 	}
 }
 
-static void	on_open_download_folder (GtkWidget* widget, UgtkApp* app)
+static void on_open_download_folder (GtkWidget* widget, UgtkApp* app)
 {
 	UgetCommon*  common;
 	UgetNode*    node;
@@ -452,7 +452,7 @@ static void	on_open_download_folder (GtkWidget* widget, UgtkApp* app)
 #endif
 }
 
-static void	on_set_download_force_start (GtkWidget* widget, UgtkApp* app)
+static void on_set_download_force_start (GtkWidget* widget, UgtkApp* app)
 {
 	UgetNode*  node;
 	UgetNode*  cursor;
@@ -479,7 +479,7 @@ static void	on_set_download_force_start (GtkWidget* widget, UgtkApp* app)
 }
 
 // UgtkMenubar.download.move_to
-static void	on_move_download (GtkWidget* widget, UgtkApp* app)
+static void on_move_download (GtkWidget* widget, UgtkApp* app)
 {
 	GPtrArray*  array;
 	UgetNode*   cnode;
@@ -521,7 +521,7 @@ static void	on_move_download (GtkWidget* widget, UgtkApp* app)
 }
 
 // UgtkMenubar.download.prioriy
-static void	on_set_download_prioriy (GtkWidget* widget, UgtkApp* app)
+static void on_set_download_prioriy (GtkWidget* widget, UgtkApp* app)
 {
 	UgetPriority   priority;
 	UgetRelation*  relation;

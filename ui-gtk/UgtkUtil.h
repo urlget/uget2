@@ -49,16 +49,16 @@ int  ugtk_copy_file (const gchar *src_file_utf8, const gchar *new_file_utf8);
 // ------------------------------------------------------------------
 // URI list functions
 // To get URIs from text file, error is G_FILE_ERROR.
-GList*	ugtk_text_file_get_uris (const gchar* file_utf8, GError** error);
+GList*  ugtk_text_file_get_uris (const gchar* file_utf8, GError** error);
 // get URIs from text
-GList*	ugtk_text_get_uris (const gchar* text);
+GList*  ugtk_text_get_uris (const gchar* text);
 // remove URIs from list by scheme
-GList*	ugtk_uri_list_remove_scheme (GList* uris, const gchar* scheme);
+GList*  ugtk_uri_list_remove_scheme (GList* uris, const gchar* scheme);
 
 // ------------------------------------------------------------------
 // check BOM in file header and set it's encoding.
 // return encoding string.
-const char*	ugtk_io_channel_decide_encoding (GIOChannel* channel);
+const char* ugtk_io_channel_decide_encoding (GIOChannel* channel);
 
 // ------------------------------------------------------------------
 // others

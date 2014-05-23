@@ -39,9 +39,9 @@
 #include <glib/gi18n.h>
 
 // response
-static void	on_confirm_to_delete_response (GtkWidget* dialog, gint response,
+static void on_confirm_to_delete_response (GtkWidget* dialog, gint response,
                                            UgtkConfirmDialog* cdialog);
-static void	on_confirm_to_exit_response (GtkWidget* dialog, gint response,
+static void on_confirm_to_exit_response (GtkWidget* dialog, gint response,
                                          UgtkConfirmDialog* cdialog);
 
 UgtkConfirmDialog*  ugtk_confirm_dialog_new (UgtkConfirmDialogMode mode, UgtkApp* app)
@@ -139,7 +139,7 @@ void  ugtk_confirm_dialog_run (UgtkConfirmDialog* cdialog)
 	gtk_widget_show_all ((GtkWidget*) cdialog->self);
 }
 
-static void	on_confirm_to_delete_response (GtkWidget* dialog, gint response,
+static void on_confirm_to_delete_response (GtkWidget* dialog, gint response,
                                            UgtkConfirmDialog* cdialog)
 {
 	UgtkApp*  app;
@@ -157,7 +157,7 @@ static void	on_confirm_to_delete_response (GtkWidget* dialog, gint response,
 	ugtk_confirm_dialog_free (cdialog);
 }
 
-static void	on_confirm_to_exit_response (GtkWidget* dialog, gint response,
+static void on_confirm_to_exit_response (GtkWidget* dialog, gint response,
                                          UgtkConfirmDialog* cdialog)
 {
 	UgtkApp*  app;

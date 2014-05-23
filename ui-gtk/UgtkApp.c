@@ -989,7 +989,7 @@ static GtkWidget*  create_file_chooser (GtkWindow* parent,
 	return dialog;
 }
 
-static void	on_create_torrent_response (GtkWidget* dialog, gint response, UgtkApp* app)
+static void  on_create_torrent_response (GtkWidget* dialog, gint response, UgtkApp* app)
 {
 	gchar*  file;
 
@@ -1005,7 +1005,7 @@ static void	on_create_torrent_response (GtkWidget* dialog, gint response, UgtkAp
 	g_free (file);
 }
 
-static void	on_create_metalink_response (GtkWidget* dialog, gint response, UgtkApp* app)
+static void  on_create_metalink_response (GtkWidget* dialog, gint response, UgtkApp* app)
 {
 	gchar*  file;
 
@@ -1063,7 +1063,7 @@ void  ugtk_app_create_metalink (UgtkApp* app)
 // ------------------------------------
 // import/export
 
-static void	on_save_category_response (GtkWidget* dialog, gint response, UgtkApp* app)
+static void  on_save_category_response (GtkWidget* dialog, gint response, UgtkApp* app)
 {
 	UgetNode* cnode;
 	gchar*    file;
@@ -1086,7 +1086,7 @@ static void	on_save_category_response (GtkWidget* dialog, gint response, UgtkApp
 	g_free (file);
 }
 
-static void	on_load_category_response (GtkWidget* dialog, gint response, UgtkApp* app)
+static void  on_load_category_response (GtkWidget* dialog, gint response, UgtkApp* app)
 {
 	gchar*  file;
 
@@ -1142,7 +1142,7 @@ void  ugtk_app_load_category (UgtkApp* app)
 	gtk_widget_show (dialog);
 }
 
-static void	on_import_html_file_response (GtkWidget* dialog, gint response, UgtkApp* app)
+static void  on_import_html_file_response (GtkWidget* dialog, gint response, UgtkApp* app)
 {
 	UgHtmlFilter*     filter;
 	UgHtmlFilterTag*  tag_a;
@@ -1203,7 +1203,7 @@ static void	on_import_html_file_response (GtkWidget* dialog, gint response, Ugtk
 	ugtk_batch_dialog_run (bdialog);
 }
 
-static void	on_import_text_file_response (GtkWidget* dialog, gint response, UgtkApp* app)
+static void  on_import_text_file_response (GtkWidget* dialog, gint response, UgtkApp* app)
 {
 	UgtkBatchDialog*   bdialog;
 	UgtkSelectorPage*  page;
@@ -1248,7 +1248,7 @@ static void	on_import_text_file_response (GtkWidget* dialog, gint response, Ugtk
 	ugtk_batch_dialog_run (bdialog);
 }
 
-static void	on_export_text_file_response (GtkWidget* dialog, gint response, UgtkApp* app)
+static void  on_export_text_file_response (GtkWidget* dialog, gint response, UgtkApp* app)
 {
 	GIOChannel*  channel;
 	UgetCommon*  common;
@@ -1562,7 +1562,7 @@ void  ugtk_app_backup_attachment (UgtkApp* app, UgetNode* dnode)
 // ------------------------------------
 // others
 
-static void	on_message_response (GtkWidget* dialog, gint response, GtkWidget** value)
+static void  on_message_response (GtkWidget* dialog, gint response, GtkWidget** value)
 {
 	gtk_widget_destroy (dialog);
 	*value = NULL;

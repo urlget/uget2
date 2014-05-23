@@ -66,7 +66,7 @@ void  ugtk_app_init_callback (UgtkApp* app)
 // ----------------------------------------------------------------------------
 // Toolbar
 //
-static void	on_create_download (GtkWidget* widget, UgtkApp* app)
+static void  on_create_download (GtkWidget* widget, UgtkApp* app)
 {
 	ugtk_app_create_download (app, NULL, NULL);
 }
@@ -75,7 +75,7 @@ static void	on_create_download (GtkWidget* widget, UgtkApp* app)
 // UgtkWindow
 
 // UgtkTraveler.download.view selection "changed"
-static void	on_download_selection_changed (GtkTreeSelection* selection, UgtkApp* app)
+static void  on_download_selection_changed (GtkTreeSelection* selection, UgtkApp* app)
 {
 	gint  n_selected;
 
@@ -85,7 +85,7 @@ static void	on_download_selection_changed (GtkTreeSelection* selection, UgtkApp*
 }
 
 // UgtkTraveler.download.view "cursor-changed"
-static void	on_download_cursor_changed (GtkTreeView* view, UgtkApp* app)
+static void  on_download_cursor_changed (GtkTreeView* view, UgtkApp* app)
 {
 	GtkWidget*    item;
 	UgetNode*     node;
@@ -127,7 +127,7 @@ static void	on_download_cursor_changed (GtkTreeView* view, UgtkApp* app)
 
 // UgtkTraveler.category.view "cursor-changed"
 // UgtkTraveler.state.view "cursor-changed"
-static void	on_category_cursor_changed (GtkTreeView* view, UgtkApp* app)
+static void  on_category_cursor_changed (GtkTreeView* view, UgtkApp* app)
 {
 	UgtkTraveler*  traveler;
 
@@ -204,7 +204,7 @@ static void	on_category_cursor_changed (GtkTreeView* view, UgtkApp* app)
 }
 
 // button-press-event
-static gboolean	on_button_press_event (GtkTreeView* view, GdkEventButton* event, UgtkApp* app)
+static gboolean  on_button_press_event (GtkTreeView* view, GdkEventButton* event, UgtkApp* app)
 {
 	GtkTreeSelection* selection;
 	GtkTreePath*      path;
@@ -240,7 +240,7 @@ static gboolean	on_button_press_event (GtkTreeView* view, GdkEventButton* event,
 }
 
 // UgtkSummary.menu.copy signal handler
-static void	on_summary_copy_selected (GtkWidget* widget, UgtkApp* app)
+static void  on_summary_copy_selected (GtkWidget* widget, UgtkApp* app)
 {
 	gchar*  text;
 
@@ -249,7 +249,7 @@ static void	on_summary_copy_selected (GtkWidget* widget, UgtkApp* app)
 }
 
 // UgtkSummary.menu.copy_all signal handler
-static void	on_summary_copy_all (GtkWidget* widget, UgtkApp* app)
+static void  on_summary_copy_all (GtkWidget* widget, UgtkApp* app)
 {
 	gchar*  text;
 
@@ -258,11 +258,11 @@ static void	on_summary_copy_all (GtkWidget* widget, UgtkApp* app)
 }
 
 // This function is used by on_window_key_press_event()
-static void menu_position_func (GtkMenu*	menu,
-                                gint*		x,
-                                gint*		y,
-                                gboolean*	push_in,
-                                gpointer	user_data)
+static void  menu_position_func (GtkMenu*	menu,
+                                 gint*		x,
+                                 gint*		y,
+                                 gboolean*	push_in,
+                                 gpointer	user_data)
 {
 	GtkRequisition	menu_requisition;
 	GtkAllocation	allocation;
@@ -295,7 +295,7 @@ static void menu_position_func (GtkMenu*	menu,
 }
 
 // key-press-event
-static gboolean	on_window_key_press_event (GtkWidget* widget, GdkEventKey* event, UgtkApp* app)
+static gboolean  on_window_key_press_event (GtkWidget* widget, GdkEventKey* event, UgtkApp* app)
 {
 	GtkTreeView*	focus;
 	GtkMenu*		menu;
@@ -327,7 +327,7 @@ static gboolean	on_window_key_press_event (GtkWidget* widget, GdkEventKey* event
 }
 
 // UgtkWindow.self "delete-event"
-static gboolean on_window_delete_event (GtkWidget* widget, GdkEvent* event, UgtkApp* app)
+static gboolean  on_window_delete_event (GtkWidget* widget, GdkEvent* event, UgtkApp* app)
 {
 	if (app->setting.ui.close_to_tray == FALSE)
 		ugtk_app_decide_to_quit (app);
@@ -339,7 +339,7 @@ static gboolean on_window_delete_event (GtkWidget* widget, GdkEvent* event, Ugtk
 }
 
 // UgtkTraveler.download.view "key-press-event"
-static gboolean	on_traveler_key_press_event  (GtkWidget* widget, GdkEventKey* event, UgtkApp* app)
+static gboolean  on_traveler_key_press_event  (GtkWidget* widget, GdkEventKey* event, UgtkApp* app)
 {
 /*
 	// check shift key status
