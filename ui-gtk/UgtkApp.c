@@ -305,8 +305,8 @@ void  ugtk_app_set_plugin_setting (UgtkApp* app, UgtkSetting* setting)
 		                 (void*)(intptr_t) setting->aria2.launch);
 		uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_ARIA2_SHUTDOWN,
 		                 (void*)(intptr_t) setting->aria2.shutdown);
-		limit[0] = setting->aria2.limit.download;
-		limit[1] = setting->aria2.limit.upload;
+		limit[0] = setting->aria2.limit.download * 1024;
+		limit[1] = setting->aria2.limit.upload * 1024;
 		uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_SPEED_LIMIT, limit);
 	}
 
