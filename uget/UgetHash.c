@@ -39,9 +39,10 @@
 #include <UgetData.h>
 #include <UgetHash.h>
 
-#if defined NO_URI_HASH
+#ifdef NO_URI_HASH
+#else
 
-#elif defined HAVE_GLIB
+#if defined HAVE_GLIB
 
 #define ug_hash_table_destroy    g_hash_table_destroy
 #define ug_hash_table_lookup     g_hash_table_lookup
@@ -638,3 +639,4 @@ void  uget_uri_hash_remove_category (void* uuhash, UgetNode* cnode)
 	}
 }
 
+#endif // NO_URI_HASH
