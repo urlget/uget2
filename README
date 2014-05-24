@@ -1,9 +1,11 @@
 uGet 1.95:
 1. curl plug-in: Program must get file timestamp even if file has existed.
-2. aria2 plug-in: "max-concurrent-downloads" is global option, don't use it with gid.
-3. aria2 plug-in: add "split" option to avoid less connections if user specify mirrors.
-4. Remove line breaks from setting of clipboard monitor and aria2 arguments.
-5. Add missing Android.mk files.
+2. curl plug-in: Enable infinite retries if retry limit is zero.
+3. aria2 plug-in: "max-concurrent-downloads" is global option, don't use it with gid.
+4. aria2 plug-in: add "split" option to avoid less connections if user specify mirrors.
+5. aria2 plug-in: global speed limit must set correct value.
+6. Remove line breaks from setting of clipboard monitor and aria2 arguments.
+7. Add missing Android.mk files.
 
 uGet 1.93:
 1. aria2 plug-in: support RPC authorization secret token (Aria2 v1.8.4 new feature)

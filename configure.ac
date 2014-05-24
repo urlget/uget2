@@ -1,4 +1,4 @@
-AC_INIT(uget, 1.93)
+AC_INIT(uget, 1.95)
 
 ## Use automake (add automake to autogen.sh)
 AM_INIT_AUTOMAKE
