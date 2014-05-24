@@ -113,6 +113,10 @@ static void ugtk_setting_set_by_v1 (UgtkSetting* setting, UgSetting* setting1)
 	setting->ui.start_notification = setting1->ui.start_notification;
 	setting->ui.sound_notification = setting1->ui.sound_notification;
 	setting->ui.apply_recently = setting1->ui.apply_recently;
+#ifdef HAVE_APP_INDICATOR
+	setting->ui.app_indicator = TRUE;
+#endif
+
 	// ClipboardSetting
 	ug_free (setting->clipboard.pattern);
 	setting->clipboard.pattern = setting1->clipboard.pattern;
