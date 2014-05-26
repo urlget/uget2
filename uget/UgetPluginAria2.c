@@ -61,6 +61,13 @@ static gboolean	uget_plugin_aria2_set_proxy_pwmd (UgetPluginAria2 *plugin, UgVal
 #define  ug_sleep(millisecond)    usleep (millisecond * 1000)
 #endif // _WIN32 || _WIN64
 
+#ifdef HAVE_GLIB
+#include <glib/gi18n.h>
+#else
+#define N_(x)   x
+#define  _(x)   x
+#endif
+
 static void  aria2_file_clear (Aria2File* afile);
 static void* aria2_file_array_find (Aria2FileArray* afiles, const char* path);
 static void* ug_file_to_base64  (const char* file, int* length);
@@ -261,41 +268,41 @@ static const char* error_string[] =
 {
 	NULL,
 	// 1 - 10
-	"aria2: an unknown error occurred.",
-	"aria2: time out occurred.",
-	"aria2: resource was not found.",
-	"aria2 saw the specfied number of 'resource not found' error. See --max-file-not-found option",
-	"aria2: speed was too slow.",
-	"aria2: network problem occurred.",
-	"aria2: unfinished downloads.",
-	"Not Resumable",    // _("Not Resumable"),
-	"Out of resource",  // _(),
-	"aria2: piece length was different from one in .aria2 control file.",
+	N_("aria2: an unknown error occurred."),
+	N_("aria2: time out occurred."),
+	N_("aria2: resource was not found."),
+	N_("aria2 saw the specfied number of 'resource not found' error. See --max-file-not-found option"),
+	N_("aria2: speed was too slow."),
+	N_("aria2: network problem occurred."),
+	N_("aria2: unfinished downloads."),
+	N_("Not Resumable"),    // _("Not Resumable"),
+	N_("Out of resource"),  // _(),
+	N_("aria2: piece length was different from one in .aria2 control file."),
 	// 11 - 20
-	"aria2 was downloading same file.",
-	"aria2 was downloading same info hash torrent.",
-	"aria2: file already existed. See --allow-overwrite option.",
-	"Output file can't be renamed.",  // _("Output file can't be renamed."),
-	"aria2: could not open existing file.",
-	"aria2: could not create new file or truncate existing file.",
-	"aria2: file I/O error occurred.",
-	"Folder can't be created.",    // UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
-	"aria2: name resolution failed.",
-	"aria2: could not parse Metalink document.",
+	N_("aria2 was downloading same file."),
+	N_("aria2 was downloading same info hash torrent."),
+	N_("aria2: file already existed. See --allow-overwrite option."),
+	N_("Output file can't be renamed."),  // _("Output file can't be renamed."),
+	N_("aria2: could not open existing file."),
+	N_("aria2: could not create new file or truncate existing file."),
+	N_("aria2: file I/O error occurred."),
+	N_("Folder can't be created."),    // UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
+	N_("aria2: name resolution failed."),
+	N_("aria2: could not parse Metalink document."),
 	// 21 - 30
-	"aria2: FTP command failed.",
-	"aria2: HTTP response header was bad or unexpected.",
-	"Too many redirections.",
-	"aria2: HTTP authorization failed.",
-	"aria2: could not parse bencoded file(usually .torrent file).",
-	"aria2: torrent file was corrupted or missing information.",
-	"aria2: Magnet URI was bad.",
-	"aria2: bad/unrecognized option was given or unexpected option argument was given.",
-	"aria2: remote server was unable to handle the request.",
-	"aria2: could not parse JSON-RPC request.",
+	N_("aria2: FTP command failed."),
+	N_("aria2: HTTP response header was bad or unexpected."),
+	N_("Too many redirections."),
+	N_("aria2: HTTP authorization failed."),
+	N_("aria2: could not parse bencoded file(usually .torrent file)."),
+	N_("aria2: torrent file was corrupted or missing information."),
+	N_("aria2: Magnet URI was bad."),
+	N_("aria2: bad/unrecognized option was given or unexpected option argument was given."),
+	N_("aria2: remote server was unable to handle the request."),
+	N_("aria2: could not parse JSON-RPC request."),
 };
 
-static const char* aria2_no_response = "No response. Is aria2 shutdown?";
+static const char* aria2_no_response = N_("No response. Is aria2 shutdown?");
 
 static void  plugin_init (UgetPluginAria2* plugin)
 {
@@ -406,6 +413,7 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 {
 	int        index;
 	UgetNode*  node;
+	UgetEvent* event;
 	struct {
 		UgetCommon*      common;
 		UgetProgress*    progress;
@@ -475,8 +483,8 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 			if (index != -1) {
 				ug_free (node->name);
 				node->name = ug_uri_get_file (&plugin->uri_part);
-				uget_plugin_post ((UgetPlugin*) plugin,
-						uget_event_new (UGET_EVENT_NAME));
+				event = uget_event_new (UGET_EVENT_NAME);
+				uget_plugin_post ((UgetPlugin*) plugin, event);
 #ifndef NDEBUG
 				// debug
 				if (temp.common->debug_level)
@@ -535,8 +543,8 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 		// If no followed gid, it was completed.
 		else if (plugin->gids.length == 0) {
 			node->state |= UGET_STATE_COMPLETED;
-			uget_plugin_post ((UgetPlugin*)plugin,
-					uget_event_new (UGET_EVENT_COMPLETED));
+			event = uget_event_new (UGET_EVENT_COMPLETED);
+			uget_plugin_post ((UgetPlugin*)plugin, event);
 		}
 		// clear plugin->files
 		ug_array_foreach (&plugin->files, (UgForeachFunc)aria2_file_clear, NULL);
@@ -565,9 +573,9 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 			}
 			else {
 				plugin->node->state |= UGET_STATE_ERROR;
-				uget_plugin_post ((UgetPlugin*) plugin,
-						uget_event_new_error (
-								UGET_EVENT_ERROR_TOO_MANY_RETRIES, NULL));
+				event = uget_event_new_error (
+						UGET_EVENT_ERROR_TOO_MANY_RETRIES, NULL);
+				uget_plugin_post ((UgetPlugin*) plugin, event);
 			}
 		}
 		else {
@@ -576,9 +584,14 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 			// if this is last gid.
 			if (plugin->gids.length == 1) {
 				plugin->node->state |= UGET_STATE_ERROR;
-				uget_plugin_post ((UgetPlugin*)plugin,
-						uget_event_new_error (0,
-								error_string[plugin->errorCode]));
+#ifdef HAVE_GLIB
+				event = uget_event_new_error (0,
+						gettext (error_string[plugin->errorCode]));
+#else
+				event = uget_event_new_error (0,
+						error_string[plugin->errorCode]);
+#endif
+				uget_plugin_post ((UgetPlugin*)plugin, event);
 			}
 		}
 
@@ -591,8 +604,8 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 
 	case ARIA2_STATUS_REMOVED:
 		// debug
-		uget_plugin_post ((UgetPlugin*)plugin,
-				uget_event_new_normal (0, "aria2: gid was removed."));
+		event = uget_event_new_normal (0, _("aria2: gid was removed."));
+		uget_plugin_post ((UgetPlugin*)plugin, event);
 		// remove completed gid
 		ug_free (plugin->gids.at[0]);
 		plugin->gids.length -= 1;
@@ -681,8 +694,13 @@ restart_thread:
 	plugin->restart = FALSE;
 	res = uget_aria2_respond (global.data, plugin->start_request);
 	if (res == NULL) {
-		uget_plugin_post ((UgetPlugin*)plugin,
+#ifdef HAVE_GLIB
+		uget_plugin_post ((UgetPlugin*) plugin,
+				uget_event_new_error(0, gettext (aria2_no_response)));
+#else
+		uget_plugin_post ((UgetPlugin*) plugin,
 				uget_event_new_error(0, aria2_no_response));
+#endif
 		plugin->node->state |= UGET_STATE_ERROR;
 		goto exit;
 	}
@@ -749,8 +767,13 @@ restart_thread:
 		// status respond
 		res = uget_aria2_respond (global.data, req);
 		if (res == NULL) {
-			uget_plugin_post ((UgetPlugin*)plugin,
+#ifdef HAVE_GLIB
+			uget_plugin_post ((UgetPlugin*) plugin,
+					uget_event_new_error(0, gettext (aria2_no_response)));
+#else
+			uget_plugin_post ((UgetPlugin*) plugin,
 					uget_event_new_error(0, aria2_no_response));
+#endif
 			recycle_status_request (req);
 			plugin->node->state |= UGET_STATE_ERROR;
 			goto exit;
