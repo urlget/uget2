@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-06 15:48+0800\n"
+"POT-Creation-Date: 2014-05-27 14:40+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -13,525 +13,902 @@ msgstr ""
 "X-Poedit-Language: Chinese\n"
 "X-Poedit-Country: TAIWAN\n"
 
-#. UG_MESSAGE_INFO_CUSTOM
-#: ../uglib/UgMessage.c:52
+#: ../uget/UgetApp.c:95
+#, fuzzy
+msgid "All Category"
+msgstr "分類"
+
+#. UGET_EVENT_NORMAL_CUSTOM
+#: ../uget/UgetEvent.c:58
 msgid "Connecting..."
 msgstr "連線中..."
 
-#. UG_MESSAGE_INFO_CONNECT
-#: ../uglib/UgMessage.c:53
+#. UGET_EVENT_NORMAL_CONNECT
+#: ../uget/UgetEvent.c:59
 msgid "Transmitting..."
 msgstr "傳輸中..."
 
-#. UG_MESSAGE_INFO_TRANSMIT,
-#: ../uglib/UgMessage.c:54
-#: ../uget-gtk/UgDownloadWidget.c:896
+#. UGET_EVENT_NORMAL_TRANSMIT,
+#: ../uget/UgetEvent.c:60
+#: ../ui-gtk/UgtkNodeView.c:874
 msgid "Retry"
 msgstr "重試"
 
-#. UG_MESSAGE_INFO_RETRY,
-#: ../uglib/UgMessage.c:55
+#. UGET_EVENT_NORMAL_RETRY,
+#: ../uget/UgetEvent.c:61
 msgid "Download completed"
 msgstr "下載完成"
 
-#. UG_MESSAGE_INFO_COMPLETE,
-#: ../uglib/UgMessage.c:56
-#: ../uget-gtk/UgCategoryWidget.c:45
+#. UGET_EVENT_NORMAL_COMPLETE,
+#: ../uget/UgetEvent.c:62
+#: ../ui-gtk/UgtkNodeView.c:613
 msgid "Finished"
 msgstr "已結束"
 
-#. UG_MESSAGE_INFO_FINISH,
+#. UGET_EVENT_NORMAL_FINISH,
 #. resumable
-#: ../uglib/UgMessage.c:58
+#: ../uget/UgetEvent.c:64
 msgid "Resumable"
 msgstr "可續傳"
 
-#. UG_MESSAGE_INFO_RESUMABLE,
-#: ../uglib/UgMessage.c:59
-#: ../uglib/UgPlugin-aria2.c:890
+#. UGET_EVENT_NORMAL_RESUMABLE,
+#: ../uget/UgetEvent.c:65
+#: ../uget/UgetPluginAria2.c:278
 msgid "Not Resumable"
 msgstr "無法續傳"
 
-#. UG_MESSAGE_WARNING_CUSTOM
-#: ../uglib/UgMessage.c:67
-#: ../uglib/UgPlugin-aria2.c:914
+#. UGET_EVENT_WARNING_CUSTOM
+#: ../uget/UgetEvent.c:73
+#: ../uget/UgetPluginAria2.c:285
 msgid "Output file can't be renamed."
 msgstr "輸出檔無法改名."
 
-#. UG_MESSAGE_ERROR_CUSTOM
-#: ../uglib/UgMessage.c:75
+#. UGET_EVENT_ERROR_CUSTOM
+#: ../uget/UgetEvent.c:81
 msgid "couldn't connect to host."
 msgstr "無法連接到主機."
 
-#. UG_MESSAGE_ERROR_CONNECT_FAILED
-#: ../uglib/UgMessage.c:76
+#. UGET_EVENT_ERROR_CONNECT_FAILED
+#: ../uget/UgetEvent.c:82
+#: ../uget/UgetPluginAria2.c:289
 msgid "Folder can't be created."
 msgstr "資料夾無法建立"
 
-#. UG_MESSAGE_ERROR_FOLDER_CREATE_FAILED
-#: ../uglib/UgMessage.c:77
+#. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
+#: ../uget/UgetEvent.c:83
 msgid "File can't be created (bad filename or file exist)."
 msgstr "檔案無法建立 (檔名錯誤或檔案已經存在)."
 
-#. UG_MESSAGE_ERROR_FILE_CREATE_FAILED
-#: ../uglib/UgMessage.c:78
+#. UGET_EVENT_ERROR_FILE_CREATE_FAILED
+#: ../uget/UgetEvent.c:84
 msgid "File can't be opened."
 msgstr "檔案無法開啟."
 
-#. UG_MESSAGE_ERROR_FILE_OPEN_FAILED
-#: ../uglib/UgMessage.c:79
-#: ../uglib/UgRunning.c:104
-msgid "Unable to create thread, reduce number of download."
+#. UGET_EVENT_ERROR_FILE_OPEN_FAILED
+#: ../uget/UgetEvent.c:85
+#, fuzzy
+msgid "Unable to create thread."
 msgstr "無法建立執行緒, 請減少下載數量."
 
-#. UG_MESSAGE_ERROR_THREAD_CREATE_FAILED
-#: ../uglib/UgMessage.c:80
+#. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
+#: ../uget/UgetEvent.c:86
+msgid "Incorrect source (different size)."
+msgstr ""
+
+#. UGET_EVENT_ERROR_INCORRECT_SOURCE,
+#: ../uget/UgetEvent.c:87
 msgid "Out of resource (disk full or run out of memory)."
 msgstr "系統資源不足 (儲存空間或記憶體不足)"
 
-#. UG_MESSAGE_ERROR_OUT_OF_RESOURCE
-#: ../uglib/UgMessage.c:81
+#. UGET_EVENT_ERROR_OUT_OF_RESOURCE
+#: ../uget/UgetEvent.c:88
 msgid "No output file."
 msgstr "沒有指定輸出檔案."
 
-#. UG_MESSAGE_ERROR_NO_OUTPUT_FILE
-#: ../uglib/UgMessage.c:82
+#. UGET_EVENT_ERROR_NO_OUTPUT_FILE
+#: ../uget/UgetEvent.c:89
 msgid "No output setting."
 msgstr "沒有輸出的設定."
 
-#. UG_MESSAGE_ERROR_NO_OUTPUT_SETTING
-#: ../uglib/UgMessage.c:83
+#. UGET_EVENT_ERROR_NO_OUTPUT_SETTING
+#: ../uget/UgetEvent.c:90
 msgid "Too many retries."
 msgstr "重試太多次."
 
-#. UG_MESSAGE_ERROR_TOO_MANY_RETRIES
-#: ../uglib/UgMessage.c:84
+#. UGET_EVENT_ERROR_TOO_MANY_RETRIES
+#: ../uget/UgetEvent.c:91
 msgid "Unsupported scheme (protocol)."
 msgstr "不支援的通訊協定."
 
-#. UG_MESSAGE_ERROR_UNSUPPORTED_SCHEME
-#: ../uglib/UgMessage.c:85
+#. UGET_EVENT_ERROR_UNSUPPORTED_SCHEME
+#: ../uget/UgetEvent.c:92
 msgid "Unsupported file."
 msgstr "不支援的檔案."
 
-#. UG_MESSAGE_ERROR_HTTP_MEMBER_CUSTOM
-#: ../uglib/UgMessage.c:103
+#. 1 - 10
+#: ../uget/UgetPluginAria2.c:271
+msgid "aria2: an unknown error occurred."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:272
+msgid "aria2: time out occurred."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:273
+msgid "aria2: resource was not found."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:274
+msgid ""
+"aria2 saw the specfied number of 'resource not found' error. See --max-file-"
+"not-found option"
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:275
+msgid "aria2: speed was too slow."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:276
+msgid "aria2: network problem occurred."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:277
+msgid "aria2: unfinished downloads."
+msgstr ""
+
+#. _("Not Resumable"),
+#: ../uget/UgetPluginAria2.c:279
+msgid "Out of resource"
+msgstr ""
+
+#. _(),
+#: ../uget/UgetPluginAria2.c:280
+msgid "aria2: piece length was different from one in .aria2 control file."
+msgstr ""
+
+#. 11 - 20
+#: ../uget/UgetPluginAria2.c:282
+msgid "aria2 was downloading same file."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:283
+msgid "aria2 was downloading same info hash torrent."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:284
+msgid "aria2: file already existed. See --allow-overwrite option."
+msgstr ""
+
+#. _("Output file can't be renamed."),
+#: ../uget/UgetPluginAria2.c:286
+#, fuzzy
+msgid "aria2: could not open existing file."
+msgstr "post 檔案開啟失敗."
+
+#: ../uget/UgetPluginAria2.c:287
+msgid "aria2: could not create new file or truncate existing file."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:288
+msgid "aria2: file I/O error occurred."
+msgstr ""
+
+#. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
+#: ../uget/UgetPluginAria2.c:290
+msgid "aria2: name resolution failed."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:291
+msgid "aria2: could not parse Metalink document."
+msgstr ""
+
+#. 21 - 30
+#: ../uget/UgetPluginAria2.c:293
+msgid "aria2: FTP command failed."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:294
+msgid "aria2: HTTP response header was bad or unexpected."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:295
 msgid "Too many redirections."
 msgstr "重新導向太多次."
 
-#. UG_MESSAGE_ERROR_HTTP_MEMBER_TOO_MANY_REDIRECTIONS
-#: ../uglib/UgMessage.c:104
-msgid "Failed to open posted file."
-msgstr "post 檔案開啟失敗."
+#: ../uget/UgetPluginAria2.c:296
+msgid "aria2: HTTP authorization failed."
+msgstr ""
 
-#: ../uglib/UgRunning.c:91
-msgid "No plug-in support this scheme or file."
-msgstr "沒有插件支援這種方案或檔案."
+#: ../uget/UgetPluginAria2.c:297
+msgid "aria2: could not parse bencoded file(usually .torrent file)."
+msgstr ""
 
-#: ../uget-gtk/UgApp-gtk.c:571
-#: ../uget-gtk/UgApp-gtk-timeout.c:543
-msgid "tasks"
-msgstr "任務"
+#: ../uget/UgetPluginAria2.c:298
+msgid "aria2: torrent file was corrupted or missing information."
+msgstr ""
 
-#: ../uget-gtk/UgApp-gtk.c:616
-#, c-format
-msgid "Selected %d items"
-msgstr "已選擇 %d 個項目"
+#: ../uget/UgetPluginAria2.c:299
+msgid "aria2: Magnet URI was bad."
+msgstr ""
 
-#. create confirmation dialog
-#: ../uget-gtk/UgApp-gtk.c:686
-msgid "Really Quit?"
-msgstr "真的要離開?"
+#: ../uget/UgetPluginAria2.c:300
+msgid ""
+"aria2: bad/unrecognized option was given or unexpected option argument was "
+"given."
+msgstr ""
 
-#: ../uget-gtk/UgApp-gtk.c:703
-msgid "Are you sure you want to quit?"
-msgstr "你確定要離開?"
+#: ../uget/UgetPluginAria2.c:301
+msgid "aria2: remote server was unable to handle the request."
+msgstr ""
 
-#: ../uget-gtk/UgApp-gtk.c:708
-msgid "Remember this action"
-msgstr "記住這個設定"
+#: ../uget/UgetPluginAria2.c:302
+msgid "aria2: could not parse JSON-RPC request."
+msgstr ""
 
-#. radio button
-#: ../uget-gtk/UgApp-gtk.c:713
-msgid "Minimize to tray"
-msgstr "縮小到系統列"
+#: ../uget/UgetPluginAria2.c:305
+msgid "No response. Is aria2 shutdown?"
+msgstr ""
 
-#: ../uget-gtk/UgApp-gtk.c:715
-msgid "Exit uGet"
-msgstr "離開 uGet"
+#. debug
+#: ../uget/UgetPluginAria2.c:607
+msgid "aria2: gid was removed."
+msgstr ""
 
-#. create confirmation dialog
-#: ../uget-gtk/UgApp-gtk.c:770
-msgid "Really delete files?"
-msgstr "真的要刪除文件？"
-
-#: ../uget-gtk/UgApp-gtk.c:788
-msgid "Are you sure you want to delete files?"
-msgstr "你確定要刪除檔案?"
-
-#: ../uget-gtk/UgApp-gtk.c:793
-msgid "Do not ask me again"
-msgstr "下次別問我"
-
-#: ../uget-gtk/UgApp-gtk.c:835
-#: ../uget-gtk/UgApp-gtk-callback.c:562
-#: ../uget-gtk/UgApp-gtk-callback.c:595
-msgid "Error"
-msgstr "錯誤"
-
-#: ../uget-gtk/UgApp-gtk.c:843
-#: ../uget-gtk/UgSummary.c:173
-msgid "Message"
-msgstr "訊息"
-
-#: ../uget-gtk/UgApp-gtk-aria2.c:303
-msgid "failed to launch aria2."
-msgstr "aria2 啟動失敗。"
-
-#: ../uget-gtk/UgApp-gtk-callback.c:59
+#: ../ui-gtk/UgtkAboutDialog.c:46
 msgid "Download Manager"
 msgstr "下載管理程式"
 
-#: ../uget-gtk/UgApp-gtk-callback.c:61
+#: ../ui-gtk/UgtkAboutDialog.c:48
 msgid "translator-credits"
 msgstr "繁體中文 (zh_TW) - 黃正雄"
 
-#: ../uget-gtk/UgApp-gtk-callback.c:113
-#: ../uget-gtk/UgApp-gtk-callback.c:126
-msgid "New Category"
-msgstr "新增分類"
+#: ../ui-gtk/UgtkAboutDialog.c:80
+msgid "uGet Founder: "
+msgstr ""
 
-#: ../uget-gtk/UgApp-gtk-callback.c:121
-msgid "Copy - "
-msgstr "複製 - "
+#: ../ui-gtk/UgtkAboutDialog.c:81
+msgid "uGet Project Manager: "
+msgstr ""
 
-#: ../uget-gtk/UgApp-gtk-callback.c:176
-msgid "Category Properties"
-msgstr "分類內容"
+#: ../ui-gtk/UgtkApp-timeout.c:250
+#: ../ui-gtk/UgtkTrayIcon.c:204
+msgid "tasks"
+msgstr "任務"
 
-#: ../uget-gtk/UgApp-gtk-callback.c:265
-#: ../uget-gtk/UgApp-gtk-timeout.c:258
+#: ../ui-gtk/UgtkApp-timeout.c:368
+msgid "New from Clipboard"
+msgstr "從剪貼簿新增"
+
+#: ../ui-gtk/UgtkApp-timeout.c:370
+#: ../ui-gtk/UgtkApp.c:641
 msgid "New Download"
 msgstr "新增下載"
 
-#: ../uget-gtk/UgApp-gtk-callback.c:293
-msgid "URL Sequence batch"
-msgstr "URL 序列下載"
-
-#: ../uget-gtk/UgApp-gtk-callback.c:316
-msgid "No URLs found in clipboard."
-msgstr "剪貼簿裡面沒有網址."
-
-#: ../uget-gtk/UgApp-gtk-callback.c:320
-msgid "Clipboard batch"
-msgstr "剪貼簿批次下載"
-
-#: ../uget-gtk/UgApp-gtk-callback.c:328
-#: ../uget-gtk/UgApp-gtk-timeout.c:168
-#: ../uget-gtk/UgSettingDialog.c:80
+#: ../ui-gtk/UgtkApp-timeout.c:393
+#: ../ui-gtk/UgtkApp.c:1387
+#: ../ui-gtk/UgtkSettingDialog.c:103
 msgid "Clipboard"
 msgstr "剪貼簿"
 
-#: ../uget-gtk/UgApp-gtk-callback.c:354
-msgid "New Torrent"
-msgstr "新增 Torrent"
+#: ../ui-gtk/UgtkApp-timeout.c:395
+msgid "Command line"
+msgstr "命令列"
 
-#: ../uget-gtk/UgApp-gtk-callback.c:376
-msgid "Open Torrent file"
-msgstr "開啟 Torrent 檔案"
-
-#: ../uget-gtk/UgApp-gtk-callback.c:399
-msgid "New Metalink"
-msgstr "新增 Metalink"
-
-#: ../uget-gtk/UgApp-gtk-callback.c:422
-msgid "Open Metalink file"
-msgstr "開啟 Metalink 檔案"
-
-#: ../uget-gtk/UgApp-gtk-callback.c:556
-#, c-format
-msgid "Can't launch default application for file '%s'."
-msgstr "無法啟動檔案 '%s' 的預設應用程式."
-
-#: ../uget-gtk/UgApp-gtk-callback.c:589
-#, c-format
-msgid "'%s' - This folder does not exist."
-msgstr "'%s' - 這個資料夾不存在."
-
-#: ../uget-gtk/UgApp-gtk-callback.c:669
-msgid "Download Properties"
-msgstr "下載內容"
-
-#. add link
-#: ../uget-gtk/UgApp-gtk-callback.c:932
-msgid "Link <A>"
-msgstr "連結 <A>"
-
-#. add image
-#: ../uget-gtk/UgApp-gtk-callback.c:937
-msgid "Image <IMG>"
-msgstr "影像 <IMG>"
-
-#: ../uget-gtk/UgApp-gtk-callback.c:953
-msgid "Import URLs from HTML file"
-msgstr "從 HTML 檔案匯入網址"
-
-#: ../uget-gtk/UgApp-gtk-callback.c:994
-msgid "Text File"
-msgstr "文字檔案"
-
-#: ../uget-gtk/UgApp-gtk-callback.c:1010
-msgid "Import URLs from text file"
-msgstr "從文字檔案匯入網址"
-
-#: ../uget-gtk/UgApp-gtk-callback.c:1056
-#: ../uget-gtk/UgApp-gtk-callback.c:1057
-msgid "Export to"
-msgstr "匯出到"
-
-#: ../uget-gtk/UgApp-gtk-callback.c:1169
-msgid "Settings"
-msgstr "設定"
-
-#: ../uget-gtk/UgApp-gtk-callback.c:1407
-msgid "uGet 創辦人: "
+#: ../ui-gtk/UgtkApp-timeout.c:752
+msgid "Error Occurred"
 msgstr ""
 
-#: ../uget-gtk/UgApp-gtk-callback.c:1408
-msgid "uGet 項目經理: "
+#: ../ui-gtk/UgtkApp-timeout.c:753
+#, fuzzy
+msgid "Error Occurred when downloading."
+msgstr "下載完成時發出聲音"
+
+#: ../ui-gtk/UgtkApp-timeout.c:754
+msgid "Download Starting"
+msgstr "開始下載"
+
+#: ../ui-gtk/UgtkApp-timeout.c:755
+msgid "Starting download queue."
+msgstr "開始下載佇列"
+
+#: ../ui-gtk/UgtkApp-timeout.c:756
+msgid "Download Completed"
+msgstr "下載完成"
+
+#: ../ui-gtk/UgtkApp-timeout.c:757
+msgid "All queuing downloads have been completed."
+msgstr "所有排隊中的檔案下載完成."
+
+#. ----------------------------------------------------
+#. frame for Status (start mode)
+#: ../ui-gtk/UgtkApp-ui.c:115
+#: ../ui-gtk/UgtkDownloadForm.c:220
+#: ../ui-gtk/UgtkNodeView.c:997
+msgid "Status"
+msgstr "狀態"
+
+#. Summary Items - Category
+#. Download Columns - Category
+#: ../ui-gtk/UgtkApp-ui.c:117
+#: ../ui-gtk/UgtkMenubar-ui.c:264
+#: ../ui-gtk/UgtkMenubar-ui.c:292
+#: ../ui-gtk/UgtkMenubar-ui.c:377
+#: ../ui-gtk/UgtkNodeDialog.c:392
+#: ../ui-gtk/UgtkNodeView.c:889
+#: ../ui-gtk/UgtkNodeView.c:977
+#: ../ui-gtk/UgtkSummary.c:139
+msgid "Category"
+msgstr "分類"
+
+#. toolbar right side
+#: ../ui-gtk/UgtkApp-ui.c:183
+msgid "Sort"
 msgstr ""
 
-#. New Download
+#: ../ui-gtk/UgtkApp-ui.c:195
+msgid "Create new download"
+msgstr "建立新的下載"
+
 #. New Download (accelerators)
-#: ../uget-gtk/UgApp-gtk-gui.c:102
-#: ../uget-gtk/UgApp-gtk-gui.c:293
+#. gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
+#. New Download
+#: ../ui-gtk/UgtkApp-ui.c:205
+#: ../ui-gtk/UgtkMenubar-ui.c:58
+#: ../ui-gtk/UgtkTrayIcon.c:59
 msgid "New _Download..."
 msgstr "新增下載(_D)..."
 
+#. New Category
+#: ../ui-gtk/UgtkApp-ui.c:212
+#: ../ui-gtk/UgtkMenubar-ui.c:65
+msgid "New _Category..."
+msgstr "新增分類(_C)..."
+
 #. New Clipboard batch
-#: ../uget-gtk/UgApp-gtk-gui.c:109
-#: ../uget-gtk/UgApp-gtk-gui.c:306
+#: ../ui-gtk/UgtkApp-ui.c:218
+#: ../ui-gtk/UgtkTrayIcon.c:66
 msgid "New Clipboard _batch..."
 msgstr "新增剪貼簿批次下載(_B)..."
 
+#. New URL Sequence batch
+#: ../ui-gtk/UgtkApp-ui.c:225
+msgid "New _URL Sequence batch..."
+msgstr "新增 _URL 序列下載..."
+
 #. New Torrent
-#: ../uget-gtk/UgApp-gtk-gui.c:118
-#: ../uget-gtk/UgApp-gtk-gui.c:323
+#. separator
+#. gtk_menu_shell_append ((GtkMenuShell*)submenu, gtk_separator_menu_item_new() );
+#. New Torrent
+#: ../ui-gtk/UgtkApp-ui.c:235
+#: ../ui-gtk/UgtkMenubar-ui.c:73
+#: ../ui-gtk/UgtkTrayIcon.c:75
 msgid "New Torrent..."
 msgstr "新增 Torrent..."
 
 #. New Metalink
-#: ../uget-gtk/UgApp-gtk-gui.c:125
-#: ../uget-gtk/UgApp-gtk-gui.c:330
+#: ../ui-gtk/UgtkApp-ui.c:242
+#: ../ui-gtk/UgtkMenubar-ui.c:79
+#: ../ui-gtk/UgtkTrayIcon.c:82
 msgid "New Metalink..."
 msgstr "新增 Metalink..."
 
-#. Settings
-#. --- Completion Auto-Actions --- end ---
-#. menu_item = gtk_menu_item_new_with_mnemonic (_("_Settings..."));
-#: ../uget-gtk/UgApp-gtk-gui.c:134
-#: ../uget-gtk/UgApp-gtk-gui.c:556
-msgid "_Settings..."
-msgstr "設定(_S)..."
+#: ../ui-gtk/UgtkApp-ui.c:251
+#, fuzzy
+msgid "Save all settings"
+msgstr "分類設定"
 
-#. Show window
-#: ../uget-gtk/UgApp-gtk-gui.c:148
-msgid "Show window"
-msgstr "顯示視窗"
-
-#. Offline mode
-#: ../uget-gtk/UgApp-gtk-gui.c:153
-#: ../uget-gtk/UgApp-gtk-gui.c:493
-msgid "_Offline Mode"
-msgstr "離線模式(_O)"
-
-#: ../uget-gtk/UgApp-gtk-gui.c:283
-msgid "Create new download"
-msgstr "建立新的下載"
-
-#. New Category
-#: ../uget-gtk/UgApp-gtk-gui.c:300
-msgid "New _Category..."
-msgstr "新增分類(_C)..."
-
-#. New URL Sequence batch
-#: ../uget-gtk/UgApp-gtk-gui.c:313
-msgid "New _URL Sequence batch..."
-msgstr "新增 _URL 序列下載..."
-
-#: ../uget-gtk/UgApp-gtk-gui.c:339
-msgid "Save all"
-msgstr "全部儲存"
-
-#: ../uget-gtk/UgApp-gtk-gui.c:347
+#: ../ui-gtk/UgtkApp-ui.c:259
 msgid "Set selected download runnable"
 msgstr "選擇的項目設定為可運行的"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:352
+#: ../ui-gtk/UgtkApp-ui.c:264
 msgid "Set selected download to pause"
 msgstr "選擇的項目設定為暫停"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:357
+#: ../ui-gtk/UgtkApp-ui.c:269
 msgid "Set selected download properties"
 msgstr "設定選擇的項目的內容"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:365
+#: ../ui-gtk/UgtkApp-ui.c:277
 msgid "Move selected download up"
 msgstr "選擇的項目向上移"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:370
+#: ../ui-gtk/UgtkApp-ui.c:282
 msgid "Move selected download down"
 msgstr "選擇的項目向下移"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:375
+#: ../ui-gtk/UgtkApp-ui.c:287
 msgid "Move selected download to top"
 msgstr "選擇的項目向上移到頂"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:380
+#: ../ui-gtk/UgtkApp-ui.c:292
 msgid "Move selected download to bottom"
 msgstr "選擇的項目向下移到底"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:403
+#: ../ui-gtk/UgtkApp.c:613
+msgid "New Category"
+msgstr "新增分類"
+
+#: ../ui-gtk/UgtkApp.c:624
+msgid "Copy - "
+msgstr "複製 - "
+
+#: ../ui-gtk/UgtkApp.c:762
+msgid "Category Properties"
+msgstr "分類內容"
+
+#: ../ui-gtk/UgtkApp.c:776
+msgid "Download Properties"
+msgstr "下載內容"
+
+#: ../ui-gtk/UgtkApp.c:1004
+msgid "New Torrent"
+msgstr "新增 Torrent"
+
+#: ../ui-gtk/UgtkApp.c:1020
+msgid "New Metalink"
+msgstr "新增 Metalink"
+
+#: ../ui-gtk/UgtkApp.c:1029
+msgid "Open Torrent file"
+msgstr "開啟 Torrent 檔案"
+
+#: ../ui-gtk/UgtkApp.c:1045
+msgid "Open Metalink file"
+msgstr "開啟 Metalink 檔案"
+
+#: ../ui-gtk/UgtkApp.c:1085
+#, fuzzy
+msgid "Failed to save category file."
+msgstr "post 檔案開啟失敗."
+
+#: ../ui-gtk/UgtkApp.c:1105
+#, fuzzy
+msgid "Failed to load category file."
+msgstr "post 檔案開啟失敗."
+
+#: ../ui-gtk/UgtkApp.c:1116
+#, fuzzy
+msgid "Save Category file"
+msgstr "新增分類"
+
+#: ../ui-gtk/UgtkApp.c:1134
+#, fuzzy
+msgid "Open Category file"
+msgstr "開啟 Torrent 檔案"
+
+#. add link
+#: ../ui-gtk/UgtkApp.c:1193
+msgid "Link <A>"
+msgstr "連結 <A>"
+
+#. add image
+#: ../ui-gtk/UgtkApp.c:1198
+msgid "Image <IMG>"
+msgstr "影像 <IMG>"
+
+#: ../ui-gtk/UgtkApp.c:1243
+msgid "Text File"
+msgstr "文字檔案"
+
+#: ../ui-gtk/UgtkApp.c:1290
+msgid "Import URLs from HTML file"
+msgstr "從 HTML 檔案匯入網址"
+
+#: ../ui-gtk/UgtkApp.c:1305
+msgid "Import URLs from text file"
+msgstr "從文字檔案匯入網址"
+
+#: ../ui-gtk/UgtkApp.c:1320
+#, fuzzy
+msgid "Export URLs to text file"
+msgstr "從文字檔案匯入網址"
+
+#: ../ui-gtk/UgtkApp.c:1339
+msgid "URL Sequence batch"
+msgstr "URL 序列下載"
+
+#: ../ui-gtk/UgtkApp.c:1366
+msgid "No URLs found in clipboard."
+msgstr "剪貼簿裡面沒有網址."
+
+#: ../ui-gtk/UgtkApp.c:1375
+msgid "All URLs had existed."
+msgstr ""
+
+#: ../ui-gtk/UgtkApp.c:1380
+msgid "Clipboard batch"
+msgstr "剪貼簿批次下載"
+
+#: ../ui-gtk/UgtkApp.c:1470
+msgid "New"
+msgstr ""
+
+#: ../ui-gtk/UgtkApp.c:1589
+#: ../ui-gtk/UgtkMenubar.c:365
+#: ../ui-gtk/UgtkMenubar.c:397
+#: ../ui-gtk/UgtkNodeView.c:609
+msgid "Error"
+msgstr "錯誤"
+
+#: ../ui-gtk/UgtkApp.c:1597
+#: ../ui-gtk/UgtkSummary.c:184
+msgid "Message"
+msgstr "訊息"
+
+#: ../ui-gtk/UgtkApp.c:1703
+#, c-format
+msgid "Selected %d items"
+msgstr "已選擇 %d 個項目"
+
+#: ../ui-gtk/UgtkBanner.c:145
+#: ../ui-gtk/UgtkBanner.c:165
+msgid "Attention uGetters:"
+msgstr "關注 uGetters:"
+
+#: ../ui-gtk/UgtkBanner.c:148
+msgid ""
+"we are running a Donation Drive for uGet's Future Development, please click "
+msgstr "我們正在進行uGet未來發展的募捐，請按"
+
+#: ../ui-gtk/UgtkBanner.c:151
+msgid "HERE"
+msgstr "這裡"
+
+#: ../ui-gtk/UgtkBanner.c:168
+msgid "please fill out this quick User Survey for uGet."
+msgstr "請填寫快速用戶調查。"
+
+#: ../ui-gtk/UgtkBanner.c:171
+msgid "click here to take survey"
+msgstr "按這裡參加調查"
+
+#: ../ui-gtk/UgtkCategoryForm.c:62
+msgid "Category _name:"
+msgstr "分類名稱(_N):"
+
+#: ../ui-gtk/UgtkCategoryForm.c:82
+msgid "Active _downloads:"
+msgstr "啟動下載數量(_D):"
+
+#: ../ui-gtk/UgtkCategoryForm.c:92
+msgid "Capacity of Finished:"
+msgstr "'已結束'的容量:"
+
+#: ../ui-gtk/UgtkCategoryForm.c:102
+msgid "Capacity of Recycled:"
+msgstr "'回收區'的容量:"
+
+#. ------------------------------------------------------------------------
+#. URI Matching conditions
+#: ../ui-gtk/UgtkCategoryForm.c:111
+msgid "URI Matching conditions"
+msgstr ""
+
+#: ../ui-gtk/UgtkCategoryForm.c:118
+msgid "Matched _Hosts:"
+msgstr ""
+
+#: ../ui-gtk/UgtkCategoryForm.c:129
+msgid "Matched _Schemes:"
+msgstr ""
+
+#: ../ui-gtk/UgtkCategoryForm.c:140
+msgid "Matched _Types:"
+msgstr ""
+
+#: ../ui-gtk/UgtkConfirmDialog.c:62
+msgid "Really Quit?"
+msgstr "真的要離開?"
+
+#: ../ui-gtk/UgtkConfirmDialog.c:63
+msgid "Are you sure you want to quit?"
+msgstr "你確定要離開?"
+
+#: ../ui-gtk/UgtkConfirmDialog.c:67
+msgid "Really delete files?"
+msgstr "真的要刪除文件？"
+
+#: ../ui-gtk/UgtkConfirmDialog.c:68
+msgid "Are you sure you want to delete files?"
+msgstr "你確定要刪除檔案?"
+
+#: ../ui-gtk/UgtkConfirmDialog.c:99
+#, fuzzy
+msgid "Don't ask me again"
+msgstr "下次別問我"
+
+#. URL - label
+#: ../ui-gtk/UgtkDownloadForm.c:109
+#: ../ui-gtk/UgtkSequencer.c:63
+msgid "_URI:"
+msgstr ""
+
+#. Mirrors - label
+#: ../ui-gtk/UgtkDownloadForm.c:128
+msgid "Mirrors:"
+msgstr "鏡像:"
+
+#. File - label
+#: ../ui-gtk/UgtkDownloadForm.c:144
+#: ../ui-gtk/UgtkProxyForm.c:385
+msgid "File:"
+msgstr "檔案:"
+
+#: ../ui-gtk/UgtkDownloadForm.c:159
+#: ../ui-gtk/UgtkDownloadForm.c:889
+msgid "Select Folder"
+msgstr "選擇資料夾"
+
+#. Folder - label
+#: ../ui-gtk/UgtkDownloadForm.c:167
+msgid "_Folder:"
+msgstr "資料夾(_F):"
+
+#. Referrer - label
+#: ../ui-gtk/UgtkDownloadForm.c:182
+msgid "Referrer:"
+msgstr "參照位址:"
+
+#. "Max Connections:" - title label
+#: ../ui-gtk/UgtkDownloadForm.c:207
+#, fuzzy
+msgid "_Max Connections:"
+msgstr "連線數"
+
+#: ../ui-gtk/UgtkDownloadForm.c:226
+#: ../ui-gtk/UgtkMenubar-ui.c:504
+msgid "_Runnable"
+msgstr "可運行(_R)"
+
+#: ../ui-gtk/UgtkDownloadForm.c:228
+msgid "P_ause"
+msgstr "暫停(_A)"
+
+#. ----------------------------------------------------
+#. frame for login
+#: ../ui-gtk/UgtkDownloadForm.c:234
+msgid "Login"
+msgstr "登入"
+
+#. User - label
+#. user label & entry
+#: ../ui-gtk/UgtkDownloadForm.c:248
+#: ../ui-gtk/UgtkProxyForm.c:149
+msgid "User:"
+msgstr "使用者:"
+
+#. Password - label
+#. password label & entry
+#: ../ui-gtk/UgtkDownloadForm.c:264
+#: ../ui-gtk/UgtkProxyForm.c:160
+msgid "Password:"
+msgstr "密碼:"
+
+#. label - cookie file
+#: ../ui-gtk/UgtkDownloadForm.c:290
+#, fuzzy
+msgid "Cookie file:"
+msgstr "選擇 cookie 資料檔"
+
+#: ../ui-gtk/UgtkDownloadForm.c:302
+#: ../ui-gtk/UgtkDownloadForm.c:945
+msgid "Select Cookie File"
+msgstr "選擇 cookie 資料檔"
+
+#. label - post file
+#: ../ui-gtk/UgtkDownloadForm.c:311
+msgid "Post file:"
+msgstr "Post 檔案:"
+
+#: ../ui-gtk/UgtkDownloadForm.c:323
+#: ../ui-gtk/UgtkDownloadForm.c:1001
+msgid "Select Post File"
+msgstr "選檡 Post 檔案"
+
+#. label - user agent
+#: ../ui-gtk/UgtkDownloadForm.c:333
+msgid "User Agent:"
+msgstr "用戶代理:"
+
+#. label - Max upload speed
+#: ../ui-gtk/UgtkDownloadForm.c:349
+msgid "Max upload speed:"
+msgstr "最大上傳速度"
+
+#. label - "KiB/s"
+#: ../ui-gtk/UgtkDownloadForm.c:361
+#: ../ui-gtk/UgtkDownloadForm.c:379
+#: ../ui-gtk/UgtkSettingForm.c:280
+#: ../ui-gtk/UgtkSettingForm.c:292
+#: ../ui-gtk/UgtkSettingForm.c:577
+#: ../ui-gtk/UgtkSettingForm.c:589
+msgid "KiB/s"
+msgstr "KiB/s"
+
+#. label - Max download speed
+#: ../ui-gtk/UgtkDownloadForm.c:367
+msgid "Max download speed:"
+msgstr "最大下載速度"
+
+#. Retry limit - label
+#: ../ui-gtk/UgtkDownloadForm.c:385
+msgid "Retry _limit:"
+msgstr "重試限制(_L):"
+
+#. counts - label
+#: ../ui-gtk/UgtkDownloadForm.c:400
+msgid "counts"
+msgstr "次"
+
+#. Retry delay - label
+#: ../ui-gtk/UgtkDownloadForm.c:407
+msgid "Retry _delay:"
+msgstr "重試延遲(_D):"
+
+#. seconds - label
+#: ../ui-gtk/UgtkDownloadForm.c:422
+msgid "seconds"
+msgstr "秒"
+
+#. Retrieve timestamp
+#: ../ui-gtk/UgtkDownloadForm.c:429
+msgid "Retrieve timestamp"
+msgstr "取回時間戳記"
+
+#: ../ui-gtk/UgtkMenubar-ui.c:51
 msgid "_File"
 msgstr "檔案(_F)"
 
-#. New - Download (accelerators)
-#: ../uget-gtk/UgApp-gtk-gui.c:415
-msgid "_Download..."
-msgstr "下載(_D)..."
-
-#. New - Category
-#: ../uget-gtk/UgApp-gtk-gui.c:422
-msgid "_Category..."
-msgstr "分類(_C)..."
-
-#. New - Torrent
-#: ../uget-gtk/UgApp-gtk-gui.c:430
-msgid "Torrent..."
-msgstr "Torrent..."
-
-#. New - Metalink
-#: ../uget-gtk/UgApp-gtk-gui.c:436
-msgid "Metalink..."
-msgstr "Metalink..."
-
-#. New --- end ---
 #. Batch Downloads --- start ---
-#: ../uget-gtk/UgApp-gtk-gui.c:444
+#: ../ui-gtk/UgtkMenubar-ui.c:86
 msgid "_Batch Downloads"
 msgstr "批次下載(_B)"
 
 #. Batch downloads - Clipboard batch
-#: ../uget-gtk/UgApp-gtk-gui.c:450
+#: ../ui-gtk/UgtkMenubar-ui.c:92
 msgid "_Clipboard batch..."
 msgstr "剪貼簿批次下載(_C)..."
 
 #. Batch downloads - URL Sequence batch
-#: ../uget-gtk/UgApp-gtk-gui.c:456
+#: ../ui-gtk/UgtkMenubar-ui.c:98
 msgid "_URL Sequence batch..."
 msgstr "_URL 序列下載..."
 
 #. Batch downloads - Text file import (.txt)
-#: ../uget-gtk/UgApp-gtk-gui.c:462
+#: ../ui-gtk/UgtkMenubar-ui.c:104
 msgid "_Text file import (.txt)..."
 msgstr "匯入文字檔(_T)..."
 
 #. Batch downloads - HTML file import (.html)
-#: ../uget-gtk/UgApp-gtk-gui.c:468
+#: ../ui-gtk/UgtkMenubar-ui.c:110
 msgid "_HTML file import (.html)..."
 msgstr "匯入HTML檔(_H)..."
 
 #. Batch downloads - Export to Text file (.txt)
-#: ../uget-gtk/UgApp-gtk-gui.c:476
+#: ../ui-gtk/UgtkMenubar-ui.c:118
 msgid "_Export to Text file (.txt)..."
 msgstr "匯出文字檔(_E)..."
 
-#: ../uget-gtk/UgApp-gtk-gui.c:504
+#. Open Category
+#: ../ui-gtk/UgtkMenubar-ui.c:128
+#, fuzzy
+msgid "_Open category..."
+msgstr "新增分類(_N)..."
+
+#. Save Category
+#: ../ui-gtk/UgtkMenubar-ui.c:135
+#, fuzzy
+msgid "_Save category as..."
+msgstr "新增分類(_N)..."
+
+#. Save All
+#: ../ui-gtk/UgtkMenubar-ui.c:142
+#, fuzzy
+msgid "Save _all settings"
+msgstr "分類設定"
+
+#. Offline mode
+#: ../ui-gtk/UgtkMenubar-ui.c:152
+#, fuzzy
+msgid "Offline Mode"
+msgstr "離線模式(_O)"
+
+#: ../ui-gtk/UgtkMenubar-ui.c:170
 msgid "_Edit"
 msgstr "編輯(_E)"
 
 #. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
-#: ../uget-gtk/UgApp-gtk-gui.c:509
+#: ../ui-gtk/UgtkMenubar-ui.c:175
 msgid "Clipboard _Monitor"
 msgstr "監視剪貼簿(_M)"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:513
-msgid "_Clipboard Option..."
-msgstr "剪貼簿選項(_C)..."
+#: ../ui-gtk/UgtkMenubar-ui.c:179
+#, fuzzy
+msgid "Clipboard works quietly"
+msgstr "監視剪貼簿(_M)"
+
+#: ../ui-gtk/UgtkMenubar-ui.c:183
+#, fuzzy
+msgid "Command-line works quietly"
+msgstr "命令列設定"
+
+#: ../ui-gtk/UgtkMenubar-ui.c:187
+msgid "Skip existing URI"
+msgstr ""
 
 #. --- Completion Auto-Actions --- start ---
-#: ../uget-gtk/UgApp-gtk-gui.c:520
+#: ../ui-gtk/UgtkMenubar-ui.c:194
 msgid "Completion _Auto-Actions"
 msgstr "完成自動操作(_A)"
 
 #. Completion Auto-Actions - Disable
-#: ../uget-gtk/UgApp-gtk-gui.c:526
+#: ../ui-gtk/UgtkMenubar-ui.c:200
 msgid "_Disable"
 msgstr "關閉(_D)"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:531
+#: ../ui-gtk/UgtkMenubar-ui.c:205
 msgid "Hibernate"
 msgstr "休眠"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:536
+#: ../ui-gtk/UgtkMenubar-ui.c:210
 msgid "Suspend"
 msgstr "暫停"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:541
+#: ../ui-gtk/UgtkMenubar-ui.c:215
 msgid "Shutdown"
 msgstr "關機"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:546
+#: ../ui-gtk/UgtkMenubar-ui.c:220
 msgid "Reboot"
 msgstr "重新開機"
 
+#: ../ui-gtk/UgtkMenubar-ui.c:225
+msgid "Custom"
+msgstr ""
+
 #. Completion Auto-Actions - Help
-#: ../uget-gtk/UgApp-gtk-gui.c:550
+#: ../ui-gtk/UgtkMenubar-ui.c:229
 #, fuzzy
 msgid "Help"
 msgstr "說明(_H)"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:565
+#. --- Completion Auto-Actions --- end ---
+#. menu_item = gtk_menu_item_new_with_mnemonic (_("_Settings..."));
+#. Settings
+#: ../ui-gtk/UgtkMenubar-ui.c:235
+#: ../ui-gtk/UgtkTrayIcon.c:91
+msgid "_Settings..."
+msgstr "設定(_S)..."
+
+#: ../ui-gtk/UgtkMenubar-ui.c:250
 msgid "_View"
 msgstr "檢視(_V)"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:569
+#: ../ui-gtk/UgtkMenubar-ui.c:254
 msgid "_Toolbar"
 msgstr "工具列(_T)"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:574
+#: ../ui-gtk/UgtkMenubar-ui.c:259
 msgid "Statusbar"
 msgstr "狀態列"
 
-#. Summary Items - Category
-#. Download Columns - Category
-#: ../uget-gtk/UgApp-gtk-gui.c:579
-#: ../uget-gtk/UgApp-gtk-gui.c:607
-#: ../uget-gtk/UgApp-gtk-gui.c:692
-#: ../uget-gtk/UgCategoryWidget.c:129
-#: ../uget-gtk/UgCategoryWidget.c:440
-#: ../uget-gtk/UgDownloadDialog.c:205
-#: ../uget-gtk/UgDownloadWidget.c:911
-#: ../uget-gtk/UgSummary.c:140
-msgid "Category"
-msgstr "分類"
-
-#: ../uget-gtk/UgApp-gtk-gui.c:584
+#: ../ui-gtk/UgtkMenubar-ui.c:269
 msgid "_Summary"
 msgstr "摘要(_S)"
 
 #. Summary Items --- start ---
-#: ../uget-gtk/UgApp-gtk-gui.c:592
+#: ../ui-gtk/UgtkMenubar-ui.c:277
 msgid "Summary _Items"
 msgstr "摘要項目(_I)"
 
 #. Summary Items - Name
-#: ../uget-gtk/UgApp-gtk-gui.c:597
+#: ../ui-gtk/UgtkMenubar-ui.c:282
 msgid "_Name"
 msgstr "名稱(_N)"
 
 #. Summary Items - Folder
-#: ../uget-gtk/UgApp-gtk-gui.c:602
+#: ../ui-gtk/UgtkMenubar-ui.c:287
 msgid "_Folder"
 msgstr "資料夾(_F)"
 
@@ -542,817 +919,819 @@ msgstr "資料夾(_F)"
 #. menubar->view.summary_items.elapsed = menu_item;
 #. Summary Items - URL
 #. Download Columns - URL
-#: ../uget-gtk/UgApp-gtk-gui.c:617
-#: ../uget-gtk/UgApp-gtk-gui.c:697
+#: ../ui-gtk/UgtkMenubar-ui.c:302
+#: ../ui-gtk/UgtkMenubar-ui.c:382
 msgid "_URL"
 msgstr "網址(_U)"
 
 #. Summary Items - Message
-#: ../uget-gtk/UgApp-gtk-gui.c:622
+#: ../ui-gtk/UgtkMenubar-ui.c:307
 msgid "_Message"
 msgstr "訊息(_M)"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:637
+#: ../ui-gtk/UgtkMenubar-ui.c:322
 msgid "Download _Columns"
 msgstr "下載欄位(_C)"
 
 #. Download Columns - Completed
-#: ../uget-gtk/UgApp-gtk-gui.c:642
+#: ../ui-gtk/UgtkMenubar-ui.c:327
 msgid "_Complete"
 msgstr "完成(_C)"
 
 #. Download Columns - Total
-#: ../uget-gtk/UgApp-gtk-gui.c:647
+#: ../ui-gtk/UgtkMenubar-ui.c:332
 msgid "_Size"
 msgstr "大小(_S)"
 
 #. Download Columns - Percent (%)
-#: ../uget-gtk/UgApp-gtk-gui.c:652
+#: ../ui-gtk/UgtkMenubar-ui.c:337
 msgid "_Percent '%'"
 msgstr "百分比 '%' (_P)"
 
 #. Download Columns - Elapsed
-#: ../uget-gtk/UgApp-gtk-gui.c:657
+#: ../ui-gtk/UgtkMenubar-ui.c:342
 msgid "_Elapsed"
 msgstr "經過時間(_E)"
 
 #. Download Columns - Left
-#: ../uget-gtk/UgApp-gtk-gui.c:662
+#: ../ui-gtk/UgtkMenubar-ui.c:347
 msgid "_Left"
 msgstr "剩餘時間(_L)"
 
 #. Download Columns - Speed
-#: ../uget-gtk/UgApp-gtk-gui.c:667
-#: ../uget-gtk/UgDownloadWidget.c:840
+#: ../ui-gtk/UgtkMenubar-ui.c:352
+#: ../ui-gtk/UgtkNodeView.c:818
 msgid "Speed"
 msgstr "速度"
 
 #. Download Columns - Up Speed
-#: ../uget-gtk/UgApp-gtk-gui.c:672
-#: ../uget-gtk/UgDownloadWidget.c:854
+#: ../ui-gtk/UgtkMenubar-ui.c:357
+#: ../ui-gtk/UgtkNodeView.c:832
 msgid "Up Speed"
 msgstr "上傳速度"
 
 #. Download Columns - Uploaded
-#: ../uget-gtk/UgApp-gtk-gui.c:677
-#: ../uget-gtk/UgDownloadWidget.c:868
+#: ../ui-gtk/UgtkMenubar-ui.c:362
+#: ../ui-gtk/UgtkNodeView.c:846
 msgid "Uploaded"
 msgstr "上傳大小"
 
 #. Download Columns - Ratio
-#: ../uget-gtk/UgApp-gtk-gui.c:682
-#: ../uget-gtk/UgDownloadWidget.c:882
+#: ../ui-gtk/UgtkMenubar-ui.c:367
+#: ../ui-gtk/UgtkNodeView.c:860
 msgid "Ratio"
 msgstr "分享比"
 
 #. Download Columns - Retry
-#: ../uget-gtk/UgApp-gtk-gui.c:687
+#: ../ui-gtk/UgtkMenubar-ui.c:372
 msgid "_Retry"
 msgstr "重試(_R)"
 
 #. Download Columns - Added On
-#: ../uget-gtk/UgApp-gtk-gui.c:702
-#: ../uget-gtk/UgDownloadWidget.c:939
+#: ../ui-gtk/UgtkMenubar-ui.c:387
+#: ../ui-gtk/UgtkNodeView.c:917
 msgid "Added On"
 msgstr "加入時間"
 
 #. Download Columns - Completed On
-#: ../uget-gtk/UgApp-gtk-gui.c:707
-#: ../uget-gtk/UgDownloadWidget.c:953
+#: ../ui-gtk/UgtkMenubar-ui.c:392
+#: ../ui-gtk/UgtkNodeView.c:931
 msgid "Completed On"
 msgstr "完成時間"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:716
+#: ../ui-gtk/UgtkMenubar-ui.c:407
 msgid "_Category"
 msgstr "分類(_C)"
 
 #. New Category
-#: ../uget-gtk/UgApp-gtk-gui.c:721
+#: ../ui-gtk/UgtkMenubar-ui.c:412
 msgid "_New Category..."
 msgstr "新增分類(_N)..."
 
 #. Delete Category
-#: ../uget-gtk/UgApp-gtk-gui.c:727
+#: ../ui-gtk/UgtkMenubar-ui.c:418
 msgid "_Delete Category"
 msgstr "刪除分類(_D)"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:741
+#: ../ui-gtk/UgtkMenubar-ui.c:455
 msgid "_Download"
 msgstr "下載(_D)"
 
 #. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE, accel_group);
-#: ../uget-gtk/UgApp-gtk-gui.c:753
+#: ../ui-gtk/UgtkMenubar-ui.c:467
 msgid "_Delete Entry"
 msgstr "刪除資料(_D)"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:760
+#: ../ui-gtk/UgtkMenubar-ui.c:474
 msgid "Delete Entry and _File"
 msgstr "刪除檔案和資料(_F)"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:775
+#: ../ui-gtk/UgtkMenubar-ui.c:489
 msgid "Open _Containing folder"
 msgstr "開啟所在的資料夾(_C)"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:784
+#: ../ui-gtk/UgtkMenubar-ui.c:498
 msgid "Force Start"
 msgstr "強制開始"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:790
-#: ../uget-gtk/UgDownloadForm.c:225
-msgid "_Runnable"
-msgstr "可運行(_R)"
-
 #. Move to --- start ---
-#: ../uget-gtk/UgApp-gtk-gui.c:808
+#: ../ui-gtk/UgtkMenubar-ui.c:522
 msgid "_Move To"
 msgstr "搬移到(_M)"
 
-#: ../uget-gtk/UgApp-gtk-gui.c:859
+#. Priority --- start ---
+#: ../ui-gtk/UgtkMenubar-ui.c:567
+msgid "Priority"
+msgstr ""
+
+#: ../ui-gtk/UgtkMenubar-ui.c:576
+msgid "_High"
+msgstr ""
+
+#: ../ui-gtk/UgtkMenubar-ui.c:581
+#, fuzzy
+msgid "_Normal"
+msgstr "一般"
+
+#: ../ui-gtk/UgtkMenubar-ui.c:586
+msgid "_Low"
+msgstr ""
+
+#: ../ui-gtk/UgtkMenubar-ui.c:604
 msgid "_Help"
 msgstr "說明(_H)"
 
 #. Get Help Online
-#: ../uget-gtk/UgApp-gtk-gui.c:864
+#: ../ui-gtk/UgtkMenubar-ui.c:609
 msgid "Get Help Online"
 msgstr "取得線上協助"
 
 #. Documentation
-#: ../uget-gtk/UgApp-gtk-gui.c:871
+#: ../ui-gtk/UgtkMenubar-ui.c:616
 msgid "Documentation"
 msgstr "文件"
 
 #. Support Forum
-#: ../uget-gtk/UgApp-gtk-gui.c:878
+#: ../ui-gtk/UgtkMenubar-ui.c:623
 msgid "Support Forum"
 msgstr "支援論坦"
 
 #. Submit Feedback
-#: ../uget-gtk/UgApp-gtk-gui.c:885
+#: ../ui-gtk/UgtkMenubar-ui.c:630
 msgid "Submit Feedback"
 msgstr "提交反饋"
 
 #. Report a Bug
-#: ../uget-gtk/UgApp-gtk-gui.c:892
+#: ../ui-gtk/UgtkMenubar-ui.c:637
 msgid "Report a Bug"
 msgstr "回報錯誤"
 
 #. Keyboard Shortcuts
-#: ../uget-gtk/UgApp-gtk-gui.c:899
+#: ../ui-gtk/UgtkMenubar-ui.c:644
 msgid "Keyboard Shortcuts"
 msgstr "快捷鍵"
 
 #. Check for Updates
-#: ../uget-gtk/UgApp-gtk-gui.c:906
+#: ../ui-gtk/UgtkMenubar-ui.c:651
 msgid "Check for Updates"
 msgstr "檢查更新"
 
-#. only 1 url matched
-#: ../uget-gtk/UgApp-gtk-timeout.c:153
-#: ../uget-gtk/UgApp-gtk-timeout.c:162
-msgid "New from Clipboard"
-msgstr "從剪貼簿新增"
+#: ../ui-gtk/UgtkMenubar.c:135
+msgid "Settings"
+msgstr "設定"
 
-#: ../uget-gtk/UgApp-gtk-timeout.c:154
-msgid "only one matched"
-msgstr "只有一個符合條件"
+#: ../ui-gtk/UgtkMenubar.c:359
+#, c-format
+msgid "Can't launch default application for file '%s'."
+msgstr "無法啟動檔案 '%s' 的預設應用程式."
 
-#: ../uget-gtk/UgApp-gtk-timeout.c:266
-msgid "Command line"
-msgstr "命令列"
+#: ../ui-gtk/UgtkMenubar.c:391
+#, c-format
+msgid "'%s' - This folder does not exist."
+msgstr "'%s' - 這個資料夾不存在."
 
-#: ../uget-gtk/UgApp-gtk-timeout.c:464
-msgid ""
-"Failed to connect to aria2.\n"
-"Is aria2 shutdown? or aria2 launch failed."
+#. title
+#: ../ui-gtk/UgtkNodeDialog.c:205
+#: ../ui-gtk/UgtkNodeDialog.c:209
+msgid "URI had existed"
 msgstr ""
-"無法連線到 aria2。\n"
-"aria2 是否已經關閉？ 或是啟動失敗。"
 
-#: ../uget-gtk/UgApp-gtk-timeout.c:535
-msgid ""
-"This program need privileges to shutdown or suspend.\n"
-"If it can not work, please check your privileges."
+#: ../ui-gtk/UgtkNodeDialog.c:207
+msgid "This URI had existed, are you sure to continue?"
 msgstr ""
-"程式需要權限才能關機.\n"
-"如果不能正常運作，請檢查權限。"
 
-#: ../uget-gtk/UgApp-gtk-timeout.c:749
-msgid "Download Starting"
-msgstr "開始下載"
-
-#: ../uget-gtk/UgApp-gtk-timeout.c:750
-msgid "Starting download queue."
-msgstr "開始下載佇列"
-
-#: ../uget-gtk/UgApp-gtk-timeout.c:751
-msgid "Download Completed"
-msgstr "下載完成"
-
-#: ../uget-gtk/UgApp-gtk-timeout.c:752
-msgid "All queuing downloads have been completed."
-msgstr "所有排隊中的檔案下載完成."
-
-#: ../uget-gtk/UgBanner.c:102
-#: ../uget-gtk/UgBanner.c:119
-msgid "Attention uGetters:"
-msgstr "關注 uGetters:"
-
-#: ../uget-gtk/UgBanner.c:105
-msgid ""
-"we are running a Donation Drive for uGet's Future Development, please click "
-msgstr "我們正在進行uGet未來發展的募捐，請按"
-
-#: ../uget-gtk/UgBanner.c:108
-msgid "HERE"
-msgstr "這裡"
-
-#: ../uget-gtk/UgBanner.c:122
-msgid "please fill out this quick User Survey for uGet."
-msgstr "請填寫快速用戶調查。"
-
-#: ../uget-gtk/UgBanner.c:125
-msgid "click here to take survey"
-msgstr "按這裡參加調查"
-
-#. URL - label
-#: ../uget-gtk/UgBatchForm.c:63
-#: ../uget-gtk/UgDownloadForm.c:131
-msgid "_URL:"
-msgstr "網址(_U):"
-
-#. e.g.
-#: ../uget-gtk/UgBatchForm.c:74
-msgid "e.g."
-msgstr "範例"
-
-#. -------------------------------------------------------
-#. radio "From"
-#: ../uget-gtk/UgBatchForm.c:85
-msgid "_From:"
-msgstr "從(_F):"
-
-#. label "To"
-#: ../uget-gtk/UgBatchForm.c:108
-msgid "To:"
-msgstr "到:"
-
-#. label "digits"
-#: ../uget-gtk/UgBatchForm.c:123
-msgid "digits:"
-msgstr "位數:"
-
-#: ../uget-gtk/UgBatchForm.c:132
-msgid "F_rom:"
-msgstr "從(_R):"
-
-#. label case-sensitive
-#: ../uget-gtk/UgBatchForm.c:162
-msgid "case-sensitive"
-msgstr "大小寫不同"
-
-#: ../uget-gtk/UgBatchForm.c:188
-msgid "No wildcard(*) character in URL entry."
-msgstr "網址項目裡沒有萬用字元(*)."
-
-#: ../uget-gtk/UgBatchForm.c:192
-msgid "URL is not valid."
-msgstr "不合法的網址."
-
-#: ../uget-gtk/UgBatchForm.c:196
-msgid "No character in 'From' or 'To' entry."
-msgstr "'從'或'到'的項目裡沒有資料."
-
-#: ../uget-gtk/UgBatchForm.c:305
-msgid "Preview"
-msgstr "預覽"
-
-#: ../uget-gtk/UgCategoryDialog.c:62
-msgid "Category settings"
-msgstr "分類設定"
-
-#: ../uget-gtk/UgCategoryDialog.c:64
-msgid "Default for new download 1"
-msgstr "新增下載的預設值 1"
-
-#: ../uget-gtk/UgCategoryDialog.c:66
-msgid "Default 2"
-msgstr "預設值 2"
-
-#: ../uget-gtk/UgCategoryForm.c:53
-msgid "Category _name:"
-msgstr "分類名稱(_N):"
-
-#: ../uget-gtk/UgCategoryForm.c:68
-msgid "Active _downloads:"
-msgstr "啟動下載數量(_D):"
-
-#: ../uget-gtk/UgCategoryForm.c:76
-msgid "Capacity of Finished:"
-msgstr "'已結束'的容量:"
-
-#: ../uget-gtk/UgCategoryForm.c:85
-msgid "Capacity of Recycled:"
-msgstr "'回收區'的容量:"
-
-#: ../uget-gtk/UgCategoryWidget.c:42
-#: ../uget-gtk/UgSelector.c:292
-msgid "All"
-msgstr "全部"
-
-#: ../uget-gtk/UgCategoryWidget.c:43
-msgid "Active"
-msgstr "活躍的"
-
-#: ../uget-gtk/UgCategoryWidget.c:44
-msgid "Queuing"
-msgstr "排隊中"
-
-#: ../uget-gtk/UgCategoryWidget.c:46
-msgid "Recycled"
-msgstr "回收區"
-
-#: ../uget-gtk/UgCategoryWidget.c:461
-msgid "Quantity"
-msgstr "數量"
-
-#: ../uget-gtk/UgDownloadForm.c:92
+#: ../ui-gtk/UgtkNodeDialog.c:343
 msgid "General"
 msgstr "一般設定"
 
-#: ../uget-gtk/UgDownloadForm.c:93
+#: ../ui-gtk/UgtkNodeDialog.c:345
 msgid "Advanced"
 msgstr "進階設定"
 
-#. Mirrors - label
-#: ../uget-gtk/UgDownloadForm.c:150
-msgid "Mirrors:"
-msgstr "鏡像:"
+#: ../ui-gtk/UgtkNodeDialog.c:354
+msgid "Category settings"
+msgstr "分類設定"
 
-#. File - label
-#: ../uget-gtk/UgDownloadForm.c:166
-#: ../uget-gtk/UgProxyForm.c:369
-msgid "File:"
-msgstr "檔案:"
+#: ../ui-gtk/UgtkNodeDialog.c:356
+msgid "Default for new download 1"
+msgstr "新增下載的預設值 1"
 
-#: ../uget-gtk/UgDownloadForm.c:181
-#: ../uget-gtk/UgDownloadForm.c:916
-msgid "Select Folder"
-msgstr "選擇資料夾"
+#: ../ui-gtk/UgtkNodeDialog.c:358
+msgid "Default 2"
+msgstr "預設值 2"
 
-#. Folder - label
-#: ../uget-gtk/UgDownloadForm.c:189
-msgid "_Folder:"
-msgstr "資料夾(_F):"
-
-#. Referrer - label
-#: ../uget-gtk/UgDownloadForm.c:204
-msgid "Referrer:"
-msgstr "參照位址:"
-
-#. ----------------------------------------------------
-#. frame for Status (start mode)
-#: ../uget-gtk/UgDownloadForm.c:219
-msgid "Status"
-msgstr "狀態"
-
-#: ../uget-gtk/UgDownloadForm.c:227
-msgid "P_ause"
-msgstr "暫停(_A)"
-
-#. ----------------------------------------------------
-#. frame for login
-#: ../uget-gtk/UgDownloadForm.c:233
-msgid "Login"
-msgstr "登入"
-
-#. User - label
-#. user label & entry
-#: ../uget-gtk/UgDownloadForm.c:247
-#: ../uget-gtk/UgProxyForm.c:143
-msgid "User:"
-msgstr "使用者:"
-
-#. Password - label
-#. password label & entry
-#: ../uget-gtk/UgDownloadForm.c:263
-#: ../uget-gtk/UgProxyForm.c:154
-msgid "Password:"
-msgstr "密碼:"
-
-#. dform->password_label = widget;
-#. ----------------------------------------------------
-#. frame for option
-#: ../uget-gtk/UgDownloadForm.c:271
-msgid "Options"
-msgstr "選項"
-
-#. Retry limit - label
-#: ../uget-gtk/UgDownloadForm.c:286
-msgid "Retry _limit:"
-msgstr "重試限制(_L):"
-
-#. counts - label
-#: ../uget-gtk/UgDownloadForm.c:292
-msgid "counts"
-msgstr "次"
-
-#. Retry delay - label
-#: ../uget-gtk/UgDownloadForm.c:306
-msgid "Retry _delay:"
-msgstr "重試延遲(_D):"
-
-#. seconds - label
-#: ../uget-gtk/UgDownloadForm.c:312
-msgid "seconds"
-msgstr "秒"
-
-#. "Connections per server" - title label
-#: ../uget-gtk/UgDownloadForm.c:325
-msgid "Connections per server"
-msgstr "每台伺服器的連線數"
-
-#. connections - label
-#: ../uget-gtk/UgDownloadForm.c:338
-msgid "connections"
-msgstr "連線數"
-
-#. label - cookie file
-#: ../uget-gtk/UgDownloadForm.c:365
-#, fuzzy
-msgid "Cookie file:"
-msgstr "選擇 cookie 資料檔"
-
-#: ../uget-gtk/UgDownloadForm.c:377
-#: ../uget-gtk/UgDownloadForm.c:972
-msgid "Select Cookie File"
-msgstr "選擇 cookie 資料檔"
-
-#. label - post file
-#: ../uget-gtk/UgDownloadForm.c:386
-msgid "Post file:"
-msgstr "Post 檔案:"
-
-#: ../uget-gtk/UgDownloadForm.c:398
-#: ../uget-gtk/UgDownloadForm.c:1028
-msgid "Select Post File"
-msgstr "選檡 Post 檔案"
-
-#. label - user agent
-#: ../uget-gtk/UgDownloadForm.c:408
-msgid "User Agent:"
-msgstr "用戶代理:"
-
-#. label - Max upload speed
-#: ../uget-gtk/UgDownloadForm.c:424
-msgid "Max upload speed:"
-msgstr "最大上傳速度"
-
-#. label - "KiB/s"
-#: ../uget-gtk/UgDownloadForm.c:435
-#: ../uget-gtk/UgDownloadForm.c:452
-#: ../uget-gtk/UgSettingForm.c:469
-#: ../uget-gtk/UgSettingForm.c:480
-msgid "KiB/s"
-msgstr "KiB/s"
-
-#. label - Max download speed
-#: ../uget-gtk/UgDownloadForm.c:441
-msgid "Max download speed:"
-msgstr "最大下載速度"
-
-#. Retrieve timestamp
-#: ../uget-gtk/UgDownloadForm.c:458
-msgid "Retrieve timestamp"
-msgstr "取回時間戳記"
-
-#: ../uget-gtk/UgDownloadWidget.c:378
-#: ../uget-gtk/UgSummary.c:116
+#: ../ui-gtk/UgtkNodeView.c:121
+#: ../ui-gtk/UgtkNodeView.c:584
+#: ../ui-gtk/UgtkSummary.c:115
 msgid "unnamed"
 msgstr "未命名"
 
-#: ../uget-gtk/UgDownloadWidget.c:745
-#: ../uget-gtk/UgSummary.c:105
+#: ../ui-gtk/UgtkNodeView.c:610
+#, fuzzy
+msgid "Paused"
+msgstr "暫停(_A)"
+
+#: ../ui-gtk/UgtkNodeView.c:611
+#, fuzzy
+msgid "Uploading"
+msgstr "上傳"
+
+#: ../ui-gtk/UgtkNodeView.c:612
+#, fuzzy
+msgid "Completed"
+msgstr "完成"
+
+#: ../ui-gtk/UgtkNodeView.c:614
+msgid "Recycled"
+msgstr "回收區"
+
+#: ../ui-gtk/UgtkNodeView.c:615
+msgid "Queuing"
+msgstr "排隊中"
+
+#: ../ui-gtk/UgtkNodeView.c:616
+msgid "Active"
+msgstr "活躍的"
+
+#: ../ui-gtk/UgtkNodeView.c:637
+#, fuzzy
+msgid "All Status"
+msgstr "狀態"
+
+#: ../ui-gtk/UgtkNodeView.c:734
+#: ../ui-gtk/UgtkSettingDialog.c:85
+#: ../ui-gtk/UgtkSummary.c:108
 msgid "Name"
 msgstr "名稱"
 
-#: ../uget-gtk/UgDownloadWidget.c:769
+#: ../ui-gtk/UgtkNodeView.c:747
 msgid "Complete"
 msgstr "完成"
 
-#: ../uget-gtk/UgDownloadWidget.c:783
+#: ../ui-gtk/UgtkNodeView.c:761
 msgid "Size"
 msgstr "大小"
 
-#: ../uget-gtk/UgDownloadWidget.c:798
+#: ../ui-gtk/UgtkNodeView.c:776
 msgid "%"
 msgstr "%"
 
-#: ../uget-gtk/UgDownloadWidget.c:812
+#: ../ui-gtk/UgtkNodeView.c:790
 msgid "Elapsed"
 msgstr "經過時間"
 
-#: ../uget-gtk/UgDownloadWidget.c:826
+#: ../ui-gtk/UgtkNodeView.c:804
 msgid "Left"
 msgstr "剩餘時間"
 
-#: ../uget-gtk/UgDownloadWidget.c:925
-#: ../uget-gtk/UgSelector.c:487
-#: ../uget-gtk/UgSummary.c:151
-msgid "URL"
+#: ../ui-gtk/UgtkNodeView.c:903
+#: ../ui-gtk/UgtkSettingForm.c:549
+#: ../ui-gtk/UgtkSummary.c:151
+#, fuzzy
+msgid "URI"
 msgstr "網址"
 
+#: ../ui-gtk/UgtkNodeView.c:954
+msgid "Quantity"
+msgstr "數量"
+
 #. proxy type label & combo box
-#: ../uget-gtk/UgProxyForm.c:64
+#: ../ui-gtk/UgtkProxyForm.c:64
 msgid "Proxy:"
 msgstr "代理伺服器:"
 
-#: ../uget-gtk/UgProxyForm.c:67
+#: ../ui-gtk/UgtkProxyForm.c:67
 msgid "Don't use"
 msgstr "不使用"
 
-#: ../uget-gtk/UgProxyForm.c:69
+#: ../ui-gtk/UgtkProxyForm.c:69
 msgid "Default"
 msgstr "預設"
 
 #. host label & entry
-#: ../uget-gtk/UgProxyForm.c:116
+#: ../ui-gtk/UgtkProxyForm.c:121
 msgid "Host:"
 msgstr "主機:"
 
 #. port label & entry
-#: ../uget-gtk/UgProxyForm.c:127
+#: ../ui-gtk/UgtkProxyForm.c:132
 msgid "Port:"
 msgstr "埠號:"
 
-#: ../uget-gtk/UgProxyForm.c:335
+#: ../ui-gtk/UgtkProxyForm.c:351
 msgid "Socket:"
 msgstr "Socket:"
 
-#: ../uget-gtk/UgProxyForm.c:345
+#: ../ui-gtk/UgtkProxyForm.c:361
 msgid "Socket args:"
 msgstr "Socket args:"
 
-#: ../uget-gtk/UgProxyForm.c:355
+#: ../ui-gtk/UgtkProxyForm.c:371
 msgid "Element:"
 msgstr "Element:"
 
-#: ../uget-gtk/UgScheduleForm.c:66
+#: ../ui-gtk/UgtkScheduleForm.c:66
 msgid "Mon"
 msgstr "一"
 
-#: ../uget-gtk/UgScheduleForm.c:67
+#: ../ui-gtk/UgtkScheduleForm.c:67
 msgid "Tue"
 msgstr "二"
 
-#: ../uget-gtk/UgScheduleForm.c:68
+#: ../ui-gtk/UgtkScheduleForm.c:68
 msgid "Wed"
 msgstr "三"
 
-#: ../uget-gtk/UgScheduleForm.c:69
+#: ../ui-gtk/UgtkScheduleForm.c:69
 msgid "Thu"
 msgstr "四"
 
-#: ../uget-gtk/UgScheduleForm.c:70
+#: ../ui-gtk/UgtkScheduleForm.c:70
 msgid "Fri"
 msgstr "五"
 
-#: ../uget-gtk/UgScheduleForm.c:71
+#: ../ui-gtk/UgtkScheduleForm.c:71
 msgid "Sat"
 msgstr "六"
 
-#: ../uget-gtk/UgScheduleForm.c:72
+#: ../ui-gtk/UgtkScheduleForm.c:72
 msgid "Sun"
 msgstr "日"
 
-#: ../uget-gtk/UgScheduleForm.c:99
+#: ../ui-gtk/UgtkScheduleForm.c:99
 msgid "_Enable Scheduler"
 msgstr "啟用排程器(_E)"
 
 #. Turn off - label
-#: ../uget-gtk/UgScheduleForm.c:141
+#: ../ui-gtk/UgtkScheduleForm.c:141
 msgid "Turn off"
 msgstr "關閉"
 
 #. Turn off - help label
-#: ../uget-gtk/UgScheduleForm.c:146
+#: ../ui-gtk/UgtkScheduleForm.c:146
 msgid "- stop all task"
 msgstr "- 停止所有任務"
 
 #. Normal - label
-#: ../uget-gtk/UgScheduleForm.c:156
+#: ../ui-gtk/UgtkScheduleForm.c:156
 msgid "Normal"
 msgstr "一般"
 
 #. Normal - help label
-#: ../uget-gtk/UgScheduleForm.c:161
+#: ../ui-gtk/UgtkScheduleForm.c:161
 msgid "- run task normally"
 msgstr "- 正常運行"
 
-#: ../uget-gtk/UgSelector.c:94
-msgid "Base hypertext reference"
-msgstr ""
+#: ../ui-gtk/UgtkSelector.c:254
+msgid "All"
+msgstr "全部"
 
-#. select all
-#: ../uget-gtk/UgSelector.c:110
-msgid "Mark _All"
-msgstr "標記全部(_A)"
-
-#. select none
-#: ../uget-gtk/UgSelector.c:116
-msgid "Mark _None"
-msgstr "清除標記(_N)"
-
-#. select by filter
-#: ../uget-gtk/UgSelector.c:122
-msgid "_Mark by filter..."
-msgstr "條件標記(_M)"
-
-#: ../uget-gtk/UgSelector.c:297
+#: ../ui-gtk/UgtkSelector.c:259
 msgid "None"
 msgstr "清除"
 
-#: ../uget-gtk/UgSelector.c:314
+#: ../ui-gtk/UgtkSelector.c:276
 msgid "Mark by filter"
 msgstr "條件標記"
 
-#: ../uget-gtk/UgSelector.c:332
+#: ../ui-gtk/UgtkSelector.c:294
 msgid "Mark URLs by host AND filename extension."
 msgstr "用主機名稱和副檔名來標記網址."
 
-#: ../uget-gtk/UgSelector.c:335
+#: ../ui-gtk/UgtkSelector.c:297
 msgid "This will reset all marks of URLs."
 msgstr "這個功能會重新設定所有的標記."
 
 #. filter view -----------------------
 #. left side
-#: ../uget-gtk/UgSelector.c:343
+#: ../ui-gtk/UgtkSelector.c:305
 msgid "Host"
 msgstr "主機名稱"
 
 #. right side (filename extension)
-#: ../uget-gtk/UgSelector.c:347
+#: ../ui-gtk/UgtkSelector.c:309
 msgid "File Ext."
 msgstr "副檔名"
 
-#: ../uget-gtk/UgSettingDialog.c:71
-msgid "UI Settings"
-msgstr "介面設定"
+#: ../ui-gtk/UgtkSelector.c:449
+msgid "URL"
+msgstr "網址"
 
-#: ../uget-gtk/UgSettingDialog.c:87
+#: ../ui-gtk/UgtkSelector.c:781
+msgid "Base hypertext reference"
+msgstr ""
+
+#. select all
+#: ../ui-gtk/UgtkSelector.c:797
+msgid "Mark _All"
+msgstr "標記全部(_A)"
+
+#. select none
+#: ../ui-gtk/UgtkSelector.c:801
+msgid "Mark _None"
+msgstr "清除標記(_N)"
+
+#. select by filter
+#: ../ui-gtk/UgtkSelector.c:805
+msgid "_Mark by filter..."
+msgstr "條件標記(_M)"
+
+#. e.g.
+#: ../ui-gtk/UgtkSequencer.c:74
+msgid "e.g."
+msgstr "範例"
+
+#. -------------------------------------------------------
+#. radio "From"
+#: ../ui-gtk/UgtkSequencer.c:85
+msgid "_From:"
+msgstr "從(_F):"
+
+#. label "To"
+#: ../ui-gtk/UgtkSequencer.c:108
+msgid "To:"
+msgstr "到:"
+
+#. label "digits"
+#: ../ui-gtk/UgtkSequencer.c:123
+msgid "digits:"
+msgstr "位數:"
+
+#: ../ui-gtk/UgtkSequencer.c:132
+msgid "F_rom:"
+msgstr "從(_R):"
+
+#. label case-sensitive
+#: ../ui-gtk/UgtkSequencer.c:162
+msgid "case-sensitive"
+msgstr "大小寫不同"
+
+#: ../ui-gtk/UgtkSequencer.c:188
+msgid "No wildcard(*) character in URL entry."
+msgstr "網址項目裡沒有萬用字元(*)."
+
+#: ../ui-gtk/UgtkSequencer.c:192
+msgid "URL is not valid."
+msgstr "不合法的網址."
+
+#: ../ui-gtk/UgtkSequencer.c:196
+msgid "No character in 'From' or 'To' entry."
+msgstr "'從'或'到'的項目裡沒有資料."
+
+#: ../ui-gtk/UgtkSequencer.c:305
+msgid "Preview"
+msgstr "預覽"
+
+#: ../ui-gtk/UgtkSettingDialog.c:97
+msgid "User Interface"
+msgstr ""
+
+#: ../ui-gtk/UgtkSettingDialog.c:109
+msgid "Bandwidth"
+msgstr ""
+
+#: ../ui-gtk/UgtkSettingDialog.c:115
 msgid "Scheduler"
 msgstr "排程器"
 
-#: ../uget-gtk/UgSettingDialog.c:95
+#: ../ui-gtk/UgtkSettingDialog.c:121
 msgid "Plug-in"
 msgstr "插件"
 
-#: ../uget-gtk/UgSettingDialog.c:103
+#: ../ui-gtk/UgtkSettingDialog.c:127
 msgid "Others"
 msgstr "其他"
 
-#: ../uget-gtk/UgSettingForm.c:72
-msgid "_Monitor clipboard for specified file types:"
-msgstr "監視剪貼簿裡指定的檔案類型(_M):"
+#. Monitor button
+#: ../ui-gtk/UgtkSettingForm.c:57
+#, fuzzy
+msgid "_Enable clipboard monitor"
+msgstr "監視剪貼簿(_M)"
 
-#: ../uget-gtk/UgSettingForm.c:87
-#: ../uget-gtk/UgSettingForm.c:242
-msgid "Separate the types with character '|'."
-msgstr "用 '|' 字元分隔檔案類型."
-
-#: ../uget-gtk/UgSettingForm.c:92
-#: ../uget-gtk/UgSettingForm.c:247
-msgid "You can use regular expressions here."
-msgstr "這裡可以使用正規表達式."
-
-#: ../uget-gtk/UgSettingForm.c:100
+#. quiet mode
+#: ../ui-gtk/UgtkSettingForm.c:62
 msgid "_Quiet mode"
 msgstr "安靜模式(_Q)"
 
-#: ../uget-gtk/UgSettingForm.c:109
-msgid "Add URL to Nth category"
-msgstr "URL 直接加入第幾個分類"
+#: ../ui-gtk/UgtkSettingForm.c:68
+#: ../ui-gtk/UgtkSettingForm.c:457
+#, fuzzy
+msgid "Default category index"
+msgstr "刪除分類(_D)"
 
-#. check button
-#: ../uget-gtk/UgSettingForm.c:147
-msgid "Show confirmation dialog on close"
+#: ../ui-gtk/UgtkSettingForm.c:80
+#: ../ui-gtk/UgtkSettingForm.c:469
+msgid "Adding to Nth category if no matched category."
+msgstr ""
+
+#: ../ui-gtk/UgtkSettingForm.c:87
+#, fuzzy
+msgid "Monitor clipboard for specified file types:"
+msgstr "監視剪貼簿裡指定的檔案類型(_M):"
+
+#: ../ui-gtk/UgtkSettingForm.c:102
+msgid "Separate the types with character '|'."
+msgstr "用 '|' 字元分隔檔案類型."
+
+#: ../ui-gtk/UgtkSettingForm.c:107
+msgid "You can use regular expressions here."
+msgstr "這裡可以使用正規表達式."
+
+#: ../ui-gtk/UgtkSettingForm.c:151
+msgid "Confirmation"
+msgstr ""
+
+#. Confirmation check buttons
+#: ../ui-gtk/UgtkSettingForm.c:157
+#, fuzzy
+msgid "Show confirmation dialog on exit"
 msgstr "關閉時確認"
 
-#: ../uget-gtk/UgSettingForm.c:150
+#: ../ui-gtk/UgtkSettingForm.c:160
 msgid "Confirm when deleting files"
 msgstr "刪除檔案時確認"
 
-#: ../uget-gtk/UgSettingForm.c:153
+#: ../ui-gtk/UgtkSettingForm.c:166
+msgid "System Tray"
+msgstr ""
+
+#. System Tray check buttons
+#: ../ui-gtk/UgtkSettingForm.c:172
 msgid "Always show tray icon"
 msgstr "永遠顯示系統列圖示"
 
-#: ../uget-gtk/UgSettingForm.c:156
+#: ../ui-gtk/UgtkSettingForm.c:175
 msgid "Minimize to tray on startup"
 msgstr "啟動時縮小到系統列"
 
-#: ../uget-gtk/UgSettingForm.c:159
+#: ../ui-gtk/UgtkSettingForm.c:178
+msgid "Close to tray on window close"
+msgstr ""
+
+#: ../ui-gtk/UgtkSettingForm.c:182
+msgid "Use Ubuntu's App Indicator"
+msgstr ""
+
+#: ../ui-gtk/UgtkSettingForm.c:189
 msgid "Enable offline mode on startup"
 msgstr "啟動時進入離線模式"
 
-#: ../uget-gtk/UgSettingForm.c:162
+#: ../ui-gtk/UgtkSettingForm.c:192
 msgid "Download starting notification"
 msgstr "開始下載時通知"
 
-#: ../uget-gtk/UgSettingForm.c:165
+#: ../ui-gtk/UgtkSettingForm.c:195
 msgid "Sound when download is finished"
 msgstr "下載完成時發出聲音"
 
-#: ../uget-gtk/UgSettingForm.c:168
+#: ../ui-gtk/UgtkSettingForm.c:198
 msgid "Apply recently download settings"
 msgstr "套用上一次的下載設定"
 
-#: ../uget-gtk/UgSettingForm.c:229
-msgid "_Launch default application for specified file types:"
-msgstr "啟動指定檔案類型的預設應用程式(_L):"
+#: ../ui-gtk/UgtkSettingForm.c:264
+msgid "These will affect all plug-ins."
+msgstr ""
 
-#: ../uget-gtk/UgSettingForm.c:288
+#. Global speed limit
+#: ../ui-gtk/UgtkSettingForm.c:270
+#, fuzzy
+msgid "Global speed limit"
+msgstr "速度限制"
+
+#: ../ui-gtk/UgtkSettingForm.c:278
+#: ../ui-gtk/UgtkSettingForm.c:575
+#, fuzzy
+msgid "Max upload speed"
+msgstr "最大上傳速度"
+
+#: ../ui-gtk/UgtkSettingForm.c:290
+#: ../ui-gtk/UgtkSettingForm.c:587
+#, fuzzy
+msgid "Max download speed"
+msgstr "最大下載速度"
+
+#: ../ui-gtk/UgtkSettingForm.c:323
+#, fuzzy
+msgid "Completion Auto-Actions"
+msgstr "完成自動操作(_A)"
+
+#: ../ui-gtk/UgtkSettingForm.c:332
+msgid "Remember Completion setting in menu"
+msgstr ""
+
+#: ../ui-gtk/UgtkSettingForm.c:338
+msgid "Custom command:"
+msgstr ""
+
+#: ../ui-gtk/UgtkSettingForm.c:350
+msgid "Custom command if error occured:"
+msgstr ""
+
+#: ../ui-gtk/UgtkSettingForm.c:399
 msgid "_Auto save"
 msgstr "自動存檔(_A)"
 
 #. auto save spin & label (interval)
-#: ../uget-gtk/UgSettingForm.c:294
+#: ../ui-gtk/UgtkSettingForm.c:405
 msgid "minutes"
 msgstr "分鐘"
 
 #. auto save label
-#: ../uget-gtk/UgSettingForm.c:301
+#: ../ui-gtk/UgtkSettingForm.c:413
 msgid "_Interval:"
 msgstr "間隔(_I):"
 
-#: ../uget-gtk/UgSettingForm.c:337
+#. Commandline Settings
+#: ../ui-gtk/UgtkSettingForm.c:444
 msgid "Commandline Settings"
 msgstr "命令列設定"
 
 #. --quiet
-#: ../uget-gtk/UgSettingForm.c:341
+#: ../ui-gtk/UgtkSettingForm.c:451
 msgid "Use '--quiet' by default"
 msgstr "預設使用 '--quiet' 參數"
 
-#: ../uget-gtk/UgSettingForm.c:347
-msgid "'--category-index' default value"
-msgstr "設定 '--category-index' 的預設值"
+#: ../ui-gtk/UgtkSettingForm.c:519
+msgid "Plug-in matching order:"
+msgstr ""
 
-#: ../uget-gtk/UgSettingForm.c:410
-msgid "_Enable aria2 plug-in"
-msgstr "啟用 aria2 插件(_E)"
+#: ../ui-gtk/UgtkSettingForm.c:542
+msgid "Aria2 plug-in options"
+msgstr ""
 
-#: ../uget-gtk/UgSettingForm.c:417
+#: ../ui-gtk/UgtkSettingForm.c:558
+msgid "RPC authorization secret token"
+msgstr ""
+
+#. ------------------------------------------------------------------------
+#. Speed Limits
+#: ../ui-gtk/UgtkSettingForm.c:567
+msgid "Global speed limit for aria2 only"
+msgstr ""
+
+#. ------------------------------------------------------------------------
+#. aria2 works on local device
+#. launch
+#: ../ui-gtk/UgtkSettingForm.c:600
 msgid "_Launch aria2 on startup"
 msgstr "啟動時執行 aria2"
 
-#: ../uget-gtk/UgSettingForm.c:423
+#. shutdown
+#: ../ui-gtk/UgtkSettingForm.c:606
 msgid "_Shutdown aria2 on exit"
 msgstr "離開時關閉 aria2"
 
-#: ../uget-gtk/UgSettingForm.c:439
+#. ------------------------------------------------------------------------
+#. Local options
+#: ../ui-gtk/UgtkSettingForm.c:612
+#, fuzzy
+msgid "Launch aria2 on local device"
+msgstr "啟動時執行 aria2"
+
+#: ../ui-gtk/UgtkSettingForm.c:621
 msgid "Path"
 msgstr "路徑"
 
-#: ../uget-gtk/UgSettingForm.c:447
+#: ../ui-gtk/UgtkSettingForm.c:632
 msgid "Arguments"
 msgstr "參數"
 
-#. aria2 plug-in hint
-#: ../uget-gtk/UgSettingForm.c:454
-msgid "You must restart uGet after modifying 'Arguments'."
+#. Arguments - hint
+#: ../ui-gtk/UgtkSettingForm.c:637
+#, fuzzy
+msgid "You must restart uGet after modifying it."
 msgstr "修改'參數'之後必須重新啟動 uGet。"
 
-#: ../uget-gtk/UgSettingForm.c:461
-msgid "Speed Limits"
-msgstr "速度限制"
-
-#: ../uget-gtk/UgSettingForm.c:467
-msgid "Upload"
-msgstr "上傳"
-
-#: ../uget-gtk/UgSettingForm.c:478
-msgid "Download"
-msgstr "下傳"
-
-#: ../uget-gtk/UgSummary.c:109
+#: ../ui-gtk/UgtkSummary.c:112
 msgid "File"
 msgstr "檔案"
 
-#: ../uget-gtk/UgSummary.c:129
+#: ../ui-gtk/UgtkSummary.c:127
 msgid "Folder"
 msgstr "目錄"
 
-#: ../uget-gtk/UgSummary.c:259
+#: ../ui-gtk/UgtkSummary.c:270
 msgid "Item"
 msgstr "項目"
 
-#: ../uget-gtk/UgSummary.c:264
+#: ../ui-gtk/UgtkSummary.c:275
 msgid "Value"
 msgstr "值"
 
 #. Copy All
-#: ../uget-gtk/UgSummary.c:296
+#: ../ui-gtk/UgtkSummary.c:307
 msgid "Copy _All"
 msgstr "複製全部(_A)"
+
+#. Show window
+#: ../ui-gtk/UgtkTrayIcon.c:106
+msgid "Show window"
+msgstr "顯示視窗"
+
+#. Offline mode
+#: ../ui-gtk/UgtkTrayIcon.c:112
+msgid "_Offline Mode"
+msgstr "離線模式(_O)"
+
+#~ msgid "No plug-in support this scheme or file."
+#~ msgstr "沒有插件支援這種方案或檔案."
+
+#~ msgid "Remember this action"
+#~ msgstr "記住這個設定"
+
+#~ msgid "Minimize to tray"
+#~ msgstr "縮小到系統列"
+
+#~ msgid "Exit uGet"
+#~ msgstr "離開 uGet"
+
+#~ msgid "failed to launch aria2."
+#~ msgstr "aria2 啟動失敗。"
+
+#~ msgid "Export to"
+#~ msgstr "匯出到"
+
+#~ msgid "Save all"
+#~ msgstr "全部儲存"
+
+#~ msgid "_Download..."
+#~ msgstr "下載(_D)..."
+
+#~ msgid "_Category..."
+#~ msgstr "分類(_C)..."
+
+#~ msgid "Torrent..."
+#~ msgstr "Torrent..."
+
+#~ msgid "Metalink..."
+#~ msgstr "Metalink..."
+
+#~ msgid "_Clipboard Option..."
+#~ msgstr "剪貼簿選項(_C)..."
+
+#~ msgid "only one matched"
+#~ msgstr "只有一個符合條件"
+
+#~ msgid ""
+#~ "Failed to connect to aria2.\n"
+#~ "Is aria2 shutdown? or aria2 launch failed."
+#~ msgstr ""
+#~ "無法連線到 aria2。\n"
+#~ "aria2 是否已經關閉？ 或是啟動失敗。"
+
+#~ msgid ""
+#~ "This program need privileges to shutdown or suspend.\n"
+#~ "If it can not work, please check your privileges."
+#~ msgstr ""
+#~ "程式需要權限才能關機.\n"
+#~ "如果不能正常運作，請檢查權限。"
+
+#~ msgid "_URL:"
+#~ msgstr "網址(_U):"
+
+#~ msgid "Options"
+#~ msgstr "選項"
+
+#~ msgid "Connections per server"
+#~ msgstr "每台伺服器的連線數"
+
+#~ msgid "UI Settings"
+#~ msgstr "介面設定"
+
+#~ msgid "Add URL to Nth category"
+#~ msgstr "URL 直接加入第幾個分類"
+
+#~ msgid "_Launch default application for specified file types:"
+#~ msgstr "啟動指定檔案類型的預設應用程式(_L):"
+
+#~ msgid "'--category-index' default value"
+#~ msgstr "設定 '--category-index' 的預設值"
+
+#~ msgid "_Enable aria2 plug-in"
+#~ msgstr "啟用 aria2 插件(_E)"
+
+#~ msgid "Download"
+#~ msgstr "下傳"
 
 #~ msgid "Shutdown when downloads complete"
 #~ msgstr "下載完成時關機"

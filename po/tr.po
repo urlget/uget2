@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # etc <etcetin@gmail.com>, 2013
 # yakup <mutouk@yandex.ru>, 2013
@@ -9,1289 +9,1736 @@ msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-07 23:06+0800\n"
+"POT-Creation-Date: 2014-05-27 14:40+0800\n"
 "PO-Revision-Date: 2013-12-09 18:25+0000\n"
 "Last-Translator: etc <etcetin@gmail.com>\n"
-"Language-Team: Turkish (http://www.transifex.com/projects/p/uget/language/tr/)\n"
+"Language-Team: Turkish (http://www.transifex.com/projects/p/uget/language/"
+"tr/)\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#. UG_MESSAGE_INFO_CUSTOM
-#: ../../po/../uglib/UgMessage.c:52
+#: ../uget/UgetApp.c:95
+#, fuzzy
+msgid "All Category"
+msgstr "Bölüm"
+
+#. UGET_EVENT_NORMAL_CUSTOM
+#: ../uget/UgetEvent.c:58
 msgid "Connecting..."
 msgstr "Bağlanıyor..."
 
-#. UG_MESSAGE_INFO_CONNECT
-#: ../../po/../uglib/UgMessage.c:53
+#. UGET_EVENT_NORMAL_CONNECT
+#: ../uget/UgetEvent.c:59
 msgid "Transmitting..."
 msgstr "Gönderiliyor..."
 
-#. UG_MESSAGE_INFO_TRANSMIT,
-#: ../../po/../uglib/UgMessage.c:54
-#: ../../po/../uget-gtk/UgDownloadWidget.c:896
+#. UGET_EVENT_NORMAL_TRANSMIT,
+#: ../uget/UgetEvent.c:60
+#: ../ui-gtk/UgtkNodeView.c:874
 msgid "Retry"
 msgstr "Yeniden Dene"
 
-#. UG_MESSAGE_INFO_RETRY,
-#: ../../po/../uglib/UgMessage.c:55
+#. UGET_EVENT_NORMAL_RETRY,
+#: ../uget/UgetEvent.c:61
 msgid "Download completed"
 msgstr "İndirme tamamlandı"
 
-#. UG_MESSAGE_INFO_COMPLETE,
-#: ../../po/../uglib/UgMessage.c:56 ../../po/../uget-gtk/UgCategoryWidget.c:45
+#. UGET_EVENT_NORMAL_COMPLETE,
+#: ../uget/UgetEvent.c:62
+#: ../ui-gtk/UgtkNodeView.c:613
 msgid "Finished"
 msgstr "Bitti"
 
-#. UG_MESSAGE_INFO_FINISH,
+#. UGET_EVENT_NORMAL_FINISH,
 #. resumable
-#: ../../po/../uglib/UgMessage.c:58
+#: ../uget/UgetEvent.c:64
 msgid "Resumable"
 msgstr "Devam Edebilir"
 
-#. UG_MESSAGE_INFO_RESUMABLE,
-#: ../../po/../uglib/UgMessage.c:59 ../../po/../uglib/UgPlugin-aria2.c:889
+#. UGET_EVENT_NORMAL_RESUMABLE,
+#: ../uget/UgetEvent.c:65
+#: ../uget/UgetPluginAria2.c:278
 msgid "Not Resumable"
 msgstr "Devam Edemez"
 
-#. UG_MESSAGE_WARNING_CUSTOM
-#: ../../po/../uglib/UgMessage.c:67 ../../po/../uglib/UgPlugin-aria2.c:913
+#. UGET_EVENT_WARNING_CUSTOM
+#: ../uget/UgetEvent.c:73
+#: ../uget/UgetPluginAria2.c:285
 msgid "Output file can't be renamed."
 msgstr "Çıktı dosyası yeniden adlandırılamadı."
 
-#. UG_MESSAGE_ERROR_CUSTOM
-#: ../../po/../uglib/UgMessage.c:75
+#. UGET_EVENT_ERROR_CUSTOM
+#: ../uget/UgetEvent.c:81
 msgid "couldn't connect to host."
 msgstr "ana makineye bağlanamadı."
 
-#. UG_MESSAGE_ERROR_CONNECT_FAILED
-#: ../../po/../uglib/UgMessage.c:76
+#. UGET_EVENT_ERROR_CONNECT_FAILED
+#: ../uget/UgetEvent.c:82
+#: ../uget/UgetPluginAria2.c:289
 msgid "Folder can't be created."
 msgstr "Dizin oluşturulamadı."
 
-#. UG_MESSAGE_ERROR_FOLDER_CREATE_FAILED
-#: ../../po/../uglib/UgMessage.c:77
+#. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
+#: ../uget/UgetEvent.c:83
 msgid "File can't be created (bad filename or file exist)."
 msgstr "Dosya oluşturulamadı (geçersiz dosya ismi veya dosya zaten mevcut)."
 
-#. UG_MESSAGE_ERROR_FILE_CREATE_FAILED
-#: ../../po/../uglib/UgMessage.c:78
+#. UGET_EVENT_ERROR_FILE_CREATE_FAILED
+#: ../uget/UgetEvent.c:84
 msgid "File can't be opened."
 msgstr "Dosya açılamadı."
 
-#. UG_MESSAGE_ERROR_FILE_OPEN_FAILED
-#: ../../po/../uglib/UgMessage.c:79 ../../po/../uglib/UgRunning.c:104
-msgid "Unable to create thread, reduce number of download."
+#. UGET_EVENT_ERROR_FILE_OPEN_FAILED
+#: ../uget/UgetEvent.c:85
+#, fuzzy
+msgid "Unable to create thread."
 msgstr "İş parçacığı oluşturulamıyor, indirme sayısını düşürün."
 
-#. UG_MESSAGE_ERROR_THREAD_CREATE_FAILED
-#: ../../po/../uglib/UgMessage.c:80
+#. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
+#: ../uget/UgetEvent.c:86
+msgid "Incorrect source (different size)."
+msgstr ""
+
+#. UGET_EVENT_ERROR_INCORRECT_SOURCE,
+#: ../uget/UgetEvent.c:87
 msgid "Out of resource (disk full or run out of memory)."
 msgstr "Yetersiz kaynak (disk dolu veya bellek yetersiz)"
 
-#. UG_MESSAGE_ERROR_OUT_OF_RESOURCE
-#: ../../po/../uglib/UgMessage.c:81
+#. UGET_EVENT_ERROR_OUT_OF_RESOURCE
+#: ../uget/UgetEvent.c:88
 msgid "No output file."
 msgstr "Çıktı dosyası yok."
 
-#. UG_MESSAGE_ERROR_NO_OUTPUT_FILE
-#: ../../po/../uglib/UgMessage.c:82
+#. UGET_EVENT_ERROR_NO_OUTPUT_FILE
+#: ../uget/UgetEvent.c:89
 msgid "No output setting."
 msgstr "Çıktı ayarları yok."
 
-#. UG_MESSAGE_ERROR_NO_OUTPUT_SETTING
-#: ../../po/../uglib/UgMessage.c:83
+#. UGET_EVENT_ERROR_NO_OUTPUT_SETTING
+#: ../uget/UgetEvent.c:90
 msgid "Too many retries."
 msgstr "Çok fazla yeniden deneme."
 
-#. UG_MESSAGE_ERROR_TOO_MANY_RETRIES
-#: ../../po/../uglib/UgMessage.c:84
+#. UGET_EVENT_ERROR_TOO_MANY_RETRIES
+#: ../uget/UgetEvent.c:91
 msgid "Unsupported scheme (protocol)."
 msgstr "Desteklenmeyen şablon (protokol)."
 
-#. UG_MESSAGE_ERROR_UNSUPPORTED_SCHEME
-#: ../../po/../uglib/UgMessage.c:85
+#. UGET_EVENT_ERROR_UNSUPPORTED_SCHEME
+#: ../uget/UgetEvent.c:92
 msgid "Unsupported file."
 msgstr "Desteklenmeyen dosya."
 
-#. UG_MESSAGE_ERROR_HTTP_MEMBER_CUSTOM
-#: ../../po/../uglib/UgMessage.c:103
+#. 1 - 10
+#: ../uget/UgetPluginAria2.c:271
+msgid "aria2: an unknown error occurred."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:272
+msgid "aria2: time out occurred."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:273
+msgid "aria2: resource was not found."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:274
+msgid ""
+"aria2 saw the specfied number of 'resource not found' error. See --max-file-"
+"not-found option"
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:275
+msgid "aria2: speed was too slow."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:276
+msgid "aria2: network problem occurred."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:277
+msgid "aria2: unfinished downloads."
+msgstr ""
+
+#. _("Not Resumable"),
+#: ../uget/UgetPluginAria2.c:279
+msgid "Out of resource"
+msgstr ""
+
+#. _(),
+#: ../uget/UgetPluginAria2.c:280
+msgid "aria2: piece length was different from one in .aria2 control file."
+msgstr ""
+
+#. 11 - 20
+#: ../uget/UgetPluginAria2.c:282
+msgid "aria2 was downloading same file."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:283
+msgid "aria2 was downloading same info hash torrent."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:284
+msgid "aria2: file already existed. See --allow-overwrite option."
+msgstr ""
+
+#. _("Output file can't be renamed."),
+#: ../uget/UgetPluginAria2.c:286
+#, fuzzy
+msgid "aria2: could not open existing file."
+msgstr "Gönderilen dosyayı açma işlemi başarısız."
+
+#: ../uget/UgetPluginAria2.c:287
+msgid "aria2: could not create new file or truncate existing file."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:288
+msgid "aria2: file I/O error occurred."
+msgstr ""
+
+#. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
+#: ../uget/UgetPluginAria2.c:290
+msgid "aria2: name resolution failed."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:291
+msgid "aria2: could not parse Metalink document."
+msgstr ""
+
+#. 21 - 30
+#: ../uget/UgetPluginAria2.c:293
+msgid "aria2: FTP command failed."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:294
+msgid "aria2: HTTP response header was bad or unexpected."
+msgstr ""
+
+#: ../uget/UgetPluginAria2.c:295
 msgid "Too many redirections."
 msgstr "Çok fazla yönlendirme."
 
-#. UG_MESSAGE_ERROR_HTTP_MEMBER_TOO_MANY_REDIRECTIONS
-#: ../../po/../uglib/UgMessage.c:104
-msgid "Failed to open posted file."
-msgstr "Gönderilen dosyayı açma işlemi başarısız."
+#: ../uget/UgetPluginAria2.c:296
+msgid "aria2: HTTP authorization failed."
+msgstr ""
 
-#: ../../po/../uglib/UgRunning.c:91
-msgid "No plug-in support this scheme or file."
-msgstr "Bu şema veya dosyaya eklenti desteği yok"
+#: ../uget/UgetPluginAria2.c:297
+msgid "aria2: could not parse bencoded file(usually .torrent file)."
+msgstr ""
 
-#: ../../po/../uget-gtk/UgApp-gtk.c:571
-#: ../../po/../uget-gtk/UgApp-gtk-timeout.c:529
-msgid "tasks"
-msgstr "görevler"
+#: ../uget/UgetPluginAria2.c:298
+msgid "aria2: torrent file was corrupted or missing information."
+msgstr ""
 
-#: ../../po/../uget-gtk/UgApp-gtk.c:616
-#, c-format
-msgid "Selected %d items"
-msgstr "%d öğe seçildi"
+#: ../uget/UgetPluginAria2.c:299
+msgid "aria2: Magnet URI was bad."
+msgstr ""
 
-#. create confirmation dialog
-#: ../../po/../uget-gtk/UgApp-gtk.c:686
-msgid "Really Quit?"
-msgstr "Gerçekten çıkılsın mı?"
+#: ../uget/UgetPluginAria2.c:300
+msgid ""
+"aria2: bad/unrecognized option was given or unexpected option argument was "
+"given."
+msgstr ""
 
-#: ../../po/../uget-gtk/UgApp-gtk.c:703
-msgid "Are you sure you want to quit?"
-msgstr "Çıkmak istediğinizden emin misiniz?"
+#: ../uget/UgetPluginAria2.c:301
+msgid "aria2: remote server was unable to handle the request."
+msgstr ""
 
-#: ../../po/../uget-gtk/UgApp-gtk.c:708
-msgid "Remember this action"
-msgstr "Bu eylemi hatırla"
+#: ../uget/UgetPluginAria2.c:302
+msgid "aria2: could not parse JSON-RPC request."
+msgstr ""
 
-#. radio button
-#: ../../po/../uget-gtk/UgApp-gtk.c:713
-msgid "Minimize to tray"
-msgstr "Tepsiye küçült"
+#: ../uget/UgetPluginAria2.c:305
+msgid "No response. Is aria2 shutdown?"
+msgstr ""
 
-#: ../../po/../uget-gtk/UgApp-gtk.c:715
-msgid "Exit uGet"
-msgstr "uGet'ten Çık"
+#. debug
+#: ../uget/UgetPluginAria2.c:607
+msgid "aria2: gid was removed."
+msgstr ""
 
-#. create confirmation dialog
-#: ../../po/../uget-gtk/UgApp-gtk.c:770
-msgid "Really delete files?"
-msgstr "Dosyalar kesin olarak silinsin mi?"
-
-#: ../../po/../uget-gtk/UgApp-gtk.c:788
-msgid "Are you sure you want to delete files?"
-msgstr "Dosyaları silmek istediğinizden emin misiniz?"
-
-#: ../../po/../uget-gtk/UgApp-gtk.c:793
-msgid "Do not ask me again"
-msgstr "Bana tekrar sorma"
-
-#: ../../po/../uget-gtk/UgApp-gtk.c:835
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:567
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:600
-msgid "Error"
-msgstr "Hata"
-
-#: ../../po/../uget-gtk/UgApp-gtk.c:843 ../../po/../uget-gtk/UgSummary.c:173
-msgid "Message"
-msgstr "İleti"
-
-#: ../../po/../uget-gtk/UgApp-gtk-aria2.c:303
-msgid "failed to launch aria2."
-msgstr "aria2 başlatması başarısız."
-
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:66
+#: ../ui-gtk/UgtkAboutDialog.c:46
 msgid "Download Manager"
 msgstr "İndirme Yöneticisi"
 
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:68
+#: ../ui-gtk/UgtkAboutDialog.c:48
 msgid "translator-credits"
-msgstr "Yiğit Ateş\nEmin Tufan Çetin <etcetin@gmail.com>"
+msgstr ""
+"Yiğit Ateş\n"
+"Emin Tufan Çetin <etcetin@gmail.com>"
 
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:118
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:131
-msgid "New Category"
-msgstr "Yeni Bölüm"
+#: ../ui-gtk/UgtkAboutDialog.c:80
+msgid "uGet Founder: "
+msgstr ""
 
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:126
-msgid "Copy - "
-msgstr "Kopyala -"
+#: ../ui-gtk/UgtkAboutDialog.c:81
+msgid "uGet Project Manager: "
+msgstr ""
 
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:181
-msgid "Category Properties"
-msgstr "Bölüm Özellikleri"
+#: ../ui-gtk/UgtkApp-timeout.c:250
+#: ../ui-gtk/UgtkTrayIcon.c:204
+msgid "tasks"
+msgstr "görevler"
 
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:270
-#: ../../po/../uget-gtk/UgApp-gtk-timeout.c:258
+#: ../ui-gtk/UgtkApp-timeout.c:368
+msgid "New from Clipboard"
+msgstr "Panodan Yeni"
+
+#: ../ui-gtk/UgtkApp-timeout.c:370
+#: ../ui-gtk/UgtkApp.c:641
 msgid "New Download"
 msgstr "Yeni İndirme"
 
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:298
-msgid "URL Sequence batch"
-msgstr "URL Dizin Yığını"
-
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:321
-msgid "No URLs found in clipboard."
-msgstr "Panoda URL bulunamadı."
-
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:325
-msgid "Clipboard batch"
-msgstr "Panodan çoklu"
-
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:333
-#: ../../po/../uget-gtk/UgApp-gtk-timeout.c:168
-#: ../../po/../uget-gtk/UgSettingDialog.c:80
+#: ../ui-gtk/UgtkApp-timeout.c:393
+#: ../ui-gtk/UgtkApp.c:1387
+#: ../ui-gtk/UgtkSettingDialog.c:103
 msgid "Clipboard"
 msgstr "Pano"
 
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:359
-msgid "New Torrent"
-msgstr "Yeni Torrent"
+#: ../ui-gtk/UgtkApp-timeout.c:395
+msgid "Command line"
+msgstr "Komut satırı"
 
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:381
-msgid "Open Torrent file"
-msgstr "Torrent dosyası aç"
+#: ../ui-gtk/UgtkApp-timeout.c:752
+msgid "Error Occurred"
+msgstr ""
 
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:404
-msgid "New Metalink"
-msgstr "Yeni Metalink"
+#: ../ui-gtk/UgtkApp-timeout.c:753
+#, fuzzy
+msgid "Error Occurred when downloading."
+msgstr "İndirme tamamlandıktan sonra ses çıkar"
 
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:427
-msgid "Open Metalink file"
-msgstr "Metalink dosyası aç"
+#: ../ui-gtk/UgtkApp-timeout.c:754
+msgid "Download Starting"
+msgstr "İndirme Başlatılıyor"
 
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:561
-#, c-format
-msgid "Can't launch default application for file '%s'."
-msgstr "'%s' dosyası için varsayılan uygulama başlatılamıyor."
+#: ../ui-gtk/UgtkApp-timeout.c:755
+msgid "Starting download queue."
+msgstr "İndirme kuyruğu başlatılıyor."
 
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:594
-#, c-format
-msgid "'%s' - This folder does not exist."
-msgstr "'%s' - Bu dizin mevcut değil."
+#: ../ui-gtk/UgtkApp-timeout.c:756
+msgid "Download Completed"
+msgstr "İndirme Tamamlandı"
 
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:674
-msgid "Download Properties"
-msgstr "İndirme Özellikleri"
+#: ../ui-gtk/UgtkApp-timeout.c:757
+msgid "All queuing downloads have been completed."
+msgstr "Kuyruktaki bütün indirmeler tamamlandı."
 
-#. add link
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:906
-msgid "Link <A>"
-msgstr "Bağlantı <A>"
+#. ----------------------------------------------------
+#. frame for Status (start mode)
+#: ../ui-gtk/UgtkApp-ui.c:115
+#: ../ui-gtk/UgtkDownloadForm.c:220
+#: ../ui-gtk/UgtkNodeView.c:997
+msgid "Status"
+msgstr "Durum"
 
-#. add image
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:911
-msgid "Image <IMG>"
-msgstr "Görüntü <IMG>"
+#. Summary Items - Category
+#. Download Columns - Category
+#: ../ui-gtk/UgtkApp-ui.c:117
+#: ../ui-gtk/UgtkMenubar-ui.c:264
+#: ../ui-gtk/UgtkMenubar-ui.c:292
+#: ../ui-gtk/UgtkMenubar-ui.c:377
+#: ../ui-gtk/UgtkNodeDialog.c:392
+#: ../ui-gtk/UgtkNodeView.c:889
+#: ../ui-gtk/UgtkNodeView.c:977
+#: ../ui-gtk/UgtkSummary.c:139
+msgid "Category"
+msgstr "Bölüm"
 
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:927
-msgid "Import URLs from HTML file"
-msgstr "HTML dosyasından URL aktar"
+#. toolbar right side
+#: ../ui-gtk/UgtkApp-ui.c:183
+msgid "Sort"
+msgstr ""
 
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:968
-msgid "Text File"
-msgstr "Metin Dosyası"
+#: ../ui-gtk/UgtkApp-ui.c:195
+msgid "Create new download"
+msgstr "Yeni indirme oluştur"
 
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:984
-msgid "Import URLs from text file"
-msgstr "Metin dosyasından URL aktar"
-
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:1030
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:1031
-msgid "Export to"
-msgstr "Dışa Aktar"
-
-#: ../../po/../uget-gtk/UgApp-gtk-callback.c:1128
-msgid "Settings"
-msgstr "Ayarlar"
-
-#. New Download
 #. New Download (accelerators)
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:101
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:292
+#. gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
+#. New Download
+#: ../ui-gtk/UgtkApp-ui.c:205
+#: ../ui-gtk/UgtkMenubar-ui.c:58
+#: ../ui-gtk/UgtkTrayIcon.c:59
 msgid "New _Download..."
 msgstr "Yeni İn_dirme..."
 
+#. New Category
+#: ../ui-gtk/UgtkApp-ui.c:212
+#: ../ui-gtk/UgtkMenubar-ui.c:65
+msgid "New _Category..."
+msgstr "Yeni _Bölüm..."
+
 #. New Clipboard batch
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:108
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:305
+#: ../ui-gtk/UgtkApp-ui.c:218
+#: ../ui-gtk/UgtkTrayIcon.c:66
 msgid "New Clipboard _batch..."
 msgstr "Yeni _çoklu pano..."
 
+#. New URL Sequence batch
+#: ../ui-gtk/UgtkApp-ui.c:225
+msgid "New _URL Sequence batch..."
+msgstr "Yeni _URL Dizin yığını..."
+
 #. New Torrent
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:117
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:322
+#. separator
+#. gtk_menu_shell_append ((GtkMenuShell*)submenu, gtk_separator_menu_item_new() );
+#. New Torrent
+#: ../ui-gtk/UgtkApp-ui.c:235
+#: ../ui-gtk/UgtkMenubar-ui.c:73
+#: ../ui-gtk/UgtkTrayIcon.c:75
 msgid "New Torrent..."
 msgstr "Yeni Torrent..."
 
 #. New Metalink
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:124
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:329
+#: ../ui-gtk/UgtkApp-ui.c:242
+#: ../ui-gtk/UgtkMenubar-ui.c:79
+#: ../ui-gtk/UgtkTrayIcon.c:82
 msgid "New Metalink..."
 msgstr "Yeni Metalink..."
 
-#. Settings
-#. menu_item = gtk_menu_item_new_with_mnemonic (_("_Settings..."));
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:133
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:523
-msgid "_Settings..."
-msgstr "_Ayarlar..."
+#: ../ui-gtk/UgtkApp-ui.c:251
+#, fuzzy
+msgid "Save all settings"
+msgstr "Bölüm ayarları"
 
-#. Show window
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:147
-msgid "Show window"
-msgstr "Pencereyi göster"
-
-#. Offline mode
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:152
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:492
-msgid "_Offline Mode"
-msgstr "_Çevrimdışı Kip"
-
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:282
-msgid "Create new download"
-msgstr "Yeni indirme oluştur"
-
-#. New Category
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:299
-msgid "New _Category..."
-msgstr "Yeni _Bölüm..."
-
-#. New URL Sequence batch
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:312
-msgid "New _URL Sequence batch..."
-msgstr "Yeni _URL Dizin yığını..."
-
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:338
-msgid "Save all"
-msgstr "Tümünü kaydet"
-
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:346
+#: ../ui-gtk/UgtkApp-ui.c:259
 msgid "Set selected download runnable"
 msgstr "Seçili indirmeyi çalıştır"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:351
+#: ../ui-gtk/UgtkApp-ui.c:264
 msgid "Set selected download to pause"
 msgstr "Seçili indirmeyi duraklat"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:356
+#: ../ui-gtk/UgtkApp-ui.c:269
 msgid "Set selected download properties"
 msgstr "Seçili indirmenin özellikleri"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:364
+#: ../ui-gtk/UgtkApp-ui.c:277
 msgid "Move selected download up"
 msgstr "Seçili indirmeyi yukarı taşı"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:369
+#: ../ui-gtk/UgtkApp-ui.c:282
 msgid "Move selected download down"
 msgstr "Seçili indirmeyi aşağı taşı"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:374
+#: ../ui-gtk/UgtkApp-ui.c:287
 msgid "Move selected download to top"
 msgstr "Seçili indirmeyi en üste taşı"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:379
+#: ../ui-gtk/UgtkApp-ui.c:292
 msgid "Move selected download to bottom"
 msgstr "Seçili indirmeyi en alta taşı"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:402
+#: ../ui-gtk/UgtkApp.c:613
+msgid "New Category"
+msgstr "Yeni Bölüm"
+
+#: ../ui-gtk/UgtkApp.c:624
+msgid "Copy - "
+msgstr "Kopyala -"
+
+#: ../ui-gtk/UgtkApp.c:762
+msgid "Category Properties"
+msgstr "Bölüm Özellikleri"
+
+#: ../ui-gtk/UgtkApp.c:776
+msgid "Download Properties"
+msgstr "İndirme Özellikleri"
+
+#: ../ui-gtk/UgtkApp.c:1004
+msgid "New Torrent"
+msgstr "Yeni Torrent"
+
+#: ../ui-gtk/UgtkApp.c:1020
+msgid "New Metalink"
+msgstr "Yeni Metalink"
+
+#: ../ui-gtk/UgtkApp.c:1029
+msgid "Open Torrent file"
+msgstr "Torrent dosyası aç"
+
+#: ../ui-gtk/UgtkApp.c:1045
+msgid "Open Metalink file"
+msgstr "Metalink dosyası aç"
+
+#: ../ui-gtk/UgtkApp.c:1085
+#, fuzzy
+msgid "Failed to save category file."
+msgstr "Gönderilen dosyayı açma işlemi başarısız."
+
+#: ../ui-gtk/UgtkApp.c:1105
+#, fuzzy
+msgid "Failed to load category file."
+msgstr "Gönderilen dosyayı açma işlemi başarısız."
+
+#: ../ui-gtk/UgtkApp.c:1116
+#, fuzzy
+msgid "Save Category file"
+msgstr "Yeni Bölüm"
+
+#: ../ui-gtk/UgtkApp.c:1134
+#, fuzzy
+msgid "Open Category file"
+msgstr "Torrent dosyası aç"
+
+#. add link
+#: ../ui-gtk/UgtkApp.c:1193
+msgid "Link <A>"
+msgstr "Bağlantı <A>"
+
+#. add image
+#: ../ui-gtk/UgtkApp.c:1198
+msgid "Image <IMG>"
+msgstr "Görüntü <IMG>"
+
+#: ../ui-gtk/UgtkApp.c:1243
+msgid "Text File"
+msgstr "Metin Dosyası"
+
+#: ../ui-gtk/UgtkApp.c:1290
+msgid "Import URLs from HTML file"
+msgstr "HTML dosyasından URL aktar"
+
+#: ../ui-gtk/UgtkApp.c:1305
+msgid "Import URLs from text file"
+msgstr "Metin dosyasından URL aktar"
+
+#: ../ui-gtk/UgtkApp.c:1320
+#, fuzzy
+msgid "Export URLs to text file"
+msgstr "Metin dosyasından URL aktar"
+
+#: ../ui-gtk/UgtkApp.c:1339
+msgid "URL Sequence batch"
+msgstr "URL Dizin Yığını"
+
+#: ../ui-gtk/UgtkApp.c:1366
+msgid "No URLs found in clipboard."
+msgstr "Panoda URL bulunamadı."
+
+#: ../ui-gtk/UgtkApp.c:1375
+msgid "All URLs had existed."
+msgstr ""
+
+#: ../ui-gtk/UgtkApp.c:1380
+msgid "Clipboard batch"
+msgstr "Panodan çoklu"
+
+#: ../ui-gtk/UgtkApp.c:1470
+msgid "New"
+msgstr ""
+
+#: ../ui-gtk/UgtkApp.c:1589
+#: ../ui-gtk/UgtkMenubar.c:365
+#: ../ui-gtk/UgtkMenubar.c:397
+#: ../ui-gtk/UgtkNodeView.c:609
+msgid "Error"
+msgstr "Hata"
+
+#: ../ui-gtk/UgtkApp.c:1597
+#: ../ui-gtk/UgtkSummary.c:184
+msgid "Message"
+msgstr "İleti"
+
+#: ../ui-gtk/UgtkApp.c:1703
+#, c-format
+msgid "Selected %d items"
+msgstr "%d öğe seçildi"
+
+#: ../ui-gtk/UgtkBanner.c:145
+#: ../ui-gtk/UgtkBanner.c:165
+msgid "Attention uGetters:"
+msgstr "uGet'çiler Dikkat:"
+
+#: ../ui-gtk/UgtkBanner.c:148
+msgid ""
+"we are running a Donation Drive for uGet's Future Development, please click "
+msgstr ""
+"uGet'in gelecekteki geliştirmeleri için Donation Drive kullanıyoruz, lütfen "
+"tıklayın"
+
+#: ../ui-gtk/UgtkBanner.c:151
+msgid "HERE"
+msgstr "BURADA"
+
+#: ../ui-gtk/UgtkBanner.c:168
+msgid "please fill out this quick User Survey for uGet."
+msgstr "Lütfen uGet için bu hızlı Kullanıcı Anketini doldurun."
+
+#: ../ui-gtk/UgtkBanner.c:171
+msgid "click here to take survey"
+msgstr "anketi doldurmak için buraya tıklayın"
+
+#: ../ui-gtk/UgtkCategoryForm.c:62
+msgid "Category _name:"
+msgstr "Bölüm _adı:"
+
+#: ../ui-gtk/UgtkCategoryForm.c:82
+msgid "Active _downloads:"
+msgstr "Etkin _indirmeler:"
+
+#: ../ui-gtk/UgtkCategoryForm.c:92
+msgid "Capacity of Finished:"
+msgstr "Bitenlerin Kapasitesi:"
+
+#: ../ui-gtk/UgtkCategoryForm.c:102
+msgid "Capacity of Recycled:"
+msgstr "Geri Dönüşüm Kapasitesi:"
+
+#. ------------------------------------------------------------------------
+#. URI Matching conditions
+#: ../ui-gtk/UgtkCategoryForm.c:111
+msgid "URI Matching conditions"
+msgstr ""
+
+#: ../ui-gtk/UgtkCategoryForm.c:118
+msgid "Matched _Hosts:"
+msgstr ""
+
+#: ../ui-gtk/UgtkCategoryForm.c:129
+msgid "Matched _Schemes:"
+msgstr ""
+
+#: ../ui-gtk/UgtkCategoryForm.c:140
+msgid "Matched _Types:"
+msgstr ""
+
+#: ../ui-gtk/UgtkConfirmDialog.c:62
+msgid "Really Quit?"
+msgstr "Gerçekten çıkılsın mı?"
+
+#: ../ui-gtk/UgtkConfirmDialog.c:63
+msgid "Are you sure you want to quit?"
+msgstr "Çıkmak istediğinizden emin misiniz?"
+
+#: ../ui-gtk/UgtkConfirmDialog.c:67
+msgid "Really delete files?"
+msgstr "Dosyalar kesin olarak silinsin mi?"
+
+#: ../ui-gtk/UgtkConfirmDialog.c:68
+msgid "Are you sure you want to delete files?"
+msgstr "Dosyaları silmek istediğinizden emin misiniz?"
+
+#: ../ui-gtk/UgtkConfirmDialog.c:99
+#, fuzzy
+msgid "Don't ask me again"
+msgstr "Bana tekrar sorma"
+
+#. URL - label
+#: ../ui-gtk/UgtkDownloadForm.c:109
+#: ../ui-gtk/UgtkSequencer.c:63
+msgid "_URI:"
+msgstr ""
+
+#. Mirrors - label
+#: ../ui-gtk/UgtkDownloadForm.c:128
+msgid "Mirrors:"
+msgstr "Yansılar:"
+
+#. File - label
+#: ../ui-gtk/UgtkDownloadForm.c:144
+#: ../ui-gtk/UgtkProxyForm.c:385
+msgid "File:"
+msgstr "Dosya:"
+
+#: ../ui-gtk/UgtkDownloadForm.c:159
+#: ../ui-gtk/UgtkDownloadForm.c:889
+msgid "Select Folder"
+msgstr "Dizin Seç"
+
+#. Folder - label
+#: ../ui-gtk/UgtkDownloadForm.c:167
+msgid "_Folder:"
+msgstr "_Dizin:"
+
+#. Referrer - label
+#: ../ui-gtk/UgtkDownloadForm.c:182
+msgid "Referrer:"
+msgstr "Yönlendiren:"
+
+#. "Max Connections:" - title label
+#: ../ui-gtk/UgtkDownloadForm.c:207
+#, fuzzy
+msgid "_Max Connections:"
+msgstr "bağlantı"
+
+#: ../ui-gtk/UgtkDownloadForm.c:226
+#: ../ui-gtk/UgtkMenubar-ui.c:504
+msgid "_Runnable"
+msgstr "Çalıştı_rılabilir"
+
+#: ../ui-gtk/UgtkDownloadForm.c:228
+msgid "P_ause"
+msgstr "Dur_aklat"
+
+#. ----------------------------------------------------
+#. frame for login
+#: ../ui-gtk/UgtkDownloadForm.c:234
+msgid "Login"
+msgstr "Oturum Aç"
+
+#. User - label
+#. user label & entry
+#: ../ui-gtk/UgtkDownloadForm.c:248
+#: ../ui-gtk/UgtkProxyForm.c:149
+msgid "User:"
+msgstr "Kullanıcı:"
+
+#. Password - label
+#. password label & entry
+#: ../ui-gtk/UgtkDownloadForm.c:264
+#: ../ui-gtk/UgtkProxyForm.c:160
+msgid "Password:"
+msgstr "Parola:"
+
+#. label - cookie file
+#: ../ui-gtk/UgtkDownloadForm.c:290
+msgid "Cookie file:"
+msgstr "Çerez dosyası:"
+
+#: ../ui-gtk/UgtkDownloadForm.c:302
+#: ../ui-gtk/UgtkDownloadForm.c:945
+msgid "Select Cookie File"
+msgstr "Çerez Dosyası Seç"
+
+#. label - post file
+#: ../ui-gtk/UgtkDownloadForm.c:311
+msgid "Post file:"
+msgstr "Gönderme dosyası:"
+
+#: ../ui-gtk/UgtkDownloadForm.c:323
+#: ../ui-gtk/UgtkDownloadForm.c:1001
+msgid "Select Post File"
+msgstr "Gönderme Dosyası Seç"
+
+#. label - user agent
+#: ../ui-gtk/UgtkDownloadForm.c:333
+msgid "User Agent:"
+msgstr "Tarayıcı Bilgileri:"
+
+#. label - Max upload speed
+#: ../ui-gtk/UgtkDownloadForm.c:349
+msgid "Max upload speed:"
+msgstr "Azami yükleme hızı:"
+
+#. label - "KiB/s"
+#: ../ui-gtk/UgtkDownloadForm.c:361
+#: ../ui-gtk/UgtkDownloadForm.c:379
+#: ../ui-gtk/UgtkSettingForm.c:280
+#: ../ui-gtk/UgtkSettingForm.c:292
+#: ../ui-gtk/UgtkSettingForm.c:577
+#: ../ui-gtk/UgtkSettingForm.c:589
+msgid "KiB/s"
+msgstr "KiB/s"
+
+#. label - Max download speed
+#: ../ui-gtk/UgtkDownloadForm.c:367
+msgid "Max download speed:"
+msgstr "Azami indirme hızı:"
+
+#. Retry limit - label
+#: ../ui-gtk/UgtkDownloadForm.c:385
+msgid "Retry _limit:"
+msgstr "Yeniden deneme _sınırı:"
+
+#. counts - label
+#: ../ui-gtk/UgtkDownloadForm.c:400
+msgid "counts"
+msgstr "deneme"
+
+#. Retry delay - label
+#: ../ui-gtk/UgtkDownloadForm.c:407
+msgid "Retry _delay:"
+msgstr "Yeniden _deneme gecikmesi:"
+
+#. seconds - label
+#: ../ui-gtk/UgtkDownloadForm.c:422
+msgid "seconds"
+msgstr "saniye"
+
+#. Retrieve timestamp
+#: ../ui-gtk/UgtkDownloadForm.c:429
+msgid "Retrieve timestamp"
+msgstr "Zaman damgasını al"
+
+#: ../ui-gtk/UgtkMenubar-ui.c:51
 msgid "_File"
 msgstr "_Dosya"
 
-#. New - Download (accelerators)
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:414
-msgid "_Download..."
-msgstr "_İndirme..."
-
-#. New - Category
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:421
-msgid "_Category..."
-msgstr "_Bölüm..."
-
-#. New - Torrent
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:429
-msgid "Torrent..."
-msgstr "Torrent..."
-
-#. New - Metalink
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:435
-msgid "Metalink..."
-msgstr "Metalink..."
-
-#. New --- end ---
 #. Batch Downloads --- start ---
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:443
+#: ../ui-gtk/UgtkMenubar-ui.c:86
 msgid "_Batch Downloads"
 msgstr "_Çoklu İndirme"
 
 #. Batch downloads - Clipboard batch
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:449
+#: ../ui-gtk/UgtkMenubar-ui.c:92
 msgid "_Clipboard batch..."
 msgstr "Çoklu _pano..."
 
 #. Batch downloads - URL Sequence batch
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:455
+#: ../ui-gtk/UgtkMenubar-ui.c:98
 msgid "_URL Sequence batch..."
 msgstr "_URL Dizin yığını..."
 
 #. Batch downloads - Text file import (.txt)
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:461
+#: ../ui-gtk/UgtkMenubar-ui.c:104
 msgid "_Text file import (.txt)..."
 msgstr "Metin dosyasını içe ak_tar (.txt)..."
 
 #. Batch downloads - HTML file import (.html)
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:467
+#: ../ui-gtk/UgtkMenubar-ui.c:110
 msgid "_HTML file import (.html)..."
 msgstr "_HTML dosyasını içe aktar (.html)..."
 
 #. Batch downloads - Export to Text file (.txt)
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:475
+#: ../ui-gtk/UgtkMenubar-ui.c:118
 msgid "_Export to Text file (.txt)..."
 msgstr "M_etin dosyasına dışarı aktar (.txt)..."
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:503
+#. Open Category
+#: ../ui-gtk/UgtkMenubar-ui.c:128
+#, fuzzy
+msgid "_Open category..."
+msgstr "_Yeni Bölüm..."
+
+#. Save Category
+#: ../ui-gtk/UgtkMenubar-ui.c:135
+#, fuzzy
+msgid "_Save category as..."
+msgstr "_Yeni Bölüm..."
+
+#. Save All
+#: ../ui-gtk/UgtkMenubar-ui.c:142
+#, fuzzy
+msgid "Save _all settings"
+msgstr "Bölüm ayarları"
+
+#. Offline mode
+#: ../ui-gtk/UgtkMenubar-ui.c:152
+#, fuzzy
+msgid "Offline Mode"
+msgstr "_Çevrimdışı Kip"
+
+#: ../ui-gtk/UgtkMenubar-ui.c:170
 msgid "_Edit"
 msgstr "Düz_enle"
 
-#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new()
-#. );
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:508
+#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
+#: ../ui-gtk/UgtkMenubar-ui.c:175
 msgid "Clipboard _Monitor"
 msgstr "Pano _İzleyici"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:512
-msgid "_Clipboard Option..."
-msgstr "_Pano Seçenekleri..."
+#: ../ui-gtk/UgtkMenubar-ui.c:179
+#, fuzzy
+msgid "Clipboard works quietly"
+msgstr "Pano _İzleyici"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:518
-msgid "Shutdown when downloads complete"
-msgstr "İndirme tamamlandığında bilgisayarı kapat"
+#: ../ui-gtk/UgtkMenubar-ui.c:183
+#, fuzzy
+msgid "Command-line works quietly"
+msgstr "Komut Satırı Ayarları"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:532
+#: ../ui-gtk/UgtkMenubar-ui.c:187
+msgid "Skip existing URI"
+msgstr ""
+
+#. --- Completion Auto-Actions --- start ---
+#: ../ui-gtk/UgtkMenubar-ui.c:194
+msgid "Completion _Auto-Actions"
+msgstr ""
+
+#. Completion Auto-Actions - Disable
+#: ../ui-gtk/UgtkMenubar-ui.c:200
+msgid "_Disable"
+msgstr ""
+
+#: ../ui-gtk/UgtkMenubar-ui.c:205
+msgid "Hibernate"
+msgstr ""
+
+#: ../ui-gtk/UgtkMenubar-ui.c:210
+msgid "Suspend"
+msgstr ""
+
+#: ../ui-gtk/UgtkMenubar-ui.c:215
+msgid "Shutdown"
+msgstr ""
+
+#: ../ui-gtk/UgtkMenubar-ui.c:220
+msgid "Reboot"
+msgstr ""
+
+#: ../ui-gtk/UgtkMenubar-ui.c:225
+msgid "Custom"
+msgstr ""
+
+#. Completion Auto-Actions - Help
+#: ../ui-gtk/UgtkMenubar-ui.c:229
+#, fuzzy
+msgid "Help"
+msgstr "_Yardım"
+
+#. --- Completion Auto-Actions --- end ---
+#. menu_item = gtk_menu_item_new_with_mnemonic (_("_Settings..."));
+#. Settings
+#: ../ui-gtk/UgtkMenubar-ui.c:235
+#: ../ui-gtk/UgtkTrayIcon.c:91
+msgid "_Settings..."
+msgstr "_Ayarlar..."
+
+#: ../ui-gtk/UgtkMenubar-ui.c:250
 msgid "_View"
 msgstr "_Görünüm"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:536
+#: ../ui-gtk/UgtkMenubar-ui.c:254
 msgid "_Toolbar"
 msgstr "_Araç Çubuğu"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:541
+#: ../ui-gtk/UgtkMenubar-ui.c:259
 msgid "Statusbar"
 msgstr "Durum Çubuğu"
 
-#. Summary Items - Category
-#. Download Columns - Category
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:546
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:574
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:659
-#: ../../po/../uget-gtk/UgCategoryWidget.c:129
-#: ../../po/../uget-gtk/UgCategoryWidget.c:440
-#: ../../po/../uget-gtk/UgDownloadDialog.c:205
-#: ../../po/../uget-gtk/UgDownloadWidget.c:911
-#: ../../po/../uget-gtk/UgSummary.c:140
-msgid "Category"
-msgstr "Bölüm"
-
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:551
+#: ../ui-gtk/UgtkMenubar-ui.c:269
 msgid "_Summary"
 msgstr "_Özet"
 
 #. Summary Items --- start ---
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:559
+#: ../ui-gtk/UgtkMenubar-ui.c:277
 msgid "Summary _Items"
 msgstr "Özet _Öğeleri"
 
 #. Summary Items - Name
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:564
+#: ../ui-gtk/UgtkMenubar-ui.c:282
 msgid "_Name"
 msgstr "_Ad"
 
 #. Summary Items - Folder
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:569
+#: ../ui-gtk/UgtkMenubar-ui.c:287
 msgid "_Folder"
 msgstr "_Dizin"
 
 #. Summary Items - Elapsed
 #. menu_item = gtk_check_menu_item_new_with_mnemonic (_("_Elapsed"));
 #. gtk_check_menu_item_set_active ((GtkCheckMenuItem*) menu_item, TRUE);
-#. gtk_menu_shell_append ((GtkMenuShell*) sub_menu, menu_item);
+#. gtk_menu_shell_append ((GtkMenuShell*) submenu, menu_item);
 #. menubar->view.summary_items.elapsed = menu_item;
 #. Summary Items - URL
 #. Download Columns - URL
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:584
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:664
+#: ../ui-gtk/UgtkMenubar-ui.c:302
+#: ../ui-gtk/UgtkMenubar-ui.c:382
 msgid "_URL"
 msgstr "_URL"
 
 #. Summary Items - Message
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:589
+#: ../ui-gtk/UgtkMenubar-ui.c:307
 msgid "_Message"
 msgstr "_İleti"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:604
+#: ../ui-gtk/UgtkMenubar-ui.c:322
 msgid "Download _Columns"
 msgstr "_Sütunları İndir"
 
 #. Download Columns - Completed
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:609
+#: ../ui-gtk/UgtkMenubar-ui.c:327
 msgid "_Complete"
 msgstr "_Tamamlandı"
 
 #. Download Columns - Total
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:614
+#: ../ui-gtk/UgtkMenubar-ui.c:332
 msgid "_Size"
 msgstr "_Boyut"
 
 #. Download Columns - Percent (%)
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:619
+#: ../ui-gtk/UgtkMenubar-ui.c:337
 msgid "_Percent '%'"
 msgstr "_Yüzde '%'"
 
 #. Download Columns - Elapsed
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:624
+#: ../ui-gtk/UgtkMenubar-ui.c:342
 msgid "_Elapsed"
 msgstr "G_eçen"
 
 #. Download Columns - Left
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:629
+#: ../ui-gtk/UgtkMenubar-ui.c:347
 msgid "_Left"
 msgstr "Ka_lan"
 
 #. Download Columns - Speed
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:634
-#: ../../po/../uget-gtk/UgDownloadWidget.c:840
+#: ../ui-gtk/UgtkMenubar-ui.c:352
+#: ../ui-gtk/UgtkNodeView.c:818
 msgid "Speed"
 msgstr "Hız"
 
 #. Download Columns - Up Speed
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:639
-#: ../../po/../uget-gtk/UgDownloadWidget.c:854
+#: ../ui-gtk/UgtkMenubar-ui.c:357
+#: ../ui-gtk/UgtkNodeView.c:832
 msgid "Up Speed"
 msgstr "Yükleme Hızı"
 
 #. Download Columns - Uploaded
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:644
-#: ../../po/../uget-gtk/UgDownloadWidget.c:868
+#: ../ui-gtk/UgtkMenubar-ui.c:362
+#: ../ui-gtk/UgtkNodeView.c:846
 msgid "Uploaded"
 msgstr "Yüklendi"
 
 #. Download Columns - Ratio
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:649
-#: ../../po/../uget-gtk/UgDownloadWidget.c:882
+#: ../ui-gtk/UgtkMenubar-ui.c:367
+#: ../ui-gtk/UgtkNodeView.c:860
 msgid "Ratio"
 msgstr "Oran"
 
 #. Download Columns - Retry
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:654
+#: ../ui-gtk/UgtkMenubar-ui.c:372
 msgid "_Retry"
 msgstr "_Yeniden dene"
 
 #. Download Columns - Added On
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:669
-#: ../../po/../uget-gtk/UgDownloadWidget.c:939
+#: ../ui-gtk/UgtkMenubar-ui.c:387
+#: ../ui-gtk/UgtkNodeView.c:917
 msgid "Added On"
 msgstr "Eklendi"
 
 #. Download Columns - Completed On
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:674
-#: ../../po/../uget-gtk/UgDownloadWidget.c:953
+#: ../ui-gtk/UgtkMenubar-ui.c:392
+#: ../ui-gtk/UgtkNodeView.c:931
 msgid "Completed On"
 msgstr "Tamamlandı"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:683
+#: ../ui-gtk/UgtkMenubar-ui.c:407
 msgid "_Category"
 msgstr "_Bölüm"
 
 #. New Category
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:688
+#: ../ui-gtk/UgtkMenubar-ui.c:412
 msgid "_New Category..."
 msgstr "_Yeni Bölüm..."
 
 #. Delete Category
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:694
+#: ../ui-gtk/UgtkMenubar-ui.c:418
 msgid "_Delete Category"
 msgstr "_Bölümü Sil"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:708
+#: ../ui-gtk/UgtkMenubar-ui.c:455
 msgid "_Download"
 msgstr "_İndirme"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:727
-msgid "Delete _File and Data"
-msgstr "_Dosya ve Veriyi Sil"
+#. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE, accel_group);
+#: ../ui-gtk/UgtkMenubar-ui.c:467
+#, fuzzy
+msgid "_Delete Entry"
+msgstr "_Bölümü Sil"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:742
-msgid "Open _containing folder"
+#: ../ui-gtk/UgtkMenubar-ui.c:474
+msgid "Delete Entry and _File"
+msgstr ""
+
+#: ../ui-gtk/UgtkMenubar-ui.c:489
+#, fuzzy
+msgid "Open _Containing folder"
 msgstr "Depolama _konumunu aç"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:751
+#: ../ui-gtk/UgtkMenubar-ui.c:498
 msgid "Force Start"
 msgstr "Zorla Başlat"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:757
-#: ../../po/../uget-gtk/UgDownloadForm.c:225
-msgid "_Runnable"
-msgstr "Çalıştı_rılabilir"
-
 #. Move to --- start ---
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:773
+#: ../ui-gtk/UgtkMenubar-ui.c:522
 msgid "_Move To"
 msgstr "_Taşı"
 
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:824
+#. Priority --- start ---
+#: ../ui-gtk/UgtkMenubar-ui.c:567
+msgid "Priority"
+msgstr ""
+
+#: ../ui-gtk/UgtkMenubar-ui.c:576
+msgid "_High"
+msgstr ""
+
+#: ../ui-gtk/UgtkMenubar-ui.c:581
+#, fuzzy
+msgid "_Normal"
+msgstr "Normal"
+
+#: ../ui-gtk/UgtkMenubar-ui.c:586
+msgid "_Low"
+msgstr ""
+
+#: ../ui-gtk/UgtkMenubar-ui.c:604
 msgid "_Help"
 msgstr "_Yardım"
 
 #. Get Help Online
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:829
+#: ../ui-gtk/UgtkMenubar-ui.c:609
 msgid "Get Help Online"
 msgstr "Çevrimiçi Yardım Alın"
 
 #. Documentation
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:836
+#: ../ui-gtk/UgtkMenubar-ui.c:616
 msgid "Documentation"
 msgstr "Belgeleme"
 
 #. Support Forum
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:843
+#: ../ui-gtk/UgtkMenubar-ui.c:623
 msgid "Support Forum"
 msgstr "Destek Forumu"
 
 #. Submit Feedback
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:850
+#: ../ui-gtk/UgtkMenubar-ui.c:630
 msgid "Submit Feedback"
 msgstr "Geribildirim Gönder"
 
 #. Report a Bug
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:857
+#: ../ui-gtk/UgtkMenubar-ui.c:637
 msgid "Report a Bug"
 msgstr "Bir Hata Bildir"
 
+#. Keyboard Shortcuts
+#: ../ui-gtk/UgtkMenubar-ui.c:644
+msgid "Keyboard Shortcuts"
+msgstr ""
+
 #. Check for Updates
-#: ../../po/../uget-gtk/UgApp-gtk-gui.c:864
+#: ../ui-gtk/UgtkMenubar-ui.c:651
 msgid "Check for Updates"
 msgstr "Güncellemeler için denetle"
 
-#. only 1 url matched
-#: ../../po/../uget-gtk/UgApp-gtk-timeout.c:153
-#: ../../po/../uget-gtk/UgApp-gtk-timeout.c:162
-msgid "New from Clipboard"
-msgstr "Panodan Yeni"
+#: ../ui-gtk/UgtkMenubar.c:135
+msgid "Settings"
+msgstr "Ayarlar"
 
-#: ../../po/../uget-gtk/UgApp-gtk-timeout.c:154
-msgid "only one matched"
-msgstr "yalnızca tek eşleşme"
+#: ../ui-gtk/UgtkMenubar.c:359
+#, c-format
+msgid "Can't launch default application for file '%s'."
+msgstr "'%s' dosyası için varsayılan uygulama başlatılamıyor."
 
-#: ../../po/../uget-gtk/UgApp-gtk-timeout.c:266
-msgid "Command line"
-msgstr "Komut satırı"
+#: ../ui-gtk/UgtkMenubar.c:391
+#, c-format
+msgid "'%s' - This folder does not exist."
+msgstr "'%s' - Bu dizin mevcut değil."
 
-#: ../../po/../uget-gtk/UgApp-gtk-timeout.c:464
-msgid ""
-"Failed to connect to aria2.\n"
-"Is aria2 shutdown? or aria2 launch failed."
-msgstr "aria2 bağlantısı başarısız.\naria2 kapatıldı mı? Ya da başlatılamadı mı?"
+#. title
+#: ../ui-gtk/UgtkNodeDialog.c:205
+#: ../ui-gtk/UgtkNodeDialog.c:209
+msgid "URI had existed"
+msgstr ""
 
-#: ../../po/../uget-gtk/UgApp-gtk-timeout.c:735
-msgid "Download Starting"
-msgstr "İndirme Başlatılıyor"
+#: ../ui-gtk/UgtkNodeDialog.c:207
+msgid "This URI had existed, are you sure to continue?"
+msgstr ""
 
-#: ../../po/../uget-gtk/UgApp-gtk-timeout.c:736
-msgid "Starting download queue."
-msgstr "İndirme kuyruğu başlatılıyor."
-
-#: ../../po/../uget-gtk/UgApp-gtk-timeout.c:737
-msgid "Download Completed"
-msgstr "İndirme Tamamlandı"
-
-#: ../../po/../uget-gtk/UgApp-gtk-timeout.c:738
-msgid "All queuing downloads have been completed."
-msgstr "Kuyruktaki bütün indirmeler tamamlandı."
-
-#: ../../po/../uget-gtk/UgBanner.c:102 ../../po/../uget-gtk/UgBanner.c:119
-msgid "Attention uGetters:"
-msgstr "uGet'çiler Dikkat:"
-
-#: ../../po/../uget-gtk/UgBanner.c:105
-msgid ""
-"we are running a Donation Drive for uGet's Future Development, please click "
-msgstr "uGet'in gelecekteki geliştirmeleri için Donation Drive kullanıyoruz, lütfen tıklayın"
-
-#: ../../po/../uget-gtk/UgBanner.c:108
-msgid "HERE"
-msgstr "BURADA"
-
-#: ../../po/../uget-gtk/UgBanner.c:122
-msgid "please fill out this quick User Survey for uGet."
-msgstr "Lütfen uGet için bu hızlı Kullanıcı Anketini doldurun."
-
-#: ../../po/../uget-gtk/UgBanner.c:125
-msgid "click here to take survey"
-msgstr "anketi doldurmak için buraya tıklayın"
-
-#. URL - label
-#: ../../po/../uget-gtk/UgBatchForm.c:63
-#: ../../po/../uget-gtk/UgDownloadForm.c:131
-msgid "_URL:"
-msgstr "_URL:"
-
-#. e.g.
-#: ../../po/../uget-gtk/UgBatchForm.c:74
-msgid "e.g."
-msgstr "örn."
-
-#. -------------------------------------------------------
-#. radio "From"
-#: ../../po/../uget-gtk/UgBatchForm.c:85
-msgid "_From:"
-msgstr "Kaynak:"
-
-#. label "To"
-#: ../../po/../uget-gtk/UgBatchForm.c:108
-msgid "To:"
-msgstr "Alıcı:"
-
-#. label "digits"
-#: ../../po/../uget-gtk/UgBatchForm.c:123
-msgid "digits:"
-msgstr "basamak:"
-
-#: ../../po/../uget-gtk/UgBatchForm.c:132
-msgid "F_rom:"
-msgstr "K_aynak:"
-
-#. label case-sensitive
-#: ../../po/../uget-gtk/UgBatchForm.c:162
-msgid "case-sensitive"
-msgstr "büyük-küçük harf hassas"
-
-#: ../../po/../uget-gtk/UgBatchForm.c:188
-msgid "No wildcard(*) character in URL entry."
-msgstr "URL girişinde özel karakter(*) yok."
-
-#: ../../po/../uget-gtk/UgBatchForm.c:192
-msgid "URL is not valid."
-msgstr "Geçersiz URL."
-
-#: ../../po/../uget-gtk/UgBatchForm.c:196
-msgid "No character in 'From' or 'To' entry."
-msgstr "'Kaynak' veya 'Alıcı' girişi boş."
-
-#: ../../po/../uget-gtk/UgBatchForm.c:305
-msgid "Preview"
-msgstr "Önizleme"
-
-#: ../../po/../uget-gtk/UgCategoryDialog.c:62
-msgid "Category settings"
-msgstr "Bölüm ayarları"
-
-#: ../../po/../uget-gtk/UgCategoryDialog.c:64
-msgid "Default for new download 1"
-msgstr "Yeni indirme 1 için varsayılan"
-
-#: ../../po/../uget-gtk/UgCategoryDialog.c:66
-msgid "Default 2"
-msgstr "Varsayılan 2"
-
-#: ../../po/../uget-gtk/UgCategoryForm.c:53
-msgid "Category _name:"
-msgstr "Bölüm _adı:"
-
-#: ../../po/../uget-gtk/UgCategoryForm.c:68
-msgid "Active _downloads:"
-msgstr "Etkin _indirmeler:"
-
-#: ../../po/../uget-gtk/UgCategoryForm.c:76
-msgid "Capacity of Finished:"
-msgstr "Bitenlerin Kapasitesi:"
-
-#: ../../po/../uget-gtk/UgCategoryForm.c:85
-msgid "Capacity of Recycled:"
-msgstr "Geri Dönüşüm Kapasitesi:"
-
-#: ../../po/../uget-gtk/UgCategoryWidget.c:42
-#: ../../po/../uget-gtk/UgSelector.c:292
-msgid "All"
-msgstr "Tümü"
-
-#: ../../po/../uget-gtk/UgCategoryWidget.c:43
-msgid "Active"
-msgstr "Etkin"
-
-#: ../../po/../uget-gtk/UgCategoryWidget.c:44
-msgid "Queuing"
-msgstr "Kuyrukta"
-
-#: ../../po/../uget-gtk/UgCategoryWidget.c:46
-msgid "Recycled"
-msgstr "Geri dönüştürüldü"
-
-#: ../../po/../uget-gtk/UgCategoryWidget.c:461
-msgid "Quantity"
-msgstr "Miktar"
-
-#: ../../po/../uget-gtk/UgDownloadForm.c:92
+#: ../ui-gtk/UgtkNodeDialog.c:343
 msgid "General"
 msgstr "Genel"
 
-#: ../../po/../uget-gtk/UgDownloadForm.c:93
+#: ../ui-gtk/UgtkNodeDialog.c:345
 msgid "Advanced"
 msgstr "Gelişmiş"
 
-#. Mirrors - label
-#: ../../po/../uget-gtk/UgDownloadForm.c:150
-msgid "Mirrors:"
-msgstr "Yansılar:"
+#: ../ui-gtk/UgtkNodeDialog.c:354
+msgid "Category settings"
+msgstr "Bölüm ayarları"
 
-#. File - label
-#: ../../po/../uget-gtk/UgDownloadForm.c:166
-#: ../../po/../uget-gtk/UgProxyForm.c:369
-msgid "File:"
-msgstr "Dosya:"
+#: ../ui-gtk/UgtkNodeDialog.c:356
+msgid "Default for new download 1"
+msgstr "Yeni indirme 1 için varsayılan"
 
-#: ../../po/../uget-gtk/UgDownloadForm.c:181
-#: ../../po/../uget-gtk/UgDownloadForm.c:916
-msgid "Select Folder"
-msgstr "Dizin Seç"
+#: ../ui-gtk/UgtkNodeDialog.c:358
+msgid "Default 2"
+msgstr "Varsayılan 2"
 
-#. Folder - label
-#: ../../po/../uget-gtk/UgDownloadForm.c:189
-msgid "_Folder:"
-msgstr "_Dizin:"
-
-#. Referrer - label
-#: ../../po/../uget-gtk/UgDownloadForm.c:204
-msgid "Referrer:"
-msgstr "Yönlendiren:"
-
-#. ----------------------------------------------------
-#. frame for Status (start mode)
-#: ../../po/../uget-gtk/UgDownloadForm.c:219
-msgid "Status"
-msgstr "Durum"
-
-#: ../../po/../uget-gtk/UgDownloadForm.c:227
-msgid "P_ause"
-msgstr "Dur_aklat"
-
-#. ----------------------------------------------------
-#. frame for login
-#: ../../po/../uget-gtk/UgDownloadForm.c:233
-msgid "Login"
-msgstr "Oturum Aç"
-
-#. User - label
-#. user label & entry
-#: ../../po/../uget-gtk/UgDownloadForm.c:247
-#: ../../po/../uget-gtk/UgProxyForm.c:143
-msgid "User:"
-msgstr "Kullanıcı:"
-
-#. Password - label
-#. password label & entry
-#: ../../po/../uget-gtk/UgDownloadForm.c:263
-#: ../../po/../uget-gtk/UgProxyForm.c:154
-msgid "Password:"
-msgstr "Parola:"
-
-#. dform->password_label = widget;
-#. ----------------------------------------------------
-#. frame for option
-#: ../../po/../uget-gtk/UgDownloadForm.c:271
-msgid "Options"
-msgstr "Seçenekler"
-
-#. Retry limit - label
-#: ../../po/../uget-gtk/UgDownloadForm.c:286
-msgid "Retry _limit:"
-msgstr "Yeniden deneme _sınırı:"
-
-#. counts - label
-#: ../../po/../uget-gtk/UgDownloadForm.c:292
-msgid "counts"
-msgstr "deneme"
-
-#. Retry delay - label
-#: ../../po/../uget-gtk/UgDownloadForm.c:306
-msgid "Retry _delay:"
-msgstr "Yeniden _deneme gecikmesi:"
-
-#. seconds - label
-#: ../../po/../uget-gtk/UgDownloadForm.c:312
-msgid "seconds"
-msgstr "saniye"
-
-#. "Connections per server" - title label
-#: ../../po/../uget-gtk/UgDownloadForm.c:325
-msgid "Connections per server"
-msgstr "Sunucu başına bağlantı"
-
-#. connections - label
-#: ../../po/../uget-gtk/UgDownloadForm.c:338
-msgid "connections"
-msgstr "bağlantı"
-
-#. label - cookie file
-#: ../../po/../uget-gtk/UgDownloadForm.c:365
-msgid "Cookie file:"
-msgstr "Çerez dosyası:"
-
-#: ../../po/../uget-gtk/UgDownloadForm.c:377
-#: ../../po/../uget-gtk/UgDownloadForm.c:972
-msgid "Select Cookie File"
-msgstr "Çerez Dosyası Seç"
-
-#. label - post file
-#: ../../po/../uget-gtk/UgDownloadForm.c:386
-msgid "Post file:"
-msgstr "Gönderme dosyası:"
-
-#: ../../po/../uget-gtk/UgDownloadForm.c:398
-#: ../../po/../uget-gtk/UgDownloadForm.c:1028
-msgid "Select Post File"
-msgstr "Gönderme Dosyası Seç"
-
-#. label - user agent
-#: ../../po/../uget-gtk/UgDownloadForm.c:408
-msgid "User Agent:"
-msgstr "Tarayıcı Bilgileri:"
-
-#. label - Max upload speed
-#: ../../po/../uget-gtk/UgDownloadForm.c:424
-msgid "Max upload speed:"
-msgstr "Azami yükleme hızı:"
-
-#. label - "KiB/s"
-#: ../../po/../uget-gtk/UgDownloadForm.c:435
-#: ../../po/../uget-gtk/UgDownloadForm.c:452
-#: ../../po/../uget-gtk/UgSettingForm.c:469
-#: ../../po/../uget-gtk/UgSettingForm.c:480
-msgid "KiB/s"
-msgstr "KiB/s"
-
-#. label - Max download speed
-#: ../../po/../uget-gtk/UgDownloadForm.c:441
-msgid "Max download speed:"
-msgstr "Azami indirme hızı:"
-
-#. Retrieve timestamp
-#: ../../po/../uget-gtk/UgDownloadForm.c:458
-msgid "Retrieve timestamp"
-msgstr "Zaman damgasını al"
-
-#: ../../po/../uget-gtk/UgDownloadWidget.c:378
-#: ../../po/../uget-gtk/UgSummary.c:116
+#: ../ui-gtk/UgtkNodeView.c:121
+#: ../ui-gtk/UgtkNodeView.c:584
+#: ../ui-gtk/UgtkSummary.c:115
 msgid "unnamed"
 msgstr "adlandırılmamış"
 
-#: ../../po/../uget-gtk/UgDownloadWidget.c:745
-#: ../../po/../uget-gtk/UgSummary.c:105
+#: ../ui-gtk/UgtkNodeView.c:610
+#, fuzzy
+msgid "Paused"
+msgstr "Dur_aklat"
+
+#: ../ui-gtk/UgtkNodeView.c:611
+#, fuzzy
+msgid "Uploading"
+msgstr "Yükle"
+
+#: ../ui-gtk/UgtkNodeView.c:612
+#, fuzzy
+msgid "Completed"
+msgstr "Tamamlanmış"
+
+#: ../ui-gtk/UgtkNodeView.c:614
+msgid "Recycled"
+msgstr "Geri dönüştürüldü"
+
+#: ../ui-gtk/UgtkNodeView.c:615
+msgid "Queuing"
+msgstr "Kuyrukta"
+
+#: ../ui-gtk/UgtkNodeView.c:616
+msgid "Active"
+msgstr "Etkin"
+
+#: ../ui-gtk/UgtkNodeView.c:637
+#, fuzzy
+msgid "All Status"
+msgstr "Durum"
+
+#: ../ui-gtk/UgtkNodeView.c:734
+#: ../ui-gtk/UgtkSettingDialog.c:85
+#: ../ui-gtk/UgtkSummary.c:108
 msgid "Name"
 msgstr "Ad"
 
-#: ../../po/../uget-gtk/UgDownloadWidget.c:769
+#: ../ui-gtk/UgtkNodeView.c:747
 msgid "Complete"
 msgstr "Tamamlanmış"
 
-#: ../../po/../uget-gtk/UgDownloadWidget.c:783
+#: ../ui-gtk/UgtkNodeView.c:761
 msgid "Size"
 msgstr "Boyut"
 
-#: ../../po/../uget-gtk/UgDownloadWidget.c:798
+#: ../ui-gtk/UgtkNodeView.c:776
 msgid "%"
 msgstr "%"
 
-#: ../../po/../uget-gtk/UgDownloadWidget.c:812
+#: ../ui-gtk/UgtkNodeView.c:790
 msgid "Elapsed"
 msgstr "Geçen süre"
 
-#: ../../po/../uget-gtk/UgDownloadWidget.c:826
+#: ../ui-gtk/UgtkNodeView.c:804
 msgid "Left"
 msgstr "Kalan"
 
-#: ../../po/../uget-gtk/UgDownloadWidget.c:925
-#: ../../po/../uget-gtk/UgSelector.c:487 ../../po/../uget-gtk/UgSummary.c:151
-msgid "URL"
+#: ../ui-gtk/UgtkNodeView.c:903
+#: ../ui-gtk/UgtkSettingForm.c:549
+#: ../ui-gtk/UgtkSummary.c:151
+#, fuzzy
+msgid "URI"
 msgstr "URL"
 
+#: ../ui-gtk/UgtkNodeView.c:954
+msgid "Quantity"
+msgstr "Miktar"
+
 #. proxy type label & combo box
-#: ../../po/../uget-gtk/UgProxyForm.c:64
+#: ../ui-gtk/UgtkProxyForm.c:64
 msgid "Proxy:"
 msgstr "Vekil sunucu:"
 
-#: ../../po/../uget-gtk/UgProxyForm.c:67
+#: ../ui-gtk/UgtkProxyForm.c:67
 msgid "Don't use"
 msgstr "Kullanma"
 
-#: ../../po/../uget-gtk/UgProxyForm.c:69
+#: ../ui-gtk/UgtkProxyForm.c:69
 msgid "Default"
 msgstr "Varsayılan"
 
 #. host label & entry
-#: ../../po/../uget-gtk/UgProxyForm.c:116
+#: ../ui-gtk/UgtkProxyForm.c:121
 msgid "Host:"
 msgstr "Ana Makine:"
 
 #. port label & entry
-#: ../../po/../uget-gtk/UgProxyForm.c:127
+#: ../ui-gtk/UgtkProxyForm.c:132
 msgid "Port:"
 msgstr "Port:"
 
-#: ../../po/../uget-gtk/UgProxyForm.c:335
+#: ../ui-gtk/UgtkProxyForm.c:351
 msgid "Socket:"
 msgstr "Soket:"
 
-#: ../../po/../uget-gtk/UgProxyForm.c:345
+#: ../ui-gtk/UgtkProxyForm.c:361
 msgid "Socket args:"
 msgstr "Soket argümanları:"
 
-#: ../../po/../uget-gtk/UgProxyForm.c:355
+#: ../ui-gtk/UgtkProxyForm.c:371
 msgid "Element:"
 msgstr "Nesne:"
 
-#: ../../po/../uget-gtk/UgScheduleForm.c:66
+#: ../ui-gtk/UgtkScheduleForm.c:66
 msgid "Mon"
 msgstr "Pzt"
 
-#: ../../po/../uget-gtk/UgScheduleForm.c:67
+#: ../ui-gtk/UgtkScheduleForm.c:67
 msgid "Tue"
 msgstr "Sal"
 
-#: ../../po/../uget-gtk/UgScheduleForm.c:68
+#: ../ui-gtk/UgtkScheduleForm.c:68
 msgid "Wed"
 msgstr "Çar"
 
-#: ../../po/../uget-gtk/UgScheduleForm.c:69
+#: ../ui-gtk/UgtkScheduleForm.c:69
 msgid "Thu"
 msgstr "Per"
 
-#: ../../po/../uget-gtk/UgScheduleForm.c:70
+#: ../ui-gtk/UgtkScheduleForm.c:70
 msgid "Fri"
 msgstr "Cum"
 
-#: ../../po/../uget-gtk/UgScheduleForm.c:71
+#: ../ui-gtk/UgtkScheduleForm.c:71
 msgid "Sat"
 msgstr "Cmt"
 
-#: ../../po/../uget-gtk/UgScheduleForm.c:72
+#: ../ui-gtk/UgtkScheduleForm.c:72
 msgid "Sun"
 msgstr "Paz"
 
-#: ../../po/../uget-gtk/UgScheduleForm.c:99
+#: ../ui-gtk/UgtkScheduleForm.c:99
 msgid "_Enable Scheduler"
 msgstr "Zamanlayıcıyı _Etkinleştir"
 
 #. Turn off - label
-#: ../../po/../uget-gtk/UgScheduleForm.c:141
+#: ../ui-gtk/UgtkScheduleForm.c:141
 msgid "Turn off"
 msgstr "Kapat"
 
 #. Turn off - help label
-#: ../../po/../uget-gtk/UgScheduleForm.c:146
+#: ../ui-gtk/UgtkScheduleForm.c:146
 msgid "- stop all task"
 msgstr "- tüm görevi durdur"
 
 #. Normal - label
-#: ../../po/../uget-gtk/UgScheduleForm.c:156
+#: ../ui-gtk/UgtkScheduleForm.c:156
 msgid "Normal"
 msgstr "Normal"
 
 #. Normal - help label
-#: ../../po/../uget-gtk/UgScheduleForm.c:161
+#: ../ui-gtk/UgtkScheduleForm.c:161
 msgid "- run task normally"
 msgstr "- görevi normal olarak yürüt"
 
-#: ../../po/../uget-gtk/UgSelector.c:94
-msgid "Base hypertext reference"
-msgstr "Temel üst metin referansı"
+#: ../ui-gtk/UgtkSelector.c:254
+msgid "All"
+msgstr "Tümü"
 
-#. select all
-#: ../../po/../uget-gtk/UgSelector.c:110
-msgid "Mark _All"
-msgstr "Tümünü İş_aretle"
-
-#. select none
-#: ../../po/../uget-gtk/UgSelector.c:116
-msgid "Mark _None"
-msgstr "İşaretlemeyi _Kaldır"
-
-#. select by filter
-#: ../../po/../uget-gtk/UgSelector.c:122
-msgid "_Mark by filter..."
-msgstr "Süzgece göre _işaretle..."
-
-#: ../../po/../uget-gtk/UgSelector.c:297
+#: ../ui-gtk/UgtkSelector.c:259
 msgid "None"
 msgstr "Boş"
 
-#: ../../po/../uget-gtk/UgSelector.c:314
+#: ../ui-gtk/UgtkSelector.c:276
 msgid "Mark by filter"
 msgstr "Süzgece göre işaretle"
 
-#: ../../po/../uget-gtk/UgSelector.c:332
+#: ../ui-gtk/UgtkSelector.c:294
 msgid "Mark URLs by host AND filename extension."
 msgstr "URL'leri ana makine VE dosya uzantısına göre işaretle"
 
-#: ../../po/../uget-gtk/UgSelector.c:335
+#: ../ui-gtk/UgtkSelector.c:297
 msgid "This will reset all marks of URLs."
 msgstr "Bu, tüm işaretli URL'leri sıfırlayacak."
 
 #. filter view -----------------------
 #. left side
-#: ../../po/../uget-gtk/UgSelector.c:343
+#: ../ui-gtk/UgtkSelector.c:305
 msgid "Host"
 msgstr "Ana Makine"
 
 #. right side (filename extension)
-#: ../../po/../uget-gtk/UgSelector.c:347
+#: ../ui-gtk/UgtkSelector.c:309
 msgid "File Ext."
 msgstr "Dosya Uzantısı"
 
-#: ../../po/../uget-gtk/UgSettingDialog.c:71
-msgid "UI Settings"
-msgstr "Kullanıcı Arayüzü Ayarları"
+#: ../ui-gtk/UgtkSelector.c:449
+msgid "URL"
+msgstr "URL"
 
-#: ../../po/../uget-gtk/UgSettingDialog.c:87
+#: ../ui-gtk/UgtkSelector.c:781
+msgid "Base hypertext reference"
+msgstr "Temel üst metin referansı"
+
+#. select all
+#: ../ui-gtk/UgtkSelector.c:797
+msgid "Mark _All"
+msgstr "Tümünü İş_aretle"
+
+#. select none
+#: ../ui-gtk/UgtkSelector.c:801
+msgid "Mark _None"
+msgstr "İşaretlemeyi _Kaldır"
+
+#. select by filter
+#: ../ui-gtk/UgtkSelector.c:805
+msgid "_Mark by filter..."
+msgstr "Süzgece göre _işaretle..."
+
+#. e.g.
+#: ../ui-gtk/UgtkSequencer.c:74
+msgid "e.g."
+msgstr "örn."
+
+#. -------------------------------------------------------
+#. radio "From"
+#: ../ui-gtk/UgtkSequencer.c:85
+msgid "_From:"
+msgstr "Kaynak:"
+
+#. label "To"
+#: ../ui-gtk/UgtkSequencer.c:108
+msgid "To:"
+msgstr "Alıcı:"
+
+#. label "digits"
+#: ../ui-gtk/UgtkSequencer.c:123
+msgid "digits:"
+msgstr "basamak:"
+
+#: ../ui-gtk/UgtkSequencer.c:132
+msgid "F_rom:"
+msgstr "K_aynak:"
+
+#. label case-sensitive
+#: ../ui-gtk/UgtkSequencer.c:162
+msgid "case-sensitive"
+msgstr "büyük-küçük harf hassas"
+
+#: ../ui-gtk/UgtkSequencer.c:188
+msgid "No wildcard(*) character in URL entry."
+msgstr "URL girişinde özel karakter(*) yok."
+
+#: ../ui-gtk/UgtkSequencer.c:192
+msgid "URL is not valid."
+msgstr "Geçersiz URL."
+
+#: ../ui-gtk/UgtkSequencer.c:196
+msgid "No character in 'From' or 'To' entry."
+msgstr "'Kaynak' veya 'Alıcı' girişi boş."
+
+#: ../ui-gtk/UgtkSequencer.c:305
+msgid "Preview"
+msgstr "Önizleme"
+
+#: ../ui-gtk/UgtkSettingDialog.c:97
+msgid "User Interface"
+msgstr ""
+
+#: ../ui-gtk/UgtkSettingDialog.c:109
+msgid "Bandwidth"
+msgstr ""
+
+#: ../ui-gtk/UgtkSettingDialog.c:115
 msgid "Scheduler"
 msgstr "Zamanlayıcı"
 
-#: ../../po/../uget-gtk/UgSettingDialog.c:95
+#: ../ui-gtk/UgtkSettingDialog.c:121
 msgid "Plug-in"
 msgstr "Eklenti"
 
-#: ../../po/../uget-gtk/UgSettingDialog.c:103
+#: ../ui-gtk/UgtkSettingDialog.c:127
 msgid "Others"
 msgstr "Diğerleri"
 
-#: ../../po/../uget-gtk/UgSettingForm.c:72
-msgid "_Monitor clipboard for specified file types:"
-msgstr "_Belirtilen dosya türleri için panoyu izle:"
+#. Monitor button
+#: ../ui-gtk/UgtkSettingForm.c:57
+#, fuzzy
+msgid "_Enable clipboard monitor"
+msgstr "Pano _İzleyici"
 
-#: ../../po/../uget-gtk/UgSettingForm.c:87
-#: ../../po/../uget-gtk/UgSettingForm.c:242
-msgid "Separate the types with character '|'."
-msgstr "Türleri '|' karakteri ile ayır."
-
-#: ../../po/../uget-gtk/UgSettingForm.c:92
-#: ../../po/../uget-gtk/UgSettingForm.c:247
-msgid "You can use regular expressions here."
-msgstr "Burada düzenli ifadeleri kullanabilirsiniz."
-
-#: ../../po/../uget-gtk/UgSettingForm.c:100
+#. quiet mode
+#: ../ui-gtk/UgtkSettingForm.c:62
 msgid "_Quiet mode"
 msgstr "_Sessiz kip"
 
-#: ../../po/../uget-gtk/UgSettingForm.c:109
-msgid "Add URL to Nth category"
-msgstr "Nnci bölüme URL ekle"
+#: ../ui-gtk/UgtkSettingForm.c:68
+#: ../ui-gtk/UgtkSettingForm.c:457
+#, fuzzy
+msgid "Default category index"
+msgstr "_Bölümü Sil"
 
-#. check button
-#: ../../po/../uget-gtk/UgSettingForm.c:147
-msgid "Show confirmation dialog on close"
+#: ../ui-gtk/UgtkSettingForm.c:80
+#: ../ui-gtk/UgtkSettingForm.c:469
+msgid "Adding to Nth category if no matched category."
+msgstr ""
+
+#: ../ui-gtk/UgtkSettingForm.c:87
+#, fuzzy
+msgid "Monitor clipboard for specified file types:"
+msgstr "_Belirtilen dosya türleri için panoyu izle:"
+
+#: ../ui-gtk/UgtkSettingForm.c:102
+msgid "Separate the types with character '|'."
+msgstr "Türleri '|' karakteri ile ayır."
+
+#: ../ui-gtk/UgtkSettingForm.c:107
+msgid "You can use regular expressions here."
+msgstr "Burada düzenli ifadeleri kullanabilirsiniz."
+
+#: ../ui-gtk/UgtkSettingForm.c:151
+msgid "Confirmation"
+msgstr ""
+
+#. Confirmation check buttons
+#: ../ui-gtk/UgtkSettingForm.c:157
+#, fuzzy
+msgid "Show confirmation dialog on exit"
 msgstr "Kapatırken onay kutusu göster"
 
-#: ../../po/../uget-gtk/UgSettingForm.c:150
+#: ../ui-gtk/UgtkSettingForm.c:160
 msgid "Confirm when deleting files"
 msgstr "Dosyalar silinirken onayla"
 
-#: ../../po/../uget-gtk/UgSettingForm.c:153
+#: ../ui-gtk/UgtkSettingForm.c:166
+msgid "System Tray"
+msgstr ""
+
+#. System Tray check buttons
+#: ../ui-gtk/UgtkSettingForm.c:172
 msgid "Always show tray icon"
 msgstr "Küçük simgeyi her zaman göster"
 
-#: ../../po/../uget-gtk/UgSettingForm.c:156
+#: ../ui-gtk/UgtkSettingForm.c:175
 msgid "Minimize to tray on startup"
 msgstr "Tepsiye küçültülmüş olarak başlat"
 
-#: ../../po/../uget-gtk/UgSettingForm.c:159
+#: ../ui-gtk/UgtkSettingForm.c:178
+msgid "Close to tray on window close"
+msgstr ""
+
+#: ../ui-gtk/UgtkSettingForm.c:182
+msgid "Use Ubuntu's App Indicator"
+msgstr ""
+
+#: ../ui-gtk/UgtkSettingForm.c:189
 msgid "Enable offline mode on startup"
 msgstr "Başlangıçta çevrimdışı kipini etkinleştir"
 
-#: ../../po/../uget-gtk/UgSettingForm.c:162
+#: ../ui-gtk/UgtkSettingForm.c:192
 msgid "Download starting notification"
 msgstr "İndirmeye başlanıyor bilgilendirmesi"
 
-#: ../../po/../uget-gtk/UgSettingForm.c:165
+#: ../ui-gtk/UgtkSettingForm.c:195
 msgid "Sound when download is finished"
 msgstr "İndirme tamamlandıktan sonra ses çıkar"
 
-#: ../../po/../uget-gtk/UgSettingForm.c:168
+#: ../ui-gtk/UgtkSettingForm.c:198
 msgid "Apply recently download settings"
 msgstr "Yeni indirme ayarlarını uygula"
 
-#: ../../po/../uget-gtk/UgSettingForm.c:229
-msgid "_Launch default application for specified file types:"
-msgstr "Belirtilen dosya türleri için varsayılan uygulamayı ça_lıştır:"
+#: ../ui-gtk/UgtkSettingForm.c:264
+msgid "These will affect all plug-ins."
+msgstr ""
 
-#: ../../po/../uget-gtk/UgSettingForm.c:288
+#. Global speed limit
+#: ../ui-gtk/UgtkSettingForm.c:270
+#, fuzzy
+msgid "Global speed limit"
+msgstr "Hız Limitleri"
+
+#: ../ui-gtk/UgtkSettingForm.c:278
+#: ../ui-gtk/UgtkSettingForm.c:575
+#, fuzzy
+msgid "Max upload speed"
+msgstr "Azami yükleme hızı:"
+
+#: ../ui-gtk/UgtkSettingForm.c:290
+#: ../ui-gtk/UgtkSettingForm.c:587
+#, fuzzy
+msgid "Max download speed"
+msgstr "Azami indirme hızı:"
+
+#: ../ui-gtk/UgtkSettingForm.c:323
+msgid "Completion Auto-Actions"
+msgstr ""
+
+#: ../ui-gtk/UgtkSettingForm.c:332
+msgid "Remember Completion setting in menu"
+msgstr ""
+
+#: ../ui-gtk/UgtkSettingForm.c:338
+msgid "Custom command:"
+msgstr ""
+
+#: ../ui-gtk/UgtkSettingForm.c:350
+msgid "Custom command if error occured:"
+msgstr ""
+
+#: ../ui-gtk/UgtkSettingForm.c:399
 msgid "_Auto save"
 msgstr "Otom_atik kaydetme"
 
 #. auto save spin & label (interval)
-#: ../../po/../uget-gtk/UgSettingForm.c:294
+#: ../ui-gtk/UgtkSettingForm.c:405
 msgid "minutes"
 msgstr "dakika"
 
 #. auto save label
-#: ../../po/../uget-gtk/UgSettingForm.c:301
+#: ../ui-gtk/UgtkSettingForm.c:413
 msgid "_Interval:"
 msgstr "_Aralık:"
 
-#: ../../po/../uget-gtk/UgSettingForm.c:337
+#. Commandline Settings
+#: ../ui-gtk/UgtkSettingForm.c:444
 msgid "Commandline Settings"
 msgstr "Komut Satırı Ayarları"
 
 #. --quiet
-#: ../../po/../uget-gtk/UgSettingForm.c:341
+#: ../ui-gtk/UgtkSettingForm.c:451
 msgid "Use '--quiet' by default"
 msgstr "Varsayılan olarak \"--quiet\" kullan"
 
-#: ../../po/../uget-gtk/UgSettingForm.c:347
-msgid "'--category-index' default value"
-msgstr "Varsayılan '--category-index' değeri"
+#: ../ui-gtk/UgtkSettingForm.c:519
+msgid "Plug-in matching order:"
+msgstr ""
 
-#: ../../po/../uget-gtk/UgSettingForm.c:410
-msgid "_Enable aria2 plug-in"
-msgstr "aria2 eklentisini _etkinleştir"
+#: ../ui-gtk/UgtkSettingForm.c:542
+msgid "Aria2 plug-in options"
+msgstr ""
 
-#: ../../po/../uget-gtk/UgSettingForm.c:417
+#: ../ui-gtk/UgtkSettingForm.c:558
+msgid "RPC authorization secret token"
+msgstr ""
+
+#. ------------------------------------------------------------------------
+#. Speed Limits
+#: ../ui-gtk/UgtkSettingForm.c:567
+msgid "Global speed limit for aria2 only"
+msgstr ""
+
+#. ------------------------------------------------------------------------
+#. aria2 works on local device
+#. launch
+#: ../ui-gtk/UgtkSettingForm.c:600
 msgid "_Launch aria2 on startup"
 msgstr "Başlangıçta aria2'yi ça_lıştır"
 
-#: ../../po/../uget-gtk/UgSettingForm.c:423
+#. shutdown
+#: ../ui-gtk/UgtkSettingForm.c:606
 msgid "_Shutdown aria2 on exit"
 msgstr "Çıkışta aria2'yi _kapat"
 
-#: ../../po/../uget-gtk/UgSettingForm.c:439
+#. ------------------------------------------------------------------------
+#. Local options
+#: ../ui-gtk/UgtkSettingForm.c:612
+#, fuzzy
+msgid "Launch aria2 on local device"
+msgstr "Başlangıçta aria2'yi ça_lıştır"
+
+#: ../ui-gtk/UgtkSettingForm.c:621
 msgid "Path"
 msgstr "Yol"
 
-#: ../../po/../uget-gtk/UgSettingForm.c:447
+#: ../ui-gtk/UgtkSettingForm.c:632
 msgid "Arguments"
 msgstr "Argümanlar"
 
-#. aria2 plug-in hint
-#: ../../po/../uget-gtk/UgSettingForm.c:454
-msgid "You must restart uGet after modifying 'Arguments'."
+#. Arguments - hint
+#: ../ui-gtk/UgtkSettingForm.c:637
+#, fuzzy
+msgid "You must restart uGet after modifying it."
 msgstr "Argümanları değiştirdikten sonra uGet'i yeniden başlatmalısınız."
 
-#: ../../po/../uget-gtk/UgSettingForm.c:461
-msgid "Speed Limits"
-msgstr "Hız Limitleri"
-
-#: ../../po/../uget-gtk/UgSettingForm.c:467
-msgid "Upload"
-msgstr "Yükle"
-
-#: ../../po/../uget-gtk/UgSettingForm.c:478
-msgid "Download"
-msgstr "İndir"
-
-#: ../../po/../uget-gtk/UgSummary.c:109
+#: ../ui-gtk/UgtkSummary.c:112
 msgid "File"
 msgstr "Dosya"
 
-#: ../../po/../uget-gtk/UgSummary.c:129
+#: ../ui-gtk/UgtkSummary.c:127
 msgid "Folder"
 msgstr "Dizin"
 
-#: ../../po/../uget-gtk/UgSummary.c:259
+#: ../ui-gtk/UgtkSummary.c:270
 msgid "Item"
 msgstr "Öğe"
 
-#: ../../po/../uget-gtk/UgSummary.c:264
+#: ../ui-gtk/UgtkSummary.c:275
 msgid "Value"
 msgstr "Değer"
 
 #. Copy All
-#: ../../po/../uget-gtk/UgSummary.c:296
+#: ../ui-gtk/UgtkSummary.c:307
 msgid "Copy _All"
 msgstr "Tümünü Kopy_ala"
+
+#. Show window
+#: ../ui-gtk/UgtkTrayIcon.c:106
+msgid "Show window"
+msgstr "Pencereyi göster"
+
+#. Offline mode
+#: ../ui-gtk/UgtkTrayIcon.c:112
+msgid "_Offline Mode"
+msgstr "_Çevrimdışı Kip"
+
+#~ msgid "No plug-in support this scheme or file."
+#~ msgstr "Bu şema veya dosyaya eklenti desteği yok"
+
+#~ msgid "Remember this action"
+#~ msgstr "Bu eylemi hatırla"
+
+#~ msgid "Minimize to tray"
+#~ msgstr "Tepsiye küçült"
+
+#~ msgid "Exit uGet"
+#~ msgstr "uGet'ten Çık"
+
+#~ msgid "failed to launch aria2."
+#~ msgstr "aria2 başlatması başarısız."
+
+#~ msgid "Export to"
+#~ msgstr "Dışa Aktar"
+
+#~ msgid "Save all"
+#~ msgstr "Tümünü kaydet"
+
+#~ msgid "_Download..."
+#~ msgstr "_İndirme..."
+
+#~ msgid "_Category..."
+#~ msgstr "_Bölüm..."
+
+#~ msgid "Torrent..."
+#~ msgstr "Torrent..."
+
+#~ msgid "Metalink..."
+#~ msgstr "Metalink..."
+
+#~ msgid "_Clipboard Option..."
+#~ msgstr "_Pano Seçenekleri..."
+
+#~ msgid "Shutdown when downloads complete"
+#~ msgstr "İndirme tamamlandığında bilgisayarı kapat"
+
+#~ msgid "Delete _File and Data"
+#~ msgstr "_Dosya ve Veriyi Sil"
+
+#~ msgid "only one matched"
+#~ msgstr "yalnızca tek eşleşme"
+
+#~ msgid ""
+#~ "Failed to connect to aria2.\n"
+#~ "Is aria2 shutdown? or aria2 launch failed."
+#~ msgstr ""
+#~ "aria2 bağlantısı başarısız.\n"
+#~ "aria2 kapatıldı mı? Ya da başlatılamadı mı?"
+
+#~ msgid "_URL:"
+#~ msgstr "_URL:"
+
+#~ msgid "Options"
+#~ msgstr "Seçenekler"
+
+#~ msgid "Connections per server"
+#~ msgstr "Sunucu başına bağlantı"
+
+#~ msgid "UI Settings"
+#~ msgstr "Kullanıcı Arayüzü Ayarları"
+
+#~ msgid "Add URL to Nth category"
+#~ msgstr "Nnci bölüme URL ekle"
+
+#~ msgid "_Launch default application for specified file types:"
+#~ msgstr "Belirtilen dosya türleri için varsayılan uygulamayı ça_lıştır:"
+
+#~ msgid "'--category-index' default value"
+#~ msgstr "Varsayılan '--category-index' değeri"
+
+#~ msgid "_Enable aria2 plug-in"
+#~ msgstr "aria2 eklentisini _etkinleştir"
+
+#~ msgid "Download"
+#~ msgstr "İndir"
