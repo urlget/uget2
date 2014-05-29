@@ -226,7 +226,7 @@ static void ugtk_menubar_edit_init (UgtkMenubar* menubar)
 	gtk_menu_shell_append ((GtkMenuShell*)submenu, menu_item);
 	menubar->edit.completion.custom = menu_item;
 	// Completion Auto-Actions - Help
-	menu_item = gtk_menu_item_new_with_mnemonic (_("Help"));
+	menu_item = gtk_menu_item_new_with_mnemonic (_("_Help"));
 	gtk_menu_shell_append ((GtkMenuShell*)submenu, menu_item);
 	menubar->edit.completion.help = menu_item;
 	// --- Completion Auto-Actions --- end ---

@@ -14,9 +14,8 @@ msgstr ""
 "X-Poedit-Country: TAIWAN\n"
 
 #: ../uget/UgetApp.c:95
-#, fuzzy
 msgid "All Category"
-msgstr "分類"
+msgstr "全分類"
 
 #. UGET_EVENT_NORMAL_CUSTOM
 #: ../uget/UgetEvent.c:58
@@ -61,12 +60,12 @@ msgstr "無法續傳"
 #: ../uget/UgetEvent.c:73
 #: ../uget/UgetPluginAria2.c:285
 msgid "Output file can't be renamed."
-msgstr "輸出檔無法改名."
+msgstr "輸出檔無法改名。"
 
 #. UGET_EVENT_ERROR_CUSTOM
 #: ../uget/UgetEvent.c:81
 msgid "couldn't connect to host."
-msgstr "無法連接到主機."
+msgstr "無法連接到主機。"
 
 #. UGET_EVENT_ERROR_CONNECT_FAILED
 #: ../uget/UgetEvent.c:82
@@ -77,23 +76,22 @@ msgstr "資料夾無法建立"
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../uget/UgetEvent.c:83
 msgid "File can't be created (bad filename or file exist)."
-msgstr "檔案無法建立 (檔名錯誤或檔案已經存在)."
+msgstr "檔案無法建立 (檔名錯誤或檔案已經存在)。"
 
 #. UGET_EVENT_ERROR_FILE_CREATE_FAILED
 #: ../uget/UgetEvent.c:84
 msgid "File can't be opened."
-msgstr "檔案無法開啟."
+msgstr "檔案無法開啟。"
 
 #. UGET_EVENT_ERROR_FILE_OPEN_FAILED
 #: ../uget/UgetEvent.c:85
-#, fuzzy
 msgid "Unable to create thread."
-msgstr "無法建立執行緒, 請減少下載數量."
+msgstr "無法建立執行緒。"
 
 #. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 #: ../uget/UgetEvent.c:86
-msgid "Incorrect source (different size)."
-msgstr ""
+msgid "Incorrect source (different file size)."
+msgstr "不正確的來源 (檔案大小不同)"
 
 #. UGET_EVENT_ERROR_INCORRECT_SOURCE,
 #: ../uget/UgetEvent.c:87
@@ -103,113 +101,112 @@ msgstr "系統資源不足 (儲存空間或記憶體不足)"
 #. UGET_EVENT_ERROR_OUT_OF_RESOURCE
 #: ../uget/UgetEvent.c:88
 msgid "No output file."
-msgstr "沒有指定輸出檔案."
+msgstr "沒有指定輸出檔案。"
 
 #. UGET_EVENT_ERROR_NO_OUTPUT_FILE
 #: ../uget/UgetEvent.c:89
 msgid "No output setting."
-msgstr "沒有輸出的設定."
+msgstr "沒有輸出的設定。"
 
 #. UGET_EVENT_ERROR_NO_OUTPUT_SETTING
 #: ../uget/UgetEvent.c:90
 msgid "Too many retries."
-msgstr "重試太多次."
+msgstr "重試太多次。"
 
 #. UGET_EVENT_ERROR_TOO_MANY_RETRIES
 #: ../uget/UgetEvent.c:91
 msgid "Unsupported scheme (protocol)."
-msgstr "不支援的通訊協定."
+msgstr "不支援的通訊協定。"
 
 #. UGET_EVENT_ERROR_UNSUPPORTED_SCHEME
 #: ../uget/UgetEvent.c:92
 msgid "Unsupported file."
-msgstr "不支援的檔案."
+msgstr "不支援的檔案。"
 
 #. 1 - 10
 #: ../uget/UgetPluginAria2.c:271
 msgid "aria2: an unknown error occurred."
-msgstr ""
+msgstr "aria2: 發生未知的錯誤。"
 
 #: ../uget/UgetPluginAria2.c:272
 msgid "aria2: time out occurred."
-msgstr ""
+msgstr "aria2: 發生超時。"
 
 #: ../uget/UgetPluginAria2.c:273
 msgid "aria2: resource was not found."
-msgstr ""
+msgstr "aria2: 找不到資源。"
 
 #: ../uget/UgetPluginAria2.c:274
 msgid ""
 "aria2 saw the specfied number of 'resource not found' error. See --max-file-"
 "not-found option"
-msgstr ""
+msgstr "aria2 發現'找不到資源'的錯誤達到指定的數量。請看參數 --max-file-not-found"
 
 #: ../uget/UgetPluginAria2.c:275
 msgid "aria2: speed was too slow."
-msgstr ""
+msgstr "aria2: 數度太慢。"
 
 #: ../uget/UgetPluginAria2.c:276
 msgid "aria2: network problem occurred."
-msgstr ""
+msgstr "aria2: 發生網絡問題。"
 
 #: ../uget/UgetPluginAria2.c:277
 msgid "aria2: unfinished downloads."
-msgstr ""
+msgstr "aria2: 未結束的下載。"
 
 #. _("Not Resumable"),
 #: ../uget/UgetPluginAria2.c:279
 msgid "Out of resource"
-msgstr ""
+msgstr "資源用盡"
 
 #. _(),
 #: ../uget/UgetPluginAria2.c:280
 msgid "aria2: piece length was different from one in .aria2 control file."
-msgstr ""
+msgstr "aria2: 片段長度和 .aria2 控制文件所紀錄的不同。"
 
 #. 11 - 20
 #: ../uget/UgetPluginAria2.c:282
 msgid "aria2 was downloading same file."
-msgstr ""
+msgstr "aria2 已經下載過相同的檔案。"
 
 #: ../uget/UgetPluginAria2.c:283
 msgid "aria2 was downloading same info hash torrent."
-msgstr ""
+msgstr "aria2 正在下載相同的 Torrent。"
 
 #: ../uget/UgetPluginAria2.c:284
 msgid "aria2: file already existed. See --allow-overwrite option."
-msgstr ""
+msgstr "aria2 文件已經存在。請看參數 --allow-overwrite"
 
 #. _("Output file can't be renamed."),
 #: ../uget/UgetPluginAria2.c:286
-#, fuzzy
 msgid "aria2: could not open existing file."
-msgstr "post 檔案開啟失敗."
+msgstr "aria2: 無法開啟已經存在的檔案."
 
 #: ../uget/UgetPluginAria2.c:287
 msgid "aria2: could not create new file or truncate existing file."
-msgstr ""
+msgstr "aria2: 無法創建新的文件或截斷現有文件。"
 
 #: ../uget/UgetPluginAria2.c:288
 msgid "aria2: file I/O error occurred."
-msgstr ""
+msgstr "aria2: 發生文件讀寫錯誤。"
 
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../uget/UgetPluginAria2.c:290
 msgid "aria2: name resolution failed."
-msgstr ""
+msgstr "aria2: 名稱解析失敗。"
 
 #: ../uget/UgetPluginAria2.c:291
 msgid "aria2: could not parse Metalink document."
-msgstr ""
+msgstr "aria2: 無法解析的 Metalink 檔案。"
 
 #. 21 - 30
 #: ../uget/UgetPluginAria2.c:293
 msgid "aria2: FTP command failed."
-msgstr ""
+msgstr "aria2: FTP 命令失敗。"
 
 #: ../uget/UgetPluginAria2.c:294
 msgid "aria2: HTTP response header was bad or unexpected."
-msgstr ""
+msgstr "aria2: HTTP 回應開頭部分損壞或預期以外的。"
 
 #: ../uget/UgetPluginAria2.c:295
 msgid "Too many redirections."
@@ -217,42 +214,42 @@ msgstr "重新導向太多次."
 
 #: ../uget/UgetPluginAria2.c:296
 msgid "aria2: HTTP authorization failed."
-msgstr ""
+msgstr "aria2: HTTP 授權失敗。"
 
 #: ../uget/UgetPluginAria2.c:297
 msgid "aria2: could not parse bencoded file(usually .torrent file)."
-msgstr ""
+msgstr "aria2: 無法解析編碼文件（通常是 .torrent 文件）"
 
 #: ../uget/UgetPluginAria2.c:298
 msgid "aria2: torrent file was corrupted or missing information."
-msgstr ""
+msgstr "aria2: torrent文件被損壞或丟失信息。"
 
 #: ../uget/UgetPluginAria2.c:299
 msgid "aria2: Magnet URI was bad."
-msgstr ""
+msgstr "aria2: Magnet 的 URI 已損壞。"
 
 #: ../uget/UgetPluginAria2.c:300
 msgid ""
 "aria2: bad/unrecognized option was given or unexpected option argument was "
 "given."
-msgstr ""
+msgstr "aria2: 收到損壞/無法識別的選項或意外的選項參數。"
 
 #: ../uget/UgetPluginAria2.c:301
 msgid "aria2: remote server was unable to handle the request."
-msgstr ""
+msgstr "aria2: 遠程服務器無法處理請求。"
 
 #: ../uget/UgetPluginAria2.c:302
 msgid "aria2: could not parse JSON-RPC request."
-msgstr ""
+msgstr "aria2: 無發分析 JSON-RPC 請求。"
 
 #: ../uget/UgetPluginAria2.c:305
 msgid "No response. Is aria2 shutdown?"
-msgstr ""
+msgstr "沒有回應。 aria2 是否關閉？"
 
 #. debug
 #: ../uget/UgetPluginAria2.c:607
 msgid "aria2: gid was removed."
-msgstr ""
+msgstr "aria2: gid 已被删除。"
 
 #: ../ui-gtk/UgtkAboutDialog.c:46
 msgid "Download Manager"
@@ -264,11 +261,11 @@ msgstr "繁體中文 (zh_TW) - 黃正雄"
 
 #: ../ui-gtk/UgtkAboutDialog.c:80
 msgid "uGet Founder: "
-msgstr ""
+msgstr "uGet 創立者: "
 
 #: ../ui-gtk/UgtkAboutDialog.c:81
 msgid "uGet Project Manager: "
-msgstr ""
+msgstr "uGet 項目經理: "
 
 #: ../ui-gtk/UgtkApp-timeout.c:250
 #: ../ui-gtk/UgtkTrayIcon.c:204
@@ -296,12 +293,11 @@ msgstr "命令列"
 
 #: ../ui-gtk/UgtkApp-timeout.c:752
 msgid "Error Occurred"
-msgstr ""
+msgstr "發生錯誤"
 
 #: ../ui-gtk/UgtkApp-timeout.c:753
-#, fuzzy
 msgid "Error Occurred when downloading."
-msgstr "下載完成時發出聲音"
+msgstr "下載時發生錯誤。"
 
 #: ../ui-gtk/UgtkApp-timeout.c:754
 msgid "Download Starting"
@@ -339,11 +335,6 @@ msgstr "狀態"
 #: ../ui-gtk/UgtkSummary.c:139
 msgid "Category"
 msgstr "分類"
-
-#. toolbar right side
-#: ../ui-gtk/UgtkApp-ui.c:183
-msgid "Sort"
-msgstr ""
 
 #: ../ui-gtk/UgtkApp-ui.c:195
 msgid "Create new download"
@@ -393,9 +384,8 @@ msgid "New Metalink..."
 msgstr "新增 Metalink..."
 
 #: ../ui-gtk/UgtkApp-ui.c:251
-#, fuzzy
 msgid "Save all settings"
-msgstr "分類設定"
+msgstr "儲存全部設定"
 
 #: ../ui-gtk/UgtkApp-ui.c:259
 msgid "Set selected download runnable"
@@ -458,24 +448,20 @@ msgid "Open Metalink file"
 msgstr "開啟 Metalink 檔案"
 
 #: ../ui-gtk/UgtkApp.c:1085
-#, fuzzy
 msgid "Failed to save category file."
-msgstr "post 檔案開啟失敗."
+msgstr "分類檔案儲存失敗。"
 
 #: ../ui-gtk/UgtkApp.c:1105
-#, fuzzy
 msgid "Failed to load category file."
-msgstr "post 檔案開啟失敗."
+msgstr "分類檔案載入失敗。"
 
 #: ../ui-gtk/UgtkApp.c:1116
-#, fuzzy
 msgid "Save Category file"
-msgstr "新增分類"
+msgstr "儲存分類檔案"
 
 #: ../ui-gtk/UgtkApp.c:1134
-#, fuzzy
 msgid "Open Category file"
-msgstr "開啟 Torrent 檔案"
+msgstr "開啟分類檔案"
 
 #. add link
 #: ../ui-gtk/UgtkApp.c:1193
@@ -500,9 +486,8 @@ msgid "Import URLs from text file"
 msgstr "從文字檔案匯入網址"
 
 #: ../ui-gtk/UgtkApp.c:1320
-#, fuzzy
 msgid "Export URLs to text file"
-msgstr "從文字檔案匯入網址"
+msgstr "匯出網址到文字檔案"
 
 #: ../ui-gtk/UgtkApp.c:1339
 msgid "URL Sequence batch"
@@ -510,11 +495,11 @@ msgstr "URL 序列下載"
 
 #: ../ui-gtk/UgtkApp.c:1366
 msgid "No URLs found in clipboard."
-msgstr "剪貼簿裡面沒有網址."
+msgstr "剪貼簿裡面沒有網址。"
 
 #: ../ui-gtk/UgtkApp.c:1375
 msgid "All URLs had existed."
-msgstr ""
+msgstr "全部的 URL 都已經存在。"
 
 #: ../ui-gtk/UgtkApp.c:1380
 msgid "Clipboard batch"
@@ -522,7 +507,7 @@ msgstr "剪貼簿批次下載"
 
 #: ../ui-gtk/UgtkApp.c:1470
 msgid "New"
-msgstr ""
+msgstr "新增"
 
 #: ../ui-gtk/UgtkApp.c:1589
 #: ../ui-gtk/UgtkMenubar.c:365
@@ -583,19 +568,19 @@ msgstr "'回收區'的容量:"
 #. URI Matching conditions
 #: ../ui-gtk/UgtkCategoryForm.c:111
 msgid "URI Matching conditions"
-msgstr ""
+msgstr "URI 配對條件"
 
 #: ../ui-gtk/UgtkCategoryForm.c:118
 msgid "Matched _Hosts:"
-msgstr ""
+msgstr "配對主機(_H):"
 
 #: ../ui-gtk/UgtkCategoryForm.c:129
 msgid "Matched _Schemes:"
-msgstr ""
+msgstr "配對協議(_S):"
 
 #: ../ui-gtk/UgtkCategoryForm.c:140
 msgid "Matched _Types:"
-msgstr ""
+msgstr "配對檔案類型(_T):"
 
 #: ../ui-gtk/UgtkConfirmDialog.c:62
 msgid "Really Quit?"
@@ -614,7 +599,6 @@ msgid "Are you sure you want to delete files?"
 msgstr "你確定要刪除檔案?"
 
 #: ../ui-gtk/UgtkConfirmDialog.c:99
-#, fuzzy
 msgid "Don't ask me again"
 msgstr "下次別問我"
 
@@ -622,7 +606,7 @@ msgstr "下次別問我"
 #: ../ui-gtk/UgtkDownloadForm.c:109
 #: ../ui-gtk/UgtkSequencer.c:63
 msgid "_URI:"
-msgstr ""
+msgstr "網址(_U)"
 
 #. Mirrors - label
 #: ../ui-gtk/UgtkDownloadForm.c:128
@@ -652,9 +636,8 @@ msgstr "參照位址:"
 
 #. "Max Connections:" - title label
 #: ../ui-gtk/UgtkDownloadForm.c:207
-#, fuzzy
 msgid "_Max Connections:"
-msgstr "連線數"
+msgstr "最大連線數(_M)"
 
 #: ../ui-gtk/UgtkDownloadForm.c:226
 #: ../ui-gtk/UgtkMenubar-ui.c:504
@@ -687,9 +670,8 @@ msgstr "密碼:"
 
 #. label - cookie file
 #: ../ui-gtk/UgtkDownloadForm.c:290
-#, fuzzy
 msgid "Cookie file:"
-msgstr "選擇 cookie 資料檔"
+msgstr "cookie 資料檔"
 
 #: ../ui-gtk/UgtkDownloadForm.c:302
 #: ../ui-gtk/UgtkDownloadForm.c:945
@@ -792,27 +774,23 @@ msgstr "匯出文字檔(_E)..."
 
 #. Open Category
 #: ../ui-gtk/UgtkMenubar-ui.c:128
-#, fuzzy
 msgid "_Open category..."
-msgstr "新增分類(_N)..."
+msgstr "開啟分類檔案(_O)..."
 
 #. Save Category
 #: ../ui-gtk/UgtkMenubar-ui.c:135
-#, fuzzy
 msgid "_Save category as..."
-msgstr "新增分類(_N)..."
+msgstr "另存分類為(_S)..."
 
 #. Save All
 #: ../ui-gtk/UgtkMenubar-ui.c:142
-#, fuzzy
 msgid "Save _all settings"
-msgstr "分類設定"
+msgstr "儲存全部設定(_A)"
 
 #. Offline mode
 #: ../ui-gtk/UgtkMenubar-ui.c:152
-#, fuzzy
 msgid "Offline Mode"
-msgstr "離線模式(_O)"
+msgstr "離線模式"
 
 #: ../ui-gtk/UgtkMenubar-ui.c:170
 msgid "_Edit"
@@ -824,18 +802,16 @@ msgid "Clipboard _Monitor"
 msgstr "監視剪貼簿(_M)"
 
 #: ../ui-gtk/UgtkMenubar-ui.c:179
-#, fuzzy
 msgid "Clipboard works quietly"
-msgstr "監視剪貼簿(_M)"
+msgstr "剪貼簿静静地工作"
 
 #: ../ui-gtk/UgtkMenubar-ui.c:183
-#, fuzzy
 msgid "Command-line works quietly"
-msgstr "命令列設定"
+msgstr "命令列静静地工作"
 
 #: ../ui-gtk/UgtkMenubar-ui.c:187
 msgid "Skip existing URI"
-msgstr ""
+msgstr "跳過已有的URI"
 
 #. --- Completion Auto-Actions --- start ---
 #: ../ui-gtk/UgtkMenubar-ui.c:194
@@ -865,13 +841,7 @@ msgstr "重新開機"
 
 #: ../ui-gtk/UgtkMenubar-ui.c:225
 msgid "Custom"
-msgstr ""
-
-#. Completion Auto-Actions - Help
-#: ../ui-gtk/UgtkMenubar-ui.c:229
-#, fuzzy
-msgid "Help"
-msgstr "說明(_H)"
+msgstr "自訂"
 
 #. --- Completion Auto-Actions --- end ---
 #. menu_item = gtk_menu_item_new_with_mnemonic (_("_Settings..."));
@@ -1042,21 +1012,21 @@ msgstr "搬移到(_M)"
 #. Priority --- start ---
 #: ../ui-gtk/UgtkMenubar-ui.c:567
 msgid "Priority"
-msgstr ""
+msgstr "優先權"
 
 #: ../ui-gtk/UgtkMenubar-ui.c:576
 msgid "_High"
-msgstr ""
+msgstr "高(_H)"
 
 #: ../ui-gtk/UgtkMenubar-ui.c:581
-#, fuzzy
 msgid "_Normal"
-msgstr "一般"
+msgstr "一般(_N)"
 
 #: ../ui-gtk/UgtkMenubar-ui.c:586
 msgid "_Low"
-msgstr ""
+msgstr "低(_L)"
 
+#: ../ui-gtk/UgtkMenubar-ui.c:229
 #: ../ui-gtk/UgtkMenubar-ui.c:604
 msgid "_Help"
 msgstr "說明(_H)"
@@ -1114,11 +1084,11 @@ msgstr "'%s' - 這個資料夾不存在."
 #: ../ui-gtk/UgtkNodeDialog.c:205
 #: ../ui-gtk/UgtkNodeDialog.c:209
 msgid "URI had existed"
-msgstr ""
+msgstr "URI已經存在"
 
 #: ../ui-gtk/UgtkNodeDialog.c:207
 msgid "This URI had existed, are you sure to continue?"
-msgstr ""
+msgstr "這個URI已經存在，你確定要繼續嗎？"
 
 #: ../ui-gtk/UgtkNodeDialog.c:343
 msgid "General"
@@ -1147,19 +1117,16 @@ msgid "unnamed"
 msgstr "未命名"
 
 #: ../ui-gtk/UgtkNodeView.c:610
-#, fuzzy
 msgid "Paused"
-msgstr "暫停(_A)"
+msgstr "暫停"
 
 #: ../ui-gtk/UgtkNodeView.c:611
-#, fuzzy
 msgid "Uploading"
-msgstr "上傳"
+msgstr "上傳中"
 
 #: ../ui-gtk/UgtkNodeView.c:612
-#, fuzzy
 msgid "Completed"
-msgstr "完成"
+msgstr "已完成"
 
 #: ../ui-gtk/UgtkNodeView.c:614
 msgid "Recycled"
@@ -1174,9 +1141,8 @@ msgid "Active"
 msgstr "活躍的"
 
 #: ../ui-gtk/UgtkNodeView.c:637
-#, fuzzy
 msgid "All Status"
-msgstr "狀態"
+msgstr "全狀態"
 
 #: ../ui-gtk/UgtkNodeView.c:734
 #: ../ui-gtk/UgtkSettingDialog.c:85
@@ -1207,7 +1173,6 @@ msgstr "剩餘時間"
 #: ../ui-gtk/UgtkNodeView.c:903
 #: ../ui-gtk/UgtkSettingForm.c:549
 #: ../ui-gtk/UgtkSummary.c:151
-#, fuzzy
 msgid "URI"
 msgstr "網址"
 
@@ -1339,7 +1304,7 @@ msgstr "網址"
 
 #: ../ui-gtk/UgtkSelector.c:781
 msgid "Base hypertext reference"
-msgstr ""
+msgstr "基本超文本引用"
 
 #. select all
 #: ../ui-gtk/UgtkSelector.c:797
@@ -1404,11 +1369,11 @@ msgstr "預覽"
 
 #: ../ui-gtk/UgtkSettingDialog.c:97
 msgid "User Interface"
-msgstr ""
+msgstr "用戶界面"
 
 #: ../ui-gtk/UgtkSettingDialog.c:109
 msgid "Bandwidth"
-msgstr ""
+msgstr "頻寬"
 
 #: ../ui-gtk/UgtkSettingDialog.c:115
 msgid "Scheduler"
@@ -1424,9 +1389,8 @@ msgstr "其他"
 
 #. Monitor button
 #: ../ui-gtk/UgtkSettingForm.c:57
-#, fuzzy
 msgid "_Enable clipboard monitor"
-msgstr "監視剪貼簿(_M)"
+msgstr "監視剪貼簿(_E)"
 
 #. quiet mode
 #: ../ui-gtk/UgtkSettingForm.c:62
@@ -1435,19 +1399,17 @@ msgstr "安靜模式(_Q)"
 
 #: ../ui-gtk/UgtkSettingForm.c:68
 #: ../ui-gtk/UgtkSettingForm.c:457
-#, fuzzy
 msgid "Default category index"
-msgstr "刪除分類(_D)"
+msgstr "預設分類索引"
 
 #: ../ui-gtk/UgtkSettingForm.c:80
 #: ../ui-gtk/UgtkSettingForm.c:469
 msgid "Adding to Nth category if no matched category."
-msgstr ""
+msgstr "添加到第N個分類，如果沒有匹配的類別。"
 
 #: ../ui-gtk/UgtkSettingForm.c:87
-#, fuzzy
 msgid "Monitor clipboard for specified file types:"
-msgstr "監視剪貼簿裡指定的檔案類型(_M):"
+msgstr "監視剪貼簿裡指定的檔案類型:"
 
 #: ../ui-gtk/UgtkSettingForm.c:102
 msgid "Separate the types with character '|'."
@@ -1459,11 +1421,10 @@ msgstr "這裡可以使用正規表達式."
 
 #: ../ui-gtk/UgtkSettingForm.c:151
 msgid "Confirmation"
-msgstr ""
+msgstr "確認"
 
 #. Confirmation check buttons
 #: ../ui-gtk/UgtkSettingForm.c:157
-#, fuzzy
 msgid "Show confirmation dialog on exit"
 msgstr "關閉時確認"
 
@@ -1473,7 +1434,7 @@ msgstr "刪除檔案時確認"
 
 #: ../ui-gtk/UgtkSettingForm.c:166
 msgid "System Tray"
-msgstr ""
+msgstr "系統列"
 
 #. System Tray check buttons
 #: ../ui-gtk/UgtkSettingForm.c:172
@@ -1486,11 +1447,11 @@ msgstr "啟動時縮小到系統列"
 
 #: ../ui-gtk/UgtkSettingForm.c:178
 msgid "Close to tray on window close"
-msgstr ""
+msgstr "關閉視窗時縮小到系統列"
 
 #: ../ui-gtk/UgtkSettingForm.c:182
 msgid "Use Ubuntu's App Indicator"
-msgstr ""
+msgstr "使用Ubuntu的 App Indicator"
 
 #: ../ui-gtk/UgtkSettingForm.c:189
 msgid "Enable offline mode on startup"
@@ -1510,42 +1471,38 @@ msgstr "套用上一次的下載設定"
 
 #: ../ui-gtk/UgtkSettingForm.c:264
 msgid "These will affect all plug-ins."
-msgstr ""
+msgstr "這些將影響到所有的插件。"
 
 #. Global speed limit
 #: ../ui-gtk/UgtkSettingForm.c:270
-#, fuzzy
 msgid "Global speed limit"
-msgstr "速度限制"
+msgstr "全體速度限制"
 
 #: ../ui-gtk/UgtkSettingForm.c:278
 #: ../ui-gtk/UgtkSettingForm.c:575
-#, fuzzy
 msgid "Max upload speed"
 msgstr "最大上傳速度"
 
 #: ../ui-gtk/UgtkSettingForm.c:290
 #: ../ui-gtk/UgtkSettingForm.c:587
-#, fuzzy
 msgid "Max download speed"
 msgstr "最大下載速度"
 
 #: ../ui-gtk/UgtkSettingForm.c:323
-#, fuzzy
 msgid "Completion Auto-Actions"
-msgstr "完成自動操作(_A)"
+msgstr "完成自動操作"
 
 #: ../ui-gtk/UgtkSettingForm.c:332
 msgid "Remember Completion setting in menu"
-msgstr ""
+msgstr "記住在選單中的完成設定"
 
 #: ../ui-gtk/UgtkSettingForm.c:338
 msgid "Custom command:"
-msgstr ""
+msgstr "自定命令:"
 
 #: ../ui-gtk/UgtkSettingForm.c:350
 msgid "Custom command if error occured:"
-msgstr ""
+msgstr "如果發生錯誤時自定命令:"
 
 #: ../ui-gtk/UgtkSettingForm.c:399
 msgid "_Auto save"
@@ -1573,21 +1530,21 @@ msgstr "預設使用 '--quiet' 參數"
 
 #: ../ui-gtk/UgtkSettingForm.c:519
 msgid "Plug-in matching order:"
-msgstr ""
+msgstr "插件匹配順序:"
 
 #: ../ui-gtk/UgtkSettingForm.c:542
 msgid "Aria2 plug-in options"
-msgstr ""
+msgstr "Aria2插件選項"
 
 #: ../ui-gtk/UgtkSettingForm.c:558
 msgid "RPC authorization secret token"
-msgstr ""
+msgstr "遠程呼叫授權密碼"
 
 #. ------------------------------------------------------------------------
 #. Speed Limits
 #: ../ui-gtk/UgtkSettingForm.c:567
 msgid "Global speed limit for aria2 only"
-msgstr ""
+msgstr "Aria2全域速度限制"
 
 #. ------------------------------------------------------------------------
 #. aria2 works on local device
@@ -1604,9 +1561,8 @@ msgstr "離開時關閉 aria2"
 #. ------------------------------------------------------------------------
 #. Local options
 #: ../ui-gtk/UgtkSettingForm.c:612
-#, fuzzy
 msgid "Launch aria2 on local device"
-msgstr "啟動時執行 aria2"
+msgstr "本地設備執行aria2"
 
 #: ../ui-gtk/UgtkSettingForm.c:621
 msgid "Path"
@@ -1618,7 +1574,6 @@ msgstr "參數"
 
 #. Arguments - hint
 #: ../ui-gtk/UgtkSettingForm.c:637
-#, fuzzy
 msgid "You must restart uGet after modifying it."
 msgstr "修改'參數'之後必須重新啟動 uGet。"
 

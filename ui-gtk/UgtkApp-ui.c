@@ -176,18 +176,7 @@ static void ugtk_toolbar_init_ui (struct UgtkToolbar* ugt, GtkAccelGroup* accel_
 	toolbar = GTK_TOOLBAR (ugt->toolbar);
 	gtk_toolbar_set_style (toolbar, GTK_TOOLBAR_ICONS);
 	gtk_toolbar_set_icon_size (toolbar, GTK_ICON_SIZE_SMALL_TOOLBAR);
-#if 1
 	ugt->self = ugt->toolbar;
-#else
-	// toolbar right side
-	ugt->sort = gtk_check_button_new_with_label (_("Sort"));
-	// toolbar container
-	ugt->self = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-	gtk_box_pack_start (GTK_BOX (ugt->self), ugt->toolbar,
-	                    TRUE, TRUE, 0);
-	gtk_box_pack_start (GTK_BOX (ugt->self), ugt->sort,
-	                    FALSE, FALSE, 3);
-#endif
 	gtk_widget_show (ugt->self);
 
 	// New button --- start ---

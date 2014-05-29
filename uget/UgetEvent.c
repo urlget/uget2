@@ -83,7 +83,7 @@ static const char*  error_msg[] =
 	N_("File can't be created (bad filename or file exist)."),  // UGET_EVENT_ERROR_FILE_CREATE_FAILED
 	N_("File can't be opened."),                                // UGET_EVENT_ERROR_FILE_OPEN_FAILED
 	N_("Unable to create thread."),                             // UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
-	N_("Incorrect source (different size)."),                   // UGET_EVENT_ERROR_INCORRECT_SOURCE,
+	N_("Incorrect source (different file size)."),              // UGET_EVENT_ERROR_INCORRECT_SOURCE,
 	N_("Out of resource (disk full or run out of memory)."),    // UGET_EVENT_ERROR_OUT_OF_RESOURCE
 	N_("No output file."),                                      // UGET_EVENT_ERROR_NO_OUTPUT_FILE
 	N_("No output setting."),                                   // UGET_EVENT_ERROR_NO_OUTPUT_SETTING
