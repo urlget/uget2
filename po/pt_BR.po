@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-27 14:40+0800\n"
+"POT-Creation-Date: 2014-05-29 13:42+0800\n"
 "PO-Revision-Date: 2013-12-09 02:29+0000\n"
 "Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/uget/"
@@ -99,7 +99,7 @@ msgstr "Não foi possível criar thread, reduza o número de downloads."
 
 #. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 #: ../uget/UgetEvent.c:86
-msgid "Incorrect source (different size)."
+msgid "Incorrect source (different file size)."
 msgstr ""
 
 #. UGET_EVENT_ERROR_INCORRECT_SOURCE,
@@ -347,38 +347,33 @@ msgstr "Status"
 msgid "Category"
 msgstr "Categoria"
 
-#. toolbar right side
-#: ../ui-gtk/UgtkApp-ui.c:183
-msgid "Sort"
-msgstr ""
-
-#: ../ui-gtk/UgtkApp-ui.c:195
+#: ../ui-gtk/UgtkApp-ui.c:184
 msgid "Create new download"
 msgstr "Cria novo download"
 
 #. New Download (accelerators)
 #. gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
 #. New Download
-#: ../ui-gtk/UgtkApp-ui.c:205
+#: ../ui-gtk/UgtkApp-ui.c:194
 #: ../ui-gtk/UgtkMenubar-ui.c:58
 #: ../ui-gtk/UgtkTrayIcon.c:59
 msgid "New _Download..."
 msgstr "Novo _download..."
 
 #. New Category
-#: ../ui-gtk/UgtkApp-ui.c:212
+#: ../ui-gtk/UgtkApp-ui.c:201
 #: ../ui-gtk/UgtkMenubar-ui.c:65
 msgid "New _Category..."
 msgstr "Nova _categoria..."
 
 #. New Clipboard batch
-#: ../ui-gtk/UgtkApp-ui.c:218
+#: ../ui-gtk/UgtkApp-ui.c:207
 #: ../ui-gtk/UgtkTrayIcon.c:66
 msgid "New Clipboard _batch..."
 msgstr "Novo _lote da área de transferência..."
 
 #. New URL Sequence batch
-#: ../ui-gtk/UgtkApp-ui.c:225
+#: ../ui-gtk/UgtkApp-ui.c:214
 msgid "New _URL Sequence batch..."
 msgstr "Novo lote de sequência de _URL..."
 
@@ -386,49 +381,49 @@ msgstr "Novo lote de sequência de _URL..."
 #. separator
 #. gtk_menu_shell_append ((GtkMenuShell*)submenu, gtk_separator_menu_item_new() );
 #. New Torrent
-#: ../ui-gtk/UgtkApp-ui.c:235
+#: ../ui-gtk/UgtkApp-ui.c:224
 #: ../ui-gtk/UgtkMenubar-ui.c:73
 #: ../ui-gtk/UgtkTrayIcon.c:75
 msgid "New Torrent..."
 msgstr "Novo torrent..."
 
 #. New Metalink
-#: ../ui-gtk/UgtkApp-ui.c:242
+#: ../ui-gtk/UgtkApp-ui.c:231
 #: ../ui-gtk/UgtkMenubar-ui.c:79
 #: ../ui-gtk/UgtkTrayIcon.c:82
 msgid "New Metalink..."
 msgstr "Novo metalink..."
 
-#: ../ui-gtk/UgtkApp-ui.c:251
+#: ../ui-gtk/UgtkApp-ui.c:240
 #, fuzzy
 msgid "Save all settings"
 msgstr "Configurações da categoria"
 
-#: ../ui-gtk/UgtkApp-ui.c:259
+#: ../ui-gtk/UgtkApp-ui.c:248
 msgid "Set selected download runnable"
 msgstr "Define o download selecionado como continuável"
 
-#: ../ui-gtk/UgtkApp-ui.c:264
+#: ../ui-gtk/UgtkApp-ui.c:253
 msgid "Set selected download to pause"
 msgstr "Define o download selecionado como pausado"
 
-#: ../ui-gtk/UgtkApp-ui.c:269
+#: ../ui-gtk/UgtkApp-ui.c:258
 msgid "Set selected download properties"
 msgstr "Define as propriedades do download selecionado"
 
-#: ../ui-gtk/UgtkApp-ui.c:277
+#: ../ui-gtk/UgtkApp-ui.c:266
 msgid "Move selected download up"
 msgstr "Move o download selecionado para cima"
 
-#: ../ui-gtk/UgtkApp-ui.c:282
+#: ../ui-gtk/UgtkApp-ui.c:271
 msgid "Move selected download down"
 msgstr "Move o download selecionado para baixo"
 
-#: ../ui-gtk/UgtkApp-ui.c:287
+#: ../ui-gtk/UgtkApp-ui.c:276
 msgid "Move selected download to top"
 msgstr "Move o download selecionado para o topo"
 
-#: ../ui-gtk/UgtkApp-ui.c:292
+#: ../ui-gtk/UgtkApp-ui.c:281
 msgid "Move selected download to bottom"
 msgstr "Move o download selecionado para canto inferior"
 
@@ -877,8 +872,8 @@ msgstr ""
 
 #. Completion Auto-Actions - Help
 #: ../ui-gtk/UgtkMenubar-ui.c:229
-#, fuzzy
-msgid "Help"
+#: ../ui-gtk/UgtkMenubar-ui.c:604
+msgid "_Help"
 msgstr "Aj_uda"
 
 #. --- Completion Auto-Actions --- end ---
@@ -1066,10 +1061,6 @@ msgstr "Normal"
 #: ../ui-gtk/UgtkMenubar-ui.c:586
 msgid "_Low"
 msgstr ""
-
-#: ../ui-gtk/UgtkMenubar-ui.c:604
-msgid "_Help"
-msgstr "Aj_uda"
 
 #. Get Help Online
 #: ../ui-gtk/UgtkMenubar-ui.c:609
@@ -1662,6 +1653,10 @@ msgstr "Mostrar janela"
 #: ../ui-gtk/UgtkTrayIcon.c:112
 msgid "_Offline Mode"
 msgstr "Modo _offline"
+
+#, fuzzy
+#~ msgid "Help"
+#~ msgstr "Aj_uda"
 
 #~ msgid "No plug-in support this scheme or file."
 #~ msgstr "Nenhum plug-in provê suporte a este esquema ou arquivo."

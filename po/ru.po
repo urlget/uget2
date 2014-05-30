@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-27 14:40+0800\n"
+"POT-Creation-Date: 2014-05-29 13:42+0800\n"
 "PO-Revision-Date: 2013-12-07 20:06+0000\n"
 "Last-Translator: uGet <michael@ugetdm.com>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/uget/language/"
@@ -99,7 +99,7 @@ msgstr ""
 
 #. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 #: ../uget/UgetEvent.c:86
-msgid "Incorrect source (different size)."
+msgid "Incorrect source (different file size)."
 msgstr ""
 
 #. UGET_EVENT_ERROR_INCORRECT_SOURCE,
@@ -349,38 +349,33 @@ msgstr "Статус"
 msgid "Category"
 msgstr "Категории"
 
-#. toolbar right side
-#: ../ui-gtk/UgtkApp-ui.c:183
-msgid "Sort"
-msgstr ""
-
-#: ../ui-gtk/UgtkApp-ui.c:195
+#: ../ui-gtk/UgtkApp-ui.c:184
 msgid "Create new download"
 msgstr "Создать новую закачку"
 
 #. New Download (accelerators)
 #. gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
 #. New Download
-#: ../ui-gtk/UgtkApp-ui.c:205
+#: ../ui-gtk/UgtkApp-ui.c:194
 #: ../ui-gtk/UgtkMenubar-ui.c:58
 #: ../ui-gtk/UgtkTrayIcon.c:59
 msgid "New _Download..."
 msgstr "Новая _закачка..."
 
 #. New Category
-#: ../ui-gtk/UgtkApp-ui.c:212
+#: ../ui-gtk/UgtkApp-ui.c:201
 #: ../ui-gtk/UgtkMenubar-ui.c:65
 msgid "New _Category..."
 msgstr "Новая _категория"
 
 #. New Clipboard batch
-#: ../ui-gtk/UgtkApp-ui.c:218
+#: ../ui-gtk/UgtkApp-ui.c:207
 #: ../ui-gtk/UgtkTrayIcon.c:66
 msgid "New Clipboard _batch..."
 msgstr "Новая _из буфера обмена"
 
 #. New URL Sequence batch
-#: ../ui-gtk/UgtkApp-ui.c:225
+#: ../ui-gtk/UgtkApp-ui.c:214
 msgid "New _URL Sequence batch..."
 msgstr "Новая закачка"
 
@@ -388,49 +383,49 @@ msgstr "Новая закачка"
 #. separator
 #. gtk_menu_shell_append ((GtkMenuShell*)submenu, gtk_separator_menu_item_new() );
 #. New Torrent
-#: ../ui-gtk/UgtkApp-ui.c:235
+#: ../ui-gtk/UgtkApp-ui.c:224
 #: ../ui-gtk/UgtkMenubar-ui.c:73
 #: ../ui-gtk/UgtkTrayIcon.c:75
 msgid "New Torrent..."
 msgstr "Новый торрент..."
 
 #. New Metalink
-#: ../ui-gtk/UgtkApp-ui.c:242
+#: ../ui-gtk/UgtkApp-ui.c:231
 #: ../ui-gtk/UgtkMenubar-ui.c:79
 #: ../ui-gtk/UgtkTrayIcon.c:82
 msgid "New Metalink..."
 msgstr "Новая мета-ссылка"
 
-#: ../ui-gtk/UgtkApp-ui.c:251
+#: ../ui-gtk/UgtkApp-ui.c:240
 #, fuzzy
 msgid "Save all settings"
 msgstr "Параметры категории"
 
-#: ../ui-gtk/UgtkApp-ui.c:259
+#: ../ui-gtk/UgtkApp-ui.c:248
 msgid "Set selected download runnable"
 msgstr "Установить выбранные закачки на исполнение"
 
-#: ../ui-gtk/UgtkApp-ui.c:264
+#: ../ui-gtk/UgtkApp-ui.c:253
 msgid "Set selected download to pause"
 msgstr "Установить выбранные закачки на паузу"
 
-#: ../ui-gtk/UgtkApp-ui.c:269
+#: ../ui-gtk/UgtkApp-ui.c:258
 msgid "Set selected download properties"
 msgstr "Настройки выбранных закачек"
 
-#: ../ui-gtk/UgtkApp-ui.c:277
+#: ../ui-gtk/UgtkApp-ui.c:266
 msgid "Move selected download up"
 msgstr "Поднять выбранное"
 
-#: ../ui-gtk/UgtkApp-ui.c:282
+#: ../ui-gtk/UgtkApp-ui.c:271
 msgid "Move selected download down"
 msgstr "Опустить выбранное"
 
-#: ../ui-gtk/UgtkApp-ui.c:287
+#: ../ui-gtk/UgtkApp-ui.c:276
 msgid "Move selected download to top"
 msgstr "Переместить выбранное вверх"
 
-#: ../ui-gtk/UgtkApp-ui.c:292
+#: ../ui-gtk/UgtkApp-ui.c:281
 msgid "Move selected download to bottom"
 msgstr "Переместить выбранное вниз"
 
@@ -877,8 +872,8 @@ msgstr ""
 
 #. Completion Auto-Actions - Help
 #: ../ui-gtk/UgtkMenubar-ui.c:229
-#, fuzzy
-msgid "Help"
+#: ../ui-gtk/UgtkMenubar-ui.c:604
+msgid "_Help"
 msgstr "_Справка"
 
 #. --- Completion Auto-Actions --- end ---
@@ -1066,10 +1061,6 @@ msgstr "Нормально"
 #: ../ui-gtk/UgtkMenubar-ui.c:586
 msgid "_Low"
 msgstr ""
-
-#: ../ui-gtk/UgtkMenubar-ui.c:604
-msgid "_Help"
-msgstr "_Справка"
 
 #. Get Help Online
 #: ../ui-gtk/UgtkMenubar-ui.c:609
@@ -1663,6 +1654,10 @@ msgstr "Показать окно"
 #: ../ui-gtk/UgtkTrayIcon.c:112
 msgid "_Offline Mode"
 msgstr "_Автономный режим"
+
+#, fuzzy
+#~ msgid "Help"
+#~ msgstr "_Справка"
 
 #~ msgid "No plug-in support this scheme or file."
 #~ msgstr "Нет приложения для поддержки этой схемы или файла."

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-27 14:40+0800\n"
+"POT-Creation-Date: 2014-05-29 13:42+0800\n"
 "PO-Revision-Date: 2013-12-08 06:49+0000\n"
 "Last-Translator: DrAcid <acidlabz@gmail.com>\n"
 "Language-Team: Georgian (Georgia) (http://www.transifex.com/projects/p/uget/"
@@ -102,7 +102,7 @@ msgstr "არხის გახსნა ვერ მოხერხდა, �
 
 #. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 #: ../uget/UgetEvent.c:86
-msgid "Incorrect source (different size)."
+msgid "Incorrect source (different file size)."
 msgstr ""
 
 #. UGET_EVENT_ERROR_INCORRECT_SOURCE,
@@ -350,38 +350,33 @@ msgstr "მდგომარეობა"
 msgid "Category"
 msgstr "კატეგორია"
 
-#. toolbar right side
-#: ../ui-gtk/UgtkApp-ui.c:183
-msgid "Sort"
-msgstr ""
-
-#: ../ui-gtk/UgtkApp-ui.c:195
+#: ../ui-gtk/UgtkApp-ui.c:184
 msgid "Create new download"
 msgstr "ახალი ჩამოტვირთვის შექმნა"
 
 #. New Download (accelerators)
 #. gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
 #. New Download
-#: ../ui-gtk/UgtkApp-ui.c:205
+#: ../ui-gtk/UgtkApp-ui.c:194
 #: ../ui-gtk/UgtkMenubar-ui.c:58
 #: ../ui-gtk/UgtkTrayIcon.c:59
 msgid "New _Download..."
 msgstr "ახალი _ჩამოტვირთვა..."
 
 #. New Category
-#: ../ui-gtk/UgtkApp-ui.c:212
+#: ../ui-gtk/UgtkApp-ui.c:201
 #: ../ui-gtk/UgtkMenubar-ui.c:65
 msgid "New _Category..."
 msgstr "ახალი _კატეგორია..."
 
 #. New Clipboard batch
-#: ../ui-gtk/UgtkApp-ui.c:218
+#: ../ui-gtk/UgtkApp-ui.c:207
 #: ../ui-gtk/UgtkTrayIcon.c:66
 msgid "New Clipboard _batch..."
 msgstr "ახალი ჯგუფი _ბუფერიდან..."
 
 #. New URL Sequence batch
-#: ../ui-gtk/UgtkApp-ui.c:225
+#: ../ui-gtk/UgtkApp-ui.c:214
 msgid "New _URL Sequence batch..."
 msgstr "ახალი _URL-თა მიმდევრობა..."
 
@@ -389,49 +384,49 @@ msgstr "ახალი _URL-თა მიმდევრობა..."
 #. separator
 #. gtk_menu_shell_append ((GtkMenuShell*)submenu, gtk_separator_menu_item_new() );
 #. New Torrent
-#: ../ui-gtk/UgtkApp-ui.c:235
+#: ../ui-gtk/UgtkApp-ui.c:224
 #: ../ui-gtk/UgtkMenubar-ui.c:73
 #: ../ui-gtk/UgtkTrayIcon.c:75
 msgid "New Torrent..."
 msgstr "ახალი ტორენტი..."
 
 #. New Metalink
-#: ../ui-gtk/UgtkApp-ui.c:242
+#: ../ui-gtk/UgtkApp-ui.c:231
 #: ../ui-gtk/UgtkMenubar-ui.c:79
 #: ../ui-gtk/UgtkTrayIcon.c:82
 msgid "New Metalink..."
 msgstr "ახალი მეტაბმული..."
 
-#: ../ui-gtk/UgtkApp-ui.c:251
+#: ../ui-gtk/UgtkApp-ui.c:240
 #, fuzzy
 msgid "Save all settings"
 msgstr "კატეგორიის მომართვა"
 
-#: ../ui-gtk/UgtkApp-ui.c:259
+#: ../ui-gtk/UgtkApp-ui.c:248
 msgid "Set selected download runnable"
 msgstr "არჩეული ჩამოტვირთვა გაშვებადია"
 
-#: ../ui-gtk/UgtkApp-ui.c:264
+#: ../ui-gtk/UgtkApp-ui.c:253
 msgid "Set selected download to pause"
 msgstr "არჩეული ჩამოტვირთვის შეჩერება"
 
-#: ../ui-gtk/UgtkApp-ui.c:269
+#: ../ui-gtk/UgtkApp-ui.c:258
 msgid "Set selected download properties"
 msgstr "არჩეული ჩამოტვირთვის თვისებები"
 
-#: ../ui-gtk/UgtkApp-ui.c:277
+#: ../ui-gtk/UgtkApp-ui.c:266
 msgid "Move selected download up"
 msgstr "არჩეული ჩამოტვირთვის ზემოთ წაწევა"
 
-#: ../ui-gtk/UgtkApp-ui.c:282
+#: ../ui-gtk/UgtkApp-ui.c:271
 msgid "Move selected download down"
 msgstr "არჩეული ჩამოტვირთვის ქვემოთ წაწევა"
 
-#: ../ui-gtk/UgtkApp-ui.c:287
+#: ../ui-gtk/UgtkApp-ui.c:276
 msgid "Move selected download to top"
 msgstr "არჩეული ჩამოტვირთვის თავში გადატანა"
 
-#: ../ui-gtk/UgtkApp-ui.c:292
+#: ../ui-gtk/UgtkApp-ui.c:281
 msgid "Move selected download to bottom"
 msgstr "არჩეული ჩამოტვირთვის ძირში გადატანა"
 
@@ -880,8 +875,8 @@ msgstr ""
 
 #. Completion Auto-Actions - Help
 #: ../ui-gtk/UgtkMenubar-ui.c:229
-#, fuzzy
-msgid "Help"
+#: ../ui-gtk/UgtkMenubar-ui.c:604
+msgid "_Help"
 msgstr "_დახმარება"
 
 #. --- Completion Auto-Actions --- end ---
@@ -1069,10 +1064,6 @@ msgstr "ჩვეულებრივი"
 #: ../ui-gtk/UgtkMenubar-ui.c:586
 msgid "_Low"
 msgstr ""
-
-#: ../ui-gtk/UgtkMenubar-ui.c:604
-msgid "_Help"
-msgstr "_დახმარება"
 
 #. Get Help Online
 #: ../ui-gtk/UgtkMenubar-ui.c:609
@@ -1664,6 +1655,10 @@ msgstr "ფანჯრის ჩვენება"
 #: ../ui-gtk/UgtkTrayIcon.c:112
 msgid "_Offline Mode"
 msgstr "_ხაზგარე რეჟიმი"
+
+#, fuzzy
+#~ msgid "Help"
+#~ msgstr "_დახმარება"
 
 #~ msgid "No plug-in support this scheme or file."
 #~ msgstr "არც ერთ დანამატს არ აქვს მოცემული სქემის ან ფაილის მხარდაჭერა."

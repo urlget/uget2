@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-27 14:40+0800\n"
+"POT-Creation-Date: 2014-05-29 13:42+0800\n"
 "PO-Revision-Date: 2013-12-17 17:18+0000\n"
 "Last-Translator: lordamit <lordamit.reg@outlook.com>\n"
 "Language-Team: Bengali (Bangladesh) (http://www.transifex.com/projects/p/"
@@ -100,7 +100,7 @@ msgstr "থ্রেড তৈরী করা সম্ভব নয়, ডাউ
 
 #. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 #: ../uget/UgetEvent.c:86
-msgid "Incorrect source (different size)."
+msgid "Incorrect source (different file size)."
 msgstr ""
 
 #. UGET_EVENT_ERROR_INCORRECT_SOURCE,
@@ -348,38 +348,33 @@ msgstr "অবস্থা"
 msgid "Category"
 msgstr "ক্যাটাগরি"
 
-#. toolbar right side
-#: ../ui-gtk/UgtkApp-ui.c:183
-msgid "Sort"
-msgstr ""
-
-#: ../ui-gtk/UgtkApp-ui.c:195
+#: ../ui-gtk/UgtkApp-ui.c:184
 msgid "Create new download"
 msgstr "নতুন ডাউনলোড তৈরী"
 
 #. New Download (accelerators)
 #. gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
 #. New Download
-#: ../ui-gtk/UgtkApp-ui.c:205
+#: ../ui-gtk/UgtkApp-ui.c:194
 #: ../ui-gtk/UgtkMenubar-ui.c:58
 #: ../ui-gtk/UgtkTrayIcon.c:59
 msgid "New _Download..."
 msgstr "নতুন ডাউনলোড... _D"
 
 #. New Category
-#: ../ui-gtk/UgtkApp-ui.c:212
+#: ../ui-gtk/UgtkApp-ui.c:201
 #: ../ui-gtk/UgtkMenubar-ui.c:65
 msgid "New _Category..."
 msgstr "নতুন ক্যাটাগরি... _C"
 
 #. New Clipboard batch
-#: ../ui-gtk/UgtkApp-ui.c:218
+#: ../ui-gtk/UgtkApp-ui.c:207
 #: ../ui-gtk/UgtkTrayIcon.c:66
 msgid "New Clipboard _batch..."
 msgstr "নতুন সাজানো ক্লিপবোর্ড... _b"
 
 #. New URL Sequence batch
-#: ../ui-gtk/UgtkApp-ui.c:225
+#: ../ui-gtk/UgtkApp-ui.c:214
 msgid "New _URL Sequence batch..."
 msgstr "নতুন _URL সাজানো ক্রম"
 
@@ -387,49 +382,49 @@ msgstr "নতুন _URL সাজানো ক্রম"
 #. separator
 #. gtk_menu_shell_append ((GtkMenuShell*)submenu, gtk_separator_menu_item_new() );
 #. New Torrent
-#: ../ui-gtk/UgtkApp-ui.c:235
+#: ../ui-gtk/UgtkApp-ui.c:224
 #: ../ui-gtk/UgtkMenubar-ui.c:73
 #: ../ui-gtk/UgtkTrayIcon.c:75
 msgid "New Torrent..."
 msgstr "নতুন টরেন্ট..."
 
 #. New Metalink
-#: ../ui-gtk/UgtkApp-ui.c:242
+#: ../ui-gtk/UgtkApp-ui.c:231
 #: ../ui-gtk/UgtkMenubar-ui.c:79
 #: ../ui-gtk/UgtkTrayIcon.c:82
 msgid "New Metalink..."
 msgstr "নতুন মেটালিঙ্ক..."
 
-#: ../ui-gtk/UgtkApp-ui.c:251
+#: ../ui-gtk/UgtkApp-ui.c:240
 #, fuzzy
 msgid "Save all settings"
 msgstr "ক্যাটাগরি সেটিংস"
 
-#: ../ui-gtk/UgtkApp-ui.c:259
+#: ../ui-gtk/UgtkApp-ui.c:248
 msgid "Set selected download runnable"
 msgstr "নির্বাচিত ডাউনলোড চালুর উপযোগী হিসেবে সেট করুন"
 
-#: ../ui-gtk/UgtkApp-ui.c:264
+#: ../ui-gtk/UgtkApp-ui.c:253
 msgid "Set selected download to pause"
 msgstr "নির্বাচিত ডাউনলোড বিরতির জন্য সেট করুন"
 
-#: ../ui-gtk/UgtkApp-ui.c:269
+#: ../ui-gtk/UgtkApp-ui.c:258
 msgid "Set selected download properties"
 msgstr "নির্বাচিত ডাউনলোডের বৈশিষ্ট্য দেখানোর জন্য সেট করুন"
 
-#: ../ui-gtk/UgtkApp-ui.c:277
+#: ../ui-gtk/UgtkApp-ui.c:266
 msgid "Move selected download up"
 msgstr "নির্বাচিত ডাউনলোড উপরে তুলুন"
 
-#: ../ui-gtk/UgtkApp-ui.c:282
+#: ../ui-gtk/UgtkApp-ui.c:271
 msgid "Move selected download down"
 msgstr "নির্বাচিত ডাউনলোড নিচে নামান"
 
-#: ../ui-gtk/UgtkApp-ui.c:287
+#: ../ui-gtk/UgtkApp-ui.c:276
 msgid "Move selected download to top"
 msgstr "নির্বাচিত ডাউনলোড সবার উপরে তুলুন"
 
-#: ../ui-gtk/UgtkApp-ui.c:292
+#: ../ui-gtk/UgtkApp-ui.c:281
 msgid "Move selected download to bottom"
 msgstr "নির্বাচিত ডাউনলোড সবার নিচে নামান"
 
@@ -876,8 +871,8 @@ msgstr ""
 
 #. Completion Auto-Actions - Help
 #: ../ui-gtk/UgtkMenubar-ui.c:229
-#, fuzzy
-msgid "Help"
+#: ../ui-gtk/UgtkMenubar-ui.c:604
+msgid "_Help"
 msgstr "সাহায্য_H"
 
 #. --- Completion Auto-Actions --- end ---
@@ -1065,10 +1060,6 @@ msgstr "স্বাভাবিক"
 #: ../ui-gtk/UgtkMenubar-ui.c:586
 msgid "_Low"
 msgstr ""
-
-#: ../ui-gtk/UgtkMenubar-ui.c:604
-msgid "_Help"
-msgstr "সাহায্য_H"
 
 #. Get Help Online
 #: ../ui-gtk/UgtkMenubar-ui.c:609
@@ -1660,6 +1651,10 @@ msgstr "উইন্ডো প্রদর্শন"
 #: ../ui-gtk/UgtkTrayIcon.c:112
 msgid "_Offline Mode"
 msgstr "অফলাইন মোড _O"
+
+#, fuzzy
+#~ msgid "Help"
+#~ msgstr "সাহায্য_H"
 
 #~ msgid "No plug-in support this scheme or file."
 #~ msgstr "এই স্কিম বা ফাইলকে সমর্থন করে এরূপ কোন প্লাগইন নেই।"

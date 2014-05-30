@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-27 14:40+0800\n"
+"POT-Creation-Date: 2014-05-29 13:42+0800\n"
 "PO-Revision-Date: 2009-09-17 13:33+0800\n"
 "Last-Translator: lh<jason AT gamil.com>\n"
 "Language-Team: \n"
@@ -141,7 +141,8 @@ msgstr "aria2: 未找到资源。"
 msgid ""
 "aria2 saw the specfied number of 'resource not found' error. See --max-file-"
 "not-found option"
-msgstr "aria2 看到了“资源未找到”错误达到指定的数量。请看参数 --max-file-not-found"
+msgstr ""
+"aria2 看到了“资源未找到”错误达到指定的数量。请看参数 --max-file-not-found"
 
 #: ../uget/UgetPluginAria2.c:275
 msgid "aria2: speed was too slow."
@@ -337,33 +338,33 @@ msgstr "状态"
 msgid "Category"
 msgstr "分类"
 
-#: ../ui-gtk/UgtkApp-ui.c:195
+#: ../ui-gtk/UgtkApp-ui.c:184
 msgid "Create new download"
 msgstr "新增下载"
 
 #. New Download (accelerators)
 #. gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
 #. New Download
-#: ../ui-gtk/UgtkApp-ui.c:205
+#: ../ui-gtk/UgtkApp-ui.c:194
 #: ../ui-gtk/UgtkMenubar-ui.c:58
 #: ../ui-gtk/UgtkTrayIcon.c:59
 msgid "New _Download..."
 msgstr "新下载(_D)..."
 
 #. New Category
-#: ../ui-gtk/UgtkApp-ui.c:212
+#: ../ui-gtk/UgtkApp-ui.c:201
 #: ../ui-gtk/UgtkMenubar-ui.c:65
 msgid "New _Category..."
 msgstr "新增分类(_C)..."
 
 #. New Clipboard batch
-#: ../ui-gtk/UgtkApp-ui.c:218
+#: ../ui-gtk/UgtkApp-ui.c:207
 #: ../ui-gtk/UgtkTrayIcon.c:66
 msgid "New Clipboard _batch..."
 msgstr "剪切板批量下载(_B)..."
 
 #. New URL Sequence batch
-#: ../ui-gtk/UgtkApp-ui.c:225
+#: ../ui-gtk/UgtkApp-ui.c:214
 msgid "New _URL Sequence batch..."
 msgstr "新增 _URL 序列下载..."
 
@@ -371,48 +372,48 @@ msgstr "新增 _URL 序列下载..."
 #. separator
 #. gtk_menu_shell_append ((GtkMenuShell*)submenu, gtk_separator_menu_item_new() );
 #. New Torrent
-#: ../ui-gtk/UgtkApp-ui.c:235
+#: ../ui-gtk/UgtkApp-ui.c:224
 #: ../ui-gtk/UgtkMenubar-ui.c:73
 #: ../ui-gtk/UgtkTrayIcon.c:75
 msgid "New Torrent..."
 msgstr "新增 Torrent..."
 
 #. New Metalink
-#: ../ui-gtk/UgtkApp-ui.c:242
+#: ../ui-gtk/UgtkApp-ui.c:231
 #: ../ui-gtk/UgtkMenubar-ui.c:79
 #: ../ui-gtk/UgtkTrayIcon.c:82
 msgid "New Metalink..."
 msgstr "新增 Metalink..."
 
-#: ../ui-gtk/UgtkApp-ui.c:251
+#: ../ui-gtk/UgtkApp-ui.c:240
 msgid "Save all settings"
 msgstr "保存所有设置"
 
-#: ../ui-gtk/UgtkApp-ui.c:259
+#: ../ui-gtk/UgtkApp-ui.c:248
 msgid "Set selected download runnable"
 msgstr "设置选定的下载可运行"
 
-#: ../ui-gtk/UgtkApp-ui.c:264
+#: ../ui-gtk/UgtkApp-ui.c:253
 msgid "Set selected download to pause"
 msgstr "暂停选中的下载"
 
-#: ../ui-gtk/UgtkApp-ui.c:269
+#: ../ui-gtk/UgtkApp-ui.c:258
 msgid "Set selected download properties"
 msgstr "设置选中的下载"
 
-#: ../ui-gtk/UgtkApp-ui.c:277
+#: ../ui-gtk/UgtkApp-ui.c:266
 msgid "Move selected download up"
 msgstr "上移选中的下载"
 
-#: ../ui-gtk/UgtkApp-ui.c:282
+#: ../ui-gtk/UgtkApp-ui.c:271
 msgid "Move selected download down"
 msgstr "下移选中的下载"
 
-#: ../ui-gtk/UgtkApp-ui.c:287
+#: ../ui-gtk/UgtkApp-ui.c:276
 msgid "Move selected download to top"
 msgstr "移动选中的下载到顶部"
 
-#: ../ui-gtk/UgtkApp-ui.c:292
+#: ../ui-gtk/UgtkApp-ui.c:281
 msgid "Move selected download to bottom"
 msgstr "移动选中的下载到底部"
 
@@ -822,7 +823,7 @@ msgstr "完成自动操作"
 #. Completion Auto-Actions - Disable
 #: ../ui-gtk/UgtkMenubar-ui.c:200
 msgid "_Disable"
-msgstr "关闭(_D)"
+msgstr "禁用(_D)"
 
 #: ../ui-gtk/UgtkMenubar-ui.c:205
 msgid "Hibernate"
@@ -843,6 +844,12 @@ msgstr "重启"
 #: ../ui-gtk/UgtkMenubar-ui.c:225
 msgid "Custom"
 msgstr "习俗"
+
+#. Completion Auto-Actions - Help
+#: ../ui-gtk/UgtkMenubar-ui.c:229
+#: ../ui-gtk/UgtkMenubar-ui.c:604
+msgid "_Help"
+msgstr "说明(_H)"
 
 #. --- Completion Auto-Actions --- end ---
 #. menu_item = gtk_menu_item_new_with_mnemonic (_("_Settings..."));
@@ -1026,10 +1033,6 @@ msgstr "正常(_N)"
 #: ../ui-gtk/UgtkMenubar-ui.c:586
 msgid "_Low"
 msgstr "低(_L)"
-
-#: ../ui-gtk/UgtkMenubar-ui.c:604
-msgid "_Help"
-msgstr "说明(_H)"
 
 #. Get Help Online
 #: ../ui-gtk/UgtkMenubar-ui.c:609
