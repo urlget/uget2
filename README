@@ -1,3 +1,6 @@
+uGet 1.97.1:
+1. curl plug-in: change SSL cipher and restore default SSL version.
+
 uGet 1.97:
 1. Refresh download status when user enable/disable scheduler.
 2. change SSL cipher list to avoid "SSLv3 alert handshake failure".
