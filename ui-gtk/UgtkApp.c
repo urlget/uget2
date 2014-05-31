@@ -69,7 +69,9 @@ void  ugtk_app_init (UgtkApp* app, UgetIpc* ipc)
 		ugtk_app_add_default_category (app);
 	// clipboard
 	ugtk_clipboard_init (&app->clipboard, app->setting.clipboard.pattern);
-
+	// plugin initialize
+	uget_plugin_set (UgetPluginCurlInfo,  UGET_PLUGIN_INIT, (void*) TRUE);
+	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) TRUE);
 	// apply UgtkSetting
 	ugtk_app_set_plugin_setting (app, &app->setting);
 	ugtk_app_set_window_setting (app, &app->setting);
@@ -100,6 +102,9 @@ void  ugtk_app_final (UgtkApp* app)
 
 	uget_rss_final (&app->rss_buildin);
 	uget_app_final ((UgetApp*) app);
+	// plugin finalize
+	uget_plugin_set (UgetPluginCurlInfo,  UGET_PLUGIN_INIT, (void*) FALSE);
+	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) FALSE);
 }
 
 void  ugtk_app_save (UgtkApp* app)
@@ -807,6 +812,7 @@ void  ugtk_app_queue_download (UgtkApp* app)
 	}
 	g_list_free (list);
 	// refresh other data & status
+	gtk_widget_queue_draw ((GtkWidget*) app->traveler.download.view);
 	gtk_widget_queue_draw ((GtkWidget*) app->traveler.category.view);
 	gtk_widget_queue_draw ((GtkWidget*) app->traveler.state.view);
 //	ugtk_summary_show (&app->summary, app->traveler.download.cursor.node);
@@ -833,6 +839,7 @@ void  ugtk_app_pause_download (UgtkApp* app)
 	}
 	g_list_free (list);
 	// refresh other data & status
+	gtk_widget_queue_draw ((GtkWidget*) app->traveler.download.view);
 	gtk_widget_queue_draw ((GtkWidget*) app->traveler.category.view);
 	gtk_widget_queue_draw ((GtkWidget*) app->traveler.state.view);
 //	ugtk_summary_show (&app->summary, app->traveler.download.cursor.node);
@@ -864,6 +871,7 @@ void  ugtk_app_switch_download_state (UgtkApp* app)
 	}
 	g_list_free (list);
 	// refresh other data & status
+	gtk_widget_queue_draw ((GtkWidget*) app->traveler.download.view);
 	gtk_widget_queue_draw ((GtkWidget*) app->traveler.category.view);
 	gtk_widget_queue_draw ((GtkWidget*) app->traveler.state.view);
 //	ugtk_summary_show (&app->summary, app->traveler.download.cursor.node);

@@ -160,6 +160,12 @@ static gboolean  ugtk_app_decide_schedule_state (UgtkApp* app)
 		}
 	}
 
+	if (changed) {
+		// refresh other data & status
+		gtk_widget_queue_draw ((GtkWidget*) app->traveler.download.view);
+		gtk_widget_queue_draw ((GtkWidget*) app->traveler.category.view);
+		gtk_widget_queue_draw ((GtkWidget*) app->traveler.state.view);
+	}
 	return changed;
 }
 
@@ -270,6 +276,7 @@ static gboolean  ugtk_app_timeout_queuing (UgtkApp* app)
 
 	if (app->n_moved > 0) {
 		// refresh other data & status
+		gtk_widget_queue_draw ((GtkWidget*) app->traveler.download.view);
 		gtk_widget_queue_draw ((GtkWidget*) app->traveler.category.view);
 		gtk_widget_queue_draw ((GtkWidget*) app->traveler.state.view);
 	}

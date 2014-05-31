@@ -815,6 +815,7 @@ int   uget_app_queue_download (UgetApp* app, UgetNode* dnode)
 
 	if ((dnode->state & (UGET_STATE_ACTIVE | UGET_STATE_UNRUNNABLE)) == 0)
 		return FALSE;
+	uget_task_remove (&app->task, dnode);
 
 	if (dnode->state & UGET_STATE_QUEUING)
 		dnode->state = UGET_STATE_QUEUING;
