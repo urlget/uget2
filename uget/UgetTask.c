@@ -273,7 +273,7 @@ static void uget_task_adjust_speed_index (UgetTask* task, int idx, int remain)
 {
 	UgSLink*       link;
 	UgetNode*      node;
-	UgetRelation*  relation;
+	UgetRelation*  relation = NULL;
 	UgetRelation*  prev = NULL;
 	int            n_piece = 0;
 
