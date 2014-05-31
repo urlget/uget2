@@ -1,6 +1,6 @@
 uGet 1.97:
 1. Refresh download status when user enable/disable scheduler.
-2. change SSL_CIPHER_LIST to avoid "SSLv3 alert handshake failure".
+2. change SSL cipher list to avoid "SSLv3 alert handshake failure".
 3. Remove some duplicate strings.
 4. Update translation files.
 
