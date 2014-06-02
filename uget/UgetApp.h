@@ -94,7 +94,7 @@ void  uget_app_init (UgetApp* app);
 void  uget_app_final (UgetApp* app);
 
 // uget_app_grow() return number of active download
-int   uget_app_grow (UgetApp* app);
+int   uget_app_grow (UgetApp* app, int no_queuing);
 void  uget_app_set_config_dir (UgetApp* app, const char* dir);
 void  uget_app_set_sorting (UgetApp* app, UgCompareFunc func, int reversed);
 void  uget_app_set_notification (UgetApp* app, void* data,

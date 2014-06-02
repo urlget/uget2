@@ -65,6 +65,7 @@ static void on_offline_mode (GtkWidget* widget, UgtkApp* app)
 	if (app->setting.offline_mode) {
 		for (cnode = app->real.children;  cnode;  cnode = cnode->next)
 			uget_app_stop_category ((UgetApp*)app, cnode);
+		app->user_action = TRUE;
 	}
 }
 

@@ -270,7 +270,7 @@ void  start_app (UgetApp* app)
 
 	uget_app_add_download (app, dnode, NULL, FALSE);
 	puts ("uget_app_grow()");
-	while (uget_app_grow (app)) {
+	while (uget_app_grow (app, FALSE)) {
 		ug_sleep (1000);
 		string[0] = ug_str_from_int_unit (app->task.speed.download, "/s");
 		string[1] = ug_str_from_int_unit (app->task.speed.upload, "/s");
@@ -281,7 +281,7 @@ void  start_app (UgetApp* app)
 	puts ("uget_app_grow() return 0");
 
 	puts ("call uget_app_grow() again");
-	uget_app_grow (app);
+	uget_app_grow (app, FALSE);
 }
 
 void  close_app (UgetApp* app)

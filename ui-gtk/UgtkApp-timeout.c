@@ -146,6 +146,8 @@ static gboolean  ugtk_app_decide_schedule_state (UgtkApp* app)
 		case UGTK_SCHEDULE_TURN_OFF:
 			for (cnode = app->real.children;  cnode;  cnode = cnode->next)
 				uget_app_stop_category ((UgetApp*)app, cnode);
+			// Don't notify anything
+			app->user_action = TRUE;
 			break;
 
 		case UGTK_SCHEDULE_LIMITED_SPEED:
@@ -174,17 +176,14 @@ static gboolean  ugtk_app_timeout_queuing (UgtkApp* app)
 	static int  n_counts = 0;
 	static int  n_active_prev = 0;
 	int         n_active;
+	int         no_queuing = FALSE;
 	gchar*      string;
 
 	ugtk_app_decide_schedule_state (app);
 	if (app->setting.offline_mode ||
 	    app->schedule_state == UGTK_SCHEDULE_TURN_OFF)
 	{
-		// reset counter
-		app->n_error = 0;
-		app->n_completed = 0;
-		n_active_prev = 0;
-		return TRUE;
+		no_queuing = TRUE;
 	}
 
 	// if current status is "All" or "Active"
@@ -194,7 +193,7 @@ static gboolean  ugtk_app_timeout_queuing (UgtkApp* app)
 		ugtk_traveler_reserve_selection (&app->traveler);
 	}
 
-	n_active = uget_app_grow ((UgetApp*) app);
+	n_active = uget_app_grow ((UgetApp*) app, no_queuing);
 	if (n_active != n_active_prev) {
 		// start downloading
 		if (n_active > 0 && n_active_prev == 0) {

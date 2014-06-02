@@ -1,3 +1,6 @@
+uGet 1.99:
+1. "Force start" can work with Scheduler and Offline mode.
+
 uGet 1.97.1:
 1. curl plug-in: change SSL cipher and restore default SSL version.
 
@@ -67,5 +70,5 @@ Part 4. GTK+ User interface:
 Part 5. Future version: (After uGet 2.0)
 1. Database for Downloaded URIs
 2. RSS Monitor
-3. Scheduler Per Category
+3. Every Category has its Scheduler.
 

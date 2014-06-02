@@ -210,7 +210,7 @@ static void uget_app_queuing (UgetApp* app, UgetNode* cnode, UgetCategory* categ
 }
 
 // return number of active download
-int  uget_app_grow (UgetApp* app)
+int  uget_app_grow (UgetApp* app, int no_queuing)
 {
 	UgetCategory*  category;
 	UgetNode*      cnode;
@@ -225,7 +225,8 @@ int  uget_app_grow (UgetApp* app)
 		if (category == NULL)
 			continue;
 		uget_app_activate (app, cnode, category);
-		uget_app_queuing (app, cnode, category);
+		if (no_queuing == FALSE)
+			uget_app_queuing (app, cnode, category);
 		while (category->finished->n_children > category->finished_limit) {
 			dnode = category->finished->last->real;
 			uget_uri_hash_remove_download (app->uri_hash, dnode);
