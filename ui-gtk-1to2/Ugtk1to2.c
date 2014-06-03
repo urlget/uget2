@@ -175,6 +175,9 @@ static void ugtk_setting_set_by_v1 (UgtkSetting* setting, UgSetting* setting1)
 		glink->data = NULL;
 		ug_list_append (&setting->folder_history, ulink);
 	}
+
+	// completion
+	setting->completion.remember = TRUE;
 }
 
 static void uget_node_set_by_dataset (UgetNode* node, UgDataset* dataset)

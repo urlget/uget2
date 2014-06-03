@@ -94,6 +94,8 @@ struct UgtkMenubar
 			GtkWidget*  shutdown;
 			GtkWidget*  reboot;
 			GtkWidget*  custom;
+			// separator
+			GtkWidget*  remember;
 			GtkWidget*  help;
 		} completion;
 	} edit;

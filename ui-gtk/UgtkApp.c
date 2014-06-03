@@ -384,6 +384,9 @@ void  ugtk_app_set_menu_setting (UgtkApp* app, UgtkSetting* setting)
 				(GtkCheckMenuItem*)app->menubar.edit.completion.custom, TRUE);
 		break;
 	}
+	gtk_check_menu_item_set_active (
+			(GtkCheckMenuItem*) app->menubar.edit.completion.remember,
+			setting->completion.remember);
 	// ----------------------------------------------------
 	// UgtkViewMenu
 	gtk_check_menu_item_set_active (

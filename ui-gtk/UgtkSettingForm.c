@@ -328,13 +328,6 @@ void  ugtk_completion_form_init (struct UgtkCompletionForm* csform)
 
 	hbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_box_pack_start (vbox, (GtkWidget*) hbox, FALSE, FALSE, 1);
-	widget = gtk_check_button_new_with_mnemonic (
-			_("Remember Completion setting in menu"));
-	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 0);
-	csform->store = (GtkToggleButton*) widget;
-
-	hbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-	gtk_box_pack_start (vbox, (GtkWidget*) hbox, FALSE, FALSE, 1);
 	widget = gtk_label_new (_("Custom command:"));
 	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 0);
 
@@ -358,8 +351,6 @@ void  ugtk_completion_form_init (struct UgtkCompletionForm* csform)
 
 void  ugtk_completion_form_set (struct UgtkCompletionForm* csform, UgtkSetting* setting)
 {
-	gtk_toggle_button_set_active (csform->store, setting->completion.store);
-
 	if (setting->completion.command)
 		gtk_entry_set_text (csform->command, setting->completion.command);
 	if (setting->completion.on_error)
@@ -368,8 +359,6 @@ void  ugtk_completion_form_set (struct UgtkCompletionForm* csform, UgtkSetting* 
 
 void  ugtk_completion_form_get (struct UgtkCompletionForm* csform, UgtkSetting* setting)
 {
-	setting->completion.store = gtk_toggle_button_get_active (csform->store);
-
 	ug_free (setting->completion.command);
 	setting->completion.command = ug_strdup (gtk_entry_get_text (csform->command));
 	ug_free (setting->completion.on_error);
@@ -717,5 +706,5 @@ static void remove_line_breaks (gchar* buffer, gint len)
 	while ( (cur = strchr (cur, '\n')) ) {
 		memmove (cur, cur + 1, end - cur);
 		end--;
-	}	
+	}
 }

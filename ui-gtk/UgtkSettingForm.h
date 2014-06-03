@@ -111,9 +111,8 @@ struct UgtkCompletionForm
 {
 	GtkWidget*  self;
 
-	GtkToggleButton*  store;
-	GtkEntry*         command;
-	GtkEntry*         on_error;
+	GtkEntry*   command;
+	GtkEntry*   on_error;
 };
 
 void  ugtk_completion_form_init (struct UgtkCompletionForm* csform);

@@ -205,7 +205,7 @@ struct UgtkSetting
 
 	// Completion Auto-Actions
 	struct UgtkCompletionSetting {
-		int    store;
+		int    remember;
 		int    action;
 		char*  command;
 		char*  on_error;

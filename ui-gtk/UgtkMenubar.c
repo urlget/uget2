@@ -119,6 +119,14 @@ static void on_config_completion (GtkWidget* widget, UgtkApp* app)
 		app->setting.completion.action = 5;
 }
 
+static void  on_config_completion_remember (GtkWidget* widget, UgtkApp* app)
+{
+	gboolean  remember;
+
+	remember = gtk_check_menu_item_get_active ((GtkCheckMenuItem*) widget);
+	app->setting.completion.remember = remember;
+}
+
 static void on_config_completion_help (GtkWidget* widget, UgtkApp* app)
 {
 	ugtk_launch_uri ("http://ugetdm.com/documentation/on-complete");
@@ -653,6 +661,8 @@ void ugtk_menubar_init_callback (UgtkMenubar* menubar, UgtkApp* app)
 			G_CALLBACK (on_config_completion), app);
 	g_signal_connect (menubar->edit.completion.custom, "activate",
 			G_CALLBACK (on_config_completion), app);
+	g_signal_connect (menubar->edit.completion.remember, "activate",
+			G_CALLBACK (on_config_completion_remember), app);
 	g_signal_connect (menubar->edit.completion.help, "activate",
 			G_CALLBACK (on_config_completion_help), app);
 	g_signal_connect (menubar->edit.settings, "activate",

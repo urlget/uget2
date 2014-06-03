@@ -188,7 +188,7 @@ static void ugtk_menubar_edit_init (UgtkMenubar* menubar)
 	gtk_menu_shell_append ((GtkMenuShell*)menu, menu_item);
 	menubar->edit.skip_existing = menu_item;
 
-	gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_separator_menu_item_new() );
+	gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_separator_menu_item_new());
 
 	// --- Completion Auto-Actions --- start ---
 	menu_item = gtk_image_menu_item_new_with_mnemonic (_("Completion _Auto-Actions"));
@@ -225,6 +225,12 @@ static void ugtk_menubar_edit_init (UgtkMenubar* menubar)
 			(GtkRadioMenuItem*) menu_item, _("Custom"));
 	gtk_menu_shell_append ((GtkMenuShell*)submenu, menu_item);
 	menubar->edit.completion.custom = menu_item;
+	// separator
+	gtk_menu_shell_append ((GtkMenuShell*)submenu, gtk_separator_menu_item_new());
+	// Completion Auto-Actions - Remember
+	menu_item = gtk_check_menu_item_new_with_mnemonic (_("Remember setting"));
+	gtk_menu_shell_append ((GtkMenuShell*)submenu, menu_item);
+	menubar->edit.completion.remember = menu_item;
 	// Completion Auto-Actions - Help
 	menu_item = gtk_menu_item_new_with_mnemonic (_("_Help"));
 	gtk_menu_shell_append ((GtkMenuShell*)submenu, menu_item);

@@ -262,7 +262,7 @@ static const UgEntry  UgtkPluginAria2SettingEntry[] =
 
 static const UgEntry  UgtkCompletionSettingEntry[] =
 {
-	{"store",     offsetof (struct UgtkCompletionSetting, store),
+	{"remember",  offsetof (struct UgtkCompletionSetting, remember),
 			UG_ENTRY_BOOL,  NULL,   NULL},
 	{"action",    offsetof (struct UgtkCompletionSetting, action),
 			UG_ENTRY_INT,   NULL,   NULL},
@@ -424,7 +424,7 @@ void  ugtk_setting_reset (UgtkSetting* setting)
 	setting->aria2.uri  = ug_strdup ("http://localhost:6800/jsonrpc");
 
 	// Others
-	setting->completion.store = FALSE;
+	setting->completion.remember = TRUE;
 	setting->completion.action = 0;
 	setting->completion.command = NULL;
 	setting->completion.on_error = NULL;
@@ -453,7 +453,7 @@ int  ugtk_setting_save (UgtkSetting* setting, const char* file)
 
 	// save completion.action
 	action = setting->completion.action;
-	if (setting->completion.store == FALSE)
+	if (setting->completion.remember == FALSE)
 		setting->completion.action = 0;
 
 	ug_json_write_object_head (&jfile->json);
@@ -461,7 +461,7 @@ int  ugtk_setting_save (UgtkSetting* setting, const char* file)
 	ug_json_write_object_tail (&jfile->json);
 
 	// restore completion.action
-	if (setting->completion.store == FALSE)
+	if (setting->completion.remember == FALSE)
 		setting->completion.action = action;
 
 	ug_json_file_end_write (jfile);
