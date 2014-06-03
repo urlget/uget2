@@ -61,7 +61,7 @@ void  ugtk_app_init (UgtkApp* app, UgetIpc* ipc)
 	uget_app_set_config_dir ((UgetApp*) app, dir);
 	g_free (dir);
 
-	uget_rss_init (&app->rss_buildin);
+	app->rss_buildin = uget_rss_new ();
 	ugtk_app_load (app);
 	ugtk_app_init_ui (app);
 	ugtk_app_init_callback (app);
@@ -85,10 +85,10 @@ void  ugtk_app_init (UgtkApp* app, UgetIpc* ipc)
 	app->last.category_index = 0;
 	app->last.infonode = uget_node_new (NULL);
 	// RSS
-	uget_rss_add_buildin (&app->rss_buildin, UGET_RSS_STABLE);
-	uget_rss_add_buildin (&app->rss_buildin, UGET_RSS_NEWS);
-	uget_rss_add_buildin (&app->rss_buildin, UGET_RSS_TUTORIALS);
-	uget_rss_update (&app->rss_buildin, FALSE);
+	uget_rss_add_buildin (app->rss_buildin, UGET_RSS_STABLE);
+	uget_rss_add_buildin (app->rss_buildin, UGET_RSS_NEWS);
+	uget_rss_add_buildin (app->rss_buildin, UGET_RSS_TUTORIALS);
+	uget_rss_update (app->rss_buildin, FALSE);
 	gtk_widget_hide (app->banner.self);
 
 	uget_app_use_uri_hash ((UgetApp*) app);
@@ -100,7 +100,7 @@ void  ugtk_app_final (UgtkApp* app)
 {
 	uget_app_set_notification ((UgetApp*) app, NULL, NULL, NULL, NULL);
 
-	uget_rss_final (&app->rss_buildin);
+	uget_rss_unref (app->rss_buildin);
 	uget_app_final ((UgetApp*) app);
 	// plugin finalize
 	uget_plugin_set (UgetPluginCurlInfo,  UGET_PLUGIN_INIT, (void*) FALSE);
@@ -119,7 +119,7 @@ void  ugtk_app_save (UgtkApp* app)
 
 	// RSS
 	file = g_build_filename (app->config_dir, "RSS-build-in.json", NULL);
-	uget_rss_save_feeds (&app->rss_buildin, file);
+	uget_rss_save_feeds (app->rss_buildin, file);
 	g_free (file);
 
 //	uget_app_save_categories ((UgetApp*) app, g_get_user_config_dir ());
@@ -145,7 +145,7 @@ void  ugtk_app_load (UgtkApp* app)
 
 	// RSS
 	file = g_build_filename (app->config_dir, "RSS-build-in.json", NULL);
-	uget_rss_load_feeds (&app->rss_buildin, file);
+	uget_rss_load_feeds (app->rss_buildin, file);
 	g_free (file);
 
 //	uget_app_load_categories ((UgetApp*) app, g_get_user_config_dir ());

@@ -273,28 +273,26 @@ UgetRss*  uget_rss_new (void)
 	UgetRss*  urss;
 
 	urss = ug_malloc (sizeof (UgetRss));
-	uget_rss_init (urss);
-	return urss;
-}
-
-void  uget_rss_free (UgetRss* urss)
-{
-	uget_rss_final (urss);
-	ug_free (urss);
-}
-
-void  uget_rss_init (UgetRss* urss)
-{
 	ug_html_init (&urss->uhtml);
 	ug_list_init (&urss->feeds);
 	urss->checked = NULL;
 	urss->updating = FALSE;
+	urss->ref_count = 1;
+	return urss;
 }
 
-void  uget_rss_final (UgetRss* urss)
+void  uget_rss_ref (UgetRss* urss)
 {
-	ug_html_final (&urss->uhtml);
-	ug_list_foreach (&urss->feeds, (UgForeachFunc) uget_rss_feed_free, NULL);
+	urss->ref_count++;
+}
+
+void  uget_rss_unref (UgetRss* urss)
+{
+	if (--urss->ref_count == 0) {
+		ug_html_final (&urss->uhtml);
+		ug_list_foreach (&urss->feeds, (UgForeachFunc) uget_rss_feed_free, NULL);
+		ug_free (urss);
+	}
 }
 
 void  uget_rss_add (UgetRss* urss, UgetRssFeed* feed)
@@ -416,6 +414,7 @@ static UG_THREAD_RETURN_TYPE  uget_rss_thread (UgetRss* urss)
 	curl_easy_cleanup (curl);
 
 	urss->updating = FALSE;
+	uget_rss_unref (urss);
 	return UG_THREAD_RETURN_VALUE;
 }
 
@@ -426,6 +425,7 @@ void  uget_rss_update (UgetRss* urss, int joinable)
 
 	urss->n_updated = 0;
 	urss->updating = TRUE;
+	uget_rss_ref (urss);
 	ug_thread_create (&urss->thread, (UgThreadFunc) uget_rss_thread, urss);
 	if (joinable == FALSE)
 		ug_thread_unjoin (&urss->thread);

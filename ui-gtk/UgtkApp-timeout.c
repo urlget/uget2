@@ -565,7 +565,7 @@ exit:
 
 static gboolean  ugtk_app_timeout_rss_update (UgtkApp* app)
 {
-	uget_rss_update (&app->rss_buildin, FALSE);
+	uget_rss_update (app->rss_buildin, FALSE);
 	// check RSS ready every 3 seconds
 	g_timeout_add_seconds_full (G_PRIORITY_DEFAULT_IDLE, 3,
 			(GSourceFunc) ugtk_app_timeout_rss, app, NULL);
@@ -575,10 +575,10 @@ static gboolean  ugtk_app_timeout_rss_update (UgtkApp* app)
 
 static gboolean  ugtk_app_timeout_rss (UgtkApp* app)
 {
-	if (app->rss_buildin.updating == FALSE) {
-		if (app->rss_buildin.n_updated > 0) {
-			ugtk_banner_show_rss (&app->banner, &app->rss_buildin);
-			app->rss_buildin.n_updated = 0;
+	if (app->rss_buildin->updating == FALSE) {
+		if (app->rss_buildin->n_updated > 0) {
+			ugtk_banner_show_rss (&app->banner, app->rss_buildin);
+			app->rss_buildin->n_updated = 0;
 		}
 		// update RSS every 30 minutes
 		g_timeout_add_seconds_full (G_PRIORITY_DEFAULT_IDLE, 60 * 30,

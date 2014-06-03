@@ -118,13 +118,12 @@ struct UgetRss
 	UgetRssFeed* checked;
 	uint8_t      updating;
 	int          n_updated;
+	int          ref_count;
 };
 
 UgetRss*  uget_rss_new (void);
-void      uget_rss_free (UgetRss* urss);
-
-void  uget_rss_init (UgetRss* urss);
-void  uget_rss_final (UgetRss* urss);
+void      uget_rss_ref (UgetRss* urss);
+void      uget_rss_unref (UgetRss* urss);
 
 void  uget_rss_add (UgetRss* urss, UgetRssFeed* feed);
 void  uget_rss_add_url (UgetRss* urss, const char* url);

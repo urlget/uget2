@@ -395,7 +395,7 @@ void test_uget_rss (void)
 	if (item)
 		printf ("title %s\n", item->title);
 
-	uget_rss_free (urss);
+	uget_rss_unref (urss);
 }
 
 // ----------------------------------------------------------------------------
