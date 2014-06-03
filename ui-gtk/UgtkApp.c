@@ -98,11 +98,19 @@ void  ugtk_app_init (UgtkApp* app, UgetIpc* ipc)
 
 void  ugtk_app_final (UgtkApp* app)
 {
+	int  shutdown_now;
+
 	uget_app_set_notification ((UgetApp*) app, NULL, NULL, NULL, NULL);
 
+	if (app->setting.plugin_order >= UGTK_PLUGIN_ORDER_ARIA2)
+		shutdown_now = app->setting.aria2.shutdown;
+	else
+		shutdown_now = FALSE;
 	uget_rss_unref (app->rss_buildin);
 	uget_app_final ((UgetApp*) app);
 	// plugin finalize
+	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_ARIA2_SHUTDOWN_NOW,
+			(void*)(intptr_t) shutdown_now);
 	uget_plugin_set (UgetPluginCurlInfo,  UGET_PLUGIN_INIT, (void*) FALSE);
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) FALSE);
 }
