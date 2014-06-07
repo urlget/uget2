@@ -368,7 +368,7 @@ void  uget_curl_set_common (UgetCurl* ugcurl, UgetCommon* common)
 //	curl_easy_setopt (curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_DEFAULT);
 //	curl_easy_setopt (curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_SSLv3);
 //	curl_easy_setopt (curl, CURLOPT_SSL_CIPHER_LIST, "ALL:!aNULL:!LOW:!EXPORT:!SSLv2");
-	curl_easy_setopt (curl, CURLOPT_SSL_CIPHER_LIST, "ALL");
+//	curl_easy_setopt (curl, CURLOPT_SSL_CIPHER_LIST, "ALL");
 //	curl_easy_setopt (curl, CURLOPT_SSL_CIPHER_LIST, "SSLv3");
 
 	// low speed limit for unstable network
