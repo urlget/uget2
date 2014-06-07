@@ -1,5 +1,9 @@
 uGet 1.99:
-1. "Force start" can work with Scheduler and Offline mode.
+1. Remove speed limit option in download property. Use global speed limit to replace it.
+2. "Force start" can work with Scheduler and Offline mode.
+3. Force shutdown aria2 on exit even if aria2 tasks running.
+4. Fix: Program crashes on exit.
+5. restore SSL cipher list to default value.
 
 uGet 1.97.1:
 1. curl plug-in: change SSL cipher and restore default SSL version.
