@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-03 09:36+0800\n"
+"POT-Creation-Date: 2014-06-09 16:11+0800\n"
 "PO-Revision-Date: 2013-12-17 17:18+0000\n"
 "Last-Translator: lordamit <lordamit.reg@outlook.com>\n"
 "Language-Team: Bengali (Bangladesh) (http://www.transifex.com/projects/p/"
@@ -58,12 +58,12 @@ msgid "Resumable"
 msgstr "পুনরায় আরম্ভযোগ্য"
 
 #. UGET_EVENT_NORMAL_RESUMABLE,
-#: ../../po/../uget/UgetEvent.c:65 ../../po/../uget/UgetPluginAria2.c:278
+#: ../../po/../uget/UgetEvent.c:65 ../../po/../uget/UgetPluginAria2.c:279
 msgid "Not Resumable"
 msgstr "পুনরয়ায় আরম্ভযোগ্য নয়"
 
 #. UGET_EVENT_WARNING_CUSTOM
-#: ../../po/../uget/UgetEvent.c:73 ../../po/../uget/UgetPluginAria2.c:285
+#: ../../po/../uget/UgetEvent.c:73 ../../po/../uget/UgetPluginAria2.c:286
 msgid "Output file can't be renamed."
 msgstr "আউটপুট ফাইল পুনরায় নামকরন করা যাবে না।"
 
@@ -73,7 +73,7 @@ msgid "couldn't connect to host."
 msgstr "হোস্টের সাথে যুক্ত হতে ব্যর্থ।"
 
 #. UGET_EVENT_ERROR_CONNECT_FAILED
-#: ../../po/../uget/UgetEvent.c:82 ../../po/../uget/UgetPluginAria2.c:289
+#: ../../po/../uget/UgetEvent.c:82 ../../po/../uget/UgetPluginAria2.c:290
 msgid "Folder can't be created."
 msgstr "ফোল্ডার তৈরী করা সম্ভব নয়।"
 
@@ -129,131 +129,131 @@ msgid "Unsupported file."
 msgstr "অসর্মথিত ফাইল।"
 
 #. 1 - 10
-#: ../../po/../uget/UgetPluginAria2.c:271
+#: ../../po/../uget/UgetPluginAria2.c:272
 msgid "aria2: an unknown error occurred."
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:272
+#: ../../po/../uget/UgetPluginAria2.c:273
 msgid "aria2: time out occurred."
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:273
+#: ../../po/../uget/UgetPluginAria2.c:274
 msgid "aria2: resource was not found."
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:274
+#: ../../po/../uget/UgetPluginAria2.c:275
 msgid ""
 "aria2 saw the specfied number of 'resource not found' error. See --max-file-"
 "not-found option"
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:275
+#: ../../po/../uget/UgetPluginAria2.c:276
 msgid "aria2: speed was too slow."
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:276
+#: ../../po/../uget/UgetPluginAria2.c:277
 msgid "aria2: network problem occurred."
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:277
+#: ../../po/../uget/UgetPluginAria2.c:278
 msgid "aria2: unfinished downloads."
 msgstr ""
 
 #. _("Not Resumable"),
-#: ../../po/../uget/UgetPluginAria2.c:279
+#: ../../po/../uget/UgetPluginAria2.c:280
 msgid "Out of resource"
 msgstr ""
 
 #. _(),
-#: ../../po/../uget/UgetPluginAria2.c:280
+#: ../../po/../uget/UgetPluginAria2.c:281
 msgid "aria2: piece length was different from one in .aria2 control file."
 msgstr ""
 
 #. 11 - 20
-#: ../../po/../uget/UgetPluginAria2.c:282
+#: ../../po/../uget/UgetPluginAria2.c:283
 msgid "aria2 was downloading same file."
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:283
+#: ../../po/../uget/UgetPluginAria2.c:284
 msgid "aria2 was downloading same info hash torrent."
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:284
+#: ../../po/../uget/UgetPluginAria2.c:285
 msgid "aria2: file already existed. See --allow-overwrite option."
 msgstr ""
 
 #. _("Output file can't be renamed."),
-#: ../../po/../uget/UgetPluginAria2.c:286
+#: ../../po/../uget/UgetPluginAria2.c:287
 #, fuzzy
 msgid "aria2: could not open existing file."
 msgstr "পোস্টকৃত ফাইল খুলতে ব্যর্থ।"
 
-#: ../../po/../uget/UgetPluginAria2.c:287
+#: ../../po/../uget/UgetPluginAria2.c:288
 msgid "aria2: could not create new file or truncate existing file."
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:288
+#: ../../po/../uget/UgetPluginAria2.c:289
 msgid "aria2: file I/O error occurred."
 msgstr ""
 
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
-#: ../../po/../uget/UgetPluginAria2.c:290
+#: ../../po/../uget/UgetPluginAria2.c:291
 msgid "aria2: name resolution failed."
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:291
+#: ../../po/../uget/UgetPluginAria2.c:292
 msgid "aria2: could not parse Metalink document."
 msgstr ""
 
 #. 21 - 30
-#: ../../po/../uget/UgetPluginAria2.c:293
+#: ../../po/../uget/UgetPluginAria2.c:294
 msgid "aria2: FTP command failed."
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:294
+#: ../../po/../uget/UgetPluginAria2.c:295
 msgid "aria2: HTTP response header was bad or unexpected."
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:295
+#: ../../po/../uget/UgetPluginAria2.c:296
 msgid "Too many redirections."
 msgstr "অনেক বেশী পুনঃনির্দেশ।"
 
-#: ../../po/../uget/UgetPluginAria2.c:296
+#: ../../po/../uget/UgetPluginAria2.c:297
 msgid "aria2: HTTP authorization failed."
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:297
+#: ../../po/../uget/UgetPluginAria2.c:298
 msgid "aria2: could not parse bencoded file(usually .torrent file)."
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:298
+#: ../../po/../uget/UgetPluginAria2.c:299
 msgid "aria2: torrent file was corrupted or missing information."
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:299
+#: ../../po/../uget/UgetPluginAria2.c:300
 msgid "aria2: Magnet URI was bad."
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:300
+#: ../../po/../uget/UgetPluginAria2.c:301
 msgid ""
 "aria2: bad/unrecognized option was given or unexpected option argument was "
 "given."
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:301
+#: ../../po/../uget/UgetPluginAria2.c:302
 msgid "aria2: remote server was unable to handle the request."
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:302
+#: ../../po/../uget/UgetPluginAria2.c:303
 msgid "aria2: could not parse JSON-RPC request."
 msgstr ""
 
-#: ../../po/../uget/UgetPluginAria2.c:305
+#: ../../po/../uget/UgetPluginAria2.c:306
 msgid "No response. Is aria2 shutdown?"
 msgstr ""
 
 #. debug
-#: ../../po/../uget/UgetPluginAria2.c:607
+#: ../../po/../uget/UgetPluginAria2.c:608
 msgid "aria2: gid was removed."
 msgstr ""
 
@@ -282,11 +282,11 @@ msgstr "কাজসমূহ"
 msgid "New from Clipboard"
 msgstr "ক্লিপবোর্ড থেকে নতুন"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:376 ../../po/../ui-gtk/UgtkApp.c:649
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:376 ../../po/../ui-gtk/UgtkApp.c:662
 msgid "New Download"
 msgstr "নতুন ডাউনলোড"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:399 ../../po/../ui-gtk/UgtkApp.c:1398
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:399 ../../po/../ui-gtk/UgtkApp.c:1411
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:103
 msgid "Clipboard"
 msgstr "ক্লিপবোর্ড"
@@ -414,115 +414,115 @@ msgstr "নির্বাচিত ডাউনলোড সবার উপর
 msgid "Move selected download to bottom"
 msgstr "নির্বাচিত ডাউনলোড সবার নিচে নামান"
 
-#: ../../po/../ui-gtk/UgtkApp.c:621
+#: ../../po/../ui-gtk/UgtkApp.c:634
 msgid "New Category"
 msgstr "নতুন ক্যাটাগরি"
 
-#: ../../po/../ui-gtk/UgtkApp.c:632
+#: ../../po/../ui-gtk/UgtkApp.c:645
 msgid "Copy - "
 msgstr "কপি"
 
-#: ../../po/../ui-gtk/UgtkApp.c:770
+#: ../../po/../ui-gtk/UgtkApp.c:783
 msgid "Category Properties"
 msgstr "ক্যাটাগরি বৈশিষ্ট্য"
 
-#: ../../po/../ui-gtk/UgtkApp.c:784
+#: ../../po/../ui-gtk/UgtkApp.c:797
 msgid "Download Properties"
 msgstr "ডাউনলোড বৈশিষ্ট্য"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1015
+#: ../../po/../ui-gtk/UgtkApp.c:1028
 msgid "New Torrent"
 msgstr "নতুন টরেন্ট"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1031
+#: ../../po/../ui-gtk/UgtkApp.c:1044
 msgid "New Metalink"
 msgstr "নতুন মেটালিংক"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1040
+#: ../../po/../ui-gtk/UgtkApp.c:1053
 msgid "Open Torrent file"
 msgstr "টরেন্ট ফাইল খুলুন"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1056
+#: ../../po/../ui-gtk/UgtkApp.c:1069
 msgid "Open Metalink file"
 msgstr "মেটালিংক ফাইল খুলুন"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1096
+#: ../../po/../ui-gtk/UgtkApp.c:1109
 #, fuzzy
 msgid "Failed to save category file."
 msgstr "পোস্টকৃত ফাইল খুলতে ব্যর্থ।"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1116
+#: ../../po/../ui-gtk/UgtkApp.c:1129
 #, fuzzy
 msgid "Failed to load category file."
 msgstr "পোস্টকৃত ফাইল খুলতে ব্যর্থ।"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1127
+#: ../../po/../ui-gtk/UgtkApp.c:1140
 #, fuzzy
 msgid "Save Category file"
 msgstr "নতুন ক্যাটাগরি"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1145
+#: ../../po/../ui-gtk/UgtkApp.c:1158
 #, fuzzy
 msgid "Open Category file"
 msgstr "টরেন্ট ফাইল খুলুন"
 
 #. add link
-#: ../../po/../ui-gtk/UgtkApp.c:1204
+#: ../../po/../ui-gtk/UgtkApp.c:1217
 msgid "Link <A>"
 msgstr "লিংক <A>"
 
 #. add image
-#: ../../po/../ui-gtk/UgtkApp.c:1209
+#: ../../po/../ui-gtk/UgtkApp.c:1222
 msgid "Image <IMG>"
 msgstr "ছবি <IMG>"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1254
+#: ../../po/../ui-gtk/UgtkApp.c:1267
 msgid "Text File"
 msgstr "টেক্সট ফাইল"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1301
+#: ../../po/../ui-gtk/UgtkApp.c:1314
 msgid "Import URLs from HTML file"
 msgstr "HTML ফাইল থেকে URL ইমপোর্ট"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1316
+#: ../../po/../ui-gtk/UgtkApp.c:1329
 msgid "Import URLs from text file"
 msgstr "টেক্সট ফাইল থেকে URL ইমপোর্ট"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1331
+#: ../../po/../ui-gtk/UgtkApp.c:1344
 #, fuzzy
 msgid "Export URLs to text file"
 msgstr "টেক্সট ফাইল থেকে URL ইমপোর্ট"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1350
+#: ../../po/../ui-gtk/UgtkApp.c:1363
 msgid "URL Sequence batch"
 msgstr "ক্রমানুসারে সাজানো URL "
 
-#: ../../po/../ui-gtk/UgtkApp.c:1377
+#: ../../po/../ui-gtk/UgtkApp.c:1390
 msgid "No URLs found in clipboard."
 msgstr "ক্লিপবোর্ডে কোন ইউআরএল পাওয়া যায়নি"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1386
+#: ../../po/../ui-gtk/UgtkApp.c:1399
 msgid "All URLs had existed."
 msgstr ""
 
-#: ../../po/../ui-gtk/UgtkApp.c:1391
+#: ../../po/../ui-gtk/UgtkApp.c:1404
 msgid "Clipboard batch"
 msgstr "সাজানো ক্লিপবোর্ড"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1481
+#: ../../po/../ui-gtk/UgtkApp.c:1494
 msgid "New"
 msgstr ""
 
-#: ../../po/../ui-gtk/UgtkApp.c:1600 ../../po/../ui-gtk/UgtkMenubar.c:374
-#: ../../po/../ui-gtk/UgtkMenubar.c:406 ../../po/../ui-gtk/UgtkNodeView.c:609
+#: ../../po/../ui-gtk/UgtkApp.c:1613 ../../po/../ui-gtk/UgtkMenubar.c:383
+#: ../../po/../ui-gtk/UgtkMenubar.c:415 ../../po/../ui-gtk/UgtkNodeView.c:609
 msgid "Error"
 msgstr "ত্রুটি"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1608 ../../po/../ui-gtk/UgtkSummary.c:184
+#: ../../po/../ui-gtk/UgtkApp.c:1621 ../../po/../ui-gtk/UgtkSummary.c:184
 msgid "Message"
 msgstr "বার্তা"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1714
+#: ../../po/../ui-gtk/UgtkApp.c:1727
 #, c-format
 msgid "Selected %d items"
 msgstr "%d সংখ্যক বস্তু নির্বাচিত"
@@ -582,23 +582,33 @@ msgstr ""
 msgid "Matched _Types:"
 msgstr ""
 
-#: ../../po/../ui-gtk/UgtkConfirmDialog.c:62
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:64
 msgid "Really Quit?"
 msgstr "আসলেই প্রস্থান করবেন?"
 
-#: ../../po/../ui-gtk/UgtkConfirmDialog.c:63
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:65
 msgid "Are you sure you want to quit?"
 msgstr "আপনি কি নিশ্চিত যে আপনি প্রস্থান করতে চান?"
 
-#: ../../po/../ui-gtk/UgtkConfirmDialog.c:67
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:69
 msgid "Really delete files?"
 msgstr "আসলেই ফাইলগুলো মুছতে চান?"
 
-#: ../../po/../ui-gtk/UgtkConfirmDialog.c:68
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:70
 msgid "Are you sure you want to delete files?"
 msgstr "আপনি কি নিশ্চিত আপনি ফাইলগুলো মুছতে চান?"
 
-#: ../../po/../ui-gtk/UgtkConfirmDialog.c:99
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:74
+#, fuzzy
+msgid "Really delete category?"
+msgstr "আসলেই ফাইলগুলো মুছতে চান?"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:75
+#, fuzzy
+msgid "Are you sure you want to delete category?"
+msgstr "আপনি কি নিশ্চিত আপনি ফাইলগুলো মুছতে চান?"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:106
 #, fuzzy
 msgid "Don't ask me again"
 msgstr "পুনরায় আমাকে জিজ্ঞাসা করবেন না"
@@ -621,7 +631,7 @@ msgid "File:"
 msgstr "ফাইল:"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:159
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:889
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:893
 msgid "Select Folder"
 msgstr "ফোল্ডার নির্বাচন"
 
@@ -676,7 +686,7 @@ msgid "Cookie file:"
 msgstr "কুকি ফাইল:"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:302
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:945
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:949
 msgid "Select Cookie File"
 msgstr "কুকি ফাইল সিলেক্ট করুন"
 
@@ -686,7 +696,7 @@ msgid "Post file:"
 msgstr "ফাইল পোস্ট:"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:323
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:1001
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:1005
 msgid "Select Post File"
 msgstr "পোস্ট ফাইল নির্বাচন:"
 
@@ -1088,12 +1098,12 @@ msgstr "আপডেট চেক করুন"
 msgid "Settings"
 msgstr "সেটিং"
 
-#: ../../po/../ui-gtk/UgtkMenubar.c:368
+#: ../../po/../ui-gtk/UgtkMenubar.c:377
 #, c-format
 msgid "Can't launch default application for file '%s'."
 msgstr "'%s' এর জন্য ডিফল্ট এপ্লিকেশন পাওয়া যায়নি"
 
-#: ../../po/../ui-gtk/UgtkMenubar.c:400
+#: ../../po/../ui-gtk/UgtkMenubar.c:409
 #, c-format
 msgid "'%s' - This folder does not exist."
 msgstr "'%s' - এই ফোল্ডারটি নেই"
