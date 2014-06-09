@@ -463,13 +463,13 @@ void  uget_app_delete_category (UgetApp* app, UgetNode* cnode)
 
 		ug_unlink (path1);
 		if (ug_rename (path2, path1) == -1) {
-			free(path1);
-			free(path2);
+			ug_free (path1);
+			ug_free (path2);
 			break;
 		}
 
-		free(path1);
-		free(path2);
+		ug_free (path1);
+		ug_free (path2);
 	}
 
 	ug_free (path_base);
