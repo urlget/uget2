@@ -125,7 +125,7 @@ static void ugtk_window_init_ui (struct UgtkWindow* window, UgtkApp* app)
 	gtk_paned_pack2 (window->vpaned, app->summary.self, FALSE, TRUE);
 
 	gtk_box_pack_start (vbox, GTK_WIDGET (app->statusbar.self), FALSE, FALSE, 0);
-	gtk_widget_show_all ((GtkWidget*) window->self);
+	gtk_widget_show_all ((GtkWidget*) vbox);
 }
 
 // ----------------------------------------------------------------------------

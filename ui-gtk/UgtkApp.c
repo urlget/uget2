@@ -94,6 +94,11 @@ void  ugtk_app_init (UgtkApp* app, UgetIpc* ipc)
 	uget_app_use_uri_hash ((UgetApp*) app);
 	ugtk_app_clear_attachment (app);
 	ugtk_app_init_timeout (app);
+
+	if (app->setting.ui.start_in_tray)
+		ugtk_tray_icon_set_visible (&app->trayicon, TRUE);
+	else
+		gtk_widget_show ((GtkWidget*) app->window.self);
 }
 
 void  ugtk_app_final (UgtkApp* app)
