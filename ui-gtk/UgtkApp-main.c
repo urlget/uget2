@@ -237,8 +237,10 @@ int  main (int argc, char** argv)
 		return EXIT_SUCCESS;
 	}
 	ipc = uget_ipc_new ();
-	if (uget_ipc_server_start (ipc))
-		uget_ipc_server_add (ipc, argc-1, argv+1);
+	if (uget_ipc_server_start (ipc)) {
+		if (argc > 1)
+			uget_ipc_server_add (ipc, argc-1, argv+1);
+	}
 	else if (uget_ipc_client_send (ipc, argc-1, argv+1) == TRUE) {
 		uget_ipc_free (ipc);
 		return EXIT_SUCCESS;
