@@ -47,6 +47,7 @@ extern "C" {
 typedef enum {
 	UGTK_CONFIRM_DIALOG_EXIT,
 	UGTK_CONFIRM_DIALOG_DELETE,
+	UGTK_CONFIRM_DIALOG_DELETE_CATEGORY,
 } UgtkConfirmDialogMode;
 
 typedef struct UgtkConfirmDialog        UgtkConfirmDialog;

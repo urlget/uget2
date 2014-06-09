@@ -117,6 +117,7 @@ struct UgtkApp
 		GtkWidget*     message;
 		GtkWidget*     exit_confirmation;
 		GtkWidget*     delete_confirmation;
+		GtkWidget*     delete_category_confirmation;
 		GtkWidget*     setting;
 	} dialogs;
 

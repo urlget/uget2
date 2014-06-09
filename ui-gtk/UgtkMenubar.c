@@ -328,10 +328,19 @@ static void on_move_category_down (GtkWidget* widget, UgtkApp* app)
 	gtk_widget_queue_draw ((GtkWidget*) app->traveler.category.view);
 }
 
+static void on_delete_category (GtkWidget* widget, UgtkApp* app)
+{
+	UgtkConfirmDialog*  cdialog;
+
+	// confirm to delete category
+	cdialog = ugtk_confirm_dialog_new (UGTK_CONFIRM_DIALOG_DELETE_CATEGORY, app);
+	ugtk_confirm_dialog_run (cdialog);
+}
+
 // ----------------------------------------------------------------------------
 // UgtkDownloadMenu
 
-static void on_delete_download(GtkWidget* widget, UgtkApp* app)
+static void on_delete_download (GtkWidget* widget, UgtkApp* app)
 {
 	ugtk_app_delete_download (app, FALSE);
 }
@@ -723,8 +732,8 @@ void ugtk_menubar_init_callback (UgtkMenubar* menubar, UgtkApp* app)
 	// UgtkCategoryMenu
 	g_signal_connect_swapped (menubar->category.create, "activate",
 			G_CALLBACK (ugtk_app_create_category), app);
-	g_signal_connect_swapped (menubar->category.delete, "activate",
-			G_CALLBACK (ugtk_app_delete_category), app);
+	g_signal_connect (menubar->category.delete, "activate",
+			G_CALLBACK (on_delete_category), app);
 	g_signal_connect_swapped (menubar->category.properties, "activate",
 			G_CALLBACK (ugtk_app_edit_category), app);
 	g_signal_connect (menubar->category.move_up, "activate",

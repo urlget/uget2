@@ -39,10 +39,12 @@
 #include <glib/gi18n.h>
 
 // response
-static void on_confirm_to_delete_response (GtkWidget* dialog, gint response,
-                                           UgtkConfirmDialog* cdialog);
 static void on_confirm_to_exit_response (GtkWidget* dialog, gint response,
                                          UgtkConfirmDialog* cdialog);
+static void on_confirm_to_delete_response (GtkWidget* dialog, gint response,
+                                           UgtkConfirmDialog* cdialog);
+static void on_confirm_to_delete_category_response (GtkWidget* dialog, gint response,
+                                                    UgtkConfirmDialog* cdialog);
 
 UgtkConfirmDialog*  ugtk_confirm_dialog_new (UgtkConfirmDialogMode mode, UgtkApp* app)
 {
@@ -66,6 +68,11 @@ UgtkConfirmDialog*  ugtk_confirm_dialog_new (UgtkConfirmDialogMode mode, UgtkApp
 	case UGTK_CONFIRM_DIALOG_DELETE:
 		title = _("Really delete files?");
 		label = _("Are you sure you want to delete files?");
+		break;
+
+	case UGTK_CONFIRM_DIALOG_DELETE_CATEGORY:
+		title = _("Really delete category?");
+		label = _("Are you sure you want to delete category?");
 		break;
 
 	default:
@@ -100,18 +107,27 @@ UgtkConfirmDialog*  ugtk_confirm_dialog_new (UgtkConfirmDialogMode mode, UgtkApp
 	gtk_box_pack_end (hbox, button, TRUE, TRUE, 20);
 	gtk_box_pack_end (vbox, (GtkWidget*) hbox, FALSE, FALSE, 10);
 	cdialog->confirmation = (GtkToggleButton*) button;
+	//
+	gtk_widget_show_all ((GtkWidget*) vbox);
 
 	switch (mode) {
+	case UGTK_CONFIRM_DIALOG_EXIT:
+		app->dialogs.exit_confirmation = (GtkWidget*) cdialog->self;
+		g_signal_connect (cdialog->self, "response",
+				G_CALLBACK (on_confirm_to_exit_response), cdialog);
+		break;
+
 	case UGTK_CONFIRM_DIALOG_DELETE:
 		app->dialogs.delete_confirmation = (GtkWidget*) cdialog->self;
 		g_signal_connect (cdialog->self, "response",
 				G_CALLBACK (on_confirm_to_delete_response), cdialog);
 		break;
 
-	case UGTK_CONFIRM_DIALOG_EXIT:
-		app->dialogs.exit_confirmation = (GtkWidget*) cdialog->self;
+	case UGTK_CONFIRM_DIALOG_DELETE_CATEGORY:
+		app->dialogs.delete_category_confirmation = (GtkWidget*) cdialog->self;
+		gtk_widget_hide ((GtkWidget*) cdialog->confirmation);
 		g_signal_connect (cdialog->self, "response",
-				G_CALLBACK (on_confirm_to_exit_response), cdialog);
+				G_CALLBACK (on_confirm_to_delete_category_response), cdialog);
 		break;
 
 	default:
@@ -120,7 +136,6 @@ UgtkConfirmDialog*  ugtk_confirm_dialog_new (UgtkConfirmDialogMode mode, UgtkApp
 		break;
 	}
 
-	gtk_widget_show_all ((GtkWidget*) cdialog->self);
 	return cdialog;
 }
 
@@ -136,7 +151,25 @@ void  ugtk_confirm_dialog_run (UgtkConfirmDialog* cdialog)
 
 	app = cdialog->app;
 	gtk_widget_set_sensitive ((GtkWidget*) app->window.self, FALSE);
-	gtk_widget_show_all ((GtkWidget*) cdialog->self);
+	gtk_widget_show ((GtkWidget*) cdialog->self);
+}
+
+static void on_confirm_to_exit_response (GtkWidget* dialog, gint response,
+                                         UgtkConfirmDialog* cdialog)
+{
+	UgtkApp*  app;
+
+	app = cdialog->app;
+	app->dialogs.exit_confirmation = NULL;
+	if (response == GTK_RESPONSE_YES) {
+		if (gtk_toggle_button_get_active (cdialog->confirmation) == FALSE)
+			app->setting.ui.exit_confirmation = TRUE;
+		else
+			app->setting.ui.exit_confirmation = FALSE;
+		ugtk_app_quit (app);
+	}
+	gtk_widget_set_sensitive ((GtkWidget*) app->window.self, TRUE);
+	ugtk_confirm_dialog_free (cdialog);
 }
 
 static void on_confirm_to_delete_response (GtkWidget* dialog, gint response,
@@ -157,19 +190,19 @@ static void on_confirm_to_delete_response (GtkWidget* dialog, gint response,
 	ugtk_confirm_dialog_free (cdialog);
 }
 
-static void on_confirm_to_exit_response (GtkWidget* dialog, gint response,
-                                         UgtkConfirmDialog* cdialog)
+static void on_confirm_to_delete_category_response (GtkWidget* dialog, gint response,
+                                                    UgtkConfirmDialog* cdialog)
 {
 	UgtkApp*  app;
 
 	app = cdialog->app;
-	app->dialogs.exit_confirmation = NULL;
+	app->dialogs.delete_category_confirmation = NULL;
 	if (response == GTK_RESPONSE_YES) {
-		if (gtk_toggle_button_get_active (cdialog->confirmation) == FALSE)
-			app->setting.ui.exit_confirmation = TRUE;
-		else
-			app->setting.ui.exit_confirmation = FALSE;
-		ugtk_app_quit (app);
+//		if (gtk_toggle_button_get_active (cdialog->confirmation) == FALSE)
+//			app->setting.ui.delete_category_confirmation = TRUE;
+//		else
+//			app->setting.ui.delete_category_confirmation = FALSE;
+		ugtk_app_delete_category (app);
 	}
 	gtk_widget_set_sensitive ((GtkWidget*) app->window.self, TRUE);
 	ugtk_confirm_dialog_free (cdialog);
