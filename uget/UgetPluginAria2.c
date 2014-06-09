@@ -63,6 +63,7 @@ static gboolean	uget_plugin_aria2_set_proxy_pwmd (UgetPluginAria2 *plugin, UgVal
 
 #ifdef HAVE_GLIB
 #include <glib/gi18n.h>
+#undef  printf
 #else
 #define N_(x)   x
 #define  _(x)   x
