@@ -1,3 +1,7 @@
+uGet 1.99.1:
+1. "Start in tray" is workable now.
+2. Show confirm dialog when user delete category.
+
 uGet 1.99:
 1. Remove speed limit option in download property. Use global speed limit to replace it.
 2. "Force start" can work with Scheduler and Offline mode.
@@ -75,4 +79,4 @@ Part 5. Future version: (After uGet 2.0)
 1. Database for Downloaded URIs
 2. RSS Monitor
 3. Every Category has its Scheduler.
-
+4. Show file list in torrent
