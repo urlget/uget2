@@ -308,8 +308,8 @@ static const UgEntry  UgtkSettingEntry[] =
 			UG_ENTRY_INT,    NULL,  NULL},
 	{"AutoSaveInterval",offsetof (UgtkSetting, auto_save.interval),
 			UG_ENTRY_INT,    NULL,  NULL},
-	{"OfflineMode",     offsetof (UgtkSetting, offline_mode),
-			UG_ENTRY_BOOL,   NULL,  NULL},
+//	{"OfflineMode",     offsetof (UgtkSetting, offline_mode),
+//			UG_ENTRY_BOOL,   NULL,  NULL},
 
 	{"Scheduler",       offsetof (UgtkSetting, scheduler),
 			UG_ENTRY_OBJECT, (void*) UgtkSchedulerSettingEntry,   NULL},

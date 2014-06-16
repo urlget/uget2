@@ -347,7 +347,18 @@ static void  on_config_settings (GtkWidget* widget, UgtkApp* app)
 
 static void  on_offline_mode (GtkWidget* widget, UgtkApp* app)
 {
-	g_signal_emit_by_name (app->menubar.file.offline_mode, "activate");
+	gboolean  offline;
+
+	offline = gtk_check_menu_item_get_active ((GtkCheckMenuItem*) widget);
+	app->setting.offline_mode = offline;
+	// file menu
+	offline = gtk_check_menu_item_get_active (
+			(GtkCheckMenuItem*) app->menubar.file.offline_mode);
+	if (offline != app->setting.offline_mode) {
+		gtk_check_menu_item_set_active (
+				(GtkCheckMenuItem*) app->menubar.file.offline_mode,
+				app->setting.offline_mode);
+	}
 }
 
 static void  on_about (GtkWidget* widget, UgtkApp* app)

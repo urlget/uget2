@@ -58,9 +58,18 @@ static void on_create_download (GtkWidget* widget, UgtkApp* app)
 static void on_offline_mode (GtkWidget* widget, UgtkApp* app)
 {
 	UgetNode* cnode;
+	gboolean  offline;
 
-	app->setting.offline_mode = gtk_check_menu_item_get_active (
-			(GtkCheckMenuItem*) app->menubar.file.offline_mode);
+	offline = gtk_check_menu_item_get_active ((GtkCheckMenuItem*) widget);
+	app->setting.offline_mode = offline;
+	// trayicon menu
+	offline = gtk_check_menu_item_get_active (
+			(GtkCheckMenuItem*) app->trayicon.menu.offline_mode);
+	if (offline != app->setting.offline_mode) {
+		gtk_check_menu_item_set_active (
+				(GtkCheckMenuItem*) app->trayicon.menu.offline_mode,
+				app->setting.offline_mode);
+	}
 
 	if (app->setting.offline_mode) {
 		for (cnode = app->real.children;  cnode;  cnode = cnode->next)

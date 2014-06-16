@@ -99,6 +99,9 @@ void  ugtk_app_init (UgtkApp* app, UgetIpc* ipc)
 		ugtk_tray_icon_set_visible (&app->trayicon, TRUE);
 	else
 		gtk_widget_show ((GtkWidget*) app->window.self);
+	// offline
+	if (app->setting.ui.start_in_offline_mode)
+		g_signal_emit_by_name (app->menubar.file.offline_mode, "activate");
 }
 
 void  ugtk_app_final (UgtkApp* app)
