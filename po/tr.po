@@ -1543,7 +1543,7 @@ msgid "Custom command if error occured:"
 msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:388
-msgid "_Auto save"
+msgid "_Autosave"
 msgstr "Otom_atik kaydetme"
 
 #. auto save spin & label (interval)

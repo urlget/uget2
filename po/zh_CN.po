@@ -1498,7 +1498,7 @@ msgid "Custom command if error occured:"
 msgstr "发生错误时自定義命令"
 
 #: ../ui-gtk/UgtkSettingForm.c:388
-msgid "_Auto save"
+msgid "_Autosave"
 msgstr "自动保存(_A)"
 
 #. auto save spin & label (interval)

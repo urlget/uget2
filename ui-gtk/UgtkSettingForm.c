@@ -385,7 +385,7 @@ void  ugtk_auto_save_form_init (struct UgtkAutoSaveForm* asform)
 
 	asform->self = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	hbox = (GtkBox*) asform->self;
-	widget = gtk_check_button_new_with_mnemonic (_("_Auto save"));
+	widget = gtk_check_button_new_with_mnemonic (_("_Autosave"));
 	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 0);
 	g_signal_connect (widget, "toggled",
 			G_CALLBACK (on_auto_save_toggled), asform);

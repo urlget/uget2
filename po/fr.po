@@ -1538,7 +1538,7 @@ msgid "Custom command if error occured:"
 msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:388
-msgid "_Auto save"
+msgid "_Autosave"
 msgstr "Sauvegarde _Auto"
 
 #. auto save spin & label (interval)
