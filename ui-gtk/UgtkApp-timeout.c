@@ -220,7 +220,7 @@ static gboolean  ugtk_app_timeout_queuing (UgtkApp* app)
 				app->trayicon.error_occurred = FALSE;
 			}
 			// Completion Auto-Actions
-			if (app->setting.completion.action > 0) {
+			if (app->setting.completion.action > 0 && app->user_action == FALSE) {
 				ugtk_app_save (app);
 				switch (app->setting.completion.action) {
 				case 1:    // hibernate
