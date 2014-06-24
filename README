@@ -1,3 +1,7 @@
+uGet 1.99.2:
+1. "Enable offline mode on startup" is workable now.
+2. Don't do completion action if user stop download manually.
+
 uGet 1.99.1:
 1. "Start in tray" is workable now.
 2. Show confirm dialog when user delete category.
@@ -69,11 +73,12 @@ Part 4. GTK+ User interface:
 1. New setting dialog.
 2. Adjust category selector in main window for touch screen.
 3. Remember category selection and paned position.
-4. Program can launch custom command when download complete.
-5. Remove launching app for specified file types.
-6. Don't notify completed if error occurs. It will notify error.
-7. Banner can show uGet RSS message.
-8. provide uget-1to2 (or uget-gtk-1to2) to convert setting from old uGet files.
+4. Program can sort all downloads by status.
+5. Program can launch custom command when download complete.
+6. Remove launching app for specified file types.
+7. Don't notify completed if error occurs. It will notify error.
+8. Banner can show uGet RSS message.
+9. provide uget-1to2 (or uget-gtk-1to2) to convert setting from old uGet files.
 
 Part 5. Future version: (After uGet 2.0)
 1. Database for Downloaded URIs
