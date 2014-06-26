@@ -1560,7 +1560,7 @@ void  ugtk_app_backup_attachment (UgtkApp* app, UgetNode* dnode)
 	int        base_len;
 
 	http = ug_info_get (&dnode->info, UgetHttpInfo);
-	if (http == NULL && (http->cookie_file == NULL || http->post_file == NULL))
+	if (http == NULL || (http->cookie_file == NULL || http->post_file == NULL))
 		return;
 
 	gstr = g_string_new (app->config_dir);
