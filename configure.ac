@@ -84,7 +84,7 @@ AC_SUBST(CURL_LIBS)
 ## GnuTLS
 AC_ARG_WITH(
 	[gnutls],
-	AC_HELP_STRING([--with-gnutls[=@<:@no/auto/yes@:>@]], [Enable GnuTLS support.]),
+	AC_HELP_STRING([--with-gnutls[=@<:@no/auto/yes@:>@]], [Enable GnuTLS support. (default is auto)]),
 	[with_gnutls="$withval"],
 	[with_gnutls="auto"]
 )
@@ -122,15 +122,17 @@ fi
 ## OpenSSL
 AC_ARG_WITH(
 	[openssl],
-	AC_HELP_STRING([--with-openssl], [Enable OpenSSL support.]),
-	[enable_openssl="yes"],
-	[enable_openssl="no"]
+	AC_HELP_STRING([--with-openssl[=@<:@no/yes@:>@]], [Enable OpenSSL support.]),
+	[with_openssl="$withval"],
+	[with_openssl="yes"]
 )
-if test "x$enable_openssl" = "xyes"; then
-	PKG_CHECK_MODULES(LIBCRYPTO, libcrypto)
-	AC_SUBST(LIBCRYPTO_CFLAGS)
-	AC_SUBST(LIBCRYPTO_LIBS)
-	AC_DEFINE(USE_OPENSSL, 1, [Define to 1 if openssl support is required.])
+if test "x$LIBGCRYPT_CONFIG" = "x" ; then
+	if test "x$with_openssl" = "xyes"; then
+		PKG_CHECK_MODULES(LIBCRYPTO, libcrypto)
+		AC_SUBST(LIBCRYPTO_CFLAGS)
+		AC_SUBST(LIBCRYPTO_LIBS)
+		AC_DEFINE(USE_OPENSSL, 1, [Define to 1 if openssl support is required.])
+	fi
 fi
 
 ## ----------------

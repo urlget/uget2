@@ -160,7 +160,7 @@ static void kill_locks(void)
 
 GCRY_THREAD_OPTION_PTHREAD_IMPL;
 
-void init_locks (void)
+static void init_locks (void)
 {
 	gcry_control (GCRYCTL_SET_THREAD_CBS, &gcry_threads_pthread);
 }
