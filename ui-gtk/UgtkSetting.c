@@ -40,9 +40,9 @@
 #include <UgtkSetting.h>
 #include <UgtkNodeView.h>
 
-#define UGTK_APP_CLIPBOARD_PATTERN  "BIN|ZIP|GZ|7Z|XZ|Z|TAR|TGZ|BZ2|" \
-                                    "LZH|A[0-9]?|RAR|R[0-9][0-9]|"    \
-                                    "RPM|DEB|EXE|MSI|APK|"            \
+#define UGTK_APP_CLIPBOARD_PATTERN  "BIN|ZIP|GZ|7Z|XZ|Z|TAR|TGZ|BZ2|"   \
+                                    "LZH|A[0-9]?|RAR|R[0-9][0-9]|ISO|"  \
+                                    "RPM|DEB|EXE|MSI|APK|"              \
                                     "3GP|AAC|FLAC|M4A|M4P|MP3|OGG|WAV|WMA|" \
                                     "MP4|OGV|MKV|AVI|MOV|WMV|FLV|F4V|MPG|MPEG|RMVB"
 
