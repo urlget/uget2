@@ -61,6 +61,8 @@
 // ----------------------------------------------------------------------------
 #if !(defined _WIN32 || defined _WIN64)
 
+#define USE_ABSTRACT_SOCKET
+
 #ifndef __ANDROID__
 #include <unistd.h>    // uid_t and others
 #include <pwd.h>
