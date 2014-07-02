@@ -807,6 +807,8 @@ void  ugtk_download_form_complete_entry (UgtkDownloadForm* dform)
 			completed = TRUE;
 	}
 #endif
+	else if (upart.query != -1)
+		completed = TRUE;
 	else if (gtk_widget_is_sensitive (dform->uri_entry) == FALSE)
 		completed = TRUE;
 
