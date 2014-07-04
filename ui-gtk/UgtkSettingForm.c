@@ -359,10 +359,15 @@ void  ugtk_completion_form_set (struct UgtkCompletionForm* csform, UgtkSetting* 
 
 void  ugtk_completion_form_get (struct UgtkCompletionForm* csform, UgtkSetting* setting)
 {
+	const char*  string;
+
 	ug_free (setting->completion.command);
-	setting->completion.command = ug_strdup (gtk_entry_get_text (csform->command));
+	string = gtk_entry_get_text (csform->command);
+	setting->completion.command = (string[0]) ? ug_strdup (string) : NULL;
+
 	ug_free (setting->completion.on_error);
-	setting->completion.on_error = ug_strdup (gtk_entry_get_text (csform->on_error));
+	string = gtk_entry_get_text (csform->on_error);
+	setting->completion.on_error = (string[0]) ? ug_strdup (string) : NULL;
 }
 
 // ----------------------------------------------------------------------------

@@ -236,10 +236,14 @@ static gboolean  ugtk_app_timeout_queuing (UgtkApp* app)
 					ug_reboot ();
 					break;
 				case 5:    // custom
-					if (app->n_error > 0)
-						system (app->setting.completion.on_error);
-					else
-						system (app->setting.completion.command);
+					if (app->n_error > 0) {
+						if (app->setting.completion.on_error)
+							system (app->setting.completion.on_error);
+					}
+					else {
+						if (app->setting.completion.command)
+							system (app->setting.completion.command);
+					}
 					break;
 				}
 			}
