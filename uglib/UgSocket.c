@@ -97,7 +97,7 @@ int  ug_socket_connect (SOCKET fd, const char* addr, const char* port_or_serv)
 }
 
 #if !(defined _WIN32 || defined _WIN64)
-SOCKET ug_socket_connect_unix (SOCKET fd, const char* path, int path_len)
+int  ug_socket_connect_unix (SOCKET fd, const char* path, int path_len)
 {
 	struct sockaddr_un  saddr;
 

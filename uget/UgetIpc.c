@@ -319,7 +319,7 @@ static void uget_ipc_on_destroy (void* data)
 	ug_list_clear (&ipc->queue, FALSE);
 	ug_mutex_clear (&ipc->queue_mutex);
 	ug_option_final (&ipc->option);
-#if !(defined _WIN32 || defined _WIN64 || defined __linux__)
+#if !(defined _WIN32 || defined _WIN64 || defined __linux__ || defined USE_ABSTRACT_SOCKET)
 	ug_unlink (get_unix_socket_path (NULL));
 #endif
 	ipc->server = NULL;
