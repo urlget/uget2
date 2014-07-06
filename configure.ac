@@ -86,7 +86,7 @@ AC_ARG_WITH(
 	[gnutls],
 	AC_HELP_STRING([--with-gnutls[=@<:@no/auto/yes@:>@]], [Enable GnuTLS support. (default is auto)]),
 	[with_gnutls="$withval"],
-	[with_gnutls="auto"]
+	[with_gnutls="no"]
 )
 if test "x$with_gnutls" != "xno"; then
 #	AC_CHECK_HEADER(gcrypt.h, [USE_GNUTLS_GCRYPT=1], [USE_GNUTLS_GCRYPT=0])
