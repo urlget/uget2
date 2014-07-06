@@ -1646,7 +1646,11 @@ void  ugtk_clipboard_set_pattern (struct UgtkClipboard* clipboard, const gchar* 
 {
 	if (clipboard->regex)
 		g_regex_unref (clipboard->regex);
-	clipboard->regex = g_regex_new (pattern, G_REGEX_CASELESS, 0, NULL);
+
+	if (pattern)
+		clipboard->regex = g_regex_new (pattern, G_REGEX_CASELESS, 0, NULL);
+	else
+		clipboard->regex = g_regex_new ("", G_REGEX_CASELESS, 0, NULL);
 }
 
 void  ugtk_clipboard_set_text (struct UgtkClipboard* clipboard, gchar* text)
