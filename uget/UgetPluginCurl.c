@@ -59,6 +59,7 @@
 #define strtoll		_strtoi64    // stdlib.h
 #endif
 
+#define MAX_REPEAT_COUNTS   10000
 
 typedef struct UriLink      UriLink;
 
@@ -885,7 +886,7 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 	}
 
 	// create file
-	for (counts = 0;  counts < 1000;  counts++) {
+	for (counts = 0;  counts < MAX_REPEAT_COUNTS;  counts++) {
 		value = ug_open (plugin->file.path, UG_O_CREATE | UG_O_EXCL | UG_O_WRONLY,
 				UG_S_IREAD | UG_S_IWRITE | UG_S_IRGRP | UG_S_IROTH);
 //		value = ug_open (plugin->file.path, UG_O_CREATE | UG_O_EXCL | UG_O_RDWR,
@@ -926,7 +927,7 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 		sprintf (plugin->file.path + length, ".%d", counts);
 	}
 
-	if (counts == 1000) {
+	if (counts == MAX_REPEAT_COUNTS) {
 		ugcurl->event_code = UGET_EVENT_ERROR_FILE_CREATE_FAILED;
 		return FALSE;
 	}
