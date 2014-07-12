@@ -545,10 +545,16 @@ void  ugtk_app_decide_download_sensitive (UgtkApp* app)
 	// move up/down
 	gtk_widget_set_sensitive (app->toolbar.move_up, sensitive);
 	gtk_widget_set_sensitive (app->toolbar.move_down, sensitive);
-	gtk_widget_set_sensitive (app->toolbar.move_top, sensitive);
-	gtk_widget_set_sensitive (app->toolbar.move_bottom, sensitive);
 	gtk_widget_set_sensitive (app->menubar.download.move_up, sensitive);
 	gtk_widget_set_sensitive (app->menubar.download.move_down, sensitive);
+
+	// disable move top/bottom if user select "All Category"
+	if (app->traveler.category.cursor.pos == 0 || sensitive == FALSE)
+		sensitive = FALSE;
+	else
+		sensitive = TRUE;
+	gtk_widget_set_sensitive (app->toolbar.move_top, sensitive);
+	gtk_widget_set_sensitive (app->toolbar.move_bottom, sensitive);
 	gtk_widget_set_sensitive (app->menubar.download.move_top, sensitive);
 	gtk_widget_set_sensitive (app->menubar.download.move_bottom, sensitive);
 }
