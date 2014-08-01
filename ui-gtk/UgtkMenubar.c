@@ -312,29 +312,63 @@ static void  on_change_visible_column (GtkWidget* widget, UgtkApp* app)
 static void on_move_category_up (GtkWidget* widget, UgtkApp* app)
 {
 	UgetNode* cnode;
+	GtkTreeIter  iter1,  iter2;
+	GtkTreePath *path1, *path2;
 
 	cnode = app->traveler.category.cursor.node;
 	if (cnode == NULL || cnode->prev == NULL)
 		return;
 
+	iter1.stamp = app->traveler.category.model->stamp;
+	iter2.stamp = app->traveler.category.model->stamp;
+	iter1.user_data = cnode;
+	iter2.user_data = cnode->prev;
 	uget_app_move_category ((UgetApp*) app, cnode, cnode->prev);
 	ugtk_traveler_select_category (&app->traveler,
 			app->traveler.category.cursor.pos -1, -1);
 	gtk_widget_queue_draw ((GtkWidget*) app->traveler.category.view);
+	// emit signal "row-changed"
+	path1 = gtk_tree_model_get_path (GTK_TREE_MODEL (app->traveler.category.model),
+			&iter1);
+	path2 = gtk_tree_model_get_path (GTK_TREE_MODEL (app->traveler.category.model),
+			&iter2);
+	gtk_tree_model_row_changed (GTK_TREE_MODEL (app->traveler.category.model),
+			path1, &iter1);
+	gtk_tree_model_row_changed (GTK_TREE_MODEL (app->traveler.category.model),
+			path2, &iter2);
+	gtk_tree_path_free (path1);
+	gtk_tree_path_free (path2);
 }
 
 static void on_move_category_down (GtkWidget* widget, UgtkApp* app)
 {
 	UgetNode* cnode;
+	GtkTreeIter  iter1,  iter2;
+	GtkTreePath *path1, *path2;
 
 	cnode = app->traveler.category.cursor.node;
 	if (cnode == NULL || cnode->next == NULL)
 		return;
 
+	iter1.stamp = app->traveler.category.model->stamp;
+	iter2.stamp = app->traveler.category.model->stamp;
+	iter1.user_data = cnode;
+	iter2.user_data = cnode->next;
 	uget_app_move_category ((UgetApp*) app, cnode, cnode->next->next);
 	ugtk_traveler_select_category (&app->traveler,
 			app->traveler.category.cursor.pos +1, -1);
 	gtk_widget_queue_draw ((GtkWidget*) app->traveler.category.view);
+	// emit signal "row-changed"
+	path1 = gtk_tree_model_get_path (GTK_TREE_MODEL (app->traveler.category.model),
+			&iter1);
+	path2 = gtk_tree_model_get_path (GTK_TREE_MODEL (app->traveler.category.model),
+			&iter2);
+	gtk_tree_model_row_changed (GTK_TREE_MODEL (app->traveler.category.model),
+			path1, &iter1);
+	gtk_tree_model_row_changed (GTK_TREE_MODEL (app->traveler.category.model),
+			path2, &iter2);
+	gtk_tree_path_free (path1);
+	gtk_tree_path_free (path2);
 }
 
 static void on_delete_category (GtkWidget* widget, UgtkApp* app)
