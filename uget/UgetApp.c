@@ -772,16 +772,17 @@ int   uget_app_activate_download (UgetApp* app, UgetNode* dnode)
 
 int   uget_app_pause_download (UgetApp* app, UgetNode* dnode)
 {
-//	UgetCategory* category;
-//	UgetNode*     sibling;
-//	UgetNode*     cnode;
-//	UgetNode*     fake;
+#if 0
+	UgetCategory* category;
+	UgetNode*     sibling;
+	UgetNode*     cnode;
+	UgetNode*     fake;
 
 	if (dnode->state & UGET_STATE_UNRUNNABLE)
 		return FALSE;
 	uget_task_remove (&app->task, dnode);
 	dnode->state |= UGET_STATE_PAUSED;
-/*
+
 	cnode = dnode->parent;
 	category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
 	for (fake = dnode->fake;  fake;  fake = fake->peer) {
@@ -803,8 +804,13 @@ int   uget_app_pause_download (UgetApp* app, UgetNode* dnode)
 			break;
 		}
 	}
- */
-
+#else
+	if (dnode->state & UGET_STATE_ACTIVE)
+		uget_task_remove (&app->task, dnode);
+	else if (dnode->state & UGET_STATE_UNRUNNABLE)
+		return FALSE;
+	dnode->state |= UGET_STATE_PAUSED;
+#endif
 	return TRUE;
 }
 
@@ -814,10 +820,10 @@ int   uget_app_queue_download (UgetApp* app, UgetNode* dnode)
 	UgetNode*     sibling;
 	UgetCategory* category;
 
-	if ((dnode->state & UGET_STATE_ACTIVE)     == 0 &&
-		(dnode->state & UGET_STATE_UNRUNNABLE) == 0)
+	if (dnode->state & UGET_STATE_ACTIVE)
+		uget_task_remove (&app->task, dnode);
+	else if (dnode->state & UGET_STATE_UNRUNNABLE == 0)
 		return FALSE;
-	uget_task_remove (&app->task, dnode);
 
 	if (dnode->state & UGET_STATE_QUEUING)
 		dnode->state = UGET_STATE_QUEUING;
