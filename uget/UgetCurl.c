@@ -392,7 +392,9 @@ void  uget_curl_set_common (UgetCurl* ugcurl, UgetCommon* common)
 //	curl_easy_setopt (curl, CURLOPT_MAX_SEND_SPEED_LARGE,
 //			(curl_off_t) common->max_upload_speed);
 	// login
-	if (common->user || common->password) {
+	if ((common->user     && common->user[0]) ||
+		(common->password && common->password[0]))
+	{
 		// set user & password by common data
 		curl_easy_setopt (curl, CURLOPT_USERNAME,
 				(common->user)     ? common->user     : "");
@@ -449,7 +451,8 @@ void  uget_curl_set_proxy (UgetCurl* ugcurl, UgetProxy* proxy)
 	else
 		curl_easy_setopt (curl, CURLOPT_PROXYPORT, 80);
 	// proxy user and password
-	if (proxy->user || proxy->password ||
+	if ((proxy->user     && proxy->user[0]) ||
+		(proxy->password && proxy->password[0]) ||
 		proxy->type == UGET_PROXY_SOCKS4 ||
 		proxy->type == UGET_PROXY_SOCKS5)
 	{
@@ -577,7 +580,9 @@ void uget_curl_decide_login (UgetCurl* ugcurl)
 	temp.http = ugcurl->http;
 	if (temp.http && ugcurl->scheme_type == SCHEME_HTTP)
 	{
-		if (temp.http->user || temp.http->password) {
+		if ((temp.http->user     && temp.http->user[0]) ||
+			(temp.http->password && temp.http->password[0]))
+		{
 			curl_easy_setopt (curl, CURLOPT_USERNAME,
 					(temp.http->user)     ? temp.http->user     : "");
 			curl_easy_setopt (curl, CURLOPT_PASSWORD,
@@ -592,7 +597,9 @@ void uget_curl_decide_login (UgetCurl* ugcurl)
 	temp.ftp = ugcurl->ftp;
 	if (temp.ftp && ugcurl->scheme_type == SCHEME_FTP) {
 		// set FTP user & password
-		if (temp.ftp->user || temp.ftp->password) {
+		if ((temp.ftp->user     && temp.ftp->user[0]) ||
+		    (temp.ftp->password && temp.ftp->password[0]))
+		{
 			curl_easy_setopt (curl, CURLOPT_USERNAME,
 					(temp.ftp->user)     ? temp.ftp->user     : "");
 			curl_easy_setopt (curl, CURLOPT_PASSWORD,
@@ -605,7 +612,9 @@ void uget_curl_decide_login (UgetCurl* ugcurl)
 	// common
 	temp.common = ugcurl->common;
 	if (temp.common) {
-		if (temp.common->user || temp.common->password) {
+		if ((temp.common->user     && temp.common->user[0]) ||
+			(temp.common->password && temp.common->password[0]))
+		{
 			// set user & password by common data
 			curl_easy_setopt (curl, CURLOPT_USERNAME,
 					(temp.common->user)     ? temp.common->user     : "");

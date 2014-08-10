@@ -669,7 +669,7 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 				ugcurl->state = UGET_CURL_RECYCLED;
 				plugin->seg.n_recycled++;
 				if (N_THREAD (plugin) == 0) {
-					plugin->node->state |= UGET_STATE_ERROR;
+//					plugin->node->state |= UGET_STATE_ERROR;
 					if (ugcurl->event) {
 						uget_plugin_post ((UgetPlugin*) plugin, ugcurl->event);
 						ugcurl->event = NULL;

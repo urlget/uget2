@@ -573,7 +573,7 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 #endif
 			}
 			else {
-				plugin->node->state |= UGET_STATE_ERROR;
+//				plugin->node->state |= UGET_STATE_ERROR;
 				event = uget_event_new_error (
 						UGET_EVENT_ERROR_TOO_MANY_RETRIES, NULL);
 				uget_plugin_post ((UgetPlugin*) plugin, event);
@@ -584,7 +584,7 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 				plugin->errorCode = 1;
 			// if this is last gid.
 			if (plugin->gids.length == 1) {
-				plugin->node->state |= UGET_STATE_ERROR;
+//				plugin->node->state |= UGET_STATE_ERROR;
 #ifdef HAVE_GLIB
 				event = uget_event_new_error (0,
 						gettext (error_string[plugin->errorCode]));
@@ -702,14 +702,14 @@ restart_thread:
 		uget_plugin_post ((UgetPlugin*) plugin,
 				uget_event_new_error(0, aria2_no_response));
 #endif
-		plugin->node->state |= UGET_STATE_ERROR;
+//		plugin->node->state |= UGET_STATE_ERROR;
 		goto exit;
 	}
 	if (res->error.code) {
 		uget_plugin_post ((UgetPlugin*)plugin,
 				uget_event_new_error(0, res->error.message));
 		uget_aria2_recycle (global.data, res);
-		plugin->node->state |= UGET_STATE_ERROR;
+//		plugin->node->state |= UGET_STATE_ERROR;
 		goto exit;
 	}
 
@@ -776,14 +776,14 @@ restart_thread:
 					uget_event_new_error(0, aria2_no_response));
 #endif
 			recycle_status_request (req);
-			plugin->node->state |= UGET_STATE_ERROR;
+//			plugin->node->state |= UGET_STATE_ERROR;
 			goto exit;
 		}
 		if (res->error.code) {
 			uget_plugin_post ((UgetPlugin*)plugin,
 					uget_event_new_error(0, res->error.message));
 			uget_aria2_recycle (global.data, res);
-			plugin->node->state |= UGET_STATE_ERROR;
+//			plugin->node->state |= UGET_STATE_ERROR;
 			goto exit;
 		}
 
@@ -1097,7 +1097,9 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 	member->type = UG_VALUE_BOOL;
 	member->c.boolean = TRUE;
 
-	if (temp.common->user || temp.common->password) {
+	if ((temp.common->user     && temp.common->user[0]) ||
+		(temp.common->password && temp.common->password[0]))
+	{
 		user     = (temp.common->user)     ? temp.common->user : "";
 		password = (temp.common->password) ? temp.common->password : "";
 	}
@@ -1190,7 +1192,9 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 			member->c.string = ug_strdup_printf ("%s:%d",
 					temp.proxy->host, temp.proxy->port);
 		}
-		if (temp.proxy->user || temp.proxy->password) {
+		if ((temp.proxy->user     && temp.proxy->user[0]) ||
+			(temp.proxy->password && temp.proxy->password[0]))
+		{
 			member = ug_value_alloc (value, 1);
 			member->name = "all-proxy-user";
 			member->type = UG_VALUE_STRING;
@@ -1210,7 +1214,9 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 		if (plugin->uri_part.scheme_len >= 4 &&
 		    strncmp (uri, "http", 4) == 0)
 		{
-			if (temp.http->user || temp.http->password) {
+			if ((temp.http->user     && temp.http->user[0]) ||
+				(temp.http->password && temp.http->password[0]))
+			{
 				user     = (temp.http->user)     ? temp.http->user : "";
 				password = (temp.http->password) ? temp.http->password : "";
 			}
@@ -1238,7 +1244,9 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 	temp.ftp = ug_info_get (&node->info, UgetFtpInfo);
 	if (temp.ftp) {
 		if (plugin->uri_part.scheme_len >= 3 && strncmp (uri, "ftp", 3) == 0) {
-			if (temp.ftp->user || temp.ftp->password) {
+			if ((temp.ftp->user     && temp.ftp->user[0]) ||
+				(temp.ftp->password && temp.ftp->password[0]))
+			{
 				user     = (temp.ftp->user)     ? temp.ftp->user : "";
 				password = (temp.ftp->password) ? temp.ftp->password : "";
 			}
