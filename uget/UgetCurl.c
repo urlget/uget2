@@ -107,6 +107,9 @@ static UG_THREAD_RETURN_TYPE  uget_curl_thread (UgetCurl* ugcurl)
 	char*     tempstr;
 	CURLcode  code;
 
+	// reset speed
+	ugcurl->speed[0] = 0;
+	ugcurl->speed[1] = 0;
 	// perform
 	do {
 		ugcurl->restart = FALSE;
