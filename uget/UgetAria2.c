@@ -447,6 +447,9 @@ void uget_aria2_unref (UgetAria2* uaria2)
 
 		ug_mutex_clear (&uaria2->completed_mutex);
 		ug_mutex_clear (&uaria2->mutex);
+		ug_free (uaria2->uri);
+		ug_free (uaria2->path);
+		ug_free (uaria2->args);
 		ug_free (uaria2);
 
 		curl_global_cleanup ();
