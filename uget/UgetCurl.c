@@ -107,9 +107,6 @@ static UG_THREAD_RETURN_TYPE  uget_curl_thread (UgetCurl* ugcurl)
 	char*     tempstr;
 	CURLcode  code;
 
-	// reset speed
-	ugcurl->speed[0] = 0;
-	ugcurl->speed[1] = 0;
 	// perform
 	do {
 		ugcurl->restart = FALSE;
@@ -251,6 +248,9 @@ void  uget_curl_run (UgetCurl* ugcurl, int joinable)
 	ugcurl->response = 0;
 	ugcurl->event_code = 0;
 	ugcurl->progress_count = PROGRESS_COUNT_LIMIT;
+	// reset speed
+	ugcurl->speed[0] = 0;
+	ugcurl->speed[1] = 0;
 
 	ug_free (ugcurl->header.uri);
 	ug_free (ugcurl->header.filename);

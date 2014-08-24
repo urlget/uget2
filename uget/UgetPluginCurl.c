@@ -914,8 +914,15 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 				uget_a2cf_init (&plugin->aria2.ctrl, plugin->file.size);
 				uget_a2cf_save (&plugin->aria2.ctrl, plugin->aria2.path);
 				// allocate disk space
-				ug_seek (value, plugin->file.size - 1, SEEK_SET);
-				ug_write (value, "X", 1);
+				if (ug_seek (value, plugin->file.size - 1, SEEK_SET) == -1)
+					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
+				if (ug_write (value, "X", 1) == -1)
+					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
+				// if error occur
+				if (ugcurl->event_code > 0) {
+					ug_close (value);
+					return FALSE;
+				}
 			}
 			ug_close (value);
 			// remove tail ".aria2"
