@@ -481,8 +481,10 @@ void  uget_app_stop_category (UgetApp* app, UgetNode* cnode)
 	UgetNode*      dnode;
 
 	category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
-	for (dnode = category->active->children;  dnode;  dnode = dnode->next)
-		uget_app_queue_download (app, dnode->data);
+	for (dnode = category->active->children;  dnode;  dnode = dnode->next) {
+		if (dnode->state & UGET_STATE_ACTIVE)
+			uget_app_queue_download (app, dnode->data);
+	}
 }
 
 UgetNode* uget_app_match_category (UgetApp* app, UgUri* uuri)
@@ -822,7 +824,7 @@ int   uget_app_queue_download (UgetApp* app, UgetNode* dnode)
 
 	if (dnode->state & UGET_STATE_ACTIVE)
 		uget_task_remove (&app->task, dnode);
-	else if (dnode->state & UGET_STATE_UNRUNNABLE == 0)
+	else if ((dnode->state & UGET_STATE_UNRUNNABLE) == 0)
 		return FALSE;
 
 	if (dnode->state & UGET_STATE_QUEUING)
