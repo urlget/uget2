@@ -482,7 +482,7 @@ void  uget_app_stop_category (UgetApp* app, UgetNode* cnode)
 
 	category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
 	for (dnode = category->active->children;  dnode;  dnode = dnode->next) {
-		if (dnode->state & UGET_STATE_ACTIVE)
+		if (dnode->data->state & UGET_STATE_ACTIVE)
 			uget_app_queue_download (app, dnode->data);
 	}
 }
