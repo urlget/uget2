@@ -55,8 +55,8 @@
 //       +-- Category2
 //
 
-// UgNode   is 2D node type
-// UgetNode is 3D node type
+// UgNode   is base node type
+// UgetNode extend from base node and add 2 pointer (real and fake).
 //
 //            prev   /               prev   /
 //              |  fake                |  fake
