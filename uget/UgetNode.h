@@ -55,8 +55,8 @@
 //       +-- Category2
 //
 
-// UgNode   is base node type
-// UgetNode extend from base node and add 2 pointer (real and fake).
+// UgNode   is base node type.
+// UgetNode extend from UgNode and add pointers (real, fake, and peer).
 //
 //            prev   /               prev   /
 //              |  fake                |  fake
