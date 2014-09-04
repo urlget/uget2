@@ -246,6 +246,14 @@ void  ug_socket_server_unref (UgSocketServer* server)
 	}
 }
 
+void  ug_socket_server_close (UgSocketServer* server)
+{
+	if (server->socket != -1) {
+		closesocket (server->socket);
+		server->socket = -1;
+	}
+}
+
 void  ug_socket_server_set_receiver (UgSocketServer* server,
                                      UgSocketServerFunc func,
                                      void* data)

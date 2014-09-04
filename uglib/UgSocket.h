@@ -174,6 +174,8 @@ UgSocketServer* ug_socket_server_new (SOCKET server_fd);
 void  ug_socket_server_ref (UgSocketServer* server);
 void  ug_socket_server_unref (UgSocketServer* server);
 
+void  ug_socket_server_close (UgSocketServer* server);
+
 // Program will call user specified function after accept()
 void  ug_socket_server_set_receiver (UgSocketServer* server,
                                      UgSocketServerFunc func,
