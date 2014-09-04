@@ -187,8 +187,25 @@ UgtkApp*  ugtk_app;
 
 static void sys_signal_handler (int sig)
 {
-	// This will quit  gtk_main()  to  main()
-	ugtk_app_quit (ugtk_app);
+	void  ug_socket_server_close (UgSocketServer* server);
+
+	switch (sig) {
+	case SIGINT:  // Ctrl-C
+	case SIGTERM: // termination request
+	case SIGABRT: // Abnormal termination (abort)
+//	case SIGQUIT:
+		// This will quit gtk_main() to main()
+		ugtk_app_quit (ugtk_app);
+		break;
+
+	case SIGSEGV:
+		signal (SIGSEGV, NULL);
+		ug_socket_server_close (ugtk_app->ipc->server);
+		break;
+
+	default:
+		break;
+	}
 }
 
 /*
@@ -263,9 +280,14 @@ int  main (int argc, char** argv)
 
 	ugtk_app = g_malloc0 (sizeof (UgtkApp));
 	ugtk_app_init (ugtk_app, ipc);
+
+	// signal handler
+	signal (SIGINT,  sys_signal_handler);
 	signal (SIGTERM, sys_signal_handler);
-	signal (SIGINT, sys_signal_handler);
+	signal (SIGABRT, sys_signal_handler);
+	signal (SIGSEGV, sys_signal_handler);
 //	signal (SIGQUIT, sys_signal_handler);
+
 	gtk_main ();
 
 	ugtk_app_final (ugtk_app);
