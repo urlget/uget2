@@ -1511,7 +1511,7 @@ void  ugtk_app_add_default_category (UgtkApp* app)
 	*(char**)ug_array_alloc (&category->file_exts, 1) = ug_strdup ("torrent");
 	*(char**)ug_array_alloc (&category->file_exts, 1) = ug_strdup ("metalink");
 
-	uget_app_add_category ((UgetApp*) app, cnode);
+	uget_app_add_category ((UgetApp*) app, cnode, TRUE);
 }
 
 void  ugtk_app_clear_attachment (UgtkApp* app)

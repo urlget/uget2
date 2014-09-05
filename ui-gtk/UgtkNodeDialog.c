@@ -432,7 +432,7 @@ static void on_response_new_category (GtkDialog *dialog, gint response_id,
 	if (response_id == GTK_RESPONSE_OK) {
 		cnode = uget_node_new (NULL);
 		ugtk_node_dialog_get (ndialog, cnode);
-		uget_app_add_category ((UgetApp*) ndialog->app, cnode);
+		uget_app_add_category ((UgetApp*) ndialog->app, cnode, TRUE);
 		ugtk_app_decide_category_sensitive (ndialog->app);
 		ugtk_download_form_get_folders (&ndialog->download,
 		                                &ndialog->app->setting);

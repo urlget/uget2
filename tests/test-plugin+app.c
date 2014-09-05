@@ -243,7 +243,7 @@ void  setup_app (UgetApp* app)
 	*(char**)ug_array_alloc (&category->schemes, 1) = ug_strdup ("ftp");
 	common = ug_info_realloc (&cnode->info, UgetCommonInfo);
 	common->max_connections = 2;
-	uget_app_add_category (app, cnode);
+	uget_app_add_category (app, cnode, TRUE);
 
 	uget_app_add_plugin (app, UgetPluginAria2Info);
 	uget_app_add_plugin (app, UgetPluginCurlInfo);

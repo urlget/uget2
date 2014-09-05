@@ -338,7 +338,7 @@ void  uget_app_set_notification (UgetApp* app, void* data,
 	notification_mix_split.data     = data;
 }
 
-void  uget_app_add_category (UgetApp* app, UgetNode* cnode)
+void  uget_app_add_category (UgetApp* app, UgetNode* cnode, int save_file)
 {
 	UgetCategory*  category;
 	UgetNode*      node;
@@ -373,17 +373,19 @@ void  uget_app_add_category (UgetApp* app, UgetNode* cnode)
 	}
 
 	// save new category
-	path_base = ug_build_filename (app->config_dir, "category", NULL);
+	if (save_file) {
+		path_base = ug_build_filename (app->config_dir, "category", NULL);
 #if defined _WIN32 || defined _WIN64
-	path = ug_strdup_printf ("%s%c%.4d.json", path_base, '\\',
-	                         uget_node_child_position (&app->real, cnode));
+		path = ug_strdup_printf ("%s%c%.4d.json", path_base, '\\',
+		                         uget_node_child_position (&app->real, cnode));
 #else
-	path = ug_strdup_printf ("%s%c%.4d.json", path_base, '/',
-	                         uget_node_child_position (&app->real, cnode));
+		path = ug_strdup_printf ("%s%c%.4d.json", path_base, '/',
+		                         uget_node_child_position (&app->real, cnode));
 #endif // defined
-	uget_app_save_category ((UgetApp*) app, cnode, path);
-	ug_free (path_base);
-	ug_free (path);
+		uget_app_save_category ((UgetApp*) app, cnode, path);
+		ug_free (path_base);
+		ug_free (path);
+	}
 }
 
 int  uget_app_move_category (UgetApp* app, UgetNode* cnode, UgetNode* position)
@@ -1044,7 +1046,7 @@ UgetNode* uget_app_load_category (UgetApp* app, const char* filename)
 	ug_json_file_free (jfile);
 
 	if (error == UG_JSON_ERROR_NONE) {
-		uget_app_add_category (app, cnode);
+		uget_app_add_category (app, cnode, FALSE);
 		// create fake node
 		uget_node_make_fake (cnode);
 		// move all downloads from active to queuing in this categoey
@@ -1156,7 +1158,7 @@ int   uget_app_load_categories (UgetApp* app, const char* folder)
 				NULL, NULL);
 		ug_json_file_end_parse (jfile);
 
-		uget_app_add_category (app, cnode);
+		uget_app_add_category (app, cnode, FALSE);
 		// create fake node
 		uget_node_make_fake (cnode);
 		// move all downloads from active to queuing in this categoey

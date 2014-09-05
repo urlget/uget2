@@ -104,7 +104,7 @@ void  uget_app_set_notification (UgetApp* app, void* data,
 
 // category functions
 // uget_app_move_category() return TRUE or FALSE
-void  uget_app_add_category (UgetApp* app, UgetNode* cnode);
+void  uget_app_add_category (UgetApp* app, UgetNode* cnode, int save_file);
 int   uget_app_move_category (UgetApp* app, UgetNode* cnode, UgetNode* position);
 void  uget_app_delete_category (UgetApp* app, UgetNode* cnode);
 void  uget_app_stop_category (UgetApp* app, UgetNode* cnode);
