@@ -868,16 +868,26 @@ restart_thread:
 	if (plugin->gids.length) {
 		req = uget_aria2_alloc (global.data, TRUE, TRUE);
 		req->method_static = "aria2.remove";
-		value = &req->params;
-		if (value->type == UG_VALUE_NONE)
-			ug_value_init_array (value, plugin->gids.length);
-		value = ug_value_alloc (value, plugin->gids.length);
+		// if there is no secret token in params.
+		if (req->params.type == UG_VALUE_NONE)
+			ug_value_init_array (&req->params, plugin->gids.length);
+		// add gids to params.
+		value = ug_value_alloc (&req->params, plugin->gids.length);
 		for (index = 0;  index < plugin->gids.length;  index++, value++) {
 			value->type = UG_VALUE_STRING;
 			value->c.string = ug_strdup (plugin->gids.at[index]);
 		}
+		// call "aria2.remove"
 		uget_aria2_request (global.data, req);
 		res = uget_aria2_respond (global.data, req);
+#ifndef NDEBUG
+		// debug
+		if (res->error.code) {
+			printf ("aria2.remove() response error code = %d" "\n"
+					"               message = \"%s\"." "\n",
+					res->error.code, res->error.message);
+		}
+#endif
 		uget_aria2_recycle (global.data, res);
 		uget_aria2_recycle (global.data, req);
 	}
