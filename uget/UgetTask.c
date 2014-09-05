@@ -83,6 +83,8 @@ int   uget_task_add (UgetTask* task, UgetNode* node, const UgetPluginInfo* info)
 			temp.progress->complete = 0;
 			temp.progress->total = 0;
 		}
+		temp.progress->download_speed = 0;
+		temp.progress->upload_speed = 0;
 	}
 
 	// UgetCommon: clear retry_count
