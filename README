@@ -1,3 +1,14 @@
+uGet 1.99.3:
+1. use abstract socket in linux by default.
+2. change category capacity limit from 9999 to 99999.
+3. reduce start-up time.
+4. curl plug-in: reset speed if download thread restart.
+5. curl plug-in: change file auto rename counts to 10000.
+6. curl plug-in: response error if error occur when create large file.
+7. Fix: program doesn't backup cookie or post file from command-line.
+8. Fix: user can't pause some downloading task.
+9. Fix: download dialog can't accept magnet URI.
+
 uGet 1.99.2:
 1. "Enable offline mode on startup" is workable now.
 2. Don't do completion action if user stop download manually.
@@ -44,7 +55,7 @@ Browse Git: http://sourceforge.net/p/urlget/uget2/ci/master/tree/
 
 ----------
 
-What's changed in uGet2: (2014-05-22)
+What's changed in uGet2: (2014-07-06)
 
 Part 1. curl plug-in:
 1. support multi-thread downloading.
@@ -75,7 +86,7 @@ Part 4. GTK+ User interface:
 3. Remember category selection and paned position.
 4. Program can sort all downloads by status.
 5. Program can launch custom command when download complete.
-6. Remove launching app for specified file types.
+6. Remove feature: launching app for specified file types.
 7. Don't notify completed if error occurs. It will notify error.
 8. Banner can show uGet RSS message.
 9. provide uget-1to2 (or uget-gtk-1to2) to convert setting from old uGet files.
