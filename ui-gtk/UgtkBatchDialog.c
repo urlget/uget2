@@ -136,15 +136,24 @@ void  ugtk_batch_dialog_use_sequencer (UgtkBatchDialog* bdialog)
 
 void  ugtk_batch_dialog_disable_batch (UgtkBatchDialog* bdialog)
 {
+	GtkWidget*  widget;
+
 	ugtk_download_form_set_multiple (&bdialog->download, FALSE);
 	ugtk_node_dialog_monitor_uri ((UgtkNodeDialog*) bdialog);
 	// forward to next page.
 	gtk_dialog_response (bdialog->self, GTK_RESPONSE_ACCEPT);
-	// disable forward and back
+	// disable forward and back button
 	gtk_dialog_set_response_sensitive (bdialog->self,
 	                                   GTK_RESPONSE_REJECT, FALSE);
 	gtk_dialog_set_response_sensitive (bdialog->self,
 	                                   GTK_RESPONSE_ACCEPT, FALSE);
+	// hide forward and back button
+	widget = gtk_dialog_get_widget_for_response (bdialog->self,
+	                                             GTK_RESPONSE_REJECT);
+	gtk_widget_set_visible (widget, FALSE);
+	widget = gtk_dialog_get_widget_for_response (bdialog->self,
+	                                             GTK_RESPONSE_ACCEPT);
+	gtk_widget_set_visible (widget, FALSE);
 }
 
 void  ugtk_batch_dialog_run (UgtkBatchDialog* bdialog)
