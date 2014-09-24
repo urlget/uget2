@@ -497,7 +497,9 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 
 	switch (plugin->status) {
 	case ARIA2_STATUS_ACTIVE:
-		if (plugin->totalLength  == plugin->completedLength) {
+		if (plugin->completedLength > 0 &&
+		    plugin->completedLength == plugin->totalLength)
+		{
 #ifndef NDEBUG
 			// debug
 			if (temp.common->debug_level) {
