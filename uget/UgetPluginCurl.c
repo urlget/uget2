@@ -738,15 +738,34 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 			plugin->speed.download = speed.download;
 		}
 		plugin->synced = FALSE;
-		// completed
-		if (plugin->file.size && plugin->file.size == plugin->size.download) {
-			if (N_THREAD (plugin) > 0)
-				continue;    // wait other thread
-			else {
-				complete_file (plugin);
-				plugin->synced = FALSE;
+		// check file size
+		if (plugin->file.size) {
+			// response error if file size is different
+			if (plugin->file.size < plugin->size.download) {
 				plugin->stopped = TRUE;
-				break;
+				if (N_THREAD (plugin) > 0)
+					continue;    // wait other thread
+				else {
+					if (plugin->aria2.path)
+						ug_unlink (plugin->aria2.path);
+					uget_plugin_post ((UgetPlugin*) plugin,
+							uget_event_new_error (
+									UGET_EVENT_ERROR_INCORRECT_SOURCE,
+									NULL));
+					plugin->synced = FALSE;
+					break;
+				}
+			}
+			// download completed
+			if (plugin->file.size == plugin->size.download) {
+				if (N_THREAD (plugin) > 0)
+					continue;    // wait other thread
+				else {
+					complete_file (plugin);
+					plugin->synced = FALSE;
+					plugin->stopped = TRUE;
+					break;
+				}
 			}
 		}
 		// adjust speed every 0.5 x 2 = 1 second.
