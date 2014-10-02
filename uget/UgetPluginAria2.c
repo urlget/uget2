@@ -76,6 +76,7 @@ static void* ug_file_to_base64  (const char* file, int* length);
 enum UgetPluginAria2UriType {
 	URI_UNSUPPORTED,
 	URI_NET,
+	URI_MAGNET,    // magnet:
 	URI_TORRENT,
 	URI_METALINK,
 };
@@ -523,8 +524,8 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 		// If there is only one followed gid and file, change uri.
 		if (plugin->gids.length == 1 && plugin->files.length == 1) {
 			// If URI scheme is not "magnet" and aria2 runs in local device
-			if (strcmp (temp.common->uri, "magnet:") != 0 &&
-				global.data->uri_remote == FALSE )
+			if (global.data->uri_remote == FALSE &&
+				plugin->uri_type != URI_MAGNET)
 			{
 				// change URI
 				ug_free (temp.common->uri);
@@ -1061,6 +1062,8 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 			return FALSE;
 		}
 	}
+	else if (plugin->uri_part.scheme_len == 6 && strncmp (uri, "magnet", 6) == 0)
+		plugin->uri_type = URI_MAGNET;
 
 	request = uget_aria2_alloc (global.data, TRUE, TRUE);
 	if (request->params.type == UG_VALUE_NONE)
@@ -1068,6 +1071,7 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 
 	switch (plugin->uri_type) {
 	case URI_NET:
+	case URI_MAGNET:
 		request->method_static = "aria2.addUri";
 		// parameter1 : URIs
 		value = ug_value_alloc (&request->params, 1);
