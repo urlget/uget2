@@ -103,7 +103,9 @@ static void uget_common_init (UgetCommon* common)
 	common->retry_limit = 99;
 	common->max_connections = 1;
 	common->timestamp = TRUE;
-//	common->debug_level = 1;
+#ifndef NDEBUG
+	common->debug_level = 1;
+#endif
 }
 
 static void uget_common_final (UgetCommon* common)
