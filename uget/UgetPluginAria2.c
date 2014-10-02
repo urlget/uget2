@@ -522,7 +522,10 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 				sizeof (char*) * plugin->gids.length);
 		// If there is only one followed gid and file, change uri.
 		if (plugin->gids.length == 1 && plugin->files.length == 1) {
-			if (global.data->uri_remote == FALSE) {
+			// If URI scheme is not "magnet" and aria2 runs in local device
+			if (strcmp (temp.common->uri, "magnet:") != 0 &&
+				global.data->uri_remote == FALSE )
+			{
 				// change URI
 				ug_free (temp.common->uri);
 				ug_free (temp.common->file);
