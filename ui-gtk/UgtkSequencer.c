@@ -221,7 +221,7 @@ GList*  ugtk_sequencer_get_list (UgtkSequencer* seqer, gboolean preview)
 	gint         from, to, cur, digits;
 	gboolean     char_mode;
 	const gchar* string;
-	gint         offset;
+	gint         offset, offset_cur, offset_end;
 
 	string = gtk_entry_get_text (seqer->entry);
 	offset = strcspn (string, "*");
@@ -266,11 +266,17 @@ GList*  ugtk_sequencer_get_list (UgtkSequencer* seqer, gboolean preview)
 			list = g_list_prepend (list, g_strdup (" ..."));
 			cur = from + 1;
 		}
-		if (char_mode)
-			g_string_append_printf (gstr, "%c", cur);
-		else
-			g_string_append_printf (gstr, "%.*d", digits, cur);
-		g_string_append (gstr, string + offset + 1);
+		// multi wildcard
+		for (offset_cur = offset;  string[offset_cur];  offset_cur = offset_end) {
+			offset_cur++;
+			offset_end = strcspn (string + offset_cur, "*") + offset_cur;
+			if (char_mode)
+				g_string_append_printf (gstr, "%c", cur);
+			else
+				g_string_append_printf (gstr, "%.*d", digits, cur);
+			g_string_append_len (gstr, string + offset_cur,
+			                     offset_end - offset_cur);
+		}
 		list = g_list_prepend (list, g_strdup (gstr->str));
 		g_string_truncate (gstr, offset);
 	}
