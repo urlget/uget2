@@ -491,7 +491,6 @@ static void on_response_edit_download (GtkDialog *dialog, gint response_id,
 		app = ndialog->app;
 		uget_uri_hash_remove_download (app->uri_hash, ndialog->node);
 		ugtk_node_dialog_get (ndialog, ndialog->node);
-		uget_node_decide_name (ndialog->node);
 		uget_uri_hash_add_download (app->uri_hash, ndialog->node);
 		ugtk_traveler_reserve_selection (&app->traveler);
 		uget_app_reset_download_name ((UgetApp*) app, ndialog->node);

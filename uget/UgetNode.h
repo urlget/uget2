@@ -203,7 +203,6 @@ int       uget_node_fake_position (UgetNode* node, UgetNode* fake);
 
 // ----------------------------------------------------------------------------
 
-void  uget_node_decide_name (UgetNode* node);
 void  uget_node_set_name_by_uri (UgetNode* node, UgUri* uuri);
 void  uget_node_set_name_by_uri_string (UgetNode* node, const char* uri);
 

@@ -444,19 +444,6 @@ int  uget_node_fake_position (UgetNode* node, UgetNode* fake)
 
 // ----------------------------------------------------------------------------
 
-void  uget_node_decide_name (UgetNode* node)
-{
-	UgetCommon* common;
-
-	common = ug_info_get (&node->info, UgetCommonInfo);
-	if (common->file) {
-		ug_free (node->name);
-		node->name = ug_strdup (common->file);
-	}
-	else
-		uget_node_set_name_by_uri_string (node, common->uri);
-}
-
 void  uget_node_set_name_by_uri (UgetNode* node, UgUri* uuri)
 {
 	const char* filename;
