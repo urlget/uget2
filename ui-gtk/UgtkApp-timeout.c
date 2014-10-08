@@ -381,6 +381,9 @@ static void  ugtk_app_add_uris_selected (UgtkApp* app, GList* list, UgetNode* in
 	bdialog = ugtk_batch_dialog_new (title, app);
 	g_free (title);
 
+	// disable batch if only one uri in list.
+	if (list->next == NULL)
+		ugtk_batch_dialog_disable_batch (bdialog);
 	// apply other setting
 	if (infonode) {
 		ugtk_download_form_set (&bdialog->download, infonode, FALSE);
@@ -388,8 +391,6 @@ static void  ugtk_app_add_uris_selected (UgtkApp* app, GList* list, UgetNode* in
 	}
 	// add URIs
 	if (list->next == NULL) {
-		// disable batch if only one uri in list.
-		ugtk_batch_dialog_disable_batch (bdialog);
 		gtk_entry_set_text (GTK_ENTRY (bdialog->download.uri_entry),
 		                    list->data);
 		bdialog->download.changed.uri = TRUE;
