@@ -1081,6 +1081,7 @@ static int  load_file_info (UgetPluginCurl* plugin)
 	}
 }
 
+#if 0
 static int  switch_uri (UgetPluginCurl* plugin, UgetCurl* ugcurl, int is_resumable)
 {
 	UriLink*  uri_link;
@@ -1113,19 +1114,44 @@ static int  switch_uri (UgetPluginCurl* plugin, UgetCurl* ugcurl, int is_resumab
 		break;
 	}
 
-	// set flags from UriLink
-	plugin->uri.link = (void*) uri_link->next;
+	// set URI and decide it's scheme
 	uget_curl_set_url (ugcurl, uri_link->uri);
 	uri_link->scheme_type = ugcurl->scheme_type;
+	// sync URI flags to UgetCurl
 	ugcurl->uri.link = uri_link;
 	ugcurl->resumable = uri_link->resumable;
 	ugcurl->tested = uri_link->tested;
 	ugcurl->test_ok = uri_link->ok;
+	// pointer current URI to next one
+	plugin->uri.link = (void*) uri_link->next;
 
 	if (uri_link == uri_begin)
 		return FALSE;
 	return TRUE;
 }
+#else
+static int  switch_uri (UgetPluginCurl* plugin, UgetCurl* ugcurl, int is_resumable)
+{
+	UriLink*  uri_link;
+
+	uri_link = (UriLink*) plugin->uri.link;
+	if (uri_link == NULL)
+		uri_link = (UriLink*) plugin->uri.list.head;
+
+	// set URI and decide it's scheme
+	uget_curl_set_url (ugcurl, uri_link->uri);
+	uri_link->scheme_type = ugcurl->scheme_type;
+	// sync URI flags to UgetCurl
+	ugcurl->uri.link = uri_link;
+	ugcurl->resumable = uri_link->resumable;
+	ugcurl->tested = uri_link->tested;
+	ugcurl->test_ok = uri_link->ok;
+	// pointer current URI to next one
+	plugin->uri.link = (void*) uri_link->next;
+
+	return TRUE;
+}
+#endif
 
 static void complete_file (UgetPluginCurl* plugin)
 {
