@@ -45,7 +45,6 @@
 
 static void ugtk_download_form_init_page1 (UgtkDownloadForm* dform, UgtkProxyForm* proxy);
 static void ugtk_download_form_init_page2 (UgtkDownloadForm* dform);
-static void ugtk_download_form_decide_sensitive (UgtkDownloadForm* dform);	// aria2
 //	signal handler
 static void on_spin_changed (GtkEditable *editable, UgtkDownloadForm* dform);
 static void on_entry_changed (GtkEditable *editable, UgtkDownloadForm* dform);
@@ -75,7 +74,6 @@ void  ugtk_download_form_init (UgtkDownloadForm* dform, UgtkProxyForm* proxy, Gt
 
 	ugtk_download_form_init_page1 (dform, proxy);
 	ugtk_download_form_init_page2 (dform);
-	ugtk_download_form_decide_sensitive (dform);	// for aria2
 
 	gtk_widget_show_all (dform->page1);
 	gtk_widget_show_all (dform->page2);
@@ -87,16 +85,20 @@ static void ugtk_download_form_init_page1 (UgtkDownloadForm* dform, UgtkProxyFor
 	GtkGrid*	top_grid;
 	GtkGrid*	grid;
 	GtkWidget*	frame;
+	GtkBox*	    top_vbox;
 	GtkWidget*	vbox;
 	GtkWidget*	hbox;
 
-	dform->page1 = gtk_grid_new ();
-	top_grid = (GtkGrid*) dform->page1;
-	gtk_container_set_border_width (GTK_CONTAINER (top_grid), 2);
+	dform->page1 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+	top_vbox = (GtkBox*) dform->page1;
+	gtk_container_set_border_width (GTK_CONTAINER (top_vbox), 2);
+
+	top_grid = (GtkGrid*) gtk_grid_new ();
+	gtk_box_pack_start (top_vbox, (GtkWidget*) top_grid, FALSE, FALSE, 0);
 
 	// URL - entry
 	widget = gtk_entry_new ();
-	gtk_entry_set_width_chars (GTK_ENTRY (widget), 20);
+//	gtk_entry_set_width_chars (GTK_ENTRY (widget), 20); // remove for GTK+ 3.12
 	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
 	g_object_set (widget, "margin-left", 1, "margin-right", 1, NULL);
 	g_object_set (widget, "margin-top", 2, "margin-bottom", 2, NULL);
@@ -115,7 +117,7 @@ static void ugtk_download_form_init_page1 (UgtkDownloadForm* dform, UgtkProxyFor
 
 	// Mirrors - entry
 	widget = gtk_entry_new ();
-	gtk_entry_set_width_chars (GTK_ENTRY (widget), 20);
+//	gtk_entry_set_width_chars (GTK_ENTRY (widget), 20); // remove for GTK+ 3.12
 	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
 	g_object_set (widget, "margin-left", 1, "margin-right", 1, NULL);
 	g_object_set (widget, "margin-top", 2, "margin-bottom", 2, NULL);
@@ -190,9 +192,7 @@ static void ugtk_download_form_init_page1 (UgtkDownloadForm* dform, UgtkProxyFor
 	// Connections
 	// HBox for Connections
 	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-	g_object_set (hbox, "margin-left", 1, "margin-right", 1, NULL);
-	g_object_set (hbox, "margin-top", 4, "margin-bottom", 2, NULL);
-	gtk_grid_attach (top_grid, hbox, 0, 5, 3, 1);
+	gtk_box_pack_start (top_vbox, hbox, FALSE, FALSE, 2);
 	// connections - label
 //	widget = gtk_label_new (_("connections"));
 //	gtk_box_pack_end (GTK_BOX (hbox), widget, FALSE, FALSE, 2);
@@ -200,7 +200,7 @@ static void ugtk_download_form_init_page1 (UgtkDownloadForm* dform, UgtkProxyFor
 	// connections - spin button
 	widget = gtk_spin_button_new_with_range (1.0, 16.0, 1.0);
 	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
-	gtk_entry_set_width_chars (GTK_ENTRY (widget), 3);
+//	gtk_entry_set_width_chars (GTK_ENTRY (widget), 3); // remove for GTK+ 3.12
 	gtk_box_pack_end (GTK_BOX (hbox), widget, FALSE, FALSE, 2);
 	dform->spin_connections = widget;
 	// "Max Connections:" - title label
@@ -212,8 +212,7 @@ static void ugtk_download_form_init_page1 (UgtkDownloadForm* dform, UgtkProxyFor
 	// ----------------------------------------------------
 	// HBox for "Status" and "Login"
 	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-	g_object_set (hbox, "margin", 1, "hexpand", TRUE, NULL);
-	gtk_grid_attach (top_grid, hbox, 0, 6, 3, 1);
+	gtk_box_pack_start (top_vbox, hbox, FALSE, FALSE, 2);
 
 	// ----------------------------------------------------
 	// frame for Status (start mode)
@@ -272,8 +271,7 @@ static void ugtk_download_form_init_page1 (UgtkDownloadForm* dform, UgtkProxyFor
 //	ug_proxy_widget_init (&dform->proxy_dform);
 	if (proxy) {
 		widget = proxy->self;
-		g_object_set (widget, "margin", 1, "hexpand", TRUE, NULL);
-		gtk_grid_attach (top_grid, widget, 0, 7, 3, 1);
+		gtk_box_pack_start (top_vbox, widget, FALSE, FALSE, 2);
 	}
 }
 
@@ -429,28 +427,6 @@ static void ugtk_download_form_init_page2 (UgtkDownloadForm* dform)
 	widget = gtk_check_button_new_with_label (_("Retrieve timestamp"));
 	gtk_grid_attach (grid, widget, 0, 7, 3, 1);
 	dform->timestamp = (GtkToggleButton*) widget;
-}
-
-static void ugtk_download_form_decide_sensitive (UgtkDownloadForm* dform)
-{
-	/*
-	extern UgtkApp* app;	// UgApp-gtk-main.c
-	gboolean  sensitive;
-
-	sensitive = app->setting.plugin.aria2.enable;
-	gtk_widget_set_sensitive (dform->mirrors_label, sensitive);
-	gtk_widget_set_sensitive (dform->mirrors_entry, sensitive);
-	gtk_widget_set_sensitive (dform->title_connections, sensitive);
-	gtk_widget_set_sensitive (dform->label_connections, sensitive);
-	gtk_widget_set_sensitive (dform->spin_connections, sensitive);
-
-	// disable
-	sensitive = !sensitive;
-	gtk_widget_set_sensitive (dform->cookie_label, sensitive);
-	gtk_widget_set_sensitive (dform->cookie_entry, sensitive);
-	gtk_widget_set_sensitive (dform->post_label, sensitive);
-	gtk_widget_set_sensitive (dform->post_entry, sensitive);
-	*/
 }
 
 void  ugtk_download_form_get (UgtkDownloadForm* dform, UgetNode* node)
