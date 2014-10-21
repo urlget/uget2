@@ -1172,7 +1172,7 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 	member = ug_value_alloc (value, 1);
 	member->name = "lowest-speed-limit";
 	member->type = UG_VALUE_STRING;
-	member->c.string = ug_strdup_printf ("%u", 512);
+	member->c.string = ug_strdup_printf ("%u", 128);
 
 	// Don't set connection limit if max_connections is 0.
 	if (temp.common->max_connections != 0) {
