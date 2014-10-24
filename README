@@ -1,3 +1,15 @@
+uGet 1.99.4:
+1.  curl plug-in: retry all URI (include mirrors) every time.
+2.  curl plug-in: response error if file size is different.
+3.  aria2 plug-in: change lowest speed limit to 128 byte/sec.
+4.  aria2 plug-in: Don't change node name If URI scheme is "magnet".
+5.  aria2 plug-in: Don't change URI If URI scheme is "magnet".
+6.  aria2 plug-in: Don't set uploading status if no downloaded data.
+7.  magnet: get and show name from magnet URI.
+8.  Adjust layout of Download Form for GTK+ 3.12.
+9.  Implement multiple wildcards in Sequential Batch.
+10. Fix : discard filename option from command-line.
+
 uGet 1.99.3:
 1. use abstract socket in linux by default.
 2. change category capacity limit from 9999 to 99999.
@@ -90,9 +102,3 @@ Part 4. GTK+ User interface:
 7. Don't notify completed if error occurs. It will notify error.
 8. Banner can show uGet RSS message.
 9. provide uget-1to2 (or uget-gtk-1to2) to convert setting from old uGet files.
-
-Part 5. Future version: (After uGet 2.0)
-1. Database for Downloaded URIs
-2. RSS Monitor
-3. Every Category has its Scheduler.
-4. Show file list in torrent
