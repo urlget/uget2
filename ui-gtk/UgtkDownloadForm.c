@@ -342,55 +342,19 @@ static void ugtk_download_form_init_page2 (UgtkDownloadForm* dform)
 	g_signal_connect (GTK_EDITABLE (widget), "changed",
 			G_CALLBACK (on_http_entry_changed), dform);
 	dform->agent_entry = widget;
-#if 0
-	// label - Max upload speed
-	widget = gtk_label_new (_("Max upload speed:"));
-	g_object_set (widget, "margin-left", 2, "margin-right", 2, NULL);
-	g_object_set (widget, "margin-top", 1, "margin-bottom", 1, NULL);
-	gtk_grid_attach (grid, widget, 0, 3, 2, 1);
-	// spin - Max upload speed
-	widget = gtk_spin_button_new_with_range (0, 99999999, 1);
-	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
-	gtk_entry_set_width_chars (GTK_ENTRY (widget), 8);
-	g_object_set (widget, "margin", 1, NULL);
-	gtk_grid_attach (grid, widget, 2, 3, 1, 1);
-	dform->spin_upload_speed = (GtkSpinButton*) widget;
-	// label - "KiB/s"
-	widget = gtk_label_new (_("KiB/s"));
-	gtk_misc_set_alignment (GTK_MISC (widget), 0.0, 0.5);	// left, center
-	g_object_set (widget, "margin", 2, "hexpand", TRUE, NULL);
-	gtk_grid_attach (grid, widget, 3, 3, 1, 1);
 
-	// label - Max download speed
-	widget = gtk_label_new (_("Max download speed:"));
-	g_object_set (widget, "margin-left", 2, "margin-right", 2, NULL);
-	g_object_set (widget, "margin-top", 1, "margin-bottom", 1, NULL);
-	gtk_grid_attach (grid, widget, 0, 4, 2, 1);
-	// spin - Max download speed
-	widget = gtk_spin_button_new_with_range (0, 99999999, 1);
-	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
-	gtk_entry_set_width_chars (GTK_ENTRY (widget), 8);
-	g_object_set (widget, "margin", 1, NULL);
-	gtk_grid_attach (grid, widget, 2, 4, 1, 1);
-	dform->spin_download_speed = (GtkSpinButton*) widget;
-	// label - "KiB/s"
-	widget = gtk_label_new (_("KiB/s"));
-	gtk_misc_set_alignment (GTK_MISC (widget), 0.0, 0.5);	// left, center
-	g_object_set (widget, "margin", 2, "hexpand", TRUE, NULL);
-	gtk_grid_attach (grid, widget, 3, 4, 1, 1);
-#endif
 	// Retry limit - label
 	widget = gtk_label_new_with_mnemonic (_("Retry _limit:"));
 	gtk_label_set_mnemonic_widget (GTK_LABEL (widget), dform->spin_retry);
 	g_object_set (widget, "margin-left", 2, "margin-right", 2, NULL);
 	g_object_set (widget, "margin-top", 1, "margin-bottom", 1, NULL);
-	gtk_grid_attach (grid, widget, 0, 5, 2, 1);
+	gtk_grid_attach (grid, widget, 0, 3, 2, 1);
 	// Retry limit - spin button
 	widget = gtk_spin_button_new_with_range (0.0, 99.0, 1.0);
 	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
 		g_object_set (widget, "margin-left", 2, "margin-right", 2, NULL);
 	g_object_set (widget, "margin-top", 1, "margin-bottom", 1, NULL);
-	gtk_grid_attach (grid, widget, 2, 5, 1, 1);
+	gtk_grid_attach (grid, widget, 2, 3, 1, 1);
 	g_signal_connect (GTK_EDITABLE (widget), "changed",
 			G_CALLBACK (on_spin_changed), dform);
 	dform->spin_retry = widget;
@@ -399,20 +363,20 @@ static void ugtk_download_form_init_page2 (UgtkDownloadForm* dform)
 	gtk_misc_set_alignment (GTK_MISC (widget), 0.0, 0.5);
 	g_object_set (widget, "margin-left", 2, "margin-right", 2, NULL);
 	g_object_set (widget, "margin-top", 1, "margin-bottom", 1, NULL);
-	gtk_grid_attach (grid, widget, 3, 5, 1, 1);
+	gtk_grid_attach (grid, widget, 3, 3, 1, 1);
 
 	// Retry delay - label
 	widget = gtk_label_new_with_mnemonic (_("Retry _delay:"));
 	gtk_label_set_mnemonic_widget (GTK_LABEL (widget), dform->spin_delay);
 	g_object_set (widget, "margin-left", 2, "margin-right", 2, NULL);
 	g_object_set (widget, "margin-top", 1, "margin-bottom", 1, NULL);
-	gtk_grid_attach (grid, widget, 0, 6, 2, 1);
+	gtk_grid_attach (grid, widget, 0, 4, 2, 1);
 	// Retry delay - spin button
 	widget = gtk_spin_button_new_with_range (0.0, 600.0, 1.0);
 	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
 	g_object_set (widget, "margin-left", 2, "margin-right", 2, NULL);
 	g_object_set (widget, "margin-top", 1, "margin-bottom", 1, NULL);
-	gtk_grid_attach (grid, widget, 2, 6, 1, 1);
+	gtk_grid_attach (grid, widget, 2, 4, 1, 1);
 	g_signal_connect (GTK_EDITABLE (widget), "changed",
 			G_CALLBACK (on_spin_changed), dform);
 	dform->spin_delay = widget;
@@ -421,6 +385,42 @@ static void ugtk_download_form_init_page2 (UgtkDownloadForm* dform)
 	gtk_misc_set_alignment (GTK_MISC (widget), 0.0, 0.5);
 	g_object_set (widget, "margin-left", 2, "margin-right", 2, NULL);
 	g_object_set (widget, "margin-top", 1, "margin-bottom", 1, NULL);
+	gtk_grid_attach (grid, widget, 3, 4, 1, 1);
+
+	// label - Max upload speed
+	widget = gtk_label_new (_("Max upload speed:"));
+	g_object_set (widget, "margin-left", 2, "margin-right", 2, NULL);
+	g_object_set (widget, "margin-top", 1, "margin-bottom", 1, NULL);
+	gtk_grid_attach (grid, widget, 0, 5, 2, 1);
+	// spin - Max upload speed
+	widget = gtk_spin_button_new_with_range (0, 99999999, 1);
+	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
+	gtk_entry_set_width_chars (GTK_ENTRY (widget), 8);
+	g_object_set (widget, "margin", 1, NULL);
+	gtk_grid_attach (grid, widget, 2, 5, 1, 1);
+	dform->spin_upload_speed = (GtkSpinButton*) widget;
+	// label - "KiB/s"
+	widget = gtk_label_new (_("KiB/s"));
+	gtk_misc_set_alignment (GTK_MISC (widget), 0.0, 0.5);	// left, center
+	g_object_set (widget, "margin", 2, "hexpand", TRUE, NULL);
+	gtk_grid_attach (grid, widget, 3, 5, 1, 1);
+
+	// label - Max download speed
+	widget = gtk_label_new (_("Max download speed:"));
+	g_object_set (widget, "margin-left", 2, "margin-right", 2, NULL);
+	g_object_set (widget, "margin-top", 1, "margin-bottom", 1, NULL);
+	gtk_grid_attach (grid, widget, 0, 6, 2, 1);
+	// spin - Max download speed
+	widget = gtk_spin_button_new_with_range (0, 99999999, 1);
+	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
+	gtk_entry_set_width_chars (GTK_ENTRY (widget), 8);
+	g_object_set (widget, "margin", 1, NULL);
+	gtk_grid_attach (grid, widget, 2, 6, 1, 1);
+	dform->spin_download_speed = (GtkSpinButton*) widget;
+	// label - "KiB/s"
+	widget = gtk_label_new (_("KiB/s"));
+	gtk_misc_set_alignment (GTK_MISC (widget), 0.0, 0.5);	// left, center
+	g_object_set (widget, "margin", 2, "hexpand", TRUE, NULL);
 	gtk_grid_attach (grid, widget, 3, 6, 1, 1);
 
 	// Retrieve timestamp
@@ -458,14 +458,14 @@ void  ugtk_download_form_get (UgtkDownloadForm* dform, UgetNode* node)
 	// retry_delay
 	number = gtk_spin_button_get_value_as_int ((GtkSpinButton*) dform->spin_delay);
 	common->retry_delay = number;
-#if 0
+
 	// max_upload_speed
 	number = gtk_spin_button_get_value_as_int ((GtkSpinButton*) dform->spin_upload_speed) * 1024;
 	common->max_upload_speed = number;
 	// max_download_speed
 	number = gtk_spin_button_get_value_as_int ((GtkSpinButton*) dform->spin_download_speed) * 1024;
 	common->max_download_speed = number;
-#endif
+
 	// max_connections
 	number = gtk_spin_button_get_value_as_int ((GtkSpinButton*) dform->spin_connections);
 	common->max_connections = number;
@@ -613,7 +613,7 @@ void  ugtk_download_form_set (UgtkDownloadForm* dform, UgetNode* node, gboolean 
 		gtk_spin_button_set_value ((GtkSpinButton*) dform->spin_delay,
 				(common) ? common->retry_delay : 6);
 	}
-#if 0
+
 	if (keep_changed==FALSE || dform->changed.max_upload_speed==FALSE) {
 		gtk_spin_button_set_value ((GtkSpinButton*) dform->spin_upload_speed,
 				(gdouble) (common->max_upload_speed / 1024));
@@ -622,7 +622,7 @@ void  ugtk_download_form_set (UgtkDownloadForm* dform, UgetNode* node, gboolean 
 		gtk_spin_button_set_value ((GtkSpinButton*) dform->spin_download_speed,
 				(gdouble) (common->max_download_speed / 1024));
 	}
-#endif
+
 	if (keep_changed==FALSE || dform->changed.connections==FALSE) {
 		gtk_spin_button_set_value ((GtkSpinButton*) dform->spin_connections,
 			common->max_connections);
