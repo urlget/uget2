@@ -359,10 +359,7 @@ static int  plugin_ctrl (UgetPluginAria2* plugin, int code, void* data)
 		// speed control
 		return plugin_ctrl_speed (plugin, data);
 
-	case UGET_PLUGIN_CTRL_DATA_CHANGED:
-		break;
-
-	case UGET_PLUGIN_CTRL_LIMIT_CHANGED:
+	case UGET_PLUGIN_CTRL_NODE_UPDATED:
 		break;
 	}
 
@@ -376,7 +373,9 @@ static int  plugin_ctrl_speed (UgetPluginAria2* plugin, int* speed)
 
 	// Don't do anything if speed limit keep no change.
 	if (plugin->limit[0] == speed[0] && plugin->limit[1] == speed[1])
-		return TRUE;
+		if (plugin->limit_by_user == FALSE)
+			return TRUE;
+	plugin->limit_by_user = FALSE;
 	// decide speed limit by user specified data.
 	if (plugin->node == NULL) {
 		plugin->limit[0] = speed[0];
@@ -452,6 +451,13 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 
 	// ------------------------------------------------
 	temp.common = ug_info_realloc (&node->info, UgetCommonInfo);
+	// sync changed limit from UgetNode
+	if (plugin->limit[1] != temp.common->max_upload_speed ||
+		plugin->limit[0] != temp.common->max_download_speed)
+	{
+		plugin->limit_by_user = TRUE;
+	}
+
 	// add nodes by files
 	if (plugin->files_per_gid_prev != plugin->files_per_gid) {
 #ifndef NDEBUG
@@ -650,6 +656,12 @@ static int  plugin_insert_node (UgetPluginAria2* plugin,
 {
 	UgetNode*  node;
 	char*      ctrl_file;
+
+	// aria2 magnet metadata file
+//	if (plugin->uri_type == URI_MAGNET) {
+//		if (strncmp ("[METADATA]", fpath, 10) == 0)
+//			fpath += 10;
+//	}
 
 	for (node = plugin->node->children;  node;  node = node->next) {
 		if (strcmp (node->name, fpath) == 0)

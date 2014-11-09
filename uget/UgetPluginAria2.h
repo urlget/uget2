@@ -111,6 +111,7 @@ struct UgetPluginAria2
 	// limit[1] = upload speed limit
 	int               limit[2];
 	uint8_t           limit_changed:1;
+	uint8_t           limit_by_user:1; // speed limit changed by user
 
 	// flags
 	uint8_t    synced:1;

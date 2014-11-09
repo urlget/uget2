@@ -200,10 +200,7 @@ static int  plugin_ctrl (UgetPluginEmpty* plugin, int code, void* data)
 		// speed control
 		return plugin_ctrl_speed (plugin, data);
 
-	case UGET_PLUGIN_CTRL_DATA_CHANGED:
-		break;
-
-	case UGET_PLUGIN_CTRL_LIMIT_CHANGED:
+	case UGET_PLUGIN_CTRL_NODE_UPDATED:
 		break;
 	}
 	return FALSE;

@@ -116,6 +116,7 @@ struct UgetPluginCurl
 	} base, size, speed, limit;
 
 	// flags
+	uint8_t       limit_by_user:1; // speed limit changed by user
 	uint8_t       limit_changed:1; // speed limit changed
 	uint8_t       file_renamed:1;  // has file path?
 	uint8_t       aria2_created:1; // has aria2 ctrl file?

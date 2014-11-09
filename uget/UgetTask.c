@@ -238,7 +238,7 @@ void  uget_task_add_watch (UgetTask* task, UgetWatchFunc func, void* data)
 // ----------------------------------------------------------------------------
 // speed control
 
-#define SPEED_MIN        1024
+#define SPEED_MIN        512
 
 static void uget_task_disable_limit_index (UgetTask* task, int idx);
 static void uget_task_adjust_speed_index (UgetTask* task, int idx, int limit_new);

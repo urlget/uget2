@@ -251,10 +251,7 @@ static int  plugin_ctrl (UgetPluginCurl* plugin, int code, void* data)
 		// speed control
 		return plugin_ctrl_speed (plugin, data);
 
-	case UGET_PLUGIN_CTRL_DATA_CHANGED:
-		break;
-
-	case UGET_PLUGIN_CTRL_LIMIT_CHANGED:
+	case UGET_PLUGIN_CTRL_NODE_UPDATED:
 		break;
 	}
 
@@ -268,14 +265,16 @@ static int  plugin_ctrl_speed (UgetPluginCurl* plugin, int* speed)
 
 	// Don't do anything if speed limit keep no change.
 	if (plugin->limit.download == speed[0] && plugin->limit.upload == speed[1])
-		return TRUE;
+		if (plugin->limit_by_user == FALSE)
+			return TRUE;
+	plugin->limit_by_user = FALSE;
 	// decide speed limit by user specified data.
 	if (plugin->node == NULL) {
 		plugin->limit.download = speed[0];
 		plugin->limit.upload = speed[1];
 	}
 	else {
-		common = ug_info_realloc (&plugin->node->info, UgetCommonInfo);
+		common = plugin->common;
 		// download
 		value = speed[0];
 		if (common->max_download_speed) {
@@ -321,6 +320,18 @@ static int  plugin_sync (UgetPluginCurl* plugin)
 	node = plugin->node;
 	common = ug_info_realloc (&node->info, UgetCommonInfo);
 	common->retry_count = plugin->common->retry_count;
+	// sync changed limit from UgetNode
+	if (plugin->common->max_upload_speed != common->max_upload_speed ||
+		plugin->common->max_download_speed != common->max_download_speed)
+	{
+		plugin->common->max_upload_speed = common->max_upload_speed;
+		plugin->common->max_download_speed = common->max_download_speed;
+		plugin->limit_by_user = TRUE;
+	}
+    plugin->common->max_connections = common->max_connections;
+    plugin->common->retry_limit = common->retry_limit;
+    if (common->max_connections > 0)
+		plugin->seg.n_max = common->max_connections;
 
 	progress = ug_info_realloc (&node->info, UgetProgressInfo);
 	progress->upload_speed   = plugin->speed.upload;
@@ -1281,7 +1292,7 @@ static UgetCurl* create_segment (UgetPluginCurl* plugin)
 }
 
 // speed control
-#define SPEED_MIN    512
+#define SPEED_MIN    256
 
 static void  adjust_speed_limit_index (UgetPluginCurl* plugin, int idx, int64_t remain)
 {

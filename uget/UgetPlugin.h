@@ -55,7 +55,7 @@ typedef enum {
 	UGET_PLUGIN_CTRL_START,    // UgetNode*
 	UGET_PLUGIN_CTRL_STOP,
 	UGET_PLUGIN_CTRL_SPEED,    // int*, int[0] = download, int[1] = upload
-	UGET_PLUGIN_CTRL_DATA_CHANGED,
+	UGET_PLUGIN_CTRL_NODE_UPDATED,
 	UGET_PLUGIN_CTRL_LIMIT_CHANGED,
 } UgetPluginCtrlCode;
 
