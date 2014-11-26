@@ -254,12 +254,18 @@ void  ugtk_tray_icon_use_indicator (UgtkTrayIcon* trayicon, gboolean enable)
 
 static void	on_trayicon_activate (GtkStatusIcon* status_icon, UgtkApp* app)
 {
+	gint  x, y;
+
 	if (gtk_widget_get_visible ((GtkWidget*) app->window.self) == TRUE) {
 		// get position and size
-		gtk_window_get_position (app->window.self,
-				&app->setting.window.x, &app->setting.window.y);
+		gtk_window_get_position (app->window.self, &x, &y);
 		gtk_window_get_size (app->window.self,
 				&app->setting.window.width, &app->setting.window.height);
+		// gtk_window_get_position() may return: x == -32000, y == -32000
+		if (x + app->setting.window.width > 0)
+			app->setting.window.x = x;
+		if (y + app->setting.window.height > 0)
+			app->setting.window.y = y;
 		// hide window
 #if defined _WIN32 || defined _WIN64
 //		gtk_window_iconify (app->window.self);

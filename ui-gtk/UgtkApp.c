@@ -192,6 +192,7 @@ void  ugtk_app_get_window_setting (UgtkApp* app, UgtkSetting* setting)
 	GdkWindowState  gdk_wstate;
 	GdkWindow*      gdk_window;
 	GtkAllocation   allocation;
+	gint            x, y;
 
 	// get window position, size, and maximzied state
 	if (gtk_widget_get_visible (GTK_WIDGET (app->window.self)) == TRUE) {
@@ -204,10 +205,14 @@ void  ugtk_app_get_window_setting (UgtkApp* app, UgtkSetting* setting)
 			setting->window.maximized = FALSE;
 		// get geometry
 		if (setting->window.maximized == FALSE) {
-			gtk_window_get_position (app->window.self,
-					&setting->window.x, &setting->window.y);
+			gtk_window_get_position (app->window.self, &x, &y);
 			gtk_window_get_size (app->window.self,
 					&setting->window.width, &setting->window.height);
+			// gtk_window_get_position() may return: x == -32000, y == -32000
+			if (x + app->setting.window.width > 0)
+				setting->window.x = x;
+			if (y + app->setting.window.height > 0)
+				setting->window.y = y;
 		}
 	}
 	// GtkPaned position
