@@ -59,7 +59,8 @@
 #define strtoll		_strtoi64    // stdlib.h
 #endif
 
-#define MAX_REPEAT_COUNTS   10000
+#define MAX_REPEAT_DIGITS    5
+#define MAX_REPEAT_COUNTS    10000
 
 typedef struct UriLink      UriLink;
 
@@ -895,7 +896,8 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 
 	// path = folder + filename
 	ug_free (plugin->file.path);
-	plugin->file.path = ug_malloc (length + 11);  // + ".xxx.aria2" + '\0'
+	//                             length + digits + ".aria2" + '\0'
+	plugin->file.path = ug_malloc (length + MAX_REPEAT_DIGITS + 6 + 1);
 	plugin->file.path[0] = 0;  // you need this line if common->folder is NULL.
 	if (common->folder) {
 		strcpy (plugin->file.path, common->folder);
@@ -921,9 +923,11 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 				UG_S_IREAD | UG_S_IWRITE | UG_S_IRGRP | UG_S_IROTH);
 //		value = ug_open (plugin->file.path, UG_O_CREATE | UG_O_EXCL | UG_O_RDWR,
 //				UG_S_IREAD | UG_S_IWRITE | UG_S_IRGRP | UG_S_IROTH);
-		// check if this directory can't access
-//		if (value == -1 && ug_file_is_exist (plugin->file.path) == FALSE)
+		// check if this path can't access
+//		if (value == -1 && ug_file_is_exist (plugin->file.path) == FALSE) {
+//			ugcurl->event_code = UGET_EVENT_ERROR_FILE_CREATE_FAILED;
 //			return FALSE;    // error
+//		}
 
 		// check exist downloaded file & it's control file
 		strcat (plugin->file.path + length, ".aria2");
