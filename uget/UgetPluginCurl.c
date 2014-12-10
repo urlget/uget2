@@ -673,10 +673,17 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 				break;
 
 			case UGET_CURL_ERROR:
-				if (switch_uri (plugin, ugcurl, FALSE)) {
-					uget_curl_run (ugcurl, FALSE);
-					break;
+#if 1
+				if (ugcurl->event_code == UGET_EVENT_ERROR_CONNECT_FAILED)
+					switch_uri (plugin, ugcurl, FALSE);
+#else
+				if (ugcurl->event_code == UGET_EVENT_ERROR_CONNECT_FAILED) {
+					if (switch_uri (plugin, ugcurl, FALSE)) {
+						uget_curl_run (ugcurl, FALSE);
+						break;
+					}
 				}
+#endif
 				// recycle current UgetCurl
 				ugcurl->state = UGET_CURL_RECYCLED;
 				plugin->seg.n_recycled++;
