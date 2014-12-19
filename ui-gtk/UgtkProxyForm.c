@@ -132,7 +132,7 @@ static void  ugtk_proxy_form_std_init (UgtkProxyForm* pform)
 	widget = gtk_label_new_with_mnemonic (_("Port:"));
 	pform->port  = gtk_spin_button_new_with_range (0.0, 65535.0, 1.0);
 	gtk_entry_set_activates_default (GTK_ENTRY (pform->port), TRUE);
-	gtk_entry_set_width_chars (GTK_ENTRY (pform->port), 5);
+//	gtk_entry_set_width_chars (GTK_ENTRY (pform->port), 5);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (widget), pform->port);
 	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_box_pack_start (GTK_BOX (hbox), pform->port, FALSE, FALSE, 0);
