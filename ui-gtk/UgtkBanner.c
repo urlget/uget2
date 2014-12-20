@@ -80,12 +80,12 @@ void ugtk_banner_init (struct UgtkBanner* banner)
 	style_context = gtk_widget_get_style_context (GTK_WIDGET (banner->text_view));
 	gtk_style_context_get_background_color (style_context,
 			GTK_STATE_FLAG_SELECTED, &rgba);
-	gtk_widget_override_background_color (
-			GTK_WIDGET (banner->text_view), GTK_STATE_FLAG_NORMAL, &rgba);
+//	gtk_widget_override_background_color (
+//			GTK_WIDGET (banner->text_view), GTK_STATE_FLAG_NORMAL, &rgba);
 	gtk_style_context_get_color (style_context,
 			GTK_STATE_FLAG_SELECTED, &rgba);
-	gtk_widget_override_color (
-			GTK_WIDGET (banner->text_view), GTK_STATE_FLAG_NORMAL, &rgba);
+//	gtk_widget_override_color (
+//			GTK_WIDGET (banner->text_view), GTK_STATE_FLAG_NORMAL, &rgba);
 	// close button
 	gtk_box_pack_end (GTK_BOX (banner->self),
 			create_x_button (banner), FALSE, FALSE, 0);
