@@ -506,6 +506,11 @@ static gboolean  ugtk_app_timeout_ipc (UgtkApp* app)
 //		if (gtk_widget_get_visible ((GtkWidget*) app->window.self) == FALSE)
 //			gtk_window_deiconify (app->window.self);
 		gtk_window_present (app->window.self);
+		// set position and size
+		gtk_window_move (app->window.self,
+				app->setting.window.x, app->setting.window.y);
+		gtk_window_resize (app->window.self,
+				app->setting.window.width, app->setting.window.height);
 	}
 
 	if (app->ipc->value.input_file)
