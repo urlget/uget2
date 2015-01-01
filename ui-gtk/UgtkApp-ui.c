@@ -38,6 +38,7 @@
 #include <UgtkNodeList.h>
 #include <UgtkNodeTree.h>
 #include <UgtkNodeView.h>
+#include <gdk/gdk.h>        // GdkScreen
 
 #include <glib/gi18n.h>
 
@@ -49,8 +50,8 @@ void  ugtk_app_init_ui (UgtkApp* app)
 {
 #if defined _WIN32 || defined _WIN64
 	// This will use icons\hicolor\index.theme
-	GtkIconTheme*	icon_theme;
-	gchar*			path;
+	GtkIconTheme*   icon_theme;
+	gchar*          path;
 
 	icon_theme = gtk_icon_theme_get_default ();
 	path = g_build_filename (DATADIR, "icons", NULL);
@@ -90,10 +91,34 @@ static void ugtk_window_init_ui (struct UgtkWindow* window, UgtkApp* app)
 	GtkBox*  vbox;
 	GtkBox*  lbox;    // left side vbox
 	GtkBox*  rbox;    // right side vbox
+	GdkScreen*  screen;
+	gint        width, height;
+
+	screen = gdk_screen_get_default ();
+	if (screen) {
+		width  = gdk_screen_get_width (screen);
+		height = gdk_screen_get_height (screen);
+	}
+	else {
+		width  = 0;
+		height = 0;
+	}
+	if (width > 1200 && height > 800) {
+		width  = 1080;
+		height = 720;
+	}
+	else if (width > 1000 && height > 700) {
+		width  = 880;
+		height = 640;
+	}
+	else {
+		width  = 640;
+		height = 480;
+	}
 
 	window->self = (GtkWindow*) gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title (window->self, UGTK_APP_NAME);
-	gtk_window_resize (window->self, 780, 480);
+	gtk_window_resize (window->self, width, height);
 	gtk_window_add_accel_group (window->self, app->accel_group);
 	gtk_window_set_default_icon_name (UGTK_APP_ICON_NAME);
 
