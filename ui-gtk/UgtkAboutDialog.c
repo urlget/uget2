@@ -1,6 +1,6 @@
 static const char	uget_license[] =
 {
-" Copyright (C) 2005-2014 by C.H. Huang"                                "\n"
+" Copyright (C) 2005-2015 by C.H. Huang"                                "\n"
 " plushuang.tw@gmail.com"                                               "\n"
                                                                         "\n"
 "This library is free software; you can redistribute it and/or"         "\n"

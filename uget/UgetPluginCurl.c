@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2014 by C.H. Huang
+ *   Copyright (C) 2012-2015 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -59,8 +59,8 @@
 #define strtoll		_strtoi64    // stdlib.h
 #endif
 
-#define MAX_REPEAT_DIGITS    5
-#define MAX_REPEAT_COUNTS    10000
+#define MAX_REPEAT_DIGITS    5       //  + '.' + digits
+#define MAX_REPEAT_COUNTS    10000   // <= 9999
 
 typedef struct UriLink      UriLink;
 
@@ -1070,7 +1070,7 @@ static int  load_file_info (UgetPluginCurl* plugin)
 	// filename
 	length += strlen (common->file);
 	// path
-	path = ug_malloc (length + 11);  // + ".xxx.aria2" + '\0'
+	path = ug_malloc (length + 6 + 1);  // length + ".aria2" + '\0'
 	path[0] = 0;  // you need this line if common->folder is NULL.
 	if (common->folder) {
 		strcpy (path, common->folder);
