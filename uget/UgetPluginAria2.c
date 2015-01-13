@@ -519,9 +519,13 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 		break;
 
 	case ARIA2_STATUS_WAITING:
+		// clear uploading state
+		node->state &= ~UGET_STATE_UPLOADING;
 		break;
 
 	case ARIA2_STATUS_COMPLETE:
+		// clear uploading state
+		node->state &= ~UGET_STATE_UPLOADING;
 		// remove completed gid
 		ug_free (plugin->gids.at[0]);
 		plugin->gids.length -= 1;
@@ -565,6 +569,8 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 		break;
 
 	case ARIA2_STATUS_ERROR:
+		// clear uploading state
+		node->state &= ~UGET_STATE_UPLOADING;
 #ifdef NO_RETRY_IF_CONNECT_FAILED
 		// download speed was too slow
 		if (plugin->errorCode == 5) {
@@ -614,6 +620,8 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 		break;
 
 	case ARIA2_STATUS_REMOVED:
+		// clear uploading state
+		node->state &= ~UGET_STATE_UPLOADING;
 		// debug
 		event = uget_event_new_normal (0, _("aria2: gid was removed."));
 		uget_plugin_post ((UgetPlugin*)plugin, event);
