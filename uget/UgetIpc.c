@@ -49,7 +49,7 @@
 #define UGET_IPC_PORT      "14777"
 #define UGET_IPC_ADDR      "127.0.0.1"
 #define UGET_IPC_NAME      "uGetIPC-"
-#define UGET_IPC_NAME_ABS  "com.ugetdm.uGet"
+#define UGET_IPC_NAME_ABS  "com.ugetdm.uget"
 #define UGET_IPC_LIMIT     50
 
 #define UGET_IPC_ERROR     'E'
@@ -164,7 +164,7 @@ UgLinkStr* ug_link_str_new (const char* string, int length)
 
 	if (length == -1)
 		length = strlen (string);
-	link = ug_malloc (sizeof (UgLinkStr) + length);
+	link = (UgLinkStr*) ug_malloc (sizeof (UgLinkStr) + length);
 	link->self = link;
 	link->next = NULL;
 	link->prev = NULL;
@@ -207,7 +207,7 @@ static int  buffer_get_line (UgBuffer* buffer, char** beg, char** end)
 
 	for (cur = beg[0];  ;  ) {
 		for (length = 0;  cur < buffer->cur;  cur++, length++) {
-			if (cur[0] == '\n')
+			if (cur[0] == '\x00')
 				goto exit;
 		}
 		if (cur == buffer->cur) {
@@ -224,7 +224,7 @@ static int  buffer_get_line (UgBuffer* buffer, char** beg, char** end)
 	}
 
 exit:
-	if (**beg == '\r')
+	if (**beg == '\r' || **beg == '\n')
 		*beg += 1;
 	if (end)
 		end[0] = cur;
@@ -274,7 +274,7 @@ static void on_receiving (UgSocketServer* server, SOCKET client_fd, void* data)
 		ipc->buffer.beg[0] = 'U';
 		ipc->buffer.beg[1] = 'G';
 		ipc->buffer.beg[2] = UGET_IPC_OK;
-		ipc->buffer.beg[3] = '\n';
+		ipc->buffer.beg[3] = '\x00';
 		send (client_fd, ipc->buffer.beg, 4, 0);
 		break;
 	}
@@ -294,7 +294,7 @@ UgetIpc*  uget_ipc_new (void)
 	WSAStartup (MAKEWORD (2, 2), &WSAData);
 #endif
 
-	ipc = ug_malloc (sizeof (UgetIpc));
+	ipc = (UgetIpc*) ug_malloc (sizeof (UgetIpc));
 	ipc->server = NULL;
 	ug_list_init (&ipc->queue);
 	ug_mutex_init (&ipc->queue_mutex);
@@ -371,9 +371,20 @@ int   uget_ipc_server_get (UgetIpc* ipc, UgList* uris, UgInfo* info)
 	// clear all value
 	memset (&ipc->value, 0, sizeof (ipc->value));
 	ug_option_clear (&ipc->option);
+
 	// handle arguments
-	for (link = args->strings.head;  link;  link = link->next)
+#ifndef NDEBUG
+	puts ("*** arguments --- start ---");
+#endif
+	for (link = args->strings.head;  link;  link = link->next) {
 		ug_option_parse (&ipc->option, ((UgLinkStr*)link)->string, -1);
+#ifndef NDEBUG
+		puts (((UgLinkStr*)link)->string);
+#endif
+	}
+#ifndef NDEBUG
+	puts ("*** arguments --- end ---");
+#endif
 	uget_args_free (args);
 
 	if (ipc->option.others.length > 0 || ipc->value.input_file) {
@@ -481,12 +492,14 @@ int   uget_ipc_client_send (UgetIpc* ipc, int argc, char** argv)
 #endif
 
 	// UGET_IPC_SEND
-	ug_buffer_write (&ipc->buffer, "UGS\n", -1);
-	n = snprintf (ipc->buffer.cur, ug_buffer_remain (&ipc->buffer), "%d\n", argc);
+	ug_buffer_write (&ipc->buffer, "UGS", -1);
+	ug_buffer_write_char (&ipc->buffer, '\x00');
+	n = snprintf (ipc->buffer.cur, ug_buffer_remain (&ipc->buffer),
+	              "%d%c", argc, '\x00');
 	ipc->buffer.cur += n;
 	for (n = 0;  n < argc;  n++) {
 		ug_buffer_write (&ipc->buffer, argv[n], -1);
-		ug_buffer_write_char (&ipc->buffer, '\n');
+		ug_buffer_write_char (&ipc->buffer, '\x00');
 	}
 	if (send (fd, ipc->buffer.beg, ug_buffer_length (&ipc->buffer), 0) > 0)
 		recv (fd, ipc->buffer.beg, 4, 0);
