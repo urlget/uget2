@@ -61,6 +61,9 @@ UgtkSettingDialog*  ugtk_setting_dialog_new (const gchar* title, GtkWindow* pare
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			GTK_STOCK_OK,     GTK_RESPONSE_OK,
 			NULL);
+#if GTK_MAJOR_VERSION <= 3 && GTK_MINOR_VERSION < 14
+	gtk_window_set_has_resize_grip ((GtkWindow*) dialog->self, FALSE);
+#endif
 	gtk_dialog_set_default_response (dialog->self, GTK_RESPONSE_OK);
 	vbox = (GtkBox*) gtk_dialog_get_content_area (dialog->self);
 	hbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);

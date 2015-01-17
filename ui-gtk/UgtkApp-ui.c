@@ -121,6 +121,9 @@ static void ugtk_window_init_ui (struct UgtkWindow* window, UgtkApp* app)
 	gtk_window_resize (window->self, width, height);
 	gtk_window_add_accel_group (window->self, app->accel_group);
 	gtk_window_set_default_icon_name (UGTK_APP_ICON_NAME);
+#if GTK_MAJOR_VERSION <= 3 && GTK_MINOR_VERSION < 14
+	gtk_window_set_has_resize_grip (window->self, FALSE);
+#endif
 
 	// top container for Main Window
 	vbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);

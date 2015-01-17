@@ -56,6 +56,9 @@ UgtkBatchDialog*  ugtk_batch_dialog_new (const char* title,
 	ugtk_node_dialog_init ((UgtkNodeDialog*) bdialog, title, app, FALSE);
 	ugtk_download_form_set_multiple (&bdialog->download, TRUE);
 
+#if GTK_MAJOR_VERSION <= 3 && GTK_MINOR_VERSION < 14
+	gtk_window_set_has_resize_grip ((GtkWindow*)bdialog->self, FALSE);
+#endif
 	gtk_window_resize ((GtkWindow*)bdialog->self, 500, 350);
 	// back button
 	gtk_dialog_add_button (bdialog->self, GTK_STOCK_GO_BACK,

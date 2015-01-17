@@ -87,6 +87,9 @@ void  ugtk_node_dialog_init (UgtkNodeDialog* ndialog,
 	gtk_window_set_destroy_with_parent (window, TRUE);
 	if (title)
 		gtk_window_set_title (window, title);
+#if GTK_MAJOR_VERSION <= 3 && GTK_MINOR_VERSION < 14
+	gtk_window_set_has_resize_grip (window, FALSE);
+#endif
 
 	// decide sensitive by plug-in matching order
 	switch (app->setting.plugin_order) {

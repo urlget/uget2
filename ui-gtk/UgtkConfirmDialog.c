@@ -89,6 +89,9 @@ UgtkConfirmDialog*  ugtk_confirm_dialog_new (UgtkConfirmDialogMode mode, UgtkApp
 			GTK_STOCK_YES, GTK_RESPONSE_YES,
 			NULL);
 	g_free (temp);
+#if GTK_MAJOR_VERSION <= 3 && GTK_MINOR_VERSION < 14
+	gtk_window_set_has_resize_grip ((GtkWindow*) cdialog->self, FALSE);
+#endif
 
 	gtk_container_set_border_width (GTK_CONTAINER (cdialog->self), 4);
 	vbox = (GtkBox*) gtk_dialog_get_content_area (cdialog->self);
