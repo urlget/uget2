@@ -155,8 +155,13 @@ static void ugtk_download_form_init_page1 (UgtkDownloadForm* dform, UgtkProxyFor
 	dform->folder_entry = gtk_bin_get_child (GTK_BIN (dform->folder_combo));
 	widget = dform->folder_entry;
 	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
+#if GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 10
 	gtk_entry_set_icon_from_icon_name (GTK_ENTRY (widget),
+			GTK_ENTRY_ICON_SECONDARY, "folder");
+#else
+	gtk_entry_set_icon_from_stock (GTK_ENTRY (widget),
 			GTK_ENTRY_ICON_SECONDARY, GTK_STOCK_DIRECTORY);
+#endif
 	gtk_entry_set_icon_tooltip_text (GTK_ENTRY (widget),
 			GTK_ENTRY_ICON_SECONDARY, _("Select Folder"));
 	g_object_set (dform->folder_combo, "margin", 1, "hexpand", TRUE, NULL);
@@ -294,8 +299,13 @@ static void ugtk_download_form_init_page2 (UgtkDownloadForm* dform)
 	// entry - cookie file
 	widget = gtk_entry_new ();
 	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
+#if GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 10
 	gtk_entry_set_icon_from_icon_name (GTK_ENTRY (widget),
+			GTK_ENTRY_ICON_SECONDARY, "text-x-generic");
+#else
+	gtk_entry_set_icon_from_stock (GTK_ENTRY (widget),
 			GTK_ENTRY_ICON_SECONDARY, GTK_STOCK_FILE);
+#endif
 	gtk_entry_set_icon_tooltip_text (GTK_ENTRY (widget),
 			GTK_ENTRY_ICON_SECONDARY, _("Select Cookie File"));
 	g_object_set (widget, "margin", 1, "hexpand", TRUE, NULL);
@@ -315,8 +325,13 @@ static void ugtk_download_form_init_page2 (UgtkDownloadForm* dform)
 	// entry - post file
 	widget = gtk_entry_new ();
 	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
+#if GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 10
 	gtk_entry_set_icon_from_icon_name (GTK_ENTRY (widget),
+			GTK_ENTRY_ICON_SECONDARY, "text-x-generic");
+#else
+	gtk_entry_set_icon_from_stock (GTK_ENTRY (widget),
 			GTK_ENTRY_ICON_SECONDARY, GTK_STOCK_FILE);
+#endif
 	gtk_entry_set_icon_tooltip_text (GTK_ENTRY (widget),
 			GTK_ENTRY_ICON_SECONDARY, _("Select Post File"));
 	g_object_set (widget, "margin", 1, "hexpand", TRUE, NULL);
