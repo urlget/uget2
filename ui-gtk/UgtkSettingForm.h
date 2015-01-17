@@ -160,7 +160,8 @@ struct UgtkPluginForm
 	GtkWidget*  self;
 
 	GtkComboBoxText*    order;
-	// auto save and interval
+
+	// Aria2 options
 	GtkWidget*          aria2_opts;
 	GtkToggleButton*    launch;
 	GtkToggleButton*    shutdown;
@@ -170,8 +171,7 @@ struct UgtkPluginForm
 	GtkEntry*           path;
 	GtkWidget*          args;   // GtkTextView
 	GtkTextBuffer*      args_buffer;
-
-	// Speed Limits
+	// Speed Limits for Aria2
 	GtkSpinButton*      upload;    // KiB/s
 	GtkSpinButton*      download;  // KiB/s
 };

@@ -49,7 +49,7 @@ const static UgCompareFunc  compare_funcs[UGTK_NODE_N_COLUMNS];
 
 void  ugtk_traveler_init (UgtkTraveler* traveler, UgtkApp* app)
 {
-	GtkScrolledWindow*	scroll;
+	GtkScrolledWindow*  scroll;
 	GtkTreePath*        path;
 	GtkTreeViewColumn*  column;
 	gint                nth;

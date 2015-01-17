@@ -50,6 +50,7 @@ void  ugtk_clipboard_form_init (struct UgtkClipboardForm* csform)
 	GtkWidget*   widget;
 	GtkBox*      vbox;
 	GtkBox*      hbox;
+	GtkScrolledWindow*  scroll;
 
 	csform->self = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 	vbox = (GtkBox*) csform->self;
@@ -86,14 +87,19 @@ void  ugtk_clipboard_form_init (struct UgtkClipboardForm* csform)
 	gtk_box_pack_start (vbox, (GtkWidget*) hbox, FALSE, FALSE, 2);
 	widget = gtk_label_new (_("Monitor clipboard for specified file types:"));
 	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 1);
+	// Scrolled Window
+	scroll = (GtkScrolledWindow*) gtk_scrolled_window_new (NULL, NULL);
+	gtk_scrolled_window_set_shadow_type (scroll, GTK_SHADOW_IN);
+	gtk_widget_set_size_request (GTK_WIDGET (scroll), 100, 100);
+	gtk_box_pack_start (vbox, GTK_WIDGET (scroll), FALSE, FALSE, 2);
 	// file type pattern : TextView
 	csform->buffer = gtk_text_buffer_new (NULL);
 	csform->pattern = gtk_text_view_new_with_buffer (csform->buffer);
 	g_object_unref (csform->buffer);
-	gtk_widget_set_size_request (csform->pattern, 100, 100);
 	textview = (GtkTextView*) csform->pattern;
 	gtk_text_view_set_wrap_mode (textview, GTK_WRAP_WORD_CHAR);
-	gtk_box_pack_start (vbox, csform->pattern, FALSE, FALSE, 2);
+	gtk_container_add (GTK_CONTAINER (scroll),
+			GTK_WIDGET (csform->pattern));
 
 	// tips
 	hbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
@@ -504,6 +510,7 @@ void  ugtk_plugin_form_init (struct UgtkPluginForm* psform)
 	GtkBox*      hbox;
 	GtkBox*      box;
 	GtkWidget*   widget;
+	GtkScrolledWindow*  scroll;
 
 	psform->self = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 	vbox = (GtkBox*) psform->self;
@@ -630,13 +637,17 @@ void  ugtk_plugin_form_init (struct UgtkPluginForm* psform)
 	// Arguments - hint
 	widget = gtk_label_new (_("You must restart uGet after modifying it."));
 	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 0);
+	// Arguments - Scrolled Window
+	scroll = (GtkScrolledWindow*) gtk_scrolled_window_new (NULL, NULL);
+	gtk_scrolled_window_set_shadow_type (scroll, GTK_SHADOW_IN);
+	gtk_widget_set_size_request (GTK_WIDGET (scroll), 100, 50);
+	gtk_box_pack_start (box, GTK_WIDGET (scroll), FALSE, TRUE, 2);
 	// Arguments - text view
 	psform->args_buffer = gtk_text_buffer_new (NULL);
 	psform->args = gtk_text_view_new_with_buffer (psform->args_buffer);
 	g_object_unref (psform->args_buffer);
-	gtk_widget_set_size_request (psform->args, 100, 50);
 	gtk_text_view_set_wrap_mode ((GtkTextView*) psform->args, GTK_WRAP_WORD_CHAR);
-	gtk_box_pack_start (box, psform->args, FALSE, TRUE, 2);
+	gtk_container_add (GTK_CONTAINER (scroll), GTK_WIDGET (psform->args));
 
 	// ------------------------------------------------------------------------
 	on_plugin_launch_toggled ((GtkWidget*) psform->launch, psform);
