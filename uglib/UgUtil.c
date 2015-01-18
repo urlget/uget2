@@ -223,7 +223,7 @@ uint16_t*  ug_utf8_to_utf16 (const char* string, int count, int* utf16len)
 
 int  ug_utf8_get_invalid (const uint8_t* input, uint8_t* ch)
 {
-	int            nb, na;
+	int            nb = 0, na;
 	const uint8_t *c = input;
 
 	for (c = input;  *c;  c += (nb + 1)) {
