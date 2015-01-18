@@ -1,0 +1,1607 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: uGet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-09 16:11+0800\n"
+"PO-Revision-Date: 2014-11-27 06:52+0000\n"
+"Last-Translator: Michael Tunnell <michael@ugetdm.com>\n"
+"Language-Team: Oriya (India) (http://www.transifex.com/projects/p/uget/language/or_IN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: or_IN\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../po/../uget/UgetApp.c:95
+msgid "All Category"
+msgstr ""
+
+#. UGET_EVENT_NORMAL_CUSTOM
+#: ../../po/../uget/UgetEvent.c:58
+msgid "Connecting..."
+msgstr "ସଂଯୋଗ କରୁଛି......"
+
+#. UGET_EVENT_NORMAL_CONNECT
+#: ../../po/../uget/UgetEvent.c:59
+msgid "Transmitting..."
+msgstr "ପ୍ରେରଣ କରାଯାଉଛି..."
+
+#. UGET_EVENT_NORMAL_TRANSMIT,
+#: ../../po/../uget/UgetEvent.c:60 ../../po/../ui-gtk/UgtkNodeView.c:874
+msgid "Retry"
+msgstr "ପୁନଃ-ଚେଷ୍ଟା କରନ୍ତୁ"
+
+#. UGET_EVENT_NORMAL_RETRY,
+#: ../../po/../uget/UgetEvent.c:61
+msgid "Download completed"
+msgstr "ଆହରଣ ସମାପ୍ତ ହେଲା"
+
+#. UGET_EVENT_NORMAL_COMPLETE,
+#: ../../po/../uget/UgetEvent.c:62 ../../po/../ui-gtk/UgtkNodeView.c:613
+msgid "Finished"
+msgstr "ସମାପ୍ତ"
+
+#. UGET_EVENT_NORMAL_FINISH,
+#. resumable
+#: ../../po/../uget/UgetEvent.c:64
+msgid "Resumable"
+msgstr "ପୁନଃ-ଆରମ୍ଭଯୋଗ୍ୟ"
+
+#. UGET_EVENT_NORMAL_RESUMABLE,
+#: ../../po/../uget/UgetEvent.c:65 ../../po/../uget/UgetPluginAria2.c:279
+msgid "Not Resumable"
+msgstr "ପୁନଃ-ଆରମ୍ଭଯୋଗ୍ୟ ନୁହେଁ"
+
+#. UGET_EVENT_WARNING_CUSTOM
+#: ../../po/../uget/UgetEvent.c:73 ../../po/../uget/UgetPluginAria2.c:286
+msgid "Output file can't be renamed."
+msgstr "ନିର୍ଗମ ଫାଇଲର ପୁନଃ-ନାମକରଣ କରି ହେବ ନାହିଁ"
+
+#. UGET_EVENT_ERROR_CUSTOM
+#: ../../po/../uget/UgetEvent.c:81
+msgid "couldn't connect to host."
+msgstr "ହୋଷ୍ଟ ସହିତ ଯୋଗାଯୋଗ କରାଯାଇ ପାରୁନାହିଁ"
+
+#. UGET_EVENT_ERROR_CONNECT_FAILED
+#: ../../po/../uget/UgetEvent.c:82 ../../po/../uget/UgetPluginAria2.c:290
+msgid "Folder can't be created."
+msgstr "ଫୋଲ୍ଡର ତିଆରି କରିହେବନାହିଁ"
+
+#. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
+#: ../../po/../uget/UgetEvent.c:83
+msgid "File can't be created (bad filename or file exist)."
+msgstr "ଫାଇଲ ତିଆରି କରି ହେବନାହିଁ (ଖରାପ ନାମ ଅଥବା ଏହି ନାମରେ ଫାଇଲ ଆଗରୁ ଉପଲବ୍ଧ)"
+
+#. UGET_EVENT_ERROR_FILE_CREATE_FAILED
+#: ../../po/../uget/UgetEvent.c:84
+msgid "File can't be opened."
+msgstr "ଫାଇଲ ଖୋଲି ହେଉନାହିଁ"
+
+#. UGET_EVENT_ERROR_FILE_OPEN_FAILED
+#: ../../po/../uget/UgetEvent.c:85
+msgid "Unable to create thread."
+msgstr ""
+
+#. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
+#: ../../po/../uget/UgetEvent.c:86
+msgid "Incorrect source (different file size)."
+msgstr ""
+
+#. UGET_EVENT_ERROR_INCORRECT_SOURCE,
+#: ../../po/../uget/UgetEvent.c:87
+msgid "Out of resource (disk full or run out of memory)."
+msgstr "ସମ୍ବଳର ଅଭାବ (ଡିସ୍କ ଭର୍ତି ଅଥବା ସ୍ମୃତିର ଅଭାବ)"
+
+#. UGET_EVENT_ERROR_OUT_OF_RESOURCE
+#: ../../po/../uget/UgetEvent.c:88
+msgid "No output file."
+msgstr "ନିର୍ଗମ ଫାଇଲ ନାହିଁ"
+
+#. UGET_EVENT_ERROR_NO_OUTPUT_FILE
+#: ../../po/../uget/UgetEvent.c:89
+msgid "No output setting."
+msgstr "ନିର୍ଗମ ବିନ୍ୟାସ ନାହିଁ"
+
+#. UGET_EVENT_ERROR_NO_OUTPUT_SETTING
+#: ../../po/../uget/UgetEvent.c:90
+msgid "Too many retries."
+msgstr "ମାତ୍ରାଧିକ ପୁନଃ-ଚେଷ୍ଟା"
+
+#. UGET_EVENT_ERROR_TOO_MANY_RETRIES
+#: ../../po/../uget/UgetEvent.c:91
+msgid "Unsupported scheme (protocol)."
+msgstr "ଅସମର୍ଥିତ ଯୋଜନା (ଅଧିନିୟମ)"
+
+#. UGET_EVENT_ERROR_UNSUPPORTED_SCHEME
+#: ../../po/../uget/UgetEvent.c:92
+msgid "Unsupported file."
+msgstr "ଅସମର୍ଥିତ ଫାଇଲ"
+
+#. 1 - 10
+#: ../../po/../uget/UgetPluginAria2.c:272
+msgid "aria2: an unknown error occurred."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:273
+msgid "aria2: time out occurred."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:274
+msgid "aria2: resource was not found."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:275
+msgid ""
+"aria2 saw the specfied number of 'resource not found' error. See --max-file-"
+"not-found option"
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:276
+msgid "aria2: speed was too slow."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:277
+msgid "aria2: network problem occurred."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:278
+msgid "aria2: unfinished downloads."
+msgstr ""
+
+#. _("Not Resumable"),
+#: ../../po/../uget/UgetPluginAria2.c:280
+msgid "Out of resource"
+msgstr ""
+
+#. _(),
+#: ../../po/../uget/UgetPluginAria2.c:281
+msgid "aria2: piece length was different from one in .aria2 control file."
+msgstr ""
+
+#. 11 - 20
+#: ../../po/../uget/UgetPluginAria2.c:283
+msgid "aria2 was downloading same file."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:284
+msgid "aria2 was downloading same info hash torrent."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:285
+msgid "aria2: file already existed. See --allow-overwrite option."
+msgstr ""
+
+#. _("Output file can't be renamed."),
+#: ../../po/../uget/UgetPluginAria2.c:287
+msgid "aria2: could not open existing file."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:288
+msgid "aria2: could not create new file or truncate existing file."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:289
+msgid "aria2: file I/O error occurred."
+msgstr ""
+
+#. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
+#: ../../po/../uget/UgetPluginAria2.c:291
+msgid "aria2: name resolution failed."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:292
+msgid "aria2: could not parse Metalink document."
+msgstr ""
+
+#. 21 - 30
+#: ../../po/../uget/UgetPluginAria2.c:294
+msgid "aria2: FTP command failed."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:295
+msgid "aria2: HTTP response header was bad or unexpected."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:296
+msgid "Too many redirections."
+msgstr "ମାତ୍ରାଧିକ ପୁନଃ-ନିର୍ଦ୍ଦେଶନା"
+
+#: ../../po/../uget/UgetPluginAria2.c:297
+msgid "aria2: HTTP authorization failed."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:298
+msgid "aria2: could not parse bencoded file(usually .torrent file)."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:299
+msgid "aria2: torrent file was corrupted or missing information."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:300
+msgid "aria2: Magnet URI was bad."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:301
+msgid ""
+"aria2: bad/unrecognized option was given or unexpected option argument was "
+"given."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:302
+msgid "aria2: remote server was unable to handle the request."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:303
+msgid "aria2: could not parse JSON-RPC request."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginAria2.c:306
+msgid "No response. Is aria2 shutdown?"
+msgstr ""
+
+#. debug
+#: ../../po/../uget/UgetPluginAria2.c:608
+msgid "aria2: gid was removed."
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkAboutDialog.c:46
+msgid "Download Manager"
+msgstr "ଆହରଣ ପରିଚାଳକ"
+
+#: ../../po/../ui-gtk/UgtkAboutDialog.c:48
+msgid "translator-credits"
+msgstr "ଅନୁବାଦକ-କ୍ରେଡିଟ"
+
+#: ../../po/../ui-gtk/UgtkAboutDialog.c:80
+msgid "uGet Founder: "
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkAboutDialog.c:81
+msgid "uGet Project Manager: "
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:255
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:204
+msgid "tasks"
+msgstr "କାର୍ଯ୍ୟସବୁ"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:374
+msgid "New from Clipboard"
+msgstr "କ୍ଲିପ୍-ବୋର୍ଡ୍ ରୁ ନୂଆ"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:376 ../../po/../ui-gtk/UgtkApp.c:662
+msgid "New Download"
+msgstr "ନୂଆ ଆହରଣ"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:399 ../../po/../ui-gtk/UgtkApp.c:1411
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:103
+msgid "Clipboard"
+msgstr "କ୍ଲିପ୍-ବୋର୍ଡ୍"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:401
+msgid "Command line"
+msgstr "କମାଣ୍ଡ ଲାଇନ"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:758
+msgid "Error Occurred"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:759
+msgid "Error Occurred when downloading."
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:760
+msgid "Download Starting"
+msgstr "ଆହରଣ ଆରମ୍ଭ ହେଉଛି"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:761
+msgid "Starting download queue."
+msgstr "ଆହରଣ ଶୃଙ୍ଖଳା ଆରମ୍ଭ ହେଉଛି"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:762
+msgid "Download Completed"
+msgstr "ଆହରଣ ସମାପ୍ତ ହେଲା"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:763
+msgid "All queuing downloads have been completed."
+msgstr "ସମସ୍ତ ଶୃଙ୍ଖଳାବଦ୍ଧ ଆହରଣ ସମାପ୍ତ ହେଲା"
+
+#. ----------------------------------------------------
+#. frame for Status (start mode)
+#: ../../po/../ui-gtk/UgtkApp-ui.c:115
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:220
+#: ../../po/../ui-gtk/UgtkNodeView.c:997
+msgid "Status"
+msgstr "ସ୍ଥିତି"
+
+#. Summary Items - Category
+#. Download Columns - Category
+#: ../../po/../ui-gtk/UgtkApp-ui.c:117 ../../po/../ui-gtk/UgtkMenubar-ui.c:270
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:298
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:383
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:392
+#: ../../po/../ui-gtk/UgtkNodeView.c:889 ../../po/../ui-gtk/UgtkNodeView.c:977
+#: ../../po/../ui-gtk/UgtkSummary.c:139
+msgid "Category"
+msgstr "ବିଭାଗ"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:184
+msgid "Create new download"
+msgstr "ନୂଆ ଆହରଣ ତିଆରି କରନ୍ତୁ"
+
+#. New Download (accelerators)
+#. gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
+#. New Download
+#: ../../po/../ui-gtk/UgtkApp-ui.c:194 ../../po/../ui-gtk/UgtkMenubar-ui.c:58
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:59
+msgid "New _Download..."
+msgstr "New _Download..."
+
+#. New Category
+#: ../../po/../ui-gtk/UgtkApp-ui.c:201 ../../po/../ui-gtk/UgtkMenubar-ui.c:65
+msgid "New _Category..."
+msgstr "New _Category..."
+
+#. New Clipboard batch
+#: ../../po/../ui-gtk/UgtkApp-ui.c:207 ../../po/../ui-gtk/UgtkTrayIcon.c:66
+msgid "New Clipboard _batch..."
+msgstr "New Clipboard _batch..."
+
+#. New URL Sequence batch
+#: ../../po/../ui-gtk/UgtkApp-ui.c:214
+msgid "New _URL Sequence batch..."
+msgstr "New _URL Sequence batch..."
+
+#. New Torrent
+#. separator
+#. gtk_menu_shell_append ((GtkMenuShell*)submenu,
+#. gtk_separator_menu_item_new() );
+#. New Torrent
+#: ../../po/../ui-gtk/UgtkApp-ui.c:224 ../../po/../ui-gtk/UgtkMenubar-ui.c:73
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:75
+msgid "New Torrent..."
+msgstr "ନୂଆ ଟରେଣ୍ଟ..."
+
+#. New Metalink
+#: ../../po/../ui-gtk/UgtkApp-ui.c:231 ../../po/../ui-gtk/UgtkMenubar-ui.c:79
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:82
+msgid "New Metalink..."
+msgstr "ନୂଆ ମେଟାଲିଙ୍କ..."
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:240
+msgid "Save all settings"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:248
+msgid "Set selected download runnable"
+msgstr "ଚୟନୀତ ଆହରଣକୁ ଚଳନକ୍ଷମ ହିସାବରେ ସେଟ କରନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:253
+msgid "Set selected download to pause"
+msgstr "ଚୟନୀତ ଆହରଣ ବିରତି ପାଇଁ ସେଟ କରନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:258
+msgid "Set selected download properties"
+msgstr "ଚୟନୀତ ଆହରଣର ଗୁଣ-ଧର୍ମ ସ୍ଥିର କରନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:266
+msgid "Move selected download up"
+msgstr "ଚୟନୀତ ଆହରଣକୁ ଉପରକୁ ସ୍ଥାନାନ୍ତରିତ କରନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:271
+msgid "Move selected download down"
+msgstr "ଚୟନୀତ ଆହରଣକୁ ତଳକୁ ସ୍ଥାନାନ୍ତରିତ କରନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:276
+msgid "Move selected download to top"
+msgstr "ଚୟନୀତ ଆହରଣକୁ ସବୁଠାରୁ ଉପରକୁ ସ୍ଥାନାନ୍ତରିତ କରନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:281
+msgid "Move selected download to bottom"
+msgstr "ଚୟନୀତ ଆହରଣକୁ ସବୁଠାରୁ ତଳକୁ ସ୍ଥାନାନ୍ତରିତ କରନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkApp.c:634
+msgid "New Category"
+msgstr "ନୂଆ ବିଭାଗ"
+
+#: ../../po/../ui-gtk/UgtkApp.c:645
+msgid "Copy - "
+msgstr "ନକଲ କରନ୍ତୁ - "
+
+#: ../../po/../ui-gtk/UgtkApp.c:783
+msgid "Category Properties"
+msgstr "ବିଭାଗ ବୈଶିଷ୍ଟ୍ୟ"
+
+#: ../../po/../ui-gtk/UgtkApp.c:797
+msgid "Download Properties"
+msgstr "ଆହରଣ ଗୁଣ-ଧର୍ମ"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1028
+msgid "New Torrent"
+msgstr "ନୂଆ ଟରେଣ୍ଟ"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1044
+msgid "New Metalink"
+msgstr "ନୂଆ ମେଟାଲିଙ୍କ"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1053
+msgid "Open Torrent file"
+msgstr "ଟରେଣ୍ଟ ଫାଇଲ ଖୋଲନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1069
+msgid "Open Metalink file"
+msgstr "ମେଟାଲିଙ୍କ ଫାଇଲ ଖୋଲନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1109
+msgid "Failed to save category file."
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkApp.c:1129
+msgid "Failed to load category file."
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkApp.c:1140
+msgid "Save Category file"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkApp.c:1158
+msgid "Open Category file"
+msgstr ""
+
+#. add link
+#: ../../po/../ui-gtk/UgtkApp.c:1217
+msgid "Link <A>"
+msgstr "ଲିଙ୍କ <A>"
+
+#. add image
+#: ../../po/../ui-gtk/UgtkApp.c:1222
+msgid "Image <IMG>"
+msgstr "ଛବି <IMG>"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1267
+msgid "Text File"
+msgstr "ଟେକ୍ସଟ ଫାଇଲ"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1314
+msgid "Import URLs from HTML file"
+msgstr "HTML ଫାଇଲରୁ URL ଆମଦାନୀ କରନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1329
+msgid "Import URLs from text file"
+msgstr "ଟେକ୍ସଟ ଫାଇଲରୁ URL ଆମଦାନୀ କରନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1344
+msgid "Export URLs to text file"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkApp.c:1363
+msgid "URL Sequence batch"
+msgstr "କ୍ରମାନୁସାରେ ସଜ୍ଜିତ URL"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1390
+msgid "No URLs found in clipboard."
+msgstr "କ୍ଲିପ୍-ବୋର୍ଡ୍ ରେ କୌଣସି URL ମିଳିଲା ନାହିଁ"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1399
+msgid "All URLs had existed."
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkApp.c:1404
+msgid "Clipboard batch"
+msgstr "କ୍ଲିପ୍-ବୋର୍ଡ୍ ବ୍ୟାଚ"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1494
+msgid "New"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkApp.c:1613 ../../po/../ui-gtk/UgtkMenubar.c:383
+#: ../../po/../ui-gtk/UgtkMenubar.c:415 ../../po/../ui-gtk/UgtkNodeView.c:609
+msgid "Error"
+msgstr "ତ୍ରୁଟି"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1621 ../../po/../ui-gtk/UgtkSummary.c:184
+msgid "Message"
+msgstr "ବାର୍ତା"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1727
+#, c-format
+msgid "Selected %d items"
+msgstr "ଚୟନୀତ %d ଟି ବସ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkBanner.c:145 ../../po/../ui-gtk/UgtkBanner.c:165
+msgid "Attention uGetters:"
+msgstr "uGet ବ୍ୟବହାରକାରୀ, ଧ୍ୟାନ ଦିଅନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkBanner.c:148
+msgid ""
+"we are running a Donation Drive for uGet's Future Development, please click "
+msgstr "uGetର ଆଗାମୀ ଭବିଷ୍ୟତ ଓ ଉନ୍ନତି ପାଇଁ ଆମେ ଏକ ଆର୍ଥିକ ସାହାଯ୍ୟ କାର୍ଯ୍ୟକ୍ରମ ଚଳାଇଛୁ । ଦୟାକରି କ୍ଲିକ କରନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkBanner.c:151
+msgid "HERE"
+msgstr "ଏଠାରେ"
+
+#: ../../po/../ui-gtk/UgtkBanner.c:168
+msgid "please fill out this quick User Survey for uGet."
+msgstr "ଦୟାକରି ଏହି uGet ପାଇଁ ଏହି ପ୍ରଶ୍ନୋତ୍ତର ପତ୍ରଟି ପୂରଣ କରନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkBanner.c:171
+msgid "click here to take survey"
+msgstr "ପ୍ରଶ୍ନୋତ୍ତର କାର୍ଯ୍ୟକ୍ରମରେ ଭାଗ ନେବାପାଇଁ ଏଠାରେ କ୍ଲିକ କରନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:62
+msgid "Category _name:"
+msgstr "Category _name:"
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:82
+msgid "Active _downloads:"
+msgstr "Active _downloads:"
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:92
+msgid "Capacity of Finished:"
+msgstr "ସମାପ୍ତିର କ୍ଷମତା:"
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:102
+msgid "Capacity of Recycled:"
+msgstr "ପୁନଃ-ବ୍ୟବହାର କ୍ଷମତା:"
+
+#. ------------------------------------------------------------------------
+#. URI Matching conditions
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:111
+msgid "URI Matching conditions"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:118
+msgid "Matched _Hosts:"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:129
+msgid "Matched _Schemes:"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:140
+msgid "Matched _Types:"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:64
+msgid "Really Quit?"
+msgstr "ସତରେ ପ୍ରସ୍ଥାନ କରିବେ ?"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:65
+msgid "Are you sure you want to quit?"
+msgstr "ଆପଣ ନିଶ୍ଚିତ କି ଆପଣ ପ୍ରସ୍ଥାନ କରିବାକୁ ଚାହାନ୍ତି"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:69
+msgid "Really delete files?"
+msgstr "ସତରେ ଫାଇଲଗୁଡିକ ଅପସାରଣ କରିବାକୁ ଚାହାନ୍ତି ?"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:70
+msgid "Are you sure you want to delete files?"
+msgstr "ଆପଣ ଏହି ଫାଇଲସବୁ ଅପସାରଣ କରିବାକୁ ନିଶ୍ଚିତ କି ?"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:74
+msgid "Really delete category?"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:75
+msgid "Are you sure you want to delete category?"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:106
+msgid "Don't ask me again"
+msgstr ""
+
+#. URL - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:109
+#: ../../po/../ui-gtk/UgtkSequencer.c:63
+msgid "_URI:"
+msgstr ""
+
+#. Mirrors - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:128
+msgid "Mirrors:"
+msgstr "ମିରର ସବୁ:"
+
+#. File - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:144
+#: ../../po/../ui-gtk/UgtkProxyForm.c:385
+msgid "File:"
+msgstr "ଫାଇଲ:"
+
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:159
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:893
+msgid "Select Folder"
+msgstr "ଫୋଲ୍ଡର ବାଛନ୍ତୁ"
+
+#. Folder - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:167
+msgid "_Folder:"
+msgstr "_Folder:"
+
+#. Referrer - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:182
+msgid "Referrer:"
+msgstr "ପ୍ରେଷକ:"
+
+#. "Max Connections:" - title label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:207
+msgid "_Max Connections:"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:226
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:510
+msgid "_Runnable"
+msgstr "_Runnable"
+
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:228
+msgid "P_ause"
+msgstr "P_ause"
+
+#. ----------------------------------------------------
+#. frame for login
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:234
+msgid "Login"
+msgstr "ଲଗ୍-ଇନ୍"
+
+#. User - label
+#. user label & entry
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:248
+#: ../../po/../ui-gtk/UgtkProxyForm.c:149
+msgid "User:"
+msgstr "ଉପଭୋକ୍ତା:"
+
+#. Password - label
+#. password label & entry
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:264
+#: ../../po/../ui-gtk/UgtkProxyForm.c:160
+msgid "Password:"
+msgstr "ପ୍ରବେଶ ସଂକେତ:"
+
+#. label - cookie file
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:290
+msgid "Cookie file:"
+msgstr "କୂକି ଫାଇଲ:"
+
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:302
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:949
+msgid "Select Cookie File"
+msgstr "କୁକୀ ଫାଇଲ ବାଛନ୍ତୁ:"
+
+#. label - post file
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:311
+msgid "Post file:"
+msgstr "ପୋଷ୍ଟ ଫାଇଲ:"
+
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:323
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:1005
+msgid "Select Post File"
+msgstr "ପୋଷ୍ଟ ଫାଇଲ ବାଛନ୍ତୁ"
+
+#. label - user agent
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:333
+msgid "User Agent:"
+msgstr "ଇଉଜର ଏଜେଣ୍ଟ:"
+
+#. label - Max upload speed
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:349
+msgid "Max upload speed:"
+msgstr "ସର୍ବାଧିକ ଅପଲୋଡ ବେଗ:"
+
+#. label - "KiB/s"
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:361
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:379
+#: ../../po/../ui-gtk/UgtkSettingForm.c:280
+#: ../../po/../ui-gtk/UgtkSettingForm.c:292
+#: ../../po/../ui-gtk/UgtkSettingForm.c:566
+#: ../../po/../ui-gtk/UgtkSettingForm.c:578
+msgid "KiB/s"
+msgstr "କି.ବାଇଟ ସେକେଣ୍ଡପିଛା"
+
+#. label - Max download speed
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:367
+msgid "Max download speed:"
+msgstr "ସର୍ବାଧିକ ଆହରଣ ବେଗ:"
+
+#. Retry limit - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:385
+msgid "Retry _limit:"
+msgstr "Retry _limit:"
+
+#. counts - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:400
+msgid "counts"
+msgstr "ଗଣନା"
+
+#. Retry delay - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:407
+msgid "Retry _delay:"
+msgstr "Retry _delay:"
+
+#. seconds - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:422
+msgid "seconds"
+msgstr "ସେକେଣ୍ଡ"
+
+#. Retrieve timestamp
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:429
+msgid "Retrieve timestamp"
+msgstr "ଟାଇମଷ୍ଟାମ୍ପ ନେଇ ଆସନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:51
+msgid "_File"
+msgstr "_File"
+
+#. Batch Downloads --- start ---
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:86
+msgid "_Batch Downloads"
+msgstr "_Batch Downloads"
+
+#. Batch downloads - Clipboard batch
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:92
+msgid "_Clipboard batch..."
+msgstr "_Clipboard batch..."
+
+#. Batch downloads - URL Sequence batch
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:98
+msgid "_URL Sequence batch..."
+msgstr "_URL Sequence batch..."
+
+#. Batch downloads - Text file import (.txt)
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:104
+msgid "_Text file import (.txt)..."
+msgstr "_Text file import (.txt)..."
+
+#. Batch downloads - HTML file import (.html)
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:110
+msgid "_HTML file import (.html)..."
+msgstr "_HTML file import (.html)..."
+
+#. Batch downloads - Export to Text file (.txt)
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:118
+msgid "_Export to Text file (.txt)..."
+msgstr "_Export to Text file (.txt)..."
+
+#. Open Category
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:128
+msgid "_Open category..."
+msgstr ""
+
+#. Save Category
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:135
+msgid "_Save category as..."
+msgstr ""
+
+#. Save All
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
+msgid "Save _all settings"
+msgstr ""
+
+#. Offline mode
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:152
+msgid "Offline Mode"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:170
+msgid "_Edit"
+msgstr "_Edit"
+
+#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new()
+#. );
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:175
+msgid "Clipboard _Monitor"
+msgstr "Clipboard _Monitor"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:179
+msgid "Clipboard works quietly"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:183
+msgid "Command-line works quietly"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:187
+msgid "Skip existing URI"
+msgstr ""
+
+#. --- Completion Auto-Actions --- start ---
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:194
+msgid "Completion _Auto-Actions"
+msgstr ""
+
+#. Completion Auto-Actions - Disable
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:200
+msgid "_Disable"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:205
+msgid "Hibernate"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:210
+msgid "Suspend"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:215
+msgid "Shutdown"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:220
+msgid "Reboot"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:225
+msgid "Custom"
+msgstr ""
+
+#. Completion Auto-Actions - Remember
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
+msgid "Remember setting"
+msgstr ""
+
+#. Completion Auto-Actions - Help
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:235
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:610
+msgid "_Help"
+msgstr "_Help"
+
+#. --- Completion Auto-Actions --- end ---
+#. menu_item = gtk_menu_item_new_with_mnemonic (_("_Settings..."));
+#. Settings
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:241
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:91
+msgid "_Settings..."
+msgstr "_Settings..."
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:256
+msgid "_View"
+msgstr "_View"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:260
+msgid "_Toolbar"
+msgstr "_Toolbar"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:265
+msgid "Statusbar"
+msgstr "ସ୍ଥିତି-ସୂଚିକା"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:275
+msgid "_Summary"
+msgstr "_Summary"
+
+#. Summary Items --- start ---
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:283
+msgid "Summary _Items"
+msgstr "Summary _Items"
+
+#. Summary Items - Name
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:288
+msgid "_Name"
+msgstr "_Name"
+
+#. Summary Items - Folder
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:293
+msgid "_Folder"
+msgstr "_Folder"
+
+#. Summary Items - Elapsed
+#. menu_item = gtk_check_menu_item_new_with_mnemonic (_("_Elapsed"));
+#. gtk_check_menu_item_set_active ((GtkCheckMenuItem*) menu_item, TRUE);
+#. gtk_menu_shell_append ((GtkMenuShell*) submenu, menu_item);
+#. menubar->view.summary_items.elapsed = menu_item;
+#. Summary Items - URL
+#. Download Columns - URL
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:308
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:388
+msgid "_URL"
+msgstr "_URL"
+
+#. Summary Items - Message
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:313
+msgid "_Message"
+msgstr "_Message"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:328
+msgid "Download _Columns"
+msgstr "Download _Columns"
+
+#. Download Columns - Completed
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:333
+msgid "_Complete"
+msgstr "_Complete"
+
+#. Download Columns - Total
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:338
+msgid "_Size"
+msgstr "_Size"
+
+#. Download Columns - Percent (%)
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:343
+msgid "_Percent '%'"
+msgstr "_Percent '%'"
+
+#. Download Columns - Elapsed
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:348
+msgid "_Elapsed"
+msgstr "_Elapsed"
+
+#. Download Columns - Left
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:353
+msgid "_Left"
+msgstr "_Left"
+
+#. Download Columns - Speed
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:358
+#: ../../po/../ui-gtk/UgtkNodeView.c:818
+msgid "Speed"
+msgstr "ବେଗ"
+
+#. Download Columns - Up Speed
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:363
+#: ../../po/../ui-gtk/UgtkNodeView.c:832
+msgid "Up Speed"
+msgstr "ଅପ ବେଗ"
+
+#. Download Columns - Uploaded
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:368
+#: ../../po/../ui-gtk/UgtkNodeView.c:846
+msgid "Uploaded"
+msgstr "ଅପଲୋଡ ହୋଇଛି"
+
+#. Download Columns - Ratio
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:373
+#: ../../po/../ui-gtk/UgtkNodeView.c:860
+msgid "Ratio"
+msgstr "ଅନୁପାତ"
+
+#. Download Columns - Retry
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:378
+msgid "_Retry"
+msgstr "_Retry"
+
+#. Download Columns - Added On
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:393
+#: ../../po/../ui-gtk/UgtkNodeView.c:917
+msgid "Added On"
+msgstr "ଆରମ୍ଭ ସମୟ"
+
+#. Download Columns - Completed On
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:398
+#: ../../po/../ui-gtk/UgtkNodeView.c:931
+msgid "Completed On"
+msgstr "ସମାପ୍ତି ସମୟ"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:413
+msgid "_Category"
+msgstr "_Category"
+
+#. New Category
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:418
+msgid "_New Category..."
+msgstr "_New Category..."
+
+#. Delete Category
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:424
+msgid "_Delete Category"
+msgstr "_Delete Category"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:461
+msgid "_Download"
+msgstr "_Download"
+
+#. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE,
+#. accel_group);
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:473
+msgid "_Delete Entry"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:480
+msgid "Delete Entry and _File"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:495
+msgid "Open _Containing folder"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:504
+msgid "Force Start"
+msgstr "ବଳପୂର୍ବକ ଆରମ୍ଭ କରନ୍ତୁ"
+
+#. Move to --- start ---
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:528
+msgid "_Move To"
+msgstr "_Move To"
+
+#. Priority --- start ---
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:573
+msgid "Priority"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:582
+msgid "_High"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:587
+msgid "_Normal"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:592
+msgid "_Low"
+msgstr ""
+
+#. Get Help Online
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:615
+msgid "Get Help Online"
+msgstr "ଅନଲାଇନ ସାହାଯ୍ୟ ନିଅନ୍ତୁ"
+
+#. Documentation
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:622
+msgid "Documentation"
+msgstr "ନଥିପତ୍ର"
+
+#. Support Forum
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:629
+msgid "Support Forum"
+msgstr "ସହାୟତା କେନ୍ଦ୍ର"
+
+#. Submit Feedback
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:636
+msgid "Submit Feedback"
+msgstr "ମତାମତ ଦିଅନ୍ତୁ"
+
+#. Report a Bug
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:643
+msgid "Report a Bug"
+msgstr "ତ୍ରୁଟି ବିଷୟରେ ସୂଚନା ଦିଅନ୍ତୁ"
+
+#. Keyboard Shortcuts
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:650
+msgid "Keyboard Shortcuts"
+msgstr ""
+
+#. Check for Updates
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:657
+msgid "Check for Updates"
+msgstr "ଅଦ୍ୟତନ ଖୋଜନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkMenubar.c:144
+msgid "Settings"
+msgstr "ବିନ୍ୟାସ"
+
+#: ../../po/../ui-gtk/UgtkMenubar.c:377
+#, c-format
+msgid "Can't launch default application for file '%s'."
+msgstr " '%s' ଫାଇଲ ପାଇଁ ପୂର୍ବନିର୍ଦ୍ଧାରିତ ପ୍ରୟୋଗ ଆରମ୍ଭ ହୋଇପାରୁନି"
+
+#: ../../po/../ui-gtk/UgtkMenubar.c:409
+#, c-format
+msgid "'%s' - This folder does not exist."
+msgstr "'%s' - ଏହି ଫୋଲ୍ଡରଟି ଉପଲବ୍ଧ ନାହିଁ"
+
+#. title
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:205
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:209
+msgid "URI had existed"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:207
+msgid "This URI had existed, are you sure to continue?"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:343
+msgid "General"
+msgstr "ସାଧାରଣ"
+
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:345
+msgid "Advanced"
+msgstr "ଉନ୍ନତ"
+
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:354
+msgid "Category settings"
+msgstr "ବିଭାଗ ବିନ୍ୟାସ"
+
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:356
+msgid "Default for new download 1"
+msgstr "ନୂତନ ଆହରଣ ୧ ପାଇଁ ପୂର୍ବନିର୍ଦ୍ଧାରିତ"
+
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:358
+msgid "Default 2"
+msgstr "ପୂର୍ବନିର୍ଦ୍ଧାରିତ ୨"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:121 ../../po/../ui-gtk/UgtkNodeView.c:584
+#: ../../po/../ui-gtk/UgtkSummary.c:115
+msgid "unnamed"
+msgstr "ଅନାମଧେୟ"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:610
+msgid "Paused"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:611
+msgid "Uploading"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:612
+msgid "Completed"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:614
+msgid "Recycled"
+msgstr "ପୁନଃ-ବ୍ୟବହୃତ"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:615
+msgid "Queuing"
+msgstr "ଧାଡି"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:616
+msgid "Active"
+msgstr "ସକ୍ରିୟ"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:637
+msgid "All Status"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:734
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:85
+#: ../../po/../ui-gtk/UgtkSummary.c:108
+msgid "Name"
+msgstr "ନାମ"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:747
+msgid "Complete"
+msgstr "ସମାପ୍ତ"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:761
+msgid "Size"
+msgstr "ଆକାର"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:776
+msgid "%"
+msgstr "%"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:790
+msgid "Elapsed"
+msgstr "ଅତିକ୍ରାନ୍ତ ହୋଇଛି"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:804
+msgid "Left"
+msgstr "ବାମ"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:903
+#: ../../po/../ui-gtk/UgtkSettingForm.c:538
+#: ../../po/../ui-gtk/UgtkSummary.c:151
+msgid "URI"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:954
+msgid "Quantity"
+msgstr "ପରିମାଣ"
+
+#. proxy type label & combo box
+#: ../../po/../ui-gtk/UgtkProxyForm.c:64
+msgid "Proxy:"
+msgstr "ପ୍ରକ୍ସି:"
+
+#: ../../po/../ui-gtk/UgtkProxyForm.c:67
+msgid "Don't use"
+msgstr "ବ୍ୟବହାର କରନ୍ତୁନାହିଁ"
+
+#: ../../po/../ui-gtk/UgtkProxyForm.c:69
+msgid "Default"
+msgstr "ପୂର୍ବନିର୍ଦ୍ଧାରିତ"
+
+#. host label & entry
+#: ../../po/../ui-gtk/UgtkProxyForm.c:121
+msgid "Host:"
+msgstr "ହୋଷ୍ଟ:"
+
+#. port label & entry
+#: ../../po/../ui-gtk/UgtkProxyForm.c:132
+msgid "Port:"
+msgstr "ପୋର୍ଟ:"
+
+#: ../../po/../ui-gtk/UgtkProxyForm.c:351
+msgid "Socket:"
+msgstr "ସକେଟ୍:"
+
+#: ../../po/../ui-gtk/UgtkProxyForm.c:361
+msgid "Socket args:"
+msgstr "ସକେଟ୍ ଆର୍ଗୁମେଣ୍ଟ:"
+
+#: ../../po/../ui-gtk/UgtkProxyForm.c:371
+msgid "Element:"
+msgstr "ଉପାଦାନ:"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:66
+msgid "Mon"
+msgstr "ସୋମ"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:67
+msgid "Tue"
+msgstr "ମଙ୍ଗଳ"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:68
+msgid "Wed"
+msgstr "ବୁଧ"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:69
+msgid "Thu"
+msgstr "ଗୁରୁ"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:70
+msgid "Fri"
+msgstr "ଶୁକ୍ର"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:71
+msgid "Sat"
+msgstr "ଶନି"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:72
+msgid "Sun"
+msgstr "ରବି"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:99
+msgid "_Enable Scheduler"
+msgstr "_Enable Scheduler"
+
+#. Turn off - label
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:141
+msgid "Turn off"
+msgstr "ବନ୍ଦ କରନ୍ତୁ"
+
+#. Turn off - help label
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:146
+msgid "- stop all task"
+msgstr "- ସମସ୍ତ କାର୍ଯ୍ୟ ବନ୍ଦ କରନ୍ତୁ"
+
+#. Normal - label
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:156
+msgid "Normal"
+msgstr "ସ୍ଵାଭାବିକ"
+
+#. Normal - help label
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:161
+msgid "- run task normally"
+msgstr "- run task normally"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:254
+msgid "All"
+msgstr "ସମସ୍ତ"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:259
+msgid "None"
+msgstr "କୌଣସିଟି ନୁହେଁ"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:276
+msgid "Mark by filter"
+msgstr "ପରିସ୍ରବଣ ହିସାବରେ ଚିହ୍ନିତ କରନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:294
+msgid "Mark URLs by host AND filename extension."
+msgstr "URLଗୁଡିକୁ ହୋଷ୍ଟ ଏବଂ ଫାଇଲ ଏକ୍ସଟେନସନ ହିସାବରେ ଚିହ୍ନିତ କରନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:297
+msgid "This will reset all marks of URLs."
+msgstr "ଏହା ସବୁ URLର ମାର୍କଗୁଡିକୁ ପୁନଃ-ସ୍ଥାପନ କରିଦେବ"
+
+#. filter view -----------------------
+#. left side
+#: ../../po/../ui-gtk/UgtkSelector.c:305
+msgid "Host"
+msgstr "ହୋଷ୍ଟ"
+
+#. right side (filename extension)
+#: ../../po/../ui-gtk/UgtkSelector.c:309
+msgid "File Ext."
+msgstr "ଫାଇଲ ଏକ୍ସ୍ଟ"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:449
+msgid "URL"
+msgstr "URL"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:781
+msgid "Base hypertext reference"
+msgstr "ମୂଳ ହାଇପର୍ଟେକ୍ସ୍ଟ ରେଫରେନ୍ସ"
+
+#. select all
+#: ../../po/../ui-gtk/UgtkSelector.c:797
+msgid "Mark _All"
+msgstr "Mark _All"
+
+#. select none
+#: ../../po/../ui-gtk/UgtkSelector.c:801
+msgid "Mark _None"
+msgstr "Mark _None"
+
+#. select by filter
+#: ../../po/../ui-gtk/UgtkSelector.c:805
+msgid "_Mark by filter..."
+msgstr "_Mark by filter..."
+
+#. e.g.
+#: ../../po/../ui-gtk/UgtkSequencer.c:74
+msgid "e.g."
+msgstr "ଯେପରିକି:"
+
+#. -------------------------------------------------------
+#. radio "From"
+#: ../../po/../ui-gtk/UgtkSequencer.c:85
+msgid "_From:"
+msgstr "_From:"
+
+#. label "To"
+#: ../../po/../ui-gtk/UgtkSequencer.c:108
+msgid "To:"
+msgstr "ପ୍ରତି:"
+
+#. label "digits"
+#: ../../po/../ui-gtk/UgtkSequencer.c:123
+msgid "digits:"
+msgstr "ସଂଖ୍ୟା:"
+
+#: ../../po/../ui-gtk/UgtkSequencer.c:132
+msgid "F_rom:"
+msgstr "F_rom:"
+
+#. label case-sensitive
+#: ../../po/../ui-gtk/UgtkSequencer.c:162
+msgid "case-sensitive"
+msgstr "କେସ୍-ସଂବେଦନଶୀଳ"
+
+#: ../../po/../ui-gtk/UgtkSequencer.c:188
+msgid "No wildcard(*) character in URL entry."
+msgstr "URL ରେ କୌଣସି ୱାଇଲ୍ଡକାର୍ଡ(*) ବର୍ଣ ଉପସ୍ଥିତ ନାହିଁ"
+
+#: ../../po/../ui-gtk/UgtkSequencer.c:192
+msgid "URL is not valid."
+msgstr "URL ବୈଧ ନୁହେଁ"
+
+#: ../../po/../ui-gtk/UgtkSequencer.c:196
+msgid "No character in 'From' or 'To' entry."
+msgstr "'From' ଅଥବା 'To' ସ୍ଥାନରେ କିଛି ଅକ୍ଷର ଉପସ୍ଥିତ ନାହିଁ"
+
+#: ../../po/../ui-gtk/UgtkSequencer.c:305
+msgid "Preview"
+msgstr "ପ୍ରାକ୍-ଦର୍ଶନ"
+
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:97
+msgid "User Interface"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:109
+msgid "Bandwidth"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:115
+msgid "Scheduler"
+msgstr "ନିର୍ଘଣ୍ଟକ"
+
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:121
+msgid "Plug-in"
+msgstr "ପ୍ଲଗ୍-ଇନ୍"
+
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:127
+msgid "Others"
+msgstr "ଅନ୍ୟାନ୍ୟ"
+
+#. Monitor button
+#: ../../po/../ui-gtk/UgtkSettingForm.c:57
+msgid "_Enable clipboard monitor"
+msgstr ""
+
+#. quiet mode
+#: ../../po/../ui-gtk/UgtkSettingForm.c:62
+msgid "_Quiet mode"
+msgstr "_Quiet mode"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:68
+#: ../../po/../ui-gtk/UgtkSettingForm.c:446
+msgid "Default category index"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:80
+#: ../../po/../ui-gtk/UgtkSettingForm.c:458
+msgid "Adding to Nth category if no matched category."
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:87
+msgid "Monitor clipboard for specified file types:"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:102
+msgid "Separate the types with character '|'."
+msgstr "ପ୍ରକାର ଗୁଡିକୁ '|' ଦ୍ଵାରା ଅଲଗା କରନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:107
+msgid "You can use regular expressions here."
+msgstr "ଏଠାରେ ଆପଣ ଚିରାଚରିତ ଏକ୍ସପ୍ରେସନ ବ୍ୟବହାର କରିପାରନ୍ତି"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:151
+msgid "Confirmation"
+msgstr ""
+
+#. Confirmation check buttons
+#: ../../po/../ui-gtk/UgtkSettingForm.c:157
+msgid "Show confirmation dialog on exit"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:160
+msgid "Confirm when deleting files"
+msgstr "ଫାଇଲ ଅପସାରଣ କଲାବେଳେ ସୂଚିତ କରାନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:166
+msgid "System Tray"
+msgstr ""
+
+#. System Tray check buttons
+#: ../../po/../ui-gtk/UgtkSettingForm.c:172
+msgid "Always show tray icon"
+msgstr "ଟ୍ରେ ଚିତ୍ରସଂକେତ ସବୁବେଳେ ଦେଖାନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:175
+msgid "Minimize to tray on startup"
+msgstr "କମ୍ପୁଟର ଚାଲୁହେବା ମାତ୍ରେ ଟ୍ରେ ରେ ମିନିମାଇଜ କରିଦିଅନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:178
+msgid "Close to tray on window close"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:182
+msgid "Use Ubuntu's App Indicator"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:189
+msgid "Enable offline mode on startup"
+msgstr "କମ୍ପୁଟର ଚାଲୁହେବା ମାତ୍ରେ ଅଫଲାଇନ ଧାରା ଚାଲୁ କରନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:192
+msgid "Download starting notification"
+msgstr "ଆହରଣ ଆରମ୍ଭ ହେବାର ବିଜ୍ଞପ୍ତି"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:195
+msgid "Sound when download is finished"
+msgstr "ଆହରଣ ସମାପ୍ତ ହେଲେ ଏକ ଧ୍ୱନି ଶୁଣାନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:198
+msgid "Apply recently download settings"
+msgstr "ସାମ୍ପ୍ରତିକ ଆହରଣ ବିନ୍ୟାସଗୁଡ଼ିକ ପ୍ରୟୋଗ କରନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:264
+msgid "These will affect all plug-ins."
+msgstr ""
+
+#. Global speed limit
+#: ../../po/../ui-gtk/UgtkSettingForm.c:270
+msgid "Global speed limit"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:278
+#: ../../po/../ui-gtk/UgtkSettingForm.c:564
+msgid "Max upload speed"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:290
+#: ../../po/../ui-gtk/UgtkSettingForm.c:576
+msgid "Max download speed"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:323
+msgid "Completion Auto-Actions"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:331
+msgid "Custom command:"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:343
+msgid "Custom command if error occured:"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:388
+msgid "_Autosave"
+msgstr ""
+
+#. auto save spin & label (interval)
+#: ../../po/../ui-gtk/UgtkSettingForm.c:394
+msgid "minutes"
+msgstr "ମିନିଟ"
+
+#. auto save label
+#: ../../po/../ui-gtk/UgtkSettingForm.c:402
+msgid "_Interval:"
+msgstr "_Interval:"
+
+#. Commandline Settings
+#: ../../po/../ui-gtk/UgtkSettingForm.c:433
+msgid "Commandline Settings"
+msgstr "କମାଣ୍ଡ-ଲାଇନ ବିନ୍ୟାସ"
+
+#. --quiet
+#: ../../po/../ui-gtk/UgtkSettingForm.c:440
+msgid "Use '--quiet' by default"
+msgstr "'--quiet' ପୂର୍ବ-ନିର୍ଦ୍ଧାରିତ ଭାବେ ବ୍ୟବହାର କରନ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:508
+msgid "Plug-in matching order:"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:531
+msgid "Aria2 plug-in options"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:547
+msgid "RPC authorization secret token"
+msgstr ""
+
+#. ------------------------------------------------------------------------
+#. Speed Limits
+#: ../../po/../ui-gtk/UgtkSettingForm.c:556
+msgid "Global speed limit for aria2 only"
+msgstr ""
+
+#. ------------------------------------------------------------------------
+#. aria2 works on local device
+#. launch
+#: ../../po/../ui-gtk/UgtkSettingForm.c:589
+msgid "_Launch aria2 on startup"
+msgstr "_Launch aria2 on startup"
+
+#. shutdown
+#: ../../po/../ui-gtk/UgtkSettingForm.c:595
+msgid "_Shutdown aria2 on exit"
+msgstr "_Shutdown aria2 on exit"
+
+#. ------------------------------------------------------------------------
+#. Local options
+#: ../../po/../ui-gtk/UgtkSettingForm.c:601
+msgid "Launch aria2 on local device"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:610
+msgid "Path"
+msgstr "ପଥ"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:621
+msgid "Arguments"
+msgstr "Arguments"
+
+#. Arguments - hint
+#: ../../po/../ui-gtk/UgtkSettingForm.c:626
+msgid "You must restart uGet after modifying it."
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSummary.c:112
+msgid "File"
+msgstr "ଫାଇଲ"
+
+#: ../../po/../ui-gtk/UgtkSummary.c:127
+msgid "Folder"
+msgstr "ଫୋଲ୍ଡର"
+
+#: ../../po/../ui-gtk/UgtkSummary.c:270
+msgid "Item"
+msgstr "ବସ୍ତୁ"
+
+#: ../../po/../ui-gtk/UgtkSummary.c:275
+msgid "Value"
+msgstr "ମୂଲ୍ୟ"
+
+#. Copy All
+#: ../../po/../ui-gtk/UgtkSummary.c:307
+msgid "Copy _All"
+msgstr "Copy _All"
+
+#. Show window
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:106
+msgid "Show window"
+msgstr "ୱିଣ୍ଡୋ ଦେଖାନ୍ତୁ"
+
+#. Offline mode
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:112
+msgid "_Offline Mode"
+msgstr "_Offline Mode"

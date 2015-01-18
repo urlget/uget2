@@ -1,0 +1,1608 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# pyler <pyler.inbox@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: uGet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-09 16:11+0800\n"
+"PO-Revision-Date: 2014-11-29 16:32+0000\n"
+"Last-Translator: pyler <pyler.inbox@gmail.com>\n"
+"Language-Team: Slovak (Slovakia) (http://www.transifex.com/projects/p/uget/language/sk_SK/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk_SK\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: ../../po/../uget/UgetApp.c:95
+msgid "All Category"
+msgstr "Všetky kategórie"
+
+#. UGET_EVENT_NORMAL_CUSTOM
+#: ../../po/../uget/UgetEvent.c:58
+msgid "Connecting..."
+msgstr "Pripájanie..."
+
+#. UGET_EVENT_NORMAL_CONNECT
+#: ../../po/../uget/UgetEvent.c:59
+msgid "Transmitting..."
+msgstr "Prenášanie..."
+
+#. UGET_EVENT_NORMAL_TRANSMIT,
+#: ../../po/../uget/UgetEvent.c:60 ../../po/../ui-gtk/UgtkNodeView.c:874
+msgid "Retry"
+msgstr "Skúsiť znovu"
+
+#. UGET_EVENT_NORMAL_RETRY,
+#: ../../po/../uget/UgetEvent.c:61
+msgid "Download completed"
+msgstr "Sťahovanie dokončené"
+
+#. UGET_EVENT_NORMAL_COMPLETE,
+#: ../../po/../uget/UgetEvent.c:62 ../../po/../ui-gtk/UgtkNodeView.c:613
+msgid "Finished"
+msgstr "Dokončené"
+
+#. UGET_EVENT_NORMAL_FINISH,
+#. resumable
+#: ../../po/../uget/UgetEvent.c:64
+msgid "Resumable"
+msgstr "Obnoviteľné"
+
+#. UGET_EVENT_NORMAL_RESUMABLE,
+#: ../../po/../uget/UgetEvent.c:65 ../../po/../uget/UgetPluginAria2.c:279
+msgid "Not Resumable"
+msgstr "Neobnoviteľné"
+
+#. UGET_EVENT_WARNING_CUSTOM
+#: ../../po/../uget/UgetEvent.c:73 ../../po/../uget/UgetPluginAria2.c:286
+msgid "Output file can't be renamed."
+msgstr "Výstupný súbor nemôže byť premenovaný."
+
+#. UGET_EVENT_ERROR_CUSTOM
+#: ../../po/../uget/UgetEvent.c:81
+msgid "couldn't connect to host."
+msgstr "Nemožno sa pripojiť k hostiteľovi."
+
+#. UGET_EVENT_ERROR_CONNECT_FAILED
+#: ../../po/../uget/UgetEvent.c:82 ../../po/../uget/UgetPluginAria2.c:290
+msgid "Folder can't be created."
+msgstr "Priečinok nemôže byť vytvorený."
+
+#. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
+#: ../../po/../uget/UgetEvent.c:83
+msgid "File can't be created (bad filename or file exist)."
+msgstr "Súbor nemôže byť vytvorený (zlý názov súboru alebo súbor už existuje)."
+
+#. UGET_EVENT_ERROR_FILE_CREATE_FAILED
+#: ../../po/../uget/UgetEvent.c:84
+msgid "File can't be opened."
+msgstr "Súbor nemôže byť otvorený."
+
+#. UGET_EVENT_ERROR_FILE_OPEN_FAILED
+#: ../../po/../uget/UgetEvent.c:85
+msgid "Unable to create thread."
+msgstr "Nemožno vytvoriť vlákno."
+
+#. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
+#: ../../po/../uget/UgetEvent.c:86
+msgid "Incorrect source (different file size)."
+msgstr "Nesprávny zdroj (odlišná veľkosť súboru)."
+
+#. UGET_EVENT_ERROR_INCORRECT_SOURCE,
+#: ../../po/../uget/UgetEvent.c:87
+msgid "Out of resource (disk full or run out of memory)."
+msgstr "Nedostatok zdrojov (plný disk alebo nedostatok pamäte)."
+
+#. UGET_EVENT_ERROR_OUT_OF_RESOURCE
+#: ../../po/../uget/UgetEvent.c:88
+msgid "No output file."
+msgstr "Žiadny výstupný súbor."
+
+#. UGET_EVENT_ERROR_NO_OUTPUT_FILE
+#: ../../po/../uget/UgetEvent.c:89
+msgid "No output setting."
+msgstr "Žiadne nastavenie výstupu."
+
+#. UGET_EVENT_ERROR_NO_OUTPUT_SETTING
+#: ../../po/../uget/UgetEvent.c:90
+msgid "Too many retries."
+msgstr "Príliš veľa opakovaní."
+
+#. UGET_EVENT_ERROR_TOO_MANY_RETRIES
+#: ../../po/../uget/UgetEvent.c:91
+msgid "Unsupported scheme (protocol)."
+msgstr "Nepodporovaná schéma (protokol)."
+
+#. UGET_EVENT_ERROR_UNSUPPORTED_SCHEME
+#: ../../po/../uget/UgetEvent.c:92
+msgid "Unsupported file."
+msgstr "Nepodporovaný súbor."
+
+#. 1 - 10
+#: ../../po/../uget/UgetPluginAria2.c:272
+msgid "aria2: an unknown error occurred."
+msgstr "aria2: Vyskytla sa neznáma chyba."
+
+#: ../../po/../uget/UgetPluginAria2.c:273
+msgid "aria2: time out occurred."
+msgstr "aria2: Časový limit vypršal."
+
+#: ../../po/../uget/UgetPluginAria2.c:274
+msgid "aria2: resource was not found."
+msgstr "aria2: Zdroj nebol nájdený."
+
+#: ../../po/../uget/UgetPluginAria2.c:275
+msgid ""
+"aria2 saw the specfied number of 'resource not found' error. See --max-file-"
+"not-found option"
+msgstr "aria2 má špecifický počet chýb 'zdroj nebol nájdený'. Pozrite možnosť --max-file-not-found"
+
+#: ../../po/../uget/UgetPluginAria2.c:276
+msgid "aria2: speed was too slow."
+msgstr "aria2: Rýchlosť bola príliš pomalá."
+
+#: ../../po/../uget/UgetPluginAria2.c:277
+msgid "aria2: network problem occurred."
+msgstr "aria2: Vyskytol sa problém so sieťou."
+
+#: ../../po/../uget/UgetPluginAria2.c:278
+msgid "aria2: unfinished downloads."
+msgstr "aria2: Nedokončené sťahovania."
+
+#. _("Not Resumable"),
+#: ../../po/../uget/UgetPluginAria2.c:280
+msgid "Out of resource"
+msgstr "Nedostatok zdrojov"
+
+#. _(),
+#: ../../po/../uget/UgetPluginAria2.c:281
+msgid "aria2: piece length was different from one in .aria2 control file."
+msgstr "aria2: Dĺžka časti bola odlišná od uvedenej v kontrolnom súbore .aria2."
+
+#. 11 - 20
+#: ../../po/../uget/UgetPluginAria2.c:283
+msgid "aria2 was downloading same file."
+msgstr "aria2 sťahoval rovnaký súbor."
+
+#: ../../po/../uget/UgetPluginAria2.c:284
+msgid "aria2 was downloading same info hash torrent."
+msgstr "aria2 stiahol rovnaký info hash torrent."
+
+#: ../../po/../uget/UgetPluginAria2.c:285
+msgid "aria2: file already existed. See --allow-overwrite option."
+msgstr "aria2: Súbor už existuje. Pozrite možnosť --allow-overwrite."
+
+#. _("Output file can't be renamed."),
+#: ../../po/../uget/UgetPluginAria2.c:287
+msgid "aria2: could not open existing file."
+msgstr "aria2: Nemožno otvoriť existujúci súbor."
+
+#: ../../po/../uget/UgetPluginAria2.c:288
+msgid "aria2: could not create new file or truncate existing file."
+msgstr "aria2: Nemožno vytvoriť nový súbor alebo skrátiť existujúci súbor."
+
+#: ../../po/../uget/UgetPluginAria2.c:289
+msgid "aria2: file I/O error occurred."
+msgstr "aria2: Vyskytla sa vstupno-výstupná chyba súboru."
+
+#. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
+#: ../../po/../uget/UgetPluginAria2.c:291
+msgid "aria2: name resolution failed."
+msgstr "aria2: Rozlíšenie názvu zlyhalo."
+
+#: ../../po/../uget/UgetPluginAria2.c:292
+msgid "aria2: could not parse Metalink document."
+msgstr "aria2: Nemožno parsovať Metalink dokument."
+
+#. 21 - 30
+#: ../../po/../uget/UgetPluginAria2.c:294
+msgid "aria2: FTP command failed."
+msgstr "aria2: FTP príkaz zlyhal."
+
+#: ../../po/../uget/UgetPluginAria2.c:295
+msgid "aria2: HTTP response header was bad or unexpected."
+msgstr "aria2: Hlavička HTTP odozvy bola zlá alebo neočakávaná."
+
+#: ../../po/../uget/UgetPluginAria2.c:296
+msgid "Too many redirections."
+msgstr "Príliš veľa presmerovaní."
+
+#: ../../po/../uget/UgetPluginAria2.c:297
+msgid "aria2: HTTP authorization failed."
+msgstr "aria2: HTTP overenie zlyhalo."
+
+#: ../../po/../uget/UgetPluginAria2.c:298
+msgid "aria2: could not parse bencoded file(usually .torrent file)."
+msgstr "aria2: Nemožno parsovať benkódovaný súbor (zvyčajne súbor .torrent)."
+
+#: ../../po/../uget/UgetPluginAria2.c:299
+msgid "aria2: torrent file was corrupted or missing information."
+msgstr "aria2: Súbor torrentu je poškodený alebo neobsahuje niektoré informácie."
+
+#: ../../po/../uget/UgetPluginAria2.c:300
+msgid "aria2: Magnet URI was bad."
+msgstr "aria2: Magnet URI je zlá."
+
+#: ../../po/../uget/UgetPluginAria2.c:301
+msgid ""
+"aria2: bad/unrecognized option was given or unexpected option argument was "
+"given."
+msgstr "aria2: Bola zadaná zlá alebo nerozpoznaná možnosť alebo zlý argument možnosti"
+
+#: ../../po/../uget/UgetPluginAria2.c:302
+msgid "aria2: remote server was unable to handle the request."
+msgstr "aria2: Vzdialený server nemohol spracovať požiadavku."
+
+#: ../../po/../uget/UgetPluginAria2.c:303
+msgid "aria2: could not parse JSON-RPC request."
+msgstr "aria2: Nemožno parsovať JSON-RPC požiadavka."
+
+#: ../../po/../uget/UgetPluginAria2.c:306
+msgid "No response. Is aria2 shutdown?"
+msgstr "Žiadna odozva. Je plugin aria2 vypnutý?"
+
+#. debug
+#: ../../po/../uget/UgetPluginAria2.c:608
+msgid "aria2: gid was removed."
+msgstr "aria2: Gid bol odstránený."
+
+#: ../../po/../ui-gtk/UgtkAboutDialog.c:46
+msgid "Download Manager"
+msgstr "Správca sťahovaní"
+
+#: ../../po/../ui-gtk/UgtkAboutDialog.c:48
+msgid "translator-credits"
+msgstr "pyler"
+
+#: ../../po/../ui-gtk/UgtkAboutDialog.c:80
+msgid "uGet Founder: "
+msgstr "Zakladateľ uGet: "
+
+#: ../../po/../ui-gtk/UgtkAboutDialog.c:81
+msgid "uGet Project Manager: "
+msgstr "Správca projektu uGet:"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:255
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:204
+msgid "tasks"
+msgstr "úlohy"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:374
+msgid "New from Clipboard"
+msgstr "Nové zo schránky"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:376 ../../po/../ui-gtk/UgtkApp.c:662
+msgid "New Download"
+msgstr "Nové sťahovanie"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:399 ../../po/../ui-gtk/UgtkApp.c:1411
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:103
+msgid "Clipboard"
+msgstr "Schránka"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:401
+msgid "Command line"
+msgstr "Príkazový riadok"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:758
+msgid "Error Occurred"
+msgstr "Vyskytla sa chyba"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:759
+msgid "Error Occurred when downloading."
+msgstr "Vyskytla sa chyba pri sťahovaní."
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:760
+msgid "Download Starting"
+msgstr "Sťahovanie začalo"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:761
+msgid "Starting download queue."
+msgstr "Sťahovanie fronty začalo."
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:762
+msgid "Download Completed"
+msgstr "Sťahovanie dokončené"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:763
+msgid "All queuing downloads have been completed."
+msgstr "Všetky sťahovania vo fronte sú dokončené."
+
+#. ----------------------------------------------------
+#. frame for Status (start mode)
+#: ../../po/../ui-gtk/UgtkApp-ui.c:115
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:220
+#: ../../po/../ui-gtk/UgtkNodeView.c:997
+msgid "Status"
+msgstr "Stav"
+
+#. Summary Items - Category
+#. Download Columns - Category
+#: ../../po/../ui-gtk/UgtkApp-ui.c:117 ../../po/../ui-gtk/UgtkMenubar-ui.c:270
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:298
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:383
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:392
+#: ../../po/../ui-gtk/UgtkNodeView.c:889 ../../po/../ui-gtk/UgtkNodeView.c:977
+#: ../../po/../ui-gtk/UgtkSummary.c:139
+msgid "Category"
+msgstr "Kategória"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:184
+msgid "Create new download"
+msgstr "Vytvoriť nové sťahovanie"
+
+#. New Download (accelerators)
+#. gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
+#. New Download
+#: ../../po/../ui-gtk/UgtkApp-ui.c:194 ../../po/../ui-gtk/UgtkMenubar-ui.c:58
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:59
+msgid "New _Download..."
+msgstr "Nové _sťahovanie..."
+
+#. New Category
+#: ../../po/../ui-gtk/UgtkApp-ui.c:201 ../../po/../ui-gtk/UgtkMenubar-ui.c:65
+msgid "New _Category..."
+msgstr "Nová _kategória..."
+
+#. New Clipboard batch
+#: ../../po/../ui-gtk/UgtkApp-ui.c:207 ../../po/../ui-gtk/UgtkTrayIcon.c:66
+msgid "New Clipboard _batch..."
+msgstr "New Clipboard _batch..."
+
+#. New URL Sequence batch
+#: ../../po/../ui-gtk/UgtkApp-ui.c:214
+msgid "New _URL Sequence batch..."
+msgstr "Nové _dávkové z URL sekvencie..."
+
+#. New Torrent
+#. separator
+#. gtk_menu_shell_append ((GtkMenuShell*)submenu,
+#. gtk_separator_menu_item_new() );
+#. New Torrent
+#: ../../po/../ui-gtk/UgtkApp-ui.c:224 ../../po/../ui-gtk/UgtkMenubar-ui.c:73
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:75
+msgid "New Torrent..."
+msgstr "Nový torrent..."
+
+#. New Metalink
+#: ../../po/../ui-gtk/UgtkApp-ui.c:231 ../../po/../ui-gtk/UgtkMenubar-ui.c:79
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:82
+msgid "New Metalink..."
+msgstr "Nový metaodkaz..."
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:240
+msgid "Save all settings"
+msgstr "Uložiť všetky nastavenia"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:248
+msgid "Set selected download runnable"
+msgstr "Spustiť vybrané sťahovanie"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:253
+msgid "Set selected download to pause"
+msgstr "Pozastaviť vybrané sťahovanie"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:258
+msgid "Set selected download properties"
+msgstr "Vlastnosti vybraného sťahovania"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:266
+msgid "Move selected download up"
+msgstr "Posunúť vybrané sťahovanie vyššie"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:271
+msgid "Move selected download down"
+msgstr "Posunúť vybrané sťahovanie nižšie"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:276
+msgid "Move selected download to top"
+msgstr "Posunúť vybrané sťahovanie nahor"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:281
+msgid "Move selected download to bottom"
+msgstr "Posunúť vybrané sťahovanie nadol"
+
+#: ../../po/../ui-gtk/UgtkApp.c:634
+msgid "New Category"
+msgstr "Nová kategória"
+
+#: ../../po/../ui-gtk/UgtkApp.c:645
+msgid "Copy - "
+msgstr "Kopírovať - "
+
+#: ../../po/../ui-gtk/UgtkApp.c:783
+msgid "Category Properties"
+msgstr "Vlastnosti kategórie"
+
+#: ../../po/../ui-gtk/UgtkApp.c:797
+msgid "Download Properties"
+msgstr "Vlastnosti sťahovania"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1028
+msgid "New Torrent"
+msgstr "Nový torrent"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1044
+msgid "New Metalink"
+msgstr "Nový metaodkaz"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1053
+msgid "Open Torrent file"
+msgstr "Otvoriť súbor torrentu"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1069
+msgid "Open Metalink file"
+msgstr "Otvoriť súbor metaodkazu"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1109
+msgid "Failed to save category file."
+msgstr "Nepodarilo sa uložiť súbor kategórií."
+
+#: ../../po/../ui-gtk/UgtkApp.c:1129
+msgid "Failed to load category file."
+msgstr "Nepodarilo sa načítať súbor kategórií."
+
+#: ../../po/../ui-gtk/UgtkApp.c:1140
+msgid "Save Category file"
+msgstr "Uložiť súbor kategórií"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1158
+msgid "Open Category file"
+msgstr "Otvoriť súbor kategórií"
+
+#. add link
+#: ../../po/../ui-gtk/UgtkApp.c:1217
+msgid "Link <A>"
+msgstr "Odkaz <A>"
+
+#. add image
+#: ../../po/../ui-gtk/UgtkApp.c:1222
+msgid "Image <IMG>"
+msgstr "Obrázok <IMG>"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1267
+msgid "Text File"
+msgstr "Textový súbor"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1314
+msgid "Import URLs from HTML file"
+msgstr "Importovať URL adresy z HTML súboru"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1329
+msgid "Import URLs from text file"
+msgstr "Importovať URL adresy z textového súboru"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1344
+msgid "Export URLs to text file"
+msgstr "Exportovať URL adresy do textového súboru"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1363
+msgid "URL Sequence batch"
+msgstr "Dávkové zo URL sekvencie"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1390
+msgid "No URLs found in clipboard."
+msgstr "Nenájdené žiadne URL adresy v schránke."
+
+#: ../../po/../ui-gtk/UgtkApp.c:1399
+msgid "All URLs had existed."
+msgstr "Všetky URL adresy existujú."
+
+#: ../../po/../ui-gtk/UgtkApp.c:1404
+msgid "Clipboard batch"
+msgstr "Dávkové zo schránky"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1494
+msgid "New"
+msgstr "Nové"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1613 ../../po/../ui-gtk/UgtkMenubar.c:383
+#: ../../po/../ui-gtk/UgtkMenubar.c:415 ../../po/../ui-gtk/UgtkNodeView.c:609
+msgid "Error"
+msgstr "Chyba"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1621 ../../po/../ui-gtk/UgtkSummary.c:184
+msgid "Message"
+msgstr "Správa"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1727
+#, c-format
+msgid "Selected %d items"
+msgstr "Počet vybraných položiek: %d"
+
+#: ../../po/../ui-gtk/UgtkBanner.c:145 ../../po/../ui-gtk/UgtkBanner.c:165
+msgid "Attention uGetters:"
+msgstr "Upozornenie používateľom uGet:"
+
+#: ../../po/../ui-gtk/UgtkBanner.c:148
+msgid ""
+"we are running a Donation Drive for uGet's Future Development, please click "
+msgstr "zbierame dary na financovanie budúcich verzií uGet, prosíme klikněte"
+
+#: ../../po/../ui-gtk/UgtkBanner.c:151
+msgid "HERE"
+msgstr "TU"
+
+#: ../../po/../ui-gtk/UgtkBanner.c:168
+msgid "please fill out this quick User Survey for uGet."
+msgstr "prosím, vyplňte tento krátky používateľský prieskum ohľadom uGet."
+
+#: ../../po/../ui-gtk/UgtkBanner.c:171
+msgid "click here to take survey"
+msgstr "kliknite sem a zúčastnite sa prieskumu"
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:62
+msgid "Category _name:"
+msgstr "_Názov kategórie:"
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:82
+msgid "Active _downloads:"
+msgstr "Aktívne _sťahovania:"
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:92
+msgid "Capacity of Finished:"
+msgstr "Kapacita dokončených:"
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:102
+msgid "Capacity of Recycled:"
+msgstr "Kapacita koša:"
+
+#. ------------------------------------------------------------------------
+#. URI Matching conditions
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:111
+msgid "URI Matching conditions"
+msgstr "Zodpovedajúce podmienky URI"
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:118
+msgid "Matched _Hosts:"
+msgstr "Zodpovedajúci _hostitelia:"
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:129
+msgid "Matched _Schemes:"
+msgstr "Zodpovedajúce _schémy:"
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:140
+msgid "Matched _Types:"
+msgstr "Zodpovedajúce _typy:"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:64
+msgid "Really Quit?"
+msgstr "Naozaj ukončiť?"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:65
+msgid "Are you sure you want to quit?"
+msgstr "Ste si istý, že chcete ukončiť?"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:69
+msgid "Really delete files?"
+msgstr "Naozaj vymazať súbory?"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:70
+msgid "Are you sure you want to delete files?"
+msgstr "Ste si istý, že chcete vymazať súbory?"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:74
+msgid "Really delete category?"
+msgstr "Vymazať kategóriu?"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:75
+msgid "Are you sure you want to delete category?"
+msgstr "Ste si istý, že chcete vymazať kategóriu?"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:106
+msgid "Don't ask me again"
+msgstr "Nepýtať sa znovu"
+
+#. URL - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:109
+#: ../../po/../ui-gtk/UgtkSequencer.c:63
+msgid "_URI:"
+msgstr "_URI:"
+
+#. Mirrors - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:128
+msgid "Mirrors:"
+msgstr "Zrkadlá:"
+
+#. File - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:144
+#: ../../po/../ui-gtk/UgtkProxyForm.c:385
+msgid "File:"
+msgstr "Súbor:"
+
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:159
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:893
+msgid "Select Folder"
+msgstr "Vyberte priečinok"
+
+#. Folder - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:167
+msgid "_Folder:"
+msgstr "_Priečinok:"
+
+#. Referrer - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:182
+msgid "Referrer:"
+msgstr "Odkazovateľ:"
+
+#. "Max Connections:" - title label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:207
+msgid "_Max Connections:"
+msgstr "_Maximálny počet pripojení:"
+
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:226
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:510
+msgid "_Runnable"
+msgstr "_Spustiť"
+
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:228
+msgid "P_ause"
+msgstr "_Pozastaviť"
+
+#. ----------------------------------------------------
+#. frame for login
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:234
+msgid "Login"
+msgstr "_Prihlásiť sa"
+
+#. User - label
+#. user label & entry
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:248
+#: ../../po/../ui-gtk/UgtkProxyForm.c:149
+msgid "User:"
+msgstr "Používateľ:"
+
+#. Password - label
+#. password label & entry
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:264
+#: ../../po/../ui-gtk/UgtkProxyForm.c:160
+msgid "Password:"
+msgstr "Heslo:"
+
+#. label - cookie file
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:290
+msgid "Cookie file:"
+msgstr "Súbor cookie:"
+
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:302
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:949
+msgid "Select Cookie File"
+msgstr "Vyberte súbor cookie:"
+
+#. label - post file
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:311
+msgid "Post file:"
+msgstr "Odoslať súbor:"
+
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:323
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:1005
+msgid "Select Post File"
+msgstr "Vyberte súbor na odoslanie:"
+
+#. label - user agent
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:333
+msgid "User Agent:"
+msgstr "Používateľský agent:"
+
+#. label - Max upload speed
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:349
+msgid "Max upload speed:"
+msgstr "Maximálna rýchlosť nahrávania:"
+
+#. label - "KiB/s"
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:361
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:379
+#: ../../po/../ui-gtk/UgtkSettingForm.c:280
+#: ../../po/../ui-gtk/UgtkSettingForm.c:292
+#: ../../po/../ui-gtk/UgtkSettingForm.c:566
+#: ../../po/../ui-gtk/UgtkSettingForm.c:578
+msgid "KiB/s"
+msgstr "KiB/s"
+
+#. label - Max download speed
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:367
+msgid "Max download speed:"
+msgstr "Maximálna rýchlosť sťahovania:"
+
+#. Retry limit - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:385
+msgid "Retry _limit:"
+msgstr "_Limit opakovaní:"
+
+#. counts - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:400
+msgid "counts"
+msgstr "počet"
+
+#. Retry delay - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:407
+msgid "Retry _delay:"
+msgstr "_Oneskorenie opakovania:"
+
+#. seconds - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:422
+msgid "seconds"
+msgstr "sekúnd"
+
+#. Retrieve timestamp
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:429
+msgid "Retrieve timestamp"
+msgstr "Načítať časovú pečiatku"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:51
+msgid "_File"
+msgstr "_Súbor"
+
+#. Batch Downloads --- start ---
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:86
+msgid "_Batch Downloads"
+msgstr "_Dávkové sťahovanie"
+
+#. Batch downloads - Clipboard batch
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:92
+msgid "_Clipboard batch..."
+msgstr "_Dávkové zo schránky..."
+
+#. Batch downloads - URL Sequence batch
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:98
+msgid "_URL Sequence batch..."
+msgstr "_Dávkové z URL sekvencie..."
+
+#. Batch downloads - Text file import (.txt)
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:104
+msgid "_Text file import (.txt)..."
+msgstr "_Importovať z textového súboru (.txt)..."
+
+#. Batch downloads - HTML file import (.html)
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:110
+msgid "_HTML file import (.html)..."
+msgstr "_Importovať z HTML súboru (.html)..."
+
+#. Batch downloads - Export to Text file (.txt)
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:118
+msgid "_Export to Text file (.txt)..."
+msgstr "_Exportovať do textového súboru (.txt)..."
+
+#. Open Category
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:128
+msgid "_Open category..."
+msgstr "_Otvoriť kategóriu..."
+
+#. Save Category
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:135
+msgid "_Save category as..."
+msgstr "_Uložiť kategóriu ako..."
+
+#. Save All
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
+msgid "Save _all settings"
+msgstr "Uložiť _všetky nastavenia"
+
+#. Offline mode
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:152
+msgid "Offline Mode"
+msgstr "Režim offline"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:170
+msgid "_Edit"
+msgstr "_Upraviť"
+
+#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new()
+#. );
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:175
+msgid "Clipboard _Monitor"
+msgstr "_Monitor schránky"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:179
+msgid "Clipboard works quietly"
+msgstr "Schránka pracuje potichu"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:183
+msgid "Command-line works quietly"
+msgstr "Príkazový riadok pracuje potichu"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:187
+msgid "Skip existing URI"
+msgstr "Preskočiť existujúce URI"
+
+#. --- Completion Auto-Actions --- start ---
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:194
+msgid "Completion _Auto-Actions"
+msgstr "Dokončenie _automatických akcií"
+
+#. Completion Auto-Actions - Disable
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:200
+msgid "_Disable"
+msgstr "_Zakázať"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:205
+msgid "Hibernate"
+msgstr "Hibernovať"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:210
+msgid "Suspend"
+msgstr "Pozastaviť"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:215
+msgid "Shutdown"
+msgstr "Vypnúť"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:220
+msgid "Reboot"
+msgstr "Reštartovať"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:225
+msgid "Custom"
+msgstr "Vlastné"
+
+#. Completion Auto-Actions - Remember
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
+msgid "Remember setting"
+msgstr "Zapamätať nastavenie"
+
+#. Completion Auto-Actions - Help
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:235
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:610
+msgid "_Help"
+msgstr "_Pomocník"
+
+#. --- Completion Auto-Actions --- end ---
+#. menu_item = gtk_menu_item_new_with_mnemonic (_("_Settings..."));
+#. Settings
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:241
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:91
+msgid "_Settings..."
+msgstr "_Nastavenia..."
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:256
+msgid "_View"
+msgstr "_Zobraziť"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:260
+msgid "_Toolbar"
+msgstr "_Panel nástrojov"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:265
+msgid "Statusbar"
+msgstr "Stavový riadok"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:275
+msgid "_Summary"
+msgstr "_Zhrnutie"
+
+#. Summary Items --- start ---
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:283
+msgid "Summary _Items"
+msgstr "Zhrnutie _položiek"
+
+#. Summary Items - Name
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:288
+msgid "_Name"
+msgstr "_Názov"
+
+#. Summary Items - Folder
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:293
+msgid "_Folder"
+msgstr "_Priečinok"
+
+#. Summary Items - Elapsed
+#. menu_item = gtk_check_menu_item_new_with_mnemonic (_("_Elapsed"));
+#. gtk_check_menu_item_set_active ((GtkCheckMenuItem*) menu_item, TRUE);
+#. gtk_menu_shell_append ((GtkMenuShell*) submenu, menu_item);
+#. menubar->view.summary_items.elapsed = menu_item;
+#. Summary Items - URL
+#. Download Columns - URL
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:308
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:388
+msgid "_URL"
+msgstr "_URL"
+
+#. Summary Items - Message
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:313
+msgid "_Message"
+msgstr "_Správa"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:328
+msgid "Download _Columns"
+msgstr "Stĺpce sťahovania"
+
+#. Download Columns - Completed
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:333
+msgid "_Complete"
+msgstr "_Dokončené"
+
+#. Download Columns - Total
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:338
+msgid "_Size"
+msgstr "_Veľkosť"
+
+#. Download Columns - Percent (%)
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:343
+msgid "_Percent '%'"
+msgstr "_Percento '%'"
+
+#. Download Columns - Elapsed
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:348
+msgid "_Elapsed"
+msgstr "_Uplynulé"
+
+#. Download Columns - Left
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:353
+msgid "_Left"
+msgstr "_Zostáva"
+
+#. Download Columns - Speed
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:358
+#: ../../po/../ui-gtk/UgtkNodeView.c:818
+msgid "Speed"
+msgstr "Rýchlosť"
+
+#. Download Columns - Up Speed
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:363
+#: ../../po/../ui-gtk/UgtkNodeView.c:832
+msgid "Up Speed"
+msgstr "Rýchlosť nahrávania"
+
+#. Download Columns - Uploaded
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:368
+#: ../../po/../ui-gtk/UgtkNodeView.c:846
+msgid "Uploaded"
+msgstr "Nahrané"
+
+#. Download Columns - Ratio
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:373
+#: ../../po/../ui-gtk/UgtkNodeView.c:860
+msgid "Ratio"
+msgstr "Pomer"
+
+#. Download Columns - Retry
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:378
+msgid "_Retry"
+msgstr "_Skúsiť znovu"
+
+#. Download Columns - Added On
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:393
+#: ../../po/../ui-gtk/UgtkNodeView.c:917
+msgid "Added On"
+msgstr "Dátum pridania"
+
+#. Download Columns - Completed On
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:398
+#: ../../po/../ui-gtk/UgtkNodeView.c:931
+msgid "Completed On"
+msgstr "Dátum dokončenia"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:413
+msgid "_Category"
+msgstr "_Kategória"
+
+#. New Category
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:418
+msgid "_New Category..."
+msgstr "_Nová kategória..."
+
+#. Delete Category
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:424
+msgid "_Delete Category"
+msgstr "_Vymazať kategóriu"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:461
+msgid "_Download"
+msgstr "_Sťahovanie"
+
+#. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE,
+#. accel_group);
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:473
+msgid "_Delete Entry"
+msgstr "_Vymazať položku"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:480
+msgid "Delete Entry and _File"
+msgstr "Vymazať položku a _súbor"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:495
+msgid "Open _Containing folder"
+msgstr "Otvoriť _cieľový priečinok"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:504
+msgid "Force Start"
+msgstr "Vynútiť spustenie"
+
+#. Move to --- start ---
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:528
+msgid "_Move To"
+msgstr "_Presunúť do"
+
+#. Priority --- start ---
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:573
+msgid "Priority"
+msgstr "Priorita"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:582
+msgid "_High"
+msgstr "_Vysoká"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:587
+msgid "_Normal"
+msgstr "_Normálna"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:592
+msgid "_Low"
+msgstr "_Nízka"
+
+#. Get Help Online
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:615
+msgid "Get Help Online"
+msgstr "Získať pomoc online"
+
+#. Documentation
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:622
+msgid "Documentation"
+msgstr "Dokumentácia"
+
+#. Support Forum
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:629
+msgid "Support Forum"
+msgstr "Fórum podpory"
+
+#. Submit Feedback
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:636
+msgid "Submit Feedback"
+msgstr "Odoslať spätnú väzbu"
+
+#. Report a Bug
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:643
+msgid "Report a Bug"
+msgstr "Nahlásiť chybu"
+
+#. Keyboard Shortcuts
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:650
+msgid "Keyboard Shortcuts"
+msgstr "Klávesové skratky"
+
+#. Check for Updates
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:657
+msgid "Check for Updates"
+msgstr "Skontrolovať aktualizácie"
+
+#: ../../po/../ui-gtk/UgtkMenubar.c:144
+msgid "Settings"
+msgstr "Nastavenia"
+
+#: ../../po/../ui-gtk/UgtkMenubar.c:377
+#, c-format
+msgid "Can't launch default application for file '%s'."
+msgstr "Nemožno spustiť predvolenú aplikáciu pre súbor '%s'."
+
+#: ../../po/../ui-gtk/UgtkMenubar.c:409
+#, c-format
+msgid "'%s' - This folder does not exist."
+msgstr "'%s' - Tento priečinok neexistuje."
+
+#. title
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:205
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:209
+msgid "URI had existed"
+msgstr "URI existuje"
+
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:207
+msgid "This URI had existed, are you sure to continue?"
+msgstr "Toto URI existuje, naozaj chcete pokračovať?"
+
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:343
+msgid "General"
+msgstr "Všeobecné"
+
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:345
+msgid "Advanced"
+msgstr "Pokročilé"
+
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:354
+msgid "Category settings"
+msgstr "Nastavenia kategórie"
+
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:356
+msgid "Default for new download 1"
+msgstr "Predvolené pre nové sťahovanie 1"
+
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:358
+msgid "Default 2"
+msgstr "Predvolené 2"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:121 ../../po/../ui-gtk/UgtkNodeView.c:584
+#: ../../po/../ui-gtk/UgtkSummary.c:115
+msgid "unnamed"
+msgstr "bez názvu"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:610
+msgid "Paused"
+msgstr "Pozastavené"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:611
+msgid "Uploading"
+msgstr "Nahrávanie"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:612
+msgid "Completed"
+msgstr "Dokončené"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:614
+msgid "Recycled"
+msgstr "V koši"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:615
+msgid "Queuing"
+msgstr "Vo fronte"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:616
+msgid "Active"
+msgstr "Aktívne"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:637
+msgid "All Status"
+msgstr "Všetky stavy"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:734
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:85
+#: ../../po/../ui-gtk/UgtkSummary.c:108
+msgid "Name"
+msgstr "Názov"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:747
+msgid "Complete"
+msgstr "Dokončené"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:761
+msgid "Size"
+msgstr "Veľkosť"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:776
+msgid "%"
+msgstr "%"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:790
+msgid "Elapsed"
+msgstr "Uplynulé"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:804
+msgid "Left"
+msgstr "Zostáva"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:903
+#: ../../po/../ui-gtk/UgtkSettingForm.c:538
+#: ../../po/../ui-gtk/UgtkSummary.c:151
+msgid "URI"
+msgstr "URI"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:954
+msgid "Quantity"
+msgstr "Počet"
+
+#. proxy type label & combo box
+#: ../../po/../ui-gtk/UgtkProxyForm.c:64
+msgid "Proxy:"
+msgstr "Proxy:"
+
+#: ../../po/../ui-gtk/UgtkProxyForm.c:67
+msgid "Don't use"
+msgstr "Nepoužívať"
+
+#: ../../po/../ui-gtk/UgtkProxyForm.c:69
+msgid "Default"
+msgstr "Predvolené"
+
+#. host label & entry
+#: ../../po/../ui-gtk/UgtkProxyForm.c:121
+msgid "Host:"
+msgstr "Hostiteľ:"
+
+#. port label & entry
+#: ../../po/../ui-gtk/UgtkProxyForm.c:132
+msgid "Port:"
+msgstr "Port:"
+
+#: ../../po/../ui-gtk/UgtkProxyForm.c:351
+msgid "Socket:"
+msgstr "Socket:"
+
+#: ../../po/../ui-gtk/UgtkProxyForm.c:361
+msgid "Socket args:"
+msgstr "Argumenty socketu:"
+
+#: ../../po/../ui-gtk/UgtkProxyForm.c:371
+msgid "Element:"
+msgstr "Prvok:"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:66
+msgid "Mon"
+msgstr "Po"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:67
+msgid "Tue"
+msgstr "Ut"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:68
+msgid "Wed"
+msgstr "St"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:69
+msgid "Thu"
+msgstr "Št"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:70
+msgid "Fri"
+msgstr "Pi"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:71
+msgid "Sat"
+msgstr "So"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:72
+msgid "Sun"
+msgstr "Ne"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:99
+msgid "_Enable Scheduler"
+msgstr "_Povoliť plánovač"
+
+#. Turn off - label
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:141
+msgid "Turn off"
+msgstr "Vypnúť"
+
+#. Turn off - help label
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:146
+msgid "- stop all task"
+msgstr "- zastaviť všetky úlohy"
+
+#. Normal - label
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:156
+msgid "Normal"
+msgstr "Normálne"
+
+#. Normal - help label
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:161
+msgid "- run task normally"
+msgstr "- spustiť úlohu normálne"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:254
+msgid "All"
+msgstr "Všetky"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:259
+msgid "None"
+msgstr "Žiadne"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:276
+msgid "Mark by filter"
+msgstr "Označiť podľa filtra"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:294
+msgid "Mark URLs by host AND filename extension."
+msgstr "Označiť URL podľa hostiteľa a prípony súboru"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:297
+msgid "This will reset all marks of URLs."
+msgstr "Toto obnoví všetky označené URL."
+
+#. filter view -----------------------
+#. left side
+#: ../../po/../ui-gtk/UgtkSelector.c:305
+msgid "Host"
+msgstr "Hostiteľ"
+
+#. right side (filename extension)
+#: ../../po/../ui-gtk/UgtkSelector.c:309
+msgid "File Ext."
+msgstr "Prípona súboru"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:449
+msgid "URL"
+msgstr "URL"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:781
+msgid "Base hypertext reference"
+msgstr "Základ hypertextových odkazov"
+
+#. select all
+#: ../../po/../ui-gtk/UgtkSelector.c:797
+msgid "Mark _All"
+msgstr "Označiť _všetko"
+
+#. select none
+#: ../../po/../ui-gtk/UgtkSelector.c:801
+msgid "Mark _None"
+msgstr "Neoznačiť _žiadne"
+
+#. select by filter
+#: ../../po/../ui-gtk/UgtkSelector.c:805
+msgid "_Mark by filter..."
+msgstr "_Označiť podľa filtra..."
+
+#. e.g.
+#: ../../po/../ui-gtk/UgtkSequencer.c:74
+msgid "e.g."
+msgstr "napríklad"
+
+#. -------------------------------------------------------
+#. radio "From"
+#: ../../po/../ui-gtk/UgtkSequencer.c:85
+msgid "_From:"
+msgstr "_Od:"
+
+#. label "To"
+#: ../../po/../ui-gtk/UgtkSequencer.c:108
+msgid "To:"
+msgstr "Do:"
+
+#. label "digits"
+#: ../../po/../ui-gtk/UgtkSequencer.c:123
+msgid "digits:"
+msgstr "číslice:"
+
+#: ../../po/../ui-gtk/UgtkSequencer.c:132
+msgid "F_rom:"
+msgstr "_Od:"
+
+#. label case-sensitive
+#: ../../po/../ui-gtk/UgtkSequencer.c:162
+msgid "case-sensitive"
+msgstr "citlivé na veľkosť písmen"
+
+#: ../../po/../ui-gtk/UgtkSequencer.c:188
+msgid "No wildcard(*) character in URL entry."
+msgstr "Žiadny znak divokej karty (*) v položke URL."
+
+#: ../../po/../ui-gtk/UgtkSequencer.c:192
+msgid "URL is not valid."
+msgstr "URL nie je platná"
+
+#: ../../po/../ui-gtk/UgtkSequencer.c:196
+msgid "No character in 'From' or 'To' entry."
+msgstr "Žiadny znak v položkách 'Od' alebo 'Do'."
+
+#: ../../po/../ui-gtk/UgtkSequencer.c:305
+msgid "Preview"
+msgstr "Náhľad"
+
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:97
+msgid "User Interface"
+msgstr "Používateľské rozhranie"
+
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:109
+msgid "Bandwidth"
+msgstr "Šírka pásma"
+
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:115
+msgid "Scheduler"
+msgstr "Plánovač"
+
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:121
+msgid "Plug-in"
+msgstr "Zásuvný modul"
+
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:127
+msgid "Others"
+msgstr "Ostatné"
+
+#. Monitor button
+#: ../../po/../ui-gtk/UgtkSettingForm.c:57
+msgid "_Enable clipboard monitor"
+msgstr "_Povoliť monitor schránky"
+
+#. quiet mode
+#: ../../po/../ui-gtk/UgtkSettingForm.c:62
+msgid "_Quiet mode"
+msgstr "_Tichý režim"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:68
+#: ../../po/../ui-gtk/UgtkSettingForm.c:446
+msgid "Default category index"
+msgstr "Predvolený index kategórií"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:80
+#: ../../po/../ui-gtk/UgtkSettingForm.c:458
+msgid "Adding to Nth category if no matched category."
+msgstr "Pridať do N-tej kategórie, ak nie je žiadna zodpovedajúca kategória"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:87
+msgid "Monitor clipboard for specified file types:"
+msgstr "Monitorovať schránku pre konkrétne typy súborov:"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:102
+msgid "Separate the types with character '|'."
+msgstr "Oddeľte typy pomocou znaku '|'."
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:107
+msgid "You can use regular expressions here."
+msgstr "Tu môžete používať regulárne výrazy."
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:151
+msgid "Confirmation"
+msgstr "Potvrdenie"
+
+#. Confirmation check buttons
+#: ../../po/../ui-gtk/UgtkSettingForm.c:157
+msgid "Show confirmation dialog on exit"
+msgstr "Zobraziť potvrdovací dialóg pri ukončení"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:160
+msgid "Confirm when deleting files"
+msgstr "Potvrdiť pri vymazávaní súborov"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:166
+msgid "System Tray"
+msgstr "Systémový panel"
+
+#. System Tray check buttons
+#: ../../po/../ui-gtk/UgtkSettingForm.c:172
+msgid "Always show tray icon"
+msgstr "Vždy zobraziť ikonu v oznamovacej oblasti"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:175
+msgid "Minimize to tray on startup"
+msgstr "Minimalizovať po štarte do oznamovacej oblasti"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:178
+msgid "Close to tray on window close"
+msgstr "Minimalizovať do panela po zavretí okna"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:182
+msgid "Use Ubuntu's App Indicator"
+msgstr "Použiť Ubuntu indikátor aplikácie"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:189
+msgid "Enable offline mode on startup"
+msgstr "Povoliť režim offline po štarte"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:192
+msgid "Download starting notification"
+msgstr "Oznámenie o začatí sťahovania"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:195
+msgid "Sound when download is finished"
+msgstr "Zvuk pri dokončení sťahovania"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:198
+msgid "Apply recently download settings"
+msgstr "Použiť nedávne nastavenia sťahovania"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:264
+msgid "These will affect all plug-ins."
+msgstr "Toto bude mať vplyv na všetky pluginy."
+
+#. Global speed limit
+#: ../../po/../ui-gtk/UgtkSettingForm.c:270
+msgid "Global speed limit"
+msgstr "Globálne limity rýchlostí"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:278
+#: ../../po/../ui-gtk/UgtkSettingForm.c:564
+msgid "Max upload speed"
+msgstr "Maximálna rýchlosť nahrávania"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:290
+#: ../../po/../ui-gtk/UgtkSettingForm.c:576
+msgid "Max download speed"
+msgstr "Maximálna rýchlosť sťahovania"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:323
+msgid "Completion Auto-Actions"
+msgstr "Dokončenie automatických akcií"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:331
+msgid "Custom command:"
+msgstr "Vlastný príkaz:"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:343
+msgid "Custom command if error occured:"
+msgstr "Vlastný príkaz ak dôjde k chybe:"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:388
+msgid "_Autosave"
+msgstr "_Automaticky ukladať"
+
+#. auto save spin & label (interval)
+#: ../../po/../ui-gtk/UgtkSettingForm.c:394
+msgid "minutes"
+msgstr "minútach"
+
+#. auto save label
+#: ../../po/../ui-gtk/UgtkSettingForm.c:402
+msgid "_Interval:"
+msgstr "_Interval:"
+
+#. Commandline Settings
+#: ../../po/../ui-gtk/UgtkSettingForm.c:433
+msgid "Commandline Settings"
+msgstr "Nastavenia príkazového riadku"
+
+#. --quiet
+#: ../../po/../ui-gtk/UgtkSettingForm.c:440
+msgid "Use '--quiet' by default"
+msgstr "Používať predvolene '--quiet'"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:508
+msgid "Plug-in matching order:"
+msgstr "Plugin odpovedajúci zadaniu:"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:531
+msgid "Aria2 plug-in options"
+msgstr "Možnosti pluginu Aria2"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:547
+msgid "RPC authorization secret token"
+msgstr "Overovací tajný token RPC"
+
+#. ------------------------------------------------------------------------
+#. Speed Limits
+#: ../../po/../ui-gtk/UgtkSettingForm.c:556
+msgid "Global speed limit for aria2 only"
+msgstr "Globálne limity rýchlostí sú len pre aria2"
+
+#. ------------------------------------------------------------------------
+#. aria2 works on local device
+#. launch
+#: ../../po/../ui-gtk/UgtkSettingForm.c:589
+msgid "_Launch aria2 on startup"
+msgstr "_Spustiť aria2 po štarte"
+
+#. shutdown
+#: ../../po/../ui-gtk/UgtkSettingForm.c:595
+msgid "_Shutdown aria2 on exit"
+msgstr "_Vypnúť aria2 po ukončení"
+
+#. ------------------------------------------------------------------------
+#. Local options
+#: ../../po/../ui-gtk/UgtkSettingForm.c:601
+msgid "Launch aria2 on local device"
+msgstr "Spustiť aria2 na lokálnom zariadení"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:610
+msgid "Path"
+msgstr "Umiestnenie"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:621
+msgid "Arguments"
+msgstr "Argumenty"
+
+#. Arguments - hint
+#: ../../po/../ui-gtk/UgtkSettingForm.c:626
+msgid "You must restart uGet after modifying it."
+msgstr "Po zmene musíte reštartovať uGet."
+
+#: ../../po/../ui-gtk/UgtkSummary.c:112
+msgid "File"
+msgstr "Súbor"
+
+#: ../../po/../ui-gtk/UgtkSummary.c:127
+msgid "Folder"
+msgstr "Priečinok"
+
+#: ../../po/../ui-gtk/UgtkSummary.c:270
+msgid "Item"
+msgstr "Položka"
+
+#: ../../po/../ui-gtk/UgtkSummary.c:275
+msgid "Value"
+msgstr "Hodnota"
+
+#. Copy All
+#: ../../po/../ui-gtk/UgtkSummary.c:307
+msgid "Copy _All"
+msgstr "Kopírovať _všetko"
+
+#. Show window
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:106
+msgid "Show window"
+msgstr "Zobraziť okno"
+
+#. Offline mode
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:112
+msgid "_Offline Mode"
+msgstr "_Režim offline"

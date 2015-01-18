@@ -1,0 +1,1609 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# markosm <chajbo@ro.ru>, 2014
+# markosm <chajbo@ro.ru>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: uGet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-09 16:11+0800\n"
+"PO-Revision-Date: 2014-11-29 15:05+0000\n"
+"Last-Translator: markosm <chajbo@ro.ru>\n"
+"Language-Team: Serbian (http://www.transifex.com/projects/p/uget/language/sr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sr\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../../po/../uget/UgetApp.c:95
+msgid "All Category"
+msgstr "Све категорије"
+
+#. UGET_EVENT_NORMAL_CUSTOM
+#: ../../po/../uget/UgetEvent.c:58
+msgid "Connecting..."
+msgstr "Повезивање..."
+
+#. UGET_EVENT_NORMAL_CONNECT
+#: ../../po/../uget/UgetEvent.c:59
+msgid "Transmitting..."
+msgstr "Шаљем..."
+
+#. UGET_EVENT_NORMAL_TRANSMIT,
+#: ../../po/../uget/UgetEvent.c:60 ../../po/../ui-gtk/UgtkNodeView.c:874
+msgid "Retry"
+msgstr "Покушај поново"
+
+#. UGET_EVENT_NORMAL_RETRY,
+#: ../../po/../uget/UgetEvent.c:61
+msgid "Download completed"
+msgstr "Преузимање завршено"
+
+#. UGET_EVENT_NORMAL_COMPLETE,
+#: ../../po/../uget/UgetEvent.c:62 ../../po/../ui-gtk/UgtkNodeView.c:613
+msgid "Finished"
+msgstr "Завршено"
+
+#. UGET_EVENT_NORMAL_FINISH,
+#. resumable
+#: ../../po/../uget/UgetEvent.c:64
+msgid "Resumable"
+msgstr "Обновљиво"
+
+#. UGET_EVENT_NORMAL_RESUMABLE,
+#: ../../po/../uget/UgetEvent.c:65 ../../po/../uget/UgetPluginAria2.c:279
+msgid "Not Resumable"
+msgstr "Није обновљиво"
+
+#. UGET_EVENT_WARNING_CUSTOM
+#: ../../po/../uget/UgetEvent.c:73 ../../po/../uget/UgetPluginAria2.c:286
+msgid "Output file can't be renamed."
+msgstr "Излазни фајл не може бити преименован."
+
+#. UGET_EVENT_ERROR_CUSTOM
+#: ../../po/../uget/UgetEvent.c:81
+msgid "couldn't connect to host."
+msgstr "немогуће повезивање са рачунаром."
+
+#. UGET_EVENT_ERROR_CONNECT_FAILED
+#: ../../po/../uget/UgetEvent.c:82 ../../po/../uget/UgetPluginAria2.c:290
+msgid "Folder can't be created."
+msgstr "Фасцикла не може бити креирана."
+
+#. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
+#: ../../po/../uget/UgetEvent.c:83
+msgid "File can't be created (bad filename or file exist)."
+msgstr "Фајл не може бити креиран (погрешно име или фајл већ постоји)."
+
+#. UGET_EVENT_ERROR_FILE_CREATE_FAILED
+#: ../../po/../uget/UgetEvent.c:84
+msgid "File can't be opened."
+msgstr "Фајл се не може отворити"
+
+#. UGET_EVENT_ERROR_FILE_OPEN_FAILED
+#: ../../po/../uget/UgetEvent.c:85
+msgid "Unable to create thread."
+msgstr "Није могуће створити нит."
+
+#. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
+#: ../../po/../uget/UgetEvent.c:86
+msgid "Incorrect source (different file size)."
+msgstr "Неисправан извор (различита величина фајла)."
+
+#. UGET_EVENT_ERROR_INCORRECT_SOURCE,
+#: ../../po/../uget/UgetEvent.c:87
+msgid "Out of resource (disk full or run out of memory)."
+msgstr "Премало ресурса (диск је пун или нема довољно меморије)."
+
+#. UGET_EVENT_ERROR_OUT_OF_RESOURCE
+#: ../../po/../uget/UgetEvent.c:88
+msgid "No output file."
+msgstr "Нема излазног фајла."
+
+#. UGET_EVENT_ERROR_NO_OUTPUT_FILE
+#: ../../po/../uget/UgetEvent.c:89
+msgid "No output setting."
+msgstr "Нема излазне поставке."
+
+#. UGET_EVENT_ERROR_NO_OUTPUT_SETTING
+#: ../../po/../uget/UgetEvent.c:90
+msgid "Too many retries."
+msgstr "Превише поновних покушаја."
+
+#. UGET_EVENT_ERROR_TOO_MANY_RETRIES
+#: ../../po/../uget/UgetEvent.c:91
+msgid "Unsupported scheme (protocol)."
+msgstr "Неподржана шема (протокол)."
+
+#. UGET_EVENT_ERROR_UNSUPPORTED_SCHEME
+#: ../../po/../uget/UgetEvent.c:92
+msgid "Unsupported file."
+msgstr "Неподржан фајл."
+
+#. 1 - 10
+#: ../../po/../uget/UgetPluginAria2.c:272
+msgid "aria2: an unknown error occurred."
+msgstr "aria2: догодила се непозната грешка."
+
+#: ../../po/../uget/UgetPluginAria2.c:273
+msgid "aria2: time out occurred."
+msgstr "aria2: временска пауза."
+
+#: ../../po/../uget/UgetPluginAria2.c:274
+msgid "aria2: resource was not found."
+msgstr "aria2: ресурси нису пронађени."
+
+#: ../../po/../uget/UgetPluginAria2.c:275
+msgid ""
+"aria2 saw the specfied number of 'resource not found' error. See --max-file-"
+"not-found option"
+msgstr "aria2 пријављује одређени број 'resource not found' грешки. Погледај  --max-file-not-found опцију"
+
+#: ../../po/../uget/UgetPluginAria2.c:276
+msgid "aria2: speed was too slow."
+msgstr "aria2: брзина је врло спора."
+
+#: ../../po/../uget/UgetPluginAria2.c:277
+msgid "aria2: network problem occurred."
+msgstr "aria2: догодио се проблем са мрежом."
+
+#: ../../po/../uget/UgetPluginAria2.c:278
+msgid "aria2: unfinished downloads."
+msgstr "aria2: незавршена преузимања."
+
+#. _("Not Resumable"),
+#: ../../po/../uget/UgetPluginAria2.c:280
+msgid "Out of resource"
+msgstr "Ван ресурса"
+
+#. _(),
+#: ../../po/../uget/UgetPluginAria2.c:281
+msgid "aria2: piece length was different from one in .aria2 control file."
+msgstr "aria2: дужина комада је различита од оне у .aria2 контролном фајлу."
+
+#. 11 - 20
+#: ../../po/../uget/UgetPluginAria2.c:283
+msgid "aria2 was downloading same file."
+msgstr "aria2 је преузела исти фајл."
+
+#: ../../po/../uget/UgetPluginAria2.c:284
+msgid "aria2 was downloading same info hash torrent."
+msgstr "aria2 је преузела исти торент инфо."
+
+#: ../../po/../uget/UgetPluginAria2.c:285
+msgid "aria2: file already existed. See --allow-overwrite option."
+msgstr "aria2: фајл већ постоји. Погледај --allow-overwrite опцију."
+
+#. _("Output file can't be renamed."),
+#: ../../po/../uget/UgetPluginAria2.c:287
+msgid "aria2: could not open existing file."
+msgstr "aria2: не могу отворити постојећи фајл."
+
+#: ../../po/../uget/UgetPluginAria2.c:288
+msgid "aria2: could not create new file or truncate existing file."
+msgstr "aria2: не могу креирати нови фајл или скратити постојећи."
+
+#: ../../po/../uget/UgetPluginAria2.c:289
+msgid "aria2: file I/O error occurred."
+msgstr "aria2: догодила се I/O грешка."
+
+#. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
+#: ../../po/../uget/UgetPluginAria2.c:291
+msgid "aria2: name resolution failed."
+msgstr "aria2: неуспело именовање резолуције."
+
+#: ../../po/../uget/UgetPluginAria2.c:292
+msgid "aria2: could not parse Metalink document."
+msgstr "aria2: није могуће анализирати Металинк документ."
+
+#. 21 - 30
+#: ../../po/../uget/UgetPluginAria2.c:294
+msgid "aria2: FTP command failed."
+msgstr "aria2: ФТП команда није успела."
+
+#: ../../po/../uget/UgetPluginAria2.c:295
+msgid "aria2: HTTP response header was bad or unexpected."
+msgstr "aria2: HTTP одговор је лош или неочекива."
+
+#: ../../po/../uget/UgetPluginAria2.c:296
+msgid "Too many redirections."
+msgstr "Превише преусмеравања."
+
+#: ../../po/../uget/UgetPluginAria2.c:297
+msgid "aria2: HTTP authorization failed."
+msgstr "aria2: HTTP ауторизација није успела."
+
+#: ../../po/../uget/UgetPluginAria2.c:298
+msgid "aria2: could not parse bencoded file(usually .torrent file)."
+msgstr "aria2: не могу анализирати фајл (обично .torrent фајл)."
+
+#: ../../po/../uget/UgetPluginAria2.c:299
+msgid "aria2: torrent file was corrupted or missing information."
+msgstr "aria2: торент фајл је оштећен или недостају информације."
+
+#: ../../po/../uget/UgetPluginAria2.c:300
+msgid "aria2: Magnet URI was bad."
+msgstr "aria2: Магнет URI је био лош."
+
+#: ../../po/../uget/UgetPluginAria2.c:301
+msgid ""
+"aria2: bad/unrecognized option was given or unexpected option argument was "
+"given."
+msgstr "aria2: дата је лоша/непозната опција."
+
+#: ../../po/../uget/UgetPluginAria2.c:302
+msgid "aria2: remote server was unable to handle the request."
+msgstr "aria2: удаљени сервер није могао да обради захтев."
+
+#: ../../po/../uget/UgetPluginAria2.c:303
+msgid "aria2: could not parse JSON-RPC request."
+msgstr "aria2: није могуће анализирати JSON-RPC захтев."
+
+#: ../../po/../uget/UgetPluginAria2.c:306
+msgid "No response. Is aria2 shutdown?"
+msgstr "Без одговора. Да ли је aria2 угашен?"
+
+#. debug
+#: ../../po/../uget/UgetPluginAria2.c:608
+msgid "aria2: gid was removed."
+msgstr "aria2: гид је уклоњен."
+
+#: ../../po/../ui-gtk/UgtkAboutDialog.c:46
+msgid "Download Manager"
+msgstr "Менаџер преузимања"
+
+#: ../../po/../ui-gtk/UgtkAboutDialog.c:48
+msgid "translator-credits"
+msgstr "заслуге преводилаца"
+
+#: ../../po/../ui-gtk/UgtkAboutDialog.c:80
+msgid "uGet Founder: "
+msgstr "uGet оснивач:"
+
+#: ../../po/../ui-gtk/UgtkAboutDialog.c:81
+msgid "uGet Project Manager: "
+msgstr "uGet менаџер пројекта: "
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:255
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:204
+msgid "tasks"
+msgstr "задаци"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:374
+msgid "New from Clipboard"
+msgstr "Ново из клипборда"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:376 ../../po/../ui-gtk/UgtkApp.c:662
+msgid "New Download"
+msgstr "Ново преузимање"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:399 ../../po/../ui-gtk/UgtkApp.c:1411
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:103
+msgid "Clipboard"
+msgstr "Клипборд"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:401
+msgid "Command line"
+msgstr "Командна линија"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:758
+msgid "Error Occurred"
+msgstr "Догодила се грешка"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:759
+msgid "Error Occurred when downloading."
+msgstr "Догодила се грешка код преузимања."
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:760
+msgid "Download Starting"
+msgstr "Преузимање започиње"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:761
+msgid "Starting download queue."
+msgstr "Покретање преузимања на чекању"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:762
+msgid "Download Completed"
+msgstr "Преузимање завршено"
+
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:763
+msgid "All queuing downloads have been completed."
+msgstr "Сва преузимања са пописа чекања су завршена."
+
+#. ----------------------------------------------------
+#. frame for Status (start mode)
+#: ../../po/../ui-gtk/UgtkApp-ui.c:115
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:220
+#: ../../po/../ui-gtk/UgtkNodeView.c:997
+msgid "Status"
+msgstr "Стање"
+
+#. Summary Items - Category
+#. Download Columns - Category
+#: ../../po/../ui-gtk/UgtkApp-ui.c:117 ../../po/../ui-gtk/UgtkMenubar-ui.c:270
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:298
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:383
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:392
+#: ../../po/../ui-gtk/UgtkNodeView.c:889 ../../po/../ui-gtk/UgtkNodeView.c:977
+#: ../../po/../ui-gtk/UgtkSummary.c:139
+msgid "Category"
+msgstr "Категорија"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:184
+msgid "Create new download"
+msgstr "Креирај ново преузимање"
+
+#. New Download (accelerators)
+#. gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
+#. New Download
+#: ../../po/../ui-gtk/UgtkApp-ui.c:194 ../../po/../ui-gtk/UgtkMenubar-ui.c:58
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:59
+msgid "New _Download..."
+msgstr "Ново _преузимање..."
+
+#. New Category
+#: ../../po/../ui-gtk/UgtkApp-ui.c:201 ../../po/../ui-gtk/UgtkMenubar-ui.c:65
+msgid "New _Category..."
+msgstr "Нова _категорија..."
+
+#. New Clipboard batch
+#: ../../po/../ui-gtk/UgtkApp-ui.c:207 ../../po/../ui-gtk/UgtkTrayIcon.c:66
+msgid "New Clipboard _batch..."
+msgstr "Ново из _клипборда..."
+
+#. New URL Sequence batch
+#: ../../po/../ui-gtk/UgtkApp-ui.c:214
+msgid "New _URL Sequence batch..."
+msgstr "Нови _URL редослед линкова..."
+
+#. New Torrent
+#. separator
+#. gtk_menu_shell_append ((GtkMenuShell*)submenu,
+#. gtk_separator_menu_item_new() );
+#. New Torrent
+#: ../../po/../ui-gtk/UgtkApp-ui.c:224 ../../po/../ui-gtk/UgtkMenubar-ui.c:73
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:75
+msgid "New Torrent..."
+msgstr "Нови торент..."
+
+#. New Metalink
+#: ../../po/../ui-gtk/UgtkApp-ui.c:231 ../../po/../ui-gtk/UgtkMenubar-ui.c:79
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:82
+msgid "New Metalink..."
+msgstr "Нови мета-линк..."
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:240
+msgid "Save all settings"
+msgstr "Сачувај сва подешавања"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:248
+msgid "Set selected download runnable"
+msgstr "Покрени одабрано преузимање"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:253
+msgid "Set selected download to pause"
+msgstr "Паузирај одабрано преузимање"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:258
+msgid "Set selected download properties"
+msgstr "Подеси својства одабраног преузимања"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:266
+msgid "Move selected download up"
+msgstr "Помери одабрано преузимање горе"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:271
+msgid "Move selected download down"
+msgstr "Помери одабрано преузимање доле"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:276
+msgid "Move selected download to top"
+msgstr "Помери одабрано преузимање на врх"
+
+#: ../../po/../ui-gtk/UgtkApp-ui.c:281
+msgid "Move selected download to bottom"
+msgstr "Помери одабрано преузимање на дно"
+
+#: ../../po/../ui-gtk/UgtkApp.c:634
+msgid "New Category"
+msgstr "Нова категорија"
+
+#: ../../po/../ui-gtk/UgtkApp.c:645
+msgid "Copy - "
+msgstr "Копирај - "
+
+#: ../../po/../ui-gtk/UgtkApp.c:783
+msgid "Category Properties"
+msgstr "Својства категорије"
+
+#: ../../po/../ui-gtk/UgtkApp.c:797
+msgid "Download Properties"
+msgstr "Својства преузимања"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1028
+msgid "New Torrent"
+msgstr "Нови торент"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1044
+msgid "New Metalink"
+msgstr "Нови мета-линк"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1053
+msgid "Open Torrent file"
+msgstr "Отвори торент фајл"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1069
+msgid "Open Metalink file"
+msgstr "Отвори мета-линк фајл"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1109
+msgid "Failed to save category file."
+msgstr "Неуспело чување фајла категорије"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1129
+msgid "Failed to load category file."
+msgstr "Неуспело учитавање категорије фајла."
+
+#: ../../po/../ui-gtk/UgtkApp.c:1140
+msgid "Save Category file"
+msgstr "Сачувај фајл категорије"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1158
+msgid "Open Category file"
+msgstr "Отвори фајл категорије"
+
+#. add link
+#: ../../po/../ui-gtk/UgtkApp.c:1217
+msgid "Link <A>"
+msgstr "Линк <A>"
+
+#. add image
+#: ../../po/../ui-gtk/UgtkApp.c:1222
+msgid "Image <IMG>"
+msgstr "Слика <IMG>"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1267
+msgid "Text File"
+msgstr "Текстуални фајл"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1314
+msgid "Import URLs from HTML file"
+msgstr "Увези URL-ове из HTML фајла"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1329
+msgid "Import URLs from text file"
+msgstr "Увези URL-ове из текстуалног фајла"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1344
+msgid "Export URLs to text file"
+msgstr "Извези УРЛ у текстуални фајл"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1363
+msgid "URL Sequence batch"
+msgstr "URL Редослед линкова"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1390
+msgid "No URLs found in clipboard."
+msgstr "Без URL-а пронађених у клипборду."
+
+#: ../../po/../ui-gtk/UgtkApp.c:1399
+msgid "All URLs had existed."
+msgstr "Све УРЛ адресе су постојеће."
+
+#: ../../po/../ui-gtk/UgtkApp.c:1404
+msgid "Clipboard batch"
+msgstr "Из клипборда"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1494
+msgid "New"
+msgstr "Ново"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1613 ../../po/../ui-gtk/UgtkMenubar.c:383
+#: ../../po/../ui-gtk/UgtkMenubar.c:415 ../../po/../ui-gtk/UgtkNodeView.c:609
+msgid "Error"
+msgstr "Грешка"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1621 ../../po/../ui-gtk/UgtkSummary.c:184
+msgid "Message"
+msgstr "Порука"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1727
+#, c-format
+msgid "Selected %d items"
+msgstr "Одабрано %d ставки"
+
+#: ../../po/../ui-gtk/UgtkBanner.c:145 ../../po/../ui-gtk/UgtkBanner.c:165
+msgid "Attention uGetters:"
+msgstr "Пажња uGetters:"
+
+#: ../../po/../ui-gtk/UgtkBanner.c:148
+msgid ""
+"we are running a Donation Drive for uGet's Future Development, please click "
+msgstr "покренули смо прикупљање донација за будући развој uGet-а, молим кликните "
+
+#: ../../po/../ui-gtk/UgtkBanner.c:151
+msgid "HERE"
+msgstr "ОВДЕ"
+
+#: ../../po/../ui-gtk/UgtkBanner.c:168
+msgid "please fill out this quick User Survey for uGet."
+msgstr "молимо попуните ову кратку корисничку анкету за uGet."
+
+#: ../../po/../ui-gtk/UgtkBanner.c:171
+msgid "click here to take survey"
+msgstr "кликните овде за почетак анкете"
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:62
+msgid "Category _name:"
+msgstr "Име _категорије:"
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:82
+msgid "Active _downloads:"
+msgstr "Активна _преузимања:"
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:92
+msgid "Capacity of Finished:"
+msgstr "Капацитет завршеног:"
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:102
+msgid "Capacity of Recycled:"
+msgstr "Капацитет обрисаног:"
+
+#. ------------------------------------------------------------------------
+#. URI Matching conditions
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:111
+msgid "URI Matching conditions"
+msgstr "УРИ подударајући услови"
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:118
+msgid "Matched _Hosts:"
+msgstr "Подударени _хостови:"
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:129
+msgid "Matched _Schemes:"
+msgstr "Подударене _шеме:"
+
+#: ../../po/../ui-gtk/UgtkCategoryForm.c:140
+msgid "Matched _Types:"
+msgstr "Подударени _режими:"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:64
+msgid "Really Quit?"
+msgstr "Стварно желите изаћи?"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:65
+msgid "Are you sure you want to quit?"
+msgstr "Да ли сте сигурни да желите изаћи?"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:69
+msgid "Really delete files?"
+msgstr "Стварно желите обрисати фајлове?"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:70
+msgid "Are you sure you want to delete files?"
+msgstr "Да ли сте сигурни да желите обрисати фајлове?"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:74
+msgid "Really delete category?"
+msgstr "Стварно желите обрисати категорију?"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:75
+msgid "Are you sure you want to delete category?"
+msgstr "Да ли сте сигурни да желите обрисати категорију?"
+
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:106
+msgid "Don't ask me again"
+msgstr "Не питај ме поново"
+
+#. URL - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:109
+#: ../../po/../ui-gtk/UgtkSequencer.c:63
+msgid "_URI:"
+msgstr "_URI:"
+
+#. Mirrors - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:128
+msgid "Mirrors:"
+msgstr "Сервери:"
+
+#. File - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:144
+#: ../../po/../ui-gtk/UgtkProxyForm.c:385
+msgid "File:"
+msgstr "Фајл:"
+
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:159
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:893
+msgid "Select Folder"
+msgstr "Одабери фасциклу:"
+
+#. Folder - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:167
+msgid "_Folder:"
+msgstr "_Фасцикла:"
+
+#. Referrer - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:182
+msgid "Referrer:"
+msgstr "Извор транзиције:"
+
+#. "Max Connections:" - title label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:207
+msgid "_Max Connections:"
+msgstr "_Макс конекција:"
+
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:226
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:510
+msgid "_Runnable"
+msgstr "_Покрени"
+
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:228
+msgid "P_ause"
+msgstr "П_ауза"
+
+#. ----------------------------------------------------
+#. frame for login
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:234
+msgid "Login"
+msgstr "Пријава"
+
+#. User - label
+#. user label & entry
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:248
+#: ../../po/../ui-gtk/UgtkProxyForm.c:149
+msgid "User:"
+msgstr "Корисник:"
+
+#. Password - label
+#. password label & entry
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:264
+#: ../../po/../ui-gtk/UgtkProxyForm.c:160
+msgid "Password:"
+msgstr "Лозинка:"
+
+#. label - cookie file
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:290
+msgid "Cookie file:"
+msgstr "Фајл колачића:"
+
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:302
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:949
+msgid "Select Cookie File"
+msgstr "Одабери фајл колачића"
+
+#. label - post file
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:311
+msgid "Post file:"
+msgstr "Поштански фајл:"
+
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:323
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:1005
+msgid "Select Post File"
+msgstr "Одабери поштански фајл"
+
+#. label - user agent
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:333
+msgid "User Agent:"
+msgstr "Кориснички заступник"
+
+#. label - Max upload speed
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:349
+msgid "Max upload speed:"
+msgstr "Максимална брзина отпремања:"
+
+#. label - "KiB/s"
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:361
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:379
+#: ../../po/../ui-gtk/UgtkSettingForm.c:280
+#: ../../po/../ui-gtk/UgtkSettingForm.c:292
+#: ../../po/../ui-gtk/UgtkSettingForm.c:566
+#: ../../po/../ui-gtk/UgtkSettingForm.c:578
+msgid "KiB/s"
+msgstr "KiB/s"
+
+#. label - Max download speed
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:367
+msgid "Max download speed:"
+msgstr "Максимална брзина преузимања:"
+
+#. Retry limit - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:385
+msgid "Retry _limit:"
+msgstr "Ограничење _покушаја:"
+
+#. counts - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:400
+msgid "counts"
+msgstr "покушаја"
+
+#. Retry delay - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:407
+msgid "Retry _delay:"
+msgstr "Одгађање _покушаја:"
+
+#. seconds - label
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:422
+msgid "seconds"
+msgstr "секунди"
+
+#. Retrieve timestamp
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:429
+msgid "Retrieve timestamp"
+msgstr "Прихвати временске ознаке"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:51
+msgid "_File"
+msgstr "_Фајл"
+
+#. Batch Downloads --- start ---
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:86
+msgid "_Batch Downloads"
+msgstr "_Пакетна преузимања"
+
+#. Batch downloads - Clipboard batch
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:92
+msgid "_Clipboard batch..."
+msgstr "_Из клипборда..."
+
+#. Batch downloads - URL Sequence batch
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:98
+msgid "_URL Sequence batch..."
+msgstr "_URL редослед линкова..."
+
+#. Batch downloads - Text file import (.txt)
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:104
+msgid "_Text file import (.txt)..."
+msgstr "_Увоз текстуалног фајла (.txt)..."
+
+#. Batch downloads - HTML file import (.html)
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:110
+msgid "_HTML file import (.html)..."
+msgstr "_Увоз HTML фајла (.html)..."
+
+#. Batch downloads - Export to Text file (.txt)
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:118
+msgid "_Export to Text file (.txt)..."
+msgstr "_Извоз у текстуалном фајлу (.txt)..."
+
+#. Open Category
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:128
+msgid "_Open category..."
+msgstr "_Отвори категорију..."
+
+#. Save Category
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:135
+msgid "_Save category as..."
+msgstr "_Сачувај категорију као..."
+
+#. Save All
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
+msgid "Save _all settings"
+msgstr "Сачувај _сва подешавања"
+
+#. Offline mode
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:152
+msgid "Offline Mode"
+msgstr "Режим ван мреже"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:170
+msgid "_Edit"
+msgstr "_Уреди"
+
+#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new()
+#. );
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:175
+msgid "Clipboard _Monitor"
+msgstr "Клипборд _монитор"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:179
+msgid "Clipboard works quietly"
+msgstr "Клипборд ради у позадини"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:183
+msgid "Command-line works quietly"
+msgstr "Командна линија ради у позадини"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:187
+msgid "Skip existing URI"
+msgstr "Прескочи постојећи URI"
+
+#. --- Completion Auto-Actions --- start ---
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:194
+msgid "Completion _Auto-Actions"
+msgstr "Завршене _ауто-акције"
+
+#. Completion Auto-Actions - Disable
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:200
+msgid "_Disable"
+msgstr "_Онемогући"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:205
+msgid "Hibernate"
+msgstr "Успавај"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:210
+msgid "Suspend"
+msgstr "Суспендуј"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:215
+msgid "Shutdown"
+msgstr "Напусти"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:220
+msgid "Reboot"
+msgstr "Поново покрени"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:225
+msgid "Custom"
+msgstr "Прилагођено"
+
+#. Completion Auto-Actions - Remember
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
+msgid "Remember setting"
+msgstr "Запамти подешавања"
+
+#. Completion Auto-Actions - Help
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:235
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:610
+msgid "_Help"
+msgstr "_Помоћ"
+
+#. --- Completion Auto-Actions --- end ---
+#. menu_item = gtk_menu_item_new_with_mnemonic (_("_Settings..."));
+#. Settings
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:241
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:91
+msgid "_Settings..."
+msgstr "_Поставке..."
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:256
+msgid "_View"
+msgstr "_Преглед"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:260
+msgid "_Toolbar"
+msgstr "_Трака алата"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:265
+msgid "Statusbar"
+msgstr "Статусна трака"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:275
+msgid "_Summary"
+msgstr "_Сажетак"
+
+#. Summary Items --- start ---
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:283
+msgid "Summary _Items"
+msgstr "Ставке _сажетка"
+
+#. Summary Items - Name
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:288
+msgid "_Name"
+msgstr "_Име"
+
+#. Summary Items - Folder
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:293
+msgid "_Folder"
+msgstr "_Фасцикла"
+
+#. Summary Items - Elapsed
+#. menu_item = gtk_check_menu_item_new_with_mnemonic (_("_Elapsed"));
+#. gtk_check_menu_item_set_active ((GtkCheckMenuItem*) menu_item, TRUE);
+#. gtk_menu_shell_append ((GtkMenuShell*) submenu, menu_item);
+#. menubar->view.summary_items.elapsed = menu_item;
+#. Summary Items - URL
+#. Download Columns - URL
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:308
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:388
+msgid "_URL"
+msgstr "_URL"
+
+#. Summary Items - Message
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:313
+msgid "_Message"
+msgstr "_Порука"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:328
+msgid "Download _Columns"
+msgstr "Колоне _преузимања"
+
+#. Download Columns - Completed
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:333
+msgid "_Complete"
+msgstr "_Завршено"
+
+#. Download Columns - Total
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:338
+msgid "_Size"
+msgstr "_Величина"
+
+#. Download Columns - Percent (%)
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:343
+msgid "_Percent '%'"
+msgstr "_Проценат '%'"
+
+#. Download Columns - Elapsed
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:348
+msgid "_Elapsed"
+msgstr "_Прошло времена"
+
+#. Download Columns - Left
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:353
+msgid "_Left"
+msgstr "_Лево"
+
+#. Download Columns - Speed
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:358
+#: ../../po/../ui-gtk/UgtkNodeView.c:818
+msgid "Speed"
+msgstr "Брзина"
+
+#. Download Columns - Up Speed
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:363
+#: ../../po/../ui-gtk/UgtkNodeView.c:832
+msgid "Up Speed"
+msgstr "Брзина отпреме"
+
+#. Download Columns - Uploaded
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:368
+#: ../../po/../ui-gtk/UgtkNodeView.c:846
+msgid "Uploaded"
+msgstr "Отпремљено"
+
+#. Download Columns - Ratio
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:373
+#: ../../po/../ui-gtk/UgtkNodeView.c:860
+msgid "Ratio"
+msgstr "Однос"
+
+#. Download Columns - Retry
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:378
+msgid "_Retry"
+msgstr "_Покушај поново"
+
+#. Download Columns - Added On
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:393
+#: ../../po/../ui-gtk/UgtkNodeView.c:917
+msgid "Added On"
+msgstr "Додато"
+
+#. Download Columns - Completed On
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:398
+#: ../../po/../ui-gtk/UgtkNodeView.c:931
+msgid "Completed On"
+msgstr "Завршено"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:413
+msgid "_Category"
+msgstr "_Категорија"
+
+#. New Category
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:418
+msgid "_New Category..."
+msgstr "_Нова категорија..."
+
+#. Delete Category
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:424
+msgid "_Delete Category"
+msgstr "_Обриши категорију"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:461
+msgid "_Download"
+msgstr "_Преузимање"
+
+#. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE,
+#. accel_group);
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:473
+msgid "_Delete Entry"
+msgstr "_Обриши ставку"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:480
+msgid "Delete Entry and _File"
+msgstr "Обриши ставку и _фајл"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:495
+msgid "Open _Containing folder"
+msgstr "Отвори _садржајну фасциклу"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:504
+msgid "Force Start"
+msgstr "Присили покретање"
+
+#. Move to --- start ---
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:528
+msgid "_Move To"
+msgstr "_Премести у"
+
+#. Priority --- start ---
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:573
+msgid "Priority"
+msgstr "Приоритет"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:582
+msgid "_High"
+msgstr "_Висок"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:587
+msgid "_Normal"
+msgstr "_Нормалан"
+
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:592
+msgid "_Low"
+msgstr "_Низак"
+
+#. Get Help Online
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:615
+msgid "Get Help Online"
+msgstr "Потражите помоћ на мрежи"
+
+#. Documentation
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:622
+msgid "Documentation"
+msgstr "Документација"
+
+#. Support Forum
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:629
+msgid "Support Forum"
+msgstr "Форум за подршку"
+
+#. Submit Feedback
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:636
+msgid "Submit Feedback"
+msgstr "Пошаљите повратну информацију"
+
+#. Report a Bug
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:643
+msgid "Report a Bug"
+msgstr "Пријавите грешке"
+
+#. Keyboard Shortcuts
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:650
+msgid "Keyboard Shortcuts"
+msgstr "Пречице тастатуре"
+
+#. Check for Updates
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:657
+msgid "Check for Updates"
+msgstr "Проверите ажурирања"
+
+#: ../../po/../ui-gtk/UgtkMenubar.c:144
+msgid "Settings"
+msgstr "Поставке"
+
+#: ../../po/../ui-gtk/UgtkMenubar.c:377
+#, c-format
+msgid "Can't launch default application for file '%s'."
+msgstr "Немогуће покретање подразумеване апликација за фајл '%s'."
+
+#: ../../po/../ui-gtk/UgtkMenubar.c:409
+#, c-format
+msgid "'%s' - This folder does not exist."
+msgstr "'%s' - Ова фасцикла не постоји."
+
+#. title
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:205
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:209
+msgid "URI had existed"
+msgstr "URI  постоји"
+
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:207
+msgid "This URI had existed, are you sure to continue?"
+msgstr "Овај URI постоји, да ли желите да наставите?"
+
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:343
+msgid "General"
+msgstr "Опште"
+
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:345
+msgid "Advanced"
+msgstr "Напредно"
+
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:354
+msgid "Category settings"
+msgstr "Поставке категорије"
+
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:356
+msgid "Default for new download 1"
+msgstr "Подразумевано за ново преузимање 1"
+
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:358
+msgid "Default 2"
+msgstr "Подразумевано 2"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:121 ../../po/../ui-gtk/UgtkNodeView.c:584
+#: ../../po/../ui-gtk/UgtkSummary.c:115
+msgid "unnamed"
+msgstr "безимено"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:610
+msgid "Paused"
+msgstr "Паузирано"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:611
+msgid "Uploading"
+msgstr "Отпремање"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:612
+msgid "Completed"
+msgstr "Завршено"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:614
+msgid "Recycled"
+msgstr "Обрисано"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:615
+msgid "Queuing"
+msgstr "На чекању"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:616
+msgid "Active"
+msgstr "Активно"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:637
+msgid "All Status"
+msgstr "Сви статуси"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:734
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:85
+#: ../../po/../ui-gtk/UgtkSummary.c:108
+msgid "Name"
+msgstr "Име"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:747
+msgid "Complete"
+msgstr "Завршено"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:761
+msgid "Size"
+msgstr "Величина"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:776
+msgid "%"
+msgstr "%"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:790
+msgid "Elapsed"
+msgstr "Покренуто"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:804
+msgid "Left"
+msgstr "Завршено"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:903
+#: ../../po/../ui-gtk/UgtkSettingForm.c:538
+#: ../../po/../ui-gtk/UgtkSummary.c:151
+msgid "URI"
+msgstr "URI"
+
+#: ../../po/../ui-gtk/UgtkNodeView.c:954
+msgid "Quantity"
+msgstr "Количина"
+
+#. proxy type label & combo box
+#: ../../po/../ui-gtk/UgtkProxyForm.c:64
+msgid "Proxy:"
+msgstr "Прокси:"
+
+#: ../../po/../ui-gtk/UgtkProxyForm.c:67
+msgid "Don't use"
+msgstr "Не користи"
+
+#: ../../po/../ui-gtk/UgtkProxyForm.c:69
+msgid "Default"
+msgstr "Подразумевано"
+
+#. host label & entry
+#: ../../po/../ui-gtk/UgtkProxyForm.c:121
+msgid "Host:"
+msgstr "Рачунар:"
+
+#. port label & entry
+#: ../../po/../ui-gtk/UgtkProxyForm.c:132
+msgid "Port:"
+msgstr "Порт:"
+
+#: ../../po/../ui-gtk/UgtkProxyForm.c:351
+msgid "Socket:"
+msgstr "Утичница:"
+
+#: ../../po/../ui-gtk/UgtkProxyForm.c:361
+msgid "Socket args:"
+msgstr "Утичница args:"
+
+#: ../../po/../ui-gtk/UgtkProxyForm.c:371
+msgid "Element:"
+msgstr "Елемент:"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:66
+msgid "Mon"
+msgstr "Пон"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:67
+msgid "Tue"
+msgstr "Уто"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:68
+msgid "Wed"
+msgstr "Сре"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:69
+msgid "Thu"
+msgstr "Чет"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:70
+msgid "Fri"
+msgstr "Пет"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:71
+msgid "Sat"
+msgstr "Суб"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:72
+msgid "Sun"
+msgstr "Нед"
+
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:99
+msgid "_Enable Scheduler"
+msgstr "_Омогући распоред"
+
+#. Turn off - label
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:141
+msgid "Turn off"
+msgstr "Искључи"
+
+#. Turn off - help label
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:146
+msgid "- stop all task"
+msgstr "- заустави све задатке"
+
+#. Normal - label
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:156
+msgid "Normal"
+msgstr "Нормално"
+
+#. Normal - help label
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:161
+msgid "- run task normally"
+msgstr "- нормално покрени задатак"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:254
+msgid "All"
+msgstr "Све"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:259
+msgid "None"
+msgstr "Непознато"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:276
+msgid "Mark by filter"
+msgstr "Означи према филтеру"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:294
+msgid "Mark URLs by host AND filename extension."
+msgstr "Означи URL-ове према рачунару и врсти фајла."
+
+#: ../../po/../ui-gtk/UgtkSelector.c:297
+msgid "This will reset all marks of URLs."
+msgstr "Ово ће ресетовати све означене URL-ове."
+
+#. filter view -----------------------
+#. left side
+#: ../../po/../ui-gtk/UgtkSelector.c:305
+msgid "Host"
+msgstr "Рачунар"
+
+#. right side (filename extension)
+#: ../../po/../ui-gtk/UgtkSelector.c:309
+msgid "File Ext."
+msgstr "Врста фајла"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:449
+msgid "URL"
+msgstr "URL"
+
+#: ../../po/../ui-gtk/UgtkSelector.c:781
+msgid "Base hypertext reference"
+msgstr "Основна хипертекст препорука"
+
+#. select all
+#: ../../po/../ui-gtk/UgtkSelector.c:797
+msgid "Mark _All"
+msgstr "Означи _све"
+
+#. select none
+#: ../../po/../ui-gtk/UgtkSelector.c:801
+msgid "Mark _None"
+msgstr "Означи _ништа"
+
+#. select by filter
+#: ../../po/../ui-gtk/UgtkSelector.c:805
+msgid "_Mark by filter..."
+msgstr "_Означи према филтеру..."
+
+#. e.g.
+#: ../../po/../ui-gtk/UgtkSequencer.c:74
+msgid "e.g."
+msgstr "нпр."
+
+#. -------------------------------------------------------
+#. radio "From"
+#: ../../po/../ui-gtk/UgtkSequencer.c:85
+msgid "_From:"
+msgstr "_Од:"
+
+#. label "To"
+#: ../../po/../ui-gtk/UgtkSequencer.c:108
+msgid "To:"
+msgstr "На:"
+
+#. label "digits"
+#: ../../po/../ui-gtk/UgtkSequencer.c:123
+msgid "digits:"
+msgstr "бројеви:"
+
+#: ../../po/../ui-gtk/UgtkSequencer.c:132
+msgid "F_rom:"
+msgstr "О_д:"
+
+#. label case-sensitive
+#: ../../po/../ui-gtk/UgtkSequencer.c:162
+msgid "case-sensitive"
+msgstr "мала-велика слова"
+
+#: ../../po/../ui-gtk/UgtkSequencer.c:188
+msgid "No wildcard(*) character in URL entry."
+msgstr "Без заменских(*) карактера у URL уносу."
+
+#: ../../po/../ui-gtk/UgtkSequencer.c:192
+msgid "URL is not valid."
+msgstr "URL није исправан."
+
+#: ../../po/../ui-gtk/UgtkSequencer.c:196
+msgid "No character in 'From' or 'To' entry."
+msgstr "Нема знакова у 'Од' или 'На' уносу."
+
+#: ../../po/../ui-gtk/UgtkSequencer.c:305
+msgid "Preview"
+msgstr "Преглед"
+
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:97
+msgid "User Interface"
+msgstr "Корисничко сучеље"
+
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:109
+msgid "Bandwidth"
+msgstr "Проток"
+
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:115
+msgid "Scheduler"
+msgstr "Распоред"
+
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:121
+msgid "Plug-in"
+msgstr "Додатак"
+
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:127
+msgid "Others"
+msgstr "Остало"
+
+#. Monitor button
+#: ../../po/../ui-gtk/UgtkSettingForm.c:57
+msgid "_Enable clipboard monitor"
+msgstr "_Омогући клипборд монитор"
+
+#. quiet mode
+#: ../../po/../ui-gtk/UgtkSettingForm.c:62
+msgid "_Quiet mode"
+msgstr "_Тихи режим"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:68
+#: ../../po/../ui-gtk/UgtkSettingForm.c:446
+msgid "Default category index"
+msgstr "Подразумевани индекс категорије"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:80
+#: ../../po/../ui-gtk/UgtkSettingForm.c:458
+msgid "Adding to Nth category if no matched category."
+msgstr "Додавање у Nth категорију ако се не подударају."
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:87
+msgid "Monitor clipboard for specified file types:"
+msgstr "Монитор клипборда за одређени тип фајла:"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:102
+msgid "Separate the types with character '|'."
+msgstr "Раздвој врсте фајлова са знаком '|'."
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:107
+msgid "You can use regular expressions here."
+msgstr "Можете користити уобичајене изразе овде."
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:151
+msgid "Confirmation"
+msgstr "Потврда"
+
+#. Confirmation check buttons
+#: ../../po/../ui-gtk/UgtkSettingForm.c:157
+msgid "Show confirmation dialog on exit"
+msgstr "Прикажи дијалог потврде на изласку"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:160
+msgid "Confirm when deleting files"
+msgstr "Потврди при брисању фајлова"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:166
+msgid "System Tray"
+msgstr "Системска касета"
+
+#. System Tray check buttons
+#: ../../po/../ui-gtk/UgtkSettingForm.c:172
+msgid "Always show tray icon"
+msgstr "Увек прикажи икону у системској касети"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:175
+msgid "Minimize to tray on startup"
+msgstr "Смањи у системску касету по покретању"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:178
+msgid "Close to tray on window close"
+msgstr "Спусти у системску касету кад затвориш прозор"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:182
+msgid "Use Ubuntu's App Indicator"
+msgstr "Користи Ubuntu индикатор"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:189
+msgid "Enable offline mode on startup"
+msgstr "Омогући на почетку режим ван мреже"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:192
+msgid "Download starting notification"
+msgstr "Обавештење о почетку преузимања"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:195
+msgid "Sound when download is finished"
+msgstr "Звук када се заврши преузимање"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:198
+msgid "Apply recently download settings"
+msgstr "Примени недавне поставке преузимања"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:264
+msgid "These will affect all plug-ins."
+msgstr "Ово ће утицати на све додатке."
+
+#. Global speed limit
+#: ../../po/../ui-gtk/UgtkSettingForm.c:270
+msgid "Global speed limit"
+msgstr "Опште ограничење брзине"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:278
+#: ../../po/../ui-gtk/UgtkSettingForm.c:564
+msgid "Max upload speed"
+msgstr "Макс брзина отпремања"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:290
+#: ../../po/../ui-gtk/UgtkSettingForm.c:576
+msgid "Max download speed"
+msgstr "Макс брзина преузимања"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:323
+msgid "Completion Auto-Actions"
+msgstr "Завршене ауто-акције"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:331
+msgid "Custom command:"
+msgstr "Прилагођена команда:"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:343
+msgid "Custom command if error occured:"
+msgstr "Прилагођена команда ако се догоди грешка:"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:388
+msgid "_Autosave"
+msgstr "_Аутоматско чување"
+
+#. auto save spin & label (interval)
+#: ../../po/../ui-gtk/UgtkSettingForm.c:394
+msgid "minutes"
+msgstr "минута"
+
+#. auto save label
+#: ../../po/../ui-gtk/UgtkSettingForm.c:402
+msgid "_Interval:"
+msgstr "_Интервал:"
+
+#. Commandline Settings
+#: ../../po/../ui-gtk/UgtkSettingForm.c:433
+msgid "Commandline Settings"
+msgstr "Поставке командне линије"
+
+#. --quiet
+#: ../../po/../ui-gtk/UgtkSettingForm.c:440
+msgid "Use '--quiet' by default"
+msgstr "Користи '--quiet' као подразумевано"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:508
+msgid "Plug-in matching order:"
+msgstr "Поредак повезивања:"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:531
+msgid "Aria2 plug-in options"
+msgstr "Aria2 опције повезивања"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:547
+msgid "RPC authorization secret token"
+msgstr "RPC тајно питање за ауторизацију"
+
+#. ------------------------------------------------------------------------
+#. Speed Limits
+#: ../../po/../ui-gtk/UgtkSettingForm.c:556
+msgid "Global speed limit for aria2 only"
+msgstr "Опште ограничење брзине само за aria2"
+
+#. ------------------------------------------------------------------------
+#. aria2 works on local device
+#. launch
+#: ../../po/../ui-gtk/UgtkSettingForm.c:589
+msgid "_Launch aria2 on startup"
+msgstr "_Покрени aria2 на почетку"
+
+#. shutdown
+#: ../../po/../ui-gtk/UgtkSettingForm.c:595
+msgid "_Shutdown aria2 on exit"
+msgstr "_Искључи aria2 на излазу"
+
+#. ------------------------------------------------------------------------
+#. Local options
+#: ../../po/../ui-gtk/UgtkSettingForm.c:601
+msgid "Launch aria2 on local device"
+msgstr "Покрени aria2 на локалном уређају"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:610
+msgid "Path"
+msgstr "Путања"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:621
+msgid "Arguments"
+msgstr "Аргументи"
+
+#. Arguments - hint
+#: ../../po/../ui-gtk/UgtkSettingForm.c:626
+msgid "You must restart uGet after modifying it."
+msgstr "Морате поново покренути uGet након измена."
+
+#: ../../po/../ui-gtk/UgtkSummary.c:112
+msgid "File"
+msgstr "Фајл"
+
+#: ../../po/../ui-gtk/UgtkSummary.c:127
+msgid "Folder"
+msgstr "Фасцикла"
+
+#: ../../po/../ui-gtk/UgtkSummary.c:270
+msgid "Item"
+msgstr "Ставка"
+
+#: ../../po/../ui-gtk/UgtkSummary.c:275
+msgid "Value"
+msgstr "Вредност"
+
+#. Copy All
+#: ../../po/../ui-gtk/UgtkSummary.c:307
+msgid "Copy _All"
+msgstr "Копирај _све"
+
+#. Show window
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:106
+msgid "Show window"
+msgstr "Прикажи прозор"
+
+#. Offline mode
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:112
+msgid "_Offline Mode"
+msgstr "_Режим ван мреже"
