@@ -1,33 +1,28 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# ahmadzxc <ahmad.almomani5@gmail.com>, 2013
-# ahmadzxc <ahmad.almomani5@gmail.com>, 2013
-# safaalfulaij <safaalfulaij@hotmail.com>, 2013
-# safaalfulaij <safaalfulaij@hotmail.com>, 2013
-# safaalfulaij <safaalfulaij@hotmail.com>, 2013
+# ahmad <ahmad.almomani5@gmail.com>, 2013
+# Ibrahim Saed <ibraheem5000@hotmail.com>, 2014
+# صفا الفليج <safaalfulaij@hotmail.com>, 2013-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2013-12-08 13:16+0000\n"
-"Last-Translator: safaalfulaij <safaalfulaij@hotmail.com>\n"
-"Language-Team: Arabic (http://www.transifex.com/projects/p/uget/language/"
-"ar/)\n"
-"Language: ar\n"
+"PO-Revision-Date: 2014-11-27 14:12+0000\n"
+"Last-Translator: صفا الفليج <safaalfulaij@hotmail.com>\n"
+"Language-Team: Arabic (http://www.transifex.com/projects/p/uget/language/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: ../../po/../uget/UgetApp.c:95
-#, fuzzy
 msgid "All Category"
-msgstr "الفئة"
+msgstr "كلّ الفئات"
 
 #. UGET_EVENT_NORMAL_CUSTOM
 #: ../../po/../uget/UgetEvent.c:58
@@ -68,7 +63,7 @@ msgstr "غير قابل للاستئناف"
 #. UGET_EVENT_WARNING_CUSTOM
 #: ../../po/../uget/UgetEvent.c:73 ../../po/../uget/UgetPluginAria2.c:286
 msgid "Output file can't be renamed."
-msgstr "الملف المُخرج لا يمكن إعادة تسميته."
+msgstr "تعذّرت تسمية الملف المُخرج."
 
 #. UGET_EVENT_ERROR_CUSTOM
 #: ../../po/../uget/UgetEvent.c:81
@@ -83,7 +78,7 @@ msgstr "تعذّر إنشاء المجلد."
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../../po/../uget/UgetEvent.c:83
 msgid "File can't be created (bad filename or file exist)."
-msgstr "تعذّر إنشاء الملف (اسم ملف سيئ أو موجود مسبقًا)."
+msgstr "تعذّر إنشاء الملف (اسم الملف سيء أو موجود مسبقًا)."
 
 #. UGET_EVENT_ERROR_FILE_CREATE_FAILED
 #: ../../po/../uget/UgetEvent.c:84
@@ -92,19 +87,18 @@ msgstr "تعذّر فتح الملف."
 
 #. UGET_EVENT_ERROR_FILE_OPEN_FAILED
 #: ../../po/../uget/UgetEvent.c:85
-#, fuzzy
 msgid "Unable to create thread."
-msgstr "تعذّر إنشاء الخيط، قلّل عدد التنزيلات."
+msgstr "تعذّر إنشاء خيط."
 
 #. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 #: ../../po/../uget/UgetEvent.c:86
 msgid "Incorrect source (different file size)."
-msgstr ""
+msgstr "مصدر غير صحيح (حجم الملفّ مختلف)."
 
 #. UGET_EVENT_ERROR_INCORRECT_SOURCE,
 #: ../../po/../uget/UgetEvent.c:87
 msgid "Out of resource (disk full or run out of memory)."
-msgstr "نفذت الموارد (القرص ممتلئ أو نفذت الذاكرة)"
+msgstr "نفذت الموارد (القرص ممتلئ أو نفذت الذاكرة)."
 
 #. UGET_EVENT_ERROR_OUT_OF_RESOURCE
 #: ../../po/../uget/UgetEvent.c:88
@@ -129,12 +123,12 @@ msgstr "مخطّط (ميفاق) غير مدعوم."
 #. UGET_EVENT_ERROR_UNSUPPORTED_SCHEME
 #: ../../po/../uget/UgetEvent.c:92
 msgid "Unsupported file."
-msgstr "ملف غير مدعوم"
+msgstr "ملف غير مدعوم."
 
 #. 1 - 10
 #: ../../po/../uget/UgetPluginAria2.c:272
 msgid "aria2: an unknown error occurred."
-msgstr ""
+msgstr "aria2: حدث خطأ مجهول."
 
 #: ../../po/../uget/UgetPluginAria2.c:273
 msgid "aria2: time out occurred."
@@ -142,7 +136,7 @@ msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:274
 msgid "aria2: resource was not found."
-msgstr ""
+msgstr "aria2: لم يُعثر على المورد."
 
 #: ../../po/../uget/UgetPluginAria2.c:275
 msgid ""
@@ -152,20 +146,20 @@ msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:276
 msgid "aria2: speed was too slow."
-msgstr ""
+msgstr "aria2: كانت السرعة بطيئة جدًّا."
 
 #: ../../po/../uget/UgetPluginAria2.c:277
 msgid "aria2: network problem occurred."
-msgstr ""
+msgstr "aria2: حدثت مشكلة شبكيّة."
 
 #: ../../po/../uget/UgetPluginAria2.c:278
 msgid "aria2: unfinished downloads."
-msgstr ""
+msgstr "aria2: تنزيلات غير منتهية."
 
 #. _("Not Resumable"),
 #: ../../po/../uget/UgetPluginAria2.c:280
 msgid "Out of resource"
-msgstr ""
+msgstr "نفذت الموارد"
 
 #. _(),
 #: ../../po/../uget/UgetPluginAria2.c:281
@@ -175,21 +169,20 @@ msgstr ""
 #. 11 - 20
 #: ../../po/../uget/UgetPluginAria2.c:283
 msgid "aria2 was downloading same file."
-msgstr ""
+msgstr "كان aria2 ينزّل نفس الملف."
 
 #: ../../po/../uget/UgetPluginAria2.c:284
 msgid "aria2 was downloading same info hash torrent."
-msgstr ""
+msgstr "كان aria2 ينزّل نفس معلومات تلبيدة السيل."
 
 #: ../../po/../uget/UgetPluginAria2.c:285
 msgid "aria2: file already existed. See --allow-overwrite option."
-msgstr ""
+msgstr "aria2: الملف موجود بالفعل. طالع خيار ‎--allow-overwrite."
 
 #. _("Output file can't be renamed."),
 #: ../../po/../uget/UgetPluginAria2.c:287
-#, fuzzy
 msgid "aria2: could not open existing file."
-msgstr "فشل فتح الملف البريدي."
+msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:288
 msgid "aria2: could not create new file or truncate existing file."
@@ -197,7 +190,7 @@ msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:289
 msgid "aria2: file I/O error occurred."
-msgstr ""
+msgstr "aria2: حدث خطأ دَخْل/خَرْج ملفات."
 
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../../po/../uget/UgetPluginAria2.c:291
@@ -206,16 +199,16 @@ msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:292
 msgid "aria2: could not parse Metalink document."
-msgstr ""
+msgstr "aria2: تعذّر تحليل مستند ميتالِنك."
 
 #. 21 - 30
 #: ../../po/../uget/UgetPluginAria2.c:294
 msgid "aria2: FTP command failed."
-msgstr ""
+msgstr "aria2: فشل أمر FTP."
 
 #: ../../po/../uget/UgetPluginAria2.c:295
 msgid "aria2: HTTP response header was bad or unexpected."
-msgstr ""
+msgstr "aria2: ترويسة ردّ HTTP سيّئة أو غير متوقّعة."
 
 #: ../../po/../uget/UgetPluginAria2.c:296
 msgid "Too many redirections."
@@ -223,7 +216,7 @@ msgstr "إعادات توجيه كثيرة."
 
 #: ../../po/../uget/UgetPluginAria2.c:297
 msgid "aria2: HTTP authorization failed."
-msgstr ""
+msgstr "aria2: فشل استيثاق HTTP."
 
 #: ../../po/../uget/UgetPluginAria2.c:298
 msgid "aria2: could not parse bencoded file(usually .torrent file)."
@@ -231,11 +224,11 @@ msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:299
 msgid "aria2: torrent file was corrupted or missing information."
-msgstr ""
+msgstr "aria2: ملف السيل معطوب أو معلوماته ناقصة."
 
 #: ../../po/../uget/UgetPluginAria2.c:300
 msgid "aria2: Magnet URI was bad."
-msgstr ""
+msgstr "aria2: معرّف URI الممغنط سيّئ."
 
 #: ../../po/../uget/UgetPluginAria2.c:301
 msgid ""
@@ -253,7 +246,7 @@ msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:306
 msgid "No response. Is aria2 shutdown?"
-msgstr ""
+msgstr "لا استجابة. هل aria2 مطفأ؟"
 
 #. debug
 #: ../../po/../uget/UgetPluginAria2.c:608
@@ -270,16 +263,16 @@ msgstr "صفا الفليج\t<safaalfulaij@hotmail.com>"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:80
 msgid "uGet Founder: "
-msgstr ""
+msgstr "مؤسّس uGet:"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:81
 msgid "uGet Project Manager: "
-msgstr ""
+msgstr "مدير مشروع uGet:"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:255
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:204
 msgid "tasks"
-msgstr "المهام"
+msgstr "من المهام"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:374
 msgid "New from Clipboard"
@@ -300,12 +293,11 @@ msgstr "سطر الأوامر"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:758
 msgid "Error Occurred"
-msgstr ""
+msgstr "حدث خطأ"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:759
-#, fuzzy
 msgid "Error Occurred when downloading."
-msgstr "إصدار صوت عند انتهاء التنزيل"
+msgstr "حدث خطأ أثناء التنزيل."
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:760
 msgid "Download Starting"
@@ -367,11 +359,12 @@ msgstr "دف_عة جديدة من الحافظة..."
 #. New URL Sequence batch
 #: ../../po/../ui-gtk/UgtkApp-ui.c:214
 msgid "New _URL Sequence batch..."
-msgstr "دفعة _عناوين URL متسلسلة جديدة..."
+msgstr "دفعة و_صلات متسلسلة جديدة..."
 
 #. New Torrent
 #. separator
-#. gtk_menu_shell_append ((GtkMenuShell*)submenu, gtk_separator_menu_item_new() );
+#. gtk_menu_shell_append ((GtkMenuShell*)submenu,
+#. gtk_separator_menu_item_new() );
 #. New Torrent
 #: ../../po/../ui-gtk/UgtkApp-ui.c:224 ../../po/../ui-gtk/UgtkMenubar-ui.c:73
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:75
@@ -385,9 +378,8 @@ msgid "New Metalink..."
 msgstr "ميتالِنك جديد..."
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:240
-#, fuzzy
 msgid "Save all settings"
-msgstr "إعدادات الفئة"
+msgstr "احفظ كلّ الإعدادات"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:248
 msgid "Set selected download runnable"
@@ -450,24 +442,20 @@ msgid "Open Metalink file"
 msgstr "افتح ملف ميتالِنك"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1109
-#, fuzzy
 msgid "Failed to save category file."
-msgstr "فشل فتح الملف البريدي."
+msgstr "فشل حفظ ملف الفئة."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1129
-#, fuzzy
 msgid "Failed to load category file."
-msgstr "فشل فتح الملف البريدي."
+msgstr "فشل تحميل ملف الفئة."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1140
-#, fuzzy
 msgid "Save Category file"
-msgstr "فئة جديدة"
+msgstr "احفظ ملف الفئة"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1158
-#, fuzzy
 msgid "Open Category file"
-msgstr "افتح ملف تورنت"
+msgstr "افتح ملف فئة"
 
 #. add link
 #: ../../po/../ui-gtk/UgtkApp.c:1217
@@ -485,28 +473,27 @@ msgstr "ملف نصّي"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1314
 msgid "Import URLs from HTML file"
-msgstr "استورد عناوين URL من ملف HTML"
+msgstr "استورد وصلات من ملف HTML"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1329
 msgid "Import URLs from text file"
-msgstr "استورد عناوين URL من ملف نصّي"
+msgstr "استورد وصلات من ملف نصّي"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1344
-#, fuzzy
 msgid "Export URLs to text file"
-msgstr "استورد عناوين URL من ملف نصّي"
+msgstr "صدّر العناوين إلى ملف نصّيّ"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1363
 msgid "URL Sequence batch"
-msgstr "دفعة عناوين URL متسلسلة"
+msgstr "دفعة وصلات متسلسلة"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1390
 msgid "No URLs found in clipboard."
-msgstr "لا توجد عناوين URL في الحافظة."
+msgstr "لا توجد وصلات في الحافظة."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1399
 msgid "All URLs had existed."
-msgstr ""
+msgstr "كلّ العناوين موجودة."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1404
 msgid "Clipboard batch"
@@ -514,7 +501,7 @@ msgstr "دفعة من الحافظة"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1494
 msgid "New"
-msgstr ""
+msgstr "جديد"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1613 ../../po/../ui-gtk/UgtkMenubar.c:383
 #: ../../po/../ui-gtk/UgtkMenubar.c:415 ../../po/../ui-gtk/UgtkNodeView.c:609
@@ -532,7 +519,7 @@ msgstr "%d من العناصر محدّدة"
 
 #: ../../po/../ui-gtk/UgtkBanner.c:145 ../../po/../ui-gtk/UgtkBanner.c:165
 msgid "Attention uGetters:"
-msgstr "انتبهوا uGetters:"
+msgstr "مستخدمي uGet انتبهوا:"
 
 #: ../../po/../ui-gtk/UgtkBanner.c:148
 msgid ""
@@ -561,11 +548,11 @@ msgstr "التن_زيلات النشطة:"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:92
 msgid "Capacity of Finished:"
-msgstr "كمية التنزيلات المنتهية:"
+msgstr "سعة المنتهية:"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:102
 msgid "Capacity of Recycled:"
-msgstr "كمية التنزيلات المنتهية:"
+msgstr "سعة المحذوفة"
 
 #. ------------------------------------------------------------------------
 #. URI Matching conditions
@@ -587,32 +574,29 @@ msgstr ""
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:64
 msgid "Really Quit?"
-msgstr "الخروج بالفعل؟"
+msgstr "أأخرج بالفعل؟"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:65
 msgid "Are you sure you want to quit?"
-msgstr "أأنت متأكد من الخروج؟"
+msgstr "أتريد حقًّا الخروج؟"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:69
 msgid "Really delete files?"
-msgstr "مسح الملفات بالفعل؟"
+msgstr "أأحذف الملفات؟"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:70
 msgid "Are you sure you want to delete files?"
-msgstr "أأنت متأكد من حذف الملفات؟"
+msgstr "أتريد حقًّا حذف الملفات؟"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:74
-#, fuzzy
 msgid "Really delete category?"
-msgstr "مسح الملفات بالفعل؟"
+msgstr "أأحذف الفئة؟"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:75
-#, fuzzy
 msgid "Are you sure you want to delete category?"
-msgstr "أأنت متأكد من حذف الملفات؟"
+msgstr "أمتأكّد من حذف الفئة؟"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:106
-#, fuzzy
 msgid "Don't ask me again"
 msgstr "لا تسألني ثانيةً"
 
@@ -636,7 +620,7 @@ msgstr "الملف:"
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:159
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:893
 msgid "Select Folder"
-msgstr "اختيار مجلد"
+msgstr "اختر مجلدًا"
 
 #. Folder - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:167
@@ -650,9 +634,8 @@ msgstr "المُرجِع:"
 
 #. "Max Connections:" - title label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:207
-#, fuzzy
 msgid "_Max Connections:"
-msgstr "اتصال"
+msgstr "أ_قصى عدد اتصالات:"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:226
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:510
@@ -770,65 +753,60 @@ msgstr "دفعة من الحاف_ظة..."
 #. Batch downloads - URL Sequence batch
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:98
 msgid "_URL Sequence batch..."
-msgstr "دفعة _عناوين URL متسلسلة..."
+msgstr "دفعة و_صلات متسلسلة..."
 
 #. Batch downloads - Text file import (.txt)
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:104
 msgid "_Text file import (.txt)..."
-msgstr "استورد ملف _نصّي (.txt)..."
+msgstr "استورد ملف _نصّي (‎.txt)..."
 
 #. Batch downloads - HTML file import (.html)
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:110
 msgid "_HTML file import (.html)..."
-msgstr "است_ورد ملف HTML (.html)..."
+msgstr "است_ورد ملف HTML‏ (‎.html)..."
 
 #. Batch downloads - Export to Text file (.txt)
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:118
 msgid "_Export to Text file (.txt)..."
-msgstr "_صدر إلى ملف نصّي (.txt)..."
+msgstr "_صدر إلى ملف نصّي (‎.txt)..."
 
 #. Open Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:128
-#, fuzzy
 msgid "_Open category..."
-msgstr "فئة _جديدة..."
+msgstr "ا_فتح فئة..."
 
 #. Save Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:135
-#, fuzzy
 msgid "_Save category as..."
-msgstr "فئة _جديدة..."
+msgstr "ا_حفظ الفئة كـ..."
 
 #. Save All
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
-#, fuzzy
 msgid "Save _all settings"
-msgstr "إعدادات الفئة"
+msgstr "احفظ _كلّ الإعدادات"
 
 #. Offline mode
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:152
-#, fuzzy
 msgid "Offline Mode"
-msgstr "وضع ع_دم الاتصال"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:170
 msgid "_Edit"
-msgstr "_حرر"
+msgstr "_حرّر"
 
-#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
+#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new()
+#. );
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:175
 msgid "Clipboard _Monitor"
-msgstr "را_قة الحافظة"
+msgstr "را_قب الحافظة"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:179
-#, fuzzy
 msgid "Clipboard works quietly"
-msgstr "را_قة الحافظة"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:183
-#, fuzzy
 msgid "Command-line works quietly"
-msgstr "إعدادات سطر الأوامر"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:187
 msgid "Skip existing URI"
@@ -842,33 +820,32 @@ msgstr ""
 #. Completion Auto-Actions - Disable
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:200
 msgid "_Disable"
-msgstr ""
+msgstr "_عطّل"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:205
 msgid "Hibernate"
-msgstr ""
+msgstr "أسبِت"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:210
 msgid "Suspend"
-msgstr ""
+msgstr "علّق"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:215
 msgid "Shutdown"
-msgstr ""
+msgstr "أطفئ"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:220
 msgid "Reboot"
-msgstr ""
+msgstr "أعد الإقلاع"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:225
 msgid "Custom"
-msgstr ""
+msgstr "مخصّص"
 
 #. Completion Auto-Actions - Remember
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
-#, fuzzy
 msgid "Remember setting"
-msgstr "تذكّر هذا الفعل"
+msgstr "احفظ الإعداد"
 
 #. Completion Auto-Actions - Help
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:235
@@ -898,12 +875,12 @@ msgstr "شريط الحالة"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:275
 msgid "_Summary"
-msgstr "مل_خص"
+msgstr "المل_خّص"
 
 #. Summary Items --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:283
 msgid "Summary _Items"
-msgstr "ع_ناصر الملخص"
+msgstr "ع_ناصر الملخّص"
 
 #. Summary Items - Name
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:288
@@ -925,7 +902,7 @@ msgstr "الم_جلد"
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:308
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:388
 msgid "_URL"
-msgstr "عن_وان URL"
+msgstr "الو_صلة"
 
 #. Summary Items - Message
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:313
@@ -1014,24 +991,23 @@ msgstr "فئة _جديدة..."
 #. Delete Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:424
 msgid "_Delete Category"
-msgstr "ح_ذف الفئة"
+msgstr "اح_ذف الفئة"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:461
 msgid "_Download"
-msgstr "ن_زل"
+msgstr "ن_زّل"
 
-#. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE, accel_group);
+#. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE,
+#. accel_group);
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:473
-#, fuzzy
 msgid "_Delete Entry"
-msgstr "ح_ذف الفئة"
+msgstr "ا_حذف المدخلة"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:480
 msgid "Delete Entry and _File"
-msgstr ""
+msgstr "احذف المدخلة مع ال_ملف"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:495
-#, fuzzy
 msgid "Open _Containing folder"
 msgstr "افتح المجلد الم_حتوي"
 
@@ -1047,20 +1023,19 @@ msgstr "ان_قل إلى"
 #. Priority --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:573
 msgid "Priority"
-msgstr ""
+msgstr "الأهمّيّة"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:582
 msgid "_High"
-msgstr ""
+msgstr "_عالٍ"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:587
-#, fuzzy
 msgid "_Normal"
-msgstr "عادي"
+msgstr "عا_ديّ"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:592
 msgid "_Low"
-msgstr ""
+msgstr "م_نخفض"
 
 #. Get Help Online
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:615
@@ -1090,7 +1065,7 @@ msgstr "أبلغ عن علّة"
 #. Keyboard Shortcuts
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:650
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "اختصارات لوحة المفاتيح"
 
 #. Check for Updates
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:657
@@ -1109,25 +1084,25 @@ msgstr "تعذّر تشغيل التطبيق الافتراضي للملف \"%s\
 #: ../../po/../ui-gtk/UgtkMenubar.c:409
 #, c-format
 msgid "'%s' - This folder does not exist."
-msgstr "\"%s\" - الملف هذا غير موجود."
+msgstr "\"%s\" - المجلد هذا غير موجود."
 
 #. title
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:205
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:209
 msgid "URI had existed"
-msgstr ""
+msgstr "معرّف URI موجود"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:207
 msgid "This URI had existed, are you sure to continue?"
-msgstr ""
+msgstr "معرّف URI موجد، أمتأكّد من المتابعة؟"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:343
 msgid "General"
-msgstr "عام"
+msgstr "عامّ"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:345
 msgid "Advanced"
-msgstr "متقدم"
+msgstr "متقدّم"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:354
 msgid "Category settings"
@@ -1147,36 +1122,32 @@ msgid "unnamed"
 msgstr "غير معنون"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:610
-#, fuzzy
 msgid "Paused"
-msgstr "ألب_ث"
+msgstr "مُلبث"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:611
-#, fuzzy
 msgid "Uploading"
-msgstr "الرفع"
+msgstr "يرفع"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:612
-#, fuzzy
 msgid "Completed"
-msgstr "مكتمل"
+msgstr "اكتمل"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:614
 msgid "Recycled"
-msgstr "محذوف"
+msgstr "المحذوفة"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:615
 msgid "Queuing"
-msgstr "مصطف"
+msgstr "المصطفّة"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:616
 msgid "Active"
-msgstr "نشط"
+msgstr "النشطة"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:637
-#, fuzzy
 msgid "All Status"
-msgstr "الحالة"
+msgstr "كلّ الحالات"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:734
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:85
@@ -1207,9 +1178,8 @@ msgstr "المتبقي"
 #: ../../po/../ui-gtk/UgtkNodeView.c:903
 #: ../../po/../ui-gtk/UgtkSettingForm.c:538
 #: ../../po/../ui-gtk/UgtkSummary.c:151
-#, fuzzy
 msgid "URI"
-msgstr "عنوان URL"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:954
 msgid "Quantity"
@@ -1304,7 +1274,7 @@ msgstr "- شغّل المهمة اعتياديًا"
 
 #: ../../po/../ui-gtk/UgtkSelector.c:254
 msgid "All"
-msgstr "الكل"
+msgstr "الكلّ"
 
 #: ../../po/../ui-gtk/UgtkSelector.c:259
 msgid "None"
@@ -1316,11 +1286,11 @@ msgstr "علّم بالمرشّح"
 
 #: ../../po/../ui-gtk/UgtkSelector.c:294
 msgid "Mark URLs by host AND filename extension."
-msgstr "علّم عناوين URL بالمضيف وامتداد الملف."
+msgstr "علّم الوصلات بالمضيف وامتداد الملف."
 
 #: ../../po/../ui-gtk/UgtkSelector.c:297
 msgid "This will reset all marks of URLs."
-msgstr "هذا سيُعيد جميع علامات عناوين URL."
+msgstr "هذا سيُعيد جميع علامات الوصلات."
 
 #. filter view -----------------------
 #. left side
@@ -1335,11 +1305,11 @@ msgstr "الملف موجود"
 
 #: ../../po/../ui-gtk/UgtkSelector.c:449
 msgid "URL"
-msgstr "عنوان URL"
+msgstr "الوصلة"
 
 #: ../../po/../ui-gtk/UgtkSelector.c:781
 msgid "Base hypertext reference"
-msgstr "قاعدة النص التشعبي المرجعية"
+msgstr "أساس المرجع النصيّ التشعبيّ"
 
 #. select all
 #: ../../po/../ui-gtk/UgtkSelector.c:797
@@ -1388,11 +1358,11 @@ msgstr "حسّاس للأحرف"
 
 #: ../../po/../ui-gtk/UgtkSequencer.c:188
 msgid "No wildcard(*) character in URL entry."
-msgstr "لا حرف بدل (*) في مدخلة عنوان URL."
+msgstr "لا حرف بدل (*) في مُدخلة الوصلة."
 
 #: ../../po/../ui-gtk/UgtkSequencer.c:192
 msgid "URL is not valid."
-msgstr "عنوان URL غير صالح."
+msgstr "الوصلة غير صالحة."
 
 #: ../../po/../ui-gtk/UgtkSequencer.c:196
 msgid "No character in 'From' or 'To' entry."
@@ -1404,11 +1374,11 @@ msgstr "معاينة"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:97
 msgid "User Interface"
-msgstr ""
+msgstr "واجهة المستخدم"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:109
 msgid "Bandwidth"
-msgstr ""
+msgstr "عرض النطاق"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:115
 msgid "Scheduler"
@@ -1424,9 +1394,8 @@ msgstr "أخرى"
 
 #. Monitor button
 #: ../../po/../ui-gtk/UgtkSettingForm.c:57
-#, fuzzy
 msgid "_Enable clipboard monitor"
-msgstr "را_قة الحافظة"
+msgstr "م_كّن مراقبة الحافظة"
 
 #. quiet mode
 #: ../../po/../ui-gtk/UgtkSettingForm.c:62
@@ -1435,9 +1404,8 @@ msgstr "الوضع ال_صامت"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:68
 #: ../../po/../ui-gtk/UgtkSettingForm.c:446
-#, fuzzy
 msgid "Default category index"
-msgstr "ح_ذف الفئة"
+msgstr "فهرس الفئة الافتراضي"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:80
 #: ../../po/../ui-gtk/UgtkSettingForm.c:458
@@ -1445,9 +1413,8 @@ msgid "Adding to Nth category if no matched category."
 msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:87
-#, fuzzy
 msgid "Monitor clipboard for specified file types:"
-msgstr "را_قب الحافظة لأنواع الملفات المعيّنة هذه:"
+msgstr "راقب الحافظة بحثًا عن أنواع الملفات:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:102
 msgid "Separate the types with character '|'."
@@ -1455,17 +1422,16 @@ msgstr "افصل الأنواع بالمحرف \"|\"."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:107
 msgid "You can use regular expressions here."
-msgstr "تستطيع استعمال التعبيرات الاعتيادية هنا."
+msgstr "تستطيع استعمال التعابير النمطية هنا."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:151
 msgid "Confirmation"
-msgstr ""
+msgstr "أكّد"
 
 #. Confirmation check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:157
-#, fuzzy
 msgid "Show confirmation dialog on exit"
-msgstr "أظهر مربع حوار تأكيد عند الإغلاق"
+msgstr "أظهر حواري تأكيدي عن الخروج"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:160
 msgid "Confirm when deleting files"
@@ -1473,7 +1439,7 @@ msgstr "أظهر تأكيد عند حذف الملفات"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:166
 msgid "System Tray"
-msgstr ""
+msgstr "صينيّة النظام"
 
 #. System Tray check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:172
@@ -1482,15 +1448,15 @@ msgstr "أظهر صينية النظام دائمًا"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:175
 msgid "Minimize to tray on startup"
-msgstr "صغّر إلى الصينية عند بدء التشغيل"
+msgstr "صغّر إلى الصينية عند البدء"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:178
 msgid "Close to tray on window close"
-msgstr ""
+msgstr "أغلق إلى الصينيّة عند إغلاق النافذة"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:182
 msgid "Use Ubuntu's App Indicator"
-msgstr ""
+msgstr "استخدم مؤشّر برمجيات أبونتو"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:189
 msgid "Enable offline mode on startup"
@@ -1510,41 +1476,38 @@ msgstr "طبّق إعدادات التنزيل الأخيرة"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264
 msgid "These will affect all plug-ins."
-msgstr ""
+msgstr "سيؤثّر هذا على كلّ الإضافات."
 
 #. Global speed limit
 #: ../../po/../ui-gtk/UgtkSettingForm.c:270
-#, fuzzy
 msgid "Global speed limit"
-msgstr "حدود السرعة"
+msgstr "حدّ السرعة العموميّ"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:278
 #: ../../po/../ui-gtk/UgtkSettingForm.c:564
-#, fuzzy
 msgid "Max upload speed"
-msgstr "أقصى حد للرفع:"
+msgstr "حدّ الرفع العموميّ"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:290
 #: ../../po/../ui-gtk/UgtkSettingForm.c:576
-#, fuzzy
 msgid "Max download speed"
-msgstr "أقصى حد للتنزيل:"
+msgstr "حدّ التنزيل العموميّ"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:323
 msgid "Completion Auto-Actions"
-msgstr ""
+msgstr "إجراءات الاكتمال الآليّة"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:331
 msgid "Custom command:"
-msgstr ""
+msgstr "أمر مخصّص:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:343
 msgid "Custom command if error occured:"
-msgstr ""
+msgstr "أمر مخصّص إن حدث خطأ:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:388
 msgid "_Autosave"
-msgstr "الحف_ظ التلقائي"
+msgstr "احفظ آ_ليًّا"
 
 #. auto save spin & label (interval)
 #: ../../po/../ui-gtk/UgtkSettingForm.c:394
@@ -1564,15 +1527,15 @@ msgstr "إعدادات سطر الأوامر"
 #. --quiet
 #: ../../po/../ui-gtk/UgtkSettingForm.c:440
 msgid "Use '--quiet' by default"
-msgstr "استخدم \"--quiet\" افتراضيًا"
+msgstr "استخدم \"‎--quiet\" افتراضيًا"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:508
 msgid "Plug-in matching order:"
-msgstr ""
+msgstr "ترتيب مطابقة الملحقات:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:531
 msgid "Aria2 plug-in options"
-msgstr ""
+msgstr "خيارات ملحقات Aria2"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:547
 msgid "RPC authorization secret token"
@@ -1582,7 +1545,7 @@ msgstr ""
 #. Speed Limits
 #: ../../po/../ui-gtk/UgtkSettingForm.c:556
 msgid "Global speed limit for aria2 only"
-msgstr ""
+msgstr "حدّ السرعة العموميّ لِـ aria2 فقط"
 
 #. ------------------------------------------------------------------------
 #. aria2 works on local device
@@ -1599,9 +1562,8 @@ msgstr "أو_قف تشغيل aria2 عند الخروج"
 #. ------------------------------------------------------------------------
 #. Local options
 #: ../../po/../ui-gtk/UgtkSettingForm.c:601
-#, fuzzy
 msgid "Launch aria2 on local device"
-msgstr "ا_بدء aria2 عند بدء التشغيل"
+msgstr "أطلِق aria2 على جهاز محلّيّ"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:610
 msgid "Path"
@@ -1613,9 +1575,8 @@ msgstr "المُعطيات"
 
 #. Arguments - hint
 #: ../../po/../ui-gtk/UgtkSettingForm.c:626
-#, fuzzy
 msgid "You must restart uGet after modifying it."
-msgstr "يجب عليك إعادة تشغيل uGet بعد تعديل \"المُعطيات\"."
+msgstr "عليك إعادة تشغيل uGet بعد تعديلها."
 
 #: ../../po/../ui-gtk/UgtkSummary.c:112
 msgid "File"
@@ -1636,7 +1597,7 @@ msgstr "قيمة"
 #. Copy All
 #: ../../po/../ui-gtk/UgtkSummary.c:307
 msgid "Copy _All"
-msgstr "انسخ ال_كل"
+msgstr "انسخ ال_كلّ"
 
 #. Show window
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:106
@@ -1647,83 +1608,3 @@ msgstr "أظهر النافذة"
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:112
 msgid "_Offline Mode"
 msgstr "وضع ع_دم الاتصال"
-
-#, fuzzy
-#~ msgid "Help"
-#~ msgstr "م_ساعدة"
-
-#~ msgid "No plug-in support this scheme or file."
-#~ msgstr "لا توجد ملحقة تدعم هذا المخطط أو الملف."
-
-#~ msgid "Minimize to tray"
-#~ msgstr "صغّر لصينية النظام"
-
-#~ msgid "Exit uGet"
-#~ msgstr "أغلق uGet"
-
-#~ msgid "failed to launch aria2."
-#~ msgstr "تعذّر بدء aria2."
-
-#~ msgid "Export to"
-#~ msgstr "صدّر إلى"
-
-#~ msgid "Save all"
-#~ msgstr "احفظ الكل"
-
-#~ msgid "_Download..."
-#~ msgstr "ن_زل..."
-
-#~ msgid "_Category..."
-#~ msgstr "_فئة..."
-
-#~ msgid "Torrent..."
-#~ msgstr "تورنت..."
-
-#~ msgid "Metalink..."
-#~ msgstr "ميتالِنك..."
-
-#~ msgid "_Clipboard Option..."
-#~ msgstr "خيارات الحاف_ظة..."
-
-#~ msgid "Shutdown when downloads complete"
-#~ msgstr "أوقف التشغيل عند اكتمال التنزيلات"
-
-#~ msgid "Delete _File and Data"
-#~ msgstr "احذف ال_ملف والبيانات"
-
-#~ msgid "only one matched"
-#~ msgstr "تطابق واحد فقط"
-
-#~ msgid ""
-#~ "Failed to connect to aria2.\n"
-#~ "Is aria2 shutdown? or aria2 launch failed."
-#~ msgstr ""
-#~ "تعذّر الاتصال بـ aria2.\n"
-#~ "هل aria2 مُطفى؟ لربما فشل بدء aria2."
-
-#~ msgid "_URL:"
-#~ msgstr "عن_وان URL:"
-
-#~ msgid "Options"
-#~ msgstr "خيارات"
-
-#~ msgid "Connections per server"
-#~ msgstr "اتصال لكل خادم"
-
-#~ msgid "UI Settings"
-#~ msgstr "إعدادات واجهة المستخدم"
-
-#~ msgid "Add URL to Nth category"
-#~ msgstr "أضف عنوان URL إلى الفئة النونية"
-
-#~ msgid "_Launch default application for specified file types:"
-#~ msgstr "أ_طلِق التطبيق الافتراضي لأنواع الملفات المحددة:"
-
-#~ msgid "'--category-index' default value"
-#~ msgstr "قيمة \"--category-index\" الافتراضية"
-
-#~ msgid "_Enable aria2 plug-in"
-#~ msgstr "م_كّن إضافة aria2"
-
-#~ msgid "Download"
-#~ msgstr "التنزيل"

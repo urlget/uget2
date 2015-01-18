@@ -1,28 +1,26 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# balzamon <kurjak.richard@gmail.com>, 2013
+# Richárd Kurják <kurjak.richard@gmail.com>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2013-12-07 20:06+0000\n"
-"Last-Translator: uGet <michael@ugetdm.com>\n"
-"Language-Team: Hungarian (http://www.transifex.com/projects/p/uget/language/"
-"hu/)\n"
-"Language: hu\n"
+"PO-Revision-Date: 2015-01-08 15:05+0000\n"
+"Last-Translator: Richárd Kurják <kurjak.richard@gmail.com>\n"
+"Language-Team: Hungarian (http://www.transifex.com/projects/p/uget/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../../po/../uget/UgetApp.c:95
-#, fuzzy
 msgid "All Category"
-msgstr "Kategória"
+msgstr "Összes kategória"
 
 #. UGET_EVENT_NORMAL_CUSTOM
 #: ../../po/../uget/UgetEvent.c:58
@@ -87,15 +85,13 @@ msgstr "A fájl nem nyitható meg."
 
 #. UGET_EVENT_ERROR_FILE_OPEN_FAILED
 #: ../../po/../uget/UgetEvent.c:85
-#, fuzzy
 msgid "Unable to create thread."
-msgstr ""
-"Nem lehet létrehozni a letöltési szálat, csökkentsd a letöltések számát."
+msgstr "Nem lehet létrehozni a letöltési szálat."
 
 #. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 #: ../../po/../uget/UgetEvent.c:86
 msgid "Incorrect source (different file size)."
-msgstr ""
+msgstr "Hibás forrás (eltérő fájl méret)."
 
 #. UGET_EVENT_ERROR_INCORRECT_SOURCE,
 #: ../../po/../uget/UgetEvent.c:87
@@ -130,88 +126,87 @@ msgstr "Nem támogatott fájl."
 #. 1 - 10
 #: ../../po/../uget/UgetPluginAria2.c:272
 msgid "aria2: an unknown error occurred."
-msgstr ""
+msgstr "aria2: ismeretlen hiba történt."
 
 #: ../../po/../uget/UgetPluginAria2.c:273
 msgid "aria2: time out occurred."
-msgstr ""
+msgstr "aria2: időtúllépési hiba."
 
 #: ../../po/../uget/UgetPluginAria2.c:274
 msgid "aria2: resource was not found."
-msgstr ""
+msgstr "aria2: a forrás nem található."
 
 #: ../../po/../uget/UgetPluginAria2.c:275
 msgid ""
 "aria2 saw the specfied number of 'resource not found' error. See --max-file-"
 "not-found option"
-msgstr ""
+msgstr "aria2 a forrás nem létezik hibát észlelt. Lásd --max-file-not-found opció"
 
 #: ../../po/../uget/UgetPluginAria2.c:276
 msgid "aria2: speed was too slow."
-msgstr ""
+msgstr "aria2: az átviteli sebesség túl kicsi"
 
 #: ../../po/../uget/UgetPluginAria2.c:277
 msgid "aria2: network problem occurred."
-msgstr ""
+msgstr "aria2: hálózati hiba."
 
 #: ../../po/../uget/UgetPluginAria2.c:278
 msgid "aria2: unfinished downloads."
-msgstr ""
+msgstr "aria2: befejezetlen letöltés."
 
 #. _("Not Resumable"),
 #: ../../po/../uget/UgetPluginAria2.c:280
 msgid "Out of resource"
-msgstr ""
+msgstr "Az erőforrások elfogytak."
 
 #. _(),
 #: ../../po/../uget/UgetPluginAria2.c:281
 msgid "aria2: piece length was different from one in .aria2 control file."
-msgstr ""
+msgstr "aria2: a szelet hossza eltér az .aria2 kontroll fájlban megadottétól."
 
 #. 11 - 20
 #: ../../po/../uget/UgetPluginAria2.c:283
 msgid "aria2 was downloading same file."
-msgstr ""
+msgstr "aria2 letöltötte már ezt a fájlt."
 
 #: ../../po/../uget/UgetPluginAria2.c:284
 msgid "aria2 was downloading same info hash torrent."
-msgstr ""
+msgstr "aria2 letöltötte már ugyanezt a torrent szelet info-t."
 
 #: ../../po/../uget/UgetPluginAria2.c:285
 msgid "aria2: file already existed. See --allow-overwrite option."
-msgstr ""
+msgstr "aria2: A fájl már létezik. Lásd --allow-overwrite opció."
 
 #. _("Output file can't be renamed."),
 #: ../../po/../uget/UgetPluginAria2.c:287
-#, fuzzy
 msgid "aria2: could not open existing file."
-msgstr "A mentett fájl nem nyitható meg."
+msgstr "aria2: Nem nyitható meg ugyanaz a fájl."
 
 #: ../../po/../uget/UgetPluginAria2.c:288
 msgid "aria2: could not create new file or truncate existing file."
-msgstr ""
+msgstr "aria2: az új fájl nem hozható létre vagy nem írható felül létező fájl."
 
 #: ../../po/../uget/UgetPluginAria2.c:289
 msgid "aria2: file I/O error occurred."
-msgstr ""
+msgstr "aria2: fájl írás/olvasási hiba."
 
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../../po/../uget/UgetPluginAria2.c:291
 msgid "aria2: name resolution failed."
-msgstr ""
+msgstr "aria2: a névfeloldás meghiúsult."
 
 #: ../../po/../uget/UgetPluginAria2.c:292
 msgid "aria2: could not parse Metalink document."
-msgstr ""
+msgstr "aria2: nem elemezhető Metalink dokumentum."
 
 #. 21 - 30
 #: ../../po/../uget/UgetPluginAria2.c:294
 msgid "aria2: FTP command failed."
-msgstr ""
+msgstr "aria2: az FTP parancs végrehajtása meghiúsult."
 
 #: ../../po/../uget/UgetPluginAria2.c:295
 msgid "aria2: HTTP response header was bad or unexpected."
-msgstr ""
+msgstr "aria2: nem várt vagy hibás HTTP válasz fejléc"
 
 #: ../../po/../uget/UgetPluginAria2.c:296
 msgid "Too many redirections."
@@ -219,42 +214,42 @@ msgstr "Túl sok átirányítás."
 
 #: ../../po/../uget/UgetPluginAria2.c:297
 msgid "aria2: HTTP authorization failed."
-msgstr ""
+msgstr "aria2: HTTP jogosultsági hiba."
 
 #: ../../po/../uget/UgetPluginAria2.c:298
 msgid "aria2: could not parse bencoded file(usually .torrent file)."
-msgstr ""
+msgstr "aria2: nem elemezhető kódolt fájl(.torrent file)."
 
 #: ../../po/../uget/UgetPluginAria2.c:299
 msgid "aria2: torrent file was corrupted or missing information."
-msgstr ""
+msgstr "aria2: a torrent fájl hibás vagy hiányzó információ"
 
 #: ../../po/../uget/UgetPluginAria2.c:300
 msgid "aria2: Magnet URI was bad."
-msgstr ""
+msgstr "aria2: Magnet URI hibás"
 
 #: ../../po/../uget/UgetPluginAria2.c:301
 msgid ""
 "aria2: bad/unrecognized option was given or unexpected option argument was "
 "given."
-msgstr ""
+msgstr "aria2: hibás/ismeretlen opció"
 
 #: ../../po/../uget/UgetPluginAria2.c:302
 msgid "aria2: remote server was unable to handle the request."
-msgstr ""
+msgstr "aria2: a távoli szerver nem elérhető a kérés feldolgozásához"
 
 #: ../../po/../uget/UgetPluginAria2.c:303
 msgid "aria2: could not parse JSON-RPC request."
-msgstr ""
+msgstr "aria2: nem elemezhető JSON-RPC kérés"
 
 #: ../../po/../uget/UgetPluginAria2.c:306
 msgid "No response. Is aria2 shutdown?"
-msgstr ""
+msgstr "Nincs válasz. Az aria2 kilépett?"
 
 #. debug
 #: ../../po/../uget/UgetPluginAria2.c:608
 msgid "aria2: gid was removed."
-msgstr ""
+msgstr "aria2: a csoportazonosító eltávolítva."
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:46
 msgid "Download Manager"
@@ -266,11 +261,11 @@ msgstr "Fordítók listája"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:80
 msgid "uGet Founder: "
-msgstr ""
+msgstr "uGet alapító:"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:81
 msgid "uGet Project Manager: "
-msgstr ""
+msgstr "uGet projekt menedzser:"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:255
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:204
@@ -296,12 +291,11 @@ msgstr "Parancssor"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:758
 msgid "Error Occurred"
-msgstr ""
+msgstr "Hiba történt"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:759
-#, fuzzy
 msgid "Error Occurred when downloading."
-msgstr "Hangjelzés a letöltés végén"
+msgstr "Hiba történt a letöltéskor."
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:760
 msgid "Download Starting"
@@ -367,7 +361,8 @@ msgstr "Új _letöltési sor URL..."
 
 #. New Torrent
 #. separator
-#. gtk_menu_shell_append ((GtkMenuShell*)submenu, gtk_separator_menu_item_new() );
+#. gtk_menu_shell_append ((GtkMenuShell*)submenu,
+#. gtk_separator_menu_item_new() );
 #. New Torrent
 #: ../../po/../ui-gtk/UgtkApp-ui.c:224 ../../po/../ui-gtk/UgtkMenubar-ui.c:73
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:75
@@ -381,9 +376,8 @@ msgid "New Metalink..."
 msgstr "Új metalink..."
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:240
-#, fuzzy
 msgid "Save all settings"
-msgstr "Kategória beállítások"
+msgstr "Összes beállítás mentése"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:248
 msgid "Set selected download runnable"
@@ -446,24 +440,20 @@ msgid "Open Metalink file"
 msgstr "Metalink fájl megnyitása"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1109
-#, fuzzy
 msgid "Failed to save category file."
-msgstr "A mentett fájl nem nyitható meg."
+msgstr "A kategória fájl mentése nem sikerült."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1129
-#, fuzzy
 msgid "Failed to load category file."
-msgstr "A mentett fájl nem nyitható meg."
+msgstr "A kategória fájl betöltése nem sikerült."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1140
-#, fuzzy
 msgid "Save Category file"
-msgstr "Új kategória"
+msgstr "Kategória fájl mentése"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1158
-#, fuzzy
 msgid "Open Category file"
-msgstr "Torrent fájl megnyitása"
+msgstr "Kategória fájl megnyitása"
 
 #. add link
 #: ../../po/../ui-gtk/UgtkApp.c:1217
@@ -488,9 +478,8 @@ msgid "Import URLs from text file"
 msgstr "Hivatkozás import vágólapról"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1344
-#, fuzzy
 msgid "Export URLs to text file"
-msgstr "Hivatkozás import vágólapról"
+msgstr "A hivatkozások exportálása szövegfájlba"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1363
 msgid "URL Sequence batch"
@@ -502,7 +491,7 @@ msgstr "Nincs hivatkozás a vágólapon"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1399
 msgid "All URLs had existed."
-msgstr ""
+msgstr "Már az összes URL létezik."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1404
 msgid "Clipboard batch"
@@ -510,7 +499,7 @@ msgstr "Köteg vágólapról"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1494
 msgid "New"
-msgstr ""
+msgstr "Új"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1613 ../../po/../ui-gtk/UgtkMenubar.c:383
 #: ../../po/../ui-gtk/UgtkMenubar.c:415 ../../po/../ui-gtk/UgtkNodeView.c:609
@@ -533,7 +522,7 @@ msgstr "Figyelmeztetés uGet használóknak:"
 #: ../../po/../ui-gtk/UgtkBanner.c:148
 msgid ""
 "we are running a Donation Drive for uGet's Future Development, please click "
-msgstr ""
+msgstr "Itt támogathatod a jövőbeni fejlesztéseket."
 
 #: ../../po/../ui-gtk/UgtkBanner.c:151
 msgid "HERE"
@@ -541,11 +530,11 @@ msgstr "ITT"
 
 #: ../../po/../ui-gtk/UgtkBanner.c:168
 msgid "please fill out this quick User Survey for uGet."
-msgstr ""
+msgstr "Kérlek töltsd ki ezt a felmérést az Ugetről."
 
 #: ../../po/../ui-gtk/UgtkBanner.c:171
 msgid "click here to take survey"
-msgstr ""
+msgstr "klikkelj ide a felméréshez"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:62
 msgid "Category _name:"
@@ -567,19 +556,19 @@ msgstr "Töröltek:"
 #. URI Matching conditions
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:111
 msgid "URI Matching conditions"
-msgstr ""
+msgstr "URI egyező feltételek"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:118
 msgid "Matched _Hosts:"
-msgstr ""
+msgstr "Egyező _host-ok:"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:129
 msgid "Matched _Schemes:"
-msgstr ""
+msgstr "Egyező _sémák:"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:140
 msgid "Matched _Types:"
-msgstr ""
+msgstr "Egyező _típusok:"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:64
 msgid "Really Quit?"
@@ -598,17 +587,14 @@ msgid "Are you sure you want to delete files?"
 msgstr "Tényleg törlöd a fájlokat?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:74
-#, fuzzy
 msgid "Really delete category?"
-msgstr "Tényleg törlöd a fájlokat?"
+msgstr "Tényleg törlöd a kategóriát?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:75
-#, fuzzy
 msgid "Are you sure you want to delete category?"
-msgstr "Tényleg törlöd a fájlokat?"
+msgstr "Biztos, hogy törölni akarod a kategóriát?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:106
-#, fuzzy
 msgid "Don't ask me again"
 msgstr "Ne kérdezd meg újra"
 
@@ -616,7 +602,7 @@ msgstr "Ne kérdezd meg újra"
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:109
 #: ../../po/../ui-gtk/UgtkSequencer.c:63
 msgid "_URI:"
-msgstr ""
+msgstr "_URI:"
 
 #. Mirrors - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:128
@@ -646,9 +632,8 @@ msgstr "Hivatkozó:"
 
 #. "Max Connections:" - title label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:207
-#, fuzzy
 msgid "_Max Connections:"
-msgstr "kapcsolatok"
+msgstr "_Maximális kapcsolatok száma:"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:226
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:510
@@ -785,86 +770,80 @@ msgstr "_Exportálás szövegfájlba (.txt)..."
 
 #. Open Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:128
-#, fuzzy
 msgid "_Open category..."
-msgstr "_Új kategória..."
+msgstr "_Kategória megnyitása..."
 
 #. Save Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:135
-#, fuzzy
 msgid "_Save category as..."
-msgstr "_Új kategória..."
+msgstr "_Kategória mentése mint.."
 
 #. Save All
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
-#, fuzzy
 msgid "Save _all settings"
-msgstr "Kategória beállítások"
+msgstr "Összes _beállítás mentése"
 
 #. Offline mode
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:152
-#, fuzzy
 msgid "Offline Mode"
-msgstr "_Kapcsolat nélküli mód"
+msgstr "Kapcsolat nélküli mód"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:170
 msgid "_Edit"
 msgstr "_Szerkesztés"
 
-#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
+#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new()
+#. );
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:175
 msgid "Clipboard _Monitor"
 msgstr "Vágólap _figyelő"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:179
-#, fuzzy
 msgid "Clipboard works quietly"
-msgstr "Vágólap _figyelő"
+msgstr "A vágólap háttérben fut"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:183
-#, fuzzy
 msgid "Command-line works quietly"
-msgstr "Parancssori beállítások"
+msgstr "A parancssor a háttérben fut"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:187
 msgid "Skip existing URI"
-msgstr ""
+msgstr "Létező URI átugrása"
 
 #. --- Completion Auto-Actions --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:194
 msgid "Completion _Auto-Actions"
-msgstr ""
+msgstr "Az automatikus műveletek _befejezése"
 
 #. Completion Auto-Actions - Disable
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:200
 msgid "_Disable"
-msgstr ""
+msgstr "_Elutasít"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:205
 msgid "Hibernate"
-msgstr ""
+msgstr "Hibernálás"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:210
 msgid "Suspend"
-msgstr ""
+msgstr "Alvó állapot"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:215
 msgid "Shutdown"
-msgstr ""
+msgstr "Leállít"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:220
 msgid "Reboot"
-msgstr ""
+msgstr "Újraindít"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:225
 msgid "Custom"
-msgstr ""
+msgstr "Egyéni"
 
 #. Completion Auto-Actions - Remember
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
-#, fuzzy
 msgid "Remember setting"
-msgstr "Emlékezz erre műveletre"
+msgstr "Beállítások megjegyzése"
 
 #. Completion Auto-Actions - Help
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:235
@@ -1016,18 +995,17 @@ msgstr "_Kategória törlése"
 msgid "_Download"
 msgstr "_Letöltés"
 
-#. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE, accel_group);
+#. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE,
+#. accel_group);
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:473
-#, fuzzy
 msgid "_Delete Entry"
-msgstr "_Kategória törlése"
+msgstr "_Bejegyzés törlése"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:480
 msgid "Delete Entry and _File"
-msgstr ""
+msgstr "A hivatkozás és a fájl törlése"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:495
-#, fuzzy
 msgid "Open _Containing folder"
 msgstr "Letöltési _mappa megnyitása"
 
@@ -1043,20 +1021,19 @@ msgstr "_Áthelyez"
 #. Priority --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:573
 msgid "Priority"
-msgstr ""
+msgstr "Elsőbbség"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:582
 msgid "_High"
-msgstr ""
+msgstr "_Magas"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:587
-#, fuzzy
 msgid "_Normal"
-msgstr "Normál"
+msgstr "_Normál"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:592
 msgid "_Low"
-msgstr ""
+msgstr "_Alacsony"
 
 #. Get Help Online
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:615
@@ -1086,7 +1063,7 @@ msgstr "Hibajelentés küldése"
 #. Keyboard Shortcuts
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:650
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Billentyűkombinációk"
 
 #. Check for Updates
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:657
@@ -1111,11 +1088,11 @@ msgstr "'%s' - A mappa nem létezik."
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:205
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:209
 msgid "URI had existed"
-msgstr ""
+msgstr "URI már létezik"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:207
 msgid "This URI had existed, are you sure to continue?"
-msgstr ""
+msgstr "Az URI már létezik, biztos hogy folytatod?"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:343
 msgid "General"
@@ -1143,17 +1120,14 @@ msgid "unnamed"
 msgstr "névtelen"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:610
-#, fuzzy
 msgid "Paused"
-msgstr "Szün_et"
+msgstr "Megállt"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:611
-#, fuzzy
 msgid "Uploading"
 msgstr "Feltöltés"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:612
-#, fuzzy
 msgid "Completed"
 msgstr "Kész"
 
@@ -1170,9 +1144,8 @@ msgid "Active"
 msgstr "Aktív"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:637
-#, fuzzy
 msgid "All Status"
-msgstr "Állapot"
+msgstr "Összes állapot"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:734
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:85
@@ -1203,9 +1176,8 @@ msgstr "Hátralévő"
 #: ../../po/../ui-gtk/UgtkNodeView.c:903
 #: ../../po/../ui-gtk/UgtkSettingForm.c:538
 #: ../../po/../ui-gtk/UgtkSummary.c:151
-#, fuzzy
 msgid "URI"
-msgstr "URL"
+msgstr "URI"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:954
 msgid "Quantity"
@@ -1400,11 +1372,11 @@ msgstr "Előnézet"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:97
 msgid "User Interface"
-msgstr ""
+msgstr "Felhasználói felület"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:109
 msgid "Bandwidth"
-msgstr ""
+msgstr "Sávszélesség"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:115
 msgid "Scheduler"
@@ -1420,9 +1392,8 @@ msgstr "Egyebek"
 
 #. Monitor button
 #: ../../po/../ui-gtk/UgtkSettingForm.c:57
-#, fuzzy
 msgid "_Enable clipboard monitor"
-msgstr "Vágólap _figyelő"
+msgstr "_Vágólap figyelés engedélyezése"
 
 #. quiet mode
 #: ../../po/../ui-gtk/UgtkSettingForm.c:62
@@ -1431,19 +1402,17 @@ msgstr "_Néma üzemmód"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:68
 #: ../../po/../ui-gtk/UgtkSettingForm.c:446
-#, fuzzy
 msgid "Default category index"
-msgstr "_Kategória törlése"
+msgstr "Alapértelmezett kategória index"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:80
 #: ../../po/../ui-gtk/UgtkSettingForm.c:458
 msgid "Adding to Nth category if no matched category."
-msgstr ""
+msgstr "Hozzáadás az N-dik kategóriához, ha nincs egyező kategória."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:87
-#, fuzzy
 msgid "Monitor clipboard for specified file types:"
-msgstr "_Vágólap figyelés megadott fájltípusok után:"
+msgstr "Vágólap figyelés megadott fájltípusok után:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:102
 msgid "Separate the types with character '|'."
@@ -1455,13 +1424,12 @@ msgstr "Reguláris kifejezés használható."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:151
 msgid "Confirmation"
-msgstr ""
+msgstr "Megerősítés"
 
 #. Confirmation check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:157
-#, fuzzy
 msgid "Show confirmation dialog on exit"
-msgstr "Megerősítés kérése bezáráskor"
+msgstr "Mutasd a megerősítés ablakot kilépéskor."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:160
 msgid "Confirm when deleting files"
@@ -1469,7 +1437,7 @@ msgstr "Megerősítés fájlok törlésekor"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:166
 msgid "System Tray"
-msgstr ""
+msgstr "Rendszertálca"
 
 #. System Tray check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:172
@@ -1482,11 +1450,11 @@ msgstr "Indítás minimódban a tálcán"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:178
 msgid "Close to tray on window close"
-msgstr ""
+msgstr "Tedd tálcára az ablak bezárásakor"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:182
 msgid "Use Ubuntu's App Indicator"
-msgstr ""
+msgstr "Használd az Ubuntu alkalmazás indikátort"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:189
 msgid "Enable offline mode on startup"
@@ -1506,37 +1474,34 @@ msgstr "Alkalmazd a legújabb letöltési beállításokat"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264
 msgid "These will affect all plug-ins."
-msgstr ""
+msgstr "Minden plug-in-ra vonatkozik."
 
 #. Global speed limit
 #: ../../po/../ui-gtk/UgtkSettingForm.c:270
-#, fuzzy
 msgid "Global speed limit"
-msgstr "Sebesség korlátozások"
+msgstr "Globális sebesség korlátozás"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:278
 #: ../../po/../ui-gtk/UgtkSettingForm.c:564
-#, fuzzy
 msgid "Max upload speed"
 msgstr "Maximális feltöltési sebesség:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:290
 #: ../../po/../ui-gtk/UgtkSettingForm.c:576
-#, fuzzy
 msgid "Max download speed"
 msgstr "Maximális letöltés sebesség:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:323
 msgid "Completion Auto-Actions"
-msgstr ""
+msgstr "Az automatikus műveletek befejezése"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:331
 msgid "Custom command:"
-msgstr ""
+msgstr "Egyedi parancs"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:343
 msgid "Custom command if error occured:"
-msgstr ""
+msgstr "Hiba esetén egyedi parancs futtatása"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:388
 msgid "_Autosave"
@@ -1564,21 +1529,21 @@ msgstr "Használd a '--csendes módot' alapértelmezetten"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:508
 msgid "Plug-in matching order:"
-msgstr ""
+msgstr "Plug-in egyezőségi sorrend:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:531
 msgid "Aria2 plug-in options"
-msgstr ""
+msgstr "Aria2 beépülők beállításai"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:547
 msgid "RPC authorization secret token"
-msgstr ""
+msgstr "RPC jogosultsági titkosító eszköz"
 
 #. ------------------------------------------------------------------------
 #. Speed Limits
 #: ../../po/../ui-gtk/UgtkSettingForm.c:556
 msgid "Global speed limit for aria2 only"
-msgstr ""
+msgstr "Globális letöltési sebesség korlátozás csak az aria2-nek"
 
 #. ------------------------------------------------------------------------
 #. aria2 works on local device
@@ -1595,9 +1560,8 @@ msgstr "_Aria2 leállítása kilépéskor"
 #. ------------------------------------------------------------------------
 #. Local options
 #: ../../po/../ui-gtk/UgtkSettingForm.c:601
-#, fuzzy
 msgid "Launch aria2 on local device"
-msgstr "_Aria2 futtatása indításkor"
+msgstr "Futtasd az aria2 a helyi meghajtón"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:610
 msgid "Path"
@@ -1609,9 +1573,8 @@ msgstr "Paraméterek"
 
 #. Arguments - hint
 #: ../../po/../ui-gtk/UgtkSettingForm.c:626
-#, fuzzy
 msgid "You must restart uGet after modifying it."
-msgstr "Az uGet újraindítása szükséges a 'Paraméterek' érvényesítéséhez."
+msgstr "Az uGet újraindítása szükséges a módosítások érvényesítéséhez."
 
 #: ../../po/../ui-gtk/UgtkSummary.c:112
 msgid "File"
@@ -1643,83 +1606,3 @@ msgstr "Mutasd az ablakot"
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:112
 msgid "_Offline Mode"
 msgstr "_Kapcsolat nélküli mód"
-
-#, fuzzy
-#~ msgid "Help"
-#~ msgstr "_Segítség"
-
-#~ msgid "No plug-in support this scheme or file."
-#~ msgstr "Nincs plug-in támogatás ehhez az összeállításhoz vagy fájlhoz"
-
-#~ msgid "Minimize to tray"
-#~ msgstr "Minimalizálás tálcára"
-
-#~ msgid "Exit uGet"
-#~ msgstr "Kilépés az uGet-ből"
-
-#~ msgid "failed to launch aria2."
-#~ msgstr "aria2 nem futtatható"
-
-#~ msgid "Export to"
-#~ msgstr "Exportálás"
-
-#~ msgid "Save all"
-#~ msgstr "Összes mentése"
-
-#~ msgid "_Download..."
-#~ msgstr "_Letöltés..."
-
-#~ msgid "_Category..."
-#~ msgstr "_Kategória..."
-
-#~ msgid "Torrent..."
-#~ msgstr "Torrent..."
-
-#~ msgid "Metalink..."
-#~ msgstr "Metalink..."
-
-#~ msgid "_Clipboard Option..."
-#~ msgstr "_Vágólap beállítások"
-
-#~ msgid "Shutdown when downloads complete"
-#~ msgstr "A számítógép leállítása a letöltés végén"
-
-#~ msgid "Delete _File and Data"
-#~ msgstr "Törlés _a listáról és a lemezről"
-
-#~ msgid "only one matched"
-#~ msgstr "csak "
-
-#~ msgid ""
-#~ "Failed to connect to aria2.\n"
-#~ "Is aria2 shutdown? or aria2 launch failed."
-#~ msgstr ""
-#~ "Nem lehet kapcsolódni az aria2.\n"
-#~ "ls aria2 leállítás? vagy aria2 futtatás meghiúsult."
-
-#~ msgid "_URL:"
-#~ msgstr "_URL:"
-
-#~ msgid "Options"
-#~ msgstr "Beállítások"
-
-#~ msgid "Connections per server"
-#~ msgstr "Kapcsolatok/server"
-
-#~ msgid "UI Settings"
-#~ msgstr "UI beállítások"
-
-#~ msgid "Add URL to Nth category"
-#~ msgstr "URL hozzáadása a Nth kategóriához"
-
-#~ msgid "_Launch default application for specified file types:"
-#~ msgstr "_Alapértelmezett alkalmazás futtatása bizonyos fájltípusoknál:"
-
-#~ msgid "'--category-index' default value"
-#~ msgstr "'--kategória-index' az alapértelmezett érték"
-
-#~ msgid "_Enable aria2 plug-in"
-#~ msgstr "_Aria2 kiegészítő engedélyezése"
-
-#~ msgid "Download"
-#~ msgstr "Letöltés"

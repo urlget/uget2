@@ -1,28 +1,26 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# ppanhh <vietnamesel10n@gmail.com>, 2013
+# Anh Phan <vietnamesel10n@gmail.com>, 2013-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2013-12-07 20:06+0000\n"
-"Last-Translator: uGet <michael@ugetdm.com>\n"
-"Language-Team: Vietnamese (http://www.transifex.com/projects/p/uget/language/"
-"vi/)\n"
-"Language: vi\n"
+"PO-Revision-Date: 2014-11-27 06:57+0000\n"
+"Last-Translator: Michael Tunnell <michael@ugetdm.com>\n"
+"Language-Team: Vietnamese (http://www.transifex.com/projects/p/uget/language/vi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: vi\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../../po/../uget/UgetApp.c:95
-#, fuzzy
 msgid "All Category"
-msgstr "Phân loại"
+msgstr ""
 
 #. UGET_EVENT_NORMAL_CUSTOM
 #: ../../po/../uget/UgetEvent.c:58
@@ -78,8 +76,7 @@ msgstr "Không thể tạo thư mục."
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../../po/../uget/UgetEvent.c:83
 msgid "File can't be created (bad filename or file exist)."
-msgstr ""
-"Không thể tạo thư mục (tên tập tin không hợp lệ hoặc tập tin không tồn tại)."
+msgstr "Không thể tạo thư mục (tên tập tin không hợp lệ hoặc tập tin không tồn tại)."
 
 #. UGET_EVENT_ERROR_FILE_CREATE_FAILED
 #: ../../po/../uget/UgetEvent.c:84
@@ -99,9 +96,7 @@ msgstr ""
 #. UGET_EVENT_ERROR_INCORRECT_SOURCE,
 #: ../../po/../uget/UgetEvent.c:87
 msgid "Out of resource (disk full or run out of memory)."
-msgstr ""
-"Nguồn tài nguyên bị giới hạn (ổ đĩa không đủ dung lượng hoặc không đủ bộ "
-"nhớ)."
+msgstr "Nguồn tài nguyên bị giới hạn (ổ đĩa không đủ dung lượng hoặc không đủ bộ nhớ)."
 
 #. UGET_EVENT_ERROR_OUT_OF_RESOURCE
 #: ../../po/../uget/UgetEvent.c:88
@@ -184,9 +179,8 @@ msgstr ""
 
 #. _("Output file can't be renamed."),
 #: ../../po/../uget/UgetPluginAria2.c:287
-#, fuzzy
 msgid "aria2: could not open existing file."
-msgstr "Không thể mở được tập tin đã đăng lên."
+msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:288
 msgid "aria2: could not create new file or truncate existing file."
@@ -300,9 +294,8 @@ msgid "Error Occurred"
 msgstr ""
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:759
-#, fuzzy
 msgid "Error Occurred when downloading."
-msgstr "Phát âm thanh thông báo khi phần tải về đã được hoàn tất"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:760
 msgid "Download Starting"
@@ -318,9 +311,7 @@ msgstr "Tiến Trình Tải Về Đã Hoàn Tất"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:763
 msgid "All queuing downloads have been completed."
-msgstr ""
-"Tiến trình tải về của toàn bộ các đối tượng trong danh sách đợi đã được hoàn "
-"tất."
+msgstr "Tiến trình tải về của toàn bộ các đối tượng trong danh sách đợi đã được hoàn tất."
 
 #. ----------------------------------------------------
 #. frame for Status (start mode)
@@ -370,7 +361,8 @@ msgstr "Tạo chuỗi đường dẫn liên tiếp _mới..."
 
 #. New Torrent
 #. separator
-#. gtk_menu_shell_append ((GtkMenuShell*)submenu, gtk_separator_menu_item_new() );
+#. gtk_menu_shell_append ((GtkMenuShell*)submenu,
+#. gtk_separator_menu_item_new() );
 #. New Torrent
 #: ../../po/../ui-gtk/UgtkApp-ui.c:224 ../../po/../ui-gtk/UgtkMenubar-ui.c:73
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:75
@@ -384,9 +376,8 @@ msgid "New Metalink..."
 msgstr "Tạo mới metalink..."
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:240
-#, fuzzy
 msgid "Save all settings"
-msgstr "Thiết lập phân loại"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:248
 msgid "Set selected download runnable"
@@ -449,24 +440,20 @@ msgid "Open Metalink file"
 msgstr "Mở tập tin metalink"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1109
-#, fuzzy
 msgid "Failed to save category file."
-msgstr "Không thể mở được tập tin đã đăng lên."
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkApp.c:1129
-#, fuzzy
 msgid "Failed to load category file."
-msgstr "Không thể mở được tập tin đã đăng lên."
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkApp.c:1140
-#, fuzzy
 msgid "Save Category file"
-msgstr "Phân loại mới"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkApp.c:1158
-#, fuzzy
 msgid "Open Category file"
-msgstr "Mở tập tin torrent"
+msgstr ""
 
 #. add link
 #: ../../po/../ui-gtk/UgtkApp.c:1217
@@ -491,9 +478,8 @@ msgid "Import URLs from text file"
 msgstr "Nhập đường dẫn liên kết từ tập tin văn bản"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1344
-#, fuzzy
 msgid "Export URLs to text file"
-msgstr "Nhập đường dẫn liên kết từ tập tin văn bản"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkApp.c:1363
 msgid "URL Sequence batch"
@@ -531,24 +517,24 @@ msgstr "Đã chọn %d đối tượng"
 
 #: ../../po/../ui-gtk/UgtkBanner.c:145 ../../po/../ui-gtk/UgtkBanner.c:165
 msgid "Attention uGetters:"
-msgstr ""
+msgstr "Xin người dùng lưu ý:"
 
 #: ../../po/../ui-gtk/UgtkBanner.c:148
 msgid ""
 "we are running a Donation Drive for uGet's Future Development, please click "
-msgstr ""
+msgstr "chúng tôi hiện đang nhận sự ủng hộ tài chính để có thể phát triển dự án hơn nữa, hãy click vào"
 
 #: ../../po/../ui-gtk/UgtkBanner.c:151
 msgid "HERE"
-msgstr ""
+msgstr "TẠI ĐÂY"
 
 #: ../../po/../ui-gtk/UgtkBanner.c:168
 msgid "please fill out this quick User Survey for uGet."
-msgstr ""
+msgstr "hãy điền vào bảng khảo sát sau đây"
 
 #: ../../po/../ui-gtk/UgtkBanner.c:171
 msgid "click here to take survey"
-msgstr ""
+msgstr "hãy click vào đây để tham gia khảo sát"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:62
 msgid "Category _name:"
@@ -601,19 +587,16 @@ msgid "Are you sure you want to delete files?"
 msgstr "Bạn có thực sự muốn xóa những tập tin này hay không?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:74
-#, fuzzy
 msgid "Really delete category?"
-msgstr "Bạn có muốn thực sự xóa những tập tin này?"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:75
-#, fuzzy
 msgid "Are you sure you want to delete category?"
-msgstr "Bạn có thực sự muốn xóa những tập tin này hay không?"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:106
-#, fuzzy
 msgid "Don't ask me again"
-msgstr "Không hỏi lại tôi lần nào nữa"
+msgstr ""
 
 #. URL - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:109
@@ -624,7 +607,7 @@ msgstr ""
 #. Mirrors - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:128
 msgid "Mirrors:"
-msgstr ""
+msgstr "Phần phụ:"
 
 #. File - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:144
@@ -649,9 +632,8 @@ msgstr "Phần tham chiếu:"
 
 #. "Max Connections:" - title label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:207
-#, fuzzy
 msgid "_Max Connections:"
-msgstr "các kết nối"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:226
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:510
@@ -788,46 +770,41 @@ msgstr "_Xuất dữ liệu sang tập tin dạng văn bản (.txt)..."
 
 #. Open Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:128
-#, fuzzy
 msgid "_Open category..."
-msgstr "_Tạo phân loại mới..."
+msgstr ""
 
 #. Save Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:135
-#, fuzzy
 msgid "_Save category as..."
-msgstr "_Tạo phân loại mới..."
+msgstr ""
 
 #. Save All
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
-#, fuzzy
 msgid "Save _all settings"
-msgstr "Thiết lập phân loại"
+msgstr ""
 
 #. Offline mode
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:152
-#, fuzzy
 msgid "Offline Mode"
-msgstr "Chế Độ _không có kết nối internet"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:170
 msgid "_Edit"
 msgstr "_Chỉnh sửa"
 
-#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
+#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new()
+#. );
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:175
 msgid "Clipboard _Monitor"
 msgstr "Quản lý bộ _nhớ ảo"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:179
-#, fuzzy
 msgid "Clipboard works quietly"
-msgstr "Quản lý bộ _nhớ ảo"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:183
-#, fuzzy
 msgid "Command-line works quietly"
-msgstr "Thiết lập chế độ dòng lệnh"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:187
 msgid "Skip existing URI"
@@ -865,9 +842,8 @@ msgstr ""
 
 #. Completion Auto-Actions - Remember
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
-#, fuzzy
 msgid "Remember setting"
-msgstr "Ghi nhớ thao tác này"
+msgstr ""
 
 #. Completion Auto-Actions - Help
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:235
@@ -1019,20 +995,19 @@ msgstr "_Xóa phân loại"
 msgid "_Download"
 msgstr "_Tải về"
 
-#. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE, accel_group);
+#. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE,
+#. accel_group);
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:473
-#, fuzzy
 msgid "_Delete Entry"
-msgstr "_Xóa phân loại"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:480
 msgid "Delete Entry and _File"
 msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:495
-#, fuzzy
 msgid "Open _Containing folder"
-msgstr "_Mở thư mục chứa dữ liệu"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:504
 msgid "Force Start"
@@ -1053,9 +1028,8 @@ msgid "_High"
 msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:587
-#, fuzzy
 msgid "_Normal"
-msgstr "Bình thường"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:592
 msgid "_Low"
@@ -1064,27 +1038,27 @@ msgstr ""
 #. Get Help Online
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:615
 msgid "Get Help Online"
-msgstr ""
+msgstr "Nhận trợ giúp trực tuyến"
 
 #. Documentation
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:622
 msgid "Documentation"
-msgstr ""
+msgstr "Tài liệu hướng dẫn"
 
 #. Support Forum
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:629
 msgid "Support Forum"
-msgstr ""
+msgstr "Diễn đàn hỗ trợ"
 
 #. Submit Feedback
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:636
 msgid "Submit Feedback"
-msgstr ""
+msgstr "Gửi phản hồi"
 
 #. Report a Bug
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:643
 msgid "Report a Bug"
-msgstr ""
+msgstr "Báo cáo lỗi"
 
 #. Keyboard Shortcuts
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:650
@@ -1094,7 +1068,7 @@ msgstr ""
 #. Check for Updates
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:657
 msgid "Check for Updates"
-msgstr ""
+msgstr "Kiểm tra cập nhật mới"
 
 #: ../../po/../ui-gtk/UgtkMenubar.c:144
 msgid "Settings"
@@ -1146,19 +1120,16 @@ msgid "unnamed"
 msgstr "Chưa đặt tên"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:610
-#, fuzzy
 msgid "Paused"
-msgstr "Tạ_m ngưng"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:611
-#, fuzzy
 msgid "Uploading"
-msgstr "Tải lên"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:612
-#, fuzzy
 msgid "Completed"
-msgstr "Hoàn tất"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:614
 msgid "Recycled"
@@ -1173,9 +1144,8 @@ msgid "Active"
 msgstr "Đang hoạt động"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:637
-#, fuzzy
 msgid "All Status"
-msgstr "Trạng thái"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:734
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:85
@@ -1206,9 +1176,8 @@ msgstr "Còn lại"
 #: ../../po/../ui-gtk/UgtkNodeView.c:903
 #: ../../po/../ui-gtk/UgtkSettingForm.c:538
 #: ../../po/../ui-gtk/UgtkSummary.c:151
-#, fuzzy
 msgid "URI"
-msgstr "Đường dẫn liên kết"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:954
 msgid "Quantity"
@@ -1243,7 +1212,7 @@ msgstr "Socket :"
 
 #: ../../po/../ui-gtk/UgtkProxyForm.c:361
 msgid "Socket args:"
-msgstr ""
+msgstr "Đối số mã mạng:"
 
 #: ../../po/../ui-gtk/UgtkProxyForm.c:371
 msgid "Element:"
@@ -1319,8 +1288,7 @@ msgstr "Đánh dấu các đường dẫn liên kết bằng máy chủ và đin
 
 #: ../../po/../ui-gtk/UgtkSelector.c:297
 msgid "This will reset all marks of URLs."
-msgstr ""
-"Phần này sẽ cài đặt lại toàn bộ phần đánh dấu của các đường dẫn liên kết."
+msgstr "Phần này sẽ cài đặt lại toàn bộ phần đánh dấu của các đường dẫn liên kết."
 
 #. filter view -----------------------
 #. left side
@@ -1424,9 +1392,8 @@ msgstr "Các phần khác"
 
 #. Monitor button
 #: ../../po/../ui-gtk/UgtkSettingForm.c:57
-#, fuzzy
 msgid "_Enable clipboard monitor"
-msgstr "Quản lý bộ _nhớ ảo"
+msgstr ""
 
 #. quiet mode
 #: ../../po/../ui-gtk/UgtkSettingForm.c:62
@@ -1435,9 +1402,8 @@ msgstr "_Chế độ im lặng"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:68
 #: ../../po/../ui-gtk/UgtkSettingForm.c:446
-#, fuzzy
 msgid "Default category index"
-msgstr "_Xóa phân loại"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:80
 #: ../../po/../ui-gtk/UgtkSettingForm.c:458
@@ -1445,9 +1411,8 @@ msgid "Adding to Nth category if no matched category."
 msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:87
-#, fuzzy
 msgid "Monitor clipboard for specified file types:"
-msgstr "_Theo dõi bộ nhớ ảo với các loại tập tin như sau:"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:102
 msgid "Separate the types with character '|'."
@@ -1463,9 +1428,8 @@ msgstr ""
 
 #. Confirmation check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:157
-#, fuzzy
 msgid "Show confirmation dialog on exit"
-msgstr "Hiển thị hộp thoại xác nhận khi đóng lại"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:160
 msgid "Confirm when deleting files"
@@ -1514,21 +1478,18 @@ msgstr ""
 
 #. Global speed limit
 #: ../../po/../ui-gtk/UgtkSettingForm.c:270
-#, fuzzy
 msgid "Global speed limit"
-msgstr "Giới hạn tốc độ"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:278
 #: ../../po/../ui-gtk/UgtkSettingForm.c:564
-#, fuzzy
 msgid "Max upload speed"
-msgstr "Tốc độ tải lên tối đa:"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:290
 #: ../../po/../ui-gtk/UgtkSettingForm.c:576
-#, fuzzy
 msgid "Max download speed"
-msgstr "Tốc độ tải về tối đa:"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:323
 msgid "Completion Auto-Actions"
@@ -1544,7 +1505,7 @@ msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:388
 msgid "_Autosave"
-msgstr "_Tự động lưu"
+msgstr ""
 
 #. auto save spin & label (interval)
 #: ../../po/../ui-gtk/UgtkSettingForm.c:394
@@ -1599,9 +1560,8 @@ msgstr "_Tắt aria2 khi thoát"
 #. ------------------------------------------------------------------------
 #. Local options
 #: ../../po/../ui-gtk/UgtkSettingForm.c:601
-#, fuzzy
 msgid "Launch aria2 on local device"
-msgstr "_Chạy aria3 khi khởi động"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:610
 msgid "Path"
@@ -1613,9 +1573,8 @@ msgstr "Đối số"
 
 #. Arguments - hint
 #: ../../po/../ui-gtk/UgtkSettingForm.c:626
-#, fuzzy
 msgid "You must restart uGet after modifying it."
-msgstr "Bạn phải khởi động lại uGet sau khi sửa đổi 'Đối số'."
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSummary.c:112
 msgid "File"
@@ -1647,83 +1606,3 @@ msgstr "Hiện cửa sổ"
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:112
 msgid "_Offline Mode"
 msgstr "Chế Độ _không có kết nối internet"
-
-#, fuzzy
-#~ msgid "Help"
-#~ msgstr "_Dịch bởi Vetati"
-
-#~ msgid "No plug-in support this scheme or file."
-#~ msgstr "Tiện ích không được hỗ trợ trong giản đồ hoặc tập tin này."
-
-#~ msgid "Minimize to tray"
-#~ msgstr "Thu nhỏ xuống khay hệ thống"
-
-#~ msgid "Exit uGet"
-#~ msgstr "Thoát"
-
-#~ msgid "failed to launch aria2."
-#~ msgstr "thất bại trong việc khởi động aria2."
-
-#~ msgid "Export to"
-#~ msgstr "Xuất dữ liệu sang"
-
-#~ msgid "Save all"
-#~ msgstr "Lưu lại tất cả"
-
-#~ msgid "_Download..."
-#~ msgstr "_Tải về..."
-
-#~ msgid "_Category..."
-#~ msgstr "_Phân loại..."
-
-#~ msgid "Torrent..."
-#~ msgstr "Torrent..."
-
-#~ msgid "Metalink..."
-#~ msgstr "Metalink..."
-
-#~ msgid "_Clipboard Option..."
-#~ msgstr "_Tùy chọn về bộ nhớ ảo..."
-
-#~ msgid "Shutdown when downloads complete"
-#~ msgstr "Tắt máy khi toàn bộ các phần tải về đã hoàn tất"
-
-#~ msgid "Delete _File and Data"
-#~ msgstr "Xóa _tập tin và dữ liệu"
-
-#~ msgid "only one matched"
-#~ msgstr "chỉ có một đối tượng khớp"
-
-#~ msgid ""
-#~ "Failed to connect to aria2.\n"
-#~ "Is aria2 shutdown? or aria2 launch failed."
-#~ msgstr ""
-#~ "Không thể kết nối tới aria2\n"
-#~ "Có phải aria2 đã bị tắt? hoặc giả dụ như aria2 không thể khởi động được."
-
-#~ msgid "_URL:"
-#~ msgstr "_Đường dẫn liên kết:"
-
-#~ msgid "Options"
-#~ msgstr "Tuỳ chọn"
-
-#~ msgid "Connections per server"
-#~ msgstr "Các kết nố đến mỗi máy chủ"
-
-#~ msgid "UI Settings"
-#~ msgstr "Thiết lập giao diện"
-
-#~ msgid "Add URL to Nth category"
-#~ msgstr "Thêm đường dẫn N vào phần phân loại"
-
-#~ msgid "_Launch default application for specified file types:"
-#~ msgstr "_Chạy các ứng dụng mặc định đối với từng loại tập tin:"
-
-#~ msgid "'--category-index' default value"
-#~ msgstr "'--category-index' giá trị mặc định"
-
-#~ msgid "_Enable aria2 plug-in"
-#~ msgstr "_Cho phép bật tiện ích aria2"
-
-#~ msgid "Download"
-#~ msgstr "Tải về"

@@ -1,30 +1,27 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# uGet <michael@ugetdm.com>, 2013
-# Raphael Groner, 2013
-# uGet <michael@ugetdm.com>, 2013
+# Michael Tunnell <michael@ugetdm.com>, 2013
+# Raphael Groner <projects.rg@smart.ms>, 2013-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2013-12-23 22:15+0000\n"
-"Last-Translator: Raphael Groner\n"
-"Language-Team: German (http://www.transifex.com/projects/p/uget/language/"
-"de/)\n"
-"Language: de\n"
+"PO-Revision-Date: 2014-11-27 12:30+0000\n"
+"Last-Translator: Raphael Groner <projects.rg@smart.ms>\n"
+"Language-Team: German (http://www.transifex.com/projects/p/uget/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../../po/../uget/UgetApp.c:95
-#, fuzzy
 msgid "All Category"
-msgstr "Kategorie"
+msgstr "Alle Kategorien"
 
 #. UGET_EVENT_NORMAL_CUSTOM
 #: ../../po/../uget/UgetEvent.c:58
@@ -80,9 +77,7 @@ msgstr "Ordner kann nicht erstellt werden."
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../../po/../uget/UgetEvent.c:83
 msgid "File can't be created (bad filename or file exist)."
-msgstr ""
-"Datei kann nicht erstellt werden (unzulässiger Dateiname oder Datei "
-"existiert)."
+msgstr "Datei kann nicht erstellt werden (unzulässiger Dateiname oder Datei existiert)."
 
 #. UGET_EVENT_ERROR_FILE_CREATE_FAILED
 #: ../../po/../uget/UgetEvent.c:84
@@ -91,14 +86,13 @@ msgstr "Datei kann nicht geöffnet werden."
 
 #. UGET_EVENT_ERROR_FILE_OPEN_FAILED
 #: ../../po/../uget/UgetEvent.c:85
-#, fuzzy
 msgid "Unable to create thread."
-msgstr "Thread nicht erstellbar, Anzahl Downloads reduzieren."
+msgstr ""
 
 #. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 #: ../../po/../uget/UgetEvent.c:86
 msgid "Incorrect source (different file size)."
-msgstr ""
+msgstr "Unzulässige Quelle (unterschiedliche Dateigröße)."
 
 #. UGET_EVENT_ERROR_INCORRECT_SOURCE,
 #: ../../po/../uget/UgetEvent.c:87
@@ -133,15 +127,15 @@ msgstr "Dateiformat nicht unterstützt."
 #. 1 - 10
 #: ../../po/../uget/UgetPluginAria2.c:272
 msgid "aria2: an unknown error occurred."
-msgstr ""
+msgstr "aria2: unbekannter Fehler aufgetreten."
 
 #: ../../po/../uget/UgetPluginAria2.c:273
 msgid "aria2: time out occurred."
-msgstr ""
+msgstr "aria2: Zeit abgelaufen."
 
 #: ../../po/../uget/UgetPluginAria2.c:274
 msgid "aria2: resource was not found."
-msgstr ""
+msgstr "aria2: Resource wurde nicht gefunden."
 
 #: ../../po/../uget/UgetPluginAria2.c:275
 msgid ""
@@ -151,15 +145,15 @@ msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:276
 msgid "aria2: speed was too slow."
-msgstr ""
+msgstr "aria2: Geschwindigkeit war zu langsam."
 
 #: ../../po/../uget/UgetPluginAria2.c:277
 msgid "aria2: network problem occurred."
-msgstr ""
+msgstr "aria2: Netzwerkproblem aufgetreten."
 
 #: ../../po/../uget/UgetPluginAria2.c:278
 msgid "aria2: unfinished downloads."
-msgstr ""
+msgstr "aria2: Unvollständige Downloads."
 
 #. _("Not Resumable"),
 #: ../../po/../uget/UgetPluginAria2.c:280
@@ -169,12 +163,12 @@ msgstr ""
 #. _(),
 #: ../../po/../uget/UgetPluginAria2.c:281
 msgid "aria2: piece length was different from one in .aria2 control file."
-msgstr ""
+msgstr "aria2: Teillänge war unterschiedlich zu einer in .aria2 Kontrolldatei."
 
 #. 11 - 20
 #: ../../po/../uget/UgetPluginAria2.c:283
 msgid "aria2 was downloading same file."
-msgstr ""
+msgstr "aria2 hat die selbe Datei heruntergeladen."
 
 #: ../../po/../uget/UgetPluginAria2.c:284
 msgid "aria2 was downloading same info hash torrent."
@@ -186,9 +180,8 @@ msgstr ""
 
 #. _("Output file can't be renamed."),
 #: ../../po/../uget/UgetPluginAria2.c:287
-#, fuzzy
 msgid "aria2: could not open existing file."
-msgstr "Fehler beim Öffnen der übertragenen Datei."
+msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:288
 msgid "aria2: could not create new file or truncate existing file."
@@ -302,9 +295,8 @@ msgid "Error Occurred"
 msgstr ""
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:759
-#, fuzzy
 msgid "Error Occurred when downloading."
-msgstr "Ton ausgeben wenn Download fertiggestellt ist"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:760
 msgid "Download Starting"
@@ -370,7 +362,8 @@ msgstr "Neue _URL-Sequenz abarbeiten…"
 
 #. New Torrent
 #. separator
-#. gtk_menu_shell_append ((GtkMenuShell*)submenu, gtk_separator_menu_item_new() );
+#. gtk_menu_shell_append ((GtkMenuShell*)submenu,
+#. gtk_separator_menu_item_new() );
 #. New Torrent
 #: ../../po/../ui-gtk/UgtkApp-ui.c:224 ../../po/../ui-gtk/UgtkMenubar-ui.c:73
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:75
@@ -384,9 +377,8 @@ msgid "New Metalink..."
 msgstr "Neuer Metalink …"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:240
-#, fuzzy
 msgid "Save all settings"
-msgstr "Kategorie-Einstellungen"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:248
 msgid "Set selected download runnable"
@@ -449,24 +441,20 @@ msgid "Open Metalink file"
 msgstr "Metalink-Datei öffnen"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1109
-#, fuzzy
 msgid "Failed to save category file."
-msgstr "Fehler beim Öffnen der übertragenen Datei."
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkApp.c:1129
-#, fuzzy
 msgid "Failed to load category file."
-msgstr "Fehler beim Öffnen der übertragenen Datei."
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkApp.c:1140
-#, fuzzy
 msgid "Save Category file"
-msgstr "Neue Kategorie"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkApp.c:1158
-#, fuzzy
 msgid "Open Category file"
-msgstr "Torrent-Datei öffnen"
+msgstr ""
 
 #. add link
 #: ../../po/../ui-gtk/UgtkApp.c:1217
@@ -491,9 +479,8 @@ msgid "Import URLs from text file"
 msgstr "URLs von Textdatei importieren"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1344
-#, fuzzy
 msgid "Export URLs to text file"
-msgstr "URLs von Textdatei importieren"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkApp.c:1363
 msgid "URL Sequence batch"
@@ -536,9 +523,7 @@ msgstr "Achtung uGetters:"
 #: ../../po/../ui-gtk/UgtkBanner.c:148
 msgid ""
 "we are running a Donation Drive for uGet's Future Development, please click "
-msgstr ""
-"Wir betreiben ein \"Donation Drive\" für uGet's zukünftige Entwicklung, "
-"bitte klicken: "
+msgstr "Wir betreiben ein \"Donation Drive\" für uGet's zukünftige Entwicklung, bitte klicken: "
 
 #: ../../po/../ui-gtk/UgtkBanner.c:151
 msgid "HERE"
@@ -603,19 +588,16 @@ msgid "Are you sure you want to delete files?"
 msgstr "Wollen Sie die Dateien wirklich löschen?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:74
-#, fuzzy
 msgid "Really delete category?"
-msgstr "Dateien wirklich löschen?"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:75
-#, fuzzy
 msgid "Are you sure you want to delete category?"
-msgstr "Wollen Sie die Dateien wirklich löschen?"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:106
-#, fuzzy
 msgid "Don't ask me again"
-msgstr "Nicht mehr nachfragen"
+msgstr ""
 
 #. URL - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:109
@@ -651,9 +633,8 @@ msgstr "Referrer:"
 
 #. "Max Connections:" - title label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:207
-#, fuzzy
 msgid "_Max Connections:"
-msgstr "Verbindungen"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:226
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:510
@@ -790,46 +771,41 @@ msgstr "_Export in Textdatei (.txt) …"
 
 #. Open Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:128
-#, fuzzy
 msgid "_Open category..."
-msgstr "_Neue Kategorie..."
+msgstr ""
 
 #. Save Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:135
-#, fuzzy
 msgid "_Save category as..."
-msgstr "_Neue Kategorie..."
+msgstr ""
 
 #. Save All
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
-#, fuzzy
 msgid "Save _all settings"
-msgstr "Kategorie-Einstellungen"
+msgstr ""
 
 #. Offline mode
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:152
-#, fuzzy
 msgid "Offline Mode"
-msgstr "_Offline-Modus"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:170
 msgid "_Edit"
 msgstr "_Bearbeiten"
 
-#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
+#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new()
+#. );
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:175
 msgid "Clipboard _Monitor"
 msgstr "Zwischenablage _überwachen"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:179
-#, fuzzy
 msgid "Clipboard works quietly"
-msgstr "Zwischenablage _überwachen"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:183
-#, fuzzy
 msgid "Command-line works quietly"
-msgstr "Befehlszeile-Einstellungen"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:187
 msgid "Skip existing URI"
@@ -867,9 +843,8 @@ msgstr ""
 
 #. Completion Auto-Actions - Remember
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
-#, fuzzy
 msgid "Remember setting"
-msgstr "An Aktion erinnern"
+msgstr ""
 
 #. Completion Auto-Actions - Help
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:235
@@ -1021,20 +996,19 @@ msgstr "_Lösche Kategorie"
 msgid "_Download"
 msgstr "_Download"
 
-#. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE, accel_group);
+#. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE,
+#. accel_group);
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:473
-#, fuzzy
 msgid "_Delete Entry"
-msgstr "_Lösche Kategorie"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:480
 msgid "Delete Entry and _File"
 msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:495
-#, fuzzy
 msgid "Open _Containing folder"
-msgstr "Öffne _beinhaltenden Ordner"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:504
 msgid "Force Start"
@@ -1055,9 +1029,8 @@ msgid "_High"
 msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:587
-#, fuzzy
 msgid "_Normal"
-msgstr "Normal"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:592
 msgid "_Low"
@@ -1148,19 +1121,16 @@ msgid "unnamed"
 msgstr "unbenannt"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:610
-#, fuzzy
 msgid "Paused"
-msgstr "P_ause"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:611
-#, fuzzy
 msgid "Uploading"
-msgstr "Upload"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:612
-#, fuzzy
 msgid "Completed"
-msgstr "Fertig"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:614
 msgid "Recycled"
@@ -1175,9 +1145,8 @@ msgid "Active"
 msgstr "Aktiv"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:637
-#, fuzzy
 msgid "All Status"
-msgstr "Status"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:734
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:85
@@ -1208,9 +1177,8 @@ msgstr "Verbleibend"
 #: ../../po/../ui-gtk/UgtkNodeView.c:903
 #: ../../po/../ui-gtk/UgtkSettingForm.c:538
 #: ../../po/../ui-gtk/UgtkSummary.c:151
-#, fuzzy
 msgid "URI"
-msgstr "URL"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:954
 msgid "Quantity"
@@ -1425,9 +1393,8 @@ msgstr "Andere"
 
 #. Monitor button
 #: ../../po/../ui-gtk/UgtkSettingForm.c:57
-#, fuzzy
 msgid "_Enable clipboard monitor"
-msgstr "Zwischenablage _überwachen"
+msgstr ""
 
 #. quiet mode
 #: ../../po/../ui-gtk/UgtkSettingForm.c:62
@@ -1436,9 +1403,8 @@ msgstr "_Ruhemodus"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:68
 #: ../../po/../ui-gtk/UgtkSettingForm.c:446
-#, fuzzy
 msgid "Default category index"
-msgstr "_Lösche Kategorie"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:80
 #: ../../po/../ui-gtk/UgtkSettingForm.c:458
@@ -1446,9 +1412,8 @@ msgid "Adding to Nth category if no matched category."
 msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:87
-#, fuzzy
 msgid "Monitor clipboard for specified file types:"
-msgstr "Zwischenablage nach Dateitypen überprüfen:"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:102
 msgid "Separate the types with character '|'."
@@ -1464,9 +1429,8 @@ msgstr ""
 
 #. Confirmation check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:157
-#, fuzzy
 msgid "Show confirmation dialog on exit"
-msgstr "Bestätigungs-Dialog beim Beenden anzeigen"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:160
 msgid "Confirm when deleting files"
@@ -1515,21 +1479,18 @@ msgstr ""
 
 #. Global speed limit
 #: ../../po/../ui-gtk/UgtkSettingForm.c:270
-#, fuzzy
 msgid "Global speed limit"
-msgstr "Geschwindigkeitsbegrenzungen"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:278
 #: ../../po/../ui-gtk/UgtkSettingForm.c:564
-#, fuzzy
 msgid "Max upload speed"
-msgstr "Max Upload-Geschwindigkeit:"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:290
 #: ../../po/../ui-gtk/UgtkSettingForm.c:576
-#, fuzzy
 msgid "Max download speed"
-msgstr "Max Download-Geschwindigkeit:"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:323
 msgid "Completion Auto-Actions"
@@ -1545,7 +1506,7 @@ msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:388
 msgid "_Autosave"
-msgstr "_Automatisch speichern"
+msgstr ""
 
 #. auto save spin & label (interval)
 #: ../../po/../ui-gtk/UgtkSettingForm.c:394
@@ -1600,9 +1561,8 @@ msgstr "Aria2 beim Beenden _anhalten"
 #. ------------------------------------------------------------------------
 #. Local options
 #: ../../po/../ui-gtk/UgtkSettingForm.c:601
-#, fuzzy
 msgid "Launch aria2 on local device"
-msgstr "Aria2 beim Starten _ausführen"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:610
 msgid "Path"
@@ -1614,9 +1574,8 @@ msgstr "Argumente"
 
 #. Arguments - hint
 #: ../../po/../ui-gtk/UgtkSettingForm.c:626
-#, fuzzy
 msgid "You must restart uGet after modifying it."
-msgstr "Sie müssen uGet neu starten, nachdem Sie »Argumente« geändert haben."
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSummary.c:112
 msgid "File"
@@ -1648,83 +1607,3 @@ msgstr "Fenster anzeigen"
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:112
 msgid "_Offline Mode"
 msgstr "_Offline-Modus"
-
-#, fuzzy
-#~ msgid "Help"
-#~ msgstr "_Hilfe"
-
-#~ msgid "No plug-in support this scheme or file."
-#~ msgstr "Keine PlugIn-Unterstützung für Schema oder Datei."
-
-#~ msgid "Minimize to tray"
-#~ msgstr "Zum Tray minimieren"
-
-#~ msgid "Exit uGet"
-#~ msgstr "uGet beenden"
-
-#~ msgid "failed to launch aria2."
-#~ msgstr "Aria2 konnte nicht gestartet werden."
-
-#~ msgid "Export to"
-#~ msgstr "Exportieren nach"
-
-#~ msgid "Save all"
-#~ msgstr "Alles speichern"
-
-#~ msgid "_Download..."
-#~ msgstr "_Download…"
-
-#~ msgid "_Category..."
-#~ msgstr "_Kategorie..."
-
-#~ msgid "Torrent..."
-#~ msgstr "Torrent …"
-
-#~ msgid "Metalink..."
-#~ msgstr "Metalink …"
-
-#~ msgid "_Clipboard Option..."
-#~ msgstr "Zwischenablage-Optionen..."
-
-#~ msgid "Shutdown when downloads complete"
-#~ msgstr "Herunterfahren wenn Downloads vollständig"
-
-#~ msgid "Delete _File and Data"
-#~ msgstr "Lösche _Eintrag und Datei"
-
-#~ msgid "only one matched"
-#~ msgstr "Nur ein Treffer"
-
-#~ msgid ""
-#~ "Failed to connect to aria2.\n"
-#~ "Is aria2 shutdown? or aria2 launch failed."
-#~ msgstr ""
-#~ "Fehler beim Verbinden zu Aria2.\n"
-#~ "Aria2 wurde beendet oder Start von aria2 fehlgeschlagen."
-
-#~ msgid "_URL:"
-#~ msgstr "_URL"
-
-#~ msgid "Options"
-#~ msgstr "Optionen"
-
-#~ msgid "Connections per server"
-#~ msgstr "Verbindungen je Server"
-
-#~ msgid "UI Settings"
-#~ msgstr "UI-Einstellungen"
-
-#~ msgid "Add URL to Nth category"
-#~ msgstr "URL zur N-ten Kategorie hinzufügen"
-
-#~ msgid "_Launch default application for specified file types:"
-#~ msgstr "Starte Default-Anwendung für Dateitypen:"
-
-#~ msgid "'--category-index' default value"
-#~ msgstr "Standardwert für '--category-index'"
-
-#~ msgid "_Enable aria2 plug-in"
-#~ msgstr "Aria2-PlugIn aktivi_eren."
-
-#~ msgid "Download"
-#~ msgstr "Download"

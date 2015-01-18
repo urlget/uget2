@@ -1,30 +1,26 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# meequz <meequz@gmail.com>, 2011
-# meequz <meequz@gmail.com>, 2011
+# Mihail Varantsou <meequz@gmail.com>, 2011
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2013-12-08 07:48+0000\n"
-"Last-Translator: meequz <meequz@gmail.com>\n"
-"Language-Team: Belarusian (http://www.transifex.com/projects/p/uget/language/"
-"be/)\n"
-"Language: be\n"
+"PO-Revision-Date: 2014-11-30 13:28+0000\n"
+"Last-Translator: Mihail Varantsou <meequz@gmail.com>\n"
+"Language-Team: Belarusian (http://www.transifex.com/projects/p/uget/language/be/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: be\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../../po/../uget/UgetApp.c:95
-#, fuzzy
 msgid "All Category"
-msgstr "Катэгорыі"
+msgstr "Усе катэгорыі"
 
 #. UGET_EVENT_NORMAL_CUSTOM
 #: ../../po/../uget/UgetEvent.c:58
@@ -89,14 +85,13 @@ msgstr "Немагчыма адкрыць файл."
 
 #. UGET_EVENT_ERROR_FILE_OPEN_FAILED
 #: ../../po/../uget/UgetEvent.c:85
-#, fuzzy
 msgid "Unable to create thread."
-msgstr "Занадта шмат адначасовых сцягванняў, зменшыце іх колькасць."
+msgstr "Не выйшла стварыць трэд."
 
 #. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 #: ../../po/../uget/UgetEvent.c:86
 msgid "Incorrect source (different file size)."
-msgstr ""
+msgstr "Памылковая крыніца (адрозны памер файла)."
 
 #. UGET_EVENT_ERROR_INCORRECT_SOURCE,
 #: ../../po/../uget/UgetEvent.c:87
@@ -111,7 +106,7 @@ msgstr "Няма выходнага файла."
 #. UGET_EVENT_ERROR_NO_OUTPUT_FILE
 #: ../../po/../uget/UgetEvent.c:89
 msgid "No output setting."
-msgstr "Няма выходных настаўленняў."
+msgstr "Няма выходных настáўленняў."
 
 #. UGET_EVENT_ERROR_NO_OUTPUT_SETTING
 #: ../../po/../uget/UgetEvent.c:90
@@ -162,7 +157,7 @@ msgstr ""
 #. _("Not Resumable"),
 #: ../../po/../uget/UgetPluginAria2.c:280
 msgid "Out of resource"
-msgstr ""
+msgstr "Няма рэсурсаў"
 
 #. _(),
 #: ../../po/../uget/UgetPluginAria2.c:281
@@ -184,9 +179,8 @@ msgstr ""
 
 #. _("Output file can't be renamed."),
 #: ../../po/../uget/UgetPluginAria2.c:287
-#, fuzzy
 msgid "aria2: could not open existing file."
-msgstr "Не выйшла адкрыць размешчаны файл."
+msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:288
 msgid "aria2: could not create new file or truncate existing file."
@@ -250,7 +244,7 @@ msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:306
 msgid "No response. Is aria2 shutdown?"
-msgstr ""
+msgstr "Няма адказу. Можа, aria2 адключаная?"
 
 #. debug
 #: ../../po/../uget/UgetPluginAria2.c:608
@@ -267,11 +261,11 @@ msgstr "Міхась Варанцоў <meequz@gmail.com>"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:80
 msgid "uGet Founder: "
-msgstr ""
+msgstr "Заснавальнік uGet: "
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:81
 msgid "uGet Project Manager: "
-msgstr ""
+msgstr "Кіраўнік праекту uGet: "
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:255
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:204
@@ -297,12 +291,11 @@ msgstr "Загадны радок"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:758
 msgid "Error Occurred"
-msgstr ""
+msgstr "Узнікла памылка"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:759
-#, fuzzy
 msgid "Error Occurred when downloading."
-msgstr "Гук, калі сцягванне скончана"
+msgstr "Падчас сцягвання ўзнікла памылка."
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:760
 msgid "Download Starting"
@@ -368,7 +361,8 @@ msgstr "Новае пакетнае сцягванне..."
 
 #. New Torrent
 #. separator
-#. gtk_menu_shell_append ((GtkMenuShell*)submenu, gtk_separator_menu_item_new() );
+#. gtk_menu_shell_append ((GtkMenuShell*)submenu,
+#. gtk_separator_menu_item_new() );
 #. New Torrent
 #: ../../po/../ui-gtk/UgtkApp-ui.c:224 ../../po/../ui-gtk/UgtkMenubar-ui.c:73
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:75
@@ -382,9 +376,8 @@ msgid "New Metalink..."
 msgstr "Новая мета-спасылка..."
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:240
-#, fuzzy
 msgid "Save all settings"
-msgstr "Настаўленні катэгорыі"
+msgstr "Захаваць усе настáўленні"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:248
 msgid "Set selected download runnable"
@@ -447,24 +440,20 @@ msgid "Open Metalink file"
 msgstr "Адкрыць файл мета-спасылкі"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1109
-#, fuzzy
 msgid "Failed to save category file."
-msgstr "Не выйшла адкрыць размешчаны файл."
+msgstr "Не выйшла захаваць файл катэгорыі."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1129
-#, fuzzy
 msgid "Failed to load category file."
-msgstr "Не выйшла адкрыць размешчаны файл."
+msgstr "Не выйшла прачытаць файл катэгорыі."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1140
-#, fuzzy
 msgid "Save Category file"
-msgstr "Новая катэгорыя"
+msgstr "Захаваць файл катэгорыі"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1158
-#, fuzzy
 msgid "Open Category file"
-msgstr "Адкрыць Torrent-файл"
+msgstr "Адкрыць файл катэгорыі"
 
 #. add link
 #: ../../po/../ui-gtk/UgtkApp.c:1217
@@ -489,9 +478,8 @@ msgid "Import URLs from text file"
 msgstr "Імпартаваць URL'ы з тэкставага файла"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1344
-#, fuzzy
 msgid "Export URLs to text file"
-msgstr "Імпартаваць URL'ы з тэкставага файла"
+msgstr "Экспартаваць URL'ы у тэкставы файл"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1363
 msgid "URL Sequence batch"
@@ -503,15 +491,15 @@ msgstr "Не знойдзена URL'аў у буферы абмену."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1399
 msgid "All URLs had existed."
-msgstr ""
+msgstr "Усе URL'ы ўжо існавалі."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1404
 msgid "Clipboard batch"
-msgstr "Настаўленні _буферу абмену"
+msgstr "Настáўленні _буферу абмену"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1494
 msgid "New"
-msgstr ""
+msgstr "Новы"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1613 ../../po/../ui-gtk/UgtkMenubar.c:383
 #: ../../po/../ui-gtk/UgtkMenubar.c:415 ../../po/../ui-gtk/UgtkNodeView.c:609
@@ -534,9 +522,7 @@ msgstr "Карыстальнікі uGet, увага:"
 #: ../../po/../ui-gtk/UgtkBanner.c:148
 msgid ""
 "we are running a Donation Drive for uGet's Future Development, please click "
-msgstr ""
-"мы запусцілі Donation Drive для далейшай распрацоўкі uGet. Калі ласка, "
-"пстрыкніце "
+msgstr "мы запусцілі Donation Drive для далейшай распрацоўкі uGet. Калі ласка, пстрыкніце "
 
 #: ../../po/../ui-gtk/UgtkBanner.c:151
 msgid "HERE"
@@ -570,19 +556,19 @@ msgstr "Памятаць выдаленых сцягванняў, не боле�
 #. URI Matching conditions
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:111
 msgid "URI Matching conditions"
-msgstr ""
+msgstr "Умовы распазнання URI"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:118
 msgid "Matched _Hosts:"
-msgstr ""
+msgstr "Распазнаваць _хосты:"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:129
 msgid "Matched _Schemes:"
-msgstr ""
+msgstr "Распазнаваць _схемы:"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:140
 msgid "Matched _Types:"
-msgstr ""
+msgstr "Распазнаваць _тыпы:"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:64
 msgid "Really Quit?"
@@ -590,7 +576,7 @@ msgstr "Сапраўды выйсці?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:65
 msgid "Are you sure you want to quit?"
-msgstr "Вы упэўнены, што хочаце выйсці?"
+msgstr "Вы сапраўды хочаце выйсці?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:69
 msgid "Really delete files?"
@@ -598,28 +584,25 @@ msgstr "Сапраўды выдаліць файлы?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:70
 msgid "Are you sure you want to delete files?"
-msgstr "Вы упэўнены, что хочаце выдаліць файлы?"
+msgstr "Вы сапраўды хочаце выдаліць файлы?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:74
-#, fuzzy
 msgid "Really delete category?"
-msgstr "Сапраўды выдаліць файлы?"
+msgstr "Сапраўды выдаліць катэгорыю?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:75
-#, fuzzy
 msgid "Are you sure you want to delete category?"
-msgstr "Вы упэўнены, что хочаце выдаліць файлы?"
+msgstr "Вы сапраўды хочаце выдаліць катэгорыю?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:106
-#, fuzzy
 msgid "Don't ask me again"
-msgstr "Не пытацца ізноў"
+msgstr "Болей не пытацца"
 
 #. URL - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:109
 #: ../../po/../ui-gtk/UgtkSequencer.c:63
 msgid "_URI:"
-msgstr ""
+msgstr "_URI:"
 
 #. Mirrors - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:128
@@ -649,9 +632,8 @@ msgstr "Крыніца пераходу:"
 
 #. "Max Connections:" - title label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:207
-#, fuzzy
 msgid "_Max Connections:"
-msgstr "далучэнняў"
+msgstr "_Максімум злучэнняў:"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:226
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:510
@@ -764,7 +746,7 @@ msgstr "Новая серыя сцягванняў"
 #. Batch downloads - Clipboard batch
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:92
 msgid "_Clipboard batch..."
-msgstr "_Настаўленні буферу абмену..."
+msgstr "_Настáўленні буферу абмену..."
 
 #. Batch downloads - URL Sequence batch
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:98
@@ -788,86 +770,80 @@ msgstr "_Экспартаваць у тэкставы файл (.txt)..."
 
 #. Open Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:128
-#, fuzzy
 msgid "_Open category..."
-msgstr "_Новая катэгорыя..."
+msgstr "_Адкрыць катэгорыю..."
 
 #. Save Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:135
-#, fuzzy
 msgid "_Save category as..."
-msgstr "_Новая катэгорыя..."
+msgstr "_Захаваць катэгорыю як..."
 
 #. Save All
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
-#, fuzzy
 msgid "Save _all settings"
-msgstr "Настаўленні катэгорыі"
+msgstr "Захаваць _усе настáўленні"
 
 #. Offline mode
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:152
-#, fuzzy
 msgid "Offline Mode"
-msgstr "_Афлайн-рэжым"
+msgstr "Афлайн-рэжым"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:170
 msgid "_Edit"
 msgstr "_Змяніць"
 
-#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
+#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new()
+#. );
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:175
 msgid "Clipboard _Monitor"
 msgstr "Сачыць за _буферам абмену"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:179
-#, fuzzy
 msgid "Clipboard works quietly"
-msgstr "Сачыць за _буферам абмену"
+msgstr "Буфер абмену ў аўтаматычным рэжыме"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:183
-#, fuzzy
 msgid "Command-line works quietly"
-msgstr "Загадны радок"
+msgstr "Загадны радок у аўтаматычным рэжыме"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:187
 msgid "Skip existing URI"
-msgstr ""
+msgstr "Пропуск існага URI"
 
 #. --- Completion Auto-Actions --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:194
 msgid "Completion _Auto-Actions"
-msgstr ""
+msgstr "Дзеянні па сканчэнні"
 
 #. Completion Auto-Actions - Disable
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:200
 msgid "_Disable"
-msgstr ""
+msgstr "_Адключыць"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:205
 msgid "Hibernate"
-msgstr ""
+msgstr "Заснуць"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:210
 msgid "Suspend"
-msgstr ""
+msgstr "Прыпыніць"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:215
 msgid "Shutdown"
-msgstr ""
+msgstr "Адключыць"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:220
 msgid "Reboot"
-msgstr ""
+msgstr "Перастартаваць"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:225
 msgid "Custom"
-msgstr ""
+msgstr "Сваё"
 
 #. Completion Auto-Actions - Remember
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
-#, fuzzy
 msgid "Remember setting"
-msgstr "Запомніць гэтае дзеянне"
+msgstr "Запомніць настáўленне"
 
 #. Completion Auto-Actions - Help
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:235
@@ -881,7 +857,7 @@ msgstr "_Даведка"
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:241
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:91
 msgid "_Settings..."
-msgstr "_Настаўленні..."
+msgstr "_Настáўленні..."
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:256
 msgid "_View"
@@ -948,7 +924,7 @@ msgstr "_Памер"
 #. Download Columns - Percent (%)
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:343
 msgid "_Percent '%'"
-msgstr "_Рух (у адсотках)"
+msgstr "_Рух (у %)"
 
 #. Download Columns - Elapsed
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:348
@@ -1019,20 +995,19 @@ msgstr "_Выдаліць катэгорыю"
 msgid "_Download"
 msgstr "_Сцягванне"
 
-#. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE, accel_group);
+#. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE,
+#. accel_group);
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:473
-#, fuzzy
 msgid "_Delete Entry"
-msgstr "_Выдаліць катэгорыю"
+msgstr "_Выдаліць элемент"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:480
 msgid "Delete Entry and _File"
-msgstr ""
+msgstr "Выдаліць элемент і _файл"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:495
-#, fuzzy
 msgid "Open _Containing folder"
-msgstr "Адкрыць змяшчальны каталог"
+msgstr "Адкрыць _змяшчальны каталог"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:504
 msgid "Force Start"
@@ -1046,20 +1021,19 @@ msgstr "_Перанесці ў катэгорыю"
 #. Priority --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:573
 msgid "Priority"
-msgstr ""
+msgstr "Прыярытэт"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:582
 msgid "_High"
-msgstr ""
+msgstr "_Высокі"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:587
-#, fuzzy
 msgid "_Normal"
-msgstr "Запусціць"
+msgstr "_Нармальны"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:592
 msgid "_Low"
-msgstr ""
+msgstr "_Нізкі"
 
 #. Get Help Online
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:615
@@ -1089,16 +1063,16 @@ msgstr "Паведаміць пра хібу"
 #. Keyboard Shortcuts
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:650
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Клавіятурныя скароты"
 
 #. Check for Updates
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:657
 msgid "Check for Updates"
-msgstr "Праверць на абнаўленні"
+msgstr "Праверыць на абнаўленні"
 
 #: ../../po/../ui-gtk/UgtkMenubar.c:144
 msgid "Settings"
-msgstr "Настаўленні"
+msgstr "Настáўленні"
 
 #: ../../po/../ui-gtk/UgtkMenubar.c:377
 #, c-format
@@ -1114,11 +1088,11 @@ msgstr "'%s' - гэты каталог не існуе."
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:205
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:209
 msgid "URI had existed"
-msgstr ""
+msgstr "URI ужо існаваў"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:207
 msgid "This URI had existed, are you sure to continue?"
-msgstr ""
+msgstr "Гэты URI ужо існаваў. Вы сапраўды жадаеце працягваць?"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:343
 msgid "General"
@@ -1130,15 +1104,15 @@ msgstr "Дадатковыя"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:354
 msgid "Category settings"
-msgstr "Настаўленні катэгорыі"
+msgstr "Настáўленні катэгорыі"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:356
 msgid "Default for new download 1"
-msgstr "Прадвызначэнні катэгорыі"
+msgstr "Стандартныя настáўленні катэгорыі"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:358
 msgid "Default 2"
-msgstr "Дадатковыя прадвызначэнні"
+msgstr "Дадатковыя стандартныя настáўленні"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:121 ../../po/../ui-gtk/UgtkNodeView.c:584
 #: ../../po/../ui-gtk/UgtkSummary.c:115
@@ -1146,19 +1120,16 @@ msgid "unnamed"
 msgstr "безназоўны"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:610
-#, fuzzy
 msgid "Paused"
-msgstr "П_рыпыніць"
+msgstr "Прыпынена"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:611
-#, fuzzy
 msgid "Uploading"
 msgstr "Зацягванне"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:612
-#, fuzzy
 msgid "Completed"
-msgstr "Сцягнута"
+msgstr "Скончана"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:614
 msgid "Recycled"
@@ -1173,9 +1144,8 @@ msgid "Active"
 msgstr "Дзейныя"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:637
-#, fuzzy
 msgid "All Status"
-msgstr "Стан"
+msgstr "Агульны стан"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:734
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:85
@@ -1206,9 +1176,8 @@ msgstr "Засталося"
 #: ../../po/../ui-gtk/UgtkNodeView.c:903
 #: ../../po/../ui-gtk/UgtkSettingForm.c:538
 #: ../../po/../ui-gtk/UgtkSummary.c:151
-#, fuzzy
 msgid "URI"
-msgstr "URL"
+msgstr "URI"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:954
 msgid "Quantity"
@@ -1311,7 +1280,7 @@ msgstr "Нічога"
 
 #: ../../po/../ui-gtk/UgtkSelector.c:276
 msgid "Mark by filter"
-msgstr "Вылучыць згодна з фільтрам"
+msgstr "Вылучыць паводле фільтру"
 
 #: ../../po/../ui-gtk/UgtkSelector.c:294
 msgid "Mark URLs by host AND filename extension."
@@ -1319,7 +1288,7 @@ msgstr "Вылучыць URL'ы паводле хоста І ТАКСАМА ты
 
 #: ../../po/../ui-gtk/UgtkSelector.c:297
 msgid "This will reset all marks of URLs."
-msgstr "Гэта зніме ўсе вылучэнні URL'аў."
+msgstr "Гэта скіне ўсе вылучэнні URL'аў."
 
 #. filter view -----------------------
 #. left side
@@ -1353,7 +1322,7 @@ msgstr "Зняць _усе вылучэнні"
 #. select by filter
 #: ../../po/../ui-gtk/UgtkSelector.c:805
 msgid "_Mark by filter..."
-msgstr "_Вылучыць згодна з фільтрам..."
+msgstr "_Вылучыць паводле фільтру..."
 
 #. e.g.
 #: ../../po/../ui-gtk/UgtkSequencer.c:74
@@ -1403,11 +1372,11 @@ msgstr "Перадпрагляд"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:97
 msgid "User Interface"
-msgstr ""
+msgstr "Інтэрфэйс карыстальніка"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:109
 msgid "Bandwidth"
-msgstr ""
+msgstr "Прапускная здольнасць"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:115
 msgid "Scheduler"
@@ -1423,9 +1392,8 @@ msgstr "Іншае"
 
 #. Monitor button
 #: ../../po/../ui-gtk/UgtkSettingForm.c:57
-#, fuzzy
 msgid "_Enable clipboard monitor"
-msgstr "Сачыць за _буферам абмену"
+msgstr "_Уключыць назіральнік буферу абмену"
 
 #. quiet mode
 #: ../../po/../ui-gtk/UgtkSettingForm.c:62
@@ -1434,37 +1402,34 @@ msgstr "_Аўтаматычны рэжым"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:68
 #: ../../po/../ui-gtk/UgtkSettingForm.c:446
-#, fuzzy
 msgid "Default category index"
-msgstr "_Выдаліць катэгорыю"
+msgstr "Стандартны індэкс катэгорыі"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:80
 #: ../../po/../ui-gtk/UgtkSettingForm.c:458
 msgid "Adding to Nth category if no matched category."
-msgstr ""
+msgstr "Даданне да N-ай катэгорыі, калі катэгорыя не распазнана."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:87
-#, fuzzy
 msgid "Monitor clipboard for specified file types:"
-msgstr "Сачыць за гэтымі тыпамі файлаў у буферы абмену:"
+msgstr "Сачыць за буферам абмену на прадмет дадзеных тыпаў файлаў:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:102
 msgid "Separate the types with character '|'."
-msgstr "Тыпы размяжоўваюцца сімвалам '|'."
+msgstr "Тыпы размяжоўваюцца знакам '|'."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:107
 msgid "You can use regular expressions here."
-msgstr "Можна выкарыстоўваць рэгулярныя выразы."
+msgstr "Дазваляюцца рэгулярныя выразы."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:151
 msgid "Confirmation"
-msgstr ""
+msgstr "Пацверджанне"
 
 #. Confirmation check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:157
-#, fuzzy
 msgid "Show confirmation dialog on exit"
-msgstr "Пацверджанне закрыцця"
+msgstr "Паказваць вакенца пацверджання пры закрыцці"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:160
 msgid "Confirm when deleting files"
@@ -1472,7 +1437,7 @@ msgstr "Пацверджанне выдалення файлаў"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:166
 msgid "System Tray"
-msgstr ""
+msgstr "Сістэмны трэй"
 
 #. System Tray check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:172
@@ -1485,11 +1450,11 @@ msgstr "Згарнуць у трэй на пачатку"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:178
 msgid "Close to tray on window close"
-msgstr ""
+msgstr "Згортвацца ў трэй пры закрыцці вакна"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:182
 msgid "Use Ubuntu's App Indicator"
-msgstr ""
+msgstr "Выкарыстоўваць індыкатар праграм Ubuntu"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:189
 msgid "Enable offline mode on startup"
@@ -1505,41 +1470,38 @@ msgstr "Гук, калі сцягванне скончана"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
 msgid "Apply recently download settings"
-msgstr "Ужываць настаўленні апошняга сцягвання"
+msgstr "Ужываць настáўленні апошняга сцягвання"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264
 msgid "These will affect all plug-ins."
-msgstr ""
+msgstr "Гэта паўплывае на ўсе ўбудовы."
 
 #. Global speed limit
 #: ../../po/../ui-gtk/UgtkSettingForm.c:270
-#, fuzzy
 msgid "Global speed limit"
-msgstr "Абмежаванні хуткасці"
+msgstr "Глабальнае абмежаванне хуткасці"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:278
 #: ../../po/../ui-gtk/UgtkSettingForm.c:564
-#, fuzzy
 msgid "Max upload speed"
-msgstr "Найбольшая хуткасць зацягвання:"
+msgstr "Найбольшая хуткасць зацягвання"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:290
 #: ../../po/../ui-gtk/UgtkSettingForm.c:576
-#, fuzzy
 msgid "Max download speed"
-msgstr "Найбольшая хуткасць сцягвання:"
+msgstr "Найбольшая хуткасць сцягвання"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:323
 msgid "Completion Auto-Actions"
-msgstr ""
+msgstr "Дзеянні па сканчэнні"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:331
 msgid "Custom command:"
-msgstr ""
+msgstr "Свой загад:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:343
 msgid "Custom command if error occured:"
-msgstr ""
+msgstr "Свой загад на выпадак узнікнення памылкі:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:388
 msgid "_Autosave"
@@ -1567,21 +1529,21 @@ msgstr "Выкарыстоўваць '--quiet' стандартна"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:508
 msgid "Plug-in matching order:"
-msgstr ""
+msgstr "Парадак распазнання убудоў:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:531
 msgid "Aria2 plug-in options"
-msgstr ""
+msgstr "Параметры убудовы aria2"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:547
 msgid "RPC authorization secret token"
-msgstr ""
+msgstr "Сакрэтны токен RPC-аўтарызацыі"
 
 #. ------------------------------------------------------------------------
 #. Speed Limits
 #: ../../po/../ui-gtk/UgtkSettingForm.c:556
 msgid "Global speed limit for aria2 only"
-msgstr ""
+msgstr "Глабальнае абмежаванне хуткасці выключна для aria2"
 
 #. ------------------------------------------------------------------------
 #. aria2 works on local device
@@ -1598,9 +1560,8 @@ msgstr "_Спыняць aria2 пры закрыцці"
 #. ------------------------------------------------------------------------
 #. Local options
 #: ../../po/../ui-gtk/UgtkSettingForm.c:601
-#, fuzzy
 msgid "Launch aria2 on local device"
-msgstr "_Запускаць aria2 на пачатку"
+msgstr "Запускаць aria2 на лакальнай прыладзе"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:610
 msgid "Path"
@@ -1612,9 +1573,8 @@ msgstr "Аргументы"
 
 #. Arguments - hint
 #: ../../po/../ui-gtk/UgtkSettingForm.c:626
-#, fuzzy
 msgid "You must restart uGet after modifying it."
-msgstr "Вы мусіце перазапусціць uGet пасля змянення аргументаў."
+msgstr "Трэба перазапусціць uGet пасля змянення."
 
 #: ../../po/../ui-gtk/UgtkSummary.c:112
 msgid "File"
@@ -1640,89 +1600,9 @@ msgstr "Капіяваць _усё"
 #. Show window
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:106
 msgid "Show window"
-msgstr "Паказаць акно"
+msgstr "Паказаць вакно"
 
 #. Offline mode
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:112
 msgid "_Offline Mode"
 msgstr "_Афлайн-рэжым"
-
-#, fuzzy
-#~ msgid "Help"
-#~ msgstr "_Даведка"
-
-#~ msgid "No plug-in support this scheme or file."
-#~ msgstr "Няма ўбудоваў для падтрымкі гэтай схемы ці файла."
-
-#~ msgid "Minimize to tray"
-#~ msgstr "Згарнуць у трэй"
-
-#~ msgid "Exit uGet"
-#~ msgstr "Выйсці з uGet"
-
-#~ msgid "failed to launch aria2."
-#~ msgstr "не выйшла запусціць aria2."
-
-#~ msgid "Export to"
-#~ msgstr "Экспартаваць у"
-
-#~ msgid "Save all"
-#~ msgstr "Захаваць усё"
-
-#~ msgid "_Download..."
-#~ msgstr "_Сцягванне..."
-
-#~ msgid "_Category..."
-#~ msgstr "_Катэгорыя..."
-
-#~ msgid "Torrent..."
-#~ msgstr "Торэнт..."
-
-#~ msgid "Metalink..."
-#~ msgstr "Мета-спасылка..."
-
-#~ msgid "_Clipboard Option..."
-#~ msgstr "_Настаўленні буферу абмену..."
-
-#~ msgid "Shutdown when downloads complete"
-#~ msgstr "Аўтаадключэнне пасля сканчэння сцягванняў"
-
-#~ msgid "Delete _File and Data"
-#~ msgstr "Выдаліць _файлы і даныя"
-
-#~ msgid "only one matched"
-#~ msgstr "толькі пры супадзенні"
-
-#~ msgid ""
-#~ "Failed to connect to aria2.\n"
-#~ "Is aria2 shutdown? or aria2 launch failed."
-#~ msgstr ""
-#~ "Не выйшла падлучыцца да aria2.\n"
-#~ "aria2 не выконваецца? Або не выйшла запусціць aria2."
-
-#~ msgid "_URL:"
-#~ msgstr "_URL:"
-
-#~ msgid "Options"
-#~ msgstr "Параметры"
-
-#~ msgid "Connections per server"
-#~ msgstr "Далучэнняў да сервера"
-
-#~ msgid "UI Settings"
-#~ msgstr "Інтэрфэйс"
-
-#~ msgid "Add URL to Nth category"
-#~ msgstr "Дадаць URL да катэгорыі нумар"
-
-#~ msgid "_Launch default application for specified file types:"
-#~ msgstr "_Запускаць стандартныя праграмы для гэтых тыпаў файлаў:"
-
-#~ msgid "'--category-index' default value"
-#~ msgstr "Стандартнае значэнне для '--category-index'"
-
-#~ msgid "_Enable aria2 plug-in"
-#~ msgstr "_Задзейнічаць aria2-убудову"
-
-#~ msgid "Download"
-#~ msgstr "Сцягванне"

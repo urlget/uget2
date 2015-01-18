@@ -1,9 +1,10 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# ToMáš_Marný, 2013
+# Alois Nešpor <info@aloisnespor.info>, 2014
+# ToMáš Marný, 2013
 # ToMáš_Marný, 2013
 # wastingdouglas <adminkonsoleshop@volny.cz>, 2011
 msgid ""
@@ -11,20 +12,18 @@ msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2013-12-19 18:12+0000\n"
-"Last-Translator: ToMáš_Marný\n"
-"Language-Team: Czech (http://www.transifex.com/projects/p/uget/language/"
-"cs/)\n"
-"Language: cs\n"
+"PO-Revision-Date: 2014-11-27 08:40+0000\n"
+"Last-Translator: Alois Nešpor <info@aloisnespor.info>\n"
+"Language-Team: Czech (http://www.transifex.com/projects/p/uget/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: ../../po/../uget/UgetApp.c:95
-#, fuzzy
 msgid "All Category"
-msgstr "Kategorie"
+msgstr "Všechny kategorie"
 
 #. UGET_EVENT_NORMAL_CUSTOM
 #: ../../po/../uget/UgetEvent.c:58
@@ -39,7 +38,7 @@ msgstr "Přenášení..."
 #. UGET_EVENT_NORMAL_TRANSMIT,
 #: ../../po/../uget/UgetEvent.c:60 ../../po/../ui-gtk/UgtkNodeView.c:874
 msgid "Retry"
-msgstr "Opakování"
+msgstr "Opakovat"
 
 #. UGET_EVENT_NORMAL_RETRY,
 #: ../../po/../uget/UgetEvent.c:61
@@ -80,8 +79,7 @@ msgstr "Složka nemohla být vytvořena"
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../../po/../uget/UgetEvent.c:83
 msgid "File can't be created (bad filename or file exist)."
-msgstr ""
-"Soubor nemohl být vytvořen (špatné jméno souboru nebo soubor již existuje)."
+msgstr "Soubor nemohl být vytvořen (špatné jméno souboru nebo soubor již existuje)."
 
 #. UGET_EVENT_ERROR_FILE_CREATE_FAILED
 #: ../../po/../uget/UgetEvent.c:84
@@ -90,14 +88,13 @@ msgstr "Soubor nemohl být otevřen."
 
 #. UGET_EVENT_ERROR_FILE_OPEN_FAILED
 #: ../../po/../uget/UgetEvent.c:85
-#, fuzzy
 msgid "Unable to create thread."
-msgstr "Nepodařilo se vytvořit vlákno, snižte počet stažení."
+msgstr "Nepodařilo se vytvořit vlákno."
 
 #. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 #: ../../po/../uget/UgetEvent.c:86
 msgid "Incorrect source (different file size)."
-msgstr ""
+msgstr "Chybný zdroj (velikost souboru je jiná)."
 
 #. UGET_EVENT_ERROR_INCORRECT_SOURCE,
 #: ../../po/../uget/UgetEvent.c:87
@@ -132,88 +129,87 @@ msgstr "Nepodporovaný soubor."
 #. 1 - 10
 #: ../../po/../uget/UgetPluginAria2.c:272
 msgid "aria2: an unknown error occurred."
-msgstr ""
+msgstr "aria2: vyskytla se neznámá chyba."
 
 #: ../../po/../uget/UgetPluginAria2.c:273
 msgid "aria2: time out occurred."
-msgstr ""
+msgstr "aria2: vypršel časový limit"
 
 #: ../../po/../uget/UgetPluginAria2.c:274
 msgid "aria2: resource was not found."
-msgstr ""
+msgstr "aria2: zdroj nebyl nalezen."
 
 #: ../../po/../uget/UgetPluginAria2.c:275
 msgid ""
 "aria2 saw the specfied number of 'resource not found' error. See --max-file-"
 "not-found option"
-msgstr ""
+msgstr "aria2 chyba v zadaném počtu 'zdroj nebyl nalezen'. Podívejte se na volbu --max-file-not-found"
 
 #: ../../po/../uget/UgetPluginAria2.c:276
 msgid "aria2: speed was too slow."
-msgstr ""
+msgstr "aria2: rychlost byla příliš pomalá."
 
 #: ../../po/../uget/UgetPluginAria2.c:277
 msgid "aria2: network problem occurred."
-msgstr ""
+msgstr "aria2: nastal problém se sítí"
 
 #: ../../po/../uget/UgetPluginAria2.c:278
 msgid "aria2: unfinished downloads."
-msgstr ""
+msgstr "aria2: nedokončené stahování."
 
 #. _("Not Resumable"),
 #: ../../po/../uget/UgetPluginAria2.c:280
 msgid "Out of resource"
-msgstr ""
+msgstr " Nedostatek zdrojů či prostředků"
 
 #. _(),
 #: ../../po/../uget/UgetPluginAria2.c:281
 msgid "aria2: piece length was different from one in .aria2 control file."
-msgstr ""
+msgstr "aria2: velikost jednoho dílu je rozdílná než v kontrolním souboru."
 
 #. 11 - 20
 #: ../../po/../uget/UgetPluginAria2.c:283
 msgid "aria2 was downloading same file."
-msgstr ""
+msgstr "aria2 stáhla stejný soubor."
 
 #: ../../po/../uget/UgetPluginAria2.c:284
 msgid "aria2 was downloading same info hash torrent."
-msgstr ""
+msgstr "aria2 stáhla stejný info hash torrent."
 
 #: ../../po/../uget/UgetPluginAria2.c:285
 msgid "aria2: file already existed. See --allow-overwrite option."
-msgstr ""
+msgstr "aria2: soubor již existuje. Podívjte se na volbu --allow-overwrite."
 
 #. _("Output file can't be renamed."),
 #: ../../po/../uget/UgetPluginAria2.c:287
-#, fuzzy
 msgid "aria2: could not open existing file."
-msgstr "Nepodařilo se otevřít soubor."
+msgstr "aria2: nelze otevřít existující soubor."
 
 #: ../../po/../uget/UgetPluginAria2.c:288
 msgid "aria2: could not create new file or truncate existing file."
-msgstr ""
+msgstr "aria2: nelze vytvořit nový soubor."
 
 #: ../../po/../uget/UgetPluginAria2.c:289
 msgid "aria2: file I/O error occurred."
-msgstr ""
+msgstr "aria2: nastala chyba I/O souboru."
 
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../../po/../uget/UgetPluginAria2.c:291
 msgid "aria2: name resolution failed."
-msgstr ""
+msgstr "aria2: rozlišení jména selhalo."
 
 #: ../../po/../uget/UgetPluginAria2.c:292
 msgid "aria2: could not parse Metalink document."
-msgstr ""
+msgstr "aria2: nelze parsovat Metalink dokument."
 
 #. 21 - 30
 #: ../../po/../uget/UgetPluginAria2.c:294
 msgid "aria2: FTP command failed."
-msgstr ""
+msgstr "aria2: FTP příkaz selhal."
 
 #: ../../po/../uget/UgetPluginAria2.c:295
 msgid "aria2: HTTP response header was bad or unexpected."
-msgstr ""
+msgstr "aria2: HTTP hlavička je chybná nebo neočekávaná."
 
 #: ../../po/../uget/UgetPluginAria2.c:296
 msgid "Too many redirections."
@@ -221,42 +217,42 @@ msgstr "Příliš mnoho přesměrování."
 
 #: ../../po/../uget/UgetPluginAria2.c:297
 msgid "aria2: HTTP authorization failed."
-msgstr ""
+msgstr "aria2: selhala HTTP autorizace."
 
 #: ../../po/../uget/UgetPluginAria2.c:298
 msgid "aria2: could not parse bencoded file(usually .torrent file)."
-msgstr ""
+msgstr "aria2: nelze parsovat soubor (obvykle .torrent soubor)"
 
 #: ../../po/../uget/UgetPluginAria2.c:299
 msgid "aria2: torrent file was corrupted or missing information."
-msgstr ""
+msgstr "aria2: soubor torrentu je poškozený nebo v něm chybí potřebné  informace."
 
 #: ../../po/../uget/UgetPluginAria2.c:300
 msgid "aria2: Magnet URI was bad."
-msgstr ""
+msgstr "aria2: Magnet URI je chybný."
 
 #: ../../po/../uget/UgetPluginAria2.c:301
 msgid ""
 "aria2: bad/unrecognized option was given or unexpected option argument was "
 "given."
-msgstr ""
+msgstr "aria2: byl zadán špatná nebo nerozpoznatelná volba, případně špatný argument volby"
 
 #: ../../po/../uget/UgetPluginAria2.c:302
 msgid "aria2: remote server was unable to handle the request."
-msgstr ""
+msgstr "aria2: vzdálený server neodpovídá na žádost."
 
 #: ../../po/../uget/UgetPluginAria2.c:303
 msgid "aria2: could not parse JSON-RPC request."
-msgstr ""
+msgstr "aria2: nelze parsovat JSON-RPC."
 
 #: ../../po/../uget/UgetPluginAria2.c:306
 msgid "No response. Is aria2 shutdown?"
-msgstr ""
+msgstr "Žádná odezva. Je aria2 vypnuta?"
 
 #. debug
 #: ../../po/../uget/UgetPluginAria2.c:608
 msgid "aria2: gid was removed."
-msgstr ""
+msgstr "aria2: gid byl odstrraněn."
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:46
 msgid "Download Manager"
@@ -264,15 +260,15 @@ msgstr "Správce stahování"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:48
 msgid "translator-credits"
-msgstr "WastingDouglas, Tomáš Marný"
+msgstr "Tomáš Marný, Alois Nešpor"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:80
 msgid "uGet Founder: "
-msgstr ""
+msgstr "Zakladatel uGet:"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:81
 msgid "uGet Project Manager: "
-msgstr ""
+msgstr "Projektový manažer uGet:"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:255
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:204
@@ -298,12 +294,11 @@ msgstr "Příkazová řádka"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:758
 msgid "Error Occurred"
-msgstr ""
+msgstr "Vyskytla se chyba"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:759
-#, fuzzy
 msgid "Error Occurred when downloading."
-msgstr "Zvuk po dokončení stahování"
+msgstr "Vyskytla se chyba během stahování."
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:760
 msgid "Download Starting"
@@ -369,7 +364,8 @@ msgstr "Nová hromadná _URL sekvence..."
 
 #. New Torrent
 #. separator
-#. gtk_menu_shell_append ((GtkMenuShell*)submenu, gtk_separator_menu_item_new() );
+#. gtk_menu_shell_append ((GtkMenuShell*)submenu,
+#. gtk_separator_menu_item_new() );
 #. New Torrent
 #: ../../po/../ui-gtk/UgtkApp-ui.c:224 ../../po/../ui-gtk/UgtkMenubar-ui.c:73
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:75
@@ -383,9 +379,8 @@ msgid "New Metalink..."
 msgstr "Nový metalink..."
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:240
-#, fuzzy
 msgid "Save all settings"
-msgstr "Nastavení kategorie"
+msgstr "Uložit veškeré nastavení"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:248
 msgid "Set selected download runnable"
@@ -448,24 +443,20 @@ msgid "Open Metalink file"
 msgstr "Otevřít soubor metalinku"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1109
-#, fuzzy
 msgid "Failed to save category file."
-msgstr "Nepodařilo se otevřít soubor."
+msgstr "Nepodařilo se uložit soubor kategorií."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1129
-#, fuzzy
 msgid "Failed to load category file."
-msgstr "Nepodařilo se otevřít soubor."
+msgstr "Nepodařilo se otevřít soubor kategorií."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1140
-#, fuzzy
 msgid "Save Category file"
-msgstr "Nová kategorie"
+msgstr "Uložit soubor kategorií"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1158
-#, fuzzy
 msgid "Open Category file"
-msgstr "Otevřít torrent soubor"
+msgstr "Otevřít soubor kategorií"
 
 #. add link
 #: ../../po/../ui-gtk/UgtkApp.c:1217
@@ -490,9 +481,8 @@ msgid "Import URLs from text file"
 msgstr "Importovat URL z textového souboru"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1344
-#, fuzzy
 msgid "Export URLs to text file"
-msgstr "Importovat URL z textového souboru"
+msgstr "Exportovat URL do textového souboru"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1363
 msgid "URL Sequence batch"
@@ -504,7 +494,7 @@ msgstr "Ve schránce nebyla nalezena žádná URL adresa."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1399
 msgid "All URLs had existed."
-msgstr ""
+msgstr "Všechny URL existují."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1404
 msgid "Clipboard batch"
@@ -512,7 +502,7 @@ msgstr "Schránka hromadně"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1494
 msgid "New"
-msgstr ""
+msgstr "Nový"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1613 ../../po/../ui-gtk/UgtkMenubar.c:383
 #: ../../po/../ui-gtk/UgtkMenubar.c:415 ../../po/../ui-gtk/UgtkNodeView.c:609
@@ -569,19 +559,19 @@ msgstr "Kapacita koše:"
 #. URI Matching conditions
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:111
 msgid "URI Matching conditions"
-msgstr ""
+msgstr "Odpovídající podmínky URI"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:118
 msgid "Matched _Hosts:"
-msgstr ""
+msgstr "Odpovídající _hosté:"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:129
 msgid "Matched _Schemes:"
-msgstr ""
+msgstr "Odpovídající _schémata:"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:140
 msgid "Matched _Types:"
-msgstr ""
+msgstr "Odpovídající _typy:"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:64
 msgid "Really Quit?"
@@ -600,25 +590,22 @@ msgid "Are you sure you want to delete files?"
 msgstr "Jste si jisti, že chcete smazat soubory?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:74
-#, fuzzy
 msgid "Really delete category?"
-msgstr "Opravdu smazat soubory?"
+msgstr "Skutečně smazat kategorii?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:75
-#, fuzzy
 msgid "Are you sure you want to delete category?"
-msgstr "Jste si jisti, že chcete smazat soubory?"
+msgstr "Jste si jist, že chcete smazat kategorii?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:106
-#, fuzzy
 msgid "Don't ask me again"
-msgstr "Znovu se neptat"
+msgstr "Neptat se znovu"
 
 #. URL - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:109
 #: ../../po/../ui-gtk/UgtkSequencer.c:63
 msgid "_URI:"
-msgstr ""
+msgstr "_URI:"
 
 #. Mirrors - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:128
@@ -648,9 +635,8 @@ msgstr "Referrer:"
 
 #. "Max Connections:" - title label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:207
-#, fuzzy
 msgid "_Max Connections:"
-msgstr "připojení"
+msgstr "_Maximálních připojení:"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:226
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:510
@@ -787,86 +773,80 @@ msgstr "_Exportovat _textový soubor (.txt)..."
 
 #. Open Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:128
-#, fuzzy
 msgid "_Open category..."
-msgstr "_Nová kategorie..."
+msgstr "_Otevřít kategorii..."
 
 #. Save Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:135
-#, fuzzy
 msgid "_Save category as..."
-msgstr "_Nová kategorie..."
+msgstr "_Uložit kategorii jako..."
 
 #. Save All
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
-#, fuzzy
 msgid "Save _all settings"
-msgstr "Nastavení kategorie"
+msgstr "Uložit _veškeré nastavení"
 
 #. Offline mode
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:152
-#, fuzzy
 msgid "Offline Mode"
-msgstr "_Offline režim"
+msgstr "Offline režim"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:170
 msgid "_Edit"
 msgstr "_Upravit"
 
-#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
+#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new()
+#. );
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:175
 msgid "Clipboard _Monitor"
 msgstr "_Monitor schránky"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:179
-#, fuzzy
 msgid "Clipboard works quietly"
-msgstr "_Monitor schránky"
+msgstr "Schránka pracuje tiše"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:183
-#, fuzzy
 msgid "Command-line works quietly"
-msgstr "Nastavení příkazové řádky"
+msgstr "Příkazový řádek pracuje tiše"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:187
 msgid "Skip existing URI"
-msgstr ""
+msgstr "Přeskočit existující URI"
 
 #. --- Completion Auto-Actions --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:194
 msgid "Completion _Auto-Actions"
-msgstr ""
+msgstr "Dokončení _automatických akcí"
 
 #. Completion Auto-Actions - Disable
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:200
 msgid "_Disable"
-msgstr ""
+msgstr "_Zakázat"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:205
 msgid "Hibernate"
-msgstr ""
+msgstr "Hibernovat"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:210
 msgid "Suspend"
-msgstr ""
+msgstr "Uspat"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:215
 msgid "Shutdown"
-msgstr ""
+msgstr "Vypnout"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:220
 msgid "Reboot"
-msgstr ""
+msgstr "Restartovat"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:225
 msgid "Custom"
-msgstr ""
+msgstr "Vlastní"
 
 #. Completion Auto-Actions - Remember
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
-#, fuzzy
 msgid "Remember setting"
-msgstr "Pamatovat si tuto akci."
+msgstr "Zapamatovat nastavení"
 
 #. Completion Auto-Actions - Help
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:235
@@ -1018,18 +998,17 @@ msgstr "_Smazat kategorii"
 msgid "_Download"
 msgstr "_Stahování"
 
-#. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE, accel_group);
+#. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE,
+#. accel_group);
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:473
-#, fuzzy
 msgid "_Delete Entry"
-msgstr "_Smazat kategorii"
+msgstr "_Smazat položku"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:480
 msgid "Delete Entry and _File"
-msgstr ""
+msgstr "Smazat položku a _soubor"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:495
-#, fuzzy
 msgid "Open _Containing folder"
 msgstr "Otevřít _cílovou složku"
 
@@ -1045,20 +1024,19 @@ msgstr "_Přesunout do"
 #. Priority --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:573
 msgid "Priority"
-msgstr ""
+msgstr "Priorita"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:582
 msgid "_High"
-msgstr ""
+msgstr "_Vysoká"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:587
-#, fuzzy
 msgid "_Normal"
-msgstr "Normální"
+msgstr "_Normální"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:592
 msgid "_Low"
-msgstr ""
+msgstr "_Nízká"
 
 #. Get Help Online
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:615
@@ -1088,7 +1066,7 @@ msgstr "Nahlásit chybu"
 #. Keyboard Shortcuts
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:650
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Klávesové zkratky"
 
 #. Check for Updates
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:657
@@ -1113,11 +1091,11 @@ msgstr "'%s' - Tato složka neexistuje."
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:205
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:209
 msgid "URI had existed"
-msgstr ""
+msgstr "URI existuje"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:207
 msgid "This URI had existed, are you sure to continue?"
-msgstr ""
+msgstr "Toto URI existuje, chcete opravdu pokračovat?"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:343
 msgid "General"
@@ -1145,17 +1123,14 @@ msgid "unnamed"
 msgstr "bezejmenný"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:610
-#, fuzzy
 msgid "Paused"
-msgstr "Pozast_aveno"
+msgstr "Pozastaveno"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:611
-#, fuzzy
 msgid "Uploading"
 msgstr "Odesílání"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:612
-#, fuzzy
 msgid "Completed"
 msgstr "Kompletní"
 
@@ -1172,9 +1147,8 @@ msgid "Active"
 msgstr "Aktivní"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:637
-#, fuzzy
 msgid "All Status"
-msgstr "Stav"
+msgstr "Všechny stavy"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:734
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:85
@@ -1205,9 +1179,8 @@ msgstr "Zbývá"
 #: ../../po/../ui-gtk/UgtkNodeView.c:903
 #: ../../po/../ui-gtk/UgtkSettingForm.c:538
 #: ../../po/../ui-gtk/UgtkSummary.c:151
-#, fuzzy
 msgid "URI"
-msgstr "URL"
+msgstr "URI"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:954
 msgid "Quantity"
@@ -1242,7 +1215,7 @@ msgstr "Socket:"
 
 #: ../../po/../ui-gtk/UgtkProxyForm.c:361
 msgid "Socket args:"
-msgstr ""
+msgstr "Argumenty socketu:"
 
 #: ../../po/../ui-gtk/UgtkProxyForm.c:371
 msgid "Element:"
@@ -1352,7 +1325,7 @@ msgstr "Neoznačit _nic"
 #. select by filter
 #: ../../po/../ui-gtk/UgtkSelector.c:805
 msgid "_Mark by filter..."
-msgstr "_označit podle filtru..."
+msgstr "_Označit podle filtru..."
 
 #. e.g.
 #: ../../po/../ui-gtk/UgtkSequencer.c:74
@@ -1402,11 +1375,11 @@ msgstr "Náhled"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:97
 msgid "User Interface"
-msgstr ""
+msgstr "Uživatelské rozhraní"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:109
 msgid "Bandwidth"
-msgstr ""
+msgstr "Šířka pásma"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:115
 msgid "Scheduler"
@@ -1422,9 +1395,8 @@ msgstr "Ostatní"
 
 #. Monitor button
 #: ../../po/../ui-gtk/UgtkSettingForm.c:57
-#, fuzzy
 msgid "_Enable clipboard monitor"
-msgstr "_Monitor schránky"
+msgstr "_Zapnout monitor schránky"
 
 #. quiet mode
 #: ../../po/../ui-gtk/UgtkSettingForm.c:62
@@ -1433,19 +1405,17 @@ msgstr "_Tichý režim"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:68
 #: ../../po/../ui-gtk/UgtkSettingForm.c:446
-#, fuzzy
 msgid "Default category index"
-msgstr "_Smazat kategorii"
+msgstr "Výchozí index kategorií"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:80
 #: ../../po/../ui-gtk/UgtkSettingForm.c:458
 msgid "Adding to Nth category if no matched category."
-msgstr ""
+msgstr "Přidat do Nth kategorie, pokud není žádná odpovídající kategorie."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:87
-#, fuzzy
 msgid "Monitor clipboard for specified file types:"
-msgstr "_Monitorovat schránku pro stanovené typy souboru:"
+msgstr "Monitorovat schránku pro stanovené typy souboru:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:102
 msgid "Separate the types with character '|'."
@@ -1457,13 +1427,12 @@ msgstr "Můžete použít regulární výrazy."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:151
 msgid "Confirmation"
-msgstr ""
+msgstr "Potvrzení"
 
 #. Confirmation check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:157
-#, fuzzy
 msgid "Show confirmation dialog on exit"
-msgstr "Při ukončení zobrazit potvrzovací dialog"
+msgstr "Zobrazit potvrzovací dialog při ukončení"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:160
 msgid "Confirm when deleting files"
@@ -1471,7 +1440,7 @@ msgstr "Potvrdit při mazání souborů"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:166
 msgid "System Tray"
-msgstr ""
+msgstr "Systémová lišta"
 
 #. System Tray check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:172
@@ -1484,11 +1453,11 @@ msgstr "Při startu minimalizovat do oznamovací oblasti"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:178
 msgid "Close to tray on window close"
-msgstr ""
+msgstr "Při zavření okna minimalizovat do lišty."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:182
 msgid "Use Ubuntu's App Indicator"
-msgstr ""
+msgstr "Použít Ubuntu App indikátor"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:189
 msgid "Enable offline mode on startup"
@@ -1508,41 +1477,38 @@ msgstr "Použít nastavení posledního stahování"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264
 msgid "These will affect all plug-ins."
-msgstr ""
+msgstr "To bude mít vliv na všechny plug-iny."
 
 #. Global speed limit
 #: ../../po/../ui-gtk/UgtkSettingForm.c:270
-#, fuzzy
 msgid "Global speed limit"
-msgstr "Omezení rychlosti"
+msgstr "Globální limit rychlosti"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:278
 #: ../../po/../ui-gtk/UgtkSettingForm.c:564
-#, fuzzy
 msgid "Max upload speed"
-msgstr "Max. rychlost odesílání:"
+msgstr "Max. rychlost odesílání"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:290
 #: ../../po/../ui-gtk/UgtkSettingForm.c:576
-#, fuzzy
 msgid "Max download speed"
-msgstr "Max. rychlost stahování:"
+msgstr "Max. rychlost stahování"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:323
 msgid "Completion Auto-Actions"
-msgstr ""
+msgstr "Dokončení automatických akcí"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:331
 msgid "Custom command:"
-msgstr ""
+msgstr "Vlastní příkaz:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:343
 msgid "Custom command if error occured:"
-msgstr ""
+msgstr "Vlastní příkaz, když se vyskytne chyba:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:388
 msgid "_Autosave"
-msgstr "_Automatické ukládání"
+msgstr "_Automatické uložení"
 
 #. auto save spin & label (interval)
 #: ../../po/../ui-gtk/UgtkSettingForm.c:394
@@ -1566,21 +1532,21 @@ msgstr "Ve výchozím nastavení použít '--quiet'"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:508
 msgid "Plug-in matching order:"
-msgstr ""
+msgstr "Plug-in odpovídající zadání:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:531
 msgid "Aria2 plug-in options"
-msgstr ""
+msgstr "Volby pluginu Aria2"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:547
 msgid "RPC authorization secret token"
-msgstr ""
+msgstr "RPC autorizační tajný token"
 
 #. ------------------------------------------------------------------------
 #. Speed Limits
 #: ../../po/../ui-gtk/UgtkSettingForm.c:556
 msgid "Global speed limit for aria2 only"
-msgstr ""
+msgstr "Globální limit rychlosti pouze pro Aria2"
 
 #. ------------------------------------------------------------------------
 #. aria2 works on local device
@@ -1597,9 +1563,8 @@ msgstr "_Vypnout aria2 po ukončení"
 #. ------------------------------------------------------------------------
 #. Local options
 #: ../../po/../ui-gtk/UgtkSettingForm.c:601
-#, fuzzy
 msgid "Launch aria2 on local device"
-msgstr "_Spustit aria2 při startu"
+msgstr "Spustit aria2 na lokálním zařízení"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:610
 msgid "Path"
@@ -1611,9 +1576,8 @@ msgstr "Argumenty"
 
 #. Arguments - hint
 #: ../../po/../ui-gtk/UgtkSettingForm.c:626
-#, fuzzy
 msgid "You must restart uGet after modifying it."
-msgstr "Musíte uGet restartovat po úpravě 'Argumenty'."
+msgstr "Po úpravě musíte uGet restartovat."
 
 #: ../../po/../ui-gtk/UgtkSummary.c:112
 msgid "File"
@@ -1645,83 +1609,3 @@ msgstr "Zobrazit okno"
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:112
 msgid "_Offline Mode"
 msgstr "_Offline režim"
-
-#, fuzzy
-#~ msgid "Help"
-#~ msgstr "_Nápověda"
-
-#~ msgid "No plug-in support this scheme or file."
-#~ msgstr "Chybí zásuvný modul podporující toto schéma nebo soubor."
-
-#~ msgid "Minimize to tray"
-#~ msgstr "Minimalizovat do oznamovací oblasti"
-
-#~ msgid "Exit uGet"
-#~ msgstr "Ukončit uGet"
-
-#~ msgid "failed to launch aria2."
-#~ msgstr "chyba při spouštění aria2."
-
-#~ msgid "Export to"
-#~ msgstr "Exportovat do"
-
-#~ msgid "Save all"
-#~ msgstr "Uložit vše"
-
-#~ msgid "_Download..."
-#~ msgstr "_Stahování..."
-
-#~ msgid "_Category..."
-#~ msgstr "_Kategorie..."
-
-#~ msgid "Torrent..."
-#~ msgstr "Torrent..."
-
-#~ msgid "Metalink..."
-#~ msgstr "Metalink..."
-
-#~ msgid "_Clipboard Option..."
-#~ msgstr "Mož_nosti schránky..."
-
-#~ msgid "Shutdown when downloads complete"
-#~ msgstr "Vypnout po dokončení stahování"
-
-#~ msgid "Delete _File and Data"
-#~ msgstr "Smazat soubor a _data"
-
-#~ msgid "only one matched"
-#~ msgstr "pouze jeden"
-
-#~ msgid ""
-#~ "Failed to connect to aria2.\n"
-#~ "Is aria2 shutdown? or aria2 launch failed."
-#~ msgstr ""
-#~ "Nepodařilo se připojit k aria2.\n"
-#~ "Je aria2 vypnut? Nebo se nezdařilo aria2 spustit."
-
-#~ msgid "_URL:"
-#~ msgstr "_URL:"
-
-#~ msgid "Options"
-#~ msgstr "Možnosti"
-
-#~ msgid "Connections per server"
-#~ msgstr "Připojení na server"
-
-#~ msgid "UI Settings"
-#~ msgstr "Nastavení UI"
-
-#~ msgid "Add URL to Nth category"
-#~ msgstr "Přidat URL do n-té kategorie"
-
-#~ msgid "_Launch default application for specified file types:"
-#~ msgstr "_Spustit výchozí aplikaci pro stanovené typy souboru:"
-
-#~ msgid "'--category-index' default value"
-#~ msgstr "Výchozí hodnota '--category-index'"
-
-#~ msgid "_Enable aria2 plug-in"
-#~ msgstr "_Aktivovat zásuvný modul aria2"
-
-#~ msgid "Download"
-#~ msgstr "Stahování"
