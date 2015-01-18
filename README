@@ -1,3 +1,14 @@
+uGet 1.99.5:
+1. curl plug-in: report more error (e.g. Failed to create file) after connecting.
+2. curl plug-in: avoid crash if filename repeated counts > 999
+3. aria2 plug-in: clear uploading flag if aria2 status changed.
+4. IPC: program can handle '\n' character from command-line. (for FlashGot)
+5. adjust main windows default size.
+6. restore main window position and size when window presented by command-line (IPC).
+7. Enable Individual Download Speed Limiting.
+8. Adjust widget layout and color for GTK+ 3.14
+9. Add and update translation files.
+
 uGet 1.99.4:
 1.  curl plug-in: retry all URI (include mirrors) every time.
 2.  curl plug-in: response error if file size is different.
