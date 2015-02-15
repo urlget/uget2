@@ -427,6 +427,7 @@ int  ug_jsonrpc_receive (UgJsonrpc* jrpc,
 {
 	int    n;
 	int    type;
+	UgJsonrpcObject*  jres;
 
 	type = -1;
 	jrpc->error = 0;
@@ -446,12 +447,36 @@ int  ug_jsonrpc_receive (UgJsonrpc* jrpc,
 		jrpc->error = n;
 	// parser --- end ---
 
-	if (jrpc->error < 0) {
-		// TODO: response ...
+	if (jrpc->error == UG_JSON_ERROR_UNCOMPLETED) {
+		// {"jsonrpc": "2.0", "error": {"code": -32700, "message": "Parse error"}, "id": null}
+		jres = ug_jsonrpc_object_new ();
+		// "id": null
+		jres->id.type = UG_VALUE_STRING;
+		jres->id.c.string = NULL;
+		// "error": {"code": -32700, "message": "Parse error"}
+		jres->error.code = -32700;
+		jres->error.message = "Parse error";
+		// send response to client
+		ug_jsonrpc_response (jrpc, jres);
+		// clear response
+		jres->error.message = NULL;
+		ug_jsonrpc_object_free (jres);
 		return -1;
 	}
 	if (type < UG_JSON_OBJECT) {
-		// TODO: response ...
+		// {"jsonrpc": "2.0", "error": {"code": -32600, "message": "Invalid Request"}, "id": null}
+		jres = ug_jsonrpc_object_new ();
+		// "id": null
+		jres->id.type = UG_VALUE_STRING;
+		jres->id.c.string = NULL;
+		// "error": {"code": -32600, "message": "Invalid Request"}
+		jres->error.code = -32600;
+		jres->error.message = "Invalid Request";
+		// send response to client
+		ug_jsonrpc_response (jrpc, jres);
+		// clear response
+		jres->error.message = NULL;
+		ug_jsonrpc_object_free (jres);
 		return -1;
 	}
 
