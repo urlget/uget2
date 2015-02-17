@@ -293,20 +293,21 @@ static UG_THREAD_RETURN_TYPE server_thread (UgSocketServer* server)
 	int       client_fd;
 	int       result;
 
-	timeout.tv_sec = 2;
-	timeout.tv_usec = 0;
-
 	while (server->stopping == FALSE) {
+		// reset fd_set and timeout because select() will change them.
 		FD_ZERO (&server->read_fds);
 		FD_SET (server->socket, &server->read_fds);
-
+		timeout.tv_sec = 1;
+		timeout.tv_usec = 0;
+		// select() will change fd_set and timeout (reduce timeout to 0)
 		result = select (server->socket + 1, &server->read_fds,
 		        NULL, NULL, &timeout);
+		// exit thread if user stop server
 		if (server->stopping || result < 0)
 			break;
 		// select() time limit expired if result == 0
 		if (result == 0) {
-			ug_sleep (500);
+//			ug_sleep (200);
 			continue;
 		}
 
