@@ -170,6 +170,12 @@ struct UgSocketServer {
 };
 
 UgSocketServer* ug_socket_server_new (SOCKET server_fd);
+UgSocketServer* ug_socket_server_new_addr (const char* addr,
+                                           const char* port_or_serv);
+#if !(defined _WIN32 || defined _WIN64)
+UgSocketServer* ug_socket_server_new_unix (const char* path,
+                                           int         path_len);
+#endif
 
 void  ug_socket_server_ref (UgSocketServer* server);
 void  ug_socket_server_unref (UgSocketServer* server);

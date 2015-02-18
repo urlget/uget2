@@ -230,6 +230,41 @@ UgSocketServer* ug_socket_server_new (SOCKET server_fd)
 	return server;
 }
 
+UgSocketServer* ug_socket_server_new_addr (const char* addr, const char* port_or_serv)
+{
+	SOCKET    server_fd;
+
+	server_fd = socket (AF_INET, SOCK_STREAM, 0);
+	if (server_fd == INVALID_SOCKET)
+		return NULL;
+
+	if (ug_socket_listen (server_fd, addr, port_or_serv, 5) == SOCKET_ERROR) {
+		closesocket (server_fd);
+		return NULL;
+	}
+
+	return ug_socket_server_new (server_fd);
+}
+
+#if !(defined _WIN32 || defined _WIN64)
+UgSocketServer* ug_socket_server_new_unix (const char* path, int path_len)
+{
+	SOCKET    server_fd;
+
+	server_fd = socket (AF_UNIX, SOCK_STREAM, 0);
+	if (server_fd == -1)
+		return NULL;
+
+	if (ug_socket_listen_unix (server_fd, path, path_len, 5) == -1) {
+		close (server_fd);
+		return NULL;
+	}
+
+	return ug_socket_server_new (server_fd);
+}
+
+#endif // ! (_WIN32 || _WIN64)
+
 void  ug_socket_server_ref (UgSocketServer* server)
 {
 	server->ref_count++;
