@@ -299,39 +299,53 @@ void test_jsonrpc_socket (void)
 {
 	UgJsonrpcObject* request;
 	UgJsonrpcObject* response;
-	UgJsonrpcSocket* client;
+	UgJsonrpcSocket* jclient;
 	UgSocketServer*  server;
+#if 0
+	UgJsonrpcSocket* jserver;
+#endif
 
 	puts ("----- test_jsonrpc_socket()");
 
-	server = ug_jsonrpc_socket_server_new ("127.0.0.1", "14777");
+	server = ug_socket_server_new_addr ("127.0.0.1", "14777");
 	if (server == NULL) {
 		puts ("failed to create UgJsonrpcSocketServer");
 		return;
 	}
-	ug_jsonrpc_socket_server_run (server, jsonrpc_accepted, NULL, NULL);
+
+#if 0
+	jserver = ug_malloc (sizeof (UgJsonrpcSocket));
+	ug_jsonrpc_socket_init (jserver);
+	ug_jsonrpc_socket_use_server (jserver, server, jsonrpc_accepted, NULL, NULL);
+	ug_socket_server_start (server);
+#else
+	ug_socket_server_run_jsonrpc (server, jsonrpc_accepted, NULL, NULL);
+#endif
 	ug_sleep (1000);
 
-	client = ug_malloc (sizeof (UgJsonrpcSocket));
-	ug_jsonrpc_socket_init (client);
-	ug_jsonrpc_socket_connect (client, "127.0.0.1", "14777");
+	jclient = ug_malloc (sizeof (UgJsonrpcSocket));
+	ug_jsonrpc_socket_init (jclient);
+	ug_jsonrpc_socket_connect (jclient, "127.0.0.1", "14777");
 
 	// ping server
 	request = ug_jsonrpc_object_new ();
 	response = ug_jsonrpc_object_new ();
 	request->method_static = "ping";
-	ug_jsonrpc_call (&client->rpc, request, response);
+	ug_jsonrpc_call (&jclient->rpc, request, response);
 	print_rpc_object (response);
 	ug_jsonrpc_object_free (response);
 	ug_jsonrpc_object_free (request);
 
-	ug_jsonrpc_socket_close (client);
+	ug_jsonrpc_socket_close (jclient);
+	ug_jsonrpc_socket_final (jclient);
+	ug_free (jclient);
 	ug_sleep (1000);
 
-	ug_jsonrpc_socket_server_stop (server);
-	ug_jsonrpc_socket_server_unref (server);
-	ug_jsonrpc_socket_final (client);
-	ug_free (client);
+#if 0
+	ug_jsonrpc_socket_final(jserver);
+#endif
+	ug_socket_server_stop (server);
+	ug_socket_server_unref (server);
 }
 
 // ----------------------------------------------------------------------------

@@ -169,16 +169,56 @@ int   ug_jsonrpc_socket_receive (UgJsonrpcSocket* jrsock)
 // ----------------------------------------------------------------------------
 // Server API
 
-static UG_THREAD_RETURN_TYPE rpc_thread (UgJsonrpcSocket* jr_socket)
+// ------------------------------------
+// one thread handle all connection
+
+static void on_receiving_all (UgSocketServer* server, SOCKET client_fd, void* data)
+{
+	UgJsonrpcSocket*  jrsock;
+	UgJsonrpcServerFunc  callback;
+
+	jrsock = data;
+	jrsock->socket = client_fd;
+	callback = server->user.data3;
+	callback (&jrsock->rpc, server->user.data, server->user.data2);
+}
+
+void  ug_jsonrpc_socket_use_server (UgJsonrpcSocket* jrsock,
+                                    UgSocketServer* server,
+                                    UgJsonrpcServerFunc callback,
+                                    void* data, void* data2)
+{
+	server->user.data  = data;
+	server->user.data2 = data2;
+	server->user.data3 = callback;
+	ug_socket_server_set_receiver (server, on_receiving_all, jrsock);
+}
+
+// ------------------------------------
+// one thread handle one connection
+
+struct UgJsonrpcSocketThread
+{
+	UG_JSONRPC_SOCKET_MEMBERS;
+//	UgJson           json;
+//	UgJsonrpc        rpc;
+//	UgBuffer         buffer;
+//	int              socket;
+
+	UgSocketServer*  server;
+	UgThread         thread;
+};
+
+static UG_THREAD_RETURN_TYPE jrpc_thread (struct UgJsonrpcSocketThread* jrst)
 {
 	UgSocketServer*  server;
 	UgJsonrpcServerFunc  callback;
 
-	server = jr_socket->server;
+	server = jrst->server;
 	callback = server->user.data3;
-	callback (&jr_socket->rpc, server->user.data, server->user.data2);
-	ug_jsonrpc_socket_final (jr_socket);
-	ug_free (jr_socket);
+	callback (&jrst->rpc, server->user.data, server->user.data2);
+	ug_jsonrpc_socket_final ((UgJsonrpcSocket*) jrst);
+	ug_free (jrst);
 	ug_socket_server_unref (server);  // ref() on on_accepted()
 
 	return UG_THREAD_RETURN_VALUE;
@@ -186,61 +226,25 @@ static UG_THREAD_RETURN_TYPE rpc_thread (UgJsonrpcSocket* jr_socket)
 
 static void on_receiving (UgSocketServer* server, SOCKET client_fd, void* data)
 {
-	UgJsonrpcSocket*  jr_socket;
-	UgThread  thread;
+	struct UgJsonrpcSocketThread* jrst;
 
 	ug_socket_server_ref (server);  // unref() on service_thread()
 	// create UgJsonrpcSocket to accept JSON-RPC request
-	jr_socket = ug_malloc0 (sizeof (UgJsonrpcSocket));
-	ug_jsonrpc_socket_init (jr_socket);
-	jr_socket->socket = client_fd;
-	jr_socket->server = server;
-	ug_thread_create (&thread, (UgThreadFunc) rpc_thread, jr_socket);
-	ug_thread_unjoin (&thread);
+	jrst = ug_malloc (sizeof (struct UgJsonrpcSocketThread));
+	ug_jsonrpc_socket_init ((UgJsonrpcSocket*) jrst);
+	jrst->socket = client_fd;
+	jrst->server = server;
+	ug_thread_create (&jrst->thread, (UgThreadFunc) jrpc_thread, jrst);
+	ug_thread_unjoin (&jrst->thread);
 }
 
-UgSocketServer* ug_jsonrpc_socket_server_new (const char* addr, const char* port_or_serv)
-{
-	SOCKET    server_fd;
-
-	server_fd = socket (AF_INET, SOCK_STREAM, 0);
-	if (server_fd == INVALID_SOCKET)
-		return NULL;
-
-	if (ug_socket_listen (server_fd, addr, port_or_serv, 5) == SOCKET_ERROR) {
-		closesocket (server_fd);
-		return NULL;
-	}
-
-	return ug_socket_server_new (server_fd);
-}
-
-#if !(defined _WIN32 || defined _WIN64)
-UgSocketServer* ug_jsonrpc_socket_server_new_unix (const char* path, int path_len)
-{
-	SOCKET    server_fd;
-
-	server_fd = socket (AF_UNIX, SOCK_STREAM, 0);
-	if (server_fd == -1)
-		return NULL;
-
-	if (ug_socket_listen_unix (server_fd, path, path_len, 5) == -1) {
-		close (server_fd);
-		return NULL;
-	}
-
-	return ug_socket_server_new (server_fd);
-}
-
-#endif // ! (_WIN32 || _WIN64)
-
-void  ug_jsonrpc_socket_server_run (UgSocketServer* server,
-                                    UgJsonrpcServerFunc accepter,
+void  ug_socket_server_run_jsonrpc (UgSocketServer* server,
+                                    UgJsonrpcServerFunc callback,
                                     void* data, void* data2)
 {
 	server->user.data  = data;
 	server->user.data2 = data2;
-	server->user.data3 = accepter;
+	server->user.data3 = callback;
 	ug_socket_server_set_receiver (server, on_receiving, NULL);
 	ug_socket_server_start (server);
 }

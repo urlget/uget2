@@ -54,15 +54,19 @@ typedef struct UgJsonrpcSocket        UgJsonrpcSocket;
 //           |                             |    UgJsonrpcObject
 //           +-----------------------------+
 
+#define UG_JSONRPC_SOCKET_MEMBERS  \
+	UgJson           json;         \
+	UgJsonrpc        rpc;          \
+	UgBuffer         buffer;       \
+	int              socket
+
 struct  UgJsonrpcSocket
 {
-	UgJson     json;
-	UgJsonrpc  rpc;
-	UgBuffer   buffer;
-
-	int        socket;
-
-	void*      server;  // for internal use only
+	UG_JSONRPC_SOCKET_MEMBERS;
+//	UgJson           json;
+//	UgJsonrpc        rpc;
+//	UgBuffer         buffer;
+//	int              socket;
 };
 
 void  ug_jsonrpc_socket_init (UgJsonrpcSocket* jrsock);
@@ -85,20 +89,17 @@ int   ug_jsonrpc_socket_receive (UgJsonrpcSocket* jrsock);
 
 // ------------------------------------
 // Server API
-UgSocketServer* ug_jsonrpc_socket_server_new (const char* addr,
-                                              const char* port_or_serv);
 
-#if !(defined _WIN32 || defined _WIN64)
-UgSocketServer* ug_jsonrpc_socket_server_new_unix (const char* path,
-                                                   int         path_len);
-#endif
-
-void  ug_jsonrpc_socket_server_run (UgSocketServer* server,
-                                    UgJsonrpcServerFunc accepted,
+// one thread handle all connection
+void  ug_jsonrpc_socket_use_server (UgJsonrpcSocket* jrsock,
+                                    UgSocketServer* server,
+                                    UgJsonrpcServerFunc callback,
                                     void* data, void* data2);
 
-#define ug_jsonrpc_socket_server_stop    ug_socket_server_stop
-#define ug_jsonrpc_socket_server_unref   ug_socket_server_unref
+// one thread handle one connection
+void  ug_socket_server_run_jsonrpc (UgSocketServer* server,
+                                    UgJsonrpcServerFunc callback,
+                                    void* data, void* data2);
 
 #ifdef __cplusplus
 }
