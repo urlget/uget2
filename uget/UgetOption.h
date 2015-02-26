@@ -34,71 +34,76 @@
  *
  */
 
-#ifndef UGET_IPC_H
-#define UGET_IPC_H
+#ifndef UGET_OPTION_H
+#define UGET_OPTION_H
 
-#include <stdint.h>
 #include <UgInfo.h>
 #include <UgList.h>
-//#include <UgOption.h>
-#include <UgetOption.h>
+#include <UgOption.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct UgetIpc           UgetIpc;
-typedef struct UgetArgs          UgetArgs;
-typedef struct UgSocketServer    UgSocketServer;
+typedef struct UgetOptionValue   UgetOptionValue;
 
-// ----------------------------------------------------------------------------
+extern UgOptionEntry  uget_option_entry[];
 
-struct UgetIpc
+struct UgetOptionValue
 {
-	UgSocketServer*  server;
+	int   version;
+	int   quiet;
+	int   category_index;
+	char* input_file;
 
-	UgList   queue;
-	UgMutex  queue_mutex;
-	UgBuffer buffer;
+	struct
+	{
+		int   offline;
+	} ctrl;
 
-	UgOption         option;
-	UgetOptionValue  value;
+	struct
+	{
+		char* folder;
+		char* file;
+		char* user;
+		char* password;
+	} common;
+
+	struct
+	{
+		int   type;
+		char* host;
+		int   port;
+		char* user;
+		char* password;
+	} proxy;
+
+	struct
+	{
+		char* user;
+		char* password;
+		char* referrer;
+		char* user_agent;
+		char* cookie_data;
+		char* cookie_file;
+		char* post_data;
+		char* post_file;
+	} http;
+
+	struct
+	{
+		char* user;
+		char* password;
+	} ftp;
 };
 
-UgetIpc*   uget_ipc_new (void);
-void       uget_ipc_free (UgetIpc* ipc);
-
-// server functions
-// return TRUE or FALSE
-int   uget_ipc_server_start (UgetIpc* ipc);
-int   uget_ipc_server_has_data (UgetIpc* ipc);
-int   uget_ipc_server_get (UgetIpc* ipc, UgList* uris, UgInfo* info);
-void  uget_ipc_server_add (UgetIpc* ipc, int argc, char** argv);
-
-// client functions, ping server or send arguments to server.
-// return TRUE or FALSE
-int   uget_ipc_client_send (UgetIpc* ipc, int argc, char** argv);
-
-// ----------------------------------------------------------------------------
-
-struct UgetArgs
-{
-	UG_LINK_MEMBERS (UgetArgs, UgetArgs, self);
-
-	UgList  strings;
-};
-
-UgetArgs* uget_args_new (int argc, char** argv);
-void      uget_args_free (UgetArgs* args);
-
-void  uget_args_add (UgetArgs* args, const char* string, int length);
-
-char* uget_args_find_version (int argc, char** argv);
-char* uget_args_find_help (int argc, char** argv);
+void  uget_option_value_clear (UgetOptionValue* value);
+int   uget_option_value_has_ctrl (UgetOptionValue* value);
+int   uget_option_value_to_info (UgetOptionValue* ivalue, UgInfo* info);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif	// UGET_IPC_H
+#endif	// UGET_OPTION_H
 

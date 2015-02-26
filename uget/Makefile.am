@@ -13,6 +13,7 @@ libuget_a_CFLAGS   = @PTHREAD_CFLAGS@  @GLIB_CFLAGS@
 libuget_a_SOURCES = \
 	UgetRss.c     \
 	UgetIpc.c     \
+	UgetOption.c  \
 	UgetData.c    \
 	UgetNode.c  UgetNode-compare.c  \
 	UgetTask.c    \
@@ -30,6 +31,7 @@ libuget_a_SOURCES = \
 noinst_HEADERS = \
 	UgetRss.h     \
 	UgetIpc.h     \
+	UgetOption.h  \
 	UgetData.h    \
 	UgetNode.h    \
 	UgetTask.h    \
