@@ -187,7 +187,7 @@ UgtkApp*  ugtk_app;
 
 static void sys_signal_handler (int sig)
 {
-	void  ug_socket_server_close (UgSocketServer* server);
+//	void  ug_socket_server_close (UgSocketServer* server);
 
 	switch (sig) {
 	case SIGINT:  // Ctrl-C
@@ -198,10 +198,10 @@ static void sys_signal_handler (int sig)
 		ugtk_app_quit (ugtk_app);
 		break;
 
-	case SIGSEGV:
-		signal (SIGSEGV, NULL);
-		ug_socket_server_close (ugtk_app->ipc->server);
-		break;
+//	case SIGSEGV:
+//		signal (SIGSEGV, NULL);
+//		ug_socket_server_close (ugtk_app->rpc->server);
+//		break;
 
 	default:
 		break;
@@ -230,22 +230,22 @@ static void sys_set_sigaction ()
 
 int  main (int argc, char** argv)
 {
-	UgetIpc*  ipc;
+	UgetRpc*  rpc;
 
 	// I18N
 	bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
-	// Command line & IPC
-	if (uget_args_find_version (argc-1, argv+1)) {
+	// Command line
+	if (ug_args_find_version (argc-1, argv+1)) {
 #if (defined _WIN32 || defined _WIN64) && defined _WINDOWS
 		win32_console_init ();
 #endif
 		g_print ("uGet " PACKAGE_VERSION " for GTK+" "\n");
 		return EXIT_SUCCESS;
 	}
-	if (uget_args_find_help (argc-1, argv+1)) {
+	if (ug_args_find_help (argc-1, argv+1)) {
 #if (defined _WIN32 || defined _WIN64) && defined _WINDOWS
 		win32_console_init ();
 #endif
@@ -253,13 +253,16 @@ int  main (int argc, char** argv)
 		                            argv[0], "[URL]", NULL);
 		return EXIT_SUCCESS;
 	}
-	ipc = uget_ipc_new ();
-	if (uget_ipc_server_start (ipc)) {
-		if (argc > 1)
-			uget_ipc_server_add (ipc, argc-1, argv+1);
-	}
-	else if (uget_ipc_client_send (ipc, argc-1, argv+1) == TRUE) {
-		uget_ipc_free (ipc);
+
+	// JSON-RPC server
+	rpc = uget_rpc_new ();
+	rpc->backup_dir = g_build_filename (g_get_user_config_dir (),
+	                                    UGTK_APP_DIR, "attachment", NULL);
+	if (uget_rpc_start_server (rpc))
+		uget_rpc_send_command (rpc, argc-1, argv+1);
+	else {
+		uget_rpc_send_command (rpc, argc-1, argv+1);
+		uget_rpc_free (rpc);
 		return EXIT_SUCCESS;
 	}
 
@@ -279,13 +282,13 @@ int  main (int argc, char** argv)
 #endif
 
 	ugtk_app = g_malloc0 (sizeof (UgtkApp));
-	ugtk_app_init (ugtk_app, ipc);
+	ugtk_app_init (ugtk_app, rpc);
 
 	// signal handler
 	signal (SIGINT,  sys_signal_handler);
 	signal (SIGTERM, sys_signal_handler);
 	signal (SIGABRT, sys_signal_handler);
-	signal (SIGSEGV, sys_signal_handler);
+//	signal (SIGSEGV, sys_signal_handler);
 //	signal (SIGQUIT, sys_signal_handler);
 
 	gtk_main ();
@@ -293,9 +296,9 @@ int  main (int argc, char** argv)
 	ugtk_app_final (ugtk_app);
 	g_free (ugtk_app);
 
-	// sleep 3 second to wait thread and shutdown IPC
+	// sleep 3 second to wait thread and shutdown RPC
 	g_usleep (3 * 1000000);
-	uget_ipc_free (ipc);
+	uget_rpc_free (rpc);
 
 	// libnotify
 #ifdef HAVE_LIBNOTIFY

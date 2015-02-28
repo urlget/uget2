@@ -113,6 +113,13 @@ int   ug_option_parse_entry (UgOption* option,
                              const char* value,
                              void* dest, void* entry);
 
+// ----------------------------------------------------------------------------
+// command-line argument
+
+char* ug_args_find_version (int argc, char** argv);
+char* ug_args_find_help (int argc, char** argv);
+
+
 #ifdef __cplusplus
 }
 #endif

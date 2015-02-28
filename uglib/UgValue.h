@@ -50,7 +50,6 @@ typedef struct UgValue          UgValue;
 typedef struct UgValue          UgMember;
 typedef struct UgValueArray     UgValueArray;
 typedef struct UgValueArray     UgValueObject;
-typedef struct UgValueCustom    UgValueCustom;
 typedef union  UgValueC         UgValueC;
 
 typedef void (*UgValueForeachFunc) (UgValue* value, void* data);
@@ -165,7 +164,7 @@ UgJsonError ug_json_parse_value (UgJson* json,
 void        ug_json_write_value (UgJson* json, UgValue* value);
 
 // ----------------------------------------------------------------------------
-// UgValueArray
+// UgValueArray = UgValueObject
 
 struct UgValueArray
 {
@@ -174,19 +173,11 @@ struct UgValueArray
 	UgValue   at[1];
 };
 
-UgValueArray*  ug_value_array_new (int preAllocate);
-void           ug_value_array_free (UgValueArray* varray);
-
-// ----------------------------------------------------------------------------
-// UgValueObject = UgValueArray
-
-#define ug_value_object_new     ug_value_array_new
-#define ug_value_object_free    ug_value_array_free
-
 // ----------------------------------------------------------------------------
 // UgValueCustom: used by UG_VALUE_CUSTOM. It can't parse value in JSON array.
 
 #ifdef HAVE_UG_VALUE_CUSTOM
+typedef struct UgValueCustom    UgValueCustom;
 
 struct UgValueCustom
 {

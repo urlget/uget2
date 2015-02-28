@@ -45,6 +45,11 @@
 #define strtoull    _strtoui64
 #endif
 
+static UgValueArray*  ug_value_array_new (int preAllocate);
+static void           ug_value_array_free (UgValueArray* varray);
+#define ug_value_object_new     ug_value_array_new
+#define ug_value_object_free    ug_value_array_free
+
 // ----------------------------------------------------------------------------
 // UgValue
 
@@ -463,9 +468,9 @@ void  ug_json_write_value (UgJson* json, UgValue* uvalue)
 }
 
 // ----------------------------------------------------------------------------
-// UgValueArray
+// UgValueArray = UgValueObject
 
-UgValueArray*  ug_value_array_new (int preAllocate)
+static UgValueArray*  ug_value_array_new (int preAllocate)
 {
 	UgValueArray*  varray;
 
@@ -475,7 +480,7 @@ UgValueArray*  ug_value_array_new (int preAllocate)
 	return varray;
 }
 
-void  ug_value_array_free (UgValueArray* varray)
+static void  ug_value_array_free (UgValueArray* varray)
 {
 	UgValue*  cur;
 	UgValue*  end;

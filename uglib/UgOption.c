@@ -285,3 +285,65 @@ int  ug_option_parse_entry (UgOption* option,
 
 	return FALSE;
 }
+
+// ----------------------------------------------------------------------------
+// command-line argument
+
+// find -?, -h, --help, or --help- in command-line options and return it.
+char*	ug_args_find_help (int argc, char** argv)
+{
+	char*	arg;
+	int     arg_len;
+
+	for (argc -= 1;  argc >= 0;  argc--) {
+		arg = argv[argc];
+		arg_len = strlen (arg);
+#ifdef _WIN32
+		// Check and remove some character (space,0x20) in tail of argument from command line.
+		// This problem only happen in Windows platform.
+//		ug_str_clear_tail_charset (arg, arg_len, " \n");
+#endif
+		// check short_name: -h or -?
+		if (arg_len < 2 || arg[0] != '-')
+			continue;
+		if (arg_len == 2 && (arg[1] == 'h' || arg[1] == '?'))
+			return arg;
+		// check long name: --help
+		if (arg_len < 6 || arg[1] != '-')
+			continue;
+		if (strncmp (arg+2, "help", 4) == 0) {
+			if (arg_len == 6 || arg[6] == '-')
+				return arg;
+		}
+	}
+	return NULL;
+}
+
+// find -V, --version
+char*	ug_args_find_version (int argc, char** argv)
+{
+	char*	arg;
+	int     arg_len;
+
+	for (argc -= 1;  argc >= 0;  argc--) {
+		arg = argv[argc];
+		arg_len = strlen (arg);
+#ifdef _WIN32
+		// Check and remove some character (space,0x20) in tail of argument from command line.
+		// This problem only happen in Windows platform.
+//		ug_str_clear_tail_charset (arg, arg_len, " \n");
+#endif
+		// check short_name: -V
+		if (arg_len < 2 || arg[0] != '-')
+			continue;
+		if (arg_len == 2 && arg[1] == 'V')
+			return arg;
+		// check long name: --version
+		if (arg_len != 9 || arg[1] != '-')
+			continue;
+		if (strncmp (arg+2, "version", 7) == 0)
+			return arg;
+	}
+	return NULL;
+}
+

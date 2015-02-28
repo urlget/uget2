@@ -39,6 +39,7 @@
 
 #include <stdint.h>
 #include <time.h>
+#include <UgList.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -63,6 +64,9 @@ uint16_t*  ug_utf8_to_utf16 (const char* string, int stringLength,
                              int* utf16len);
 int        ug_utf8_get_invalid (const uint8_t* input, uint8_t* ch);
 
+uint8_t*   ug_utf16_to_utf8 (uint16_t* string, int stringLength,
+                             int* utf8len);
+
 // ----------------------------------------------------------------------------
 // Base64
 
@@ -77,6 +81,14 @@ int   ug_file_is_dir (const char* file);
 int   ug_create_dir_all (const char* dir, int len);
 //int ug_delete_dir_all (const char* dir, int len);
 char* ug_build_filename (const char* first_element, ...);
+
+// ----------------------------------------------------------------------------
+// File I/O
+
+// return -1 if error
+int   ug_file_copy (const char *src_file_utf8, const char *dest_file_utf8);
+// return number of lines
+int   ug_file_get_lines (const char* filename_utf8, UgList* list);
 
 // ----------------------------------------------------------------------------
 // Power Management

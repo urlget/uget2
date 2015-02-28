@@ -73,10 +73,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../uget/UgetHash.h" />
-		<Unit filename="../../uget/UgetIpc.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../uget/UgetIpc.h" />
 		<Unit filename="../../uget/UgetNode-compare.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -84,6 +80,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../uget/UgetNode.h" />
+		<Unit filename="../../uget/UgetOption.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetOption.h" />
 		<Unit filename="../../uget/UgetPlugin.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -100,6 +100,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../uget/UgetPluginEmpty.h" />
+		<Unit filename="../../uget/UgetRpc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetRpc.h" />
 		<Unit filename="../../uget/UgetRss.c">
 			<Option compilerVar="CC" />
 		</Unit>

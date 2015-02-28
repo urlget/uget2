@@ -72,8 +72,10 @@ typedef int   (*UgCompareFunc)(const void* a, const void* b);
 
 #if defined _WIN32 || defined _WIN64
 #define UG_DIR_SEPARATOR    '\\'
+#define UG_DIR_SEPARATOR_S  "\\"
 #else
 #define UG_DIR_SEPARATOR    '/'
+#define UG_DIR_SEPARATOR_S  "/"
 #endif  // _WIN32 || _WIN64
 
 #ifndef TRUE

@@ -40,8 +40,6 @@
 #include <UgJsonrpcCurl.h>
 #include <UgJsonrpcSocket.h>
 
-#include <UgetIpc.h>
-
 #include <UgetAria2.h>
 #include <curl/curl.h>
 
@@ -426,38 +424,6 @@ void test_uget_aria2 (void)
 	ug_sleep (2000);
 }
 
-void test_ipc (void)
-{
-	UgList   uris;
-	UgInfo   info;
-
-	UgetIpc* ipc;
-	UgetIpc* ipc_client;
-	char*    argv[] = {
-		"--user=guest",
-		"--password=xxx",
-		"http://www.yahoo.com/"
-	};
-
-	ipc = uget_ipc_new ();
-	uget_ipc_server_start (ipc);
-
-	ipc_client = uget_ipc_new ();
-	uget_ipc_client_send (ipc_client, 3, argv);
-
-	ug_sleep (1000);
-	ug_list_init (&uris);
-	ug_info_init (&info, 4, 0);
-	uget_ipc_server_get (ipc, &uris, &info);
-	ug_list_foreach (&uris, (UgForeachFunc) ug_free, NULL);
-	ug_list_clear (&uris, TRUE);
-	ug_info_final (&info);
-
-	uget_ipc_free (ipc);
-	uget_ipc_free (ipc_client);
-	ug_sleep (3000);
-}
-
 // ----------------------------------------------------------------------------
 // main
 
@@ -471,7 +437,6 @@ int   main (void)
 	// libcurl
 	curl_global_init (CURL_GLOBAL_ALL);
 
-	test_ipc ();
 	test_socket ();
 	test_rpc_parser ();
 	test_jsonrpc_socket ();

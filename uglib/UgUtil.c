@@ -257,6 +257,41 @@ int  ug_utf8_get_invalid (const uint8_t* input, uint8_t* ch)
 	return -1;
 }
 
+uint8_t*   ug_utf16_to_utf8 (uint16_t* string, int count,
+                             int* utf8len)
+{
+	uint16_t    ch;
+	uint8_t*    result;
+	uint8_t*    dest;
+	const uint16_t* end;
+
+	if (count == -1)
+		count  = wcslen (string);
+	end  = string + count;
+	result = ug_malloc (sizeof (uint8_t) * (count+1) * 3);
+	dest   = result;
+
+	while (string < end) {
+		ch = *string++;
+		if (ch >= 1 && ch <= 0x7F)
+			*dest++ = (uint8_t) ch;
+		else if (ch > 0x7FF) {
+			*dest++ = (uint8_t) (0xE0 | ((ch >> 12) & 0x0F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  6) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  0) & 0x3F));
+		}
+		else {
+			*dest++ = (uint8_t) (0xC0 | ((ch >> 12) & 0x1F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  6) & 0x3F));
+		}
+	}
+
+	*dest++ = 0;
+	if (utf8len)
+		*utf8len = dest - result;
+	return result;
+}
+
 // ----------------------------------------------------------------------------
 // Base64
 
@@ -467,6 +502,103 @@ char* ug_build_filename (const char* first_element, ...)
 	va_end (arg_list);
 
 	return result;
+}
+
+// ----------------------------------------------------------------------------
+// File I/O
+
+
+#if defined _WIN32 || defined _WIN64
+int  ug_file_copy (const char *src_file_utf8, const char *new_file_utf8)
+{
+	int	 retval;
+	uint16_t*  src_file_wcs;
+	uint16_t*  new_file_wcs;
+
+	src_file_wcs = ug_utf8_to_utf16 (src_file_utf8, -1, NULL);
+	new_file_wcs = ug_utf8_to_utf16 (new_file_utf8, -1, NULL);
+	retval = CopyFileW (src_file_wcs, new_file_wcs, FALSE);
+	ug_free (src_file_wcs);
+	ug_free (new_file_wcs);
+	if (retval == 0)
+		return -1;
+	return 0;
+}
+#else
+int  ug_file_copy (const char *src_file_utf8, const char *new_file_utf8)
+{
+	int		src_fd;
+	int		new_fd;
+	char*	buf;
+	int		buf_len;
+	int		retval = 0;
+
+//	new_fd = open (new_file_utf8,
+//	               O_BINARY | O_WRONLY | O_CREAT,
+//	               S_IREAD | S_IWRITE | S_IRGRP | S_IROTH);
+	new_fd = ug_open (new_file_utf8,
+	                  UG_O_BINARY | UG_O_WRONLY | UG_O_CREAT,
+	                  UG_S_IREAD | UG_S_IWRITE | UG_S_IRGRP | UG_S_IROTH);
+	if (new_fd == -1)
+		return -1;
+
+//	src_fd = open (src_file_utf8, O_BINARY | O_RDONLY, S_IREAD);
+	src_fd = ug_open (src_file_utf8, UG_O_BINARY | UG_O_RDONLY, UG_S_IREAD);
+	if (src_fd == -1) {
+		ug_close (new_fd);
+		return -1;
+	}
+	// read & write
+	buf = ug_malloc (8192);
+	for (;;) {
+		buf_len = ug_read (src_fd, buf, 8192);
+		if (buf_len <=0)
+			break;
+		if (ug_write (new_fd, buf, buf_len) != buf_len) {
+			retval = -1;
+			break;
+		}
+	}
+	// clear
+	ug_free (buf);
+	ug_close (src_fd);
+	ug_close (new_fd);
+	return retval;
+}
+#endif	// _WIN32
+
+int  ug_file_get_lines (const char* filename_utf8, UgList* list)
+{
+	UgLink* link;
+	FILE*   file;
+	char*   buf;
+	int     len;
+	int     count = 0;
+
+	file = ug_fopen (filename_utf8, "r");
+	if (file == NULL)
+		return 0;
+	buf = ug_malloc (8192);
+	if (fread (buf, 1, 3, file) == 3) {
+		if (buf[0] != 0xEF || buf[1] != 0xBB)
+			rewind (file);
+	}
+
+	while (fgets (buf, 8192, file) != NULL) {
+		count++;
+		len = strlen (buf);
+		if (len > 0 && buf[len-1] == '\n')
+			buf[--len] = 0;
+		if (list) {
+			link = ug_link_new ();
+			link->data = ug_strndup (buf, len);
+			ug_list_append (list, link);
+		}
+	}
+
+	ug_free (buf);
+	fclose (file);
+	return count;
 }
 
 // ----------------------------------------------------------------------------

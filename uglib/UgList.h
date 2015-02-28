@@ -38,7 +38,7 @@
 #define UG_LIST_H
 
 // uintptr_t is an unsigned int that is guaranteed to be the same size as a pointer.
-#include <stdint.h>		// uintptr_t, int64_t
+#include <stdint.h>		// uintptr_t, intptr_t
 #include <UgDefine.h>
 #include <UgJson.h>
 #include <UgEntry.h>
@@ -55,6 +55,16 @@ typedef struct	UgList          UgList;
 
 #define UG_LINK_MEMBERS(LinkType, DataType, DataName)  \
 	DataType*  DataName;    \
+	LinkType*  next;        \
+	LinkType*  prev
+
+#define UG_LINK_INT_MEMBERS(LinkType, DataName)  \
+	intptr_t   DataName;    \
+	LinkType*  next;        \
+	LinkType*  prev
+
+#define UG_LINK_UINT_MEMBERS(LinkType, DataName)  \
+	uintptr_t  DataName;    \
 	LinkType*  next;        \
 	LinkType*  prev
 
@@ -85,6 +95,9 @@ struct UgList
 //	UgLink*     head;
 //	UgLink*     tail;
 };
+
+// if all links in list were created by ug_link_new(),
+// ug_list_clear (list, TRUE) can free them.
 
 void  ug_list_init  (UgList* list);
 void  ug_list_clear (UgList* list, int free_links);

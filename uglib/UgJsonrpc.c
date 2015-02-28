@@ -133,6 +133,20 @@ void  ug_jsonrpc_object_clear (UgJsonrpcObject* jobj)
 	ug_jsonrpc_error_clear (&jobj->error);
 }
 
+void  ug_jsonrpc_object_clear_request (UgJsonrpcObject* jobj)
+{
+	ug_free (jobj->method);
+	jobj->method = NULL;
+	jobj->method_static = NULL;
+	ug_value_clear (&jobj->params);
+}
+
+void  ug_jsonrpc_object_clear_response (UgJsonrpcObject* jobj)
+{
+	ug_value_clear (&jobj->result);
+	ug_jsonrpc_error_clear (&jobj->error);
+}
+
 void  ug_json_write_rpc_object (UgJson* json, UgJsonrpcObject* jobj)
 {
 	ug_json_write_object_head (json);
@@ -369,10 +383,10 @@ int  ug_jsonrpc_call_batch (UgJsonrpc* jrpc,
 	cur = request->at;
 	end = request->at + request->length;
 	for (;  cur < end;  cur++) {
+		if (cur[0] == NULL)
+			continue;
 		// notify does NOT have id
-		if (cur[0]->id.type != UG_VALUE_NONE ||
-		    response->length == request->length)
-		{
+		if (cur[0]->id.type != UG_VALUE_NONE) {
 			ug_value_clear (&cur[0]->id);
 			cur[0]->id.type = UG_VALUE_INT;
 			cur[0]->id.c.integer = jrpc->data.id.current++;
@@ -440,8 +454,10 @@ int  ug_jsonrpc_receive (UgJsonrpc* jrpc,
 	              jrpc, &type);
 	// receive request
 	n = jrpc->receive.func (jrpc->receive.data);
-	if (n <= 0)
+	if (n <= 0) {
+		ug_json_end_parse (jrpc->json);
 		return n;
+	}
 	n = ug_json_end_parse (jrpc->json);
 	if (n < 0 || jrpc->error == 0)
 		jrpc->error = n;
@@ -523,11 +539,21 @@ int  ug_jsonrpc_response_batch (UgJsonrpc* jrpc,
 	ug_json_write_array_head (jrpc->json);
 	cur = responses->at;
 	end = responses->at + responses->length;
-	for (;  cur < end;  cur++)
+	for (n = 0;  cur < end;  cur++) {
+		// don't output NULL object
+		if (cur[0] == NULL)
+			continue;
+		// output object and increase count
 		ug_json_write_rpc_object (jrpc->json, cur[0]);
+		n++;
+	}
 	ug_json_write_array_tail (jrpc->json);
 	ug_json_end_write (jrpc->json);
 	// write --- end ---
+
+	// if no object outputted, don't send response
+	if (n == 0)
+		return 0;
 
 	// send responses
 	n = jrpc->send.func (jrpc->send.data);

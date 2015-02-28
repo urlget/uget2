@@ -48,13 +48,11 @@
 
 #include <glib/gi18n.h>
 
-#define UGTK_APP_DIR        "uGet"
-
-void  ugtk_app_init (UgtkApp* app, UgetIpc* ipc)
+void  ugtk_app_init (UgtkApp* app, UgetRpc* rpc)
 {
 	char*  dir;
 
-	app->ipc = ipc;
+	app->rpc = rpc;
 	uget_app_init ((UgetApp*) app);
 	// set application config directory for each user
 	dir = g_build_filename (g_get_user_config_dir (), UGTK_APP_DIR, NULL);
@@ -1582,14 +1580,14 @@ void  ugtk_app_backup_attachment (UgtkApp* app, UgetNode* dnode)
 
 	if (http->cookie_file) {
 		g_string_append (gstr, ".cookie");
-		ugtk_copy_file (http->cookie_file, gstr->str);
+		ug_file_copy (http->cookie_file, gstr->str);
 		ug_free (http->cookie_file);
 		http->cookie_file = ug_strdup (gstr->str);
 		g_string_truncate (gstr, base_len);
 	}
 	if (http->post_file) {
 		g_string_append (gstr, ".post");
-		ugtk_copy_file (http->post_file, gstr->str);
+		ug_file_copy (http->post_file, gstr->str);
 		ug_free (http->post_file);
 		http->post_file = ug_strdup (gstr->str);
 	}

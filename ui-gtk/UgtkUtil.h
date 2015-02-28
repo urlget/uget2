@@ -44,7 +44,6 @@
 extern "C" {
 #endif
 
-int  ugtk_copy_file (const gchar *src_file_utf8, const gchar *new_file_utf8);
 
 // ------------------------------------------------------------------
 // URI list functions

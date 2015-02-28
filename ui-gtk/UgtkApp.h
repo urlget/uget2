@@ -39,7 +39,7 @@
 
 #include <gtk/gtk.h>
 #include <UgetApp.h>
-#include <UgetIpc.h>
+#include <UgetRpc.h>
 #include <UgetRss.h>
 #include <UgtkSetting.h>
 #include <UgtkTrayIcon.h>
@@ -52,6 +52,7 @@
 extern "C" {
 #endif
 
+#define UGTK_APP_DIR         "uGet"
 #define UGTK_APP_NAME        "uGet"
 #define UGTK_APP_ICON_NAME   "uget-icon"
 
@@ -86,7 +87,7 @@ struct UgtkApp
 //	int             n_deleted;
 //	int             n_completed;
 
-	UgetIpc*          ipc;
+	UgetRpc*          rpc;
 	UgtkSetting       setting;
 	UgtkScheduleState schedule_state;
 
@@ -179,7 +180,7 @@ struct UgtkApp
 	} toolbar;
 };
 
-void  ugtk_app_init  (UgtkApp* app, UgetIpc* ipc);
+void  ugtk_app_init  (UgtkApp* app, UgetRpc* ipc);
 void  ugtk_app_final (UgtkApp* app);
 
 // UgtkApp-ui.c, UgtkApp-callback.c, and UgtkApp-timeout.c

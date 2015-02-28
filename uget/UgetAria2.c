@@ -287,8 +287,8 @@ static void  recycle_speed_request (UgetAria2* uaria2, UgJsonrpcObject* jreq)
 static UG_THREAD_RETURN_TYPE  uget_aria2_thread (UgetAria2Thread* uathread)
 {
 	UgetAria2*       uaria2;
-	UgJsonrpcObject* jreq;
-	UgJsonrpcObject* jobj;
+	UgJsonrpcObject* jreq = NULL;
+	UgJsonrpcObject* jobj = NULL;
 	UgJsonrpcObject* jreq_shutdown = NULL;
 	int  counts;
 

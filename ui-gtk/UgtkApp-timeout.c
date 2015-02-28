@@ -68,7 +68,7 @@ static void ugtk_app_notify_starting (UgtkApp* app);
 static void ugtk_app_notify_completed (UgtkApp* app);
 // GSourceFunc
 static gboolean  ugtk_app_timeout_rss (UgtkApp* app);
-static gboolean  ugtk_app_timeout_ipc (UgtkApp* app);
+static gboolean  ugtk_app_timeout_rpc (UgtkApp* app);
 static gboolean  ugtk_app_timeout_queuing (UgtkApp* app);
 static gboolean  ugtk_app_timeout_clipboard (UgtkApp* app);
 static gboolean  ugtk_app_timeout_autosave (UgtkApp* app);
@@ -77,7 +77,7 @@ void  ugtk_app_init_timeout (UgtkApp* app)
 {
 	// 0.5 seconds
 	g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE, 500,
-			(GSourceFunc) ugtk_app_timeout_ipc, app, NULL);
+			(GSourceFunc) ugtk_app_timeout_rpc, app, NULL);
 	// 0.5 seconds
 	g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE, 500,
 			(GSourceFunc) ugtk_app_timeout_queuing, app, NULL);
@@ -472,102 +472,77 @@ static gboolean  ugtk_app_timeout_clipboard (UgtkApp* app)
 }
 
 // ----------------------------------------------------------------------------
-// IPC
+// RPC
 
-static void add_uris_from_file (UgtkApp* app, UgList* uris, char* file)
+static gboolean  ugtk_app_timeout_rpc (UgtkApp* app)
 {
-	GList*  list;
-	GList*  link;
-	UgLink* ulink;
+	UgetRpcReq*  req;
+	UgetRpcCmd*  cmd;
+	UgetNode*    infonode;
 
-//	file = g_filename_from_utf8 (file, -1, NULL, NULL, NULL);
-	list = ugtk_text_file_get_uris (file, NULL);
-//	g_free (file);
-	for (link = list;  link;  link = link->next) {
-		ulink = ug_link_new ();
-		ulink->data = link->data;
-		ug_list_append (uris, ulink);
-	}
-	g_list_free (list);
-	g_free (file);
-}
+	for (;;) {
+		if (uget_rpc_has_request(app->rpc) == FALSE)
+			return TRUE;
 
-static gboolean  ugtk_app_timeout_ipc (UgtkApp* app)
-{
-	UgetNode*   infonode;
-	UgList      uris;
+		req = uget_rpc_get (app->rpc);
+		switch (req->method_id) {
+		case UGET_RPC_PRESENT:
+//			if (gtk_widget_get_visible ((GtkWidget*) app->window.self) == FALSE)
+//				gtk_window_deiconify (app->window.self);
+			gtk_window_present (app->window.self);
+			// set position and size
+			gtk_window_move (app->window.self,
+					app->setting.window.x, app->setting.window.y);
+			gtk_window_resize (app->window.self,
+					app->setting.window.width, app->setting.window.height);
+			break;
 
-	if (uget_ipc_server_has_data (app->ipc) == FALSE)
-		return TRUE;
+		case UGET_RPC_SEND_COMMAND:
+			cmd = (UgetRpcCmd*) req;
+			// control online/offline
+			switch (cmd->value.ctrl.offline) {
+			case 0:
+				app->setting.offline_mode = FALSE;
+				gtk_check_menu_item_set_active (
+						(GtkCheckMenuItem*) app->menubar.file.offline_mode,
+						FALSE);
+				break;
 
-	ug_list_init (&uris);
-	infonode = uget_node_new (NULL);
-	if (uget_ipc_server_get (app->ipc, &uris, &infonode->info) == FALSE) {
-//		if (gtk_widget_get_visible ((GtkWidget*) app->window.self) == FALSE)
-//			gtk_window_deiconify (app->window.self);
-		gtk_window_present (app->window.self);
-		// set position and size
-		gtk_window_move (app->window.self,
-				app->setting.window.x, app->setting.window.y);
-		gtk_window_resize (app->window.self,
-				app->setting.window.width, app->setting.window.height);
-	}
+			case 1:
+				app->setting.offline_mode = TRUE;
+				gtk_check_menu_item_set_active (
+						(GtkCheckMenuItem*) app->menubar.file.offline_mode,
+						TRUE);
+				break;
+			}
 
-	if (app->ipc->value.input_file)
-		add_uris_from_file (app, &uris, app->ipc->value.input_file);
+			// if user want to add downloads quietly.
+			if (app->setting.commandline.quiet)
+				cmd->value.quiet = TRUE;
 
-	// offline
-	switch (app->ipc->value.offline) {
-	case 0:
-		app->setting.offline_mode = FALSE;
-		gtk_check_menu_item_set_active (
-				(GtkCheckMenuItem*) app->menubar.file.offline_mode, FALSE);
-		break;
+			// URIs
+			if (cmd->uris.size == 0)
+				break;
 
-	case 1:
-		app->setting.offline_mode = TRUE;
-		gtk_check_menu_item_set_active (
-				(GtkCheckMenuItem*) app->menubar.file.offline_mode, TRUE);
-		break;
+			// add downloads
+			infonode = uget_node_new (NULL);
+			uget_option_value_to_info (&cmd->value, &infonode->info);
+			if (cmd->value.quiet) {
+				ugtk_app_add_uris_quietly (app, (GList*) cmd->uris.head,
+				                           infonode);
+			}
+			else {
+				ugtk_app_add_uris_selected (app, (GList*) cmd->uris.head,
+				                            infonode);
+			}
+			uget_node_unref (infonode);
+			break;
 
-	default:
-		break;
-	}
-
-	// No URI
-	if (uris.size == 0)
-		goto exit;
-
-#if defined _WIN32 || defined _WIN64
-	{
-		UgetCommon* common;
-		gchar*      uname;
-
-		common = ug_info_get (&infonode->info, UgetCommonInfo);
-		if (common && common->file && g_utf8_validate (common->file, -1, NULL) == FALSE) {
-			uname = g_locale_to_utf8 (common->file, -1, NULL, NULL, NULL);
-			ug_free (common->file);
-			common->file = uname;
+		default:
+			break;
 		}
+		req->free (req);
 	}
-#endif // _WIN32 || _WIN64
-
-	// create attachment (backup cookie & post file)
-	ugtk_app_backup_attachment (app, infonode);
-
-	// if user want to add downloads quietly.
-	if (app->setting.commandline.quiet)
-		app->ipc->value.quiet = TRUE;
-	// add downloads
-	if (app->ipc->value.quiet)
-		ugtk_app_add_uris_quietly (app, (GList*) uris.head, infonode);
-	else
-		ugtk_app_add_uris_selected (app, (GList*) uris.head, infonode);
-
-exit:
-	uget_node_unref (infonode);
-	ug_list_clear (&uris, TRUE);
-	return TRUE;
 }
 
 // ----------------------------------------------------------------------------

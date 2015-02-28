@@ -127,68 +127,6 @@ gboolean  ugtk_launch_default_app (const gchar* folder, const gchar* file)
 #endif // _WIN32 || _WIN64
 
 // ----------------------------------------------------------------------------
-//
-
-#if defined _WIN32 || defined _WIN64
-int  ugtk_copy_file (const gchar *src_file_utf8, const gchar *new_file_utf8)
-{
-	gboolean	retval;
-	gunichar2*	src_file_wcs;
-	gunichar2*	new_file_wcs;
-
-	src_file_wcs = g_utf8_to_utf16 (src_file_utf8, -1, NULL, NULL, NULL);
-	new_file_wcs = g_utf8_to_utf16 (new_file_utf8, -1, NULL, NULL, NULL);
-	retval = CopyFileW (src_file_wcs, new_file_wcs, FALSE);
-	g_free (src_file_wcs);
-	g_free (new_file_wcs);
-	if (retval == 0)
-		return -1;
-	return 0;
-}
-#else
-int  ugtk_copy_file (const gchar *src_file_utf8, const gchar *new_file_utf8)
-{
-	int		src_fd;
-	int		new_fd;
-	char*	buf;
-	int		buf_len;
-	int		retval = 0;
-
-//	new_fd = open (new_file_utf8,
-//	               O_BINARY | O_WRONLY | O_CREAT,
-//	               S_IREAD | S_IWRITE | S_IRGRP | S_IROTH);
-	new_fd = ug_open (new_file_utf8,
-	                  UG_O_BINARY | UG_O_WRONLY | UG_O_CREAT,
-	                  UG_S_IREAD | UG_S_IWRITE | UG_S_IRGRP | UG_S_IROTH);
-	if (new_fd == -1)
-		return -1;
-
-//	src_fd = open (src_file_utf8, O_BINARY | O_RDONLY, S_IREAD);
-	src_fd = ug_open (src_file_utf8, UG_O_BINARY | UG_O_RDONLY, UG_S_IREAD);
-	if (src_fd == -1) {
-		ug_close (new_fd);
-		return -1;
-	}
-	// read & write
-	buf = g_malloc (8192);
-	for (;;) {
-		buf_len = ug_read (src_fd, buf, 8192);
-		if (buf_len <=0)
-			break;
-		if (ug_write (new_fd, buf, buf_len) != buf_len) {
-			retval = -1;
-			break;
-		}
-	}
-	// clear
-	g_free (buf);
-	ug_close (src_fd);
-	ug_close (new_fd);
-	return retval;
-}
-#endif	// _WIN32
-
-// ----------------------------------------------------------------------------
 // URI list functions
 // get URIs from text file
 GList*	ugtk_text_file_get_uris (const gchar* file_utf8, GError** error)

@@ -367,7 +367,7 @@ static void ugtk_download_form_init_page2 (UgtkDownloadForm* dform)
 	// Retry limit - spin button
 	widget = gtk_spin_button_new_with_range (0.0, 99.0, 1.0);
 	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
-		g_object_set (widget, "margin-left", 2, "margin-right", 2, NULL);
+	g_object_set (widget, "margin-left", 2, "margin-right", 2, NULL);
 	g_object_set (widget, "margin-top", 1, "margin-bottom", 1, NULL);
 	gtk_grid_attach (grid, widget, 2, 3, 1, 1);
 	g_signal_connect (GTK_EDITABLE (widget), "changed",

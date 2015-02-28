@@ -43,7 +43,8 @@
 extern "C" {
 #endif
 
-typedef struct UgJsonrpcSocket        UgJsonrpcSocket;
+typedef struct UgJsonrpcSocket   UgJsonrpcSocket;
+typedef struct UgSocketServer    UgSocketServer;
 
 // ----------------------------------------------------------------------------
 // UgJsonrpcSocket: JSON-RPC over Socket

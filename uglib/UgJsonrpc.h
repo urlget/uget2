@@ -78,9 +78,6 @@ struct UgJsonrpcError
 	UgValue  data;
 };
 
-void  ug_jsonrpc_object_init (UgJsonrpcObject* jobj);
-void  ug_jsonrpc_object_clear (UgJsonrpcObject* jobj);
-
 // ----------------------------------------------------------------------------
 // UgJsonrpcObject
 
@@ -110,6 +107,9 @@ void  ug_jsonrpc_object_free (UgJsonrpcObject* jrobj);
 void  ug_jsonrpc_object_init (UgJsonrpcObject* jrobj);
 void  ug_jsonrpc_object_clear (UgJsonrpcObject* jrobj);
 
+void  ug_jsonrpc_object_clear_request (UgJsonrpcObject* jrobj);
+void  ug_jsonrpc_object_clear_response (UgJsonrpcObject* jrobj);
+
 // check request, and return error code.
 //int   ug_jsonrpc_object_check (UgJsonrpcObject* jrobj);
 
@@ -119,7 +119,7 @@ void  ug_jsonrpc_object_clear (UgJsonrpcObject* jrobj);
 void  ug_json_write_rpc_object (UgJson* json, UgJsonrpcObject* jrobj);
 
 // ----------------------------------------------------------------------------
-// UgJsonrpcArray: a UgJsonrpcObject array
+// UgJsonrpcArray: a UgJsonrpcObject array for batch
 
 //void  ug_jsonrpc_array_init (UgJsonrpcArray* joarray, int allocated_len);
 #define ug_jsonrpc_array_init(array, allocated_len)   \
@@ -213,7 +213,7 @@ int  ug_jsonrpc_response (UgJsonrpc* jrpc,
                           UgJsonrpcObject* jr_object);
 
 int  ug_jsonrpc_response_batch (UgJsonrpc* jrpc,
-                                UgJsonrpcArray*  jr_array);
+                                UgJsonrpcArray* jr_array);
 
 // This function used by UgJsonrpc server mode.
 UgJsonError  ug_json_parse_rpc_request (UgJson* json,
