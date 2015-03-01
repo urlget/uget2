@@ -8,6 +8,8 @@ LOCAL_CPPFLAGS   += -DNDEBUG -DNO_URI_HASH
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) $(LOCAL_PATH)/../uglib $(LOCAL_PATH)/../curl/include
 LOCAL_SRC_FILES  := \
+	UgetRpc.c     \
+	UgetOption.c  \
 	UgetData.c    \
 	UgetNode.c  UgetNode-compare.c  \
 	UgetTask.c    \

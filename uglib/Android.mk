@@ -11,6 +11,6 @@ LOCAL_SRC_FILES  := \
 	UgData.c  UgRegistry.c  UgSLink.c  UgInfo.c  \
 	UgNode.c  UgThread.c  UgStdio.c  UgUri.c  \
 	UgUtil.c  UgString.c  UgSocket.c  \
-	UgHtml.c  UgOption.c
+	UgOption.c
 
 include $(BUILD_STATIC_LIBRARY)
