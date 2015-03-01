@@ -97,6 +97,7 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
 
 #include <stdlib.h>    // exit(), EXIT_SUCCESS, EXIT_FAILURE
 #include <signal.h>    // signal(), SIGTERM
+#include <UgUtil.h>
 #include <UgtkApp.h>
 
 // OpenSSL
@@ -258,6 +259,7 @@ int  main (int argc, char** argv)
 	rpc = uget_rpc_new ();
 	rpc->backup_dir = g_build_filename (g_get_user_config_dir (),
 	                                    UGTK_APP_DIR, "attachment", NULL);
+	ug_create_dir_all (rpc->backup_dir, -1);
 	if (uget_rpc_start_server (rpc))
 		uget_rpc_send_command (rpc, argc-1, argv+1);
 	else {
