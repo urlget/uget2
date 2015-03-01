@@ -1,0 +1,45 @@
+uGet JSON-RPC interface
+
+uGet provides JSON-RPC over TCP (localhost:14777).
+
+---------------------------------------
+Method: uget.sendCommand
+This method send command-line arguments to uGet.
+
+Request sample
+{
+	"jsonrpc": "2.0",
+	"method": "uget.sendCommand",
+	"params": [
+		"--user=foo",
+		"--password=bar",
+		"http://foo.bar.idv/test.mp4"
+	],
+	"id": 1
+}
+
+Response sample
+{
+	"jsonrpc": "2.0",
+	"result": true,
+	"id": 1
+}
+
+---------------------------------------
+Method: uget.present
+This method can present uGet main window in screen.
+
+Request sample
+{
+	"jsonrpc": "2.0",
+	"method": "uget.present",
+	"id": 1
+}
+
+Response sample
+{
+	"jsonrpc": "2.0",
+	"result": true,
+	"id": 1
+}
+
