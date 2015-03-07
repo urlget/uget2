@@ -450,6 +450,7 @@ static void on_clipboard_text_received (GtkClipboard*	clipboard,
 {
 	UgtkApp*  app;
 	GList*    list;
+
 	app = (UgtkApp*) user_data;
 	list = ugtk_clipboard_get_matched (&app->clipboard, text);
 	if (list) {

@@ -73,7 +73,7 @@ struct UgetRpc {
 	char*            backup_dir;
 };
 
-UgetRpc*  uget_rpc_new (void);
+UgetRpc*  uget_rpc_new (const char* backup_dir);
 void      uget_rpc_free (UgetRpc* urpc);
 
 int   uget_rpc_do_request (UgetRpc* urpc, UgJsonrpcObject* jobj);

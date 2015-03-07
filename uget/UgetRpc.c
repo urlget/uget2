@@ -52,7 +52,7 @@ static void on_accepted (UgJsonrpc* jrpc, UgetRpc* urpc, void* data);
 static void set_invalid_request (UgJsonrpcObject* jobj);
 static void backup_data_file (UgetOptionValue* uoval, const char* dir);
 
-UgetRpc*  uget_rpc_new (void)
+UgetRpc*  uget_rpc_new (const char* backup_dir)
 {
 	UgetRpc*  urpc;
 
@@ -71,7 +71,10 @@ UgetRpc*  uget_rpc_new (void)
 	ug_option_init (&urpc->option);
 	ug_list_init (&urpc->queue);
 	ug_mutex_init (&urpc->queue_lock);
-	urpc->backup_dir = NULL;
+	if (backup_dir)
+		urpc->backup_dir = ug_strdup (backup_dir);
+	else
+		urpc->backup_dir = NULL;
 	return urpc;
 }
 

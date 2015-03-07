@@ -256,7 +256,7 @@ int  main (int argc, char** argv)
 	}
 
 	// JSON-RPC server
-	rpc = uget_rpc_new ();
+	rpc = uget_rpc_new (NULL);
 	rpc->backup_dir = g_build_filename (g_get_user_config_dir (),
 	                                    UGTK_APP_DIR, "attachment", NULL);
 	ug_create_dir_all (rpc->backup_dir, -1);
