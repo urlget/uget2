@@ -45,15 +45,11 @@
 
 // ----------------------------------------------------------------------------
 
-int  mem_is_zero (char* beg, int len)
+void  uget_option_value_init (UgetOptionValue* value)
 {
-	char* end;
-
-	for (end = beg + len;  beg < end;  beg++) {
-		if (beg[0])
-			return FALSE;
-	}
-	return TRUE;
+	memset (value, 0, sizeof (UgetOptionValue));
+	value->category_index = -1;
+	value->ctrl.offline = -1;
 }
 
 void  uget_option_value_clear (UgetOptionValue* value)
@@ -81,7 +77,18 @@ void  uget_option_value_clear (UgetOptionValue* value)
 	ug_free (value->ftp.user);
 	ug_free (value->ftp.password);
 
-	memset (value, 0, sizeof (UgetOptionValue));
+	uget_option_value_init (value);
+}
+
+static int  mem_is_zero (char* beg, int len)
+{
+	char* end;
+
+	for (end = beg + len;  beg < end;  beg++) {
+		if (beg[0])
+			return FALSE;
+	}
+	return TRUE;
 }
 
 int   uget_option_value_has_ctrl (UgetOptionValue* value)

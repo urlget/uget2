@@ -37,8 +37,10 @@
 #ifndef UGET_RPC_H
 #define UGET_RPC_H
 
-#include <UgetOption.h>
+#include <UgList.h>
+#include <UgThread.h>
 #include <UgJsonrpcSocket.h>
+#include <UgetOption.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -82,8 +84,8 @@ void  uget_rpc_present (UgetRpc* urpc);
 int   uget_rpc_start_server (UgetRpc* urpc);
 void  uget_rpc_stop_server  (UgetRpc* urpc);
 
-int   uget_rpc_has_request (UgetRpc* urpc);
-UgetRpcReq*  uget_rpc_get (UgetRpc* urpc);
+int          uget_rpc_has_request (UgetRpc* urpc);
+UgetRpcReq*  uget_rpc_get_request (UgetRpc* urpc);
 
 // ----------------------------------------------------------------------------
 // UgetRpcReq - Request

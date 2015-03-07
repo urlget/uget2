@@ -300,7 +300,7 @@ int   uget_rpc_has_request (UgetRpc* urpc)
 		return FALSE;
 }
 
-UgetRpcReq* uget_rpc_get (UgetRpc* urpc)
+UgetRpcReq* uget_rpc_get_request (UgetRpc* urpc)
 {
 	UgetRpcReq*  link;
 
@@ -402,9 +402,14 @@ UgetRpcCmd*  uget_rpc_cmd_new (void)
 {
 	UgetRpcCmd*  cmd;
 
-	cmd = ug_malloc0 (sizeof (UgetRpcCmd));
+	cmd = ug_malloc (sizeof (UgetRpcCmd));
 	cmd->method_id = UGET_RPC_SEND_COMMAND;
+	cmd->next = NULL;
+	cmd->prev = NULL;
 	cmd->free = (UgDeleteFunc) uget_rpc_cmd_free;
+
+	uget_option_value_init (&cmd->value);
+	ug_list_init (&cmd->uris);
 	return cmd;
 }
 

@@ -309,7 +309,7 @@ static void  on_keep_above_window_show (GtkWindow *window, gpointer  user_data)
 	gtk_window_set_keep_above (window, FALSE);
 }
 
-static void  ugtk_app_add_uris_quietly (UgtkApp* app, GList* list, UgetNode* infonode)
+static void  ugtk_app_add_uris_quietly (UgtkApp* app, GList* list, UgetNode* infonode, int  nth_category)
 {
 	GList*      link;
 	UgUri       uuri;
@@ -327,9 +327,14 @@ static void  ugtk_app_add_uris_quietly (UgtkApp* app, GList* list, UgetNode* inf
 		// check existing
 		if (link->data == NULL)
 			continue;
-		// match category
-		ug_uri_init (&uuri, link->data);
-		cnode = uget_app_match_category ((UgetApp*) app, &uuri);
+		// select category
+		cnode = NULL;
+		if (nth_category != -1)
+			cnode = uget_node_nth_child (&app->real, nth_category);
+		if (cnode == NULL) {
+			ug_uri_init (&uuri, link->data);
+			cnode = uget_app_match_category ((UgetApp*) app, &uuri);
+		}
 		if (cnode == NULL) {
 			if (infonode == NULL) {
 				cnode = uget_node_nth_child (&app->real,
@@ -359,7 +364,7 @@ static void  ugtk_app_add_uris_quietly (UgtkApp* app, GList* list, UgetNode* inf
 	}
 }
 
-static void  ugtk_app_add_uris_selected (UgtkApp* app, GList* list, UgetNode* infonode)
+static void  ugtk_app_add_uris_selected (UgtkApp* app, GList* list, UgetNode* infonode, int  nth_category)
 {
 	UgtkBatchDialog*    bdialog;
 	UgtkSelectorPage*   page;
@@ -408,9 +413,11 @@ static void  ugtk_app_add_uris_selected (UgtkApp* app, GList* list, UgetNode* in
 	}
 	// set folder history and info
 	ugtk_download_form_set_folders (&bdialog->download, &app->setting);
-	// match category
+	// select category
 	cnode = NULL;
-	if (list->data) {
+	if (nth_category != -1)
+		cnode = uget_node_nth_child (&app->real, nth_category);
+	if (cnode == NULL && list->data) {
 		ug_uri_init (&uuri, list->data);
 		cnode = uget_app_match_category ((UgetApp*) app, &uuri);
 	}
@@ -447,9 +454,9 @@ static void on_clipboard_text_received (GtkClipboard*	clipboard,
 	list = ugtk_clipboard_get_matched (&app->clipboard, text);
 	if (list) {
 		if (app->setting.clipboard.quiet)
-			ugtk_app_add_uris_quietly (app, list, NULL);
+			ugtk_app_add_uris_quietly (app, list, NULL, -1);
 		else
-			ugtk_app_add_uris_selected (app, list, NULL);
+			ugtk_app_add_uris_selected (app, list, NULL, -1);
 		g_list_free (list);
 		// refresh
 		gtk_widget_queue_draw ((GtkWidget*) app->traveler.category.view);
@@ -484,7 +491,7 @@ static gboolean  ugtk_app_timeout_rpc (UgtkApp* app)
 		if (uget_rpc_has_request(app->rpc) == FALSE)
 			return TRUE;
 
-		req = uget_rpc_get (app->rpc);
+		req = uget_rpc_get_request (app->rpc);
 		switch (req->method_id) {
 		case UGET_RPC_PRESENT:
 //			if (gtk_widget_get_visible ((GtkWidget*) app->window.self) == FALSE)
@@ -514,6 +521,9 @@ static gboolean  ugtk_app_timeout_rpc (UgtkApp* app)
 						(GtkCheckMenuItem*) app->menubar.file.offline_mode,
 						TRUE);
 				break;
+
+			default:
+				break;
 			}
 
 			// if user want to add downloads quietly.
@@ -529,11 +539,11 @@ static gboolean  ugtk_app_timeout_rpc (UgtkApp* app)
 			uget_option_value_to_info (&cmd->value, &infonode->info);
 			if (cmd->value.quiet) {
 				ugtk_app_add_uris_quietly (app, (GList*) cmd->uris.head,
-				                           infonode);
+						infonode, cmd->value.category_index);
 			}
 			else {
 				ugtk_app_add_uris_selected (app, (GList*) cmd->uris.head,
-				                            infonode);
+						infonode, cmd->value.category_index);
 			}
 			uget_node_unref (infonode);
 			break;

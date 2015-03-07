@@ -53,12 +53,12 @@ struct UgetOptionValue
 {
 	int   version;
 	int   quiet;
-	int   category_index;
+	int   category_index;  // default = -1
 	char* input_file;
 
 	struct
 	{
-		int   offline;
+		int   offline;     // default = -1
 	} ctrl;
 
 	struct
@@ -97,7 +97,9 @@ struct UgetOptionValue
 	} ftp;
 };
 
+void  uget_option_value_init (UgetOptionValue* value);
 void  uget_option_value_clear (UgetOptionValue* value);
+
 int   uget_option_value_has_ctrl (UgetOptionValue* value);
 int   uget_option_value_to_info (UgetOptionValue* ivalue, UgInfo* info);
 
