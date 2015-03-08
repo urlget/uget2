@@ -207,6 +207,36 @@ FILE* ug_fopen (const char *filename, const char *mode)
 
 #endif // _WIN32 || _WIN64
 
+#ifdef __ANDROID__
+#include <sys/linux-syscalls.h>
+
+int  fseek_64 (FILE *stream, int64_t offset, int origin)
+{  
+	int fd;
+
+	if (feof (stream)) {
+		rewind (stream);
+	}
+	else {
+		setbuf (stream, NULL);  // clear buffer of fread()
+	}
+
+	fd = fileno (stream);
+	if (lseek64 (fd, offset, origin) == -1) {
+		return errno;
+	}  
+	return 0;  
+}
+
+int64_t ftell_64 (FILE *stream)
+{
+	int fd;
+
+	fd = fileno (stream);
+	return lseek (fd, 0L, SEEK_CUR);
+}
+#endif  // __ANDROID__
+
 int  ug_ftruncate (FILE* file, int64_t size)
 {
 	int    fd;

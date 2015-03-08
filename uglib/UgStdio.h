@@ -80,6 +80,13 @@ extern "C" {
 // add `getconf LFS_CFLAGS`  to CFLAGS
 // add `getconf LFS_LDFLAGS` to LDFLAGS
 
+// in Linux
+// gcc -D_FILE_OFFSET_BITS=64
+// define _FILE_OFFSET_BITS  64
+
+// in Android
+// use lseek64()
+
 // ----------------------------------------------------------------------------
 // low level file I/O
 // wrapper functions/definitions for file descriptor.
@@ -178,14 +185,30 @@ int  ug_truncate (int fd, int64_t length);
 #  define  ug_close     close
 #  define  ug_read      read
 #  define  ug_write     write
-#  define  ug_seek      lseek
-#  define  ug_tell(fd)  lseek(fd, 0L, SEEK_CUR)
-#  define  ug_truncate  ftruncate
+#  if defined __ANDROID__
+#    define  ug_seek      lseek64
+#    define  ug_tell(fd)  lseek64(fd, 0L, SEEK_CUR)
+#    if __ANDROID_API__ >= 12
+#      define  ug_truncate  ftruncate64 // Android API level 12+
+#    else
+#      define  ug_truncate  ftruncate
+#    endif
+#  else
+#    define  ug_seek      lseek
+#    define  ug_tell(fd)  lseek(fd, 0L, SEEK_CUR)
+#    define  ug_truncate  ftruncate
+#  endif
 #endif
 
 // ------------------------------------------------------------------
 // streaming file I/O
 // wrapper functions/definitions for file stream. (struct FILE)
+
+//#if defined (USE_FILE32API)   // iOS
+//#  define fopen64  fopen
+//#  define ftello64 ftell
+//#  define fseeko64 fseek
+//#endif
 
 #if defined _WIN32 || defined _WIN64 || defined HAVE_GLIB
 FILE* ug_fopen (const char *filename_utf8, const char *mode);
@@ -193,13 +216,18 @@ FILE* ug_fopen (const char *filename_utf8, const char *mode);
 #  define ug_fopen      fopen
 #endif
 
+#if defined __ANDROID__
+int     fseek_64 (FILE *stream, int64_t offset, int origin);
+int64_t ftell_64 (FILE *stream);
+#endif  // __ANDROID__
+
 int   ug_ftruncate (FILE* file, int64_t size);
 
 #if defined _WIN32 || defined _WIN64
-#  if defined(_MSC_VER)
+#  if defined _MSC_VER
 #    define ug_fseek                _fseeki64
 #    define ug_ftell                _ftelli64
-#  elif defined(__MINGW32__)
+#  elif defined __MINGW32__
 #    define ug_fseek                fseeko64
 #    define ug_ftell                ftello64
 #  else
@@ -208,9 +236,14 @@ int   ug_ftruncate (FILE* file, int64_t size);
 #  endif
 #  define ug_fileno                 _fileno
 #else
-#  define ug_fseek					fseek
-#  define ug_ftell					ftell
-#  define ug_fileno					fileno
+#  if defined __ANDROID__
+#    define ug_fseek                fseek_64
+#    define ug_ftell                ftell_64
+#  else
+#    define ug_fseek                fseek
+#    define ug_ftell                ftell
+#  endif
+#  define ug_fileno                 fileno
 #endif
 
 #define ug_fclose                   fclose
