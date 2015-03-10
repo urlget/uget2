@@ -37,6 +37,7 @@
 #include <UgString.h>
 #include <UgUri.h>
 #include <UgUtil.h>
+#include <UgFileUtil.h>
 #include <UgStdio.h>
 #include <UgJsonFile.h>
 #include <UgetApp.h>

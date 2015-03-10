@@ -11,24 +11,62 @@ libuglib_a_CPPFLAGS = -I$(top_srcdir)/uglib
 libuglib_a_CFLAGS   = @PTHREAD_CFLAGS@  @LFS_CFLAGS@  @CURL_CFLAGS@  @GLIB_CFLAGS@
 
 libuglib_a_SOURCES = \
-	UgJson.c  UgBuffer.c  UgValue.c  UgEntry.c  UgArray.c  UgList.c  \
-	UgJson-custom.c  UgJsonFile.c  \
-	UgJsonrpc.c  UgJsonrpcSocket.c  UgJsonrpcCurl.c  \
-	UgData.c  UgRegistry.c  UgSLink.c  UgInfo.c  \
-	UgNode.c  UgThread.c  UgStdio.c  UgUri.c  \
-	UgUtil.c  UgString.c  UgSocket.c  \
-	UgHtml.c  UgHtmlEntry.c  UgHtmlFilter.c  \
-	UgOption.c
+	UgStdio.c  \
+	UgString.c  \
+	UgThread.c  \
+	UgSocket.c  \
+	UgUtil.c  \
+	UgFileUtil.c  \
+	UgArray.c  \
+	UgList.c  \
+	UgSLink.c  \
+	UgOption.c  \
+	UgUri.c  \
+	UgNode.c  \
+	UgData.c  \
+	UgInfo.c  \
+	UgRegistry.c  \
+	UgValue.c  \
+	UgEntry.c  \
+	UgBuffer.c  \
+	UgJson.c  \
+	UgJson-custom.c  \
+	UgJsonFile.c  \
+	UgJsonrpc.c  \
+	UgJsonrpcSocket.c  \
+	UgJsonrpcCurl.c  \
+	UgHtml.c  \
+	UgHtmlEntry.c  \
+	UgHtmlFilter.c
 
 noinst_HEADERS = \
 	UgDefine.h   \
-	UgJson.h  UgBuffer.h  UgValue.h  UgEntry.h  UgArray.h  UgList.h  \
-	UgJson-custom.h  UgJsonFile.h  \
-	UgJsonrpc.h  UgJsonrpcSocket.h  UgJsonrpcCurl.h  \
-	UgData.h  UgRegistry.h  UgSLink.h  UgInfo.h  \
-	UgNode.h  UgThread.h  UgStdio.h  UgUri.h  \
-	UgUtil.h  UgString.h  UgSocket.h  \
-	UgHtml.h  UgHtmlEntry.h  UgHtmlFilter.h  \
-	UgOption.h
+	UgStdio.h   \
+	UgString.h  \
+	UgThread.h  \
+	UgSocket.h  \
+	UgUtil.h  \
+	UgFileUtil.h  \
+	UgArray.h  \
+	UgList.h  \
+	UgSLink.h  \
+	UgOption.h  \
+	UgUri.h  \
+	UgNode.h  \
+	UgData.h  \
+	UgInfo.h  \
+	UgRegistry.h  \
+	UgValue.h  \
+	UgEntry.h  \
+	UgBuffer.h  \
+	UgJson.h  \
+	UgJson-custom.h  \
+	UgJsonFile.h  \
+	UgJsonrpc.h  \
+	UgJsonrpcSocket.h  \
+	UgJsonrpcCurl.h  \
+	UgHtml.h  \
+	UgHtmlEntry.h  \
+	UgHtmlFilter.h
 
 EXTRA_DIST = Android.mk

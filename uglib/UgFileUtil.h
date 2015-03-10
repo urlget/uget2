@@ -34,11 +34,10 @@
  *
  */
 
-#ifndef UG_UTIL_H
-#define UG_UTIL_H
+#ifndef UG_FILE_UTIL_H
+#define UG_FILE_UTIL_H
 
 #include <time.h>
-#include <stdint.h>
 #include <UgList.h>
 
 #ifdef __cplusplus
@@ -48,53 +47,28 @@ extern "C" {
 // ----------------------------------------------------------------------------
 // Time
 
-uint64_t ug_get_time_count (void);
+// Change the modified time of file
+int   ug_modify_file_time (const char *file_utf8, time_t mod_time);
 
 // ----------------------------------------------------------------------------
-// URI
+// file & directory functions
 
-char*  ug_unescape_uri (const char *uri, int length);
-
-// ----------------------------------------------------------------------------
-// Unicode
-
-uint16_t*  ug_utf8_to_utf16 (const char* string, int stringLength,
-                             int* utf16len);
-int        ug_utf8_get_invalid (const uint8_t* input, uint8_t* ch);
-
-uint8_t*   ug_utf16_to_utf8 (uint16_t* string, int stringLength,
-                             int* utf8len);
+int   ug_file_is_exist (const char* file);
+int   ug_file_is_dir (const char* file);
+int   ug_create_dir_all (const char* dir, int len);
+//int ug_delete_dir_all (const char* dir, int len);
 
 // ----------------------------------------------------------------------------
-// Base64
+// File I/O
 
-char*  ug_base64_encode (const uint8_t* data, int input_length,
-                         int* output_length);
-
-// ----------------------------------------------------------------------------
-// filename & path functions
-
-char* ug_build_filename (const char* first_element, ...);
-
-// ----------------------------------------------------------------------------
-// Power Management
-
-// Suspend does not turn off your computer. It puts the computer and all peripherals on a low power consumption mode.
-// Hibernate saves the state of your computer to the hard disk and completely powers off.
-
-void  ug_reboot (void);
-void  ug_shutdown (void);
-void  ug_suspend (void);
-void  ug_hibernate (void);
-
-// ----------------------------------------------------------------------------
-// Others
-
-char* ug_sys_release (void);
+// return -1 if error
+int   ug_file_copy (const char *src_file_utf8, const char *dest_file_utf8);
+// return number of lines
+int   ug_file_get_lines (const char* filename_utf8, UgList* list);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // End of UG_UTIL_H
+#endif // End of UG_FILE_UTIL_H
 

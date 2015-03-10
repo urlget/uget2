@@ -37,6 +37,7 @@
 #include <UgUtil.h>
 #include <UgStdio.h>
 #include <UgString.h>
+#include <UgFileUtil.h>
 #include <UgHtmlFilter.h>
 #include <UgetPluginCurl.h>
 #include <UgetPluginAria2.h>

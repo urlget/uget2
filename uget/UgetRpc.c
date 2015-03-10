@@ -36,9 +36,10 @@
 
 #include <stdlib.h>   // srand()
 #include <time.h>     // time()
+#include <UgUtil.h>
 #include <UgString.h>
 #include <UgSocket.h>
-#include <UgUtil.h>
+#include <UgFileUtil.h>
 #include <UgetRpc.h>
 
 #define UGET_RPC_PORT      "14777"

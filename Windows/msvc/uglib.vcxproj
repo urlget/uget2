@@ -69,6 +69,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\uglib\UgBuffer.c" />
+    <ClCompile Include="..\..\uglib\UgFileUtil.c" />
     <ClCompile Include="..\..\uglib\UgHtmlEntry.c" />
     <ClCompile Include="..\..\uglib\UgHtmlFilter.c" />
     <ClCompile Include="..\..\uglib\UgJsonFile.c" />
@@ -98,6 +99,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\uglib\UgBuffer.h" />
     <ClInclude Include="..\..\uglib\UgDefine.h" />
+    <ClInclude Include="..\..\uglib\UgFileUtil.h" />
     <ClInclude Include="..\..\uglib\UgHtmlEntry.h" />
     <ClInclude Include="..\..\uglib\UgHtmlFilter.h" />
     <ClInclude Include="..\..\uglib\UgJsonFile.h" />

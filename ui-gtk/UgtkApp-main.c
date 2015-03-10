@@ -98,6 +98,7 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
 #include <stdlib.h>    // exit(), EXIT_SUCCESS, EXIT_FAILURE
 #include <signal.h>    // signal(), SIGTERM
 #include <UgUtil.h>
+#include <UgFileUtil.h>
 #include <UgtkApp.h>
 
 // OpenSSL

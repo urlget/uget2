@@ -41,6 +41,7 @@
 #include <UgUtil.h>
 #include <UgStdio.h>
 #include <UgString.h>
+#include <UgFileUtil.h>
 #include <UgetCurl.h>
 #include <UgetPluginCurl.h>
 

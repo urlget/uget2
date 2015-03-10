@@ -60,6 +60,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../uglib/UgEntry.h" />
+		<Unit filename="../../uglib/UgFileUtil.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uglib/UgFileUtil.h" />
 		<Unit filename="../../uglib/UgHtml.c">
 			<Option compilerVar="CC" />
 		</Unit>
