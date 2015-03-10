@@ -72,6 +72,14 @@ struct UgtkTrayIcon
 		GtkWidget*  create_clipboard;
 		GtkWidget*  create_torrent;
 		GtkWidget*  create_metalink;
+
+		gboolean    emission;
+		GtkWidget*  clipboard_monitor;
+		GtkWidget*  clipboard_quiet;
+		GtkWidget*  commandline_quiet;
+		GtkWidget*  skip_existing;
+		GtkWidget*  apply_recently;
+
 		GtkWidget*  settings;
 		GtkWidget*  about;
 		GtkWidget*  show_window;

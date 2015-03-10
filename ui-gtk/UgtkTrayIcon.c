@@ -87,6 +87,29 @@ void ugtk_tray_icon_init (UgtkTrayIcon* trayicon)
 
 	gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_separator_menu_item_new() );
 
+	// Settings shortcut
+	menu_item = gtk_check_menu_item_new_with_mnemonic (_("Clipboard _Monitor"));
+	gtk_menu_shell_append ((GtkMenuShell*)menu, menu_item);
+	trayicon->menu.clipboard_monitor = menu_item;
+
+	menu_item = gtk_check_menu_item_new_with_mnemonic (_("Clipboard works quietly"));
+	gtk_menu_shell_append ((GtkMenuShell*)menu, menu_item);
+	trayicon->menu.clipboard_quiet = menu_item;
+
+	menu_item = gtk_check_menu_item_new_with_mnemonic (_("Command-line works quietly"));
+	gtk_menu_shell_append ((GtkMenuShell*)menu, menu_item);
+	trayicon->menu.commandline_quiet = menu_item;
+
+	menu_item = gtk_check_menu_item_new_with_mnemonic (_("Skip existing URI"));
+	gtk_menu_shell_append ((GtkMenuShell*)menu, menu_item);
+	trayicon->menu.skip_existing = menu_item;
+
+	menu_item = gtk_check_menu_item_new_with_mnemonic (_("Apply recently download settings"));
+	gtk_menu_shell_append ((GtkMenuShell*)menu, menu_item);
+	trayicon->menu.apply_recently = menu_item;
+
+	gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_separator_menu_item_new() );
+
 	// Settings
 	menu_item = gtk_image_menu_item_new_with_mnemonic (_("_Settings..."));
 	image = gtk_image_new_from_stock (GTK_STOCK_PROPERTIES, GTK_ICON_SIZE_MENU);
@@ -346,6 +369,36 @@ static void	on_create_download (GtkWidget* widget, UgtkApp* app)
 	ugtk_app_create_download (app, NULL, NULL);
 }
 
+static void on_clipboard_monitor (GtkWidget* widget, UgtkApp* app)
+{
+	if (app->trayicon.menu.emission)
+		g_signal_emit_by_name (app->menubar.edit.clipboard_monitor, "activate");
+}
+
+static void on_clipboard_quiet (GtkWidget* widget, UgtkApp* app)
+{
+	if (app->trayicon.menu.emission)
+		g_signal_emit_by_name (app->menubar.edit.clipboard_quiet, "activate");
+}
+
+static void on_commandline_quiet (GtkWidget* widget, UgtkApp* app)
+{
+	if (app->trayicon.menu.emission)
+		g_signal_emit_by_name (app->menubar.edit.commandline_quiet, "activate");
+}
+
+static void on_skip_existing (GtkWidget* widget, UgtkApp* app)
+{
+	if (app->trayicon.menu.emission)
+		g_signal_emit_by_name (app->menubar.edit.skip_existing, "activate");
+}
+
+static void on_apply_recently (GtkWidget* widget, UgtkApp* app)
+{
+	if (app->trayicon.menu.emission)
+		g_signal_emit_by_name (app->menubar.edit.apply_recently, "activate");
+}
+
 static void  on_config_settings (GtkWidget* widget, UgtkApp* app)
 {
 	g_signal_emit_by_name (app->menubar.edit.settings, "activate");
@@ -407,6 +460,19 @@ void  ugtk_trayicon_init_callback (struct UgtkTrayIcon* trayicon, UgtkApp* app)
 			G_CALLBACK (ugtk_app_create_torrent), app);
 	g_signal_connect_swapped (trayicon->menu.create_metalink, "activate",
 			G_CALLBACK (ugtk_app_create_metalink), app);
+
+	trayicon->menu.emission = TRUE;
+	g_signal_connect (trayicon->menu.clipboard_monitor, "activate",
+			G_CALLBACK (on_clipboard_monitor), app);
+	g_signal_connect (trayicon->menu.clipboard_quiet, "activate",
+			G_CALLBACK (on_clipboard_quiet), app);
+	g_signal_connect (trayicon->menu.commandline_quiet, "activate",
+			G_CALLBACK (on_commandline_quiet), app);
+	g_signal_connect (trayicon->menu.skip_existing, "activate",
+			G_CALLBACK (on_skip_existing), app);
+	g_signal_connect (trayicon->menu.apply_recently, "activate",
+			G_CALLBACK (on_apply_recently), app);
+
 	g_signal_connect (trayicon->menu.settings, "activate",
 			G_CALLBACK (on_config_settings), app);
 	g_signal_connect (trayicon->menu.offline_mode, "toggled",
