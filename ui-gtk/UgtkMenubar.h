@@ -83,6 +83,7 @@ struct UgtkMenubar
 		GtkWidget*  clipboard_monitor;
 		GtkWidget*  clipboard_quiet;
 		GtkWidget*  commandline_quiet;
+		GtkWidget*  apply_recently;
 		GtkWidget*  skip_existing;
 		GtkWidget*  settings;
 
