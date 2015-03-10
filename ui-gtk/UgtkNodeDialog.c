@@ -375,6 +375,13 @@ static void ugtk_node_dialog_init_list_ui (UgtkNodeDialog* ndialog,
 	GtkTreeModel* model;
 	GtkWidget*    scrolled;
 	GtkBox*       vbox;
+	int           width;
+
+	// decide width
+	if (ndialog->app->setting.window.category)
+		width = gtk_paned_get_position (ndialog->app->window.hpaned);
+	else
+		width = 165;
 
 	ndialog->node_tree = ugtk_node_tree_new (root, TRUE);
 	ndialog->node_view = (GtkTreeView*) ugtk_node_view_new_for_category ();
@@ -382,7 +389,7 @@ static void ugtk_node_dialog_init_list_ui (UgtkNodeDialog* ndialog,
 	gtk_tree_view_set_model (ndialog->node_view, model);
 
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
-	gtk_widget_set_size_request (scrolled, 165, 100);
+	gtk_widget_set_size_request (scrolled, width, 200);
 	gtk_widget_show (scrolled);
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
 			GTK_SHADOW_IN);
