@@ -296,6 +296,7 @@ int  main (int argc, char** argv)
 
 	gtk_main ();
 
+	uget_app_clear_attachment ((UgetApp*) ugtk_app);
 	ugtk_app_final (ugtk_app);
 	g_free (ugtk_app);
 

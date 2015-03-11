@@ -91,7 +91,6 @@ void  ugtk_app_init (UgtkApp* app, UgetRpc* rpc)
 	gtk_widget_hide (app->banner.self);
 
 	uget_app_use_uri_hash ((UgetApp*) app);
-	ugtk_app_clear_attachment (app);
 	ugtk_app_init_timeout (app);
 
 	if (app->setting.ui.start_in_tray)
@@ -1519,84 +1518,6 @@ void  ugtk_app_add_default_category (UgtkApp* app)
 	*(char**)ug_array_alloc (&category->file_exts, 1) = ug_strdup ("metalink");
 
 	uget_app_add_category ((UgetApp*) app, cnode, TRUE);
-}
-
-void  ugtk_app_clear_attachment (UgtkApp* app)
-{
-	UgetNode*   dnode;
-	UgetHttp*   http;
-	GDir*       gdir;
-	void*       hash;
-	const char* name;
-	GString*    gstr;
-	int         folder_len;
-
-	hash = uget_uri_hash_new ();
-	// add attachment
-	for (dnode = app->mix.children->children;  dnode;  dnode = dnode->next) {
-		if ((http = ug_info_get (&dnode->data->info, UgetHttpInfo)) == NULL)
-			continue;
-		if (http->cookie_file)
-			uget_uri_hash_add (hash, http->cookie_file);
-		if (http->post_file)
-			uget_uri_hash_add (hash, http->post_file);
-	}
-
-	gstr = g_string_new (app->config_dir);
-	g_string_append_c (gstr, G_DIR_SEPARATOR);
-	g_string_append (gstr, "attachment");
-
-	gdir = g_dir_open (gstr->str, 0, NULL);
-	if (gdir == NULL)
-		ug_create_dir_all (gstr->str, -1);
-	else {
-		g_string_append_c (gstr, G_DIR_SEPARATOR);
-		folder_len = gstr->len;
-
-		while ((name = g_dir_read_name (gdir)) != NULL) {
-			g_string_append (gstr, name);
-			if (uget_uri_hash_find (hash, gstr->str) == FALSE)
-				ug_unlink (gstr->str);
-			g_string_truncate (gstr, folder_len);
-		}
-		g_dir_close (gdir);
-	}
-
-	g_string_free (gstr, TRUE);
-	uget_uri_hash_free (hash);
-}
-
-void  ugtk_app_backup_attachment (UgtkApp* app, UgetNode* dnode)
-{
-	UgetHttp*  http;
-	GString*   gstr;
-	int        base_len;
-
-	http = ug_info_get (&dnode->info, UgetHttpInfo);
-	if (http == NULL || (http->cookie_file == NULL && http->post_file == NULL))
-		return;
-
-	gstr = g_string_new (app->config_dir);
-	g_string_append_c (gstr, G_DIR_SEPARATOR);
-	g_string_append (gstr, "attachment" G_DIR_SEPARATOR_S);
-	g_string_append_printf (gstr, "%X", (unsigned int) g_random_int ());
-	base_len = gstr->len;
-
-	if (http->cookie_file) {
-		g_string_append (gstr, ".cookie");
-		ug_file_copy (http->cookie_file, gstr->str);
-		ug_free (http->cookie_file);
-		http->cookie_file = ug_strdup (gstr->str);
-		g_string_truncate (gstr, base_len);
-	}
-	if (http->post_file) {
-		g_string_append (gstr, ".post");
-		ug_file_copy (http->post_file, gstr->str);
-		ug_free (http->post_file);
-		http->post_file = ug_strdup (gstr->str);
-	}
-
-	g_string_free (gstr, FALSE);
 }
 
 // ------------------------------------

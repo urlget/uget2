@@ -896,6 +896,53 @@ void  uget_app_use_uri_hash (UgetApp* app)
 	for (cnode = app->real.children;  cnode;  cnode = cnode->next)
 		uget_uri_hash_add_category (app->uri_hash, cnode);
 }
+
+void  uget_app_clear_attachment (UgetApp* app)
+{
+	UgetNode*   dnode;
+	UgetHttp*   http;
+	UgDir*      dir;
+	void*       hash;
+	const char* name;
+	char*       folder;
+	char*       path;
+
+	hash = uget_uri_hash_new ();
+	// add attachment
+	for (dnode = app->mix.children->children;  dnode;  dnode = dnode->next) {
+		if ((http = ug_info_get (&dnode->data->info, UgetHttpInfo)) == NULL)
+			continue;
+		if (http->cookie_file)
+			uget_uri_hash_add (hash, http->cookie_file);
+		if (http->post_file)
+			uget_uri_hash_add (hash, http->post_file);
+	}
+
+	folder = ug_build_filename (app->config_dir, "attachment", NULL);
+#ifdef HAVE_GLIB
+	path = g_filename_from_utf8 (folder, -1, NULL, NULL, NULL);
+	dir = ug_dir_open (path);
+	g_free (path);
+#else
+	dir = ug_dir_open (folder);
+#endif // HAVE_GLIB
+
+	if (dir == NULL)
+		ug_create_dir_all (folder, -1);
+	else {
+		while ((name = ug_dir_read (dir)) != NULL) {
+			path = ug_strdup_printf ("%s" UG_DIR_SEPARATOR_S "%s",
+			                         folder, name);
+			if (uget_uri_hash_find (hash, path) == FALSE)
+				ug_unlink (path);
+			ug_free (path);
+		}
+		ug_dir_close (dir);
+	}
+
+	ug_free (folder);
+	uget_uri_hash_free (hash);
+}
 #endif // NO_URI_HASH
 
 // ----------------------------------------------------------------------------

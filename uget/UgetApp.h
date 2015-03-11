@@ -124,8 +124,10 @@ void  uget_app_reset_download_name (UgetApp* app, UgetNode* dnode);
 
 #ifdef NO_URI_HASH
 #define uget_app_use_uri_hash(app)
+#define uget_app_clear_attachment(app)
 #else
-void    uget_app_use_uri_hash (UgetApp* app);
+void  uget_app_use_uri_hash (UgetApp* app);
+void  uget_app_clear_attachment (UgetApp* app);
 #endif
 
 // plugin functions

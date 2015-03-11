@@ -245,9 +245,6 @@ void  ugtk_app_category_changed  (UgtkApp* app, UgetNode* cnode);
 
 void  ugtk_app_add_default_category (UgtkApp* app);
 
-void  ugtk_app_clear_attachment (UgtkApp* app);
-void  ugtk_app_backup_attachment (UgtkApp* app, UgetNode* dnode);
-
 void  ugtk_app_show_message (UgtkApp* app, GtkMessageType type,
                              const gchar* message);
 
