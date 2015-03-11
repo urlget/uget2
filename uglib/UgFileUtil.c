@@ -59,6 +59,33 @@
 #endif
 
 // ----------------------------------------------------------------------------
+// UgDir
+
+#if defined HAVE_GLIB
+// use Glib functions
+#elif defined _WIN32 || defined _WIN64
+#else
+const char* ug_dir_read (UgDir* udir)
+{
+	struct dirent* entry;
+
+	entry = readdir (udir);
+	while (entry) {
+		if (strcmp (entry->d_name, "."))
+			break;
+		if (strcmp (entry->d_name, ".."))
+			break;
+		entry = readdir (udir);
+	}
+
+	if (entry)
+		return entry->d_name;
+	else
+		return NULL;
+}
+#endif
+
+// ----------------------------------------------------------------------------
 // Time
 
 #if defined _WIN32 || defined _WIN64

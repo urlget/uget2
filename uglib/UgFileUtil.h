@@ -37,12 +37,49 @@
 #ifndef UG_FILE_UTIL_H
 #define UG_FILE_UTIL_H
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#ifdef HAVE_GLIB
+#include <glib.h>
+#endif
+
+#if !(defined _WIN32 || defined _WIN64)
+#include <sys/types.h>
+#include <dirent.h>      // opendir(), closedir(), readdir()
+#endif
+
 #include <time.h>
 #include <UgList.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+// ----------------------------------------------------------------------------
+// UgDir
+
+#if defined HAVE_GLIB
+typedef        GDir    UgDir;
+#  define   ug_dir_open(p)  g_dir_open(p, 0, NULL)
+#  define   ug_dir_close    g_dir_close
+#  define   ug_dir_rewind   g_dir_rewind
+#  define   ug_dir_read     g_dir_read_name
+#elif defined _WIN32 || defined _WIN64
+typedef struct UgDir   UgDir;
+UgDir*      ug_dir_open (const char* path_utf8);
+void        ug_dir_close (UgDir* udir);
+void        ug_dir_rewind (UgDir* udir);
+const char* ug_dir_read (UgDir* udir);
+#else
+typedef        DIR     UgDir;
+#  define   ug_dir_open     opendir
+#  define   ug_dir_close    closedir
+#  define   ug_dir_rewind   rewinddir
+const char* ug_dir_read (UgDir* udir);
+#endif
+
 
 // ----------------------------------------------------------------------------
 // Time
