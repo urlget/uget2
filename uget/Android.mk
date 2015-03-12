@@ -3,7 +3,8 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE     := libuget
-LOCAL_CPPFLAGS   += -DNDEBUG -DNO_URI_HASH
+LOCAL_CPPFLAGS   += -DNDEBUG
+##                  -DNO_URI_HASH
 ##                  -DNO_RETRY_IF_CONNECT_FAILED
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) $(LOCAL_PATH)/../uglib $(LOCAL_PATH)/../curl/include
