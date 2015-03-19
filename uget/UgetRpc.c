@@ -223,6 +223,14 @@ void uget_rpc_send_command (UgetRpc* urpc, int argc, char** argv)
 		if (argv[index] && g_utf8_validate (argv[index], -1, NULL) == FALSE) {
 			value->c.string = g_locale_to_utf8 (argv[index], -1,
 			                                    NULL, NULL, NULL);
+			// replace invalid character from '?' to 'x' in filename
+			if (strncmp (value->c.string, "--file", 6) == 0) {
+				char* temp;
+				for (temp = value->c.string;  temp[0];  temp++) {
+					if (temp[0] == '?')
+						temp[0] = 'x';
+				}
+			}
 		} else
 #endif // (_WIN32 || _WIN64) && HAVE_GLIB
 		value->c.string = ug_strdup (argv[index]);
