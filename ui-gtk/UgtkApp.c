@@ -1510,10 +1510,10 @@ void  ugtk_app_add_default_category (UgtkApp* app)
 	common = ug_info_realloc (&cnode->info, UgetCommonInfo);
 	common->folder = ug_strdup (g_get_home_dir ());
 	category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
-	*(char**)ug_array_alloc (&category->schemes, 1) = ug_strdup ("http");
-	*(char**)ug_array_alloc (&category->schemes, 1) = ug_strdup ("ftp");
-	*(char**)ug_array_alloc (&category->hosts, 1) = ug_strdup (".com");
-	*(char**)ug_array_alloc (&category->hosts, 1) = ug_strdup (".org");
+	*(char**)ug_array_alloc (&category->schemes, 1) = ug_strdup ("ftps");
+	*(char**)ug_array_alloc (&category->schemes, 1) = ug_strdup ("magnet");
+	*(char**)ug_array_alloc (&category->hosts, 1) = ug_strdup (".edu");
+	*(char**)ug_array_alloc (&category->hosts, 1) = ug_strdup (".idv");
 	*(char**)ug_array_alloc (&category->file_exts, 1) = ug_strdup ("torrent");
 	*(char**)ug_array_alloc (&category->file_exts, 1) = ug_strdup ("metalink");
 
