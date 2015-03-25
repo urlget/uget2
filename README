@@ -1,3 +1,13 @@
+uGet 1.99.6:
+1. provide JSON-RPC over TCP (connect to localhost:14777) **
+2. match category by filename if URI doesn't match.
+3. reduce start-up time.
+4. Add some items to tray icon menu.
+5. category list in dialog use the same width in main window.
+6. Fix: command-line argument "--category-index" doesn't work.
+
+** see "doc/JSON-RPC interface.txt" in Git repo.
+
 uGet 1.99.5:
 1. curl plug-in: report more error (e.g. Failed to create file) after connecting.
 2. curl plug-in: avoid crash if filename repeated counts > 999
