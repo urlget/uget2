@@ -360,10 +360,15 @@ TopLevelSwitch:
 
 			case ';':
 				entity_len = uhtml->buf.length - uhtml->entity;
-				if (entity_len > 5 && entity_len < 3)
+				// UgHtml doesn't support all entity
+				if (entity_len > 5 || entity_len < 3)
 					uhtml->buf.at[uhtml->buf.length++] = vchar;
 				else {
 					switch (uhtml->buf.at[uhtml->entity +1]) {
+					// Entity Number
+//					case '#':
+//						break;
+
 					case 'l':    // &lt;
 						uhtml->buf.at[uhtml->entity] = '<';
 						break;
