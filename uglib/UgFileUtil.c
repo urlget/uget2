@@ -332,7 +332,8 @@ int  ug_file_get_lines (const char* filename_utf8, UgList* list)
 		return 0;
 	buf = ug_malloc (8192);
 	if (fread (buf, 1, 3, file) == 3) {
-		if (buf[0] != 0xEF || buf[1] != 0xBB)
+		// UTF-8 byte-order mark: 0xEF, 0xBB, 0xBF
+		if ((unsigned char)buf[0] != 0xEF || (unsigned char)buf[1] != 0xBB)
 			rewind (file);
 	}
 
