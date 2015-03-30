@@ -43,18 +43,22 @@
 #endif
 
 #include <stdarg.h>
-#include <stdlib.h>     // strtoul
+#include <stdlib.h>     // strtoul()
 #include <UgDefine.h>
 #include <UgUtil.h>
-#include <UgString.h>   // ug_strdup
+#include <UgString.h>   // ug_strdup()
 
 #if defined _WIN32 || defined _WIN64
 #include <windows.h>
-//#include <PowrProf.h>    // SetSuspendState()
+//#include <PowrProf.h>   // SetSuspendState()
 #else
-#include <stdio.h>      // popen
+#include <stdio.h>      // popen()
 #include <unistd.h>
 #include <sys/time.h>
+#endif
+
+#if defined __OpenBSD__    // Others?
+#include <wchar.h>      // wcslen()
 #endif
 
 // ----------------------------------------------------------------------------
