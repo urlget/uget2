@@ -84,9 +84,9 @@ void  ugtk_app_init (UgtkApp* app, UgetRpc* rpc)
 	app->last.category_index = 0;
 	app->last.infonode = uget_node_new (NULL);
 	// RSS
-	uget_rss_add_buildin (app->rss_buildin, UGET_RSS_STABLE);
-	uget_rss_add_buildin (app->rss_buildin, UGET_RSS_NEWS);
-	uget_rss_add_buildin (app->rss_buildin, UGET_RSS_TUTORIALS);
+	uget_rss_add_builtin (app->rss_buildin, UGET_RSS_STABLE);
+	uget_rss_add_builtin (app->rss_buildin, UGET_RSS_NEWS);
+	uget_rss_add_builtin (app->rss_buildin, UGET_RSS_TUTORIALS);
 	uget_rss_update (app->rss_buildin, FALSE);
 	gtk_widget_hide (app->banner.self);
 

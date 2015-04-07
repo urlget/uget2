@@ -385,7 +385,7 @@ void test_uget_rss (void)
 	UgetRssItem* item = NULL;
 
 	urss = uget_rss_new ();
-	uget_rss_add_buildin (urss, UGET_RSS_STABLE);
+	uget_rss_add_builtin (urss, UGET_RSS_STABLE);
 	uget_rss_update (urss, TRUE);
 	ug_thread_join (&urss->thread);
 

@@ -300,7 +300,7 @@ void  uget_rss_add (UgetRss* urss, UgetRssFeed* feed)
 	ug_list_append (&urss->feeds, (UgLink*) feed);
 }
 
-void  uget_rss_add_buildin (UgetRss* urss, UgetRssType type)
+void  uget_rss_add_builtin (UgetRss* urss, UgetRssType type)
 {
 	UgetRssFeed*  feed;
 	const char*   url;

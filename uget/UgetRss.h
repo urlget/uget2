@@ -127,7 +127,7 @@ void      uget_rss_unref (UgetRss* urss);
 
 void  uget_rss_add (UgetRss* urss, UgetRssFeed* feed);
 void  uget_rss_add_url (UgetRss* urss, const char* url);
-void  uget_rss_add_buildin (UgetRss* urss, UgetRssType type);
+void  uget_rss_add_builtin (UgetRss* urss, UgetRssType type);
 void  uget_rss_update (UgetRss* urss, int joinable);
 
 UgetRssFeed*  uget_rss_find_updated (UgetRss* urss, UgetRssFeed* after_feed);
