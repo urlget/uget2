@@ -45,6 +45,7 @@
 static void ugtk_statusbar_init_ui (struct UgtkStatusbar* app_statusbar);
 static void ugtk_toolbar_init_ui   (struct UgtkToolbar* app_toolbar, GtkAccelGroup* accel_group);
 static void ugtk_window_init_ui    (struct UgtkWindow* window, UgtkApp* app);
+static void ugtk_app_init_size     (UgtkApp* app);
 
 void  ugtk_app_init_ui (UgtkApp* app)
 {
@@ -81,18 +82,15 @@ void  ugtk_app_init_ui (UgtkApp* app)
 	ugtk_statusbar_init_ui (&app->statusbar);
 	ugtk_toolbar_init_ui (&app->toolbar, app->accel_group);
 	ugtk_window_init_ui (&app->window, app);
+	ugtk_app_init_size (app);
 }
 
-// ----------------------------------------------------------------------------
-// UgtkWindow
-
-static void ugtk_window_init_ui (struct UgtkWindow* window, UgtkApp* app)
+// set default size
+static void ugtk_app_init_size (UgtkApp* app)
 {
-	GtkBox*  vbox;
-	GtkBox*  lbox;    // left side vbox
-	GtkBox*  rbox;    // right side vbox
 	GdkScreen*  screen;
 	gint        width, height;
+	gint        paned_position;
 
 	screen = gdk_screen_get_default ();
 	if (screen) {
@@ -103,22 +101,45 @@ static void ugtk_window_init_ui (struct UgtkWindow* window, UgtkApp* app)
 		width  = 0;
 		height = 0;
 	}
-	if (width > 1200 && height > 800) {
-		width  = 1080;
-		height = 720;
+
+	// decide window & traveler size
+	if (width <= 640) {
+		width = 620;
+		height = 430;
+		paned_position = 165;
 	}
-	else if (width > 1000 && height > 700) {
-		width  = 880;
-		height = 640;
+	if (width <= 800) {
+		width = width * 95 / 100;
+		height = height * 9 / 10;
+		paned_position = 180;
+	}
+	else if (width <= 1000) {
+		width = width * 90 / 100;
+		height = height * 8 / 10;
+		paned_position = 200;
 	}
 	else {
-		width  = 640;
-		height = 480;
+		width = width * 85 / 100;
+		height = height * 8 / 10;
+		paned_position = 220;
 	}
+
+	gtk_window_resize (app->window.self, width, height);
+	gtk_paned_set_position (app->window.hpaned, paned_position);
+}
+
+// ----------------------------------------------------------------------------
+// UgtkWindow
+
+static void ugtk_window_init_ui (struct UgtkWindow* window, UgtkApp* app)
+{
+	GtkBox*  vbox;
+	GtkBox*  lbox;    // left side vbox
+	GtkBox*  rbox;    // right side vbox
 
 	window->self = (GtkWindow*) gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title (window->self, UGTK_APP_NAME);
-	gtk_window_resize (window->self, width, height);
+//	gtk_window_resize (window->self, 640, 480);
 	gtk_window_add_accel_group (window->self, app->accel_group);
 	gtk_window_set_default_icon_name (UGTK_APP_ICON_NAME);
 #if GTK_MAJOR_VERSION <= 3 && GTK_MINOR_VERSION < 14
