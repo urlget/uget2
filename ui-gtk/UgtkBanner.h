@@ -55,7 +55,7 @@ struct UgtkBanner {
 	GtkTextBuffer*  buffer;
 	GtkTextTag*     tag_link;
 
-	int             show_buildin;
+	int             show_builtin;
 	uint8_t         hovering_over_link;
 	char*           link;
 

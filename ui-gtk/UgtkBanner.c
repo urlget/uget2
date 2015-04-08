@@ -90,7 +90,7 @@ void ugtk_banner_init (struct UgtkBanner* banner)
 	gtk_box_pack_end (GTK_BOX (banner->self),
 			create_x_button (banner), FALSE, FALSE, 0);
 
-	banner->show_buildin = 2;
+	banner->show_builtin = 2;
 	banner->rss.self = NULL;
 	banner->rss.feed = NULL;
 	banner->rss.item = NULL;
@@ -281,13 +281,13 @@ on_x_button_release (GtkWidget* text_view, GdkEvent* ev, UgtkBanner* banner)
 			return FALSE;
 	}
 
-	if (banner->show_buildin > 0) {
-		banner->show_buildin--;
-		if (banner->show_buildin == 1)
+	if (banner->show_builtin > 0) {
+		banner->show_builtin--;
+		if (banner->show_builtin == 1)
 			ugtk_banner_show_donation (banner);
 		else {
 			ugtk_banner_show_survey (banner);
-			banner->show_buildin = 0;
+			banner->show_builtin = 0;
 		}
 		return FALSE;
 	}
