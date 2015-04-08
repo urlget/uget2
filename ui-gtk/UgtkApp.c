@@ -60,7 +60,7 @@ void  ugtk_app_init (UgtkApp* app, UgetRpc* rpc)
 	uget_app_set_config_dir ((UgetApp*) app, dir);
 	g_free (dir);
 
-	app->rss_buildin = uget_rss_new ();
+	app->rss_builtin = uget_rss_new ();
 	ugtk_app_load (app);
 	ugtk_app_init_ui (app);
 	ugtk_app_init_callback (app);
@@ -84,10 +84,10 @@ void  ugtk_app_init (UgtkApp* app, UgetRpc* rpc)
 	app->last.category_index = 0;
 	app->last.infonode = uget_node_new (NULL);
 	// RSS
-	uget_rss_add_builtin (app->rss_buildin, UGET_RSS_STABLE);
-	uget_rss_add_builtin (app->rss_buildin, UGET_RSS_NEWS);
-	uget_rss_add_builtin (app->rss_buildin, UGET_RSS_TUTORIALS);
-	uget_rss_update (app->rss_buildin, FALSE);
+	uget_rss_add_builtin (app->rss_builtin, UGET_RSS_STABLE);
+	uget_rss_add_builtin (app->rss_builtin, UGET_RSS_NEWS);
+	uget_rss_add_builtin (app->rss_builtin, UGET_RSS_TUTORIALS);
+	uget_rss_update (app->rss_builtin, FALSE);
 	gtk_widget_hide (app->banner.self);
 
 	uget_app_use_uri_hash ((UgetApp*) app);
@@ -112,7 +112,7 @@ void  ugtk_app_final (UgtkApp* app)
 		shutdown_now = app->setting.aria2.shutdown;
 	else
 		shutdown_now = FALSE;
-	uget_rss_unref (app->rss_buildin);
+	uget_rss_unref (app->rss_builtin);
 	uget_app_final ((UgetApp*) app);
 	// plugin finalize
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_ARIA2_SHUTDOWN_NOW,
@@ -133,7 +133,7 @@ void  ugtk_app_save (UgtkApp* app)
 
 	// RSS
 	file = g_build_filename (app->config_dir, "RSS-build-in.json", NULL);
-	uget_rss_save_feeds (app->rss_buildin, file);
+	uget_rss_save_feeds (app->rss_builtin, file);
 	g_free (file);
 
 //	uget_app_save_categories ((UgetApp*) app, g_get_user_config_dir ());
@@ -159,7 +159,7 @@ void  ugtk_app_load (UgtkApp* app)
 
 	// RSS
 	file = g_build_filename (app->config_dir, "RSS-build-in.json", NULL);
-	uget_rss_load_feeds (app->rss_buildin, file);
+	uget_rss_load_feeds (app->rss_builtin, file);
 	g_free (file);
 
 //	uget_app_load_categories ((UgetApp*) app, g_get_user_config_dir ());
