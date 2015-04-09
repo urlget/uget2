@@ -132,7 +132,7 @@ void  ugtk_app_save (UgtkApp* app)
 	g_free (file);
 
 	// RSS
-	file = g_build_filename (app->config_dir, "RSS-build-in.json", NULL);
+	file = g_build_filename (app->config_dir, "RSS-built-in.json", NULL);
 	uget_rss_save_feeds (app->rss_builtin, file);
 	g_free (file);
 
@@ -158,7 +158,7 @@ void  ugtk_app_load (UgtkApp* app)
 	}
 
 	// RSS
-	file = g_build_filename (app->config_dir, "RSS-build-in.json", NULL);
+	file = g_build_filename (app->config_dir, "RSS-built-in.json", NULL);
 	uget_rss_load_feeds (app->rss_builtin, file);
 	g_free (file);
 

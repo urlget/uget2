@@ -46,6 +46,19 @@
 // ------------------------------------
 // column data & functions for Common
 
+#if GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 10
+static const UgPair state_icon_pair[] =
+{
+	{(void*)(intptr_t) UGET_STATE_FINISHED,  "go-last"},
+	{(void*)(intptr_t) UGET_STATE_RECYCLED,  "list-remove"},
+	{(void*)(intptr_t) UGET_STATE_PAUSED,    "media-playback-pause"},
+	{(void*)(intptr_t) UGET_STATE_ERROR,     "dialog-error"},
+	{(void*)(intptr_t) UGET_STATE_UPLOADING, "go-up"},
+	{(void*)(intptr_t) UGET_STATE_COMPLETED, "gtk-yes"},
+	{(void*)(intptr_t) UGET_STATE_QUEUING,   "text-x-generic"},
+	{(void*)(intptr_t) UGET_STATE_ACTIVE,    "media-playback-start"},
+};
+#else
 static const UgPair state_icon_pair[] =
 {
 	{(void*)(intptr_t) UGET_STATE_FINISHED,  GTK_STOCK_GOTO_LAST},
@@ -57,6 +70,7 @@ static const UgPair state_icon_pair[] =
 	{(void*)(intptr_t) UGET_STATE_QUEUING,   GTK_STOCK_FILE},
 	{(void*)(intptr_t) UGET_STATE_ACTIVE,    GTK_STOCK_MEDIA_PLAY},
 };
+#endif
 static const int state_icon_pair_len = sizeof (state_icon_pair) / sizeof (UgPair);
 
 static void col_set_icon (GtkTreeViewColumn *tree_column,
@@ -66,7 +80,7 @@ static void col_set_icon (GtkTreeViewColumn *tree_column,
                           gpointer           data)
 {
 	UgetNode*      node;
-	const gchar*   stock_id;
+	const gchar*   icon_name;
 	int            key, index;
 
 //	gtk_tree_model_get (model, iter, 0, &node, -1);
@@ -76,16 +90,24 @@ static void col_set_icon (GtkTreeViewColumn *tree_column,
 		return;
 
 	node = node->data;
-	stock_id = GTK_STOCK_FILE;
-	// select stock_id
+#if GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 10
+	icon_name = "text-x-generic";
+#else
+	icon_name = GTK_STOCK_FILE;
+#endif
+	// select icon_name
 	for (index = 0;  index < state_icon_pair_len;  index++) {
 		key = (intptr_t)state_icon_pair[index].key;
 		if ((key & node->state) == key) {
-			stock_id = state_icon_pair[index].data;
+			icon_name = state_icon_pair[index].data;
 			break;
 		}
 	}
-	g_object_set (cell, "stock-id", stock_id, NULL);
+#if GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 10
+	g_object_set (cell, "icon-name", icon_name, NULL);
+#else
+	g_object_set (cell, "stock-id", icon_name, NULL);
+#endif
 }
 
 // ------------------------------------
@@ -595,10 +617,17 @@ static void col_set_icon_c (GtkTreeViewColumn *tree_column,
 	UgetNode*  node;
 
 	node = iter->user_data;
+#if GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 10
+	if (node->state & UGET_STATE_PAUSED)
+		g_object_set (cell, "icon-name", "media-playback-pause", NULL);
+	else
+		g_object_set (cell, "icon-name", "gtk-dnd-multiple", NULL);
+#else
 	if (node->state & UGET_STATE_PAUSED)
 		g_object_set (cell, "stock-id", GTK_STOCK_MEDIA_PAUSE, NULL);
 	else
 		g_object_set (cell, "stock-id", GTK_STOCK_DND_MULTIPLE, NULL);
+#endif
 }
 
 // ------------------------------------
@@ -654,7 +683,7 @@ static void col_set_icon_s (GtkTreeViewColumn *tree_column,
                             gpointer           data)
 {
 	UgetNode*      node;
-	const gchar*   stock_id;
+	const gchar*   icon_name;
 	int            key, index;
 
 //	gtk_tree_model_get (model, iter, 0, &node, -1);
@@ -663,18 +692,26 @@ static void col_set_icon_s (GtkTreeViewColumn *tree_column,
 	if (node == NULL)
 		return;
 
-	// select stock_id
-	stock_id = GTK_STOCK_DND_MULTIPLE;
+	// select icon_name
+#if GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 10
+	icon_name = "gtk-dnd-multiple";
+#else
+	icon_name = GTK_STOCK_DND_MULTIPLE;
+#endif
 	if (node->real) {
 		for (index = 0;  index < state_icon_pair_len;  index++) {
 			key = (intptr_t)state_icon_pair[index].key;
 			if ((key & node->state) == key) {
-				stock_id = state_icon_pair[index].data;
+				icon_name = state_icon_pair[index].data;
 				break;
 			}
 		}
 	}
-	g_object_set (cell, "stock-id", stock_id, NULL);
+#if GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 10
+	g_object_set (cell, "icon-name", icon_name, NULL);
+#else
+	g_object_set (cell, "stock-id", icon_name, NULL);
+#endif
 }
 
 // ----------------------------------------------------------------------------
