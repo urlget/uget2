@@ -277,6 +277,10 @@ void  ugtk_app_set_window_setting (UgtkApp* app, UgtkSetting* setting)
 	app->summary.visible.message  = setting->summary.message;
 
 	// traveler
+	if (setting->window.nth_category >= app->real.n_children)
+		setting->window.nth_category = 0;
+	if (setting->window.nth_state >= app->split.n_children)
+		setting->window.nth_state = 0;
 	ugtk_traveler_select_category (&app->traveler,
 				setting->window.nth_category,
 				setting->window.nth_state);
