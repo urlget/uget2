@@ -52,6 +52,10 @@
 
 #define BUFFER_SIZE             128
 
+#define IGNORE_ERROR_IN_SEPARATOR  1
+#define IGNORE_ERROR_IN_OBJECT     1
+#define IGNORE_ERROR_IN_ARRAY      1
+
 void  ug_json_init (UgJson* json)
 {
 	// initialize buffer
@@ -314,24 +318,49 @@ TopLevelSwitch:
 //				break;
 
 			case ',':
+#ifdef IGNORE_ERROR_IN_SEPARATOR
+				// if type is UG_JSON_VALUE or UG_JSON_SEPARATOR
+				if (json->type >= UG_JSON_VALUE) {
+					json->error = UG_JSON_ERROR_IN_SEPARATOR;
+					json->type  = UG_JSON_SEPARATOR;
+					continue;
+//					break;
+				}
+#else
 				// if type is UG_JSON_VALUE or UG_JSON_SEPARATOR
 				if (json->type >= UG_JSON_VALUE)
 					return UG_JSON_ERROR_IN_SEPARATOR;
+#endif // IGNORE_ERROR_IN_SEPARATOR
 				ug_json_call_parser (json);
 				json->type = UG_JSON_SEPARATOR;
 				continue;
 //				break;
 
 			case '}':
+#ifdef IGNORE_ERROR_IN_OBJECT
+				if (json->type == UG_JSON_SEPARATOR) {
+					json->error = UG_JSON_ERROR_IN_OBJECT;
+					ug_json_pop (json);
+					continue;
+//					break;
+				}
+#else
 				if (json->type == UG_JSON_SEPARATOR)
 					return UG_JSON_ERROR_IN_OBJECT;
+#endif // IGNORE_ERROR_IN_OBJECT
 				ug_json_call_parser (json);
 				ug_json_pop (json);
 				continue;
 //				break;
 
 			default:
+#ifdef IGNORE_ERROR_IN_OBJECT
+				json->error = UG_JSON_ERROR_IN_OBJECT;
+				continue;
+//				break;
+#else
 				return UG_JSON_ERROR_IN_OBJECT;
+#endif // IGNORE_ERROR_IN_OBJECT
 			}
 			break;
 
@@ -345,25 +374,51 @@ TopLevelSwitch:
 //				break;
 
 			case ',':
+#ifdef IGNORE_ERROR_IN_SEPARATOR
+				// if type is UG_JSON_VALUE or UG_JSON_SEPARATOR
+				if (json->type >= UG_JSON_VALUE) {
+					json->error = UG_JSON_ERROR_IN_SEPARATOR;
+					json->type  = UG_JSON_SEPARATOR;
+					json->state = UG_JSON_VALUE;
+					continue;
+//					break;
+				}
+#else
 				// if type is UG_JSON_VALUE or UG_JSON_SEPARATOR
 				if (json->type >= UG_JSON_VALUE)
 					return UG_JSON_ERROR_IN_SEPARATOR;
+#endif // IGNORE_ERROR_IN_SEPARATOR
 				ug_json_call_parser (json);
-				json->type = UG_JSON_SEPARATOR;
+				json->type  = UG_JSON_SEPARATOR;
 				json->state = UG_JSON_VALUE;
 				continue;
 //				break;
 
 			case ']':
+#ifdef IGNORE_ERROR_IN_ARRAY
+				if (json->type == UG_JSON_SEPARATOR) {
+					json->error = UG_JSON_ERROR_IN_ARRAY;
+					ug_json_pop (json);
+					continue;
+//					break;
+				}
+#else
 				if (json->type == UG_JSON_SEPARATOR)
 					return UG_JSON_ERROR_IN_ARRAY;
+#endif // IGNORE_ERROR_IN_ARRAY
 				ug_json_call_parser (json);
 				ug_json_pop (json);
 				continue;
 //				break;
 
 			default:
+#ifdef IGNORE_ERROR_IN_ARRAY
+				json->error = UG_JSON_ERROR_IN_ARRAY;
+				continue;
+//				break;
+#else
 				return UG_JSON_ERROR_IN_ARRAY;
+#endif // IGNORE_ERROR_IN_ARRAY
 			}
 			break;
 
