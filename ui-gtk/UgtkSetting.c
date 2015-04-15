@@ -44,7 +44,7 @@
                                     "LZH|A[0-9]?|RAR|R[0-9][0-9]|ISO|"  \
                                     "RPM|DEB|EXE|MSI|APK|"              \
                                     "3GP|AAC|FLAC|M4A|M4P|MP3|OGG|WAV|WMA|" \
-                                    "MP4|OGV|MKV|AVI|MOV|WMV|FLV|F4V|MPG|MPEG|RMVB"
+                                    "MP4|MKV|WEBM|OGV|AVI|MOV|WMV|FLV|F4V|MPG|MPEG|RMVB"
 
 #define UGTK_ARIA2_ARGUMENTS        "--enable-rpc=true -D " \
                                     "--disable-ipv6 "       \
