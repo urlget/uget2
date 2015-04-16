@@ -4,15 +4,15 @@
 # 
 # Translators:
 # deadmarshal <adeadmarshal@gmail.com>, 2014
-# Mahdi Mohammadi <m.m.m5651@gmail.com>, 2014
+# Mahdi Mohammadi <m.m.m5651@gmail.com>, 2014-2015
 # mhajiloo <majid.hajiloo@ymail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2014-11-27 06:54+0000\n"
-"Last-Translator: Michael Tunnell <michael@ugetdm.com>\n"
+"PO-Revision-Date: 2015-02-17 12:15+0000\n"
+"Last-Translator: Mahdi Mohammadi <m.m.m5651@gmail.com>\n"
 "Language-Team: Persian (http://www.transifex.com/projects/p/uget/language/fa/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../po/../uget/UgetApp.c:95
 msgid "All Category"
-msgstr ""
+msgstr "همه رده ها"
 
 #. UGET_EVENT_NORMAL_CUSTOM
 #: ../../po/../uget/UgetEvent.c:58
@@ -47,7 +47,7 @@ msgstr "پایان دانلود"
 #. UGET_EVENT_NORMAL_COMPLETE,
 #: ../../po/../uget/UgetEvent.c:62 ../../po/../ui-gtk/UgtkNodeView.c:613
 msgid "Finished"
-msgstr "پایان"
+msgstr "پایان یافت"
 
 #. UGET_EVENT_NORMAL_FINISH,
 #. resumable
@@ -88,12 +88,12 @@ msgstr "پرونده قابل باز شدن نیست."
 #. UGET_EVENT_ERROR_FILE_OPEN_FAILED
 #: ../../po/../uget/UgetEvent.c:85
 msgid "Unable to create thread."
-msgstr ""
+msgstr "اشکال در ساختن سوژه."
 
 #. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 #: ../../po/../uget/UgetEvent.c:86
 msgid "Incorrect source (different file size)."
-msgstr ""
+msgstr "منبع نادرست (تفاوت در حجم فایل)."
 
 #. UGET_EVENT_ERROR_INCORRECT_SOURCE,
 #: ../../po/../uget/UgetEvent.c:87
@@ -128,15 +128,15 @@ msgstr "پرونده پشتیبانی نشده."
 #. 1 - 10
 #: ../../po/../uget/UgetPluginAria2.c:272
 msgid "aria2: an unknown error occurred."
-msgstr ""
+msgstr "aria2: خطایی نامشخص رخ داد."
 
 #: ../../po/../uget/UgetPluginAria2.c:273
 msgid "aria2: time out occurred."
-msgstr ""
+msgstr "aria2: تایم آوت رخ داد."
 
 #: ../../po/../uget/UgetPluginAria2.c:274
 msgid "aria2: resource was not found."
-msgstr ""
+msgstr "aria2: منبع یافت نشد."
 
 #: ../../po/../uget/UgetPluginAria2.c:275
 msgid ""
@@ -159,7 +159,7 @@ msgstr ""
 #. _("Not Resumable"),
 #: ../../po/../uget/UgetPluginAria2.c:280
 msgid "Out of resource"
-msgstr ""
+msgstr "منبع تمام شد."
 
 #. _(),
 #: ../../po/../uget/UgetPluginAria2.c:281
@@ -169,7 +169,7 @@ msgstr ""
 #. 11 - 20
 #: ../../po/../uget/UgetPluginAria2.c:283
 msgid "aria2 was downloading same file."
-msgstr ""
+msgstr "aria2 نیز همان فایل را دانلود می کرد."
 
 #: ../../po/../uget/UgetPluginAria2.c:284
 msgid "aria2 was downloading same info hash torrent."
@@ -177,12 +177,12 @@ msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:285
 msgid "aria2: file already existed. See --allow-overwrite option."
-msgstr ""
+msgstr "aria2: فایل از قبل وجود دارد. گزینه --allow-overwrite را نگاه کنید."
 
 #. _("Output file can't be renamed."),
 #: ../../po/../uget/UgetPluginAria2.c:287
 msgid "aria2: could not open existing file."
-msgstr ""
+msgstr "aria2: نتوانست فایل موجود را باز کند."
 
 #: ../../po/../uget/UgetPluginAria2.c:288
 msgid "aria2: could not create new file or truncate existing file."
@@ -228,7 +228,7 @@ msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:300
 msgid "aria2: Magnet URI was bad."
-msgstr ""
+msgstr "aria2: URI مگنت اشتباه بود."
 
 #: ../../po/../uget/UgetPluginAria2.c:301
 msgid ""
@@ -246,7 +246,7 @@ msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:306
 msgid "No response. Is aria2 shutdown?"
-msgstr ""
+msgstr "بدون پاسخ. آیا aria2 خاموش است؟"
 
 #. debug
 #: ../../po/../uget/UgetPluginAria2.c:608
@@ -263,11 +263,11 @@ msgstr "توضیحات مترجم"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:80
 msgid "uGet Founder: "
-msgstr ""
+msgstr "مؤسس uGet:"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:81
 msgid "uGet Project Manager: "
-msgstr ""
+msgstr "مدیر پروژه uGet:"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:255
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:204
@@ -293,11 +293,11 @@ msgstr "خط فرمان"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:758
 msgid "Error Occurred"
-msgstr ""
+msgstr "ارور رخ داد"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:759
 msgid "Error Occurred when downloading."
-msgstr ""
+msgstr "هنگام دانلود ارور رخ داد."
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:760
 msgid "Download Starting"
@@ -379,7 +379,7 @@ msgstr "ابرپیوند تازه"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:240
 msgid "Save all settings"
-msgstr ""
+msgstr "همه تنظیمات را ذخیره کن"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:248
 msgid "Set selected download runnable"
@@ -501,7 +501,7 @@ msgstr "دانلود گروهی از کلیپبورد"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1494
 msgid "New"
-msgstr ""
+msgstr "تازه"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1613 ../../po/../ui-gtk/UgtkMenubar.c:383
 #: ../../po/../ui-gtk/UgtkMenubar.c:415 ../../po/../ui-gtk/UgtkNodeView.c:609
@@ -590,15 +590,15 @@ msgstr "آیا مطمٔنید که میخواهید فایلها را پاک ک�
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:74
 msgid "Really delete category?"
-msgstr ""
+msgstr "آیا واقعا رده پاک شود؟"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:75
 msgid "Are you sure you want to delete category?"
-msgstr ""
+msgstr "آیا واقعا میخواهید که این رده پاک شود؟"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:106
 msgid "Don't ask me again"
-msgstr ""
+msgstr "دیگر از من نپرس"
 
 #. URL - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:109
@@ -788,7 +788,7 @@ msgstr ""
 #. Offline mode
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:152
 msgid "Offline Mode"
-msgstr ""
+msgstr "حالت آفلاین"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:170
 msgid "_Edit"
@@ -810,7 +810,7 @@ msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:187
 msgid "Skip existing URI"
-msgstr ""
+msgstr "از URl موجود صرف نظر کن"
 
 #. --- Completion Auto-Actions --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:194
@@ -820,7 +820,7 @@ msgstr ""
 #. Completion Auto-Actions - Disable
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:200
 msgid "_Disable"
-msgstr ""
+msgstr "غیرفعال کن"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:205
 msgid "Hibernate"
@@ -832,20 +832,20 @@ msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:215
 msgid "Shutdown"
-msgstr ""
+msgstr "خاموش کردن"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:220
 msgid "Reboot"
-msgstr ""
+msgstr "ریبوت کردن"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:225
 msgid "Custom"
-msgstr ""
+msgstr "دستی"
 
 #. Completion Auto-Actions - Remember
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
 msgid "Remember setting"
-msgstr ""
+msgstr "تنظیمات را به یاد بسپار"
 
 #. Completion Auto-Actions - Help
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:235
@@ -1009,7 +1009,7 @@ msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:495
 msgid "Open _Containing folder"
-msgstr ""
+msgstr "پوشه دربرگیرنده را باز کن"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:504
 msgid "Force Start"
@@ -1023,19 +1023,19 @@ msgstr "بردن به"
 #. Priority --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:573
 msgid "Priority"
-msgstr ""
+msgstr "اولویت"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:582
 msgid "_High"
-msgstr ""
+msgstr "بالا"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:587
 msgid "_Normal"
-msgstr ""
+msgstr "معمولی"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:592
 msgid "_Low"
-msgstr ""
+msgstr "پایین"
 
 #. Get Help Online
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:615
@@ -1065,7 +1065,7 @@ msgstr "خبر دادن باگ"
 #. Keyboard Shortcuts
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:650
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "شورتکات های کیبورد"
 
 #. Check for Updates
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:657
@@ -1090,11 +1090,11 @@ msgstr "'%s' - این پوشه وجود ندارد."
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:205
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:209
 msgid "URI had existed"
-msgstr ""
+msgstr "URl از پیش وجود داشت"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:207
 msgid "This URI had existed, are you sure to continue?"
-msgstr ""
+msgstr "این URl از پیش وجود داشت، آیا مطمئنید میخواهید ادامه دهید؟"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:343
 msgid "General"
@@ -1123,15 +1123,15 @@ msgstr "بدون نام"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:610
 msgid "Paused"
-msgstr ""
+msgstr "متوقف شده"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:611
 msgid "Uploading"
-msgstr ""
+msgstr "در حال آپلود"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:612
 msgid "Completed"
-msgstr ""
+msgstr "پایان یافته"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:614
 msgid "Recycled"
@@ -1147,7 +1147,7 @@ msgstr "فعال"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:637
 msgid "All Status"
-msgstr ""
+msgstr "تمام وضعیت ها"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:734
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:85
@@ -1179,7 +1179,7 @@ msgstr "مانده"
 #: ../../po/../ui-gtk/UgtkSettingForm.c:538
 #: ../../po/../ui-gtk/UgtkSummary.c:151
 msgid "URI"
-msgstr ""
+msgstr "URl"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:954
 msgid "Quantity"
@@ -1374,11 +1374,11 @@ msgstr "پیش نمایش"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:97
 msgid "User Interface"
-msgstr ""
+msgstr "رابط کاربری"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:109
 msgid "Bandwidth"
-msgstr ""
+msgstr "پهنای باند"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:115
 msgid "Scheduler"
@@ -1395,7 +1395,7 @@ msgstr "بقیه"
 #. Monitor button
 #: ../../po/../ui-gtk/UgtkSettingForm.c:57
 msgid "_Enable clipboard monitor"
-msgstr ""
+msgstr "زیر نظرگرفتن کلیپبورد"
 
 #. quiet mode
 #: ../../po/../ui-gtk/UgtkSettingForm.c:62
@@ -1405,16 +1405,16 @@ msgstr "حالت ساکت"
 #: ../../po/../ui-gtk/UgtkSettingForm.c:68
 #: ../../po/../ui-gtk/UgtkSettingForm.c:446
 msgid "Default category index"
-msgstr ""
+msgstr "فهرست پیشفرض رده"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:80
 #: ../../po/../ui-gtk/UgtkSettingForm.c:458
 msgid "Adding to Nth category if no matched category."
-msgstr ""
+msgstr "اضافه کردن به Nمین رده اگر رده ای مناسب نبود."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:87
 msgid "Monitor clipboard for specified file types:"
-msgstr ""
+msgstr "برای مدل فایل های تعیین شده کلیپبورد را زیر نظر بگیر:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:102
 msgid "Separate the types with character '|'."
@@ -1426,12 +1426,12 @@ msgstr "میتوانید از عبارت های با قاعده استفاده �
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:151
 msgid "Confirmation"
-msgstr ""
+msgstr "تاییدیه"
 
 #. Confirmation check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:157
 msgid "Show confirmation dialog on exit"
-msgstr ""
+msgstr "نشان دادن دیالوگ تایید هنگام خروج"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:160
 msgid "Confirm when deleting files"
@@ -1439,7 +1439,7 @@ msgstr "گرفتن تایید هنگام پاک کردن پرونده ها"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:166
 msgid "System Tray"
-msgstr ""
+msgstr "System Tray"
 
 #. System Tray check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:172
@@ -1452,11 +1452,11 @@ msgstr "هنگام شروع به tray جمع کن"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:178
 msgid "Close to tray on window close"
-msgstr ""
+msgstr "بستن در Tray هنگام بستن پنجره"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:182
 msgid "Use Ubuntu's App Indicator"
-msgstr ""
+msgstr "استفاده از Ubuntu App Indicator"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:189
 msgid "Enable offline mode on startup"
@@ -1481,21 +1481,21 @@ msgstr ""
 #. Global speed limit
 #: ../../po/../ui-gtk/UgtkSettingForm.c:270
 msgid "Global speed limit"
-msgstr ""
+msgstr "محدودیت جهانی سرعت"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:278
 #: ../../po/../ui-gtk/UgtkSettingForm.c:564
 msgid "Max upload speed"
-msgstr ""
+msgstr "سرعت بیشینه ی آپلود"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:290
 #: ../../po/../ui-gtk/UgtkSettingForm.c:576
 msgid "Max download speed"
-msgstr ""
+msgstr "سرعت بیشینه ی دانلود"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:323
 msgid "Completion Auto-Actions"
-msgstr ""
+msgstr "کارهای خودکار هنگام پایان"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:331
 msgid "Custom command:"

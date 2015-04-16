@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Towfique Anam, 2013
+# Nazir Ahmed Sabbir <na_sabbir@yahoo.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2014-11-27 06:39+0000\n"
-"Last-Translator: Michael Tunnell <michael@ugetdm.com>\n"
+"PO-Revision-Date: 2015-01-28 07:52+0000\n"
+"Last-Translator: Nazir Ahmed Sabbir <na_sabbir@yahoo.com>\n"
 "Language-Team: Bengali (Bangladesh) (http://www.transifex.com/projects/p/uget/language/bn_BD/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +21,7 @@ msgstr ""
 
 #: ../../po/../uget/UgetApp.c:95
 msgid "All Category"
-msgstr ""
+msgstr "সকল বিভাগ"
 
 #. UGET_EVENT_NORMAL_CUSTOM
 #: ../../po/../uget/UgetEvent.c:58
