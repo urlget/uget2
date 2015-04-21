@@ -100,7 +100,7 @@ struct UgtkApp
 	gboolean        user_action;
 
 	// RSS
-	UgetRss*        rss_builtin;  // Build-in RSS
+	UgetRss*        rss_builtin;  // Built-in RSS
 
 	// Clipboard
 	struct UgtkClipboard
