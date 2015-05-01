@@ -1,12 +1,16 @@
+uGet 2.0: (2015-05-01)
+1. Try to ignore some error when parsing JSON file.
+2. clipboard monitor add a new file type 'WEBM'.
+3. Adjust main window default size.
+4. Add and update translation files.
+
 uGet 1.99.6:
-1. provide JSON-RPC over TCP (connect to localhost:14777) **
+1. provide JSON-RPC over TCP (connect to localhost:14777)
 2. match category by filename if URI doesn't match.
 3. reduce start-up time.
 4. Add some items to tray icon menu.
 5. category list in dialog use the same width in main window.
 6. Fix: command-line argument "--category-index" doesn't work.
-
-** see "doc/JSON-RPC interface.txt" in Git repo.
 
 uGet 1.99.5:
 1. curl plug-in: report more error (e.g. Failed to create file) after connecting.
