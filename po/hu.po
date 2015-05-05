@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Richárd Kurják <kurjak.richard@gmail.com>, 2014-2015
+# Balzamon, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
 "PO-Revision-Date: 2015-01-08 15:05+0000\n"
-"Last-Translator: Richárd Kurják <kurjak.richard@gmail.com>\n"
+"Last-Translator: Balzamon\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/uget/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
