@@ -15,6 +15,9 @@ AM_PROG_CC_C_O
 ## --- Determine a C++ compiler to use.
 # AC_PROG_CXX
 
+## --- Check for the ar command to use
+AM_PROG_AR
+
 ## Use library (static library)
 AC_PROG_RANLIB
 
