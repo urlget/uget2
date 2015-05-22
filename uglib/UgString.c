@@ -88,6 +88,9 @@ char*  ug_str_remove_crlf (char* string)
 	char* src;
 	char* dest;
 
+	if (string == NULL)
+		return NULL;
+
 	for (src = string, dest = NULL;  ;  src++) {
 		if (src[0] == '\r' || src[0] == '\n') {
 			if (dest == NULL)
