@@ -279,6 +279,13 @@ void  test_utility ()
 	temp = ug_unescape_uri ("This%20is a test%200.", -1);
 	puts (temp);
 	ug_free (temp);
+
+	temp = ug_strdup ("\nThis\n one\r");
+	puts ("--- ug_str_remove_crlf () --- start ---");
+	puts (temp);
+	puts (ug_str_remove_crlf(temp));
+	puts ("--- ug_str_remove_crlf () --- end ---");
+	ug_free (temp);
 }
 
 // ----------------------------------------------------------------------------

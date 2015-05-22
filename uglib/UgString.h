@@ -67,6 +67,8 @@ char*   ug_strndup (const char* string, size_t length);
 #define ug_strdup          strdup
 #endif
 
+char*  ug_str_remove_crlf (char* string);
+
 /*
  * convert double to string
  * If value large than 1024, it will append unit string like "KiB",
