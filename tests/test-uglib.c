@@ -263,6 +263,7 @@ void  test_utility ()
 {
 	char*  temp;
 	time_t res;
+	int    n;
 
 	res = ug_str_rfc822_to_time ("Sat, 07 Sep 2002 00:00:01 GMT");
 	if (res != -1)
@@ -283,8 +284,10 @@ void  test_utility ()
 	temp = ug_strdup ("\nThis\n one\r");
 	puts ("--- ug_str_remove_crlf () --- start ---");
 	puts (temp);
-	puts (ug_str_remove_crlf(temp));
-	puts ("--- ug_str_remove_crlf () --- end ---");
+	n = ug_str_remove_crlf (temp, temp);
+	puts (temp);
+
+	printf ("--- ug_str_remove_crlf () return %d --- end ---", n);
 	ug_free (temp);
 }
 

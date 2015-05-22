@@ -83,28 +83,25 @@ char*  ug_strndup (const char* string, size_t length)
 }
 #endif // ! (HAVE_GLIB)
 
-char*  ug_str_remove_crlf (char* string)
+// return length of new string
+int    ug_str_remove_crlf (const char* src, char* dest)
 {
-	char* src;
-	char* dest;
+	int   length = 0;
 
-	if (string == NULL)
-		return NULL;
+	if (src) {
+		for (;  ;  src++) {
+			if (src[0] == '\r' || src[0] == '\n')
+				continue;
 
-	for (src = string, dest = NULL;  ;  src++) {
-		if (src[0] == '\r' || src[0] == '\n') {
-			if (dest == NULL)
-				dest = src;
+			if (dest)
+				*dest++ = *src;
+			if (src[0] == 0)
+				break;
+			length++;
 		}
-		else if (dest) {
-			*dest++ = *src;
-		}
-
-		if (src[0] == 0)
-			break;
 	}
 
-	return string;
+	return length;
 }
 
 /*

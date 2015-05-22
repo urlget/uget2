@@ -459,17 +459,17 @@ void  ugtk_download_form_get (UgtkDownloadForm* dform, UgetNode* node)
 	text = gtk_entry_get_text ((GtkEntry*)dform->folder_entry);
 	ug_free (common->folder);
 	common->folder = (*text) ? ug_strdup (text) : NULL;
-	ug_str_remove_crlf (common->folder);
+	ug_str_remove_crlf (common->folder, common->folder);
 	// user
 	text = gtk_entry_get_text ((GtkEntry*)dform->username_entry);
 	ug_free (common->user);
 	common->user = (*text) ? ug_strdup (text) : NULL;
-	ug_str_remove_crlf (common->user);
+	ug_str_remove_crlf (common->user, common->user);
 	// password
 	text = gtk_entry_get_text ((GtkEntry*)dform->password_entry);
 	ug_free (common->password);
 	common->password = (*text) ? ug_strdup (text) : NULL;
-	ug_str_remove_crlf (common->password);
+	ug_str_remove_crlf (common->password, common->password);
 	// retry_limit
 	number = gtk_spin_button_get_value_as_int ((GtkSpinButton*) dform->spin_retry);
 	common->retry_limit = number;
@@ -495,7 +495,7 @@ void  ugtk_download_form_get (UgtkDownloadForm* dform, UgetNode* node)
 		text = gtk_entry_get_text ((GtkEntry*)dform->uri_entry);
 		ug_free (common->uri);
 		common->uri = (*text) ? ug_strdup (text) : NULL;
-		ug_str_remove_crlf (common->uri);
+		ug_str_remove_crlf (common->uri, common->uri);
 		if (common->uri) {
 			ug_uri_init (&uuri, common->uri);
 			// set user
@@ -522,14 +522,14 @@ void  ugtk_download_form_get (UgtkDownloadForm* dform, UgetNode* node)
 		text = gtk_entry_get_text ((GtkEntry*)dform->mirrors_entry);
 		ug_free (common->mirrors);
 		common->mirrors = (*text) ? ug_strdup (text) : NULL;
-		ug_str_remove_crlf (common->mirrors);
+		ug_str_remove_crlf (common->mirrors, common->mirrors);
 	}
 	// file
 	if (gtk_widget_is_sensitive (dform->file_entry) == TRUE) {
 		text = gtk_entry_get_text ((GtkEntry*)dform->file_entry);
 		ug_free (common->file);
 		common->file = (*text) ? ug_strdup (text) : NULL;
-		ug_str_remove_crlf (common->file);
+		ug_str_remove_crlf (common->file, common->file);
 	}
 
 	// ------------------------------------------
@@ -539,22 +539,22 @@ void  ugtk_download_form_get (UgtkDownloadForm* dform, UgetNode* node)
 	text = gtk_entry_get_text ((GtkEntry*) dform->referrer_entry);
 	ug_free (http->referrer);
 	http->referrer = (*text) ? ug_strdup (text) : NULL;
-	ug_str_remove_crlf (http->referrer);
+	ug_str_remove_crlf (http->referrer, http->referrer);
 	// cookie_file
 	text = gtk_entry_get_text ((GtkEntry*) dform->cookie_entry);
 	ug_free (http->cookie_file);
 	http->cookie_file = (*text) ? ug_strdup (text) : NULL;
-	ug_str_remove_crlf (http->cookie_file);
+	ug_str_remove_crlf (http->cookie_file, http->cookie_file);
 	// post_file
 	text = gtk_entry_get_text ((GtkEntry*) dform->post_entry);
 	ug_free (http->post_file);
 	http->post_file = (*text) ? ug_strdup (text) : NULL;
-	ug_str_remove_crlf (http->post_file);
+	ug_str_remove_crlf (http->post_file, http->post_file);
 	// user_agent
 	text = gtk_entry_get_text ((GtkEntry*) dform->agent_entry);
 	ug_free (http->user_agent);
 	http->user_agent = (*text) ? ug_strdup (text) : NULL;
-	ug_str_remove_crlf (http->user_agent);
+	ug_str_remove_crlf (http->user_agent, http->user_agent);
 
 	// ------------------------------------------
 	// UgetNode

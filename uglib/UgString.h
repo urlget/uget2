@@ -67,7 +67,9 @@ char*   ug_strndup (const char* string, size_t length);
 #define ug_strdup          strdup
 #endif
 
-char*  ug_str_remove_crlf (char* string);
+// return length of new string
+// dest can be src or NULL.
+int    ug_str_remove_crlf (const char* src, char* dest);
 
 /*
  * convert double to string
@@ -90,8 +92,8 @@ char*  ug_str_from_time (time_t ptt, int date_only);
 // RFC3339: 2013-09-12T22:50:20+08:00
 // RFC822:  Sat, 07 Sep 2002 00:00:01 GMT
 // If the calendar time cannot be represented, a value of -1 is returned.
-time_t  ug_str_rfc822_to_time  (const char* string);
-time_t  ug_str_rfc3339_to_time (const char* string);
+time_t  ug_str_rfc822_to_time  (const char* rfc822_string);
+time_t  ug_str_rfc3339_to_time (const char* rfc3339_string);
 
 // ------------------------------------
 // command-line
