@@ -1,3 +1,5 @@
+AUTOMAKE_OPTIONS = subdir-objects
+
 bin_PROGRAMS = uget-gtk-1to2
 
 uget_gtk_1to2_CPPFLAGS = \
