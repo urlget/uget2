@@ -1,3 +1,4 @@
+uget/pwmd.c
 uget/UgetApp.c
 uget/UgetEvent.c
 uget/UgetPluginAria2.c
