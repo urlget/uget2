@@ -831,6 +831,18 @@ static int prepare_existed (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 		curl_easy_getinfo (ugcurl->curl,
 				CURLINFO_CONTENT_LENGTH_DOWNLOAD, &fsize);
 		if (plugin->file.size != ugcurl->beg + (int64_t) fsize) {
+			// if remote file size and local file size are not the same,
+			// plug-in will create new download file.
+			if (plugin->seg.list.size == 1) {
+				// plugin_thread() has initialized/created some data for this function.
+				// program must clear these data before calling prepare_file()
+				ugcurl->beg = 0;
+				ugcurl->end = 0;
+				uget_curl_close_file (ugcurl);
+				uget_a2cf_clear (&plugin->aria2.ctrl);
+				return prepare_file (ugcurl, plugin);
+			}
+			// don't write INCORRECT data to existed file.
 			ugcurl->event_code = UGET_EVENT_ERROR_INCORRECT_SOURCE;
 			ugcurl->size[0] = 0;
 			if (plugin->seg.list.size == 1)
