@@ -234,10 +234,11 @@ int  ug_option_parse_entry (UgOption* option,
 		// handle data by UgEntryType
 		switch (entry->type) {
 		case UG_ENTRY_BOOL:
-			if (strcmp (value, "no") == 0 || strcmp (value, "false") == 0)
-				*(int*) dest = FALSE;
-			else
-				*(int*) dest = TRUE;
+			*(int*) dest = TRUE;
+			if (value) {
+				if (strcmp (value, "no") == 0 || strcmp (value, "false") == 0)
+					*(int*) dest = FALSE;
+			}
 			return TRUE;
 
 		case UG_ENTRY_INT:
