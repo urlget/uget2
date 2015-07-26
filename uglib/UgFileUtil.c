@@ -214,7 +214,6 @@ int   ug_file_is_dir (const char* dir)
 
 #endif // _WIN32 || _WIN64
 
-// This function use complex way to handle directory because some locale encoding doesn't avoid '\\' or '/'.
 int  ug_create_dir_all (const char* dir, int len)
 {
 	const char*   dir_end;
@@ -239,15 +238,14 @@ int  ug_create_dir_all (const char* dir, int len)
 			if (*element_end == UG_DIR_SEPARATOR)
 				break;
 		}
-		// create directory by locale encoding name.
 		element_os = (char*) ug_malloc (element_end - dir + 1);
 		element_os[element_end - dir] = 0;
 		strncpy (element_os, dir, element_end - dir);
 
 		if (element_os == NULL)
 			break;
-		if (ug_file_is_exist (element_os) == FALSE) {
-			if (ug_create_dir (element_os) == -1) {
+		if (ug_create_dir (element_os) == -1) {
+			if (ug_file_is_exist (element_os) == FALSE) {
 				ug_free (element_os);
 				return -1;
 			}
