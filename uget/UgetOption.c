@@ -110,6 +110,7 @@ int  uget_option_value_to_info (UgetOptionValue* ivalue, UgInfo* info)
 
 	if (mem_is_zero ((char*) &ivalue->common, sizeof (ivalue->common)) == FALSE) {
 		temp.common = ug_info_realloc (info, UgetCommonInfo);
+		temp.common->keeping.enable = TRUE;
 		if (ivalue->common.folder) {
 			ug_free (temp.common->folder);
 			temp.common->folder = ivalue->common.folder;
@@ -138,6 +139,7 @@ int  uget_option_value_to_info (UgetOptionValue* ivalue, UgInfo* info)
 
 	if (mem_is_zero ((char*) &ivalue->proxy, sizeof (ivalue->proxy)) == FALSE) {
 		temp.proxy = ug_info_realloc (info, UgetProxyInfo);
+		temp.proxy->keeping.enable = TRUE;
 		if (ivalue->proxy.type) {
 			temp.proxy->type = ivalue->proxy.type;
 			temp.proxy->keeping.type = TRUE;
@@ -170,6 +172,7 @@ int  uget_option_value_to_info (UgetOptionValue* ivalue, UgInfo* info)
 
 	if (mem_is_zero ((char*) &ivalue->http, sizeof (ivalue->http)) == FALSE) {
 		temp.http = ug_info_realloc (info, UgetHttpInfo);
+		temp.http->keeping.enable = TRUE;
 		if (ivalue->http.user) {
 			ug_free (temp.http->user);
 			temp.http->user = ivalue->http.user;
@@ -222,6 +225,7 @@ int  uget_option_value_to_info (UgetOptionValue* ivalue, UgInfo* info)
 
 	if (mem_is_zero ((char*) &ivalue->ftp, sizeof (ivalue->ftp)) == FALSE) {
 		temp.ftp = ug_info_realloc (info, UgetFtpInfo);
+		temp.ftp->keeping.enable = TRUE;
 		if (ivalue->ftp.user) {
 			ug_free (temp.ftp->user);
 			temp.ftp->user = ivalue->ftp.user;

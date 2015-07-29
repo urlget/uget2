@@ -128,51 +128,75 @@ static void uget_common_assign (UgetCommon* common, UgetCommon* src)
 	if (common->keeping.enable == FALSE || common->keeping.uri == FALSE) {
 		ug_free (common->uri);
 		common->uri = (src->uri) ? ug_strdup (src->uri) : NULL;
+		common->keeping.uri = src->keeping.uri;
 	}
 	if (common->keeping.enable == FALSE || common->keeping.mirrors == FALSE) {
 		ug_free (common->mirrors);
 		common->mirrors = (src->mirrors) ? ug_strdup (src->mirrors) : NULL;
+		common->keeping.mirrors = src->keeping.mirrors;
 	}
 	if (common->keeping.enable == FALSE || common->keeping.file == FALSE) {
 		ug_free (common->file);
 		common->file = (src->file) ? ug_strdup (src->file) : NULL;
+		common->keeping.file = src->keeping.file;
 	}
 	if (common->keeping.enable == FALSE || common->keeping.folder == FALSE) {
 		ug_free (common->folder);
 		common->folder = (src->folder) ? ug_strdup (src->folder) : NULL;
+		common->keeping.folder = src->keeping.folder;
 	}
 	if (common->keeping.enable == FALSE || common->keeping.user == FALSE) {
 		ug_free (common->user);
 		common->user = (src->user) ? ug_strdup (src->user) : NULL;
+		common->keeping.user = src->keeping.user;
 	}
 	if (common->keeping.enable == FALSE || common->keeping.password == FALSE) {
 		ug_free (common->password);
 		common->password = (src->password) ? ug_strdup (src->password) : NULL;
+		common->keeping.password = src->keeping.password;
 	}
 	// timeout
-	if (common->keeping.enable == FALSE || common->keeping.connect_timeout == FALSE)
-		common->connect_timeout  = src->connect_timeout;
-	if (common->keeping.enable == FALSE || common->keeping.transmit_timeout == FALSE)
+	if (common->keeping.enable == FALSE || common->keeping.connect_timeout == FALSE) {
+		common->connect_timeout = src->connect_timeout;
+		common->keeping.connect_timeout = src->keeping.connect_timeout;
+	}
+	if (common->keeping.enable == FALSE || common->keeping.transmit_timeout == FALSE) {
 		common->transmit_timeout = src->transmit_timeout;
+		common->keeping.transmit_timeout = src->keeping.transmit_timeout;
+	}
 	// retry
-	if (common->keeping.enable == FALSE || common->keeping.retry_delay == FALSE)
+	if (common->keeping.enable == FALSE || common->keeping.retry_delay == FALSE) {
 		common->retry_delay = src->retry_delay;
-	if (common->keeping.enable == FALSE || common->keeping.retry_limit == FALSE)
+		common->keeping.retry_delay = src->keeping.retry_delay;
+	}
+	if (common->keeping.enable == FALSE || common->keeping.retry_limit == FALSE) {
 		common->retry_limit = src->retry_limit;
+		common->keeping.retry_limit = src->keeping.retry_limit;
+	}
 	// max connections
-	if (common->keeping.enable == FALSE || common->keeping.max_connections == FALSE)
+	if (common->keeping.enable == FALSE || common->keeping.max_connections == FALSE) {
 		common->max_connections = src->max_connections;
+		common->keeping.max_connections = src->keeping.max_connections;
+	}
 	// speed
-	if (common->keeping.enable == FALSE || common->keeping.max_upload_speed == FALSE)
+	if (common->keeping.enable == FALSE || common->keeping.max_upload_speed == FALSE) {
 		common->max_upload_speed = src->max_upload_speed;
-	if (common->keeping.enable == FALSE || common->keeping.max_download_speed == FALSE)
+		common->keeping.max_upload_speed = src->keeping.max_upload_speed;
+	}
+	if (common->keeping.enable == FALSE || common->keeping.max_download_speed == FALSE) {
 		common->max_download_speed = src->max_download_speed;
+		common->keeping.max_download_speed = src->keeping.max_download_speed;
+	}
 	// timestamp
-	if (common->keeping.enable == FALSE || common->keeping.timestamp == FALSE)
-		common->timestamp  = src->timestamp;
+	if (common->keeping.enable == FALSE || common->keeping.timestamp == FALSE) {
+		common->timestamp = src->timestamp;
+		common->keeping.timestamp = src->keeping.timestamp;
+	}
 
-	if (common->keeping.enable == FALSE || common->keeping.debug_level == FALSE)
+	if (common->keeping.enable == FALSE || common->keeping.debug_level == FALSE) {
 		common->debug_level = src->debug_level;
+		common->keeping.debug_level = src->keeping.debug_level;
+	}
 
 	if (common->keeping.enable == FALSE)
 		common->keeping = src->keeping;
@@ -275,37 +299,48 @@ static void  uget_proxy_assign (UgetProxy* proxy, UgetProxy* src)
 	if (proxy->keeping.enable == FALSE || proxy->keeping.host == FALSE) {
 		ug_free (proxy->host);
 		proxy->host = (src->host) ? ug_strdup (src->host) : NULL;
+		proxy->keeping.host = src->keeping.host;
 	}
-	if (proxy->keeping.enable == FALSE || proxy->keeping.port == FALSE)
+	if (proxy->keeping.enable == FALSE || proxy->keeping.port == FALSE) {
 		proxy->port = src->port;
-	if (proxy->keeping.enable == FALSE || proxy->keeping.type == FALSE)
+		proxy->keeping.port = src->keeping.port;
+	}
+	if (proxy->keeping.enable == FALSE || proxy->keeping.type == FALSE) {
 		proxy->type = src->type;
+		proxy->keeping.type = src->keeping.type;
+	}
 
 	if (proxy->keeping.enable == FALSE || proxy->keeping.user == FALSE) {
 		ug_free (proxy->user);
 		proxy->user = (src->user) ? ug_strdup (src->user) : NULL;
+		proxy->keeping.user = src->keeping.user;
 	}
 	if (proxy->keeping.enable == FALSE || proxy->keeping.password == FALSE) {
 		ug_free (proxy->password);
 		proxy->password = (src->password) ? ug_strdup (src->password) : NULL;
+		proxy->keeping.password = src->keeping.password;
 	}
 
 #ifdef HAVE_LIBPWMD
 	if (proxy->keeping.enable == FALSE || proxy->pwmd.keeping.socket == FALSE) {
 		ug_free (proxy->pwmd.socket);
 		proxy->pwmd.socket = (src->pwmd.socket) ? ug_strdup (src->pwmd.socket) : NULL;
+		proxy->pwmd.keeping.socket = src->pwmd.keeping.socket;
 	}
 	if (proxy->keeping.enable == FALSE || proxy->pwmd.keeping.socket_args == FALSE) {
 		ug_free (proxy->pwmd.socket_args);
 		proxy->pwmd.socket_args = (src->pwmd.socket_args) ? ug_strdup (src->pwmd.socket_args) : NULL;
+		proxy->pwmd.keeping.socket_args = src->pwmd.keeping.socket_args;
 	}
 	if (proxy->keeping.enable == FALSE || proxy->pwmd.keeping.file == FALSE) {
 		ug_free (proxy->pwmd.file);
 		proxy->pwmd.file = (src->pwmd.file) ? ug_strdup (src->pwmd.file) : NULL;
+		proxy->pwmd.keeping.file = src->pwmd.keeping.file;
 	}
 	if (proxy->keeping.enable == FALSE || proxy->pwmd.keeping.element == FALSE) {
 		ug_free (proxy->pwmd.element);
 		proxy->pwmd.element = (src->pwmd.element) ? ug_strdup (src->pwmd.element) : NULL;
+		proxy->pwmd.keeping.element = src->pwmd.keeping.element;
 	}
 #endif	// HAVE_LIBPWMD
 
@@ -378,37 +413,47 @@ static void  uget_http_assign (UgetHttp* http, UgetHttp* src)
 	if (http->keeping.enable == FALSE || http->keeping.user == FALSE) {
 		ug_free (http->user);
 		http->user = (src->user) ? ug_strdup (src->user) : NULL;
+		http->keeping.user = src->keeping.user;
 	}
 	if (http->keeping.enable == FALSE || http->keeping.password == FALSE) {
 		ug_free (http->password);
 		http->password = (src->password) ? ug_strdup (src->password) : NULL;
+		http->keeping.password = src->keeping.password;
 	}
 	if (http->keeping.enable == FALSE || http->keeping.referrer == FALSE) {
 		ug_free (http->referrer);
 		http->referrer = (src->referrer) ? ug_strdup (src->referrer) : NULL;
+		http->keeping.referrer = src->keeping.referrer;
 	}
 	if (http->keeping.enable == FALSE || http->keeping.user_agent == FALSE) {
 		ug_free (http->user_agent);
 		http->user_agent = (src->user_agent) ? ug_strdup (src->user_agent) : NULL;
+		http->keeping.user_agent = src->keeping.user_agent;
 	}
 	if (http->keeping.enable == FALSE || http->keeping.post_data == FALSE) {
 		ug_free (http->post_data);
 		http->post_data = (src->post_data) ? ug_strdup (src->post_data) : NULL;
+		http->keeping.post_data = src->keeping.post_data;
 	}
 	if (http->keeping.enable == FALSE || http->keeping.post_file == FALSE) {
 		ug_free (http->post_file);
 		http->post_file = (src->post_file) ? ug_strdup (src->post_file) : NULL;
+		http->keeping.post_file = src->keeping.post_file;
 	}
 	if (http->keeping.enable == FALSE || http->keeping.cookie_data == FALSE) {
 		ug_free (http->cookie_data);
 		http->cookie_data = (src->cookie_data) ? ug_strdup (src->cookie_data) : NULL;
+		http->keeping.cookie_data = src->keeping.cookie_data;
 	}
 	if (http->keeping.enable == FALSE || http->keeping.cookie_file == FALSE) {
 		ug_free (http->cookie_file);
 		http->cookie_file = (src->cookie_file) ? ug_strdup (src->cookie_file) : NULL;
+		http->keeping.cookie_file = src->keeping.cookie_file;
 	}
-	if (http->keeping.enable == FALSE || http->keeping.redirection_limit == FALSE)
+	if (http->keeping.enable == FALSE || http->keeping.redirection_limit == FALSE) {
 		http->redirection_limit = src->redirection_limit;
+		http->keeping.redirection_limit = src->keeping.redirection_limit;
+	}
 
 	if (http->keeping.enable == FALSE)
 		http->keeping = src->keeping;
@@ -455,14 +500,18 @@ static void  uget_ftp_assign (UgetFtp* ftp, UgetFtp* src)
 	if (ftp->keeping.enable == FALSE || ftp->keeping.user == FALSE) {
 		ug_free (ftp->user);
 		ftp->user = (src->user) ? ug_strdup (src->user) : NULL;
+		ftp->keeping.user = src->keeping.user;
 	}
 	if (ftp->keeping.enable == FALSE || ftp->keeping.password == FALSE) {
 		ug_free (ftp->password);
 		ftp->password = (src->password) ? ug_strdup (src->password) : NULL;
+		ftp->keeping.password = src->keeping.password;
 	}
 
-	if (ftp->keeping.enable == FALSE || ftp->keeping.active_mode == FALSE)
+	if (ftp->keeping.enable == FALSE || ftp->keeping.active_mode == FALSE) {
 		ftp->active_mode = src->active_mode;
+		ftp->keeping.active_mode = src->keeping.active_mode;
+	}
 
 	if (ftp->keeping.enable == FALSE)
 		ftp->keeping = src->keeping;
