@@ -601,7 +601,7 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 		ugcurl = (UgetCurl*)plugin->seg.list.head;
 		for (;  ugcurl;  ugcurl = ugnext) {
 			ugnext = ugcurl->next;
-			// split download, use with split_download
+			// split download, use with split_download()
 			if (ugcurl->split) {
 				if (ugcurl->prev == NULL || ugcurl->prev->end < ugcurl->beg)
 					ugcurl->split = FALSE;
@@ -611,6 +611,7 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 					ugcurl->stopped = TRUE;
 					ugcurl->end = ugcurl->beg;
 					ugcurl->pos = ugcurl->beg;
+					ugcurl->size[0] = 0;
 #ifndef NDEBUG
 					if (common->debug_level) {
 						printf ("\n" "overwrite %u KiB\n",
@@ -624,6 +625,8 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 					if (ugcurl->prev->pos > ugcurl->beg) {
 						ugcurl->prev->pos = ugcurl->beg;
 						ugcurl->prev->stopped = TRUE;
+						ugcurl->prev->size[0] = ugcurl->prev->pos -
+						                        ugcurl->prev->beg;
 					}
 #ifndef NDEBUG
 					if (common->debug_level) {
