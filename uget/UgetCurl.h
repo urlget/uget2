@@ -146,7 +146,7 @@ struct UgetCurl
 	uint8_t     limit_changed:1; // speed limit changed
 	uint8_t     header_store:1;  // save uri and filename from header.
 	uint8_t     resumable:1;     // get resumable in header callback
-	uint8_t     stopped:1;  // ctrl
+	uint8_t     stopped:1;  // running control & status
 	uint8_t     tested:1;   // URI tested
 	uint8_t     test_ok:1;  // URI test ok
 	uint8_t     split:1;    // split previous

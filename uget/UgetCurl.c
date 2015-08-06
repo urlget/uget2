@@ -229,6 +229,10 @@ static UG_THREAD_RETURN_TYPE  uget_curl_thread (UgetCurl* ugcurl)
 	}
 
 exit:
+	// if user stop downloading, set state to UGET_CURL_ABORT
+	if (ugcurl->stopped == TRUE)
+		ugcurl->state = UGET_CURL_ABORT;
+
 	if (ugcurl->state == UGET_CURL_ERROR)
 		ugcurl->test_ok = FALSE;
 	ugcurl->stopped = TRUE;
@@ -244,7 +248,7 @@ void  uget_curl_run (UgetCurl* ugcurl, int joinable)
 
 	ugcurl->pos = ugcurl->beg;
 	ugcurl->state = UGET_CURL_READY;
-	ugcurl->stopped = FALSE;
+	ugcurl->stopped = FALSE;    // if thread stop, this value will be TRUE.
 	ugcurl->response = 0;
 	ugcurl->event_code = 0;
 	ugcurl->progress_count = PROGRESS_COUNT_LIMIT;
