@@ -91,6 +91,8 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
 }
 #endif // _WINDOWS
 
+#else
+#include <unistd.h>    // sync()
 #endif // _WIN32 || _WIN64
 
 // ----------------------------------------------------------------------------
@@ -198,6 +200,9 @@ static void sys_signal_handler (int sig)
 //	case SIGQUIT:
 		// This will quit gtk_main() to main()
 		ugtk_app_quit (ugtk_app);
+#if !(defined _WIN32 || defined _WIN64)
+		sync();
+#endif
 		break;
 
 //	case SIGSEGV:
