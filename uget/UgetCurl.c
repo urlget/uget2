@@ -398,23 +398,12 @@ void  uget_curl_set_common (UgetCurl* ugcurl, UgetCommon* common)
 //			(curl_off_t) common->max_download_speed);
 //	curl_easy_setopt (curl, CURLOPT_MAX_SEND_SPEED_LARGE,
 //			(curl_off_t) common->max_upload_speed);
-	// login
-	if ((common->user     && common->user[0]) ||
-		(common->password && common->password[0]))
-	{
-		// set user & password by common data
-		curl_easy_setopt (curl, CURLOPT_USERNAME,
-				(common->user)     ? common->user     : "");
-		curl_easy_setopt (curl, CURLOPT_PASSWORD,
-				(common->password) ? common->password : "");
-		curl_easy_setopt (curl, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-	}
-	else {
-		// clear user & password
-		curl_easy_setopt (curl, CURLOPT_USERNAME, NULL);
-		curl_easy_setopt (curl, CURLOPT_PASSWORD, NULL);
-		curl_easy_setopt (curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-	}
+
+	// I don't set common->user & common->password here because
+	// uget_curl_decide_login() will decide to use one of below login data
+	// common->user & common->password
+	// http->user & http->password
+	// ftp->user & ftp->password
 }
 
 void  uget_curl_set_proxy (UgetCurl* ugcurl, UgetProxy* proxy)
@@ -528,6 +517,13 @@ int   uget_curl_set_http (UgetCurl* ugcurl, UgetHttp* http)
 #endif
 		}
 	}
+
+	// I don't set http->user & http->password here because
+	// uget_curl_decide_login() will decide to use one of below login data
+	// common->user & common->password
+	// http->user & http->password
+	// ftp->user & ftp->password
+
 	return TRUE;
 }
 
@@ -555,6 +551,12 @@ void  uget_curl_set_ftp (UgetCurl* ugcurl, UgetFtp* ftp)
 		// don't use PORT command.
 		curl_easy_setopt (curl, CURLOPT_FTPPORT, NULL);
 	}
+
+	// I don't set ftp->user & ftp->password here because
+	// uget_curl_decide_login() will decide to use one of below login data
+	// common->user & common->password
+	// http->user & http->password
+	// ftp->user & ftp->password
 }
 
 void uget_curl_decide_scheme (UgetCurl* ugcurl, const char* uri)
@@ -582,13 +584,36 @@ void uget_curl_decide_login (UgetCurl* ugcurl)
 	} temp;
 
 	curl = ugcurl->curl;
+
+	// ------------------------------------------------------------------------
+	// common
+	temp.common = ugcurl->common;
+	if (temp.common) {
+		if ((temp.common->user     && temp.common->user[0]) ||
+		    (temp.common->password && temp.common->password[0]))
+		{
+			// set user & password by common data
+			curl_easy_setopt (curl, CURLOPT_USERNAME,
+					(temp.common->user)     ? temp.common->user     : "");
+			curl_easy_setopt (curl, CURLOPT_PASSWORD,
+					(temp.common->password) ? temp.common->password : "");
+			curl_easy_setopt (curl, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+		}
+		else {
+			// clear user & password (for HTTP redirection)
+			curl_easy_setopt (curl, CURLOPT_USERNAME, NULL);
+			curl_easy_setopt (curl, CURLOPT_PASSWORD, NULL);
+			curl_easy_setopt (curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+		}
+	}
+
 	// ------------------------------------------------------------------------
 	// http
 	temp.http = ugcurl->http;
 	if (temp.http && ugcurl->scheme_type == SCHEME_HTTP)
 	{
 		if ((temp.http->user     && temp.http->user[0]) ||
-			(temp.http->password && temp.http->password[0]))
+		    (temp.http->password && temp.http->password[0]))
 		{
 			curl_easy_setopt (curl, CURLOPT_USERNAME,
 					(temp.http->user)     ? temp.http->user     : "");
@@ -612,22 +637,6 @@ void uget_curl_decide_login (UgetCurl* ugcurl)
 			curl_easy_setopt (curl, CURLOPT_PASSWORD,
 					(temp.ftp->password) ? temp.ftp->password : "");
 			return;
-		}
-	}
-
-	// ------------------------------------------------------------------------
-	// common
-	temp.common = ugcurl->common;
-	if (temp.common) {
-		if ((temp.common->user     && temp.common->user[0]) ||
-			(temp.common->password && temp.common->password[0]))
-		{
-			// set user & password by common data
-			curl_easy_setopt (curl, CURLOPT_USERNAME,
-					(temp.common->user)     ? temp.common->user     : "");
-			curl_easy_setopt (curl, CURLOPT_PASSWORD,
-					(temp.common->password) ? temp.common->password : "");
-			curl_easy_setopt (curl, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
 		}
 	}
 }
@@ -704,9 +713,10 @@ static size_t uget_curl_header_http0 (char *buffer, size_t size,
 			uget_curl_decide_scheme (ugcurl, temp);
 			ug_free (temp);
 		}
-		// ug_uri_init() will call by uget_curl_decide_scheme()
 		// decide login data (user & password) by scheme
 		uget_curl_decide_login (ugcurl);
+		// uget_curl_decide_scheme() has called ug_uri_init()
+		// to initialize ugcurl->uri.part
 //		ug_uri_init (&ugcurl->uri.part, ugcurl->header.uri);
 		if (ugcurl->uri.part.file != -1 && ugcurl->header_store) {
 			ug_free (ugcurl->header.filename);
