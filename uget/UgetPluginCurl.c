@@ -453,6 +453,26 @@ static int  plugin_start (UgetPluginCurl* plugin, UgetNode* node)
 	plugin->ftp = ug_info_get (&node->info, UgetFtpInfo);
 	if (plugin->ftp)
 		plugin->ftp = ug_data_copy (plugin->ftp);
+
+	// check http->post_file
+	if (plugin->http->post_file) {
+		if (ug_file_is_exist (plugin->http->post_file) == FALSE) {
+			uget_plugin_post ((UgetPlugin*) plugin,
+					uget_event_new_error (UGET_EVENT_ERROR_POST_FILE_NOT_FOUND,
+					                      NULL));
+			return FALSE;
+		}
+	}
+	// check http->cookie_file
+	if (plugin->http->cookie_file) {
+		if (ug_file_is_exist (plugin->http->cookie_file) == FALSE) {
+			uget_plugin_post ((UgetPlugin*) plugin,
+					uget_event_new_error (UGET_EVENT_ERROR_COOKIE_FILE_NOT_FOUND,
+					                      NULL));
+			return FALSE;
+		}
+	}
+
 	// assign node before speed control
 	uget_node_ref (node);
 	plugin->node = node;
@@ -462,12 +482,15 @@ static int  plugin_start (UgetPluginCurl* plugin, UgetNode* node)
 	plugin_ctrl_speed (plugin, speed);
 	plugin->limit_changed = FALSE;
 
+	// try to start thread
 	plugin->stopped = FALSE;
 	uget_plugin_ref ((UgetPlugin*) plugin);
 	ok = ug_thread_create (&thread, (UgThreadFunc) plugin_thread, plugin);
 	if (ok == UG_THREAD_OK)
 		ug_thread_unjoin (&thread);
 	else {
+		// failed to start thread
+		plugin->stopped = TRUE;
 		uget_plugin_post ((UgetPlugin*) plugin,
 				uget_event_new_error (UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 				                      NULL));

@@ -90,6 +90,8 @@ static const char*  error_msg[] =
 	N_("Too many retries."),                                    // UGET_EVENT_ERROR_TOO_MANY_RETRIES
 	N_("Unsupported scheme (protocol)."),                       // UGET_EVENT_ERROR_UNSUPPORTED_SCHEME
 	N_("Unsupported file."),                                    // UGET_EVENT_ERROR_UNSUPPORTED_FILE
+	N_("post file not found."),                                 // UGET_EVENT_ERROR_POST_FILE_NOT_FOUND
+	N_("cookie file not found."),                               // UGET_EVENT_ERROR_COOKIE_FILE_NOT_FOUND
 };
 static const int  n_error_msg = sizeof (error_msg) / sizeof (char*);
 
