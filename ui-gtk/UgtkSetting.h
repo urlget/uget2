@@ -229,6 +229,7 @@ int   ugtk_setting_load (UgtkSetting* setting, const char* file);
 void  ugtk_setting_reset (UgtkSetting* setting);
 
 void  ugtk_setting_add_folder (UgtkSetting* setting, const char* folder);
+void  ugtk_setting_fix_data (UgtkSetting* setting);
 
 #ifdef __cplusplus
 }

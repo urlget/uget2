@@ -501,6 +501,9 @@ int  ugtk_setting_load (UgtkSetting* setting, const char* path)
 
 	ug_json_file_end_parse (jfile);
 	ug_json_file_free (jfile);
+
+	// check & fix settings
+	ugtk_setting_fix_data (setting);
 	return TRUE;
 }
 
@@ -530,4 +533,18 @@ void  ugtk_setting_add_folder (UgtkSetting* setting, const char* folder)
 	link = ug_link_new ();
 	link->data = ug_strdup (folder);
 	ug_list_prepend (list, link);
+}
+
+void  ugtk_setting_fix_data (UgtkSetting* setting)
+{
+	unsigned int  index;
+
+	// scheduler
+	for (index = 0;  index < 7*24;  index++) {
+		if (setting->scheduler.state.at[index] < 0 ||
+		    setting->scheduler.state.at[index] > UGTK_SCHEDULE_N_STATE)
+		{
+			setting->scheduler.state.at[index] = UGTK_SCHEDULE_NORMAL;
+		}
+	}
 }
