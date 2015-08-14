@@ -993,20 +993,22 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 				plugin->aria2.path = ug_strdup (plugin->file.path);
 				uget_a2cf_init (&plugin->aria2.ctrl, plugin->file.size);
 				uget_a2cf_save (&plugin->aria2.ctrl, plugin->aria2.path);
-				// allocate disk space
+				// create an empty file of particular size.
+				if (ug_write (value, "O", 1) == -1)  // begin of file
+					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
 				if (ug_seek (value, plugin->file.size - 1, SEEK_SET) == -1)
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
-				if (ug_write (value, "X", 1) == -1)
+				if (ug_write (value, "X", 1) == -1)  // end of file
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
-				// if error occur
-				if (ugcurl->event_code > 0) {
-					ug_close (value);
-					return FALSE;
-				}
 			}
 			ug_close (value);
-			// remove tail ".aria2"
+			// remove tail ".aria2" string in file path
 			*(char*) strstr (plugin->file.path + length, ".aria2") = 0;
+			// if error occurred while allocating disk space, delete created download file.
+			if (ugcurl->event_code > 0) {
+				ug_unlink (plugin->file.path);
+				return FALSE;
+			}
 			break;
 		}
 
