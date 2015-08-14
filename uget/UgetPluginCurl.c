@@ -981,8 +981,8 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 			if (uget_a2cf_load (&plugin->aria2.ctrl, plugin->file.path)) {
 				if (plugin->aria2.ctrl.total_len == plugin->file.size) {
 					plugin->aria2.path = ug_strdup (plugin->file.path);
-					plugin->file.path[length] = 0;
 					plugin->base.download = uget_a2cf_completed (&plugin->aria2.ctrl);
+					*(char*) strstr (plugin->file.path + length, ".aria2") = 0;
 					break;
 				}
 				uget_a2cf_clear (&plugin->aria2.ctrl);
