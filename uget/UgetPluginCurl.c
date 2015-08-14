@@ -990,9 +990,6 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 		}
 		else {
 			if (plugin->file.size) {
-				plugin->aria2.path = ug_strdup (plugin->file.path);
-				uget_a2cf_init (&plugin->aria2.ctrl, plugin->file.size);
-				uget_a2cf_save (&plugin->aria2.ctrl, plugin->aria2.path);
 				// create an empty file of particular size.
 				if (ug_write (value, "O", 1) == -1)  // begin of file
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
@@ -1000,6 +997,12 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
 				if (ug_write (value, "X", 1) == -1)  // end of file
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
+				// create aria2 control file if no error
+				if (ugcurl->event_code == 0) {
+					plugin->aria2.path = ug_strdup (plugin->file.path);
+					uget_a2cf_init (&plugin->aria2.ctrl, plugin->file.size);
+					uget_a2cf_save (&plugin->aria2.ctrl, plugin->aria2.path);
+				}
 			}
 			ug_close (value);
 			// remove tail ".aria2" string in file path
