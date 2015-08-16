@@ -46,9 +46,13 @@
                                     "3GP|AAC|FLAC|M4A|M4P|MP3|OGG|WAV|WMA|" \
                                     "MP4|MKV|WEBM|OGV|AVI|MOV|WMV|FLV|F4V|MPG|MPEG|RMVB"
 
-#define UGTK_ARIA2_ARGUMENTS        "--enable-rpc=true -D " \
-                                    "--disable-ipv6 "       \
-                                    "--check-certificate=false"
+#define UGTK_ARIA2_PATH    "aria2c"
+
+#define UGTK_ARIA2_ARGS    "--enable-rpc=true -D " \
+                           "--disable-ipv6 "       \
+                           "--check-certificate=false"
+
+#define UGTK_ARIA2_URI     "http://localhost:6800/jsonrpc"
 
 // ----------------------------------------------------------------------------
 // WindowSetting
@@ -419,9 +423,9 @@ void  ugtk_setting_reset (UgtkSetting* setting)
 	setting->aria2.limit.upload = 0;
 	setting->aria2.launch = TRUE;
 	setting->aria2.shutdown = TRUE;
-	setting->aria2.path = ug_strdup ("aria2c");
-	setting->aria2.args = ug_strdup (UGTK_ARIA2_ARGUMENTS);
-	setting->aria2.uri  = ug_strdup ("http://localhost:6800/jsonrpc");
+	setting->aria2.path = ug_strdup (UGTK_ARIA2_PATH);
+	setting->aria2.args = ug_strdup (UGTK_ARIA2_ARGS);
+	setting->aria2.uri  = ug_strdup (UGTK_ARIA2_URI);
 
 	// Others
 	setting->completion.remember = TRUE;
@@ -539,12 +543,53 @@ void  ugtk_setting_fix_data (UgtkSetting* setting)
 {
 	unsigned int  index;
 
-	// scheduler
+	// "DownloadColumnSetting"
+	// default sorted column
+	if (setting->download_column.sort.type != GTK_SORT_ASCENDING &&
+	    setting->download_column.sort.type != GTK_SORT_DESCENDING)
+	{
+		setting->download_column.sort.type = GTK_SORT_DESCENDING;
+	}
+	if (setting->download_column.sort.nth < 0 ||
+	    setting->download_column.sort.nth >= UGTK_NODE_N_COLUMNS)
+	{
+		setting->download_column.sort.nth = UGTK_NODE_COLUMN_ADDED_ON;
+	}
+
+	// "ClipboardSetting"
+	if (setting->clipboard.pattern == NULL ||
+	    setting->clipboard.pattern[0] == 0)
+	{
+		ug_free (setting->clipboard.pattern);
+		setting->clipboard.pattern = ug_strdup (UGTK_APP_CLIPBOARD_PATTERN);
+	}
+
+	// "SchedulerSetting"
 	for (index = 0;  index < 7*24;  index++) {
 		if (setting->scheduler.state.at[index] < 0 ||
-		    setting->scheduler.state.at[index] > UGTK_SCHEDULE_N_STATE)
+		    setting->scheduler.state.at[index] >= UGTK_SCHEDULE_N_STATE)
 		{
 			setting->scheduler.state.at[index] = UGTK_SCHEDULE_NORMAL;
 		}
+	}
+
+	// "PluginSetting"
+	if (setting->plugin_order < 0 ||
+	    setting->plugin_order >= UGTK_PLUGIN_N_ORDER)
+	{
+		setting->plugin_order = UGTK_PLUGIN_ORDER_CURL;
+	}
+	// aria2 plugin settings
+	if (setting->aria2.path == NULL || setting->aria2.path[0] == 0) {
+		ug_free (setting->aria2.path);
+		setting->aria2.path = ug_strdup (UGTK_ARIA2_PATH);
+	}
+	if (setting->aria2.args == NULL || setting->aria2.args[0] == 0) {
+		ug_free (setting->aria2.args);
+		setting->aria2.args = ug_strdup (UGTK_ARIA2_ARGS);
+	}
+	if (setting->aria2.uri == NULL || setting->aria2.uri[0] == 0) {
+		ug_free (setting->aria2.uri);
+		setting->aria2.uri  = ug_strdup (UGTK_ARIA2_URI);
 	}
 }
