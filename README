@@ -1,3 +1,15 @@
+uGet 2.0.1: (2015-08-15)
+01. curl plug-in: create new download file if file size is not the same.
+02. curl plug-in: use common user & password by default.
+03. curl plug-in: response error if post or cookie file not found.
+04. curl plug-in: don't create aria2 control file if download file create failed.
+05. curl plug-in: if error occurred while allocating disk space, delete created download file.
+06. curl plug-in: count downloaded size after splitting download. (avoid progress > 100%)
+07. avoid crash if user doesn't specify argument value.
+08. When creating folder failed, check folder exists before returning error.
+09. When uGet get SIGTERM, it will save settings and call sync() for Linux.
+10. check and fix settings after loading Setting.json
+
 uGet 2.0: (2015-05-01)
 1. Try to ignore some error when parsing JSON file.
 2. clipboard monitor add a new file type 'WEBM'.
