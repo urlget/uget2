@@ -122,6 +122,7 @@ struct UgetPluginCurl
 	uint8_t       aria2_created:1; // has aria2 ctrl file?
 	uint8_t       synced:1;
 	uint8_t       stopped:1;       // ctrl
+	uint8_t       prepared:1;      // prepare to download
 };
 
 #ifdef __cplusplus

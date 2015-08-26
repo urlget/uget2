@@ -859,7 +859,7 @@ static int prepare_existed (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 		if (plugin->file.size != ugcurl->beg + (int64_t) fsize) {
 			// if remote file size and local file size are not the same,
 			// plug-in will create new download file.
-			if (plugin->seg.list.size == 1) {
+			if (plugin->prepared == FALSE) {
 				// plugin_thread() has initialized/created some data for this function.
 				// program must clear these data before calling prepare_file()
 				ug_free (plugin->aria2.path);
@@ -882,8 +882,10 @@ static int prepare_existed (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 		plugin->file.time = (time_t) ftime;
 	}
 
-	if (uget_curl_open_file (ugcurl, plugin->file.path))
+	if (uget_curl_open_file (ugcurl, plugin->file.path)) {
+		plugin->prepared = TRUE;
 		return TRUE;
+	}
 	else {
 		ugcurl->event_code = UGET_EVENT_ERROR_FILE_OPEN_FAILED;
 		return FALSE;
@@ -1070,6 +1072,8 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 	ugcurl->prepare.func = (UgetCurlFunc) prepare_existed;
 	ugcurl->prepare.data = plugin;
 	// prepare to download
+	plugin->prepared = TRUE;
+	// file and it's offset
 	temp.val64 = 0;
 	uget_a2cf_lack (&plugin->aria2.ctrl,
 	                (uint64_t*) &temp.val64,
