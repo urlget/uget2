@@ -378,8 +378,8 @@ static int  plugin_sync (UgetPluginCurl* plugin)
 				uget_plugin_post ((UgetPlugin*) plugin,
 						uget_event_new (UGET_EVENT_NAME));
 			}
-			if (common->file == NULL)
-				common->file = ug_strdup (name + 1);
+			ug_free (common->file);
+			common->file = ug_strdup (name + 1);
 		}
 	}
 	if (plugin->aria2.path) {
