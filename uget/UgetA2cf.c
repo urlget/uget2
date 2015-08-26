@@ -389,8 +389,10 @@ int  uget_a2cf_load (UgetA2cf* a2cf, const char* filename)
 		return FALSE;
 	}
 	a2cf->bitfield_len = uint32_from_be (a2cf->bitfield_len);
-	if (a2cf->bitfield_len == 0)
+	if (a2cf->bitfield_len == 0) {
 		a2cf->bitfield = NULL;
+		return FALSE;
+	}
 	else {
 		a2cf->bitfield = ug_malloc (a2cf->bitfield_len);
 		if (ug_fread (file, a2cf->bitfield, a2cf->bitfield_len) != a2cf->bitfield_len)
