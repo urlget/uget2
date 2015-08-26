@@ -910,7 +910,7 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 	// file.size
 	curl_easy_getinfo (ugcurl->curl,
 			CURLINFO_CONTENT_LENGTH_DOWNLOAD, &temp.fsize);
-	plugin->file.size = (int64_t) temp.fsize;
+	plugin->file.size = (int64_t) temp.fsize + ugcurl->beg;
 	if (plugin->file.size == -1)
 		plugin->file.size = 0;
 
@@ -989,6 +989,7 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 			}
 		}
 		else {
+			plugin->base.download = 0;
 			if (plugin->file.size) {
 				// create an empty file of particular size.
 				if (ug_write (value, "O", 1) == -1)  // begin of file
@@ -1068,7 +1069,7 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 	// change callback
 	ugcurl->prepare.func = (UgetCurlFunc) prepare_existed;
 	ugcurl->prepare.data = plugin;
-	// file and it's offset
+	// prepare to download
 	temp.val64 = 0;
 	uget_a2cf_lack (&plugin->aria2.ctrl,
 	                (uint64_t*) &temp.val64,
