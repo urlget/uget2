@@ -862,8 +862,8 @@ static int prepare_existed (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 			if (plugin->seg.list.size == 1) {
 				// plugin_thread() has initialized/created some data for this function.
 				// program must clear these data before calling prepare_file()
-				ugcurl->beg = 0;
-				ugcurl->end = 0;
+				ug_free (plugin->aria2.path);
+				plugin->aria2.path = NULL;
 				uget_curl_close_file (ugcurl);
 				uget_a2cf_clear (&plugin->aria2.ctrl);
 				return prepare_file (ugcurl, plugin);
