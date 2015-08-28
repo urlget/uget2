@@ -300,6 +300,7 @@ static int  plugin_ctrl_speed (UgetPluginCurl* plugin, int* speed)
 // ----------------------------------------------------------------------------
 // plugin_sync
 
+static void plugin_clear_node  (UgetPluginCurl* plugin);
 static void plugin_remove_node (UgetPluginCurl* plugin, const char* fpath);
 static int  plugin_insert_node (UgetPluginCurl* plugin,
                                 const char* fpath, int is_attachment);
@@ -364,6 +365,7 @@ static int  plugin_sync (UgetPluginCurl* plugin)
 	// add UgetNode for file & attachment
 	if (plugin->file_renamed && plugin->file.path) {
 		plugin->file_renamed = FALSE;
+		plugin_clear_node (plugin);
 		plugin_insert_node (plugin, plugin->file.path, FALSE);
 		// change node name
 #if defined _WIN32 || defined _WIN64
@@ -421,6 +423,18 @@ static void plugin_remove_node (UgetPluginCurl* plugin, const char* fpath)
 			uget_node_unref (node);
 			return;
 		}
+	}
+}
+
+static void plugin_clear_node (UgetPluginCurl* plugin)
+{
+	UgetNode*  node;
+	UgetNode*  next;
+
+	for (node = plugin->node->children;  node;  node = next) {
+		next = node->next;
+		uget_node_remove (plugin->node, node);
+		uget_node_unref (node);
 	}
 }
 
