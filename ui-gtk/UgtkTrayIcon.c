@@ -57,14 +57,22 @@ void ugtk_tray_icon_init (UgtkTrayIcon* trayicon)
 	menu = gtk_menu_new ();
 	// New Download
 	menu_item = gtk_image_menu_item_new_with_mnemonic (_("New _Download..."));
-	image = gtk_image_new_from_stock (GTK_STOCK_FILE, GTK_ICON_SIZE_MENU);
+#if GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 10
+	image = gtk_image_new_from_icon_name ("document-new", GTK_ICON_SIZE_MENU);
+#else
+	image = gtk_image_new_from_stock (GTK_STOCK_NEW, GTK_ICON_SIZE_MENU);
+#endif
 	gtk_image_menu_item_set_image ((GtkImageMenuItem*)menu_item, image);
 	gtk_menu_shell_append ((GtkMenuShell*)menu, menu_item);
 	trayicon->menu.create_download = menu_item;
 
 	// New Clipboard batch
 	menu_item = gtk_image_menu_item_new_with_mnemonic (_("New Clipboard _batch..."));
+#if GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 10
+	image = gtk_image_new_from_icon_name ("edit-paste", GTK_ICON_SIZE_MENU);
+#else
 	image = gtk_image_new_from_stock (GTK_STOCK_PASTE, GTK_ICON_SIZE_MENU);
+#endif
 	gtk_image_menu_item_set_image ((GtkImageMenuItem*)menu_item, image);
 	gtk_menu_shell_append ((GtkMenuShell*)menu, menu_item);
 	trayicon->menu.create_clipboard = menu_item;
@@ -73,15 +81,15 @@ void ugtk_tray_icon_init (UgtkTrayIcon* trayicon)
 
 	// New Torrent
 	menu_item = gtk_image_menu_item_new_with_mnemonic (_("New Torrent..."));
-	image = gtk_image_new_from_stock (GTK_STOCK_FILE, GTK_ICON_SIZE_MENU);
-	gtk_image_menu_item_set_image ((GtkImageMenuItem*)menu_item, image);
+//	image = gtk_image_new_from_stock (GTK_STOCK_NEW, GTK_ICON_SIZE_MENU);
+//	gtk_image_menu_item_set_image ((GtkImageMenuItem*)menu_item, image);
 	gtk_menu_shell_append ((GtkMenuShell*)menu, menu_item);
 	trayicon->menu.create_torrent = menu_item;
 
 	// New Metalink
 	menu_item = gtk_image_menu_item_new_with_mnemonic (_("New Metalink..."));
-	image = gtk_image_new_from_stock (GTK_STOCK_FILE, GTK_ICON_SIZE_MENU);
-	gtk_image_menu_item_set_image ((GtkImageMenuItem*)menu_item, image);
+//	image = gtk_image_new_from_stock (GTK_STOCK_NEW, GTK_ICON_SIZE_MENU);
+//	gtk_image_menu_item_set_image ((GtkImageMenuItem*)menu_item, image);
 	gtk_menu_shell_append ((GtkMenuShell*)menu, menu_item);
 	trayicon->menu.create_metalink = menu_item;
 
@@ -112,7 +120,11 @@ void ugtk_tray_icon_init (UgtkTrayIcon* trayicon)
 
 	// Settings
 	menu_item = gtk_image_menu_item_new_with_mnemonic (_("_Settings..."));
+#if GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 10
+	image = gtk_image_new_from_icon_name ("document-properties", GTK_ICON_SIZE_MENU);
+#else
 	image = gtk_image_new_from_stock (GTK_STOCK_PROPERTIES, GTK_ICON_SIZE_MENU);
+#endif
 	gtk_image_menu_item_set_image ((GtkImageMenuItem*)menu_item, image);
 	gtk_menu_shell_append ((GtkMenuShell*)menu, menu_item);
 	trayicon->menu.settings = menu_item;
