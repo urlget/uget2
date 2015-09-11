@@ -104,6 +104,21 @@ int    ug_str_remove_crlf (const char* src, char* dest)
 	return length;
 }
 
+// return number of characters was replaced by to_char
+int    ug_str_replace_chars (char* str, const char* from_chars, int to_char)
+{
+	char* cur;
+	int   counts;
+
+	for (counts = 0, cur = str;  ; counts++) {
+		cur = strpbrk (cur, from_chars);
+		if (cur == NULL)
+			break;
+		cur[0] = to_char;
+	}
+	return counts;
+}
+
 /*
  * convert double to string
  * If value large than 1024, it will append unit string like "KiB",

@@ -953,6 +953,8 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 		// if it is still no filename, set default one
 		if (common->file == NULL)
 			common->file = ug_strdup ("index");
+		// replace invalid characters \/:*?"<>| by _ in filename.
+		ug_str_replace_chars (common->file, "\\/:*?\"<>|", '_');
 	}
 	length += strlen (common->file);
 

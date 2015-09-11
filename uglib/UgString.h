@@ -71,6 +71,9 @@ char*   ug_strndup (const char* string, size_t length);
 // dest can be src or NULL.
 int    ug_str_remove_crlf (const char* src, char* dest);
 
+// return number of characters was replaced by to_char
+int    ug_str_replace_chars (char* str, const char* from_chars, int to_char);
+
 /*
  * convert double to string
  * If value large than 1024, it will append unit string like "KiB",

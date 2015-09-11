@@ -555,6 +555,10 @@ int  uget_app_add_download (UgetApp* app, UgetNode* dnode, UgetNode* cnode, int 
 	} temp;
 
 	temp.common = ug_info_realloc (&dnode->info, UgetCommonInfo);
+	// replace invalid characters \/:*?"<>| by _ in filename.
+	if (temp.common->file)
+		ug_str_replace_chars (temp.common->file, "\\/:*?\"<>|", '_');
+	// decode name, filename, and category
 	if (temp.common->uri) {
 		ug_uri_init (&uuri, temp.common->uri);
 		if (dnode->name == NULL) {
