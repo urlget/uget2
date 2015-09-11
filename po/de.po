@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2015-07-14 13:04+0000\n"
+"PO-Revision-Date: 2015-08-18 16:06+0000\n"
 "Last-Translator: Tobias Bannert <tobannert@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/uget/uget/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -136,13 +136,13 @@ msgstr "aria2: Zeit abgelaufen."
 
 #: ../../po/../uget/UgetPluginAria2.c:274
 msgid "aria2: resource was not found."
-msgstr "aria2: Resource wurde nicht gefunden."
+msgstr "aria2: Quelle wurde nicht gefunden."
 
 #: ../../po/../uget/UgetPluginAria2.c:275
 msgid ""
 "aria2 saw the specfied number of 'resource not found' error. See --max-file-"
 "not-found option"
-msgstr ""
+msgstr "aria2 sah die bestimmte Zahl des Fehlers »Quelle nicht gefunden«. Siehe Option --max-file-not-found"
 
 #: ../../po/../uget/UgetPluginAria2.c:276
 msgid "aria2: speed was too slow."
@@ -159,7 +159,7 @@ msgstr "aria2: Unvollständige Übertragungen."
 #. _("Not Resumable"),
 #: ../../po/../uget/UgetPluginAria2.c:280
 msgid "Out of resource"
-msgstr ""
+msgstr "Kein Speicherplatz verfügbar"
 
 #. _(),
 #: ../../po/../uget/UgetPluginAria2.c:281
@@ -177,29 +177,29 @@ msgstr "aria2 hat den selben Info-Hash-Torrent heruntergeladen."
 
 #: ../../po/../uget/UgetPluginAria2.c:285
 msgid "aria2: file already existed. See --allow-overwrite option."
-msgstr ""
+msgstr "aria2: Datei ist bereits vorhanden. Siehe Option --allow-overwrite."
 
 #. _("Output file can't be renamed."),
 #: ../../po/../uget/UgetPluginAria2.c:287
 msgid "aria2: could not open existing file."
-msgstr ""
+msgstr "aria2: Vorhandene Datei kann nicht geöffnet werden."
 
 #: ../../po/../uget/UgetPluginAria2.c:288
 msgid "aria2: could not create new file or truncate existing file."
-msgstr ""
+msgstr "aria2: Neue Datei konnte nicht erstellt oder vorhandene Datei gekürzt werden."
 
 #: ../../po/../uget/UgetPluginAria2.c:289
 msgid "aria2: file I/O error occurred."
-msgstr ""
+msgstr "aria2: Datei-E/A-Fehler ist aufgetreten."
 
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../../po/../uget/UgetPluginAria2.c:291
 msgid "aria2: name resolution failed."
-msgstr ""
+msgstr "aria2: Namensauflösung ist fehlgeschlagen."
 
 #: ../../po/../uget/UgetPluginAria2.c:292
 msgid "aria2: could not parse Metalink document."
-msgstr ""
+msgstr "aria2: Metalink-Dokument konnte nicht analysiert werden."
 
 #. 21 - 30
 #: ../../po/../uget/UgetPluginAria2.c:294
@@ -208,7 +208,7 @@ msgstr "aria2: FTP-Befehl ist fehlgeschlagen."
 
 #: ../../po/../uget/UgetPluginAria2.c:295
 msgid "aria2: HTTP response header was bad or unexpected."
-msgstr ""
+msgstr "aria2: HTTP-Antwortkopfzeile war fehlerhaft oder unerwartet."
 
 #: ../../po/../uget/UgetPluginAria2.c:296
 msgid "Too many redirections."
@@ -216,15 +216,15 @@ msgstr "Zu viele Umleitungen."
 
 #: ../../po/../uget/UgetPluginAria2.c:297
 msgid "aria2: HTTP authorization failed."
-msgstr ""
+msgstr "aria2: HTTP-Legitimierung ist fehlgeschlagen."
 
 #: ../../po/../uget/UgetPluginAria2.c:298
 msgid "aria2: could not parse bencoded file(usually .torrent file)."
-msgstr ""
+msgstr "aria2: Bencoded-Datei (normalerweise .torrent-Datei) konnte nicht analysiert werden."
 
 #: ../../po/../uget/UgetPluginAria2.c:299
 msgid "aria2: torrent file was corrupted or missing information."
-msgstr ""
+msgstr "aria2: Torrent-Datei ist beschädigt oder es fehlen Informationen."
 
 #: ../../po/../uget/UgetPluginAria2.c:300
 msgid "aria2: Magnet URI was bad."
@@ -234,15 +234,15 @@ msgstr "aria2: Magnet-Adresse ist fehlerhaft."
 msgid ""
 "aria2: bad/unrecognized option was given or unexpected option argument was "
 "given."
-msgstr ""
+msgstr "aria2: schlechte oder nicht erkannte Option oder unerwartetes Optionsargument angegeben."
 
 #: ../../po/../uget/UgetPluginAria2.c:302
 msgid "aria2: remote server was unable to handle the request."
-msgstr ""
+msgstr "aria2: Entfernter Server war nicht in der Lage die Anfrage zu verarbeiten."
 
 #: ../../po/../uget/UgetPluginAria2.c:303
 msgid "aria2: could not parse JSON-RPC request."
-msgstr ""
+msgstr "aria2: JSON-RPC-Anfrage konnte nicht analysiert werden."
 
 #: ../../po/../uget/UgetPluginAria2.c:306
 msgid "No response. Is aria2 shutdown?"
@@ -251,7 +251,7 @@ msgstr "Keine Antwort. Ist aria2 herunterfahren?"
 #. debug
 #: ../../po/../uget/UgetPluginAria2.c:608
 msgid "aria2: gid was removed."
-msgstr ""
+msgstr "aria2: GID wurde entfernt."
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:46
 msgid "Download Manager"
@@ -630,7 +630,7 @@ msgstr "_Ordner:"
 #. Referrer - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:182
 msgid "Referrer:"
-msgstr "Referrer:"
+msgstr "_Referrer:"
 
 #. "Max Connections:" - title label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:207
@@ -644,7 +644,7 @@ msgstr "Ausfüh_ren"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:228
 msgid "P_ause"
-msgstr "P_ause"
+msgstr "An_gehalten"
 
 #. ----------------------------------------------------
 #. frame for login
@@ -1188,7 +1188,7 @@ msgstr "Größe"
 #. proxy type label & combo box
 #: ../../po/../ui-gtk/UgtkProxyForm.c:64
 msgid "Proxy:"
-msgstr "Proxy:"
+msgstr "Vermittlungsserver (Proxy):"
 
 #: ../../po/../ui-gtk/UgtkProxyForm.c:67
 msgid "Don't use"
@@ -1405,12 +1405,12 @@ msgstr "_Ruhemodus"
 #: ../../po/../ui-gtk/UgtkSettingForm.c:68
 #: ../../po/../ui-gtk/UgtkSettingForm.c:446
 msgid "Default category index"
-msgstr ""
+msgstr "Vorgegebener Kategorieindex"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:80
 #: ../../po/../ui-gtk/UgtkSettingForm.c:458
 msgid "Adding to Nth category if no matched category."
-msgstr ""
+msgstr "Wird zur N-ten Kategorie hinzugefügt, wenn mit keiner Kategorie übereinstimmt."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:87
 msgid "Monitor clipboard for specified file types:"
@@ -1468,7 +1468,7 @@ msgstr "Benachrichtigung über Herunterladestart"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:195
 msgid "Sound when download is finished"
-msgstr "Ton ausgeben wenn Übertragung fertiggestellt ist"
+msgstr "Ton ausgeben wenn Übertragung fertiggestellt wurde"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
 msgid "Apply recently download settings"
@@ -1491,7 +1491,7 @@ msgstr "Höchste Hochladegeschwindigkeit"
 #: ../../po/../ui-gtk/UgtkSettingForm.c:290
 #: ../../po/../ui-gtk/UgtkSettingForm.c:576
 msgid "Max download speed"
-msgstr "Höchste Übertragungsgeschwindigkeit"
+msgstr "Höchste Herunterladegeschwindigkeit"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:323
 msgid "Completion Auto-Actions"
@@ -1539,7 +1539,7 @@ msgstr "aria2-Moduloptionen"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:547
 msgid "RPC authorization secret token"
-msgstr ""
+msgstr "RPC-Legitimierung geheimer Token"
 
 #. ------------------------------------------------------------------------
 #. Speed Limits

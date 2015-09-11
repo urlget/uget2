@@ -4,6 +4,7 @@
 # 
 # Translators:
 # ahmad <ahmad.almomani5@gmail.com>, 2013
+# Benamara Mohamed <mohamedsdev@gmail.com>, 2015
 # Ibrahim Saed <ibraheem5000@hotmail.com>, 2014
 # صفا الفليج <safaalfulaij@hotmail.com>, 2013-2014
 msgid ""
@@ -11,9 +12,9 @@ msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2014-11-27 14:12+0000\n"
-"Last-Translator: صفا الفليج <safaalfulaij@hotmail.com>\n"
-"Language-Team: Arabic (http://www.transifex.com/projects/p/uget/language/ar/)\n"
+"PO-Revision-Date: 2015-09-09 14:59+0000\n"
+"Last-Translator: Benamara Mohamed <mohamedsdev@gmail.com>\n"
+"Language-Team: Arabic (http://www.transifex.com/uget/uget/language/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -182,7 +183,7 @@ msgstr "aria2: الملف موجود بالفعل. طالع خيار ‎--allow-
 #. _("Output file can't be renamed."),
 #: ../../po/../uget/UgetPluginAria2.c:287
 msgid "aria2: could not open existing file."
-msgstr ""
+msgstr "aria2: ﻻ يمكن فتح ملف موجود."
 
 #: ../../po/../uget/UgetPluginAria2.c:288
 msgid "aria2: could not create new file or truncate existing file."

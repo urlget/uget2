@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Reazul Iqbal <reazuliqbal@yahoo.com>, 2015
 # Towfique Anam, 2013
 # Nazir Ahmed Sabbir <na_sabbir@yahoo.com>, 2015
 msgid ""
@@ -10,9 +11,9 @@ msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2015-01-28 07:52+0000\n"
-"Last-Translator: Nazir Ahmed Sabbir <na_sabbir@yahoo.com>\n"
-"Language-Team: Bengali (Bangladesh) (http://www.transifex.com/projects/p/uget/language/bn_BD/)\n"
+"PO-Revision-Date: 2015-08-15 03:24+0000\n"
+"Last-Translator: Reazul Iqbal <reazuliqbal@yahoo.com>\n"
+"Language-Team: Bengali (Bangladesh) (http://www.transifex.com/uget/uget/language/bn_BD/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -87,12 +88,12 @@ msgstr "ফাইল খোলা যাবে না।"
 #. UGET_EVENT_ERROR_FILE_OPEN_FAILED
 #: ../../po/../uget/UgetEvent.c:85
 msgid "Unable to create thread."
-msgstr ""
+msgstr "থ্রেড তৈরি করা যায়নি।"
 
 #. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 #: ../../po/../uget/UgetEvent.c:86
 msgid "Incorrect source (different file size)."
-msgstr ""
+msgstr "ভুল উৎস (ভিন্ন আকারের ফাইল)।"
 
 #. UGET_EVENT_ERROR_INCORRECT_SOURCE,
 #: ../../po/../uget/UgetEvent.c:87
@@ -127,11 +128,11 @@ msgstr "অসর্মথিত ফাইল।"
 #. 1 - 10
 #: ../../po/../uget/UgetPluginAria2.c:272
 msgid "aria2: an unknown error occurred."
-msgstr ""
+msgstr "aria2: একটি অজানা ত্রুটি ঘটেছে।"
 
 #: ../../po/../uget/UgetPluginAria2.c:273
 msgid "aria2: time out occurred."
-msgstr ""
+msgstr "aria2: টাইম আউট হয়েছে।"
 
 #: ../../po/../uget/UgetPluginAria2.c:274
 msgid "aria2: resource was not found."
