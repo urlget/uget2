@@ -1,3 +1,11 @@
+uGet 2.0.2: (2015-09-11)
+1. curl plug-in: fix memory leak and avoid accessing NULL pointer.
+2. curl plug-in: create new file with correct size if file size is not the same.
+3. curl plug-in: create new file only in first connection.
+4. curl plug-in: change setting's file name if plug-in created new file.
+5. Don't resume file with incorrect aria2 control file (no bit field).
+6. replace invalid characters \/:*?"<>| by _ in filename.
+
 uGet 2.0.1: (2015-08-15)
 01. curl plug-in: create new download file if file size is not the same.
 02. curl plug-in: use common user & password by default.
