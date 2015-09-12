@@ -315,7 +315,7 @@ static int  plugin_sync (UgetPluginCurl* plugin)
 	if (plugin->stopped) {
 		if (plugin->synced)
 			return FALSE;
-		plugin->synced  = TRUE;
+		plugin->synced = TRUE;
 	}
 	if (plugin->node == NULL)
 		return TRUE;
@@ -340,20 +340,18 @@ static int  plugin_sync (UgetPluginCurl* plugin)
 	progress->upload_speed   = plugin->speed.upload;
 	progress->download_speed = plugin->speed.download;
 
-	if (plugin->size.upload || plugin->size.download) {
-		progress->uploaded   = plugin->size.upload;
-		progress->complete   = plugin->size.download;
+	progress->uploaded   = plugin->size.upload;
+	progress->complete   = plugin->size.download;
 
-		if (plugin->file.size > 0)
-			progress->total = plugin->file.size;
-		else
-			progress->total = progress->complete;
+	if (plugin->file.size > 0)
+		progress->total = plugin->file.size;
+	else
+		progress->total = progress->complete;
 
-		if (progress->total > 0)
-			progress->percent = progress->complete * 100 / progress->total;
-		else
-			progress->percent = 0;
-	}
+	if (progress->total > 0)
+		progress->percent = progress->complete * 100 / progress->total;
+	else
+		progress->percent = 0;
 
 	// If total size and average speed is unknown, don't calculate remain time.
 	if (progress->download_speed > 0 && progress->total > 0) {
@@ -1008,7 +1006,10 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 			}
 		}
 		else {
+			// reset downloaded size if plug-in decide to create new file.
 			plugin->base.download = 0;
+			plugin->size.download = 0;
+			// allocate disk space if plug-in known file size
 			if (plugin->file.size) {
 				// create an empty file of particular size.
 				if (ug_write (value, "O", 1) == -1)  // begin of file
