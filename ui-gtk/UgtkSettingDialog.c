@@ -74,6 +74,7 @@ UgtkSettingDialog*  ugtk_setting_dialog_new (const gchar* title, GtkWindow* pare
 	gtk_box_pack_end (hbox, widget, FALSE, FALSE, 0);
 	dialog->notebook = (GtkNotebook*) widget;
 	gtk_notebook_set_show_tabs (dialog->notebook, FALSE);
+	gtk_notebook_set_show_border (dialog->notebook, FALSE);
 	// TreeView
 	dialog->list_store = gtk_list_store_new (1, G_TYPE_STRING);
 	widget = gtk_tree_view_new_with_model (
