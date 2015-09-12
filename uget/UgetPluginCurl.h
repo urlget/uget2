@@ -119,7 +119,7 @@ struct UgetPluginCurl
 	uint8_t       limit_by_user:1; // speed limit changed by user
 	uint8_t       limit_changed:1; // speed limit changed
 	uint8_t       file_renamed:1;  // has file path?
-	uint8_t       aria2_created:1; // has aria2 ctrl file?
+	uint8_t       a2cf_named:1;    // has aria2 ctrl file name?
 	uint8_t       synced:1;
 	uint8_t       stopped:1;       // ctrl
 	uint8_t       prepared:1;      // prepare to download

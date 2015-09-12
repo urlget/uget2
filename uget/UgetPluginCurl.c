@@ -365,6 +365,7 @@ static int  plugin_sync (UgetPluginCurl* plugin)
 	// add UgetNode for file & attachment
 	if (plugin->file_renamed && plugin->file.path) {
 		plugin->file_renamed = FALSE;
+		plugin->a2cf_named = FALSE;
 		plugin_clear_node (plugin);
 		plugin_insert_node (plugin, plugin->file.path, FALSE);
 		// change node name
@@ -387,8 +388,8 @@ static int  plugin_sync (UgetPluginCurl* plugin)
 	if (plugin->aria2.path) {
 		if (plugin->file.size == plugin->size.download)
 			plugin_remove_node (plugin, plugin->aria2.path);
-		else if (plugin->aria2_created == FALSE) {
-			plugin->aria2_created = TRUE;
+		else if (plugin->a2cf_named == FALSE) {
+			plugin->a2cf_named = TRUE;
 			plugin_insert_node (plugin, plugin->aria2.path, TRUE);
 		}
 	}
