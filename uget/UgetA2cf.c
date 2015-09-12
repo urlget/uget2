@@ -472,7 +472,9 @@ int   uget_a2cf_save (UgetA2cf* a2cf, const char* filename)
 	for (piece = (void*)a2cf->piece.list.head;  piece;  piece = piece->next)
 		a2cf_piece_write (piece, file);
 
-	ug_ftruncate (file, ug_ftell (file));  // for updating existing file.
+#ifndef __ANDROID__
+//	ug_ftruncate (file, ug_ftell (file));  // for updating existing file.
+#endif
 	fclose (file);
 	return TRUE;
 }
