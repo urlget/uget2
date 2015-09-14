@@ -774,6 +774,7 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 					common->retry_count++;
 					if (common->retry_count < common->retry_limit || common->retry_limit == 0) {
 						plugin->base.download = 0;
+						plugin->size.download = 0;
 						ugcurl->beg = 0;
 						ugcurl->end = plugin->file.size;
 						delay_ms (plugin, common->retry_delay * 1000);
@@ -791,8 +792,8 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 		// progress
 		plugin->size.upload = plugin->base.upload + size.upload;
 		plugin->size.download = plugin->base.download + size.download;
+		// Don't update speed when stopping
 		if (plugin->seg.list.size) {
-			// Don't update speed when stopping
 			plugin->speed.upload = speed.upload;
 			plugin->speed.download = speed.download;
 		}
@@ -884,8 +885,6 @@ static int prepare_existed (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 			// don't write INCORRECT data to existed file.
 			ugcurl->event_code = UGET_EVENT_ERROR_INCORRECT_SOURCE;
 			ugcurl->size[0] = 0;
-			if (plugin->seg.list.size == 1)
-				plugin->base.download = uget_a2cf_completed (&plugin->aria2.ctrl);
 			return FALSE;
 		}
 	}
@@ -999,6 +998,7 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 				if (plugin->aria2.ctrl.total_len == plugin->file.size) {
 					plugin->aria2.path = ug_strdup (plugin->file.path);
 					plugin->base.download = uget_a2cf_completed (&plugin->aria2.ctrl);
+					plugin->size.download = plugin->base.download;
 					*(char*) strstr (plugin->file.path + length, ".aria2") = 0;
 					break;
 				}
@@ -1161,6 +1161,7 @@ static int  load_file_info (UgetPluginCurl* plugin)
 		plugin->file.path = ug_strndup (path, length);
 		plugin->aria2.path = path;
 		plugin->base.download = uget_a2cf_completed (&plugin->aria2.ctrl);
+		plugin->size.download = plugin->base.download;
 		return TRUE;
 	}
 	else {

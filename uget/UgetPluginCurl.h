@@ -103,7 +103,7 @@ struct UgetPluginCurl
 	time_t        start_time;
 
 	// base.download = base downloaded size (exist downloaded size)
-	// base.upload = base uploaded size (exist downloaded size)
+	// base.upload = base uploaded size (exist uploaded size)
 	// size.download = downloaded size (base + threads downloaded size)
 	// size.upload = uploaded size (base + threads uploaded size)
 	// speed.download = downloading speed
