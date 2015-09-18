@@ -119,7 +119,7 @@ int  uget_task_remove (UgetTask* task, UgetNode* node)
 		// UgetRelation
 		relation = ug_info_get (&node->info, UgetRelationInfo);
 		if (relation) {
-//			uget_plugin_sync (relation->task.plugin,
+//			uget_plugin_post (relation->task.plugin,
 //					uget_event_new_state (node, UGET_STATE_QUEUING));
 			uget_plugin_stop (relation->task.plugin);
 			uget_plugin_unref (relation->task.plugin);

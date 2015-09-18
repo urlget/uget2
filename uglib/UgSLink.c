@@ -95,12 +95,12 @@ void  ug_slinks_remove (UgSLinks* slinks, void* data, UgSLink* prev)
 		link = prev->next;
 
 	if (link) {
-		// remove link from used index
+		// remove link from used links
 		if (prev)
 			prev->next = link->next;
 		else
 			slinks->used = link->next;
-		// add link to freed index
+		// add link to freed links
 		link->next = slinks->freed;
 		slinks->freed = link;
 	}

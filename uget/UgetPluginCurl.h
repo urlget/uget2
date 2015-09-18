@@ -57,7 +57,7 @@ extern const UgetPluginInfo*  UgetPluginCurlInfo;
 
 struct UgetPluginCurl
 {
-	UGET_PLUGIN_MEMBERS;               // It derived from UgetPlugin
+	UGET_PLUGIN_MEMBERS;           // It derived from UgetPlugin
 //	const UgetPluginInfo*  info;
 //	UgetEvent*    messages;
 //	UgMutex       mutex;
@@ -102,10 +102,10 @@ struct UgetPluginCurl
 	// progress for uget_plugin_sync()
 	time_t        start_time;
 
-	// base.download = base downloaded size (exist downloaded size)
-	// base.upload = base uploaded size (exist uploaded size)
-	// size.download = downloaded size (base + threads downloaded size)
-	// size.upload = uploaded size (base + threads uploaded size)
+	// base.download = base downloaded size  (exist downloaded size)
+	// base.upload = base uploaded size      (exist uploaded size)
+	// size.download = downloaded size  (base + threads downloaded size)
+	// size.upload = uploaded size      (base + threads uploaded size)
 	// speed.download = downloading speed
 	// speed.upload = uploading speed
 	// limit.download = download speed limit
@@ -121,7 +121,8 @@ struct UgetPluginCurl
 	uint8_t       file_renamed:1;  // has file path?
 	uint8_t       a2cf_named:1;    // has aria2 ctrl file name?
 	uint8_t       synced:1;
-	uint8_t       stopped:1;       // ctrl
+	uint8_t       paused:1;        // paused by user or program
+	uint8_t       stopped:1;       // all of downloading thread are stopped
 	uint8_t       prepared:1;      // prepare to download
 };
 

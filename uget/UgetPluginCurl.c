@@ -206,6 +206,7 @@ static void plugin_init (UgetPluginCurl* plugin)
 	ug_list_init (&plugin->seg.list);
 	plugin->file.time = -1;
 	plugin->synced = TRUE;
+	plugin->paused = TRUE;
 	plugin->stopped = TRUE;
 }
 
@@ -246,7 +247,7 @@ static int  plugin_ctrl (UgetPluginCurl* plugin, int code, void* data)
 		break;
 
 	case UGET_PLUGIN_CTRL_STOP:
-		plugin->stopped = TRUE;
+		plugin->paused = TRUE;
 		return TRUE;
 
 	case UGET_PLUGIN_CTRL_SPEED:
@@ -331,9 +332,9 @@ static int  plugin_sync (UgetPluginCurl* plugin)
 		plugin->common->max_download_speed = common->max_download_speed;
 		plugin->limit_by_user = TRUE;
 	}
-    plugin->common->max_connections = common->max_connections;
-    plugin->common->retry_limit = common->retry_limit;
-    if (common->max_connections > 0)
+	plugin->common->max_connections = common->max_connections;
+	plugin->common->retry_limit = common->retry_limit;
+	if (common->max_connections > 0)
 		plugin->seg.n_max = common->max_connections;
 
 	progress = ug_info_realloc (&node->info, UgetProgressInfo);
@@ -496,6 +497,7 @@ static int  plugin_start (UgetPluginCurl* plugin, UgetNode* node)
 	plugin->limit_changed = FALSE;
 
 	// try to start thread
+	plugin->paused = FALSE;
 	plugin->stopped = FALSE;
 	uget_plugin_ref ((UgetPlugin*) plugin);
 	ok = ug_thread_create (&thread, (UgThreadFunc) plugin_thread, plugin);
@@ -503,6 +505,7 @@ static int  plugin_start (UgetPluginCurl* plugin, UgetNode* node)
 		ug_thread_unjoin (&thread);
 	else {
 		// failed to start thread
+		plugin->paused = TRUE;
 		plugin->stopped = TRUE;
 		uget_plugin_post ((UgetPlugin*) plugin,
 				uget_event_new_error (UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
@@ -673,7 +676,7 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 				}
 			}
 			// if user want to stop plugin, it must stop all UgetCurl in list.
-			if (plugin->stopped) {
+			if (plugin->paused) {
 				ugcurl->stopped = TRUE;
 				plugin->seg.n_max = 0;
 			}
@@ -802,7 +805,7 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 		if (plugin->file.size) {
 			// response error if file size is different
 			if (plugin->file.size < plugin->size.download) {
-				plugin->stopped = TRUE;
+				plugin->paused = TRUE;
 				if (N_THREAD (plugin) > 0)
 					continue;    // wait other thread
 				else {
@@ -823,7 +826,7 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 				else {
 					complete_file (plugin);
 					plugin->synced = FALSE;
-					plugin->stopped = TRUE;
+					plugin->paused = TRUE;
 					break;
 				}
 			}
@@ -849,14 +852,14 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 					uget_event_new_error (
 							UGET_EVENT_ERROR_TOO_MANY_RETRIES, NULL));
 			plugin->synced = FALSE;
-			plugin->stopped = TRUE;
+			plugin->paused = TRUE;
 		}
 	}
 
-	plugin->stopped = TRUE;
 	ug_list_foreach (&plugin->seg.list, (UgForeachFunc) uget_curl_free, NULL);
 	ug_list_init (&plugin->seg.list);
 	uget_a2cf_clear (&plugin->aria2.ctrl);
+	plugin->stopped = TRUE;
 	uget_plugin_unref ((UgetPlugin*) plugin);
 	return UG_THREAD_RETURN_VALUE;
 }
@@ -1342,7 +1345,7 @@ static int split_download (UgetPluginCurl* plugin, UgetCurl* ugcurl)
 
 static void delay_ms (UgetPluginCurl* plugin, int  milliseconds)
 {
-	while (plugin->stopped == FALSE) {
+	while (plugin->paused == FALSE) {
 		if (milliseconds >  500) {
 			milliseconds -= 500;
 			ug_sleep (500);

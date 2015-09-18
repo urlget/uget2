@@ -115,7 +115,8 @@ struct UgetPluginAria2
 
 	// flags
 	uint8_t    synced:1;
-	uint8_t    stopped:1;
+	uint8_t    paused:1;    // paused by user or program
+	uint8_t    stopped:1;   // download is stopped
 	uint8_t    restart:1;   // for retry
 	uint8_t    node_named:1;
 

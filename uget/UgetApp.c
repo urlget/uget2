@@ -812,8 +812,14 @@ int   uget_app_pause_download (UgetApp* app, UgetNode* dnode)
 		}
 	}
 #else
-	if (dnode->state & UGET_STATE_ACTIVE)
-		uget_task_remove (&app->task, dnode);
+	if (dnode->state & UGET_STATE_ACTIVE) {
+//		uget_task_remove (&app->task, dnode);
+		UgetRelation*  relation;
+		relation = ug_info_get (&dnode->info, UgetRelationInfo);
+		if (relation && relation->task.plugin)
+			uget_plugin_stop (relation->task.plugin);
+		dnode->state &= ~UGET_STATE_ACTIVE;
+	}
 	else if (dnode->state & UGET_STATE_UNRUNNABLE)
 		return FALSE;
 	dnode->state |= UGET_STATE_PAUSED;

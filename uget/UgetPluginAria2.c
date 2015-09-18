@@ -316,6 +316,7 @@ static void  plugin_init (UgetPluginAria2* plugin)
 	ug_array_init (&plugin->gids, sizeof (char*), 16);
 	ug_array_init (&plugin->files, sizeof (Aria2File), 8);
 	plugin->stopped = TRUE;
+	plugin->paused = TRUE;
 	plugin->synced = TRUE;
 }
 
@@ -352,7 +353,7 @@ static int  plugin_ctrl (UgetPluginAria2* plugin, int code, void* data)
 		break;
 
 	case UGET_PLUGIN_CTRL_STOP:
-		plugin->stopped = TRUE;
+		plugin->paused = TRUE;
 		return TRUE;
 
 	case UGET_PLUGIN_CTRL_SPEED:
@@ -420,9 +421,12 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 		UgetProgress*    progress;
 	} temp;
 
-	if (plugin->stopped == TRUE)
-		return FALSE;
-	if (plugin->synced == TRUE)
+	if (plugin->stopped) {
+		if (plugin->synced)
+			return FALSE;
+		plugin->synced = TRUE;
+	}
+	else if (plugin->synced == TRUE)
 		return TRUE;
 
 	node = plugin->node;
@@ -644,7 +648,7 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 #endif
 		// If no followed gid and no need to retry, it must stop.
 		if (plugin->restart == FALSE)
-			plugin->stopped = TRUE;
+			plugin->paused = TRUE;
 		else {
 			plugin->retry_delay = temp.common->retry_delay;
 			uget_aria2_request (global.data, plugin->start_request);
@@ -751,7 +755,7 @@ restart_thread:
 	res = NULL;
 	req = alloc_status_request (&gid);
 
-	while (plugin->stopped == FALSE) {
+	while (plugin->paused == FALSE) {
 		if (plugin->restart == TRUE) {
 			if (plugin->retry_delay) {
 				// sleep 1 second every time
@@ -1312,6 +1316,7 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 	plugin->files_per_gid = 0;
 	plugin->files_per_gid_prev = 0;
 	plugin->stopped = FALSE;
+	plugin->paused = FALSE;
 	plugin->synced = TRUE;
 	plugin->start_time = time (NULL);
 	plugin->start_request = request;
