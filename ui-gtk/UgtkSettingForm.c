@@ -39,10 +39,9 @@
 
 #include <glib/gi18n.h>
 
-static void remove_line_breaks (gchar* buffer, gint len);
-
 // ----------------------------------------------------------------------------
 // UgtkClipboardForm
+//
 //
 void  ugtk_clipboard_form_init (struct UgtkClipboardForm* csform)
 {
@@ -140,7 +139,7 @@ void  ugtk_clipboard_form_get (struct UgtkClipboardForm* csform, UgtkSetting* se
 	setting->clipboard.quiet = gtk_toggle_button_get_active (csform->quiet);
 	setting->clipboard.nth_category = gtk_spin_button_get_value_as_int (csform->nth_spin);
 	// remove line break
-	remove_line_breaks (setting->clipboard.pattern, -1);
+	ug_str_remove_crlf (setting->clipboard.pattern, setting->clipboard.pattern);
 }
 
 // ----------------------------------------------------------------------------
@@ -702,25 +701,8 @@ void  ugtk_plugin_form_get (struct UgtkPluginForm* psform, UgtkSetting* setting)
 	gtk_text_buffer_get_start_iter (psform->args_buffer, &iter1);
 	gtk_text_buffer_get_end_iter (psform->args_buffer, &iter2);
 	setting->aria2.args = gtk_text_buffer_get_text (psform->args_buffer, &iter1, &iter2, FALSE);
-	remove_line_breaks (setting->aria2.args, -1);
+	ug_str_remove_crlf (setting->aria2.args, setting->aria2.args);
 
 	setting->aria2.limit.upload   = (guint) gtk_spin_button_get_value (psform->upload);
 	setting->aria2.limit.download = (guint) gtk_spin_button_get_value (psform->download);
-}
-
-// ----------------------------------------------------------------------------
-
-static void remove_line_breaks (gchar* buffer, gint len)
-{
-	gchar*  cur;
-	gchar*  end;
-
-	if (len == -1)
-		len = strlen (buffer);
-	cur = buffer;
-	end = buffer + len;
-	while ( (cur = strchr (cur, '\n')) ) {
-		memmove (cur, cur + 1, end - cur);
-		end--;
-	}
 }
