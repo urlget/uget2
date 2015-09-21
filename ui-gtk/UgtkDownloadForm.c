@@ -410,7 +410,7 @@ static void ugtk_download_form_init_page2 (UgtkDownloadForm* dform)
 	// spin - Max upload speed
 	widget = gtk_spin_button_new_with_range (0, 99999999, 1);
 	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
-	gtk_entry_set_width_chars (GTK_ENTRY (widget), 8);
+//	gtk_entry_set_width_chars (GTK_ENTRY (widget), 8);
 	g_object_set (widget, "margin", 1, NULL);
 	gtk_grid_attach (grid, widget, 2, 5, 1, 1);
 	dform->spin_upload_speed = (GtkSpinButton*) widget;
@@ -428,7 +428,7 @@ static void ugtk_download_form_init_page2 (UgtkDownloadForm* dform)
 	// spin - Max download speed
 	widget = gtk_spin_button_new_with_range (0, 99999999, 1);
 	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
-	gtk_entry_set_width_chars (GTK_ENTRY (widget), 8);
+//	gtk_entry_set_width_chars (GTK_ENTRY (widget), 8);
 	g_object_set (widget, "margin", 1, NULL);
 	gtk_grid_attach (grid, widget, 2, 6, 1, 1);
 	dform->spin_download_speed = (GtkSpinButton*) widget;
@@ -440,6 +440,7 @@ static void ugtk_download_form_init_page2 (UgtkDownloadForm* dform)
 
 	// Retrieve timestamp
 	widget = gtk_check_button_new_with_label (_("Retrieve timestamp"));
+	g_object_set (widget, "margin-top", 3, "margin-bottom", 1, NULL);
 	gtk_grid_attach (grid, widget, 0, 7, 3, 1);
 	dform->timestamp = (GtkToggleButton*) widget;
 }
