@@ -71,7 +71,7 @@ UgtkSettingDialog*  ugtk_setting_dialog_new (const gchar* title, GtkWindow* pare
 	// Notebook
 	widget = gtk_notebook_new ();
 	gtk_widget_set_size_request (widget, 430, 320);
-	gtk_box_pack_end (hbox, widget, FALSE, FALSE, 0);
+	gtk_box_pack_end (hbox, widget, FALSE, FALSE, 3);
 	dialog->notebook = (GtkNotebook*) widget;
 	gtk_notebook_set_show_tabs (dialog->notebook, FALSE);
 	gtk_notebook_set_show_border (dialog->notebook, FALSE);
