@@ -102,8 +102,8 @@ struct UgetPluginCurl
 	// progress for uget_plugin_sync()
 	time_t        start_time;
 
-	// base.download = base downloaded size  (exist downloaded size)
-	// base.upload = base uploaded size      (exist uploaded size)
+	// base.download = base downloaded size  (existing downloaded size)
+	// base.upload = base uploaded size      (existing uploaded size)
 	// size.download = downloaded size  (base + threads downloaded size)
 	// size.upload = uploaded size      (base + threads uploaded size)
 	// speed.download = downloading speed

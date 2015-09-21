@@ -856,6 +856,12 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 		}
 	}
 
+	// count the latest downloaded size if download doesn't complete
+	if ((plugin->file.size != plugin->size.download) && plugin->aria2.path) {
+		plugin->size.download = uget_a2cf_completed (&plugin->aria2.ctrl);
+		plugin->synced = FALSE;
+	}
+
 	ug_list_foreach (&plugin->seg.list, (UgForeachFunc) uget_curl_free, NULL);
 	ug_list_init (&plugin->seg.list);
 	uget_a2cf_clear (&plugin->aria2.ctrl);
