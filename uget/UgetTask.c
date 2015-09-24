@@ -147,6 +147,10 @@ static int  uget_task_dispatch1 (UgetTask* task, UgetNode* node, UgetPlugin* plu
 	} temp;
 
 	active = uget_plugin_sync (plugin);
+	// plug-in was paused by user (see function uget_app_pause_download)
+	if (node->state & UGET_STATE_PAUSED)
+		active = FALSE;
+	// plug-in was stopped if uget_plugin_sync() return FALSE.
 	if (active == FALSE)
 		node->state &= ~UGET_STATE_ACTIVE;
 
