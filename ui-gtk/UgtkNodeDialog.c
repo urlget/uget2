@@ -147,7 +147,7 @@ void  ugtk_node_dialog_run (UgtkNodeDialog* ndialog,
 
 	switch (mode) {
 	case UGTK_NODE_DIALOG_NEW_DOWNLOAD:
-		ugtk_node_dialog_apply_last (ndialog, ndialog->app);
+		ugtk_node_dialog_apply_recent (ndialog, ndialog->app);
 		g_signal_connect (ndialog->self, "response",
 				G_CALLBACK (on_response_new_download), ndialog);
 		break;
@@ -221,30 +221,30 @@ gboolean  ugtk_node_dialog_confirm_existing (UgtkNodeDialog* ndialog, const char
 	return TRUE;
 }
 
-void  ugtk_node_dialog_store_last (UgtkNodeDialog* ndialog, UgtkApp* app)
+void  ugtk_node_dialog_store_recent (UgtkNodeDialog* ndialog, UgtkApp* app)
 {
 	GtkTreePath*  path;
 	int    nth;
 
-	app->last.saved = TRUE;
+	app->recent.saved = TRUE;
 	gtk_tree_view_get_cursor (ndialog->node_view, &path, NULL);
 	nth = *gtk_tree_path_get_indices (path);
-	app->last.category_index = nth;
+	app->recent.category_index = nth;
 	gtk_tree_path_free (path);
-	ugtk_download_form_get (&ndialog->download, app->last.infonode);
+	ugtk_download_form_get (&ndialog->download, app->recent.infonode);
 }
 
-void  ugtk_node_dialog_apply_last (UgtkNodeDialog* ndialog, UgtkApp* app)
+void  ugtk_node_dialog_apply_recent (UgtkNodeDialog* ndialog, UgtkApp* app)
 {
 	GtkTreePath*  path;
 
-	if (app->last.saved && app->setting.ui.apply_recently) {
-		path = gtk_tree_path_new_from_indices (app->last.category_index, -1);
+	if (app->recent.saved && app->setting.ui.apply_recent) {
+		path = gtk_tree_path_new_from_indices (app->recent.category_index, -1);
 		gtk_tree_view_set_cursor (ndialog->node_view, path, NULL, FALSE);
 		gtk_tree_path_free (path);
 		ndialog->download.changed.uri = TRUE;
 		ugtk_download_form_set (&ndialog->download,
-		                        app->last.infonode, TRUE);
+		                        app->recent.infonode, TRUE);
 	}
 }
 
@@ -460,7 +460,7 @@ static void on_response_new_download (GtkDialog *dialog, gint response_id,
 	const char* uri;
 
 	if (response_id == GTK_RESPONSE_OK) {
-		ugtk_node_dialog_store_last (ndialog, ndialog->app);
+		ugtk_node_dialog_store_recent (ndialog, ndialog->app);
 		dnode = uget_node_new (NULL);
 		ugtk_node_dialog_get (ndialog, dnode);
 		ugtk_node_dialog_get_category (ndialog, &cnode);

@@ -112,9 +112,9 @@ void ugtk_tray_icon_init (UgtkTrayIcon* trayicon)
 	gtk_menu_shell_append ((GtkMenuShell*)menu, menu_item);
 	trayicon->menu.skip_existing = menu_item;
 
-	menu_item = gtk_check_menu_item_new_with_mnemonic (_("Apply recently download settings"));
+	menu_item = gtk_check_menu_item_new_with_mnemonic (_("Apply recent download settings"));
 	gtk_menu_shell_append ((GtkMenuShell*)menu, menu_item);
-	trayicon->menu.apply_recently = menu_item;
+	trayicon->menu.apply_recent = menu_item;
 
 	gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_separator_menu_item_new() );
 
@@ -405,10 +405,10 @@ static void on_skip_existing (GtkWidget* widget, UgtkApp* app)
 		g_signal_emit_by_name (app->menubar.edit.skip_existing, "activate");
 }
 
-static void on_apply_recently (GtkWidget* widget, UgtkApp* app)
+static void on_apply_recent (GtkWidget* widget, UgtkApp* app)
 {
 	if (app->trayicon.menu.emission)
-		g_signal_emit_by_name (app->menubar.edit.apply_recently, "activate");
+		g_signal_emit_by_name (app->menubar.edit.apply_recent, "activate");
 }
 
 static void  on_config_settings (GtkWidget* widget, UgtkApp* app)
@@ -482,8 +482,8 @@ void  ugtk_trayicon_init_callback (struct UgtkTrayIcon* trayicon, UgtkApp* app)
 			G_CALLBACK (on_commandline_quiet), app);
 	g_signal_connect (trayicon->menu.skip_existing, "activate",
 			G_CALLBACK (on_skip_existing), app);
-	g_signal_connect (trayicon->menu.apply_recently, "activate",
-			G_CALLBACK (on_apply_recently), app);
+	g_signal_connect (trayicon->menu.apply_recent, "activate",
+			G_CALLBACK (on_apply_recent), app);
 
 	g_signal_connect (trayicon->menu.settings, "activate",
 			G_CALLBACK (on_config_settings), app);

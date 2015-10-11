@@ -132,16 +132,16 @@ static void on_skip_existing (GtkWidget* widget, UgtkApp* app)
 	app->trayicon.menu.emission = TRUE;
 }
 
-static void on_apply_recently (GtkWidget* widget, UgtkApp* app)
+static void on_apply_recent (GtkWidget* widget, UgtkApp* app)
 {
 	gboolean	active;
 
 	active = gtk_check_menu_item_get_active ((GtkCheckMenuItem*) widget);
-	app->setting.ui.apply_recently = active;
+	app->setting.ui.apply_recent = active;
 
 	app->trayicon.menu.emission = FALSE;
 	gtk_check_menu_item_set_active (
-			(GtkCheckMenuItem*) app->trayicon.menu.apply_recently, active);
+			(GtkCheckMenuItem*) app->trayicon.menu.apply_recent, active);
 	app->trayicon.menu.emission = TRUE;
 }
 
@@ -734,8 +734,8 @@ void ugtk_menubar_init_callback (UgtkMenubar* menubar, UgtkApp* app)
 			G_CALLBACK (on_commandline_quiet), app);
 	g_signal_connect (menubar->edit.skip_existing, "activate",
 			G_CALLBACK (on_skip_existing), app);
-	g_signal_connect (menubar->edit.apply_recently, "activate",
-			G_CALLBACK (on_apply_recently), app);
+	g_signal_connect (menubar->edit.apply_recent, "activate",
+			G_CALLBACK (on_apply_recent), app);
 
 	g_signal_connect (menubar->edit.completion.disable, "activate",
 			G_CALLBACK (on_config_completion), app);

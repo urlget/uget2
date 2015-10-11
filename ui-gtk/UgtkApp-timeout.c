@@ -309,7 +309,8 @@ static void  on_keep_above_window_show (GtkWindow *window, gpointer  user_data)
 	gtk_window_set_keep_above (window, FALSE);
 }
 
-static void  ugtk_app_add_uris_quietly (UgtkApp* app, GList* list, UgetNode* infonode, int  nth_category)
+static void  ugtk_app_add_uris_quietly (UgtkApp* app,       GList* list,
+                                        UgetNode* infonode, int  nth_category)
 {
 	GList*      link;
 	UgUri       uuri;
@@ -373,7 +374,8 @@ static void  ugtk_app_add_uris_quietly (UgtkApp* app, GList* list, UgetNode* inf
 	}
 }
 
-static void  ugtk_app_add_uris_selected (UgtkApp* app, GList* list, UgetNode* infonode, int  nth_category)
+static void  ugtk_app_add_uris_selected (UgtkApp* app,       GList* list,
+                                         UgetNode* infonode, int  nth_category)
 {
 	UgtkBatchDialog*    bdialog;
 	UgtkSelectorPage*   page;
@@ -463,9 +465,9 @@ static void  ugtk_app_add_uris_selected (UgtkApp* app, GList* list, UgetNode* in
 	ugtk_batch_dialog_run (bdialog);
 }
 
-static void on_clipboard_text_received (GtkClipboard*	clipboard,
-                                        const gchar*	text,
-                                        gpointer		user_data)
+static void on_clipboard_text_received (GtkClipboard*  clipboard,
+                                        const gchar*   text,
+                                        gpointer       user_data)
 {
 	UgtkApp*  app;
 	GList*    list;

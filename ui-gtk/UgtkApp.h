@@ -91,11 +91,12 @@ struct UgtkApp
 	UgtkSetting       setting;
 	UgtkScheduleState schedule_state;
 
+	// recent download settings
 	struct {
 		UgetNode*   infonode;
 		int         category_index;
 		int         saved;
-	} last;
+	} recent;
 	// status
 	gboolean        user_action;
 

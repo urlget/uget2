@@ -83,6 +83,10 @@ void  ugtk_batch_dialog_use_sequencer (UgtkBatchDialog* bdialog);
 #define ugtk_batch_dialog_set_category(bdialog, cnode)    \
 		ugtk_node_dialog_set_category((UgtkNodeDialog*) bdialog, cnode)
 
+// void ugtk_batch_dialog_apply_recent (UgtkNodeDialog* ndialog, UgtkApp* app);
+#define ugtk_batch_dialog_apply_recent(bdialog, app)    \
+		ugtk_node_dialog_apply_recent((UgtkNodeDialog*) bdialog, app);
+
 void  ugtk_batch_dialog_disable_batch (UgtkBatchDialog* bdialog);
 void  ugtk_batch_dialog_run (UgtkBatchDialog* bdialog);
 

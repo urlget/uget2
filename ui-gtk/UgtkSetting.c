@@ -170,7 +170,9 @@ static const UgEntry  UgtkUserInterfaceSettingEntry[] =
 			UG_ENTRY_BOOL,  NULL,  NULL},
 	{"SoundNotification",  offsetof (struct UgtkUserInterfaceSetting, sound_notification),
 			UG_ENTRY_BOOL,  NULL,  NULL},
-	{"ApplyRecently",      offsetof (struct UgtkUserInterfaceSetting, apply_recently),
+	{"ApplyRecently",      offsetof (struct UgtkUserInterfaceSetting, apply_recent),
+			UG_ENTRY_BOOL,  NULL,  NULL},
+	{"ApplyRecent",        offsetof (struct UgtkUserInterfaceSetting, apply_recent),
 			UG_ENTRY_BOOL,  NULL,  NULL},
 	{"SkipExisting",       offsetof (struct UgtkUserInterfaceSetting, skip_existing),
 			UG_ENTRY_BOOL,  NULL,  NULL},
@@ -230,9 +232,9 @@ static const UgEntry  UgtkSchedulerSettingEntry[] =
 
 static const UgEntry  UgtkCommandlineSettingEntry[] =
 {
-	{"quiet",       offsetof (struct UgtkCommandlineSetting, quiet),
+	{"quiet",         offsetof (struct UgtkCommandlineSetting, quiet),
 			UG_ENTRY_BOOL, NULL, NULL},
-	{"NthCategory", offsetof (struct UgtkCommandlineSetting, nth_category),
+	{"NthCategory",   offsetof (struct UgtkCommandlineSetting, nth_category),
 			UG_ENTRY_INT,  NULL, NULL},
 	{NULL},    // null-terminated
 };
@@ -286,7 +288,7 @@ static const UgEntry  UgtkSettingEntry[] =
 			UG_ENTRY_OBJECT, (void*) UgtkWindowSettingEntry,  NULL},
 	{"Summary",         offsetof (UgtkSetting, summary),
 			UG_ENTRY_OBJECT, (void*) UgtkSummarySettingEntry, NULL},
-	{"DownloadColumn",	offsetof (UgtkSetting, download_column),
+	{"DownloadColumn",  offsetof (UgtkSetting, download_column),
 			UG_ENTRY_OBJECT, (void*) UgtkDownloadColumnSettingEntry, NULL},
 	{"UserInterface",   offsetof (UgtkSetting, ui),
 			UG_ENTRY_OBJECT, (void*) UgtkUserInterfaceSettingEntry,  NULL},
@@ -308,7 +310,7 @@ static const UgEntry  UgtkSettingEntry[] =
 	{"FolderHistory",   offsetof (UgtkSetting, folder_history),
 			UG_ENTRY_ARRAY, ug_json_parse_list_string,  ug_json_write_list_string},
 
-	{"AutoSave",		offsetof (UgtkSetting, auto_save.enable),
+	{"AutoSave",        offsetof (UgtkSetting, auto_save.enable),
 			UG_ENTRY_INT,    NULL,  NULL},
 	{"AutoSaveInterval",offsetof (UgtkSetting, auto_save.interval),
 			UG_ENTRY_INT,    NULL,  NULL},
@@ -382,7 +384,7 @@ void  ugtk_setting_reset (UgtkSetting* setting)
 	setting->ui.start_in_offline_mode = FALSE;
 	setting->ui.start_notification = TRUE;
 	setting->ui.sound_notification = TRUE;
-	setting->ui.apply_recently = TRUE;
+	setting->ui.apply_recent = TRUE;
 	setting->ui.skip_existing = FALSE;
 #ifdef HAVE_APP_INDICATOR
 	setting->ui.app_indicator = TRUE;

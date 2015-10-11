@@ -228,9 +228,9 @@ static void ugtk_menubar_edit_init (UgtkMenubar* menubar)
 	gtk_menu_shell_append ((GtkMenuShell*)menu, menu_item);
 	menubar->edit.skip_existing = menu_item;
 
-	menu_item = gtk_check_menu_item_new_with_mnemonic (_("Apply recently download settings"));
+	menu_item = gtk_check_menu_item_new_with_mnemonic (_("Apply recent download settings"));
 	gtk_menu_shell_append ((GtkMenuShell*)menu, menu_item);
-	menubar->edit.apply_recently = menu_item;
+	menubar->edit.apply_recent = menu_item;
 
 	gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_separator_menu_item_new());
 

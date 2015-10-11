@@ -84,7 +84,7 @@ struct UgtkMenubar
 		GtkWidget*  clipboard_quiet;
 		GtkWidget*  commandline_quiet;
 		GtkWidget*  skip_existing;
-		GtkWidget*  apply_recently;
+		GtkWidget*  apply_recent;
 		GtkWidget*  settings;
 
 		// Completion Auto-Actions

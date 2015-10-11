@@ -147,7 +147,7 @@ struct UgtkSetting
 		int    start_in_offline_mode;
 		int    start_notification;
 		int    sound_notification;
-		int    apply_recently;
+		int    apply_recent;
 		int    skip_existing;
 #ifdef HAVE_APP_INDICATOR
 		int    app_indicator;
@@ -176,7 +176,7 @@ struct UgtkSetting
 	struct UgtkSchedulerSetting
 	{
 		int         enable;
-		UgArrayInt  state;    // [7][24] 1 week, 7 days, 24 hours
+		UgArrayInt  state;     // [7][24] 1 week, 7 days, 24 hours
 	} scheduler;
 
 	// "CommandlineSetting"
@@ -187,7 +187,7 @@ struct UgtkSetting
 	} commandline;
 
 	// "PluginOrder"
-	int    plugin_order;    // UgtkPluginOrder: matching order
+	int    plugin_order;           // UgtkPluginOrder: matching order
 
 	// UgetPluginAria2 option
 	struct UgtkPluginAria2Setting {

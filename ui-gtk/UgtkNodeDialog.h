@@ -109,8 +109,8 @@ void  ugtk_node_dialog_run (UgtkNodeDialog* ndialog,
                             UgtkNodeDialogMode mode,
                             UgetNode* node4edit);
 
-void  ugtk_node_dialog_store_last (UgtkNodeDialog* ndialog, UgtkApp* app);
-void  ugtk_node_dialog_apply_last (UgtkNodeDialog* ndialog, UgtkApp* app);
+void  ugtk_node_dialog_store_recent (UgtkNodeDialog* ndialog, UgtkApp* app);
+void  ugtk_node_dialog_apply_recent (UgtkNodeDialog* ndialog, UgtkApp* app);
 
 void  ugtk_node_dialog_monitor_uri (UgtkNodeDialog* ndialog);
 gboolean  ugtk_node_dialog_confirm_existing (UgtkNodeDialog* ndialog, const char* uri);

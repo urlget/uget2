@@ -61,9 +61,9 @@ struct UgtkClipboardForm
 	GtkSpinButton*		nth_spin;
 };
 
-void  ugtk_clipboard_form_init (struct UgtkClipboardForm* csform);
-void  ugtk_clipboard_form_set (struct UgtkClipboardForm* csform, UgtkSetting* setting);
-void  ugtk_clipboard_form_get (struct UgtkClipboardForm* csform, UgtkSetting* setting);
+void  ugtk_clipboard_form_init (struct UgtkClipboardForm* cbform);
+void  ugtk_clipboard_form_set (struct UgtkClipboardForm* cbform, UgtkSetting* setting);
+void  ugtk_clipboard_form_get (struct UgtkClipboardForm* cbform, UgtkSetting* setting);
 
 // ----------------------------------------------------------------------------
 // UgtkUserInterfaceForm
@@ -79,7 +79,7 @@ struct UgtkUserInterfaceForm
 	GtkToggleButton*    start_in_offline_mode;
 	GtkToggleButton*    start_notification;
 	GtkToggleButton*    sound_notification;
-	GtkToggleButton*    apply_recently;
+	GtkToggleButton*    apply_recent;
 	GtkToggleButton*    skip_existing;
 #ifdef HAVE_APP_INDICATOR
 	GtkToggleButton*    app_indicator;
@@ -149,9 +149,9 @@ struct UgtkCommandlineForm
 	GtkSpinButton*      index_spin;
 };
 
-void  ugtk_commandline_form_init (struct UgtkCommandlineForm* csform);
-void  ugtk_commandline_form_set (struct UgtkCommandlineForm* csform, UgtkSetting* setting);
-void  ugtk_commandline_form_get (struct UgtkCommandlineForm* csform, UgtkSetting* setting);
+void  ugtk_commandline_form_init (struct UgtkCommandlineForm* clform);
+void  ugtk_commandline_form_set (struct UgtkCommandlineForm* clform, UgtkSetting* setting);
+void  ugtk_commandline_form_get (struct UgtkCommandlineForm* clform, UgtkSetting* setting);
 
 // ----------------------------------------------------------------------------
 // UgtkPluginForm

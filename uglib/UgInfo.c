@@ -56,7 +56,7 @@ void  ug_info_set_registry (UgRegistry* registry)
 // ----------------------------------------------------------------------------
 // UgInfo
 
-void	ug_info_init (UgInfo* info, int allocated_len, int cache_len)
+void  ug_info_init (UgInfo* info, int allocated_len, int cache_len)
 {
 	int     index;
 
@@ -69,7 +69,7 @@ void	ug_info_init (UgInfo* info, int allocated_len, int cache_len)
 	}
 }
 
-void	ug_info_final (UgInfo* info)
+void  ug_info_final (UgInfo* info)
 {
 	UgPair* cur;
 	UgPair* end;
@@ -84,7 +84,7 @@ void	ug_info_final (UgInfo* info)
 	ug_array_clear (info);
 }
 
-UgPair*	ug_info_find (UgInfo* info, const UgDataInfo* key, int* inserted_index)
+UgPair* ug_info_find (UgInfo* info, const UgDataInfo* key, int* inserted_index)
 {
 	UgPair*   low;
 	UgPair*   cur;
@@ -118,7 +118,7 @@ UgPair*	ug_info_find (UgInfo* info, const UgDataInfo* key, int* inserted_index)
 	return NULL;
 }
 
-void*	ug_info_realloc (UgInfo* info, const UgDataInfo* key)
+void*  ug_info_realloc (UgInfo* info, const UgDataInfo* key)
 {
 	UgPair* cur;
 	int     index;
@@ -137,7 +137,7 @@ void*	ug_info_realloc (UgInfo* info, const UgDataInfo* key)
 	return cur->data;
 }
 
-void	ug_info_remove (UgInfo* info, const UgDataInfo* key)
+void  ug_info_remove (UgInfo* info, const UgDataInfo* key)
 {
 	UgPair* cur;
 
@@ -148,7 +148,7 @@ void	ug_info_remove (UgInfo* info, const UgDataInfo* key)
 	}
 }
 
-void*	ug_info_get (UgInfo* info, const UgDataInfo* key)
+void* ug_info_get (UgInfo* info, const UgDataInfo* key)
 {
 	UgPair* cur;
 

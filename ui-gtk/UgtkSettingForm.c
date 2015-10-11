@@ -43,7 +43,7 @@
 // UgtkClipboardForm
 //
 //
-void  ugtk_clipboard_form_init (struct UgtkClipboardForm* csform)
+void  ugtk_clipboard_form_init (struct UgtkClipboardForm* cbform)
 {
 	GtkTextView* textview;
 	GtkWidget*   widget;
@@ -51,27 +51,27 @@ void  ugtk_clipboard_form_init (struct UgtkClipboardForm* csform)
 	GtkBox*      hbox;
 	GtkScrolledWindow*  scroll;
 
-	csform->self = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-	vbox = (GtkBox*) csform->self;
+	cbform->self = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+	vbox = (GtkBox*) cbform->self;
 	// Monitor button
 	widget = gtk_check_button_new_with_mnemonic (_("_Enable clipboard monitor"));
 	gtk_box_pack_start (vbox, widget, FALSE, FALSE, 1);
-	csform->monitor = (GtkToggleButton*) widget;
+	cbform->monitor = (GtkToggleButton*) widget;
 
 	// quiet mode
 	widget = gtk_check_button_new_with_mnemonic (_("_Quiet mode"));
 	gtk_box_pack_start (vbox, widget, FALSE, FALSE, 0);
-	csform->quiet = (GtkToggleButton*) widget;
+	cbform->quiet = (GtkToggleButton*) widget;
 	// Nth category
 	hbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
 	gtk_box_pack_start (vbox, (GtkWidget*) hbox, FALSE, FALSE, 2);
 	widget = gtk_label_new (_("Default category index"));
 	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 2);
-	csform->nth_label = widget;
+	cbform->nth_label = widget;
 	widget = gtk_spin_button_new_with_range (0.0, 1000.0, 1.0);
 	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
 	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 2);
-	csform->nth_spin = (GtkSpinButton*) widget;
+	cbform->nth_spin = (GtkSpinButton*) widget;
 	// hint
 	hbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
 	gtk_box_pack_start (vbox, (GtkWidget*) hbox, FALSE, FALSE, 2);
@@ -92,13 +92,13 @@ void  ugtk_clipboard_form_init (struct UgtkClipboardForm* csform)
 	gtk_widget_set_size_request (GTK_WIDGET (scroll), 100, 100);
 	gtk_box_pack_start (vbox, GTK_WIDGET (scroll), FALSE, FALSE, 2);
 	// file type pattern : TextView
-	csform->buffer = gtk_text_buffer_new (NULL);
-	csform->pattern = gtk_text_view_new_with_buffer (csform->buffer);
-	g_object_unref (csform->buffer);
-	textview = (GtkTextView*) csform->pattern;
+	cbform->buffer = gtk_text_buffer_new (NULL);
+	cbform->pattern = gtk_text_view_new_with_buffer (cbform->buffer);
+	g_object_unref (cbform->buffer);
+	textview = (GtkTextView*) cbform->pattern;
 	gtk_text_view_set_wrap_mode (textview, GTK_WRAP_WORD_CHAR);
 	gtk_container_add (GTK_CONTAINER (scroll),
-			GTK_WIDGET (csform->pattern));
+			GTK_WIDGET (cbform->pattern));
 
 	// tips
 	hbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
@@ -113,31 +113,31 @@ void  ugtk_clipboard_form_init (struct UgtkClipboardForm* csform)
 			FALSE, FALSE, 2);
 }
 
-void  ugtk_clipboard_form_set (struct UgtkClipboardForm* csform, UgtkSetting* setting)
+void  ugtk_clipboard_form_set (struct UgtkClipboardForm* cbform, UgtkSetting* setting)
 {
 	if (setting->clipboard.pattern)
-		gtk_text_buffer_set_text (csform->buffer, setting->clipboard.pattern, -1);
-	gtk_toggle_button_set_active (csform->monitor, setting->clipboard.monitor);
-	gtk_toggle_button_set_active (csform->quiet, setting->clipboard.quiet);
-	gtk_spin_button_set_value (csform->nth_spin, setting->clipboard.nth_category);
-	gtk_toggle_button_toggled (csform->monitor);
-	gtk_toggle_button_toggled (csform->quiet);
-//	on_clipboard_quiet_mode_toggled ((GtkWidget*) csform->quiet, csform);
+		gtk_text_buffer_set_text (cbform->buffer, setting->clipboard.pattern, -1);
+	gtk_toggle_button_set_active (cbform->monitor, setting->clipboard.monitor);
+	gtk_toggle_button_set_active (cbform->quiet, setting->clipboard.quiet);
+	gtk_spin_button_set_value (cbform->nth_spin, setting->clipboard.nth_category);
+	gtk_toggle_button_toggled (cbform->monitor);
+	gtk_toggle_button_toggled (cbform->quiet);
+//	on_clipboard_quiet_mode_toggled ((GtkWidget*) cbform->quiet, cbform);
 }
 
-void  ugtk_clipboard_form_get (struct UgtkClipboardForm* csform, UgtkSetting* setting)
+void  ugtk_clipboard_form_get (struct UgtkClipboardForm* cbform, UgtkSetting* setting)
 {
 	GtkTextIter  iter1;
 	GtkTextIter  iter2;
 
-	gtk_text_buffer_get_start_iter (csform->buffer, &iter1);
-	gtk_text_buffer_get_end_iter (csform->buffer, &iter2);
+	gtk_text_buffer_get_start_iter (cbform->buffer, &iter1);
+	gtk_text_buffer_get_end_iter (cbform->buffer, &iter2);
 
 	ug_free (setting->clipboard.pattern);
-	setting->clipboard.pattern = gtk_text_buffer_get_text (csform->buffer, &iter1, &iter2, FALSE);
-	setting->clipboard.monitor = gtk_toggle_button_get_active (csform->monitor);
-	setting->clipboard.quiet = gtk_toggle_button_get_active (csform->quiet);
-	setting->clipboard.nth_category = gtk_spin_button_get_value_as_int (csform->nth_spin);
+	setting->clipboard.pattern = gtk_text_buffer_get_text (cbform->buffer, &iter1, &iter2, FALSE);
+	setting->clipboard.monitor = gtk_toggle_button_get_active (cbform->monitor);
+	setting->clipboard.quiet = gtk_toggle_button_get_active (cbform->quiet);
+	setting->clipboard.nth_category = gtk_spin_button_get_value_as_int (cbform->nth_spin);
 	// remove line break
 	ug_str_remove_crlf (setting->clipboard.pattern, setting->clipboard.pattern);
 }
@@ -200,8 +200,8 @@ void  ugtk_user_interface_form_init (struct UgtkUserInterfaceForm* uiform)
 	widget = gtk_check_button_new_with_label (_("Sound when download is finished"));
 	uiform->sound_notification = (GtkToggleButton*) widget;
 	gtk_box_pack_start (vbox, widget, FALSE, FALSE, 1);
-	widget = gtk_check_button_new_with_label (_("Apply recently download settings"));
-	uiform->apply_recently = (GtkToggleButton*) widget;
+	widget = gtk_check_button_new_with_label (_("Apply recent download settings"));
+	uiform->apply_recent = (GtkToggleButton*) widget;
 	gtk_box_pack_start (vbox, widget, FALSE, FALSE, 1);
 //	widget = gtk_check_button_new_with_label (_("Skip existing URI from clipboard and command-line"));
 //	uiform->skip_existing = (GtkToggleButton*) widget;
@@ -226,8 +226,8 @@ void  ugtk_user_interface_form_set (struct UgtkUserInterfaceForm* uiform, UgtkSe
 			setting->ui.start_notification);
 	gtk_toggle_button_set_active (uiform->sound_notification,
 			setting->ui.sound_notification);
-	gtk_toggle_button_set_active (uiform->apply_recently,
-			setting->ui.apply_recently);
+	gtk_toggle_button_set_active (uiform->apply_recent,
+			setting->ui.apply_recent);
 //	gtk_toggle_button_set_active (uiform->skip_existing,
 //			setting->ui.skip_existing);
 #ifdef HAVE_APP_INDICATOR
@@ -246,7 +246,7 @@ void  ugtk_user_interface_form_get (struct UgtkUserInterfaceForm* uiform, UgtkSe
 	setting->ui.start_in_offline_mode = gtk_toggle_button_get_active (uiform->start_in_offline_mode);
 	setting->ui.start_notification = gtk_toggle_button_get_active (uiform->start_notification);
 	setting->ui.sound_notification = gtk_toggle_button_get_active (uiform->sound_notification);
-	setting->ui.apply_recently = gtk_toggle_button_get_active (uiform->apply_recently);
+	setting->ui.apply_recent = gtk_toggle_button_get_active (uiform->apply_recent);
 //	setting->ui.skip_existing = gtk_toggle_button_get_active (uiform->skip_existing);
 #ifdef HAVE_APP_INDICATOR
 	setting->ui.app_indicator = gtk_toggle_button_get_active (uiform->app_indicator);
@@ -433,7 +433,7 @@ void  ugtk_auto_save_form_get (struct UgtkAutoSaveForm* asform, UgtkSetting* set
 // ----------------------------------------------------------------------------
 // UgtkCommandlineForm
 //
-void  ugtk_commandline_form_init (struct UgtkCommandlineForm* csform)
+void  ugtk_commandline_form_init (struct UgtkCommandlineForm* clform)
 {
 	GtkWidget*  widget;
 	GtkBox*     vbox;
@@ -441,25 +441,25 @@ void  ugtk_commandline_form_init (struct UgtkCommandlineForm* csform)
 
 	// Commandline Settings
 	widget = gtk_frame_new (_("Commandline Settings"));
-	csform->self = widget;
+	clform->self = widget;
 	vbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 	gtk_container_add (GTK_CONTAINER (widget), (GtkWidget*) vbox);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
 
 	// --quiet
 	widget = gtk_check_button_new_with_mnemonic (_("Use '--quiet' by default"));
-	gtk_box_pack_start (vbox, widget, FALSE, FALSE, 0);
-	csform->quiet = (GtkToggleButton*) widget;
+	gtk_box_pack_start (vbox, widget, FALSE, FALSE, 1);
+	clform->quiet = (GtkToggleButton*) widget;
 	// --category-index
 	hbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
 	gtk_box_pack_start (vbox, (GtkWidget*) hbox, FALSE, FALSE, 2);
 	widget = gtk_label_new (_("Default category index"));
 	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 2);
-	csform->index_label = widget;
+	clform->index_label = widget;
 	widget = gtk_spin_button_new_with_range (0.0, 1000.0, 1.0);
 	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
 	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 2);
-	csform->index_spin = (GtkSpinButton*) widget;
+	clform->index_spin = (GtkSpinButton*) widget;
 	// hint
 	hbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
 	gtk_box_pack_start (vbox, (GtkWidget*) hbox, FALSE, FALSE, 2);
@@ -469,16 +469,16 @@ void  ugtk_commandline_form_init (struct UgtkCommandlineForm* csform)
 	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 0);
 }
 
-void  ugtk_commandline_form_set (struct UgtkCommandlineForm* csform, UgtkSetting* setting)
+void  ugtk_commandline_form_set (struct UgtkCommandlineForm* clform, UgtkSetting* setting)
 {
-	gtk_toggle_button_set_active (csform->quiet, setting->commandline.quiet);
-	gtk_spin_button_set_value (csform->index_spin, setting->commandline.nth_category);
+	gtk_toggle_button_set_active (clform->quiet, setting->commandline.quiet);
+	gtk_spin_button_set_value (clform->index_spin, setting->commandline.nth_category);
 }
 
-void  ugtk_commandline_form_get (struct UgtkCommandlineForm* csform, UgtkSetting* setting)
+void  ugtk_commandline_form_get (struct UgtkCommandlineForm* clform, UgtkSetting* setting)
 {
-	setting->commandline.quiet = gtk_toggle_button_get_active (csform->quiet);
-	setting->commandline.nth_category = gtk_spin_button_get_value_as_int (csform->index_spin);
+	setting->commandline.quiet = gtk_toggle_button_get_active (clform->quiet);
+	setting->commandline.nth_category = gtk_spin_button_get_value_as_int (clform->index_spin);
 }
 
 // ----------------------------------------------------------------------------

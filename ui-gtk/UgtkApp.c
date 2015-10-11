@@ -81,8 +81,8 @@ void  ugtk_app_init (UgtkApp* app, UgetRpc* rpc)
 	ugtk_statusbar_set_speed (&app->statusbar, 0, 0);
 	ugtk_menubar_sync_category (&app->menubar, app, TRUE);
 
-	app->last.category_index = 0;
-	app->last.infonode = uget_node_new (NULL);
+	app->recent.category_index = 0;
+	app->recent.infonode = uget_node_new (NULL);
 	// RSS
 	uget_rss_add_builtin (app->rss_builtin, UGET_RSS_STABLE);
 	uget_rss_add_builtin (app->rss_builtin, UGET_RSS_NEWS);
@@ -375,8 +375,8 @@ void  ugtk_app_set_menu_setting (UgtkApp* app, UgtkSetting* setting)
 			(GtkCheckMenuItem*) app->menubar.edit.skip_existing,
 			setting->ui.skip_existing);
 	gtk_check_menu_item_set_active (
-			(GtkCheckMenuItem*) app->menubar.edit.apply_recently,
-			setting->ui.apply_recently);
+			(GtkCheckMenuItem*) app->menubar.edit.apply_recent,
+			setting->ui.apply_recent);
 
 	switch (app->setting.completion.action) {
 	default:

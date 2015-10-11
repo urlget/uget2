@@ -161,8 +161,8 @@ void  ugtk_batch_dialog_disable_batch (UgtkBatchDialog* bdialog)
 
 void  ugtk_batch_dialog_run (UgtkBatchDialog* bdialog)
 {
-	ugtk_node_dialog_apply_last ((UgtkNodeDialog*) bdialog,
-	                             bdialog->app);
+	ugtk_node_dialog_apply_recent ((UgtkNodeDialog*) bdialog,
+	                               bdialog->app);
 	// emit notify and call ugtk_batch_dialog_set_completed()
 	if (bdialog->selector.self)
 		ugtk_selector_count_marked (&bdialog->selector);
@@ -305,7 +305,7 @@ static void on_response (GtkDialog *dialog, gint response_id,
 		break;
 
 	case GTK_RESPONSE_OK:
-		ugtk_node_dialog_store_last ((UgtkNodeDialog*) bdialog, bdialog->app);
+		ugtk_node_dialog_store_recent ((UgtkNodeDialog*) bdialog, bdialog->app);
 		if (gtk_widget_get_sensitive (bdialog->download.uri_entry))
 			on_no_batch_response (bdialog);
 		if (bdialog->sequencer.self)
