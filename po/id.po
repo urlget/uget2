@@ -7,7 +7,7 @@
 # Hasan Al Banna, 2014
 # Ikhwan Setiawan <kuro.kid@gmail.com>, 2014
 # Muhammad Iqbal <tydushikari@gmail.com>, 2013
-# rizmut <sundaralinux@gmail.com>, 2014
+# Rizal Muttaqin <sundaralinux@gmail.com>, 2014
 # Yurike, 2014
 # Rendiyono Wahyu Saputro <rendi.7936@gmail.com>, 2015
 msgid ""
@@ -17,7 +17,7 @@ msgstr ""
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
 "PO-Revision-Date: 2015-01-10 13:20+0000\n"
 "Last-Translator: Rendiyono Wahyu Saputro <rendi.7936@gmail.com>\n"
-"Language-Team: Indonesian (http://www.transifex.com/projects/p/uget/language/id/)\n"
+"Language-Team: Indonesian (http://www.transifex.com/uget/uget/language/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1475,7 +1475,7 @@ msgid "Sound when download is finished"
 msgstr "Aktifkan suara ketika unduhan selesai"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recently download settings"
+msgid "Apply recent download settings"
 msgstr "Terapkan pengaturan unduh baru-baru ini"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264

@@ -1470,7 +1470,7 @@ msgid "Sound when download is finished"
 msgstr "İndirme tamamlandıktan sonra ses çıkar"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recently download settings"
+msgid "Apply recent download settings"
 msgstr "Yeni indirme ayarlarını uygula"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264

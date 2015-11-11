@@ -1,17 +1,22 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# chhuang <raymond.huang.tw@gmail.com>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: \n"
+"PO-Revision-Date: 2014-11-27 20:19+0000\n"
+"Last-Translator: Michael Tunnell <michael@ugetdm.com>\n"
+"Language-Team: Chinese (Taiwan) (http://www.transifex.com/uget/uget/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Chinese\n"
-"X-Poedit-Country: TAIWAN\n"
+"Language: zh_TW\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../uget/UgetApp.c:95
 msgid "All Category"
@@ -135,8 +140,7 @@ msgstr "aria2: 找不到資源。"
 msgid ""
 "aria2 saw the specfied number of 'resource not found' error. See --max-file-"
 "not-found option"
-msgstr ""
-"aria2 發現'找不到資源'的錯誤達到指定的數量。請看參數 --max-file-not-found"
+msgstr "aria2 發現'找不到資源'的錯誤達到指定的數量。請看參數 --max-file-not-found"
 
 #: ../uget/UgetPluginAria2.c:276
 msgid "aria2: speed was too slow."
@@ -357,7 +361,8 @@ msgstr "新增 _URL 序列下載..."
 
 #. New Torrent
 #. separator
-#. gtk_menu_shell_append ((GtkMenuShell*)submenu, gtk_separator_menu_item_new() );
+#. gtk_menu_shell_append ((GtkMenuShell*)submenu,
+#. gtk_separator_menu_item_new() );
 #. New Torrent
 #: ../ui-gtk/UgtkApp-ui.c:224 ../ui-gtk/UgtkMenubar-ui.c:73
 #: ../ui-gtk/UgtkTrayIcon.c:75
@@ -787,7 +792,8 @@ msgstr "離線模式"
 msgid "_Edit"
 msgstr "編輯(_E)"
 
-#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
+#. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new()
+#. );
 #: ../ui-gtk/UgtkMenubar-ui.c:175
 msgid "Clipboard _Monitor"
 msgstr "監視剪貼簿(_M)"
@@ -989,7 +995,8 @@ msgstr "刪除分類(_D)"
 msgid "_Download"
 msgstr "下載(_D)"
 
-#. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE, accel_group);
+#. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE,
+#. accel_group);
 #: ../ui-gtk/UgtkMenubar-ui.c:473
 msgid "_Delete Entry"
 msgstr "刪除資料(_D)"
@@ -1462,7 +1469,7 @@ msgid "Sound when download is finished"
 msgstr "下載完成時發出聲音"
 
 #: ../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recently download settings"
+msgid "Apply recent download settings"
 msgstr "套用上一次的下載設定"
 
 #: ../ui-gtk/UgtkSettingForm.c:264
@@ -1599,109 +1606,3 @@ msgstr "顯示視窗"
 #: ../ui-gtk/UgtkTrayIcon.c:112
 msgid "_Offline Mode"
 msgstr "離線模式(_O)"
-
-#~ msgid "No plug-in support this scheme or file."
-#~ msgstr "沒有插件支援這種方案或檔案."
-
-#~ msgid "Remember this action"
-#~ msgstr "記住這個設定"
-
-#~ msgid "Minimize to tray"
-#~ msgstr "縮小到系統列"
-
-#~ msgid "Exit uGet"
-#~ msgstr "離開 uGet"
-
-#~ msgid "failed to launch aria2."
-#~ msgstr "aria2 啟動失敗。"
-
-#~ msgid "Export to"
-#~ msgstr "匯出到"
-
-#~ msgid "Save all"
-#~ msgstr "全部儲存"
-
-#~ msgid "_Download..."
-#~ msgstr "下載(_D)..."
-
-#~ msgid "_Category..."
-#~ msgstr "分類(_C)..."
-
-#~ msgid "Torrent..."
-#~ msgstr "Torrent..."
-
-#~ msgid "Metalink..."
-#~ msgstr "Metalink..."
-
-#~ msgid "_Clipboard Option..."
-#~ msgstr "剪貼簿選項(_C)..."
-
-#~ msgid "only one matched"
-#~ msgstr "只有一個符合條件"
-
-#~ msgid ""
-#~ "Failed to connect to aria2.\n"
-#~ "Is aria2 shutdown? or aria2 launch failed."
-#~ msgstr ""
-#~ "無法連線到 aria2。\n"
-#~ "aria2 是否已經關閉？ 或是啟動失敗。"
-
-#~ msgid ""
-#~ "This program need privileges to shutdown or suspend.\n"
-#~ "If it can not work, please check your privileges."
-#~ msgstr ""
-#~ "程式需要權限才能關機.\n"
-#~ "如果不能正常運作，請檢查權限。"
-
-#~ msgid "_URL:"
-#~ msgstr "網址(_U):"
-
-#~ msgid "Options"
-#~ msgstr "選項"
-
-#~ msgid "Connections per server"
-#~ msgstr "每台伺服器的連線數"
-
-#~ msgid "UI Settings"
-#~ msgstr "介面設定"
-
-#~ msgid "Add URL to Nth category"
-#~ msgstr "URL 直接加入第幾個分類"
-
-#~ msgid "_Launch default application for specified file types:"
-#~ msgstr "啟動指定檔案類型的預設應用程式(_L):"
-
-#~ msgid "'--category-index' default value"
-#~ msgstr "設定 '--category-index' 的預設值"
-
-#~ msgid "_Enable aria2 plug-in"
-#~ msgstr "啟用 aria2 插件(_E)"
-
-#~ msgid "Download"
-#~ msgstr "下傳"
-
-#~ msgid "Shutdown when downloads complete"
-#~ msgstr "下載完成時關機"
-
-#~ msgid "New Batch Download"
-#~ msgstr "新增批次下載"
-
-#~ msgid "New _Batch download..."
-#~ msgstr "新增批次下載(_B)..."
-
-#~ msgid "_Batch download..."
-#~ msgstr "批次下載(_B)..."
-
-#~ msgid "_From Clipboard..."
-#~ msgstr "從剪貼簿(_F)..."
-
-#~ msgid "Import _HTML file..."
-#~ msgstr "匯入 HTML 檔案(_H)..."
-
-#~ msgid "_Import text file..."
-#~ msgstr "匯入文字檔(_I)..."
-
-#~ msgid ""
-#~ "Please make sure that all tasks have been completed\n"
-#~ "before you modify settings."
-#~ msgstr "在你修改設定前請確定所有的任務都已經完成。"

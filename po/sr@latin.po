@@ -12,7 +12,7 @@ msgstr ""
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
 "PO-Revision-Date: 2014-11-29 15:15+0000\n"
 "Last-Translator: markosm <chajbo@ro.ru>\n"
-"Language-Team: Serbian (Latin) (http://www.transifex.com/projects/p/uget/language/sr@latin/)\n"
+"Language-Team: Serbian (Latin) (http://www.transifex.com/uget/uget/language/sr@latin/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1470,7 +1470,7 @@ msgid "Sound when download is finished"
 msgstr "Zvuk kada se završi preuzimanje"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recently download settings"
+msgid "Apply recent download settings"
 msgstr "Primeni nedavne postavke preuzimanja"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264

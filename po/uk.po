@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Oleh <aalesshhkka@gmail.com>, 2014
+# Oleh, 2014
 # Serhij Dubyk <serhijdubyk@gmail.com>, 2011
 msgid ""
 msgstr ""
@@ -12,7 +12,7 @@ msgstr ""
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
 "PO-Revision-Date: 2014-11-27 06:57+0000\n"
 "Last-Translator: Michael Tunnell <michael@ugetdm.com>\n"
-"Language-Team: Ukrainian (http://www.transifex.com/projects/p/uget/language/uk/)\n"
+"Language-Team: Ukrainian (http://www.transifex.com/uget/uget/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1470,7 +1470,7 @@ msgid "Sound when download is finished"
 msgstr "Звук при завершенні звантаження"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recently download settings"
+msgid "Apply recent download settings"
 msgstr "Встановити налаштування останнього завантаження"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264

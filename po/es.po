@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Claudio Alejandro <claudio_alejandro@gmx.com>, 2015
 # Vico Koby <vicokoby@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2014-11-27 06:32+0000\n"
-"Last-Translator: Michael Tunnell <michael@ugetdm.com>\n"
-"Language-Team: Spanish (http://www.transifex.com/projects/p/uget/language/es/)\n"
+"PO-Revision-Date: 2015-10-04 09:23+0000\n"
+"Last-Translator: Claudio Alejandro <claudio_alejandro@gmx.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/uget/uget/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,7 +21,7 @@ msgstr ""
 
 #: ../../po/../uget/UgetApp.c:95
 msgid "All Category"
-msgstr ""
+msgstr "Todas las categorías"
 
 #. UGET_EVENT_NORMAL_CUSTOM
 #: ../../po/../uget/UgetEvent.c:58
@@ -86,12 +87,12 @@ msgstr "El archivo no puede ser abierto."
 #. UGET_EVENT_ERROR_FILE_OPEN_FAILED
 #: ../../po/../uget/UgetEvent.c:85
 msgid "Unable to create thread."
-msgstr ""
+msgstr "Imposible crear hilo."
 
 #. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 #: ../../po/../uget/UgetEvent.c:86
 msgid "Incorrect source (different file size)."
-msgstr ""
+msgstr "Fuente incorrecta (tamaño de archivo diferente)."
 
 #. UGET_EVENT_ERROR_INCORRECT_SOURCE,
 #: ../../po/../uget/UgetEvent.c:87
@@ -126,7 +127,7 @@ msgstr "Archivo no soportado."
 #. 1 - 10
 #: ../../po/../uget/UgetPluginAria2.c:272
 msgid "aria2: an unknown error occurred."
-msgstr ""
+msgstr "aria2: se ha producido un error desconocido."
 
 #: ../../po/../uget/UgetPluginAria2.c:273
 msgid "aria2: time out occurred."
@@ -134,30 +135,30 @@ msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:274
 msgid "aria2: resource was not found."
-msgstr ""
+msgstr "aria2: no se encontró el recurso."
 
 #: ../../po/../uget/UgetPluginAria2.c:275
 msgid ""
 "aria2 saw the specfied number of 'resource not found' error. See --max-file-"
 "not-found option"
-msgstr ""
+msgstr "aria2 vio el número específico del error 'no se encontró el recurso'. Ver opción --max-file-not-found"
 
 #: ../../po/../uget/UgetPluginAria2.c:276
 msgid "aria2: speed was too slow."
-msgstr ""
+msgstr "aria2: velocidad era demasiado lento."
 
 #: ../../po/../uget/UgetPluginAria2.c:277
 msgid "aria2: network problem occurred."
-msgstr ""
+msgstr "aria2: ocurrió un error de conexión."
 
 #: ../../po/../uget/UgetPluginAria2.c:278
 msgid "aria2: unfinished downloads."
-msgstr ""
+msgstr "aria2: descargas sin terminar."
 
 #. _("Not Resumable"),
 #: ../../po/../uget/UgetPluginAria2.c:280
 msgid "Out of resource"
-msgstr ""
+msgstr "Recursos insuficientes"
 
 #. _(),
 #: ../../po/../uget/UgetPluginAria2.c:281
@@ -167,7 +168,7 @@ msgstr ""
 #. 11 - 20
 #: ../../po/../uget/UgetPluginAria2.c:283
 msgid "aria2 was downloading same file."
-msgstr ""
+msgstr "aria2 descargo el mismo archivo."
 
 #: ../../po/../uget/UgetPluginAria2.c:284
 msgid "aria2 was downloading same info hash torrent."
@@ -175,16 +176,16 @@ msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:285
 msgid "aria2: file already existed. See --allow-overwrite option."
-msgstr ""
+msgstr "aria2: archivo ya existe. Ver opción --allow-overwrite."
 
 #. _("Output file can't be renamed."),
 #: ../../po/../uget/UgetPluginAria2.c:287
 msgid "aria2: could not open existing file."
-msgstr ""
+msgstr "aria2: no se pudo abrir archivo existente."
 
 #: ../../po/../uget/UgetPluginAria2.c:288
 msgid "aria2: could not create new file or truncate existing file."
-msgstr ""
+msgstr "aria2: no se pudo crear un nuevo archivo o truncar archivo existente."
 
 #: ../../po/../uget/UgetPluginAria2.c:289
 msgid "aria2: file I/O error occurred."
@@ -193,7 +194,7 @@ msgstr ""
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../../po/../uget/UgetPluginAria2.c:291
 msgid "aria2: name resolution failed."
-msgstr ""
+msgstr "aria2: fallo resolución de nombre."
 
 #: ../../po/../uget/UgetPluginAria2.c:292
 msgid "aria2: could not parse Metalink document."
@@ -202,11 +203,11 @@ msgstr ""
 #. 21 - 30
 #: ../../po/../uget/UgetPluginAria2.c:294
 msgid "aria2: FTP command failed."
-msgstr ""
+msgstr "aria2: fallo del comando FTP."
 
 #: ../../po/../uget/UgetPluginAria2.c:295
 msgid "aria2: HTTP response header was bad or unexpected."
-msgstr ""
+msgstr "aria2: Encabezado de respuesta HTTP malo o inesperado."
 
 #: ../../po/../uget/UgetPluginAria2.c:296
 msgid "Too many redirections."
@@ -214,7 +215,7 @@ msgstr "Demasiadas redirecciones."
 
 #: ../../po/../uget/UgetPluginAria2.c:297
 msgid "aria2: HTTP authorization failed."
-msgstr ""
+msgstr "aria2: HTTP error de autorización."
 
 #: ../../po/../uget/UgetPluginAria2.c:298
 msgid "aria2: could not parse bencoded file(usually .torrent file)."
@@ -222,7 +223,7 @@ msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:299
 msgid "aria2: torrent file was corrupted or missing information."
-msgstr ""
+msgstr "aria2: archivo torrent está dañado o falta información."
 
 #: ../../po/../uget/UgetPluginAria2.c:300
 msgid "aria2: Magnet URI was bad."
@@ -232,24 +233,24 @@ msgstr ""
 msgid ""
 "aria2: bad/unrecognized option was given or unexpected option argument was "
 "given."
-msgstr ""
+msgstr "aria2: opción mala/desconocida fue dada o inesperado argumento de opción fue dado."
 
 #: ../../po/../uget/UgetPluginAria2.c:302
 msgid "aria2: remote server was unable to handle the request."
-msgstr ""
+msgstr " aria2: servidor remoto no pudo manejar la petición."
 
 #: ../../po/../uget/UgetPluginAria2.c:303
 msgid "aria2: could not parse JSON-RPC request."
-msgstr ""
+msgstr "aria2: no pudo analizar petición JSON-RPC."
 
 #: ../../po/../uget/UgetPluginAria2.c:306
 msgid "No response. Is aria2 shutdown?"
-msgstr ""
+msgstr "No hay respuesta. ¿Está aria2 apagado?"
 
 #. debug
 #: ../../po/../uget/UgetPluginAria2.c:608
 msgid "aria2: gid was removed."
-msgstr ""
+msgstr "aria2: gid fue eliminado."
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:46
 msgid "Download Manager"
@@ -261,11 +262,11 @@ msgstr "Victor Emmanuel, vicokoby@gmail.com"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:80
 msgid "uGet Founder: "
-msgstr ""
+msgstr "Fundador de uGet:"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:81
 msgid "uGet Project Manager: "
-msgstr ""
+msgstr "Director de proyecto uGet:"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:255
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:204
@@ -291,11 +292,11 @@ msgstr "Línea de comandos"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:758
 msgid "Error Occurred"
-msgstr ""
+msgstr "Se ha producido un error"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:759
 msgid "Error Occurred when downloading."
-msgstr ""
+msgstr "Se ha producido un error al descargar."
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:760
 msgid "Download Starting"
@@ -377,7 +378,7 @@ msgstr "Nuevo metaenlace..."
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:240
 msgid "Save all settings"
-msgstr ""
+msgstr "Guardar todos los ajustes"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:248
 msgid "Set selected download runnable"
@@ -441,19 +442,19 @@ msgstr "Abrir archivo de metaenlace"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1109
 msgid "Failed to save category file."
-msgstr ""
+msgstr "Fallo al guardar archivo de categoría."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1129
 msgid "Failed to load category file."
-msgstr ""
+msgstr "Fallo al cargar archivo de categoría."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1140
 msgid "Save Category file"
-msgstr ""
+msgstr "Guardar archivo de Categoría"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1158
 msgid "Open Category file"
-msgstr ""
+msgstr "Abrir archivo de Categoría"
 
 #. add link
 #: ../../po/../ui-gtk/UgtkApp.c:1217
@@ -479,7 +480,7 @@ msgstr "Importar URLs de archivo de texto"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1344
 msgid "Export URLs to text file"
-msgstr ""
+msgstr "Exportar URLs a un archivo de texto"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1363
 msgid "URL Sequence batch"
@@ -491,7 +492,7 @@ msgstr "No se encontraron URLs en el portapapeles."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1399
 msgid "All URLs had existed."
-msgstr ""
+msgstr "Existían todas las URL."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1404
 msgid "Clipboard batch"
@@ -499,7 +500,7 @@ msgstr "En masa del portapapeles..."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1494
 msgid "New"
-msgstr ""
+msgstr "Nuevo"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1613 ../../po/../ui-gtk/UgtkMenubar.c:383
 #: ../../po/../ui-gtk/UgtkMenubar.c:415 ../../po/../ui-gtk/UgtkNodeView.c:609
@@ -588,21 +589,21 @@ msgstr "¿Está seguro que quiere eliminar los archivos?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:74
 msgid "Really delete category?"
-msgstr ""
+msgstr "¿Realmente eliminar la categoría?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:75
 msgid "Are you sure you want to delete category?"
-msgstr ""
+msgstr "¿Está seguro que quiere eliminar la categoría?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:106
 msgid "Don't ask me again"
-msgstr ""
+msgstr "No volver a preguntar"
 
 #. URL - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:109
 #: ../../po/../ui-gtk/UgtkSequencer.c:63
 msgid "_URI:"
-msgstr ""
+msgstr "_URI:"
 
 #. Mirrors - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:128
@@ -633,7 +634,7 @@ msgstr "Referencia:"
 #. "Max Connections:" - title label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:207
 msgid "_Max Connections:"
-msgstr ""
+msgstr "_Máximo de conexiones:"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:226
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:510
@@ -648,7 +649,7 @@ msgstr "P_ausar"
 #. frame for login
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:234
 msgid "Login"
-msgstr "Usuario"
+msgstr "Ingresar"
 
 #. User - label
 #. user label & entry
@@ -687,7 +688,7 @@ msgstr "Selecccionar archivo posteado"
 #. label - user agent
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:333
 msgid "User Agent:"
-msgstr "Usuario agente:"
+msgstr "Agente de Usuario:"
 
 #. label - Max upload speed
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:349
@@ -771,22 +772,22 @@ msgstr "_Exportar a archivo de texto(.txt)..."
 #. Open Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:128
 msgid "_Open category..."
-msgstr ""
+msgstr "_Abrir categoría..."
 
 #. Save Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:135
 msgid "_Save category as..."
-msgstr ""
+msgstr "_Guardar categoría como..."
 
 #. Save All
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
 msgid "Save _all settings"
-msgstr ""
+msgstr "Guardar _todos los ajustes"
 
 #. Offline mode
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:152
 msgid "Offline Mode"
-msgstr ""
+msgstr "Modo sin conexión"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:170
 msgid "_Edit"
@@ -800,50 +801,50 @@ msgstr "_Monitoreo del portapapeles"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:179
 msgid "Clipboard works quietly"
-msgstr ""
+msgstr "Portapapeles trabaja silenciosamente"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:183
 msgid "Command-line works quietly"
-msgstr ""
+msgstr "Línea de comandos trabaja silenciosamente"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:187
 msgid "Skip existing URI"
-msgstr ""
+msgstr "Saltar URI existente"
 
 #. --- Completion Auto-Actions --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:194
 msgid "Completion _Auto-Actions"
-msgstr ""
+msgstr "Al finalizar _Acciones-Automáticas"
 
 #. Completion Auto-Actions - Disable
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:200
 msgid "_Disable"
-msgstr ""
+msgstr "_Deshabilitar"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:205
 msgid "Hibernate"
-msgstr ""
+msgstr "Hibernar"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:210
 msgid "Suspend"
-msgstr ""
+msgstr "Suspender"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:215
 msgid "Shutdown"
-msgstr ""
+msgstr "Apagar"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:220
 msgid "Reboot"
-msgstr ""
+msgstr "Reiniciar"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:225
 msgid "Custom"
-msgstr ""
+msgstr "Personalizado"
 
 #. Completion Auto-Actions - Remember
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
 msgid "Remember setting"
-msgstr ""
+msgstr "Recordar ajustes"
 
 #. Completion Auto-Actions - Help
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:235
@@ -999,15 +1000,15 @@ msgstr "_Descarga"
 #. accel_group);
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:473
 msgid "_Delete Entry"
-msgstr ""
+msgstr "_Eliminar Entrada"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:480
 msgid "Delete Entry and _File"
-msgstr ""
+msgstr "Eliminar Entrada y _Archivo"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:495
 msgid "Open _Containing folder"
-msgstr ""
+msgstr "Abrir carpeta _Contenedora"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:504
 msgid "Force Start"
@@ -1021,19 +1022,19 @@ msgstr "_Mover a"
 #. Priority --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:573
 msgid "Priority"
-msgstr ""
+msgstr "Prioridad"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:582
 msgid "_High"
-msgstr ""
+msgstr "_Alta"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:587
 msgid "_Normal"
-msgstr ""
+msgstr "_Normal"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:592
 msgid "_Low"
-msgstr ""
+msgstr "_Baja"
 
 #. Get Help Online
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:615
@@ -1063,7 +1064,7 @@ msgstr "Reportar un error"
 #. Keyboard Shortcuts
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:650
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr " Atajos de teclado"
 
 #. Check for Updates
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:657
@@ -1088,11 +1089,11 @@ msgstr "'%s' - Esta carpeta no existe."
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:205
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:209
 msgid "URI had existed"
-msgstr ""
+msgstr "URI ya existía"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:207
 msgid "This URI had existed, are you sure to continue?"
-msgstr ""
+msgstr "Está URI ya existía, ¿esta seguro que desea continuar?"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:343
 msgid "General"
@@ -1121,15 +1122,15 @@ msgstr "sin nombre"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:610
 msgid "Paused"
-msgstr ""
+msgstr "Pausado"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:611
 msgid "Uploading"
-msgstr ""
+msgstr "Subiendo"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:612
 msgid "Completed"
-msgstr ""
+msgstr "Completado"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:614
 msgid "Recycled"
@@ -1145,7 +1146,7 @@ msgstr "Activo"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:637
 msgid "All Status"
-msgstr ""
+msgstr "Todo el estado"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:734
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:85
@@ -1177,7 +1178,7 @@ msgstr "Restante"
 #: ../../po/../ui-gtk/UgtkSettingForm.c:538
 #: ../../po/../ui-gtk/UgtkSummary.c:151
 msgid "URI"
-msgstr ""
+msgstr "URI"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:954
 msgid "Quantity"
@@ -1372,11 +1373,11 @@ msgstr "Vista previa"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:97
 msgid "User Interface"
-msgstr ""
+msgstr "Interfaz de usuario"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:109
 msgid "Bandwidth"
-msgstr ""
+msgstr "Ancho de banda"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:115
 msgid "Scheduler"
@@ -1393,7 +1394,7 @@ msgstr "Otros"
 #. Monitor button
 #: ../../po/../ui-gtk/UgtkSettingForm.c:57
 msgid "_Enable clipboard monitor"
-msgstr ""
+msgstr "_Activar monitor de portapapeles"
 
 #. quiet mode
 #: ../../po/../ui-gtk/UgtkSettingForm.c:62
@@ -1403,16 +1404,16 @@ msgstr "Modo _silencioso"
 #: ../../po/../ui-gtk/UgtkSettingForm.c:68
 #: ../../po/../ui-gtk/UgtkSettingForm.c:446
 msgid "Default category index"
-msgstr ""
+msgstr "Índice de categoría por defecto"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:80
 #: ../../po/../ui-gtk/UgtkSettingForm.c:458
 msgid "Adding to Nth category if no matched category."
-msgstr ""
+msgstr "Añadir a la categoría Nth si ninguna categoría coincide."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:87
 msgid "Monitor clipboard for specified file types:"
-msgstr ""
+msgstr "Monitor portapapeles para determinados tipos de archivos:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:102
 msgid "Separate the types with character '|'."
@@ -1424,12 +1425,12 @@ msgstr "También puede usar expresiones regulares."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:151
 msgid "Confirmation"
-msgstr ""
+msgstr "Confirmación"
 
 #. Confirmation check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:157
 msgid "Show confirmation dialog on exit"
-msgstr ""
+msgstr "Mostrar diálogo de confirmación al salir"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:160
 msgid "Confirm when deleting files"
@@ -1437,7 +1438,7 @@ msgstr "Confirmar eliminación de archivos"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:166
 msgid "System Tray"
-msgstr ""
+msgstr "Bandeja del sistema"
 
 #. System Tray check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:172
@@ -1450,11 +1451,11 @@ msgstr "Minimizar a la bandeja al inicio"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:178
 msgid "Close to tray on window close"
-msgstr ""
+msgstr "Ocultar a la bandeja al cerrar la ventana"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:182
 msgid "Use Ubuntu's App Indicator"
-msgstr ""
+msgstr "Usar indicador de aplicaciones de Ubuntu"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:189
 msgid "Enable offline mode on startup"
@@ -1469,43 +1470,43 @@ msgid "Sound when download is finished"
 msgstr "Sonido al finalizar la descarga"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recently download settings"
+msgid "Apply recent download settings"
 msgstr "Aplicar configuración de descargas recientes"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264
 msgid "These will affect all plug-ins."
-msgstr ""
+msgstr "Esto afectará a todos los complementos."
 
 #. Global speed limit
 #: ../../po/../ui-gtk/UgtkSettingForm.c:270
 msgid "Global speed limit"
-msgstr ""
+msgstr "Límite de velocidad global"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:278
 #: ../../po/../ui-gtk/UgtkSettingForm.c:564
 msgid "Max upload speed"
-msgstr ""
+msgstr "Velocidad de subida máxima"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:290
 #: ../../po/../ui-gtk/UgtkSettingForm.c:576
 msgid "Max download speed"
-msgstr ""
+msgstr "Velocidad de descarga máxima"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:323
 msgid "Completion Auto-Actions"
-msgstr ""
+msgstr "Al finalizar Acciones-Automáticas"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:331
 msgid "Custom command:"
-msgstr ""
+msgstr "Comando personalizado:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:343
 msgid "Custom command if error occured:"
-msgstr ""
+msgstr "Comando personalizado si se produce un error:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:388
 msgid "_Autosave"
-msgstr ""
+msgstr "_Autoguardar"
 
 #. auto save spin & label (interval)
 #: ../../po/../ui-gtk/UgtkSettingForm.c:394
@@ -1515,7 +1516,7 @@ msgstr "minutos"
 #. auto save label
 #: ../../po/../ui-gtk/UgtkSettingForm.c:402
 msgid "_Interval:"
-msgstr "I_ntérvalo:"
+msgstr "_Intervalo:"
 
 #. Commandline Settings
 #: ../../po/../ui-gtk/UgtkSettingForm.c:433
@@ -1529,11 +1530,11 @@ msgstr "Usar '--quiet' por defecto"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:508
 msgid "Plug-in matching order:"
-msgstr ""
+msgstr "Complemento en orden correspondiente:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:531
 msgid "Aria2 plug-in options"
-msgstr ""
+msgstr "Aria2 opciones del complemento"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:547
 msgid "RPC authorization secret token"
@@ -1543,7 +1544,7 @@ msgstr ""
 #. Speed Limits
 #: ../../po/../ui-gtk/UgtkSettingForm.c:556
 msgid "Global speed limit for aria2 only"
-msgstr ""
+msgstr "Límite de velocidad global solo para aria2"
 
 #. ------------------------------------------------------------------------
 #. aria2 works on local device
@@ -1561,7 +1562,7 @@ msgstr "_Cerrar aria2 al salir"
 #. Local options
 #: ../../po/../ui-gtk/UgtkSettingForm.c:601
 msgid "Launch aria2 on local device"
-msgstr ""
+msgstr "Ejecutar aria2 en dispositivo local"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:610
 msgid "Path"
@@ -1574,7 +1575,7 @@ msgstr "Argumentos"
 #. Arguments - hint
 #: ../../po/../ui-gtk/UgtkSettingForm.c:626
 msgid "You must restart uGet after modifying it."
-msgstr ""
+msgstr "Debe reiniciar uGet después de modificarlo."
 
 #: ../../po/../ui-gtk/UgtkSummary.c:112
 msgid "File"

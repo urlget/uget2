@@ -1472,7 +1472,7 @@ msgid "Sound when download is finished"
 msgstr "إصدار صوت عند انتهاء التنزيل"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recently download settings"
+msgid "Apply recent download settings"
 msgstr "طبّق إعدادات التنزيل الأخيرة"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264

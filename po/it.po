@@ -4,14 +4,15 @@
 # 
 # Translators:
 # bovirus <roberto.boriotti@canon-europe.com>, 2013
+# tomberry <tomberro@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2014-11-27 09:32+0000\n"
-"Last-Translator: bovirus <roberto.boriotti@canon-europe.com>\n"
-"Language-Team: Italian (http://www.transifex.com/projects/p/uget/language/it/)\n"
+"PO-Revision-Date: 2015-10-17 12:16+0000\n"
+"Last-Translator: tomberry <tomberro@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/uget/uget/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -741,7 +742,7 @@ msgstr "_File"
 #. Batch Downloads --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:86
 msgid "_Batch Downloads"
-msgstr "Downlaod _batch..."
+msgstr "Download _batch..."
 
 #. Batch downloads - Clipboard batch
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:92
@@ -1380,7 +1381,7 @@ msgstr "Banda"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:115
 msgid "Scheduler"
-msgstr "Pianfificazione"
+msgstr "Pianificazione"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:121
 msgid "Plug-in"
@@ -1469,7 +1470,7 @@ msgid "Sound when download is finished"
 msgstr "Suono a download completato"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recently download settings"
+msgid "Apply recent download settings"
 msgstr "Applica impostazioni download recenti"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264

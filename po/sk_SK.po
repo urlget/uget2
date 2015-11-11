@@ -11,7 +11,7 @@ msgstr ""
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
 "PO-Revision-Date: 2014-11-29 16:32+0000\n"
 "Last-Translator: pyler <pyler.inbox@gmail.com>\n"
-"Language-Team: Slovak (Slovakia) (http://www.transifex.com/projects/p/uget/language/sk_SK/)\n"
+"Language-Team: Slovak (Slovakia) (http://www.transifex.com/uget/uget/language/sk_SK/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1469,7 +1469,7 @@ msgid "Sound when download is finished"
 msgstr "Zvuk pri dokončení sťahovania"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recently download settings"
+msgid "Apply recent download settings"
 msgstr "Použiť nedávne nastavenia sťahovania"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264

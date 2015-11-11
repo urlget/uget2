@@ -1471,7 +1471,7 @@ msgid "Sound when download is finished"
 msgstr "ডাউনলোড সমাপ্ত হলে শব্দ বাজান"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recently download settings"
+msgid "Apply recent download settings"
 msgstr "সাম্প্রতিক ডাউনলোড সেটিং প্রয়োগ"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264

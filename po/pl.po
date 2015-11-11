@@ -13,7 +13,7 @@ msgstr ""
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
 "PO-Revision-Date: 2014-11-27 06:34+0000\n"
 "Last-Translator: Michael Tunnell <michael@ugetdm.com>\n"
-"Language-Team: Polish (http://www.transifex.com/projects/p/uget/language/pl/)\n"
+"Language-Team: Polish (http://www.transifex.com/uget/uget/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1471,7 +1471,7 @@ msgid "Sound when download is finished"
 msgstr "Dźwięk, gdy pobieranie zostanie ukończone"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recently download settings"
+msgid "Apply recent download settings"
 msgstr "Zastosuj ostatnie ustawienia pobierania"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264

@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2015-08-18 16:06+0000\n"
+"PO-Revision-Date: 2015-09-24 12:23+0000\n"
 "Last-Translator: Tobias Bannert <tobannert@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/uget/uget/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr "Übertragung vollständig"
 #. UGET_EVENT_NORMAL_COMPLETE,
 #: ../../po/../uget/UgetEvent.c:62 ../../po/../ui-gtk/UgtkNodeView.c:613
 msgid "Finished"
-msgstr "Fertig"
+msgstr "Fertiggestellt"
 
 #. UGET_EVENT_NORMAL_FINISH,
 #. resumable
@@ -309,7 +309,7 @@ msgstr "Herunterladewarteschlange wird abgearbeitet"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:762
 msgid "Download Completed"
-msgstr "Herunterladen abgeschlossen"
+msgstr "Übertragung vollständig"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:763
 msgid "All queuing downloads have been completed."
@@ -532,11 +532,11 @@ msgstr "HIER"
 
 #: ../../po/../ui-gtk/UgtkBanner.c:168
 msgid "please fill out this quick User Survey for uGet."
-msgstr "bitte diese schnelle Benutzerumfrage für uGet ausfüllen."
+msgstr "bitte diese kurze Benutzerumfrage über uGet ausfüllen."
 
 #: ../../po/../ui-gtk/UgtkBanner.c:171
 msgid "click here to take survey"
-msgstr "hier klicken für Teilnahme an Umfrage"
+msgstr "Bitte hier klicken, um an der Umfrage teilzunehmen."
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:62
 msgid "Category _name:"
@@ -1055,7 +1055,7 @@ msgstr "Unterstützungsforum"
 #. Submit Feedback
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:636
 msgid "Submit Feedback"
-msgstr "Rückmeldung abschicken"
+msgstr "Rückmeldung einsenden"
 
 #. Report a Bug
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:643
@@ -1065,7 +1065,7 @@ msgstr "Fehler berichten"
 #. Keyboard Shortcuts
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:650
 msgid "Keyboard Shortcuts"
-msgstr "Tastenkombination"
+msgstr "Tastenkombinationen"
 
 #. Check for Updates
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:657
@@ -1157,7 +1157,7 @@ msgstr "Name"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:747
 msgid "Complete"
-msgstr "Fertig"
+msgstr "Vollständig"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:761
 msgid "Size"
@@ -1464,14 +1464,14 @@ msgstr "Getrennten Modus beim Start aktivieren"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:192
 msgid "Download starting notification"
-msgstr "Benachrichtigung über Herunterladestart"
+msgstr "Benachrichtigung beim Starten der Übertragung"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:195
 msgid "Sound when download is finished"
 msgstr "Ton ausgeben wenn Übertragung fertiggestellt wurde"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recently download settings"
+msgid "Apply recent download settings"
 msgstr "Letzte Übertragungeinstellungen übernehmen"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264
@@ -1512,7 +1512,7 @@ msgstr "Automatisches _Speichern"
 #. auto save spin & label (interval)
 #: ../../po/../ui-gtk/UgtkSettingForm.c:394
 msgid "minutes"
-msgstr "Minuten"
+msgstr "Minute(n)"
 
 #. auto save label
 #: ../../po/../ui-gtk/UgtkSettingForm.c:402

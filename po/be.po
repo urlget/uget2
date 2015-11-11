@@ -11,7 +11,7 @@ msgstr ""
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
 "PO-Revision-Date: 2014-11-30 13:28+0000\n"
 "Last-Translator: Mihail Varantsou <meequz@gmail.com>\n"
-"Language-Team: Belarusian (http://www.transifex.com/projects/p/uget/language/be/)\n"
+"Language-Team: Belarusian (http://www.transifex.com/uget/uget/language/be/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1469,7 +1469,7 @@ msgid "Sound when download is finished"
 msgstr "Гук, калі сцягванне скончана"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recently download settings"
+msgid "Apply recent download settings"
 msgstr "Ужываць настáўленні апошняга сцягвання"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264

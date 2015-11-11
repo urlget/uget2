@@ -1470,7 +1470,7 @@ msgid "Sound when download is finished"
 msgstr "Phát âm thanh thông báo khi phần tải về đã được hoàn tất"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recently download settings"
+msgid "Apply recent download settings"
 msgstr "Áp dụng các thiết lập tải về gần đây"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264

@@ -11,7 +11,7 @@ msgstr ""
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
 "PO-Revision-Date: 2014-11-27 15:51+0000\n"
 "Last-Translator: Atanas Kovachki <crashdeburn@gmail.com>\n"
-"Language-Team: Bulgarian (http://www.transifex.com/projects/p/uget/language/bg/)\n"
+"Language-Team: Bulgarian (http://www.transifex.com/uget/uget/language/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1469,7 +1469,7 @@ msgid "Sound when download is finished"
 msgstr "Звуково известие при завършване на изтеглянето"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recently download settings"
+msgid "Apply recent download settings"
 msgstr "Приложи настройките от последното изтегляне"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264

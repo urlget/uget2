@@ -10,7 +10,7 @@ msgstr ""
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
 "PO-Revision-Date: 2014-11-27 06:52+0000\n"
 "Last-Translator: Michael Tunnell <michael@ugetdm.com>\n"
-"Language-Team: Oriya (India) (http://www.transifex.com/projects/p/uget/language/or_IN/)\n"
+"Language-Team: Oriya (India) (http://www.transifex.com/uget/uget/language/or_IN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1468,7 +1468,7 @@ msgid "Sound when download is finished"
 msgstr "ଆହରଣ ସମାପ୍ତ ହେଲେ ଏକ ଧ୍ୱନି ଶୁଣାନ୍ତୁ"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recently download settings"
+msgid "Apply recent download settings"
 msgstr "ସାମ୍ପ୍ରତିକ ଆହରଣ ବିନ୍ୟାସଗୁଡ଼ିକ ପ୍ରୟୋଗ କରନ୍ତୁ"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264
