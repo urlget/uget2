@@ -1,10 +1,16 @@
+uGet 2.0.3: (2015-11-11)
+1. curl plug-in: update control file path if download file was renamed.
+2. curl plug-in: update downloaded size after loading aria2 control file.
+3. curl plug-in: update file size when allocating disk space.
+4. Don't show border in right side of setting dialog.
+
 uGet 2.0.2: (2015-09-11)
 1. curl plug-in: fix memory leak and avoid accessing NULL pointer.
 2. curl plug-in: create new file with correct size if file size is not the same.
 3. curl plug-in: create new file only in first connection.
 4. curl plug-in: change setting's file name if plug-in created new file.
-5. Don't resume file with incorrect aria2 control file (no bit field).
-6. replace invalid characters \/:*?"<>| by _ in filename.
+5. replace invalid characters \/:*?"<>| by _ in filename.
+6. Don't resume file with incorrect aria2 control file (no bit field).
 
 uGet 2.0.1: (2015-08-15)
 01. curl plug-in: create new download file if file size is not the same.
