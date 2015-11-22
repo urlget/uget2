@@ -21,6 +21,9 @@ AM_PROG_AR
 ## Use library (static library)
 AC_PROG_RANLIB
 
+## --- Check function posix_fallocate()
+AC_CHECK_FUNCS([posix_fallocate])
+
 ## ----------------------------------------------
 ## L10N  (add intltoolize to autogen.sh)
 AC_PROG_INTLTOOL

@@ -38,6 +38,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <UgUtil.h>
 #include <UgStdio.h>
 #include <UgString.h>
@@ -52,6 +56,7 @@
 #include <winsock2.h>
 #define  ug_sleep       Sleep
 #else
+#include <fcntl.h>   // posix_fallocate()
 #include <unistd.h>  // sleep(), usleep()
 #define  ug_sleep(millisecond)    usleep (millisecond * 1000)
 #endif // _WIN32 || _WIN64
@@ -194,7 +199,7 @@ static UgetResult  global_get (int option, void* parameter)
 }
 
 // ----------------------------------------------------------------------------
-// plugins functions
+// plug-in functions
 
 static void plugin_init (UgetPluginCurl* plugin)
 {
@@ -1020,13 +1025,18 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 			plugin->size.download = 0;
 			// allocate disk space if plug-in known file size
 			if (plugin->file.size) {
-				// create an empty file of particular size.
+				// preallocate space for a file.
+#if defined HAVE_POSIX_FALLOCATE
+				if (posix_fallocate (value, 0, plugin->file.size) != 0)
+					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
+#else
 				if (ug_write (value, "O", 1) == -1)  // begin of file
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
 				if (ug_seek (value, plugin->file.size - 1, SEEK_SET) == -1)
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
 				if (ug_write (value, "X", 1) == -1)  // end of file
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
+#endif
 				// create aria2 control file if no error
 				if (ugcurl->event_code == 0) {
 					plugin->aria2.path = ug_strdup (plugin->file.path);
