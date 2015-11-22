@@ -1026,7 +1026,17 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 			// allocate disk space if plug-in known file size
 			if (plugin->file.size) {
 				// preallocate space for a file.
-#if defined HAVE_POSIX_FALLOCATE
+#if defined _WIN32 || defined _WIN64
+				LARGE_INTEGER size;
+				HANDLE        handle;
+				handle = (HANDLE) _get_osfhandle (value);
+				size.QuadPart = plugin->file.size;
+				if(SetFilePointerEx (handle ,size, 0, FILE_BEGIN) == FALSE)
+					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
+				if(SetEndOfFile (handle) == FALSE)
+					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
+				SetFilePointer (handle, 0, 0, FILE_BEGIN);
+#elif defined HAVE_POSIX_FALLOCATE
 				if (posix_fallocate (value, 0, plugin->file.size) != 0)
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
 #else
@@ -1036,7 +1046,7 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
 				if (ug_write (value, "X", 1) == -1)  // end of file
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
-#endif
+#endif // _WIN32 || _WIN64
 				// create aria2 control file if no error
 				if (ugcurl->event_code == 0) {
 					plugin->aria2.path = ug_strdup (plugin->file.path);
