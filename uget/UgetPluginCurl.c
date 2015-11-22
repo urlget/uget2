@@ -42,6 +42,10 @@
 #include <config.h>
 #endif
 
+#ifdef __ANDROID__
+#include <android/api-level.h>
+#endif
+
 #include <UgUtil.h>
 #include <UgStdio.h>
 #include <UgString.h>
@@ -1038,6 +1042,9 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 				SetFilePointer (handle, 0, 0, FILE_BEGIN);
 #elif defined HAVE_POSIX_FALLOCATE
 				if (posix_fallocate (value, 0, plugin->file.size) != 0)
+					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
+#elif defined __ANDROID__ && __ANDROID_API__ >= 20
+				if (posix_fallocate64 (value, 0, plugin->file.size) != 0)
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
 #else
 				if (ug_write (value, "O", 1) == -1)  // begin of file
