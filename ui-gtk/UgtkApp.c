@@ -191,7 +191,6 @@ void  ugtk_app_get_window_setting (UgtkApp* app, UgtkSetting* setting)
 {
 	GdkWindowState  gdk_wstate;
 	GdkWindow*      gdk_window;
-	GtkAllocation   allocation;
 	gint            x, y;
 
 	// get window position, size, and maximzied state
@@ -218,11 +217,8 @@ void  ugtk_app_get_window_setting (UgtkApp* app, UgtkSetting* setting)
 	// GtkPaned position
 	if (app->setting.window.category)
 		setting->window.paned_position_h = gtk_paned_get_position (app->window.hpaned);
-	if (app->setting.window.summary) {
-		gtk_widget_get_allocation ((GtkWidget*) app->window.vpaned, &allocation);
+	if (app->setting.window.summary)
 		setting->window.paned_position_v = gtk_paned_get_position (app->window.vpaned);
-		setting->window.paned_position_v = allocation.height - setting->window.paned_position_v;
-	}
 
 	// banner
 	setting->window.banner = gtk_widget_get_visible (app->banner.self);
@@ -233,8 +229,6 @@ void  ugtk_app_get_window_setting (UgtkApp* app, UgtkSetting* setting)
 
 void  ugtk_app_set_window_setting (UgtkApp* app, UgtkSetting* setting)
 {
-	GtkAllocation   allocation;
-
 	// set window position, size, and maximized state
 	if (setting->window.width  > 0 &&
 	    setting->window.height > 0 &&
@@ -256,9 +250,9 @@ void  ugtk_app_set_window_setting (UgtkApp* app, UgtkSetting* setting)
 		                        setting->window.paned_position_h);
 	}
 	if (setting->window.paned_position_v > 0) {
-		gtk_widget_get_allocation ((GtkWidget*) app->window.vpaned, &allocation);
+		if (setting->window.paned_position_v > 100) // for uGet < 2.0.4
 		gtk_paned_set_position (app->window.vpaned,
-				allocation.height - setting->window.paned_position_v);
+		                        setting->window.paned_position_v);
 	}
 	// set visible widgets
 	gtk_widget_set_visible (app->toolbar.self,
