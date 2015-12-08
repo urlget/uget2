@@ -196,6 +196,8 @@ void  ugtk_app_quit (UgtkApp* app);
 // set UgtkSetting from/to UgtkApp
 void  ugtk_app_get_window_setting (UgtkApp* app, UgtkSetting* setting);
 void  ugtk_app_set_window_setting (UgtkApp* app, UgtkSetting* setting);
+void  ugtk_app_get_column_setting (UgtkApp* app, UgtkSetting* setting);
+void  ugtk_app_set_column_setting (UgtkApp* app, UgtkSetting* setting);
 void  ugtk_app_set_plugin_setting (UgtkApp* app, UgtkSetting* setting);
 void  ugtk_app_set_other_setting (UgtkApp* app, UgtkSetting* setting);
 void  ugtk_app_set_menu_setting (UgtkApp* app, UgtkSetting* setting);

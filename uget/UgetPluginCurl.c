@@ -365,10 +365,11 @@ static int  plugin_sync (UgetPluginCurl* plugin)
 
 	// If total size and average speed is unknown, don't calculate remain time.
 	if (progress->download_speed > 0 && progress->total > 0) {
-		progress->remain_time = (progress->total - progress->complete) /
+		progress->left = (progress->total - progress->complete) /
 				progress->download_speed;
 	}
-	progress->consume_time = time(NULL) - plugin->start_time;
+	// consume time
+	progress->elapsed = time(NULL) - plugin->start_time;
 
 	// add UgetNode for file & attachment
 	if (plugin->file_renamed && plugin->file.path) {

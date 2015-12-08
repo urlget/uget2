@@ -438,7 +438,7 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 	temp.progress->download_speed = plugin->downloadSpeed;
 	temp.progress->upload_speed   = plugin->uploadSpeed;
 	temp.progress->uploaded       = plugin->uploadLength;
-	temp.progress->consume_time   = time(NULL) - plugin->start_time;
+	temp.progress->elapsed        = time(NULL) - plugin->start_time;
 	// ratio
 	if (temp.progress->uploaded && temp.progress->complete)
 		temp.progress->ratio = (double)temp.progress->uploaded / (double)temp.progress->complete;
@@ -451,7 +451,7 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 		temp.progress->percent = 0;
 	// If total size and average speed is unknown, don't calculate remain time.
 	if (temp.progress->download_speed > 0 && temp.progress->total > 0)
-		temp.progress->remain_time = (temp.progress->total - temp.progress->complete) / temp.progress->download_speed;
+		temp.progress->left = (temp.progress->total - temp.progress->complete) / temp.progress->download_speed;
 
 	// ------------------------------------------------
 	temp.common = ug_info_realloc (&node->info, UgetCommonInfo);

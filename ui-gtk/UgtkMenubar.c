@@ -276,12 +276,12 @@ static void  on_change_visible_column (GtkWidget* widget, UgtkApp* app)
 	traveler = &app->traveler;
 	visible  = gtk_check_menu_item_get_active ((GtkCheckMenuItem*) widget);
 	// which widget
-	if (widget == app->menubar.view.columns.completed) {
+	if (widget == app->menubar.view.columns.complete) {
 		column_index = UGTK_NODE_COLUMN_COMPLETE;
-		setting->completed = visible;
+		setting->complete = visible;
 	}
 	else if (widget == app->menubar.view.columns.total) {
-		column_index = UGTK_NODE_COLUMN_SIZE;
+		column_index = UGTK_NODE_COLUMN_TOTAL;
 		setting->total = visible;
 	}
 	else if (widget == app->menubar.view.columns.percent) {
@@ -778,7 +778,7 @@ void ugtk_menubar_init_callback (UgtkMenubar* menubar, UgtkApp* app)
 	g_signal_connect (menubar->view.summary_items.message, "toggled",
 			G_CALLBACK (on_change_visible_summary), app);
 	// download columns
-	g_signal_connect (menubar->view.columns.completed, "toggled",
+	g_signal_connect (menubar->view.columns.complete, "toggled",
 			G_CALLBACK (on_change_visible_column), app);
 	g_signal_connect (menubar->view.columns.total, "toggled",
 			G_CALLBACK (on_change_visible_column), app);

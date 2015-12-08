@@ -122,7 +122,7 @@ struct UgtkMenubar
 		{
 			GtkWidget*  self;    // GtkMenu
 
-			GtkWidget*  completed;
+			GtkWidget*  complete;
 			GtkWidget*  total;
 			GtkWidget*  percent;
 			GtkWidget*  elapsed;    // consuming time

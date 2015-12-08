@@ -377,11 +377,11 @@ static void ugtk_menubar_view_init (UgtkMenubar* menubar)
 	gtk_menu_item_set_submenu ((GtkMenuItem*) menu_item, submenu);
 	gtk_menu_shell_append ((GtkMenuShell*)menu, menu_item);
 	menubar->view.columns.self = submenu;
-	// Download Columns - Completed
+	// Download Columns - Complete
 	menu_item = gtk_check_menu_item_new_with_mnemonic (_("_Complete"));
 	gtk_menu_shell_append ((GtkMenuShell*) submenu, menu_item);
 	gtk_check_menu_item_set_active ((GtkCheckMenuItem*) menu_item, TRUE);
-	menubar->view.columns.completed = menu_item;
+	menubar->view.columns.complete = menu_item;
 	// Download Columns - Total
 	menu_item = gtk_check_menu_item_new_with_mnemonic (_("_Size"));
 	gtk_menu_shell_append ((GtkMenuShell*) submenu, menu_item);

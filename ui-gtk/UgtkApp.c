@@ -74,6 +74,7 @@ void  ugtk_app_init (UgtkApp* app, UgetRpc* rpc)
 	// apply UgtkSetting
 	ugtk_app_set_plugin_setting (app, &app->setting);
 	ugtk_app_set_window_setting (app, &app->setting);
+	ugtk_app_set_column_setting (app, &app->setting);
 	ugtk_app_set_other_setting (app, &app->setting);
 	ugtk_app_set_ui_setting (app, &app->setting);
 
@@ -174,6 +175,7 @@ void  ugtk_app_quit (UgtkApp* app)
 	uget_task_remove_all (&app->task);
 	// sync setting and save data
 	ugtk_app_get_window_setting (app, &app->setting);
+	ugtk_app_get_column_setting (app, &app->setting);
 	ugtk_app_save (app);
 	// clear plugin
 	uget_app_clear_plugins ((UgetApp*) app);
@@ -286,6 +288,185 @@ void  ugtk_app_set_window_setting (UgtkApp* app, UgtkSetting* setting)
 				setting->window.nth_state);
 	// menu
 	ugtk_app_set_menu_setting (app, setting);
+}
+
+void  ugtk_app_get_column_setting (UgtkApp* app, UgtkSetting* setting)
+{
+	GtkTreeViewColumn* column;
+	int                width;
+
+	// name
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_NAME);
+	width = gtk_tree_view_column_get_width (column);
+	setting->download_column.width.name = width;
+	// complete
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_COMPLETE);
+	width = gtk_tree_view_column_get_width (column);
+	setting->download_column.width.complete = width;
+	// total
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_TOTAL);
+	width = gtk_tree_view_column_get_width (column);
+	setting->download_column.width.total = width;
+	// percent
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_PERCENT);
+	width = gtk_tree_view_column_get_width (column);
+	setting->download_column.width.percent = width;
+	// elapsed
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_ELAPSED);
+	width = gtk_tree_view_column_get_width (column);
+	setting->download_column.width.elapsed = width;
+	// left
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_LEFT);
+	width = gtk_tree_view_column_get_width (column);
+	setting->download_column.width.left = width;
+	// speed
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_SPEED);
+	width = gtk_tree_view_column_get_width (column);
+	setting->download_column.width.speed = width;
+	// upload_speed
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_UPLOAD_SPEED);
+	width = gtk_tree_view_column_get_width (column);
+	setting->download_column.width.upload_speed = width;
+	// uploaded
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_UPLOADED);
+	width = gtk_tree_view_column_get_width (column);
+	setting->download_column.width.uploaded = width;
+	// ratio
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_RATIO);
+	width = gtk_tree_view_column_get_width (column);
+	setting->download_column.width.ratio = width;
+	// retry
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_RETRY);
+	width = gtk_tree_view_column_get_width (column);
+	setting->download_column.width.retry = width;
+	// category
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_CATEGORY);
+	width = gtk_tree_view_column_get_width (column);
+	setting->download_column.width.category = width;
+	// uri
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_URI);
+	width = gtk_tree_view_column_get_width (column);
+	setting->download_column.width.uri = width;
+	// added_on
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_ADDED_ON);
+	width = gtk_tree_view_column_get_width (column);
+	setting->download_column.width.added_on = width;
+	// completed_on
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_COMPLETED_ON);
+	width = gtk_tree_view_column_get_width (column);
+	setting->download_column.width.completed_on = width;
+}
+
+void  ugtk_app_set_column_setting (UgtkApp* app, UgtkSetting* setting)
+{
+	GtkTreeViewColumn* column;
+	int                width;
+
+	// name
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_NAME);
+	width = setting->download_column.width.name;
+	if (width > 0)
+		gtk_tree_view_column_set_fixed_width (column, width);
+	// complete
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_COMPLETE);
+	width = setting->download_column.width.complete;
+	if (width > 0)
+		gtk_tree_view_column_set_fixed_width (column, width);
+	// total
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_TOTAL);
+	width = setting->download_column.width.total;
+	if (width > 0)
+		gtk_tree_view_column_set_fixed_width (column, width);
+	// percent
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_PERCENT);
+	width = setting->download_column.width.percent;
+	if (width > 0)
+		gtk_tree_view_column_set_fixed_width (column, width);
+	// elapsed
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_ELAPSED);
+	width = setting->download_column.width.elapsed;
+	if (width > 0)
+		gtk_tree_view_column_set_fixed_width (column, width);
+	// left
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_LEFT);
+	width = setting->download_column.width.left;
+	if (width > 0)
+		gtk_tree_view_column_set_fixed_width (column, width);
+	// speed
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_SPEED);
+	width = setting->download_column.width.speed;
+	if (width > 0)
+		gtk_tree_view_column_set_fixed_width (column, width);
+	// upload_speed
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_UPLOAD_SPEED);
+	width = setting->download_column.width.upload_speed;
+	if (width > 0)
+		gtk_tree_view_column_set_fixed_width (column, width);
+	// uploaded
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_UPLOADED);
+	width = setting->download_column.width.uploaded;
+	if (width > 0)
+		gtk_tree_view_column_set_fixed_width (column, width);
+	// ratio
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_RATIO);
+	width = setting->download_column.width.ratio;
+	if (width > 0)
+		gtk_tree_view_column_set_fixed_width (column, width);
+	// retry
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_RETRY);
+	width = setting->download_column.width.retry;
+	if (width > 0)
+		gtk_tree_view_column_set_fixed_width (column, width);
+	// category
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_CATEGORY);
+	width = setting->download_column.width.category;
+	if (width > 0)
+		gtk_tree_view_column_set_fixed_width (column, width);
+	// uri
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_URI);
+	width = setting->download_column.width.uri;
+	if (width > 0)
+		gtk_tree_view_column_set_fixed_width (column, width);
+	// added_on
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_ADDED_ON);
+	width = setting->download_column.width.added_on;
+	if (width > 0)
+		gtk_tree_view_column_set_fixed_width (column, width);
+	// completed_on
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_COMPLETED_ON);
+	width = setting->download_column.width.completed_on;
+	if (width > 0)
+		gtk_tree_view_column_set_fixed_width (column, width);
 }
 
 void  ugtk_app_set_plugin_setting (UgtkApp* app, UgtkSetting* setting)
@@ -445,8 +626,8 @@ void  ugtk_app_set_menu_setting (UgtkApp* app, UgtkSetting* setting)
 			setting->summary.message);
 	// download column
 	gtk_check_menu_item_set_active (
-			(GtkCheckMenuItem*) app->menubar.view.columns.completed,
-			setting->download_column.completed);
+			(GtkCheckMenuItem*) app->menubar.view.columns.complete,
+			setting->download_column.complete);
 	gtk_check_menu_item_set_active (
 			(GtkCheckMenuItem*) app->menubar.view.columns.total,
 			setting->download_column.total);

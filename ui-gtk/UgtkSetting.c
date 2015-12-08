@@ -111,9 +111,44 @@ static const UgEntry  UgtkSummarySettingEntry[] =
 // ----------------------------------------------------------------------------
 // DownloadColumnSetting
 
+static const UgEntry  UgtkDownloadColumnWidthEntry[] =
+{
+	{"name",        offsetof (struct UgtkDownloadColumnWidth, name),
+			UG_ENTRY_INT,  NULL,  NULL},
+	{"complete",    offsetof (struct UgtkDownloadColumnWidth, complete),
+			UG_ENTRY_INT,  NULL,  NULL},
+	{"total",       offsetof (struct UgtkDownloadColumnWidth, total),
+			UG_ENTRY_INT,  NULL,  NULL},
+	{"percent",     offsetof (struct UgtkDownloadColumnWidth, percent),
+			UG_ENTRY_INT,  NULL,  NULL},
+	{"elapsed",     offsetof (struct UgtkDownloadColumnWidth, elapsed),
+			UG_ENTRY_INT,  NULL,  NULL},
+	{"left",        offsetof (struct UgtkDownloadColumnWidth, left),
+			UG_ENTRY_INT,  NULL,  NULL},
+	{"speed",       offsetof (struct UgtkDownloadColumnWidth, speed),
+			UG_ENTRY_INT,  NULL,  NULL},
+	{"UploadSpeed", offsetof (struct UgtkDownloadColumnWidth, upload_speed),
+			UG_ENTRY_INT,  NULL,  NULL},
+	{"uploaded",    offsetof (struct UgtkDownloadColumnWidth, uploaded),
+			UG_ENTRY_INT,  NULL,  NULL},
+	{"ratio",       offsetof (struct UgtkDownloadColumnWidth, ratio),
+			UG_ENTRY_INT,  NULL,  NULL},
+	{"retry",       offsetof (struct UgtkDownloadColumnWidth, retry),
+			UG_ENTRY_INT,  NULL,  NULL},
+	{"category",    offsetof (struct UgtkDownloadColumnWidth, category),
+			UG_ENTRY_INT,  NULL,  NULL},
+	{"uri",         offsetof (struct UgtkDownloadColumnWidth, uri),
+			UG_ENTRY_INT,  NULL,  NULL},
+	{"AddedOn",     offsetof (struct UgtkDownloadColumnWidth, added_on),
+			UG_ENTRY_INT,  NULL,  NULL},
+	{"CompletedOn", offsetof (struct UgtkDownloadColumnWidth, completed_on),
+			UG_ENTRY_INT,  NULL,  NULL},
+	{NULL}    // null-terminated
+};
+
 static const UgEntry  UgtkDownloadColumnSettingEntry[] =
 {
-	{"completed",   offsetof (struct UgtkDownloadColumnSetting, completed),
+	{"complete",    offsetof (struct UgtkDownloadColumnSetting, complete),
 			UG_ENTRY_BOOL,  NULL,  NULL},
 	{"total",       offsetof (struct UgtkDownloadColumnSetting, total),
 			UG_ENTRY_BOOL,  NULL,  NULL},
@@ -146,6 +181,14 @@ static const UgEntry  UgtkDownloadColumnSettingEntry[] =
 			UG_ENTRY_INT,  NULL,  NULL},
 	{"SortNth",     offsetof (struct UgtkDownloadColumnSetting, sort.nth),
 			UG_ENTRY_INT,  NULL,  NULL},
+
+	{"Width",       offsetof (struct UgtkDownloadColumnSetting, width),
+			UG_ENTRY_OBJECT, (void*) UgtkDownloadColumnWidthEntry, NULL},
+
+	// deprecated
+	{"completed",   offsetof (struct UgtkDownloadColumnSetting, complete),
+			UG_ENTRY_BOOL,  NULL,  NULL},
+
 	{NULL}    // null-terminated
 };
 
@@ -357,7 +400,7 @@ void  ugtk_setting_reset (UgtkSetting* setting)
 	setting->summary.message  = TRUE;
 
 	// "DownloadColumnSetting"
-	setting->download_column.completed    = TRUE;
+	setting->download_column.complete     = TRUE;
 	setting->download_column.total        = TRUE;
 	setting->download_column.percent      = TRUE;
 	setting->download_column.elapsed      = TRUE;
@@ -374,6 +417,9 @@ void  ugtk_setting_reset (UgtkSetting* setting)
 	// default sorted column
 	setting->download_column.sort.type    = GTK_SORT_DESCENDING;
 	setting->download_column.sort.nth     = UGTK_NODE_COLUMN_ADDED_ON;
+	// "DownloadColumnWidth"
+	memset (&setting->download_column.width, 0,
+			sizeof (setting->download_column.width));
 
 	// "UserInterfaceSetting"
 	setting->ui.exit_confirmation = TRUE;

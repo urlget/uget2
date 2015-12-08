@@ -79,7 +79,7 @@ static void ugtk_setting_set_by_v1 (UgtkSetting* setting, UgSetting* setting1)
 	setting->summary.uri = setting1->summary.url;
 	setting->summary.message = setting1->summary.message;
 	// DownloadColumn
-	setting->download_column.completed = setting1->download_column.completed;
+	setting->download_column.complete = setting1->download_column.completed;
 	setting->download_column.total = setting1->download_column.total;
 	setting->download_column.percent = setting1->download_column.percent;
 	setting->download_column.elapsed = setting1->download_column.elapsed;
@@ -302,8 +302,8 @@ static void uget_node_set_by_dataset (UgetNode* node, UgDataset* dataset)
 		new.progress->percent = old.progress->percent;
 		new.progress->uploaded = old.progress->uploaded;
 		new.progress->ratio = old.progress->ratio;
-		new.progress->consume_time = old.progress->consume_time;
-		new.progress->remain_time = old.progress->remain_time;
+		new.progress->elapsed = old.progress->consume_time;
+		new.progress->left = old.progress->remain_time;
 	}
 }
 

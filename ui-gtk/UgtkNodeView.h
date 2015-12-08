@@ -55,8 +55,8 @@ typedef enum
 	UGTK_NODE_COLUMN_QUANTITY = 2,
 
 	// Download only
-	UGTK_NODE_COLUMN_COMPLETE = 2,
-	UGTK_NODE_COLUMN_SIZE,
+	UGTK_NODE_COLUMN_COMPLETE = 2, // complete size
+	UGTK_NODE_COLUMN_TOTAL,        // total size
 	UGTK_NODE_COLUMN_PERCENT,
 	UGTK_NODE_COLUMN_ELAPSED,      // consuming time
 	UGTK_NODE_COLUMN_LEFT,         // remaining time

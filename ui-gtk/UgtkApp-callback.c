@@ -160,10 +160,10 @@ static void  on_category_cursor_changed (GtkTreeView* view, UgtkApp* app)
 			sensitive = FALSE;
 		else
 			sensitive = TRUE;
-		gtk_widget_set_sensitive (app->menubar.view.columns.completed, sensitive);
+		gtk_widget_set_sensitive (app->menubar.view.columns.complete, sensitive);
 		gtk_widget_set_sensitive (app->menubar.view.columns.percent, sensitive);
 		column = gtk_tree_view_get_column (view, UGTK_NODE_COLUMN_COMPLETE);
-		gtk_tree_view_column_set_visible (column, sensitive && setting->completed);
+		gtk_tree_view_column_set_visible (column, sensitive && setting->complete);
 		column = gtk_tree_view_get_column (view, UGTK_NODE_COLUMN_PERCENT);
 		gtk_tree_view_column_set_visible (column, sensitive && setting->percent);
 		// Recycled

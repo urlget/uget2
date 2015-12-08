@@ -242,11 +242,12 @@ static void col_set_percent (GtkTreeViewColumn *tree_column,
 	}
 }
 
-static void col_set_consume_time (GtkTreeViewColumn *tree_column,
-                                  GtkCellRenderer   *cell,
-                                  GtkTreeModel      *model,
-                                  GtkTreeIter       *iter,
-                                  gpointer           data)
+// consume time
+static void col_set_elapsed (GtkTreeViewColumn *tree_column,
+                             GtkCellRenderer   *cell,
+                             GtkTreeModel      *model,
+                             GtkTreeIter       *iter,
+                             gpointer           data)
 {
 	UgetNode*     node;
 	UgetProgress* progress;
@@ -261,7 +262,7 @@ static void col_set_consume_time (GtkTreeViewColumn *tree_column,
 
 	progress = ug_info_get (&node->info, UgetProgressInfo);
 	if (progress)
-		string = ug_str_from_seconds ((int) progress->consume_time, TRUE);
+		string = ug_str_from_seconds ((int) progress->elapsed, TRUE);
 	else
 		string = NULL;
 
@@ -269,11 +270,12 @@ static void col_set_consume_time (GtkTreeViewColumn *tree_column,
 	ug_free (string);
 }
 
-static void col_set_remain_time (GtkTreeViewColumn *tree_column,
-                                 GtkCellRenderer   *cell,
-                                 GtkTreeModel      *model,
-                                 GtkTreeIter       *iter,
-                                 gpointer           data)
+// remain time
+static void col_set_left (GtkTreeViewColumn *tree_column,
+                          GtkCellRenderer   *cell,
+                          GtkTreeModel      *model,
+                          GtkTreeIter       *iter,
+                          gpointer           data)
 {
 	UgetNode*     node;
 	UgetProgress* progress;
@@ -291,7 +293,7 @@ static void col_set_remain_time (GtkTreeViewColumn *tree_column,
 	relation = ug_info_get (&node->info, UgetRelationInfo);
 
 	if (progress && relation && relation->task.plugin)
-		string = ug_str_from_seconds ((int) progress->remain_time, TRUE);
+		string = ug_str_from_seconds ((int) progress->left, TRUE);
 	else
 		string = NULL;
 
@@ -727,7 +729,7 @@ static GtkWidget*  ugtk_node_view_new (GtkTreeCellDataFunc icon_func,
 
 	view = (GtkTreeView*)gtk_tree_view_new ();
 
-	// column state icon
+	// UGTK_NODE_COLUMN_STATE
 	// GtkCellRendererPixbuf "stock-size" = 1, 16x16
 	column = gtk_tree_view_column_new ();
 //	gtk_tree_view_column_set_title (column, "");
@@ -742,7 +744,7 @@ static GtkWidget*  ugtk_node_view_new (GtkTreeCellDataFunc icon_func,
 	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_append_column (view, column);
 
-	// column name
+	// UGTK_NODE_COLUMN_NAME
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, name_title);
 	renderer = gtk_cell_renderer_text_new ();
@@ -772,12 +774,12 @@ GtkWidget*  ugtk_node_view_new_for_download (void)
 	selection = gtk_tree_view_get_selection (view);
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
 
-	// column name
+	// UGTK_NODE_COLUMN_NAME
 	column = gtk_tree_view_get_column (view, UGTK_NODE_COLUMN_NAME);
 	gtk_tree_view_column_set_min_width (column, 180);
 	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
 
-	// column completed
+	// UGTK_NODE_COLUMN_COMPLETE
 	column = gtk_tree_view_column_new ();
 	renderer = gtk_cell_renderer_text_new ();
 	g_object_set (renderer, "xalign", 1.0, NULL);
@@ -793,7 +795,7 @@ GtkWidget*  ugtk_node_view_new_for_download (void)
 	gtk_tree_view_column_set_alignment (column, 1.0);
 	gtk_tree_view_append_column (view, column);
 
-	// column total
+	// UGTK_NODE_COLUMN_TOTAL
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("Size"));
 	gtk_tree_view_column_pack_start (column, renderer, TRUE);
@@ -807,7 +809,7 @@ GtkWidget*  ugtk_node_view_new_for_download (void)
 	gtk_tree_view_column_set_alignment (column, 1.0);
 	gtk_tree_view_append_column (view, column);
 
-	// column percent
+	// UGTK_NODE_COLUMN_PERCENT
 	column = gtk_tree_view_column_new ();
 	renderer_progress = gtk_cell_renderer_progress_new ();
 	gtk_tree_view_column_set_title (column, _("%"));
@@ -822,13 +824,13 @@ GtkWidget*  ugtk_node_view_new_for_download (void)
 	gtk_tree_view_column_set_alignment (column, 1.0);
 	gtk_tree_view_append_column (view, column);
 
-	// column "Elapsed" for consuming time
+	// UGTK_NODE_COLUMN_ELAPSED for consuming time
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("Elapsed"));
 	gtk_tree_view_column_pack_start (column, renderer, TRUE);
 	gtk_tree_view_column_set_cell_data_func (column,
 	                                         renderer,
-	                                         col_set_consume_time,
+	                                         col_set_elapsed,
 	                                         NULL, NULL);
 	gtk_tree_view_column_set_resizable (column, TRUE);
 	gtk_tree_view_column_set_min_width (column, 65);
@@ -836,13 +838,13 @@ GtkWidget*  ugtk_node_view_new_for_download (void)
 	gtk_tree_view_column_set_alignment (column, 1.0);
 	gtk_tree_view_append_column (view, column);
 
-	// column "Left" for remaining time
+	// UGTK_NODE_COLUMN_LEFT for remaining time
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("Left"));
 	gtk_tree_view_column_pack_start (column, renderer, TRUE);
 	gtk_tree_view_column_set_cell_data_func (column,
 	                                         renderer,
-	                                         col_set_remain_time,
+	                                         col_set_left,
 	                                         NULL, NULL);
 	gtk_tree_view_column_set_resizable (column, TRUE);
 	gtk_tree_view_column_set_min_width (column, 65);
@@ -850,7 +852,7 @@ GtkWidget*  ugtk_node_view_new_for_download (void)
 	gtk_tree_view_column_set_alignment (column, 1.0);
 	gtk_tree_view_append_column (view, column);
 
-	// columns speed
+	// UGTK_NODE_COLUMN_SPEED
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("Speed"));
 	gtk_tree_view_column_pack_start (column, renderer, TRUE);
@@ -864,7 +866,7 @@ GtkWidget*  ugtk_node_view_new_for_download (void)
 	gtk_tree_view_column_set_alignment (column, 1.0);
 	gtk_tree_view_append_column (view, column);
 
-	// columns upload speed
+	// UGTK_NODE_COLUMN_UPLOAD_SPEED
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("Up Speed"));
 	gtk_tree_view_column_pack_start (column, renderer, TRUE);
@@ -878,7 +880,7 @@ GtkWidget*  ugtk_node_view_new_for_download (void)
 	gtk_tree_view_column_set_alignment (column, 1.0);
 	gtk_tree_view_append_column (view, column);
 
-	// columns uploaded
+	// UGTK_NODE_COLUMN_UPLOADED
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("Uploaded"));
 	gtk_tree_view_column_pack_start (column, renderer, TRUE);
@@ -892,7 +894,7 @@ GtkWidget*  ugtk_node_view_new_for_download (void)
 	gtk_tree_view_column_set_alignment (column, 1.0);
 	gtk_tree_view_append_column (view, column);
 
-	// columns ratio
+	// UGTK_NODE_COLUMN_RATIO
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("Ratio"));
 	gtk_tree_view_column_pack_start (column, renderer, TRUE);
@@ -906,7 +908,7 @@ GtkWidget*  ugtk_node_view_new_for_download (void)
 	gtk_tree_view_column_set_alignment (column, 1.0);
 	gtk_tree_view_append_column (view, column);
 
-	// column retries
+	// UGTK_NODE_COLUMN_RETRY
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("Retry"));
 	gtk_tree_view_column_pack_start (column, renderer, TRUE);
@@ -920,7 +922,7 @@ GtkWidget*  ugtk_node_view_new_for_download (void)
 	gtk_tree_view_column_set_alignment (column, 1.0);
 	gtk_tree_view_append_column (view, column);
 
-	// column category
+	// UGTK_NODE_COLUMN_CATEGORY
 	renderer = gtk_cell_renderer_text_new ();
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("Category"));
@@ -934,7 +936,7 @@ GtkWidget*  ugtk_node_view_new_for_download (void)
 	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_append_column (view, column);
 
-	// column url
+	// UGTK_NODE_COLUMN_URI
 //	renderer = gtk_cell_renderer_text_new ();
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("URI"));
@@ -948,7 +950,7 @@ GtkWidget*  ugtk_node_view_new_for_download (void)
 	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_append_column (view, column);
 
-	// column addon_on
+	// UGTK_NODE_COLUMN_ADDED_ON
 //	renderer = gtk_cell_renderer_text_new ();
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("Added On"));
@@ -962,7 +964,7 @@ GtkWidget*  ugtk_node_view_new_for_download (void)
 	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_append_column (view, column);
 
-	// column completed_on
+	// UGTK_NODE_COLUMN_COMPLETED_ON
 //	renderer = gtk_cell_renderer_text_new ();
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("Completed On"));
@@ -986,7 +988,7 @@ static void add_column_quantity (GtkTreeView* view)
 	GtkCellRenderer*   renderer;
 	GtkTreeViewColumn* column;
 
-	// column Quantity = number of tasks
+	// UGTK_NODE_COLUMN_QUANTITY : number of tasks
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_set_title (column, _("Quantity"));
 //	gtk_tree_view_column_set_title (column, _("N"));
@@ -1014,7 +1016,7 @@ GtkWidget*  ugtk_node_view_new_for_category (void)
 			col_set_name_c, _("Category"));
 	gtk_tree_view_set_headers_visible (view, FALSE);
 
-	// column Category (Name)
+	// UGTK_NODE_COLUMN_NAME
 //	column = gtk_tree_view_get_column (view, 0);
 //	gtk_tree_view_column_set_min_width (column, -1);
 //	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);

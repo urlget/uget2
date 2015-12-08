@@ -165,11 +165,11 @@ int   uget_node_compare_elapsed (UgetNode* node1, UgetNode* node2)
 	}
 
 	// if these are the same, compare name
-	if (progress1->consume_time == progress2->consume_time)
+	if (progress1->elapsed == progress2->elapsed)
 		return uget_node_compare_name (node1, node2);
-	// return diff of consume_time
+	// return diff of elapsed (consume time)
 	else
-		return (int)(progress1->consume_time - progress2->consume_time);
+		return (int)(progress1->elapsed - progress2->elapsed);
 }
 
 int   uget_node_compare_left (UgetNode* node1, UgetNode* node2)
@@ -193,11 +193,11 @@ int   uget_node_compare_left (UgetNode* node1, UgetNode* node2)
 	}
 
 	// if these are the same, compare name
-	if (progress1->remain_time == progress2->remain_time)
+	if (progress1->left == progress2->left)
 		return uget_node_compare_name (node1, node2);
-	// return diff of remain_time
+	// return diff of left (remain time)
 	else
-		return (int)(progress1->remain_time - progress2->remain_time);
+		return (int)(progress1->left - progress2->left);
 }
 
 int   uget_node_compare_speed (UgetNode* node1, UgetNode* node2)

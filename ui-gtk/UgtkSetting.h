@@ -113,7 +113,7 @@ struct UgtkSetting
 	struct UgtkDownloadColumnSetting
 	{
 		// visible: boolean
-		int    completed;
+		int    complete;
 		int    total;
 		int    percent;
 		int    elapsed;    // consuming time
@@ -127,6 +127,26 @@ struct UgtkSetting
 		int    uri;
 		int    added_on;
 		int    completed_on;
+
+		// width: integer
+		struct UgtkDownloadColumnWidth
+		{
+			int    name;
+			int    complete;
+			int    total;
+			int    percent;
+			int    elapsed;    // consuming time
+			int    left;       // remaining time
+			int    speed;
+			int    upload_speed;
+			int    uploaded;
+			int    ratio;
+			int    retry;
+			int    category;
+			int    uri;
+			int    added_on;
+			int    completed_on;
+		} width;
 
 		struct
 		{

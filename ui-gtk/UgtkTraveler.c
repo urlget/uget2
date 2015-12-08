@@ -693,7 +693,7 @@ static void on_complete_column_clicked (GtkTreeViewColumn *column, UgtkTraveler*
 
 static void on_size_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)
 {
-	ugtk_tree_view_column_clicked (column, UGTK_NODE_COLUMN_SIZE, traveler);
+	ugtk_tree_view_column_clicked (column, UGTK_NODE_COLUMN_TOTAL, traveler);
 }
 
 static void on_percent_column_clicked (GtkTreeViewColumn *column, UgtkTraveler* traveler)

@@ -207,12 +207,12 @@ static void uget_common_assign (UgetCommon* common, UgetCommon* src)
 
 static const UgEntry  UgetProgressEntry[] =
 {
-	{"complete", offsetof (UgetProgress, complete),    UG_ENTRY_INT64,  NULL, NULL},
-	{"total",    offsetof (UgetProgress, total),       UG_ENTRY_INT64,  NULL, NULL},
-	{"elapsed",  offsetof (UgetProgress, consume_time),UG_ENTRY_INT64,  NULL, NULL},
-	{"uploaded", offsetof (UgetProgress, uploaded),    UG_ENTRY_INT64,  NULL, NULL},
-	{"percent",  offsetof (UgetProgress, percent),     UG_ENTRY_INT,    NULL, NULL},
-//	{"ratio",    offsetof (UgetProgress, ratio),       UG_ENTRY_DOUBLE, NULL, NULL},
+	{"complete", offsetof (UgetProgress, complete), UG_ENTRY_INT64,  NULL, NULL},
+	{"total",    offsetof (UgetProgress, total),    UG_ENTRY_INT64,  NULL, NULL},
+	{"elapsed",  offsetof (UgetProgress, elapsed),  UG_ENTRY_INT64,  NULL, NULL},
+	{"uploaded", offsetof (UgetProgress, uploaded), UG_ENTRY_INT64,  NULL, NULL},
+	{"percent",  offsetof (UgetProgress, percent),  UG_ENTRY_INT,    NULL, NULL},
+//	{"ratio",    offsetof (UgetProgress, ratio),    UG_ENTRY_DOUBLE, NULL, NULL},
 	{NULL}		// null-terminated
 };
 

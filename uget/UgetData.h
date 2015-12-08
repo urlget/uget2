@@ -130,10 +130,10 @@ struct UgetProgress
 	UG_DATA_MEMBERS;           // It derived from UgData
 //	const UgDataInfo*  info;
 
-	int64_t      consume_time;   // Elapsed (seconds)
-	int64_t      remain_time;    // Left    (seconds)
-	int64_t      complete;
-	int64_t      total;
+	int64_t      elapsed;     // consume time (seconds)
+	int64_t      left;        // remain time  (seconds)
+	int64_t      complete;    // complete size
+	int64_t      total;       // total size
 	// torrent - upload
 	int64_t      uploaded;
 	double       ratio;
