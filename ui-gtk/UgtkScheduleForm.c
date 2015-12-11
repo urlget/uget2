@@ -39,15 +39,6 @@
 
 #include <glib/gi18n.h>
 
-#define	GRID_FONT_SIZE      10
-
-#define	GRID_WIDTH          14
-#define	GRID_HEIGHT         16
-#define	GRID_WIDTH_LINE     (GRID_WIDTH  + 1)
-#define	GRID_HEIGHT_LINE    (GRID_HEIGHT + 1)
-#define	GRID_WIDTH_ALL      (GRID_WIDTH_LINE  * 24 + 1)
-#define	GRID_HEIGHT_ALL     (GRID_HEIGHT_LINE *  7 + 1)
-
 #define	COLOR_DISABLE_R     0.5
 #define	COLOR_DISABLE_G     0.5
 #define	COLOR_DISABLE_B     0.5
@@ -72,9 +63,20 @@ static const gchar*  week_days[7] =
 	N_("Sun"),
 };
 
-// grid one
-static GtkWidget* ug_grid_one_new (const gdouble* rgb_array);
-static gboolean   ug_grid_one_draw (GtkWidget* widget, cairo_t* cr, const gdouble* rgb_array);
+// UgtkGrid
+static struct {
+	int  width;
+	int  height;
+	int  width_and_line;
+	int  height_and_line;
+	int  width_all;
+	int  height_all;
+} UgtkGrid;
+
+static void       ugtk_grid_global_init (int width, int height);
+static GtkWidget* ugtk_grid_new (const gdouble* rgb_array);
+static gboolean   ugtk_grid_draw (GtkWidget* widget, cairo_t* cr, const gdouble* rgb_array);
+
 // signal handler
 static void     on_enable_toggled (GtkToggleButton* togglebutton, struct UgtkScheduleForm* sform);
 static gboolean on_draw_callback (GtkWidget* widget, cairo_t* cr, struct UgtkScheduleForm* sform);
@@ -85,10 +87,13 @@ static gboolean on_leave_notify_event (GtkWidget* menu, GdkEventCrossing* event,
 
 void  ugtk_schedule_form_init (struct UgtkScheduleForm* sform)
 {
+	PangoContext*  context;
+	PangoLayout*   layout;
 	GtkWidget*  widget;
 	GtkGrid*    caption;
 	GtkBox*     hbox;
 	GtkBox*     vbox;
+	int         text_width, text_height;
 
 	sform->self = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 	vbox = (GtkBox*) sform->self;
@@ -103,12 +108,20 @@ void  ugtk_schedule_form_init (struct UgtkScheduleForm* sform)
 			G_CALLBACK (on_enable_toggled), sform);
 	sform->enable = widget;
 
+	// initialize UgtkGrid
+	context = gtk_widget_get_pango_context (widget);
+	layout = pango_layout_new (context);
+	pango_layout_set_text (layout, gettext (week_days[0]), -1);
+	pango_layout_get_pixel_size (layout, &text_width, &text_height);
+	g_object_unref (layout);
+	ugtk_grid_global_init (text_height, text_height + 2);
+
 	// drawing area
 	widget = gtk_drawing_area_new ();
 	gtk_box_pack_start (vbox, widget, FALSE, FALSE, 2);
 //	gtk_widget_set_has_window (widget, FALSE);
 	gtk_widget_set_size_request (widget,
-			GRID_WIDTH_ALL + 32, GRID_HEIGHT_ALL);
+			UgtkGrid.width_all + text_width + 32, UgtkGrid.height_all);
 	gtk_widget_add_events (widget,
 			GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | GDK_LEAVE_NOTIFY_MASK);
 	g_signal_connect (widget, "draw",
@@ -134,7 +147,7 @@ void  ugtk_schedule_form_init (struct UgtkScheduleForm* sform)
 	sform->time_tips = GTK_LABEL (widget);
 
 	// Turn off - gridone
-	widget = ug_grid_one_new (colors[UGTK_SCHEDULE_TURN_OFF]);
+	widget = ugtk_grid_new (colors[UGTK_SCHEDULE_TURN_OFF]);
 	g_object_set (widget, "margin", 3, NULL);
 	gtk_grid_attach (caption, widget, 0, 1, 1, 1);
 	// Turn off - label
@@ -149,7 +162,7 @@ void  ugtk_schedule_form_init (struct UgtkScheduleForm* sform)
 	gtk_grid_attach (caption, widget, 2, 1, 2, 1);
 
 	// Normal - gridone
-	widget = ug_grid_one_new (colors[UGTK_SCHEDULE_NORMAL]);
+	widget = ugtk_grid_new (colors[UGTK_SCHEDULE_NORMAL]);
 	g_object_set (widget, "margin", 3, NULL);
 	gtk_grid_attach (caption, widget, 0, 2, 1, 1);
 	// Normal - label
@@ -164,7 +177,7 @@ void  ugtk_schedule_form_init (struct UgtkScheduleForm* sform)
 	gtk_grid_attach (caption, widget, 2, 2, 2, 1);
 /*
 	// Speed limit - gridone
-	widget = ug_grid_one_new (colors[UGTK_SCHEDULE_LIMITED_SPEED]);
+	widget = ugtk_grid_new (colors[UGTK_SCHEDULE_LIMITED_SPEED]);
 	g_object_set (widget, "margin", 3, NULL);
 	gtk_grid_attach (caption, widget, 0, 3, 1, 1);
 	// Speed limit - label
@@ -246,13 +259,14 @@ static gboolean on_draw_callback (GtkWidget* widget, cairo_t* cr, struct UgtkSch
 
 	// week days
 	// ox = x offset
-	for (ox = 0, cy = 0.5, y = 0;  y < 7;  y++, cy+=GRID_HEIGHT_LINE) {
+	for (ox = 0, cy = 0.5, y = 0;  y < 7;  y++, cy+=UgtkGrid.height_and_line) {
 		cairo_move_to (cr, 1, cy);
 		pango_layout_set_text (layout, gettext (week_days[y]), -1);
 		pango_cairo_update_layout (cr, layout);
 		pango_cairo_show_layout (cr, layout);
-		pango_layout_get_size (layout, &x, NULL);
-		x /= PANGO_SCALE;
+//		pango_layout_get_size (layout, &x, NULL);
+//		x /= PANGO_SCALE;
+		pango_layout_get_pixel_size (layout, &x, NULL);
 		if (x + 4 > ox)
 			ox = x + 4;
 	}
@@ -261,14 +275,14 @@ static gboolean on_draw_callback (GtkWidget* widget, cairo_t* cr, struct UgtkSch
 	if (sform->drawing_offset == 0)
 		sform->drawing_offset = ox;
 	// draw grid columns
-	for (cx = 0.5;  cx <= GRID_WIDTH_ALL;  cx += GRID_WIDTH_LINE) {
+	for (cx = 0.5;  cx <= UgtkGrid.width_all;  cx += UgtkGrid.width_and_line) {
 		cairo_move_to (cr, ox + cx, 0 + 0.5);
-		cairo_line_to (cr, ox + cx, GRID_HEIGHT_ALL - 1.0 + 0.5);
+		cairo_line_to (cr, ox + cx, UgtkGrid.height_all - 1.0 + 0.5);
 	}
 	// draw grid rows
-	for (cy = 0.5;  cy <= GRID_HEIGHT_ALL;  cy += GRID_HEIGHT_LINE) {
+	for (cy = 0.5;  cy <= UgtkGrid.height_all;  cy += UgtkGrid.height_and_line) {
 		cairo_move_to (cr, ox + 0.5, cy);
-		cairo_line_to (cr, ox + GRID_WIDTH_ALL - 1.0 + 0.5, cy);
+		cairo_line_to (cr, ox + UgtkGrid.width_all - 1.0 + 0.5, cy);
 	}
 	cairo_stroke (cr);
 
@@ -279,8 +293,8 @@ static gboolean on_draw_callback (GtkWidget* widget, cairo_t* cr, struct UgtkSch
 				COLOR_DISABLE_G,
 				COLOR_DISABLE_B);
 	}
-	for (cy = 1.5, y = 0;  y < 7;  y++, cy+=GRID_HEIGHT_LINE) {
-		for (cx = 1.5+ox, x = 0;  x < 24;  x++, cx+=GRID_WIDTH_LINE) {
+	for (cy = 1.5, y = 0;  y < 7;  y++, cy+=UgtkGrid.height_and_line) {
+		for (cx = 1.5+ox, x = 0;  x < 24;  x++, cx+=UgtkGrid.width_and_line) {
 			if (sensitive) {
 				cairo_set_source_rgb (cr,
 						colors [sform->state[y][x]][0],
@@ -290,8 +304,8 @@ static gboolean on_draw_callback (GtkWidget* widget, cairo_t* cr, struct UgtkSch
 			cairo_rectangle (cr,
 					cx,
 					cy,
-					GRID_WIDTH  - 0.5,
-					GRID_HEIGHT - 0.5);
+					UgtkGrid.width  - 0.5,
+					UgtkGrid.height - 0.5);
 			cairo_fill (cr);
 		}
 	}
@@ -305,8 +319,8 @@ static gboolean on_button_press_event (GtkWidget *widget, GdkEventMotion *event,
 	cairo_t*  cr;
 	UgtkScheduleState  state;
 
-	x  = (event->x - sform->drawing_offset) / GRID_WIDTH_LINE;
-	y  =  event->y / GRID_HEIGHT_LINE;
+	x  = (event->x - sform->drawing_offset) / UgtkGrid.width_and_line;
+	y  =  event->y / UgtkGrid.height_and_line;
 	if (x < 0 || y < 0 || x >= 24 || y >= 7)
 		return FALSE;
 
@@ -325,10 +339,10 @@ static gboolean on_button_press_event (GtkWidget *widget, GdkEventMotion *event,
 			colors [state][1],
 			colors [state][2]);
 	cairo_rectangle (cr,
-			(gdouble)x * GRID_WIDTH_LINE  + 1.0 + 0.5 + sform->drawing_offset,
-			(gdouble)y * GRID_HEIGHT_LINE + 1.0 + 0.5,
-			GRID_WIDTH  - 0.5,
-			GRID_HEIGHT - 0.5);
+			(gdouble)x * UgtkGrid.width_and_line  + 1.0 + 0.5 + sform->drawing_offset,
+			(gdouble)y * UgtkGrid.height_and_line + 1.0 + 0.5,
+			UgtkGrid.width  - 0.5,
+			UgtkGrid.height - 0.5);
 	cairo_fill (cr);
 	cairo_destroy (cr);
 
@@ -347,8 +361,8 @@ static gboolean on_motion_notify_event (GtkWidget *widget, GdkEventMotion *event
 	gdkwin = gtk_widget_get_window (widget);
 	gdk_window_get_device_position (gdkwin, event->device, &x, &y, &mod);
 	x -= sform->drawing_offset;
-	x /= GRID_WIDTH_LINE;
-	y /= GRID_HEIGHT_LINE;
+	x /= UgtkGrid.width_and_line;
+	y /= UgtkGrid.height_and_line;
 	if (x < 0 || y < 0 || x >= 24 || y >= 7) {
 		// clear time_tips
 		gtk_label_set_text (sform->time_tips, "");
@@ -369,17 +383,17 @@ static gboolean on_motion_notify_event (GtkWidget *widget, GdkEventMotion *event
 	cr = gdk_cairo_create (gdkwin);
 	cairo_rectangle (cr,
 			sform->drawing_offset, 0,
-			GRID_WIDTH_ALL, GRID_HEIGHT_ALL);
+			UgtkGrid.width_all, UgtkGrid.height_all);
 	cairo_clip (cr);
 	cairo_set_source_rgb (cr,
 			colors [state][0],
 			colors [state][1],
 			colors [state][2]);
 	cairo_rectangle (cr,
-			(gdouble)x * GRID_WIDTH_LINE  + 1.0 + 0.5 + sform->drawing_offset,
-			(gdouble)y * GRID_HEIGHT_LINE + 1.0 + 0.5,
-			GRID_WIDTH  - 0.5,
-			GRID_HEIGHT - 0.5);
+			(gdouble)x * UgtkGrid.width_and_line  + 1.0 + 0.5 + sform->drawing_offset,
+			(gdouble)y * UgtkGrid.height_and_line + 1.0 + 0.5,
+			UgtkGrid.width  - 0.5,
+			UgtkGrid.height - 0.5);
 	cairo_fill (cr);
 	cairo_destroy (cr);
 
@@ -394,23 +408,33 @@ static gboolean on_leave_notify_event (GtkWidget* menu, GdkEventCrossing* event,
 
 
 // ----------------------------------------------------------------------------
-// grid one
+// UgtkGrid
 //
-static GtkWidget*  ug_grid_one_new (const gdouble* rgb_array)
+static void  ugtk_grid_global_init (int width, int height)
+{
+	UgtkGrid.width  = width;
+	UgtkGrid.height = height;
+	UgtkGrid.width_and_line  = UgtkGrid.width  + 1;
+	UgtkGrid.height_and_line = UgtkGrid.height + 1;
+	UgtkGrid.width_all  = UgtkGrid.width_and_line * 24 + 1;
+	UgtkGrid.height_all = UgtkGrid.height_and_line * 7 + 1;
+}
+
+static GtkWidget*  ugtk_grid_new (const gdouble* rgb_array)
 {
 	GtkWidget*  widget;
 
 	widget = gtk_drawing_area_new ();
-	gtk_widget_set_size_request (widget, GRID_WIDTH + 2, GRID_HEIGHT + 2);
+	gtk_widget_set_size_request (widget, UgtkGrid.width + 2, UgtkGrid.height + 2);
 	gtk_widget_add_events (widget, GDK_POINTER_MOTION_MASK);
 
 	g_signal_connect (widget, "draw",
-			G_CALLBACK (ug_grid_one_draw), (gpointer) rgb_array);
+			G_CALLBACK (ugtk_grid_draw), (gpointer) rgb_array);
 
 	return widget;
 }
 
-static gboolean ug_grid_one_draw (GtkWidget* widget, cairo_t* cr, const gdouble* rgb_array)
+static gboolean ugtk_grid_draw (GtkWidget* widget, cairo_t* cr, const gdouble* rgb_array)
 {
 	GtkAllocation  allocation;
 	gdouble        x, y, width, height;
