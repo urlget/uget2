@@ -63,6 +63,7 @@ void  uget_task_final (UgetTask* task)
 int   uget_task_add (UgetTask* task, UgetNode* node, const UgetPluginInfo* info)
 {
 	UgetRelation*  relation;
+	int            dl_ul_int_array[2];
 	union {
 		UgetProgress*  progress;
 		UgetCommon*    common;
@@ -92,8 +93,13 @@ int   uget_task_add (UgetTask* task, UgetNode* node, const UgetPluginInfo* info)
 	if (temp.common)
 		temp.common->retry_count = 0;
 
-	// UgetRelation
+	// create plug-in and control it
 	relation->task.plugin = uget_plugin_new (info);
+	if (task->limit.download || task->limit.upload) {
+		dl_ul_int_array[0] = task->limit.download / (task->n_links + 1);
+		dl_ul_int_array[1] = task->limit.upload   / (task->n_links + 1);
+		uget_plugin_ctrl_speed (relation->task.plugin, dl_ul_int_array);
+	}
 	if (uget_plugin_start (relation->task.plugin, node) == FALSE) {
 		// dispatch error message from plugin
 		uget_task_dispatch1 (task, node, relation->task.plugin);

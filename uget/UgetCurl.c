@@ -309,6 +309,15 @@ void  uget_curl_run (UgetCurl* ugcurl, int joinable)
 		}
 	}
 
+	// Speed limit ------------------------------------------------------------
+	if (ugcurl->limit_changed) {
+		curl_easy_setopt (ugcurl->curl, CURLOPT_MAX_RECV_SPEED_LARGE,
+				(curl_off_t) ugcurl->limit[0]);
+		curl_easy_setopt (ugcurl->curl, CURLOPT_MAX_SEND_SPEED_LARGE,
+				(curl_off_t) ugcurl->limit[1]);
+		ugcurl->limit_changed = FALSE;
+	}
+
 	// Output -----------------------------------------------------------------
 	curl_easy_setopt (curl, CURLOPT_NOBODY, 0L);
 	curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION,

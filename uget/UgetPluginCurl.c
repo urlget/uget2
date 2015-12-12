@@ -632,7 +632,7 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 	}
 	// add to seg.list
 	ug_list_append (&plugin->seg.list, (void*) ugcurl);
-	//
+	// start curl and get starting time
 	plugin->start_time = time (NULL);
 	uget_curl_run (ugcurl, FALSE);
 
@@ -1399,6 +1399,11 @@ static UgetCurl* create_segment (UgetPluginCurl* plugin)
 	uget_curl_set_proxy (ugcurl, plugin->proxy);
 	uget_curl_set_http (ugcurl, plugin->http);
 	uget_curl_set_ftp (ugcurl, plugin->ftp);
+	// set speed limit
+	if (plugin->limit.download)
+		ugcurl->limit[0] = plugin->limit.download / (plugin->seg.list.size + 1);
+	if (plugin->limit.upload)
+		ugcurl->limit[1] = plugin->limit.upload / (plugin->seg.list.size + 1);
 	// select URL
 	switch_uri (plugin, ugcurl, FALSE);
 	// set output function

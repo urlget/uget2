@@ -968,7 +968,7 @@ static UgJsonrpcObject*  alloc_speed_request (UgetPluginAria2* plugin)
 	value->name = ug_strdup ("max-download-limit");
 	value->type = UG_VALUE_STRING;
 	value->c.string = ug_strdup_printf ("%d", plugin->limit[0]);
-	// max-download-limit
+	// max-upload-limit
 	value = ug_value_alloc (options, 1);
 	value->name = ug_strdup ("max-upload-limit");
 	value->type = UG_VALUE_STRING;
