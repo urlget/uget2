@@ -760,9 +760,7 @@ int   uget_app_activate_download (UgetApp* app, UgetNode* dnode)
 	// change node state and move node position
 	uget_node_remove (cnode, dnode);
 	uget_node_unref_fake (dnode);
-	dnode->state &= ~UGET_STATE_UNRUNNABLE;
-	dnode->state &= ~UGET_STATE_CATEGORY;
-	dnode->state |=  UGET_STATE_ACTIVE;
+	dnode->state =  UGET_STATE_ACTIVE;
 	temp.category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
 	// try to insert download before queuing, finished, and recycled
 	sibling = temp.category->queuing->children;
