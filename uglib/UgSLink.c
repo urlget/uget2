@@ -52,20 +52,31 @@ void  ug_slinks_final (UgSLinks* slinks)
 void  ug_slinks_add (UgSLinks* slinks, void* data)
 {
 	UgSLink*  link;
-	UgSLink*  used;
+	UgSLink*  old_used;
+	UgSLink*  old_at;
+	UgSLink*  current;
 
-	used = slinks->used;
+	old_used = slinks->used;
 	if (slinks->freed != NULL) {
 		link = slinks->freed;
-		slinks->used = slinks->freed;
+		link->next = old_used;
 		slinks->freed = link->next;
 	}
 	else {
-		slinks->used = slinks->at + slinks->length;
+		old_at = slinks->at;
 		link = ug_array_alloc (slinks, 1);
+		if (old_at != slinks->at && old_used) {
+			slinks->used = slinks->at + (old_used - old_at);
+			for (current = slinks->used;  ;  current = current->next) {
+				if (current->next == NULL)
+					break;
+				current->next = slinks->at + (current->next - old_at);
+			}
+		}
+		link->next = slinks->used;
 	}
-	link->next = used;
 	link->data = data;
+	slinks->used = link;
 	slinks->n_links++;
 }
 
