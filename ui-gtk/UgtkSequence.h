@@ -34,8 +34,8 @@
  *
  */
 
-#ifndef UGTK_SEQUENCER_H
-#define UGTK_SEQUENCER_H
+#ifndef UGTK_SEQUENCE_H
+#define UGTK_SEQUENCE_H
 
 #include <gtk/gtk.h>
 
@@ -43,10 +43,10 @@
 extern "C" {
 #endif
 
-typedef struct  UgtkSequencer      UgtkSequencer;
-typedef	void  (*UgtkSequencerNotify) (gpointer user_data, gboolean completed);
+typedef struct  UgtkSequence      UgtkSequence;
+typedef	void  (*UgtkSequenceNotify) (gpointer user_data, gboolean completed);
 
-struct UgtkSequencer
+struct UgtkSequence
 {
 	GtkWidget*  self;       // GtkGrid
 
@@ -66,7 +66,7 @@ struct UgtkSequencer
 	GtkWidget*  label_case;
 
 	// preview
-	struct UgtkSequencerPreview
+	struct UgtkSequencePreview
 	{
 		GtkWidget*      self;    // GtkScrolledWindow
 		GtkTreeView*    view;
@@ -78,19 +78,19 @@ struct UgtkSequencer
 	struct
 	{
 //		UgtkNotify  func1;
-		UgtkSequencerNotify func;
+		UgtkSequenceNotify func;
 		gpointer            data;
 	} notify;
 };
 
-void   ugtk_sequencer_init (UgtkSequencer* seqer);
-void   ugtk_sequencer_update_preview (UgtkSequencer* seqer);
-GList* ugtk_sequencer_get_list (UgtkSequencer* seqer, gboolean preview);
+void   ugtk_sequence_init (UgtkSequence* seqer);
+void   ugtk_sequence_update_preview (UgtkSequence* seqer);
+GList* ugtk_sequence_get_list (UgtkSequence* seqer, gboolean preview);
 
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // End of UGTK_SEQUENCER_H
+#endif  // End of UGTK_SEQUENCE_H
 

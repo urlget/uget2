@@ -114,7 +114,7 @@
     <ClCompile Include="..\..\ui-gtk\UgtkProxyForm.c" />
     <ClCompile Include="..\..\ui-gtk\UgtkScheduleForm.c" />
     <ClCompile Include="..\..\ui-gtk\UgtkSelector.c" />
-    <ClCompile Include="..\..\ui-gtk\UgtkSequencer.c" />
+    <ClCompile Include="..\..\ui-gtk\UgtkSequence.c" />
     <ClCompile Include="..\..\ui-gtk\UgtkSetting.c" />
     <ClCompile Include="..\..\ui-gtk\UgtkSettingDialog.c" />
     <ClCompile Include="..\..\ui-gtk\UgtkSettingForm.c" />
@@ -140,7 +140,7 @@
     <ClInclude Include="..\..\ui-gtk\UgtkProxyForm.h" />
     <ClInclude Include="..\..\ui-gtk\UgtkScheduleForm.h" />
     <ClInclude Include="..\..\ui-gtk\UgtkSelector.h" />
-    <ClInclude Include="..\..\ui-gtk\UgtkSequencer.h" />
+    <ClInclude Include="..\..\ui-gtk\UgtkSequence.h" />
     <ClInclude Include="..\..\ui-gtk\UgtkSetting.h" />
     <ClInclude Include="..\..\ui-gtk\UgtkSettingDialog.h" />
     <ClInclude Include="..\..\ui-gtk\UgtkSettingForm.h" />

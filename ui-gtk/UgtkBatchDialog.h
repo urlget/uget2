@@ -41,7 +41,7 @@
 #include <gtk/gtk.h>
 #include <UgtkApp.h>
 #include <UgtkNodeDialog.h>
-#include <UgtkSequencer.h>
+#include <UgtkSequence.h>
 #include <UgtkSelector.h>
 
 #ifdef __cplusplus
@@ -66,7 +66,7 @@ struct UgtkBatchDialog
 //	UgtkCategoryForm  category;
 
 	UgtkSelector      selector;
-	UgtkSequencer     sequencer;
+	UgtkSequence     sequencer;
 };
 
 UgtkBatchDialog*  ugtk_batch_dialog_new (const char* title,

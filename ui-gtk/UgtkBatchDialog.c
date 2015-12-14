@@ -122,7 +122,7 @@ void  ugtk_batch_dialog_use_sequencer (UgtkBatchDialog* bdialog)
 	gtk_dialog_set_response_sensitive (bdialog->self,
 			GTK_RESPONSE_REJECT, FALSE);
 	// add Page 1
-	ugtk_sequencer_init (&bdialog->sequencer);
+	ugtk_sequence_init (&bdialog->sequencer);
 	gtk_widget_get_preferred_size (bdialog->notebook, &requisition, NULL);
 	gtk_widget_set_size_request (bdialog->sequencer.self,
 			requisition.width, requisition.height);
@@ -217,7 +217,7 @@ static void on_sequencer_response (UgtkBatchDialog* bdialog)
 	ugtk_download_form_get_folders (&bdialog->download,
 	                                &app->setting);
 	// sequencer batch
-	uri_list = ugtk_sequencer_get_list (&bdialog->sequencer, FALSE);
+	uri_list = ugtk_sequence_get_list (&bdialog->sequencer, FALSE);
 
 	for (link = uri_list;  link;  link = link->next) {
 		dnode = uget_node_new (NULL);

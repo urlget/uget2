@@ -34,19 +34,19 @@
  *
  */
 
-#include <UgtkSequencer.h>
+#include <UgtkSequence.h>
 #include <UgUri.h>
 
 #include <glib/gi18n.h>
 
 // static functions
-static void ugtk_sequencer_preview_init (struct UgtkSequencerPreview* preview);
-static void ugtk_sequencer_preview_show (struct UgtkSequencerPreview* preview, const gchar* message);
+static void ugtk_sequence_preview_init (struct UgtkSequencePreview* preview);
+static void ugtk_sequence_preview_show (struct UgtkSequencePreview* preview, const gchar* message);
 // signal handlers
-static void on_radio1_clicked (GtkWidget* widget, UgtkSequencer* seqer);
-static void on_radio2_clicked (GtkWidget* widget, UgtkSequencer* seqer);
+static void on_radio1_clicked (GtkWidget* widget, UgtkSequence* seqer);
+static void on_radio2_clicked (GtkWidget* widget, UgtkSequence* seqer);
 
-void  ugtk_sequencer_init (UgtkSequencer* seqer)
+void  ugtk_sequence_init (UgtkSequence* seqer)
 {
 	GtkGrid*		grid;
 	GtkWidget*		label;
@@ -69,7 +69,7 @@ void  ugtk_sequencer_init (UgtkSequencer* seqer)
 	gtk_grid_attach (grid, label, 0, 0, 1, 1);
 	gtk_grid_attach (grid, entry, 1, 0, 5, 1);
 	g_signal_connect_swapped (GTK_EDITABLE (entry), "changed",
-			G_CALLBACK (ugtk_sequencer_update_preview), seqer);
+			G_CALLBACK (ugtk_sequence_update_preview), seqer);
 	// e.g.
 	label = gtk_label_new (_("e.g."));
 	g_object_set (label, "margin", 3, NULL);
@@ -94,7 +94,7 @@ void  ugtk_sequencer_init (UgtkSequencer* seqer)
 	g_object_set (seqer->spin_from, "margin", 3, "hexpand", TRUE, NULL);
 	gtk_grid_attach (grid, seqer->spin_from, 1, 3, 1, 1);
 	g_signal_connect_swapped (seqer->spin_from, "value-changed",
-			G_CALLBACK (ugtk_sequencer_update_preview), seqer);
+			G_CALLBACK (ugtk_sequence_update_preview), seqer);
 
 	// spin "To"
 	spin_adj = (GtkAdjustment *) gtk_adjustment_new (10.0, 1.0,
@@ -103,7 +103,7 @@ void  ugtk_sequencer_init (UgtkSequencer* seqer)
 	g_object_set (seqer->spin_to, "margin", 3, "hexpand", TRUE, NULL);
 	gtk_grid_attach (grid, seqer->spin_to, 3, 3, 1, 1);
 	g_signal_connect_swapped (seqer->spin_to, "value-changed",
-			G_CALLBACK (ugtk_sequencer_update_preview), seqer);
+			G_CALLBACK (ugtk_sequence_update_preview), seqer);
 	// label "To"
 	label = gtk_label_new_with_mnemonic (_("To:"));
 	g_object_set (label, "margin", 3, NULL);
@@ -118,7 +118,7 @@ void  ugtk_sequencer_init (UgtkSequencer* seqer)
 	g_object_set (seqer->spin_digits, "margin", 3, "hexpand", TRUE, NULL);
 	gtk_grid_attach (grid, seqer->spin_digits, 5, 3, 1, 1);
 	g_signal_connect_swapped (seqer->spin_digits, "value-changed",
-			G_CALLBACK (ugtk_sequencer_update_preview), seqer);
+			G_CALLBACK (ugtk_sequence_update_preview), seqer);
 	// label "digits"
 	label = gtk_label_new_with_mnemonic (_("digits:"));
 	g_object_set (label, "margin", 3, NULL);
@@ -144,7 +144,7 @@ void  ugtk_sequencer_init (UgtkSequencer* seqer)
 	g_object_set (entry, "margin", 3, "hexpand", TRUE, NULL);
 	gtk_grid_attach (grid, entry, 1, 4, 1, 1);
 	g_signal_connect_swapped (GTK_EDITABLE (entry), "changed",
-			G_CALLBACK (ugtk_sequencer_update_preview), seqer);
+			G_CALLBACK (ugtk_sequence_update_preview), seqer);
 
 	// entry "To"
 	entry = gtk_entry_new ();
@@ -156,7 +156,7 @@ void  ugtk_sequencer_init (UgtkSequencer* seqer)
 	g_object_set (entry, "margin", 3, "hexpand", TRUE, NULL);
 	gtk_grid_attach (grid, entry, 3, 4, 1, 1);
 	g_signal_connect_swapped (GTK_EDITABLE (seqer->entry_to), "changed",
-			G_CALLBACK(ugtk_sequencer_update_preview), seqer);
+			G_CALLBACK(ugtk_sequence_update_preview), seqer);
 
 	// label case-sensitive
 	label = gtk_label_new (_("case-sensitive"));
@@ -167,32 +167,32 @@ void  ugtk_sequencer_init (UgtkSequencer* seqer)
 
 	// -------------------------------------------------------
 	// preview
-	ugtk_sequencer_preview_init (&seqer->preview);
+	ugtk_sequence_preview_init (&seqer->preview);
 	g_object_set (seqer->preview.self, "margin", 3, "expand", TRUE, NULL);
 	gtk_grid_attach (grid, seqer->preview.self, 0, 7, 6, 1);
 
-	ugtk_sequencer_update_preview (seqer);
+	ugtk_sequence_update_preview (seqer);
 	gtk_widget_show_all (seqer->self);
 }
 
-void  ugtk_sequencer_update_preview (UgtkSequencer* seqer)
+void  ugtk_sequence_update_preview (UgtkSequence* seqer)
 {
 	GtkTreeIter		iter;
 	GList*			list;
 	GList*			link;
 
-	list = ugtk_sequencer_get_list (seqer, TRUE);
+	list = ugtk_sequence_get_list (seqer, TRUE);
 	if (list == NULL) {
 		if (seqer->preview.status == 1) {
-			ugtk_sequencer_preview_show (&seqer->preview,
+			ugtk_sequence_preview_show (&seqer->preview,
 					_("No wildcard(*) character in URL entry."));
 		}
 		else if (seqer->preview.status == 2) {
-			ugtk_sequencer_preview_show (&seqer->preview,
+			ugtk_sequence_preview_show (&seqer->preview,
 					_("URL is not valid."));
 		}
 		else if (seqer->preview.status == 3) {
-			ugtk_sequencer_preview_show (&seqer->preview,
+			ugtk_sequence_preview_show (&seqer->preview,
 					_("No character in 'From' or 'To' entry."));
 		}
 		// notify
@@ -214,7 +214,7 @@ void  ugtk_sequencer_update_preview (UgtkSequencer* seqer)
 	return;
 }
 
-GList*  ugtk_sequencer_get_list (UgtkSequencer* seqer, gboolean preview)
+GList*  ugtk_sequence_get_list (UgtkSequence* seqer, gboolean preview)
 {
 	GString*     gstr;
 	GList*       list;
@@ -289,7 +289,7 @@ GList*  ugtk_sequencer_get_list (UgtkSequencer* seqer, gboolean preview)
 // ----------------------------------------------------------------------------
 //	static functions
 //
-static void ugtk_sequencer_preview_init (struct UgtkSequencerPreview* preview)
+static void ugtk_sequence_preview_init (struct UgtkSequencePreview* preview)
 {
 	GtkScrolledWindow*	scrolled;
 	GtkCellRenderer*	renderer;
@@ -303,7 +303,7 @@ static void ugtk_sequencer_preview_init (struct UgtkSequencerPreview* preview)
 	gtk_widget_set_size_request ((GtkWidget*) preview->view, 140, 140);
 	selection = gtk_tree_view_get_selection (preview->view);
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_NONE);
-	// It will free UgtkSequencer.preview_store when UgtkSequencer.preview_view destroy.
+	// It will free UgtkSequence.preview_store when UgtkSequence.preview_view destroy.
 	g_object_unref (preview->store);
 
 	renderer = gtk_cell_renderer_text_new ();
@@ -320,7 +320,7 @@ static void ugtk_sequencer_preview_init (struct UgtkSequencerPreview* preview)
 	gtk_container_add (GTK_CONTAINER (scrolled), GTK_WIDGET (preview->view));
 }
 
-static void ugtk_sequencer_preview_show (struct UgtkSequencerPreview* preview, const gchar* message)
+static void ugtk_sequence_preview_show (struct UgtkSequencePreview* preview, const gchar* message)
 {
 	GtkTreeIter		iter;
 
@@ -335,7 +335,7 @@ static void ugtk_sequencer_preview_show (struct UgtkSequencerPreview* preview, c
 // ----------------------------------------------------------------------------
 //	signal handler
 //
-static void on_radio1_clicked (GtkWidget* widget, UgtkSequencer* seqer)
+static void on_radio1_clicked (GtkWidget* widget, UgtkSequence* seqer)
 {
 	// digit
 	gtk_widget_set_sensitive (seqer->spin_from, TRUE);
@@ -347,10 +347,10 @@ static void on_radio1_clicked (GtkWidget* widget, UgtkSequencer* seqer)
 	gtk_widget_set_sensitive (GTK_WIDGET (seqer->entry_from), FALSE);
 	gtk_widget_set_sensitive (GTK_WIDGET (seqer->entry_to), FALSE);
 	gtk_widget_set_sensitive (seqer->label_case, FALSE);
-	ugtk_sequencer_update_preview (seqer);
+	ugtk_sequence_update_preview (seqer);
 }
 
-static void on_radio2_clicked (GtkWidget* widget, UgtkSequencer* seqer)
+static void on_radio2_clicked (GtkWidget* widget, UgtkSequence* seqer)
 {
 	// digit
 	gtk_widget_set_sensitive (seqer->spin_from, FALSE);
@@ -362,6 +362,6 @@ static void on_radio2_clicked (GtkWidget* widget, UgtkSequencer* seqer)
 	gtk_widget_set_sensitive (GTK_WIDGET (seqer->entry_from), TRUE);
 	gtk_widget_set_sensitive (GTK_WIDGET (seqer->entry_to), TRUE);
 	gtk_widget_set_sensitive (seqer->label_case, TRUE);
-	ugtk_sequencer_update_preview (seqer);
+	ugtk_sequence_update_preview (seqer);
 }
 

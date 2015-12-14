@@ -154,10 +154,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../ui-gtk/UgtkSelector.h" />
-		<Unit filename="../../ui-gtk/UgtkSequencer.c">
+		<Unit filename="../../ui-gtk/UgtkSequence.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../ui-gtk/UgtkSequencer.h" />
+		<Unit filename="../../ui-gtk/UgtkSequence.h" />
 		<Unit filename="../../ui-gtk/UgtkSetting.c">
 			<Option compilerVar="CC" />
 		</Unit>
