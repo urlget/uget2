@@ -45,6 +45,9 @@
 //
 void  ugtk_clipboard_form_init (struct UgtkClipboardForm* cbform)
 {
+	PangoContext*  context;
+	PangoLayout*   layout;
+	int            text_height;
 	GtkTextView* textview;
 	GtkWidget*   widget;
 	GtkBox*      vbox;
@@ -82,6 +85,13 @@ void  ugtk_clipboard_form_init (struct UgtkClipboardForm* cbform)
 
 	gtk_box_pack_start (vbox, gtk_label_new (""), FALSE, FALSE, 2);
 
+	// get text height --- begin ---
+	context = gtk_widget_get_pango_context (widget);
+	layout = pango_layout_new (context);
+	pango_layout_set_text (layout, "joIN", -1);
+	pango_layout_get_pixel_size (layout, NULL, &text_height);
+	g_object_unref (layout);
+	//  get text height --- end ---
 	hbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
 	gtk_box_pack_start (vbox, (GtkWidget*) hbox, FALSE, FALSE, 2);
 	widget = gtk_label_new (_("Monitor clipboard for specified file types:"));
@@ -89,7 +99,7 @@ void  ugtk_clipboard_form_init (struct UgtkClipboardForm* cbform)
 	// Scrolled Window
 	scroll = (GtkScrolledWindow*) gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_shadow_type (scroll, GTK_SHADOW_IN);
-	gtk_widget_set_size_request (GTK_WIDGET (scroll), 100, 100);
+	gtk_widget_set_size_request (GTK_WIDGET (scroll), 100, text_height * 6);
 	gtk_box_pack_start (vbox, GTK_WIDGET (scroll), FALSE, FALSE, 2);
 	// file type pattern : TextView
 	cbform->buffer = gtk_text_buffer_new (NULL);
@@ -505,6 +515,9 @@ static void on_order_changed (GtkComboBox* widget, struct UgtkPluginForm* psform
 
 void  ugtk_plugin_form_init (struct UgtkPluginForm* psform)
 {
+	PangoContext*  context;
+	PangoLayout*   layout;
+	int            text_height;
 	GtkBox*      vbox;
 	GtkBox*      hbox;
 	GtkBox*      box;
@@ -627,6 +640,13 @@ void  ugtk_plugin_form_init (struct UgtkPluginForm* psform)
 	//
 	gtk_box_pack_start (box, gtk_label_new (""), FALSE, FALSE, 0);
 	// Arguments
+	// get text height --- begin ---
+	context = gtk_widget_get_pango_context (widget);
+	layout = pango_layout_new (context);
+	pango_layout_set_text (layout, "joIN", -1);
+	pango_layout_get_pixel_size (layout, NULL, &text_height);
+	g_object_unref (layout);
+	//  get text height --- end ---
 	hbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_box_pack_start (box, (GtkWidget*) hbox, FALSE, TRUE, 2);
 	widget = gtk_label_new (_("Arguments"));
@@ -639,13 +659,13 @@ void  ugtk_plugin_form_init (struct UgtkPluginForm* psform)
 	// Arguments - Scrolled Window
 	scroll = (GtkScrolledWindow*) gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_shadow_type (scroll, GTK_SHADOW_IN);
-	gtk_widget_set_size_request (GTK_WIDGET (scroll), 100, 50);
+	gtk_widget_set_size_request (GTK_WIDGET (scroll), 100, text_height * 3);
 	gtk_box_pack_start (box, GTK_WIDGET (scroll), FALSE, TRUE, 2);
 	// Arguments - text view
 	psform->args_buffer = gtk_text_buffer_new (NULL);
 	psform->args = gtk_text_view_new_with_buffer (psform->args_buffer);
 	g_object_unref (psform->args_buffer);
-	gtk_text_view_set_wrap_mode ((GtkTextView*) psform->args, GTK_WRAP_WORD_CHAR);
+	gtk_text_view_set_wrap_mode ((GtkTextView*) psform->args, GTK_WRAP_CHAR);
 	gtk_container_add (GTK_CONTAINER (scroll), GTK_WIDGET (psform->args));
 
 	// ------------------------------------------------------------------------
