@@ -11,7 +11,7 @@ uget_gtk_CFLAGS = \
 	@LFS_CFLAGS@            \
 	@CURL_CFLAGS@           \
 	@LIBGCRYPT_CFLAGS@      \
-	@LIBCRYPTO_CFLAGS@     \
+	@LIBCRYPTO_CFLAGS@      \
 	@GTK_CFLAGS@            \
 	@LIBNOTIFY_CFLAGS@      \
 	@APP_INDICATOR_CFLAGS@  \
@@ -26,7 +26,7 @@ uget_gtk_LDADD = \
 	@PTHREAD_LIBS@        \
 	@CURL_LIBS@           \
 	@LIBGCRYPT_LIBS@      \
-	@LIBCRYPTO_LIBS@     \
+	@LIBCRYPTO_LIBS@      \
 	@GTK_LIBS@            \
 	@LIBNOTIFY_LIBS@      \
 	@APP_INDICATOR_LIBS@  \
@@ -38,8 +38,8 @@ uget_gtk_SOURCES = \
 	UgtkNodeList.c  UgtkNodeTree.c  UgtkNodeView.c  \
 	UgtkTraveler.c  UgtkSummary.c  \
 	UgtkTrayIcon.c  UgtkBanner.c  \
+	UgtkSequence.c  UgtkSelector.c  \
 	UgtkProxyForm.c  UgtkDownloadForm.c  UgtkCategoryForm.c  \
-	UgtkSequencer.c  UgtkSelector.c  \
 	UgtkNodeDialog.c  UgtkBatchDialog.c  \
 	UgtkScheduleForm.c  UgtkSettingForm.c  UgtkSettingDialog.c  \
 	UgtkConfirmDialog.c  UgtkAboutDialog.c  \
@@ -52,8 +52,8 @@ noinst_HEADERS = \
 	UgtkNodeList.h  UgtkNodeTree.h  UgtkNodeView.h  \
 	UgtkTraveler.h  UgtkSummary.h  \
 	UgtkTrayIcon.h  UgtkBanner.h  \
+	UgtkSequence.h  UgtkSelector.h  \
 	UgtkProxyForm.h  UgtkDownloadForm.h  UgtkCategoryForm.h  \
-	UgtkSequencer.h  UgtkSelector.h  \
 	UgtkNodeDialog.h  UgtkBatchDialog.h  \
 	UgtkScheduleForm.h  UgtkSettingForm.h  UgtkSettingDialog.h  \
 	UgtkConfirmDialog.h  UgtkAboutDialog.h  \
