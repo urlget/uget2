@@ -335,14 +335,14 @@ static void  ugtk_app_add_uris_quietly (UgtkApp* app,       GList* list,
 		if (cnode == NULL) {
 			// match category by URI
 			ug_uri_init (&uuri, link->data);
-			cnode = uget_app_match_category ((UgetApp*) app, &uuri);
+			cnode = uget_app_match_category ((UgetApp*) app, &uuri, NULL);
 		}
 		if (cnode == NULL && infonode) {
 			// match category by filename
 			common = ug_info_realloc (&infonode->info, UgetCommonInfo);
 			if (common && common->file) {
 				ug_uri_init (&uuri, common->file);
-				cnode = uget_app_match_category ((UgetApp*) app, &uuri);
+				cnode = uget_app_match_category ((UgetApp*) app, &uuri, NULL);
 			}
 		}
 		if (cnode == NULL) {
@@ -432,14 +432,11 @@ static void  ugtk_app_add_uris_selected (UgtkApp* app,       GList* list,
 	if (cnode == NULL && list->data) {
 		// match category by URI
 		ug_uri_init (&uuri, list->data);
-		cnode = uget_app_match_category ((UgetApp*) app, &uuri);
-	}
-	if (cnode == NULL && infonode) {
-		// match category by filename
-		common = ug_info_realloc (&infonode->info, UgetCommonInfo);
-		if (common && common->file) {
-			ug_uri_init (&uuri, common->file);
-			cnode = uget_app_match_category ((UgetApp*) app, &uuri);
+		if (infonode == NULL)
+			cnode = uget_app_match_category ((UgetApp*) app, &uuri, NULL);
+		else {
+			common = ug_info_realloc (&infonode->info, UgetCommonInfo);
+			cnode = uget_app_match_category ((UgetApp*) app, &uuri, common->file);
 		}
 	}
 	if (cnode == NULL) {

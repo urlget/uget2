@@ -488,7 +488,31 @@ void  uget_app_stop_category (UgetApp* app, UgetNode* cnode)
 		uget_app_queue_download (app, dnode->data);
 }
 
-UgetNode* uget_app_match_category (UgetApp* app, UgUri* uuri)
+static int  ug_match_file_exts (const char* file, char** exts)
+{
+	const char* beg = NULL;
+	const char* end;
+	int         index;
+
+	// get file ext
+	for (end = file + strlen (file) - 1;  end >= file;  end--) {
+		if (end[0] == '.') {
+			beg = end + 1;   // + '.'
+			break;
+		}
+	}
+
+	if (beg == NULL)
+		return -1;
+
+	for (index = 0;  *exts;  exts++, index++) {
+		if (strcasecmp (beg, *exts) == 0)
+			return index;
+	}
+	return -1;
+}
+
+UgetNode* uget_app_match_category (UgetApp* app, UgUri* uuri, const char* file)
 {
 	UgetCategory* category;
 	UgetNode*     cnode;
@@ -519,6 +543,8 @@ UgetNode* uget_app_match_category (UgetApp* app, UgUri* uuri)
 		if (ug_uri_match_schemes (uuri, category->schemes.at) >= 0)
 			count++;
 		if (ug_uri_match_file_exts (uuri, category->file_exts.at) >= 0)
+			count++;
+		else if (file && ug_match_file_exts (file, category->file_exts.at) >= 0)
 			count++;
 
 		if (matched.count < count) {
@@ -568,7 +594,7 @@ int  uget_app_add_download (UgetApp* app, UgetNode* dnode, UgetNode* cnode, int 
 				uget_node_set_name_by_uri (dnode, &uuri);
 		}
 		if (cnode == NULL)
-			cnode = uget_app_match_category (app, &uuri);
+			cnode = uget_app_match_category (app, &uuri, temp.common->file);
 	}
 
 	if (cnode == NULL)
