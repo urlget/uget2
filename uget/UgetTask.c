@@ -300,13 +300,15 @@ static void uget_task_adjust_speed_index (UgetTask* task, int idx, int remain)
 		}
 
 		remain = remain / n_piece;
-		for (;  relation;  relation = relation->task.prev) {
+		for (;  relation;  relation = prev) {
 			relation->task.limit[idx] = relation->task.speed[idx] +
 			                            remain * (relation->task.priority+1);
 			if (relation->task.limit[idx] < SPEED_MIN)
 				relation->task.limit[idx] = SPEED_MIN;
 			uget_plugin_ctrl_speed (relation->task.plugin,
 			                        relation->task.limit);
+			prev = relation->task.prev;
+			relation->task.prev = NULL;
 		}
 	}
 	else {
