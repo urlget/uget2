@@ -3,164 +3,161 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# amin hosseinzadeh fardnia <fardnia@gmail.com>, 2015
-# deadmarshal <adeadmarshal@gmail.com>, 2014
-# Mahdi Mohammadi <m.m.m5651@gmail.com>, 2014-2015
-# mhajiloo <majid.hajiloo@ymail.com>, 2014
+# Akmal <uzbadmin@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2015-11-16 18:06+0000\n"
-"Last-Translator: amin hosseinzadeh fardnia <fardnia@gmail.com>\n"
-"Language-Team: Persian (http://www.transifex.com/uget/uget/language/fa/)\n"
+"PO-Revision-Date: 2015-12-07 17:31+0000\n"
+"Last-Translator: Akmal <uzbadmin@gmail.com>\n"
+"Language-Team: Uzbek (Latin) (http://www.transifex.com/uget/uget/language/uz@Latn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fa\n"
+"Language: uz@Latn\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../../po/../uget/UgetApp.c:95
 msgid "All Category"
-msgstr "همه رده ها"
+msgstr "Barcha turkum"
 
 #. UGET_EVENT_NORMAL_CUSTOM
 #: ../../po/../uget/UgetEvent.c:58
 msgid "Connecting..."
-msgstr "در حال اتصال"
+msgstr "Ulanmoqda..."
 
 #. UGET_EVENT_NORMAL_CONNECT
 #: ../../po/../uget/UgetEvent.c:59
 msgid "Transmitting..."
-msgstr "در حال ارسال"
+msgstr "Uzatilmoqda..."
 
 #. UGET_EVENT_NORMAL_TRANSMIT,
 #: ../../po/../uget/UgetEvent.c:60 ../../po/../ui-gtk/UgtkNodeView.c:874
 msgid "Retry"
-msgstr "تلاش دوباره"
+msgstr "Qayta urinish"
 
 #. UGET_EVENT_NORMAL_RETRY,
 #: ../../po/../uget/UgetEvent.c:61
 msgid "Download completed"
-msgstr "پایان دانلود"
+msgstr "Yuklab olish jarayoni tugadi!"
 
 #. UGET_EVENT_NORMAL_COMPLETE,
 #: ../../po/../uget/UgetEvent.c:62 ../../po/../ui-gtk/UgtkNodeView.c:613
 msgid "Finished"
-msgstr "پایان یافت"
+msgstr "Tugadi"
 
 #. UGET_EVENT_NORMAL_FINISH,
 #. resumable
 #: ../../po/../uget/UgetEvent.c:64
 msgid "Resumable"
-msgstr "با قابلیت از سر گرفتن"
+msgstr "Davom ettirsa bo‘ladi"
 
 #. UGET_EVENT_NORMAL_RESUMABLE,
 #: ../../po/../uget/UgetEvent.c:65 ../../po/../uget/UgetPluginAria2.c:279
 msgid "Not Resumable"
-msgstr "بدون قابلیت از سر گرفتن"
+msgstr "Davom ettirib bo‘lmaydi"
 
 #. UGET_EVENT_WARNING_CUSTOM
 #: ../../po/../uget/UgetEvent.c:73 ../../po/../uget/UgetPluginAria2.c:286
 msgid "Output file can't be renamed."
-msgstr "پرونده خروجی قابل نامگذاری نیست."
+msgstr "Chiquvchi fayl nomini o‘zgartirib bo‘lmaydi"
 
 #. UGET_EVENT_ERROR_CUSTOM
 #: ../../po/../uget/UgetEvent.c:81
 msgid "couldn't connect to host."
-msgstr "خطا در ارتباط با میزبان."
+msgstr "hostga ulana olmadi."
 
 #. UGET_EVENT_ERROR_CONNECT_FAILED
 #: ../../po/../uget/UgetEvent.c:82 ../../po/../uget/UgetPluginAria2.c:290
 msgid "Folder can't be created."
-msgstr "ساخت پوشه به مشکل برخورد."
+msgstr "Jild yaratilmadi."
 
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../../po/../uget/UgetEvent.c:83
 msgid "File can't be created (bad filename or file exist)."
-msgstr "پرونده قابل ساخت نیست (نام غیرمجاز یا تکراری)"
+msgstr "Fayl yaratilmadi (fayl nomi to‘g‘ri kelmaydi yoki shu nomdagi fayl mavjud)."
 
 #. UGET_EVENT_ERROR_FILE_CREATE_FAILED
 #: ../../po/../uget/UgetEvent.c:84
 msgid "File can't be opened."
-msgstr "پرونده قابل باز شدن نیست."
+msgstr "Faylni ochib bo‘lmaydi."
 
 #. UGET_EVENT_ERROR_FILE_OPEN_FAILED
 #: ../../po/../uget/UgetEvent.c:85
 msgid "Unable to create thread."
-msgstr "اشکال در ساختن سوژه."
+msgstr "Mavzu yaratilmadi."
 
 #. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 #: ../../po/../uget/UgetEvent.c:86
 msgid "Incorrect source (different file size)."
-msgstr "منبع نادرست (تفاوت در حجم فایل)."
+msgstr "Noto‘g‘ri manba (boshqa fayl hajmi)."
 
 #. UGET_EVENT_ERROR_INCORRECT_SOURCE,
 #: ../../po/../uget/UgetEvent.c:87
 msgid "Out of resource (disk full or run out of memory)."
-msgstr "منابع تمام شد (هارد پرشده یا رَم کم است)"
+msgstr "Manbadan tashqari (disk to‘la yoki xotira yetishmayapti)."
 
 #. UGET_EVENT_ERROR_OUT_OF_RESOURCE
 #: ../../po/../uget/UgetEvent.c:88
 msgid "No output file."
-msgstr "بدون فایل خروجی."
+msgstr "Chiquvchi fayl yo‘q."
 
 #. UGET_EVENT_ERROR_NO_OUTPUT_FILE
 #: ../../po/../uget/UgetEvent.c:89
 msgid "No output setting."
-msgstr "بدون تنظیمات خروجی"
+msgstr "Chiqish sozlamasi o‘rnatilmagan."
 
 #. UGET_EVENT_ERROR_NO_OUTPUT_SETTING
 #: ../../po/../uget/UgetEvent.c:90
 msgid "Too many retries."
-msgstr "بیش از حد تلاش شده."
+msgstr "Juda ko‘p urinildi."
 
 #. UGET_EVENT_ERROR_TOO_MANY_RETRIES
 #: ../../po/../uget/UgetEvent.c:91
 msgid "Unsupported scheme (protocol)."
-msgstr "طرح (پروتوکل) پشتیبانی نشده."
+msgstr "Mos kelmaydigan sxema (protokol)"
 
 #. UGET_EVENT_ERROR_UNSUPPORTED_SCHEME
 #: ../../po/../uget/UgetEvent.c:92
 msgid "Unsupported file."
-msgstr "پرونده پشتیبانی نشده."
+msgstr "Mos kelmaydigan fayl."
 
 #. 1 - 10
 #: ../../po/../uget/UgetPluginAria2.c:272
 msgid "aria2: an unknown error occurred."
-msgstr "aria2: خطایی نامشخص رخ داد."
+msgstr "aria2: noma’lum xatolik yuz berdi."
 
 #: ../../po/../uget/UgetPluginAria2.c:273
 msgid "aria2: time out occurred."
-msgstr "aria2: تایم آوت رخ داد."
+msgstr "aria2: tanaffus yuz berdi."
 
 #: ../../po/../uget/UgetPluginAria2.c:274
 msgid "aria2: resource was not found."
-msgstr "aria2: منبع یافت نشد."
+msgstr "aria2: manba topilmadi."
 
 #: ../../po/../uget/UgetPluginAria2.c:275
 msgid ""
 "aria2 saw the specfied number of 'resource not found' error. See --max-file-"
 "not-found option"
-msgstr ""
+msgstr "aria2 'resource not found' xatosining ko‘rsatilgan raqamini ko‘ring. --max-file-not-found tanlamasini ko‘ring"
 
 #: ../../po/../uget/UgetPluginAria2.c:276
 msgid "aria2: speed was too slow."
-msgstr ""
+msgstr "aria2: tezlik juda past."
 
 #: ../../po/../uget/UgetPluginAria2.c:277
 msgid "aria2: network problem occurred."
-msgstr ""
+msgstr "aria2: tarmoqda muammo yuz berdi."
 
 #: ../../po/../uget/UgetPluginAria2.c:278
 msgid "aria2: unfinished downloads."
-msgstr ""
+msgstr "aria2: tugallanmagan yuklab olishlar."
 
 #. _("Not Resumable"),
 #: ../../po/../uget/UgetPluginAria2.c:280
 msgid "Out of resource"
-msgstr "منبع تمام شد."
+msgstr "Manbadan tashqari"
 
 #. _(),
 #: ../../po/../uget/UgetPluginAria2.c:281
@@ -170,7 +167,7 @@ msgstr ""
 #. 11 - 20
 #: ../../po/../uget/UgetPluginAria2.c:283
 msgid "aria2 was downloading same file."
-msgstr "aria2 نیز همان فایل را دانلود می کرد."
+msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:284
 msgid "aria2 was downloading same info hash torrent."
@@ -178,12 +175,12 @@ msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:285
 msgid "aria2: file already existed. See --allow-overwrite option."
-msgstr "aria2: فایل از قبل وجود دارد. گزینه --allow-overwrite را نگاه کنید."
+msgstr "aria2: fayl allaqachon mavjud. Ko‘ring: --allow-overwrite."
 
 #. _("Output file can't be renamed."),
 #: ../../po/../uget/UgetPluginAria2.c:287
 msgid "aria2: could not open existing file."
-msgstr "aria2: نتوانست فایل موجود را باز کند."
+msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:288
 msgid "aria2: could not create new file or truncate existing file."
@@ -196,28 +193,28 @@ msgstr ""
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../../po/../uget/UgetPluginAria2.c:291
 msgid "aria2: name resolution failed."
-msgstr ""
+msgstr "aria2: o‘lcham nomi amalga oshmadi."
 
 #: ../../po/../uget/UgetPluginAria2.c:292
 msgid "aria2: could not parse Metalink document."
-msgstr ""
+msgstr "aria2: ma’lumot havolasi hujjatini ajratib bo‘lmadi."
 
 #. 21 - 30
 #: ../../po/../uget/UgetPluginAria2.c:294
 msgid "aria2: FTP command failed."
-msgstr ""
+msgstr "aria2: FTP buyrug‘i amalga oshmadi."
 
 #: ../../po/../uget/UgetPluginAria2.c:295
 msgid "aria2: HTTP response header was bad or unexpected."
-msgstr ""
+msgstr "aria2: HTTP javob bosh qatori juda yomon yoki kutilmaganda yuz berdi."
 
 #: ../../po/../uget/UgetPluginAria2.c:296
 msgid "Too many redirections."
-msgstr "تغییر مسیر بیش از حد"
+msgstr "Juda ko‘p qayta yo‘naltirildi."
 
 #: ../../po/../uget/UgetPluginAria2.c:297
 msgid "aria2: HTTP authorization failed."
-msgstr ""
+msgstr "aria2: HTTP tasdiqdan o‘tish amalga oshmadi."
 
 #: ../../po/../uget/UgetPluginAria2.c:298
 msgid "aria2: could not parse bencoded file(usually .torrent file)."
@@ -229,7 +226,7 @@ msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:300
 msgid "aria2: Magnet URI was bad."
-msgstr "aria2: URI مگنت اشتباه بود."
+msgstr "aria2: Magnet URI manzili yomon edi."
 
 #: ../../po/../uget/UgetPluginAria2.c:301
 msgid ""
@@ -239,82 +236,82 @@ msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:302
 msgid "aria2: remote server was unable to handle the request."
-msgstr ""
+msgstr "aria2: masofaddagi server so‘rovni ishlay olmadi."
 
 #: ../../po/../uget/UgetPluginAria2.c:303
 msgid "aria2: could not parse JSON-RPC request."
-msgstr ""
+msgstr "aria2: JSON-RPC so‘rovi tahlil qilinmadi."
 
 #: ../../po/../uget/UgetPluginAria2.c:306
 msgid "No response. Is aria2 shutdown?"
-msgstr "بدون پاسخ. آیا aria2 خاموش است؟"
+msgstr "Javob bo‘lmadi. aria2 o‘chirilganmi?"
 
 #. debug
 #: ../../po/../uget/UgetPluginAria2.c:608
 msgid "aria2: gid was removed."
-msgstr ""
+msgstr "aria2: gid o‘chirilgan edi."
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:46
 msgid "Download Manager"
-msgstr "مدیریت دانلودها"
+msgstr "Yuklab olish menejeri"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:48
 msgid "translator-credits"
-msgstr "توضیحات مترجم"
+msgstr "tarjima mualliflari"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:80
 msgid "uGet Founder: "
-msgstr "مؤسس uGet:"
+msgstr "uGet asoschisi: "
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:81
 msgid "uGet Project Manager: "
-msgstr "مدیر پروژه uGet:"
+msgstr "uGet loyihasi menejeri: "
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:255
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:204
 msgid "tasks"
-msgstr "کارها"
+msgstr "ta vazifa"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:374
 msgid "New from Clipboard"
-msgstr "دانلود تازه از کلیپبورد"
+msgstr "Almashish buferidan yangi"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:376 ../../po/../ui-gtk/UgtkApp.c:662
 msgid "New Download"
-msgstr "دانلود تازه"
+msgstr "Yangi yuklab olish"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:399 ../../po/../ui-gtk/UgtkApp.c:1411
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:103
 msgid "Clipboard"
-msgstr "کلیپبورد"
+msgstr "Almashish buferi"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:401
 msgid "Command line"
-msgstr "خط فرمان"
+msgstr "Buyruq qatori"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:758
 msgid "Error Occurred"
-msgstr "ارور رخ داد"
+msgstr "Xatolik yuz berdi"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:759
 msgid "Error Occurred when downloading."
-msgstr "هنگام دانلود ارور رخ داد."
+msgstr "Yuklab olinayotganda xatolik yuz berdi."
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:760
 msgid "Download Starting"
-msgstr "دانلود در حال شروع"
+msgstr "Yuklab olish boshlanmoqda"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:761
 msgid "Starting download queue."
-msgstr "در حال شروع صف دانلود"
+msgstr "Yuklash navbati boshlanmoqda"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:762
 msgid "Download Completed"
-msgstr "پایان دانلود"
+msgstr "Yuklab olish tugadi"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:763
 msgid "All queuing downloads have been completed."
-msgstr "تمام دانلودها پایان یافتند."
+msgstr "Barcha navbatga qo‘shilgan yuklab olishlar tugadi."
 
 #. ----------------------------------------------------
 #. frame for Status (start mode)
@@ -322,7 +319,7 @@ msgstr "تمام دانلودها پایان یافتند."
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:220
 #: ../../po/../ui-gtk/UgtkNodeView.c:997
 msgid "Status"
-msgstr "وضعیت"
+msgstr "Holati"
 
 #. Summary Items - Category
 #. Download Columns - Category
@@ -333,11 +330,11 @@ msgstr "وضعیت"
 #: ../../po/../ui-gtk/UgtkNodeView.c:889 ../../po/../ui-gtk/UgtkNodeView.c:977
 #: ../../po/../ui-gtk/UgtkSummary.c:139
 msgid "Category"
-msgstr "دسته"
+msgstr "Turkum"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:184
 msgid "Create new download"
-msgstr "ایجاد دانلود جدبد"
+msgstr "Yangi yuklab olish  yaratish"
 
 #. New Download (accelerators)
 #. gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
@@ -345,22 +342,22 @@ msgstr "ایجاد دانلود جدبد"
 #: ../../po/../ui-gtk/UgtkApp-ui.c:194 ../../po/../ui-gtk/UgtkMenubar-ui.c:58
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:59
 msgid "New _Download..."
-msgstr "ـدانلود تازه"
+msgstr "Yangi _yuklanish..."
 
 #. New Category
 #: ../../po/../ui-gtk/UgtkApp-ui.c:201 ../../po/../ui-gtk/UgtkMenubar-ui.c:65
 msgid "New _Category..."
-msgstr "ـدسته تازه..."
+msgstr "Yangi _turkum..."
 
 #. New Clipboard batch
 #: ../../po/../ui-gtk/UgtkApp-ui.c:207 ../../po/../ui-gtk/UgtkTrayIcon.c:66
 msgid "New Clipboard _batch..."
-msgstr "دانلود گروهی جدید از کلیپبورد..."
+msgstr "Yangi almashish buferi _paketi..."
 
 #. New URL Sequence batch
 #: ../../po/../ui-gtk/UgtkApp-ui.c:214
 msgid "New _URL Sequence batch..."
-msgstr "دانلود گروهی جدید"
+msgstr "Yangi _URL davomiylik paketi..."
 
 #. New Torrent
 #. separator
@@ -370,190 +367,190 @@ msgstr "دانلود گروهی جدید"
 #: ../../po/../ui-gtk/UgtkApp-ui.c:224 ../../po/../ui-gtk/UgtkMenubar-ui.c:73
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:75
 msgid "New Torrent..."
-msgstr "تورنت تازه..."
+msgstr "Yangi torrent..."
 
 #. New Metalink
 #: ../../po/../ui-gtk/UgtkApp-ui.c:231 ../../po/../ui-gtk/UgtkMenubar-ui.c:79
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:82
 msgid "New Metalink..."
-msgstr "ابرپیوند تازه"
+msgstr "Yangi metahavola..."
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:240
 msgid "Save all settings"
-msgstr "همه تنظیمات را ذخیره کن"
+msgstr "Barcha sozlamalarni saqlash"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:248
 msgid "Set selected download runnable"
-msgstr "دانلود انتخاب شده را قابل اجرا تنظیم کن"
+msgstr "Tanlangan yuklab olishni vaqtincha davom etadigan qilish"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:253
 msgid "Set selected download to pause"
-msgstr "دانلود انتخاب شده را نگه دار"
+msgstr "Tanlangan yuklab olishni vaqtincha to‘xatsa bo‘ladigan qilish"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:258
 msgid "Set selected download properties"
-msgstr "مشخصات دانلود انتخاب شده را تنظیم کن"
+msgstr "Tanlangan yuklab olish xossalarini o‘rnatish"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:266
 msgid "Move selected download up"
-msgstr "دانلود انتخاب شده را ببر بالا"
+msgstr "Tanlangan yuklab olishni yuqoriga o‘tkazish"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:271
 msgid "Move selected download down"
-msgstr "دانلود انتخاب شده را ببر پایین"
+msgstr "Tanlangan yuklab olishni pastga o‘tkazish"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:276
 msgid "Move selected download to top"
-msgstr "دانلود انتخاب شده را بالای همه ببر."
+msgstr "Tanlangan yuklab olishni eng yuqoriga o‘tkazish"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:281
 msgid "Move selected download to bottom"
-msgstr "دانلود انتخاب شده را به پایین همه ببر"
+msgstr "Tanlangan yuklab olishni eng pastga o‘tkazish"
 
 #: ../../po/../ui-gtk/UgtkApp.c:634
 msgid "New Category"
-msgstr "دسته‌ی جدید"
+msgstr "Yangi turkum"
 
 #: ../../po/../ui-gtk/UgtkApp.c:645
 msgid "Copy - "
-msgstr "کپی -"
+msgstr "Nusxa olish - "
 
 #: ../../po/../ui-gtk/UgtkApp.c:783
 msgid "Category Properties"
-msgstr "مشخصات رده"
+msgstr "Turkum xossalari"
 
 #: ../../po/../ui-gtk/UgtkApp.c:797
 msgid "Download Properties"
-msgstr "مشخصات دانلود"
+msgstr "Yuklab olish xossalari"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1028
 msgid "New Torrent"
-msgstr "تورنت تازه"
+msgstr "Yangi Torrent"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1044
 msgid "New Metalink"
-msgstr "ابرپیوند تازه"
+msgstr "Yangi metahavola"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1053
 msgid "Open Torrent file"
-msgstr "گشودن فایل تورنت"
+msgstr "Torrent faylini ochish"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1069
 msgid "Open Metalink file"
-msgstr "باز کردن فایل ابرپیوند"
+msgstr "Metahavola faylini ochish"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1109
 msgid "Failed to save category file."
-msgstr ""
+msgstr "Turkum faylini saqlab bo‘lmadi."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1129
 msgid "Failed to load category file."
-msgstr ""
+msgstr "Turkum faylini yuklash amalga oshmadi."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1140
 msgid "Save Category file"
-msgstr ""
+msgstr "Turkum faylini saqlash"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1158
 msgid "Open Category file"
-msgstr ""
+msgstr "Turkum faylini ochish"
 
 #. add link
 #: ../../po/../ui-gtk/UgtkApp.c:1217
 msgid "Link <A>"
-msgstr "لینک <A>"
+msgstr "Havola: <A>"
 
 #. add image
 #: ../../po/../ui-gtk/UgtkApp.c:1222
 msgid "Image <IMG>"
-msgstr "عکس <IMG>"
+msgstr "Rasm: <IMG>"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1267
 msgid "Text File"
-msgstr "فایل متنی"
+msgstr "Matn fayli"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1314
 msgid "Import URLs from HTML file"
-msgstr "وارد کردن آدرس ها از فایل HTML"
+msgstr "URL manzillarni HTML faylidan import qilish"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1329
 msgid "Import URLs from text file"
-msgstr "وارد کردن URLsها از فایل متنی"
+msgstr "URL manzillarni matn faylidan import qilish"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1344
 msgid "Export URLs to text file"
-msgstr ""
+msgstr "URL manzillarni matn fayliga eksport qilish"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1363
 msgid "URL Sequence batch"
-msgstr "دنباله گروهی sequence"
+msgstr "URL davomiyligi to‘plami"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1390
 msgid "No URLs found in clipboard."
-msgstr "هیچ آدرسی در کلیپبورد پیدا نشد."
+msgstr "Vaqtinchalik xotirada URL manzillar topilmadi."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1399
 msgid "All URLs had existed."
-msgstr ""
+msgstr "Barcha URL manzillar mavjud."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1404
 msgid "Clipboard batch"
-msgstr "دانلود گروهی از کلیپبورد"
+msgstr "Almashish buferi paketi"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1494
 msgid "New"
-msgstr "تازه"
+msgstr "Yangi"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1613 ../../po/../ui-gtk/UgtkMenubar.c:383
 #: ../../po/../ui-gtk/UgtkMenubar.c:415 ../../po/../ui-gtk/UgtkNodeView.c:609
 msgid "Error"
-msgstr "خطا"
+msgstr "Xato"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1621 ../../po/../ui-gtk/UgtkSummary.c:184
 msgid "Message"
-msgstr "پیام"
+msgstr "Xabar"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1727
 #, c-format
 msgid "Selected %d items"
-msgstr "%d مورد انتخاب شده"
+msgstr "%d ta element tanlandi"
 
 #: ../../po/../ui-gtk/UgtkBanner.c:145 ../../po/../ui-gtk/UgtkBanner.c:165
 msgid "Attention uGetters:"
-msgstr "توجه کنید کاربران uGet:"
+msgstr "uGetters’ga diqqat qiling:"
 
 #: ../../po/../ui-gtk/UgtkBanner.c:148
 msgid ""
 "we are running a Donation Drive for uGet's Future Development, please click "
-msgstr "ما یک درایو کمک مالی برای ادامه توسعه uGet راه انداخته ایم، لطفا کلیک کنید"
+msgstr "uGet dasturini kelajakda rivojlantirish uchun xayriya loyihasini ishga tushirdik. Yordam berish uchun  "
 
 #: ../../po/../ui-gtk/UgtkBanner.c:151
 msgid "HERE"
-msgstr "اینجا"
+msgstr "BU YERGA BOSING!"
 
 #: ../../po/../ui-gtk/UgtkBanner.c:168
 msgid "please fill out this quick User Survey for uGet."
-msgstr "لطفا این ارزیابی کوچک را به خاطر uGet پر کنید."
+msgstr "uGet uchun tezkor foydalanuvchi so‘rovnomasini to‘ldirib bering, iltimos."
 
 #: ../../po/../ui-gtk/UgtkBanner.c:171
 msgid "click here to take survey"
-msgstr "برای ارزیابی اینجا را بزنید"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:62
 msgid "Category _name:"
-msgstr "نام رده:"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:82
 msgid "Active _downloads:"
-msgstr "دانلودهای فعال:"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:92
 msgid "Capacity of Finished:"
-msgstr "ظرفیت پایان یافته ها:"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:102
 msgid "Capacity of Recycled:"
-msgstr "ظرفیت بازیافتی ها:"
+msgstr ""
 
 #. ------------------------------------------------------------------------
 #. URI Matching conditions
@@ -575,127 +572,127 @@ msgstr ""
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:64
 msgid "Really Quit?"
-msgstr "واقعا خارج شوید؟"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:65
 msgid "Are you sure you want to quit?"
-msgstr "آیا مطمٔنید که میخواهید خارج شوید؟"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:69
 msgid "Really delete files?"
-msgstr "آیا واقعا فایل ها حذف شوند؟"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:70
 msgid "Are you sure you want to delete files?"
-msgstr "آیا مطمٔنید که میخواهید فایلها را پاک کنید؟"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:74
 msgid "Really delete category?"
-msgstr "آیا واقعا رده پاک شود؟"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:75
 msgid "Are you sure you want to delete category?"
-msgstr "آیا واقعا میخواهید که این رده پاک شود؟"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:106
 msgid "Don't ask me again"
-msgstr "دیگر از من نپرس"
+msgstr "Yana soʻralmasin"
 
 #. URL - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:109
 #: ../../po/../ui-gtk/UgtkSequencer.c:63
 msgid "_URI:"
-msgstr ""
+msgstr "_URI:"
 
 #. Mirrors - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:128
 msgid "Mirrors:"
-msgstr "آینه ها:"
+msgstr "Oynalar:"
 
 #. File - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:144
 #: ../../po/../ui-gtk/UgtkProxyForm.c:385
 msgid "File:"
-msgstr "فایل:"
+msgstr "Fayl:"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:159
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:893
 msgid "Select Folder"
-msgstr "پوشه را برگزینید"
+msgstr "Jildni tanlash"
 
 #. Folder - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:167
 msgid "_Folder:"
-msgstr "پوشه:"
+msgstr "_Jild:"
 
 #. Referrer - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:182
 msgid "Referrer:"
-msgstr "مرجع:"
+msgstr ""
 
 #. "Max Connections:" - title label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:207
 msgid "_Max Connections:"
-msgstr "ـبیشترین تعداد اتصال"
+msgstr "_Maksimal ulanishlar:"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:226
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:510
 msgid "_Runnable"
-msgstr "قابل اجرا"
+msgstr "_Yangilanadigan"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:228
 msgid "P_ause"
-msgstr "توقف"
+msgstr "P_auza"
 
 #. ----------------------------------------------------
 #. frame for login
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:234
 msgid "Login"
-msgstr "ورود"
+msgstr "Kirish"
 
 #. User - label
 #. user label & entry
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:248
 #: ../../po/../ui-gtk/UgtkProxyForm.c:149
 msgid "User:"
-msgstr "کاربر:"
+msgstr "Foydalanuvchi:"
 
 #. Password - label
 #. password label & entry
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:264
 #: ../../po/../ui-gtk/UgtkProxyForm.c:160
 msgid "Password:"
-msgstr "پسورد:"
+msgstr "Parol:"
 
 #. label - cookie file
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:290
 msgid "Cookie file:"
-msgstr "فایل کوکی:"
+msgstr "Kuki fayli:"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:302
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:949
 msgid "Select Cookie File"
-msgstr "انتخاب فایل کوکی"
+msgstr "Kuki faylini tanlash"
 
 #. label - post file
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:311
 msgid "Post file:"
-msgstr "فایل پست:"
+msgstr "Post fayli"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:323
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:1005
 msgid "Select Post File"
-msgstr "انتخاب فایل پست"
+msgstr "Post faylini tanlash"
 
 #. label - user agent
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:333
 msgid "User Agent:"
-msgstr "ارگان کاربر:"
+msgstr "Foydalanuvchi agent"
 
 #. label - Max upload speed
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:349
 msgid "Max upload speed:"
-msgstr "بیشترین سرعت آپلود"
+msgstr "Maksimal yuklash tezligi:"
 
 #. label - "KiB/s"
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:361
@@ -710,96 +707,96 @@ msgstr "KiB/s"
 #. label - Max download speed
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:367
 msgid "Max download speed:"
-msgstr "بیشترین سرعت دانلود"
+msgstr "Maksimal yuklab olish tezligi:"
 
 #. Retry limit - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:385
 msgid "Retry _limit:"
-msgstr "حداکثر تلاشها:"
+msgstr "_Qayta urinish cheklovi:"
 
 #. counts - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:400
 msgid "counts"
-msgstr "تعداد"
+msgstr "miqdori"
 
 #. Retry delay - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:407
 msgid "Retry _delay:"
-msgstr "فاصله تلاشها:"
+msgstr "Qayta urinish _orasi:"
 
 #. seconds - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:422
 msgid "seconds"
-msgstr "به ثانیه"
+msgstr "soniya"
 
 #. Retrieve timestamp
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:429
 msgid "Retrieve timestamp"
-msgstr "بازیابی مُهر زمان"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:51
 msgid "_File"
-msgstr "_فایل"
+msgstr "_Fayl"
 
 #. Batch Downloads --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:86
 msgid "_Batch Downloads"
-msgstr "دانلود دسته جمعی"
+msgstr ""
 
 #. Batch downloads - Clipboard batch
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:92
 msgid "_Clipboard batch..."
-msgstr "دانلود دسته جمعی از کلیپبورد"
+msgstr ""
 
 #. Batch downloads - URL Sequence batch
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:98
 msgid "_URL Sequence batch..."
-msgstr "دنباله URL گروهی"
+msgstr ""
 
 #. Batch downloads - Text file import (.txt)
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:104
 msgid "_Text file import (.txt)..."
-msgstr "وارد کردن از فایل متن (.txt)..."
+msgstr ""
 
 #. Batch downloads - HTML file import (.html)
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:110
 msgid "_HTML file import (.html)..."
-msgstr "وارد کردن از فایل اچ تی ام ال(.html)..."
+msgstr "_HTML faylni (.html) import qilish..."
 
 #. Batch downloads - Export to Text file (.txt)
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:118
 msgid "_Export to Text file (.txt)..."
-msgstr "ریختن به فایل متن (.txt)..."
+msgstr "Matn fayilga (.txt) eksport qilish..."
 
 #. Open Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:128
 msgid "_Open category..."
-msgstr ""
+msgstr "Turkumni _ochish..."
 
 #. Save Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:135
 msgid "_Save category as..."
-msgstr ""
+msgstr "Turkumni _saqlash..."
 
 #. Save All
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
 msgid "Save _all settings"
-msgstr ""
+msgstr "_Barcha sozlamalarni saqlash"
 
 #. Offline mode
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:152
 msgid "Offline Mode"
-msgstr "حالت آفلاین"
+msgstr "Oflayn rejimi"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:170
 msgid "_Edit"
-msgstr "ویرایش"
+msgstr "&Tahrirlash"
 
 #. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new()
 #. );
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:175
 msgid "Clipboard _Monitor"
-msgstr "زیرنظر داشتن کلیپبورد"
+msgstr "Vaqtinchqlik xotirani _nazorat qilish"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:179
 msgid "Clipboard works quietly"
@@ -811,48 +808,48 @@ msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:187
 msgid "Skip existing URI"
-msgstr "از URl موجود صرف نظر کن"
+msgstr ""
 
 #. --- Completion Auto-Actions --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:194
 msgid "Completion _Auto-Actions"
-msgstr ""
+msgstr "Tugaganda keyingi amallar"
 
 #. Completion Auto-Actions - Disable
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:200
 msgid "_Disable"
-msgstr "غیرفعال کن"
+msgstr "_O‘chirib qo‘yish"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:205
 msgid "Hibernate"
-msgstr ""
+msgstr "Uyquga ketish"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:210
 msgid "Suspend"
-msgstr ""
+msgstr "To‘xtatib turish"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:215
 msgid "Shutdown"
-msgstr "خاموش کردن"
+msgstr "Tizimni o‘chirish"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:220
 msgid "Reboot"
-msgstr "ریبوت کردن"
+msgstr "Qayta ishga tushirish"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:225
 msgid "Custom"
-msgstr "دستی"
+msgstr "Boshqa"
 
 #. Completion Auto-Actions - Remember
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
 msgid "Remember setting"
-msgstr "تنظیمات را به یاد بسپار"
+msgstr "Sozlamasi eslab qolish"
 
 #. Completion Auto-Actions - Help
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:235
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:610
 msgid "_Help"
-msgstr "راهنما"
+msgstr "_Yordam"
 
 #. --- Completion Auto-Actions --- end ---
 #. menu_item = gtk_menu_item_new_with_mnemonic (_("_Settings..."));
@@ -860,38 +857,38 @@ msgstr "راهنما"
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:241
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:91
 msgid "_Settings..."
-msgstr "ـتنظیمات..."
+msgstr "_Sozlamalar..."
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:256
 msgid "_View"
-msgstr "نشان دادن"
+msgstr "_Ko‘rinishi"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:260
 msgid "_Toolbar"
-msgstr "بخش ابزارها"
+msgstr "_Asboblar paneli"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:265
 msgid "Statusbar"
-msgstr "بخش وضعیت"
+msgstr "Holat paneli"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:275
 msgid "_Summary"
-msgstr "خلاصه"
+msgstr "_Natija"
 
 #. Summary Items --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:283
 msgid "Summary _Items"
-msgstr "موارد خلاصه"
+msgstr "_Elementlar natijasi"
 
 #. Summary Items - Name
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:288
 msgid "_Name"
-msgstr "نام"
+msgstr "_Nomi"
 
 #. Summary Items - Folder
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:293
 msgid "_Folder"
-msgstr "پوشه"
+msgstr "_Jild"
 
 #. Summary Items - Elapsed
 #. menu_item = gtk_check_menu_item_new_with_mnemonic (_("_Elapsed"));
@@ -908,261 +905,261 @@ msgstr "_URL"
 #. Summary Items - Message
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:313
 msgid "_Message"
-msgstr "ـپیام"
+msgstr "_Xabar"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:328
 msgid "Download _Columns"
-msgstr "ردیف های دانلود"
+msgstr "Yuklab olish _ustunlari"
 
 #. Download Columns - Completed
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:333
 msgid "_Complete"
-msgstr "پایان"
+msgstr "_Tugatish"
 
 #. Download Columns - Total
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:338
 msgid "_Size"
-msgstr "حجم"
+msgstr "_Hajmi"
 
 #. Download Columns - Percent (%)
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:343
 msgid "_Percent '%'"
-msgstr "درصد '%'"
+msgstr "_Foiz '%'"
 
 #. Download Columns - Elapsed
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:348
 msgid "_Elapsed"
-msgstr "مانده"
+msgstr "_Sarflangan vaqt"
 
 #. Download Columns - Left
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:353
 msgid "_Left"
-msgstr "ـچپ"
+msgstr "_Qolgan vaqt"
 
 #. Download Columns - Speed
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:358
 #: ../../po/../ui-gtk/UgtkNodeView.c:818
 msgid "Speed"
-msgstr "سرعت"
+msgstr "Tezlik"
 
 #. Download Columns - Up Speed
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:363
 #: ../../po/../ui-gtk/UgtkNodeView.c:832
 msgid "Up Speed"
-msgstr "سرعت آپلود"
+msgstr "Tezlikni oshirish"
 
 #. Download Columns - Uploaded
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:368
 #: ../../po/../ui-gtk/UgtkNodeView.c:846
 msgid "Uploaded"
-msgstr "آپلود شده"
+msgstr "Yuklandi"
 
 #. Download Columns - Ratio
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:373
 #: ../../po/../ui-gtk/UgtkNodeView.c:860
 msgid "Ratio"
-msgstr "نرخ"
+msgstr "Nisbat"
 
 #. Download Columns - Retry
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:378
 msgid "_Retry"
-msgstr "تلاش دوباره"
+msgstr "_Qayta urinish"
 
 #. Download Columns - Added On
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:393
 #: ../../po/../ui-gtk/UgtkNodeView.c:917
 msgid "Added On"
-msgstr "افزوده شده در"
+msgstr "Qo‘shilgan"
 
 #. Download Columns - Completed On
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:398
 #: ../../po/../ui-gtk/UgtkNodeView.c:931
 msgid "Completed On"
-msgstr "پایان یافته در"
+msgstr "Tugallangan"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:413
 msgid "_Category"
-msgstr "رده بندی"
+msgstr "_Turkum"
 
 #. New Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:418
 msgid "_New Category..."
-msgstr "رده تازه..."
+msgstr "_Yangi turkum..."
 
 #. Delete Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:424
 msgid "_Delete Category"
-msgstr "پاک کردن رده"
+msgstr "_Turkumni o‘chirish"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:461
 msgid "_Download"
-msgstr "دانلود"
+msgstr "_Yuklab olish"
 
 #. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE,
 #. accel_group);
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:473
 msgid "_Delete Entry"
-msgstr ""
+msgstr "_Kiritilganni o‘chirish"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:480
 msgid "Delete Entry and _File"
-msgstr ""
+msgstr "Kiritilgan va _Faylni o‘chirish"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:495
 msgid "Open _Containing folder"
-msgstr "پوشه دربرگیرنده را باز کن"
+msgstr "_Saqlangan jildni ochish"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:504
 msgid "Force Start"
-msgstr "شروع با زور"
+msgstr "Majburiy boshlash"
 
 #. Move to --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:528
 msgid "_Move To"
-msgstr "بردن به"
+msgstr "_Ko‘chirish"
 
 #. Priority --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:573
 msgid "Priority"
-msgstr "اولویت"
+msgstr "Muhimligi"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:582
 msgid "_High"
-msgstr "بالا"
+msgstr "_Yuqori"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:587
 msgid "_Normal"
-msgstr "معمولی"
+msgstr "_O‘rtacha"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:592
 msgid "_Low"
-msgstr "پایین"
+msgstr "_Past"
 
 #. Get Help Online
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:615
 msgid "Get Help Online"
-msgstr "دریافت راهنمایی آنلاین"
+msgstr "Onlayn yordam olish"
 
 #. Documentation
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:622
 msgid "Documentation"
-msgstr "مستندات"
+msgstr "Qo‘llanma"
 
 #. Support Forum
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:629
 msgid "Support Forum"
-msgstr "انجمن پشتیبانی"
+msgstr "Yordam forumi"
 
 #. Submit Feedback
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:636
 msgid "Submit Feedback"
-msgstr "ارسال بازخورد"
+msgstr "Fikr bildirish"
 
 #. Report a Bug
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:643
 msgid "Report a Bug"
-msgstr "خبر دادن باگ"
+msgstr "Nosozlik haqida xabar berish"
 
 #. Keyboard Shortcuts
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:650
 msgid "Keyboard Shortcuts"
-msgstr "شورتکات های کیبورد"
+msgstr "Tugmalar birikmasi"
 
 #. Check for Updates
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:657
 msgid "Check for Updates"
-msgstr "گشتن برای بروزرسانی"
+msgstr "Yangilanishlar uchun tekshirish"
 
 #: ../../po/../ui-gtk/UgtkMenubar.c:144
 msgid "Settings"
-msgstr "تنظیمات"
+msgstr "Sozlamalar"
 
 #: ../../po/../ui-gtk/UgtkMenubar.c:377
 #, c-format
 msgid "Can't launch default application for file '%s'."
-msgstr "اشکال در اجرای برنامه ی پیشفرض برای فایل '%s'."
+msgstr "'%s' fayli uchun standart ilova dastur ishga tushmadi."
 
 #: ../../po/../ui-gtk/UgtkMenubar.c:409
 #, c-format
 msgid "'%s' - This folder does not exist."
-msgstr "'%s' - این پوشه وجود ندارد."
+msgstr "'%s' - Ushbu jild mavjud emas."
 
 #. title
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:205
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:209
 msgid "URI had existed"
-msgstr "URl از پیش وجود داشت"
+msgstr "Bunday URI mavjud"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:207
 msgid "This URI had existed, are you sure to continue?"
-msgstr "این URl از پیش وجود داشت، آیا مطمئنید میخواهید ادامه دهید؟"
+msgstr "Ushbu URI mavjud. Davom etishni xohlaysizmi?"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:343
 msgid "General"
-msgstr "اصلی"
+msgstr "Umumiy"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:345
 msgid "Advanced"
-msgstr "پیشرفته"
+msgstr "Qo‘shimcha"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:354
 msgid "Category settings"
-msgstr "تنظیمات دسته"
+msgstr "Turkum sozlamalari"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:356
 msgid "Default for new download 1"
-msgstr "پیشفرض برای دانلود 1"
+msgstr "1-yangi yuklab olish uchun standart"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:358
 msgid "Default 2"
-msgstr "پیشفرض 2"
+msgstr "Standart 2"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:121 ../../po/../ui-gtk/UgtkNodeView.c:584
 #: ../../po/../ui-gtk/UgtkSummary.c:115
 msgid "unnamed"
-msgstr "بدون نام"
+msgstr "nomsiz"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:610
 msgid "Paused"
-msgstr "متوقف شده"
+msgstr "Vaqtincha to‘xtatildi"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:611
 msgid "Uploading"
-msgstr "در حال آپلود"
+msgstr "Saytga yuklanmoqda"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:612
 msgid "Completed"
-msgstr "پایان یافته"
+msgstr "Tugadi"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:614
 msgid "Recycled"
-msgstr "بازیابی شده"
+msgstr "Chiqindiga tashlangan"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:615
 msgid "Queuing"
-msgstr "در حال صف کشی"
+msgstr "Navbatda"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:616
 msgid "Active"
-msgstr "فعال"
+msgstr "Faol"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:637
 msgid "All Status"
-msgstr "تمام وضعیت ها"
+msgstr "Barcha holat"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:734
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:85
 #: ../../po/../ui-gtk/UgtkSummary.c:108
 msgid "Name"
-msgstr "نام"
+msgstr "Nomi"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:747
 msgid "Complete"
-msgstr "پایان"
+msgstr "Tugatish"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:761
 msgid "Size"
-msgstr "سایز"
+msgstr "Hajmi"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:776
 msgid "%"
@@ -1170,139 +1167,139 @@ msgstr "%"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:790
 msgid "Elapsed"
-msgstr "سپری شده"
+msgstr "O‘tgan vaqt"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:804
 msgid "Left"
-msgstr "مانده"
+msgstr "Qolgan vaqt"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:903
 #: ../../po/../ui-gtk/UgtkSettingForm.c:538
 #: ../../po/../ui-gtk/UgtkSummary.c:151
 msgid "URI"
-msgstr "URl"
+msgstr "URI"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:954
 msgid "Quantity"
-msgstr "مقدار"
+msgstr "Miqdori"
 
 #. proxy type label & combo box
 #: ../../po/../ui-gtk/UgtkProxyForm.c:64
 msgid "Proxy:"
-msgstr "پروکسی:"
+msgstr "Proksi:"
 
 #: ../../po/../ui-gtk/UgtkProxyForm.c:67
 msgid "Don't use"
-msgstr "استفاده نکن"
+msgstr "Foydalanmang"
 
 #: ../../po/../ui-gtk/UgtkProxyForm.c:69
 msgid "Default"
-msgstr "پیشفرض"
+msgstr "Standart"
 
 #. host label & entry
 #: ../../po/../ui-gtk/UgtkProxyForm.c:121
 msgid "Host:"
-msgstr "میزبان:"
+msgstr "Host:"
 
 #. port label & entry
 #: ../../po/../ui-gtk/UgtkProxyForm.c:132
 msgid "Port:"
-msgstr "درگاه:"
+msgstr "Port:"
 
 #: ../../po/../ui-gtk/UgtkProxyForm.c:351
 msgid "Socket:"
-msgstr "سوکت:"
+msgstr "Sokket:"
 
 #: ../../po/../ui-gtk/UgtkProxyForm.c:361
 msgid "Socket args:"
-msgstr "مشخصه های سوکت:"
+msgstr "Sokket argumentlari:"
 
 #: ../../po/../ui-gtk/UgtkProxyForm.c:371
 msgid "Element:"
-msgstr "المنت"
+msgstr "Element:"
 
 #: ../../po/../ui-gtk/UgtkScheduleForm.c:66
 msgid "Mon"
-msgstr "دوشنبه"
+msgstr "Dush"
 
 #: ../../po/../ui-gtk/UgtkScheduleForm.c:67
 msgid "Tue"
-msgstr "سه شنبه"
+msgstr "Sesh"
 
 #: ../../po/../ui-gtk/UgtkScheduleForm.c:68
 msgid "Wed"
-msgstr "چهار شنبه"
+msgstr "Chor"
 
 #: ../../po/../ui-gtk/UgtkScheduleForm.c:69
 msgid "Thu"
-msgstr "پنج شنبه"
+msgstr "Pay"
 
 #: ../../po/../ui-gtk/UgtkScheduleForm.c:70
 msgid "Fri"
-msgstr "جمعه"
+msgstr "Jum"
 
 #: ../../po/../ui-gtk/UgtkScheduleForm.c:71
 msgid "Sat"
-msgstr "شنبه"
+msgstr "Shan"
 
 #: ../../po/../ui-gtk/UgtkScheduleForm.c:72
 msgid "Sun"
-msgstr "یکشنبه"
+msgstr "Yak"
 
 #: ../../po/../ui-gtk/UgtkScheduleForm.c:99
 msgid "_Enable Scheduler"
-msgstr "فعال سازی زمان بند"
+msgstr "Rejalashtirgichni _yoqish"
 
 #. Turn off - label
 #: ../../po/../ui-gtk/UgtkScheduleForm.c:141
 msgid "Turn off"
-msgstr "خاموش کن"
+msgstr "O‘chirish"
 
 #. Turn off - help label
 #: ../../po/../ui-gtk/UgtkScheduleForm.c:146
 msgid "- stop all task"
-msgstr "توقف تمام کارها"
+msgstr "- barcha vazifalarni to‘xtatish"
 
 #. Normal - label
 #: ../../po/../ui-gtk/UgtkScheduleForm.c:156
 msgid "Normal"
-msgstr "عادی"
+msgstr "O‘rtacha"
 
 #. Normal - help label
 #: ../../po/../ui-gtk/UgtkScheduleForm.c:161
 msgid "- run task normally"
-msgstr "اجرای معمولی کارها"
+msgstr "- vazifani o‘rtacha bajarish"
 
 #: ../../po/../ui-gtk/UgtkSelector.c:254
 msgid "All"
-msgstr "همه"
+msgstr "Barchasi"
 
 #: ../../po/../ui-gtk/UgtkSelector.c:259
 msgid "None"
-msgstr "هیچ"
+msgstr "Yo‘q"
 
 #: ../../po/../ui-gtk/UgtkSelector.c:276
 msgid "Mark by filter"
-msgstr "انتخاب بر اساس فیلتر"
+msgstr "Filter bo‘yicha belgilash"
 
 #: ../../po/../ui-gtk/UgtkSelector.c:294
 msgid "Mark URLs by host AND filename extension."
-msgstr "نشانه گذاری URLها با میزبان و پسوند فایلها"
+msgstr "URL manzillarni host va fayl nomi kengaytmasi bo‘yicha belgilash"
 
 #: ../../po/../ui-gtk/UgtkSelector.c:297
 msgid "This will reset all marks of URLs."
-msgstr "این تمام انتخاب های URLها را برمیگرداند."
+msgstr "U barcha URL belgilashlarni tiklaydi."
 
 #. filter view -----------------------
 #. left side
 #: ../../po/../ui-gtk/UgtkSelector.c:305
 msgid "Host"
-msgstr "میزبان"
+msgstr "Host"
 
 #. right side (filename extension)
 #: ../../po/../ui-gtk/UgtkSelector.c:309
 msgid "File Ext."
-msgstr "پسوند فایل"
+msgstr "Fayl keng."
 
 #: ../../po/../ui-gtk/UgtkSelector.c:449
 msgid "URL"
@@ -1310,170 +1307,170 @@ msgstr "URL"
 
 #: ../../po/../ui-gtk/UgtkSelector.c:781
 msgid "Base hypertext reference"
-msgstr "مرجع ابرمتن پایه"
+msgstr ""
 
 #. select all
 #: ../../po/../ui-gtk/UgtkSelector.c:797
 msgid "Mark _All"
-msgstr "انتخاب همه"
+msgstr "_Barchasini belgilash"
 
 #. select none
 #: ../../po/../ui-gtk/UgtkSelector.c:801
 msgid "Mark _None"
-msgstr "انتخاب هیچکدام"
+msgstr "_Yo‘q deb belgilash"
 
 #. select by filter
 #: ../../po/../ui-gtk/UgtkSelector.c:805
 msgid "_Mark by filter..."
-msgstr "انتخاب بر اساس فیلتر"
+msgstr ""
 
 #. e.g.
 #: ../../po/../ui-gtk/UgtkSequencer.c:74
 msgid "e.g."
-msgstr "برای نمونه"
+msgstr "mas-n:"
 
 #. -------------------------------------------------------
 #. radio "From"
 #: ../../po/../ui-gtk/UgtkSequencer.c:85
 msgid "_From:"
-msgstr "از:"
+msgstr ""
 
 #. label "To"
 #: ../../po/../ui-gtk/UgtkSequencer.c:108
 msgid "To:"
-msgstr "به:"
+msgstr ""
 
 #. label "digits"
 #: ../../po/../ui-gtk/UgtkSequencer.c:123
 msgid "digits:"
-msgstr "شماره ها:"
+msgstr "raqamlar:"
 
 #: ../../po/../ui-gtk/UgtkSequencer.c:132
 msgid "F_rom:"
-msgstr "از:"
+msgstr ""
 
 #. label case-sensitive
 #: ../../po/../ui-gtk/UgtkSequencer.c:162
 msgid "case-sensitive"
-msgstr "حساس به بزرگ و کوچکی"
+msgstr "katta-kichik harflarni farqlash"
 
 #: ../../po/../ui-gtk/UgtkSequencer.c:188
 msgid "No wildcard(*) character in URL entry."
-msgstr "کاراکترهای wildcard(*) در ورودی URL نیستند."
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSequencer.c:192
 msgid "URL is not valid."
-msgstr "URL معتبر نمی‌باشد"
+msgstr "URL noto‘g‘ri."
 
 #: ../../po/../ui-gtk/UgtkSequencer.c:196
 msgid "No character in 'From' or 'To' entry."
-msgstr "هیچ کاراکتری در ورودی 'از' یا 'به' نبود."
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSequencer.c:305
 msgid "Preview"
-msgstr "پیش نمایش"
+msgstr "Ko‘rinishi"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:97
 msgid "User Interface"
-msgstr "رابط کاربری"
+msgstr "Foydalanish interfeysi"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:109
 msgid "Bandwidth"
-msgstr "پهنای باند"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:115
 msgid "Scheduler"
-msgstr "زمان بند"
+msgstr "Rejalashtirgich"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:121
 msgid "Plug-in"
-msgstr "افزونه"
+msgstr "Plagin"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:127
 msgid "Others"
-msgstr "بقیه"
+msgstr "Boshqalar"
 
 #. Monitor button
 #: ../../po/../ui-gtk/UgtkSettingForm.c:57
 msgid "_Enable clipboard monitor"
-msgstr "زیر نظرگرفتن کلیپبورد"
+msgstr ""
 
 #. quiet mode
 #: ../../po/../ui-gtk/UgtkSettingForm.c:62
 msgid "_Quiet mode"
-msgstr "حالت ساکت"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:68
 #: ../../po/../ui-gtk/UgtkSettingForm.c:446
 msgid "Default category index"
-msgstr "فهرست پیشفرض رده"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:80
 #: ../../po/../ui-gtk/UgtkSettingForm.c:458
 msgid "Adding to Nth category if no matched category."
-msgstr "اضافه کردن به Nمین رده اگر رده ای مناسب نبود."
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:87
 msgid "Monitor clipboard for specified file types:"
-msgstr "برای مدل فایل های تعیین شده کلیپبورد را زیر نظر بگیر:"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:102
 msgid "Separate the types with character '|'."
-msgstr "شما میتوانید انواع را با کاراکتر |‌ جداکنید."
+msgstr "Fayl turlarini ajratish uchun '|' belgisidan foydalaning."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:107
 msgid "You can use regular expressions here."
-msgstr "میتوانید از عبارت های با قاعده استفاده کنید."
+msgstr "Siz muntazam ifodalardan bu yerda foydalanishingiz mumkin."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:151
 msgid "Confirmation"
-msgstr "تاییدیه"
+msgstr "Tasdiqlash"
 
 #. Confirmation check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:157
 msgid "Show confirmation dialog on exit"
-msgstr "نشان دادن دیالوگ تایید هنگام خروج"
+msgstr "Chiqishda tasdiqlash oynasini ko‘rsatish"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:160
 msgid "Confirm when deleting files"
-msgstr "گرفتن تایید هنگام پاک کردن پرونده ها"
+msgstr "Fayllar o‘chirilayotganda tasdiqlash"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:166
 msgid "System Tray"
-msgstr "System Tray"
+msgstr "Tizim nishonchasi"
 
 #. System Tray check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:172
 msgid "Always show tray icon"
-msgstr "همیشه آیکن tray را نشان بده"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:175
 msgid "Minimize to tray on startup"
-msgstr "هنگام شروع به tray جمع کن"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:178
 msgid "Close to tray on window close"
-msgstr "بستن در Tray هنگام بستن پنجره"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:182
 msgid "Use Ubuntu's App Indicator"
-msgstr "استفاده از Ubuntu App Indicator"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:189
 msgid "Enable offline mode on startup"
-msgstr "هنگام شروع حالت آفلاین را فعال کن"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:192
 msgid "Download starting notification"
-msgstr "آگاه ساز شروع دانلود"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:195
 msgid "Sound when download is finished"
-msgstr "پخش صدا هنگام پایان دانلود"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recent download settings"
-msgstr "اجرای تنظیمات اخیر دانلود"
+msgid "Apply recently download settings"
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264
 msgid "These will affect all plug-ins."
@@ -1482,61 +1479,61 @@ msgstr ""
 #. Global speed limit
 #: ../../po/../ui-gtk/UgtkSettingForm.c:270
 msgid "Global speed limit"
-msgstr "محدودیت جهانی سرعت"
+msgstr "Global tezlik cheklovi"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:278
 #: ../../po/../ui-gtk/UgtkSettingForm.c:564
 msgid "Max upload speed"
-msgstr "سرعت بیشینه ی آپلود"
+msgstr "Maksimal yuklash tezligi"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:290
 #: ../../po/../ui-gtk/UgtkSettingForm.c:576
 msgid "Max download speed"
-msgstr "سرعت بیشینه ی دانلود"
+msgstr "Maksimal yuklab olish tezligi"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:323
 msgid "Completion Auto-Actions"
-msgstr "کارهای خودکار هنگام پایان"
+msgstr "Tugaganda keyingi amallar"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:331
 msgid "Custom command:"
-msgstr ""
+msgstr "Boshqa buyruq:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:343
 msgid "Custom command if error occured:"
-msgstr ""
+msgstr "Boshqa xato yuz bersa, boshqa buyruq:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:388
 msgid "_Autosave"
-msgstr ""
+msgstr "_Autosaqlash"
 
 #. auto save spin & label (interval)
 #: ../../po/../ui-gtk/UgtkSettingForm.c:394
 msgid "minutes"
-msgstr "دقیقه"
+msgstr "daqiqa"
 
 #. auto save label
 #: ../../po/../ui-gtk/UgtkSettingForm.c:402
 msgid "_Interval:"
-msgstr "دوره زمانی:"
+msgstr "_Interval:"
 
 #. Commandline Settings
 #: ../../po/../ui-gtk/UgtkSettingForm.c:433
 msgid "Commandline Settings"
-msgstr "تنظیمات خط فرمان"
+msgstr "Buyruqlar qatori sozlamalari"
 
 #. --quiet
 #: ../../po/../ui-gtk/UgtkSettingForm.c:440
 msgid "Use '--quiet' by default"
-msgstr "به طور پیشفرض از حالت بیصدا استفاده کن"
+msgstr "Joriy holat bo‘yicha '--quiet' buyrug‘ida foydalaning"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:508
 msgid "Plug-in matching order:"
-msgstr ""
+msgstr "Plagin mosligi tartibi:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:531
 msgid "Aria2 plug-in options"
-msgstr ""
+msgstr "Aria2 plug-in moslamalari"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:547
 msgid "RPC authorization secret token"
@@ -1546,66 +1543,66 @@ msgstr ""
 #. Speed Limits
 #: ../../po/../ui-gtk/UgtkSettingForm.c:556
 msgid "Global speed limit for aria2 only"
-msgstr ""
+msgstr "Faqat aria2 uchun global tezlik cheklov"
 
 #. ------------------------------------------------------------------------
 #. aria2 works on local device
 #. launch
 #: ../../po/../ui-gtk/UgtkSettingForm.c:589
 msgid "_Launch aria2 on startup"
-msgstr "اجرای aria2 در شروع"
+msgstr "aria2’ni tizim bilan birga ishga tushirish"
 
 #. shutdown
 #: ../../po/../ui-gtk/UgtkSettingForm.c:595
 msgid "_Shutdown aria2 on exit"
-msgstr "خاموش کردن aria2 در خروج"
+msgstr "aria2’dan chiqishda _o‘chirish"
 
 #. ------------------------------------------------------------------------
 #. Local options
 #: ../../po/../ui-gtk/UgtkSettingForm.c:601
 msgid "Launch aria2 on local device"
-msgstr ""
+msgstr "aria2’ni kompyuterda ishga tushirish"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:610
 msgid "Path"
-msgstr "مسیر"
+msgstr "Yo‘l"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:621
 msgid "Arguments"
-msgstr "آرگمانها"
+msgstr "Argumentlar"
 
 #. Arguments - hint
 #: ../../po/../ui-gtk/UgtkSettingForm.c:626
 msgid "You must restart uGet after modifying it."
-msgstr ""
+msgstr "uGet moslangandan so‘ng qayta ishga tushirish kerak."
 
 #: ../../po/../ui-gtk/UgtkSummary.c:112
 msgid "File"
-msgstr "فایل"
+msgstr "Fayl"
 
 #: ../../po/../ui-gtk/UgtkSummary.c:127
 msgid "Folder"
-msgstr "پوشه"
+msgstr "Jild"
 
 #: ../../po/../ui-gtk/UgtkSummary.c:270
 msgid "Item"
-msgstr "آیتم"
+msgstr "Element"
 
 #: ../../po/../ui-gtk/UgtkSummary.c:275
 msgid "Value"
-msgstr "مقدار"
+msgstr "Qiymat"
 
 #. Copy All
 #: ../../po/../ui-gtk/UgtkSummary.c:307
 msgid "Copy _All"
-msgstr "کپی همه"
+msgstr "_Barchasidan nusxa olish"
 
 #. Show window
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:106
 msgid "Show window"
-msgstr "نمایش پنجره"
+msgstr "Oynani ko‘rsatish"
 
 #. Offline mode
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:112
 msgid "_Offline Mode"
-msgstr "حالت آفلاین"
+msgstr "Oflayn rejimi"
