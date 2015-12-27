@@ -19,7 +19,7 @@ ui-gtk/UgtkNodeView.c
 ui-gtk/UgtkProxyForm.c
 ui-gtk/UgtkScheduleForm.c
 ui-gtk/UgtkSelector.c
-ui-gtk/UgtkSequencer.c
+ui-gtk/UgtkSequence.c
 ui-gtk/UgtkSettingDialog.c
 ui-gtk/UgtkSettingForm.c
 ui-gtk/UgtkSummary.c
