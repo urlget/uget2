@@ -146,7 +146,7 @@ void  ugtk_schedule_form_init (struct UgtkScheduleForm* sform)
 	gtk_grid_attach (caption, widget, 0, 0, 5, 1);
 	sform->time_tips = GTK_LABEL (widget);
 
-	// Turn off - gridone
+	// Turn off
 	widget = ugtk_grid_new (colors[UGTK_SCHEDULE_TURN_OFF]);
 	g_object_set (widget, "margin", 3, NULL);
 	gtk_grid_attach (caption, widget, 0, 1, 1, 1);
@@ -161,7 +161,7 @@ void  ugtk_schedule_form_init (struct UgtkScheduleForm* sform)
 	g_object_set (widget, "margin", 2, NULL);
 	gtk_grid_attach (caption, widget, 2, 1, 2, 1);
 
-	// Normal - gridone
+	// Normal
 	widget = ugtk_grid_new (colors[UGTK_SCHEDULE_NORMAL]);
 	g_object_set (widget, "margin", 3, NULL);
 	gtk_grid_attach (caption, widget, 0, 2, 1, 1);
@@ -176,7 +176,7 @@ void  ugtk_schedule_form_init (struct UgtkScheduleForm* sform)
 	g_object_set (widget, "margin", 2, NULL);
 	gtk_grid_attach (caption, widget, 2, 2, 2, 1);
 /*
-	// Speed limit - gridone
+	// Speed limit
 	widget = ugtk_grid_new (colors[UGTK_SCHEDULE_LIMITED_SPEED]);
 	g_object_set (widget, "margin", 3, NULL);
 	gtk_grid_attach (caption, widget, 0, 3, 1, 1);
