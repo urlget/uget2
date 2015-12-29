@@ -78,7 +78,7 @@ void  ugtk_category_form_init (UgtkCategoryForm* cform)
 
 	cform->spin_active = gtk_spin_button_new_with_range (1.0, 20.0, 1.0);
 	gtk_entry_set_activates_default (GTK_ENTRY (cform->spin_active), TRUE);
-	gtk_entry_set_width_chars (GTK_ENTRY(cform->spin_active), 5);
+//	gtk_entry_set_width_chars (GTK_ENTRY(cform->spin_active), 5);
 	label = gtk_label_new_with_mnemonic (_("Active _downloads:"));
 	gtk_label_set_mnemonic_widget (GTK_LABEL(label), cform->spin_active);
 	g_object_set (label, "margin", 2, NULL);
@@ -88,7 +88,7 @@ void  ugtk_category_form_init (UgtkCategoryForm* cform)
 
 	cform->spin_finished = gtk_spin_button_new_with_range (0.0, 99999.0, 1.0);
 	gtk_entry_set_activates_default (GTK_ENTRY (cform->spin_finished), TRUE);
-	gtk_entry_set_width_chars (GTK_ENTRY(cform->spin_finished), 5);
+//	gtk_entry_set_width_chars (GTK_ENTRY(cform->spin_finished), 5);
 	label = gtk_label_new_with_mnemonic (_("Capacity of Finished:"));
 	gtk_label_set_mnemonic_widget (GTK_LABEL(label), cform->spin_finished);
 	g_object_set (label, "margin", 2, NULL);
@@ -98,7 +98,7 @@ void  ugtk_category_form_init (UgtkCategoryForm* cform)
 
 	cform->spin_recycled = gtk_spin_button_new_with_range (0.0, 99999.0, 1.0);
 	gtk_entry_set_activates_default (GTK_ENTRY (cform->spin_recycled), TRUE);
-	gtk_entry_set_width_chars (GTK_ENTRY(cform->spin_recycled), 5);
+//	gtk_entry_set_width_chars (GTK_ENTRY(cform->spin_recycled), 5);
 	label = gtk_label_new_with_mnemonic (_("Capacity of Recycled:"));
 	gtk_label_set_mnemonic_widget (GTK_LABEL(label), cform->spin_recycled);
 	g_object_set (label, "margin", 2, NULL);
