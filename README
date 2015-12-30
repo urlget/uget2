@@ -1,3 +1,14 @@
+uGet 2.0.4: (2016-01-01)
+1. save and restore width of download column.
+2. adjust schedule form for large font size.
+3. in speed limit mode, program adjust speed when downloading start-up.
+4. use filename from RPC request to match category if URL doesn't contain filename.
+5. curl plug-in: use posix_fallocate() to preallocate space for a file on Linux.
+6. curl plug-in: use SetEndOfFile() to preallocate space for a file on Windows.
+7. Fix: program crash when simultaneously download > 32 files.
+8. Fix: Can't save height of summary area.
+9. Add compressed 256x256 icon for Windows 7.
+
 uGet 2.0.3: (2015-11-11)
 1. curl plug-in: update control file path if download file was renamed.
 2. curl plug-in: update downloaded size after loading aria2 control file.
