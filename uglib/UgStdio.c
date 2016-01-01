@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2005-2015 by C.H. Huang
+ *   Copyright (C) 2005-2016 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -211,7 +211,7 @@ FILE* ug_fopen (const char *filename, const char *mode)
 #include <sys/linux-syscalls.h>
 
 int  fseek_64 (FILE *stream, int64_t offset, int origin)
-{  
+{
 	int fd;
 
 	if (feof (stream)) {
@@ -224,8 +224,8 @@ int  fseek_64 (FILE *stream, int64_t offset, int origin)
 	fd = fileno (stream);
 	if (lseek64 (fd, offset, origin) == -1) {
 		return errno;
-	}  
-	return 0;  
+	}
+	return 0;
 }
 
 int64_t ftell_64 (FILE *stream)
