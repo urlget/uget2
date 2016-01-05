@@ -482,10 +482,15 @@ void  uget_app_stop_category (UgetApp* app, UgetNode* cnode)
 {
 	UgetCategory*  category;
 	UgetNode*      dnode;
+	UgetNode*      dnext;
 
 	category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
-	for (dnode = category->active->children;  dnode;  dnode = dnode->next)
+	for (dnode = category->active->children;  dnode;  dnode = dnext) {
+		// because uget_app_queue_download() will change node linking,
+		// program must get next node before calling uget_app_queue_download()
+		dnext = dnode->next;
 		uget_app_queue_download (app, dnode->data);
+	}
 }
 
 static int  ug_match_file_exts (const char* file, char** exts)
