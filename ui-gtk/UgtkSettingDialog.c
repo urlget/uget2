@@ -49,6 +49,9 @@ static void on_response (GtkDialog *dialog, gint response_id, UgtkSettingDialog*
 
 UgtkSettingDialog*  ugtk_setting_dialog_new (const gchar* title, GtkWindow* parent)
 {
+	PangoContext*  context;
+	PangoLayout*   layout;
+	int            text_width;
 	UgtkSettingDialog*  dialog;
 	GtkCellRenderer*    renderer;
 	GtkWidget*  widget;
@@ -75,11 +78,20 @@ UgtkSettingDialog*  ugtk_setting_dialog_new (const gchar* title, GtkWindow* pare
 	dialog->notebook = (GtkNotebook*) widget;
 	gtk_notebook_set_show_tabs (dialog->notebook, FALSE);
 	gtk_notebook_set_show_border (dialog->notebook, FALSE);
+	// get text width
+	context = gtk_widget_get_pango_context (widget);
+	layout = pango_layout_new (context);
+	pango_layout_set_text (layout, "User Interface", -1);
+	pango_layout_get_pixel_size (layout, &text_width, NULL);
+	g_object_unref (layout);
+	text_width = text_width * 3 / 2;
+	if (text_width < 130)
+		text_width = 130;
 	// TreeView
 	dialog->list_store = gtk_list_store_new (1, G_TYPE_STRING);
 	widget = gtk_tree_view_new_with_model (
 			GTK_TREE_MODEL (dialog->list_store));
-	gtk_widget_set_size_request (widget, 130, 120);
+	gtk_widget_set_size_request (widget, text_width, 120);
 	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 0);
 	dialog->tree_view = (GtkTreeView*) widget;
 	gtk_tree_view_set_headers_visible (dialog->tree_view, FALSE);
