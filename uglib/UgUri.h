@@ -127,6 +127,9 @@ int  ug_uri_match_file_exts (UgUri* uuri, char** exts);
 // ------------------------------------
 // Other URI functions
 
+// return length of decoded uri. param dest can be param uri or NULL.
+int   ug_decode_uri (const char* uri, int uri_length, char* dest);
+
 char* ug_filename_from_uri (const char* uri);
 
 #ifdef __cplusplus

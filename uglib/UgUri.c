@@ -286,7 +286,8 @@ char* ug_uri_get_file (UgUri* uuri)
 	len = ug_uri_part_file (uuri, &str);
 	if (len == 0)
 		return NULL;
-	name = ug_unescape_uri (str, len);
+	name = ug_malloc (len + 1);
+	ug_decode_uri (str, len, name);
 	if (ug_utf8_get_invalid ((uint8_t*) name, NULL) == -1)
 		return name;
 
@@ -370,5 +371,47 @@ char* ug_filename_from_uri (const char* str)
 
 	ug_uri_init (&uuri, str);
 	return ug_uri_get_file ((UgUri*) &uuri);
-
 }
+
+// used by ug_decode_uri()
+static int  hex_char_to_int (char ch)
+{
+	if (ch >= '0' && ch <= '9')
+		return ch - '0';
+	if (ch >= 'a' && ch <= 'f')
+		return ch - 'a' + 10;
+	if (ch >= 'A' && ch <= 'F')
+		return ch - 'A' + 10;
+	return -1;
+}
+
+// return length of decoded uri. param dest can be param uri or NULL.
+int   ug_decode_uri (const char* uri, int uri_length, char* dest)
+{
+	const char* uri_end;
+	int   dest_length = 0;
+	int   ch1, ch2;
+
+	if (uri) {
+		if (uri_length == -1)
+			uri_length = strlen (uri);
+
+		for (uri_end = uri + uri_length;  uri < uri_end;  dest_length++) {
+			if (uri[0] == '%' &&
+			    uri + 2 < uri_end &&
+				( ch1 = hex_char_to_int(uri[1]) ) != -1 &&
+				( ch2 = hex_char_to_int(uri[2]) ) != -1)
+			{
+				if (dest)
+					*dest++ = (ch1 << 4) + ch2;  // ch1*16 + ch2
+				uri += 3;
+			}
+			else if (dest)
+				*dest++ = *uri++;
+		}
+	}
+
+	*dest = 0;
+	return dest_length;
+}
+

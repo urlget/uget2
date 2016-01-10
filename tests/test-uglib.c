@@ -107,6 +107,11 @@ void  test_uri (void)
 	temp = ug_uri_get_file (&uuri);
 	puts (temp);
 	ug_free (temp);
+
+	temp = ug_strdup ("file%20%%20100%2f%20.jpg");
+	index = ug_decode_uri (temp, -1, temp);
+	printf ("ug_decode_uri() return %d, output - '%s'\n", index, temp);
+	ug_free (temp);
 }
 
 // ----------------------------------------------------------------------------
@@ -275,10 +280,6 @@ void  test_utility ()
 
 	temp = ug_build_filename ("basedir", "path", "file", NULL);
 	printf ("ug_build_filename() - %s\n", temp);
-	ug_free (temp);
-
-	temp = ug_unescape_uri ("This%20is a test%200.", -1);
-	puts (temp);
 	ug_free (temp);
 
 	temp = ug_strdup ("\nThis\n one\r");

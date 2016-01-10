@@ -78,41 +78,6 @@ uint64_t ug_get_time_count (void)
 }
 
 // ----------------------------------------------------------------------------
-// URI
-
-char*  ug_unescape_uri (const char *uri, int length)
-{
-	char*  res;
-	char*  eptr;
-	char*  str;
-	const char*  end;
-
-	if (length == -1)
-		length = strlen (uri);
-	end = uri + length;
-	res = ug_malloc (length + 1);
-	str = res;
-
-	while (uri < end) {
-		if (uri[0] == '%' && uri + 2 < end) {
-			str[0] = uri[1];
-			str[1] = uri[2];
-			str[2] = 0;
-			eptr = NULL;
-			*(uint8_t*)str = (uint8_t) strtoul (str, &eptr, 16);
-			if (eptr == str + 2) {
-				str++;
-				uri+=3;
-				continue;
-			}
-		}
-		*str++ = *uri++;
-	}
-	*str = 0;
-	return res;
-}
-
-// ----------------------------------------------------------------------------
 // Unicode
 
 static const uint8_t  utf8Limits[] = {0xC0, 0xE0, 0xF0, 0xF8, 0xFC};
@@ -253,7 +218,7 @@ uint8_t*   ug_utf16_to_utf8 (uint16_t* string, int count,
 // ----------------------------------------------------------------------------
 // Base64
 
-static int mod_table[] = {0, 2, 1};
+static int  mod_table[] = {0, 2, 1};
 static char encoding_table[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                                 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                                 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',

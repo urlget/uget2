@@ -48,12 +48,7 @@ extern "C" {
 // ----------------------------------------------------------------------------
 // Time
 
-uint64_t ug_get_time_count (void);
-
-// ----------------------------------------------------------------------------
-// URI
-
-char*  ug_unescape_uri (const char *uri, int length);
+uint64_t   ug_get_time_count (void);
 
 // ----------------------------------------------------------------------------
 // Unicode
@@ -74,7 +69,7 @@ char*  ug_base64_encode (const uint8_t* data, int input_length,
 // ----------------------------------------------------------------------------
 // filename & path functions
 
-char* ug_build_filename (const char* first_element, ...);
+char*  ug_build_filename (const char* first_element, ...);
 
 // ----------------------------------------------------------------------------
 // Power Management
