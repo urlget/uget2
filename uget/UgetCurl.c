@@ -261,6 +261,24 @@ void  uget_curl_run (UgetCurl* ugcurl, int joinable)
 	ugcurl->header.uri = NULL;
 	ugcurl->header.filename = NULL;
 
+	// Others -----------------------------------------------------------------
+	curl_easy_setopt (curl, CURLOPT_NOSIGNAL, 1L);
+	curl_easy_setopt (curl, CURLOPT_FILETIME, 1L);
+	// disable peer SSL certificate verification
+	curl_easy_setopt (curl, CURLOPT_SSL_VERIFYHOST, 0L);
+	curl_easy_setopt (curl, CURLOPT_SSL_VERIFYPEER, 0L);
+	// SSL Version and cipher
+//	curl_easy_setopt (curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_DEFAULT);
+//	curl_easy_setopt (curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_SSLv3);
+//	curl_easy_setopt (curl, CURLOPT_SSL_CIPHER_LIST, "ALL:!aNULL:!LOW:!EXPORT:!SSLv2");
+//	curl_easy_setopt (curl, CURLOPT_SSL_CIPHER_LIST, "ALL");
+//	curl_easy_setopt (curl, CURLOPT_SSL_CIPHER_LIST, "SSLv3");
+
+	// low speed limit for unstable network
+	curl_easy_setopt (curl, CURLOPT_LOW_SPEED_LIMIT, 128);
+	curl_easy_setopt (curl, CURLOPT_LOW_SPEED_TIME, 60);
+
+	// resume
 	curl_easy_setopt (ugcurl->curl, CURLOPT_RESUME_FROM_LARGE,
 			(curl_off_t) ugcurl->beg);
 	// Progress  --------------------------------------------------------------
@@ -374,26 +392,10 @@ void  uget_curl_set_common (UgetCurl* ugcurl, UgetCommon* common)
 
 	curl = ugcurl->curl;
 	ugcurl->common = common;
-	// Others -----------------------------------------------------------------
-	curl_easy_setopt (curl, CURLOPT_NOSIGNAL, 1L);
-	// use with CURLINFO_FILETIME
-	curl_easy_setopt (curl, CURLOPT_FILETIME, 1L);
-	// disable peer SSL certificate verification
-	curl_easy_setopt (curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-	// SSL Version and cipher
-//	curl_easy_setopt (curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_DEFAULT);
-//	curl_easy_setopt (curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_SSLv3);
-//	curl_easy_setopt (curl, CURLOPT_SSL_CIPHER_LIST, "ALL:!aNULL:!LOW:!EXPORT:!SSLv2");
-//	curl_easy_setopt (curl, CURLOPT_SSL_CIPHER_LIST, "ALL");
-//	curl_easy_setopt (curl, CURLOPT_SSL_CIPHER_LIST, "SSLv3");
-
-	// low speed limit for unstable network
-	curl_easy_setopt (curl, CURLOPT_LOW_SPEED_LIMIT, 128);
-	curl_easy_setopt (curl, CURLOPT_LOW_SPEED_TIME, 60);
-	curl_easy_setopt (curl, CURLOPT_CONNECTTIMEOUT, common->connect_timeout);
 
 	if (common == NULL)
 		return;
+	curl_easy_setopt (curl, CURLOPT_CONNECTTIMEOUT, common->connect_timeout);
 	curl_easy_setopt (curl, CURLOPT_URL, common->uri);
 	uget_curl_decide_scheme (ugcurl, common->uri);
 	// debug

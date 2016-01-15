@@ -79,7 +79,7 @@ enum UgetCurlState
 };
 
 // ----------------------------------------------------------------------------
-// UgetCurl
+// UgetCurl: used by UgetPluginCurl
 
 struct UgetCurl
 {
@@ -172,6 +172,8 @@ void  uget_curl_set_ftp (UgetCurl* ugcurl, UgetFtp* ftp);
 
 void  uget_curl_decide_scheme (UgetCurl* ugcurl, const char* uri);
 void  uget_curl_decide_login (UgetCurl* ugcurl);
+
+#define uget_curl_join_thread(ugcurl)   ug_thread_join (&(ugcurl)->thread)
 
 #ifdef __cplusplus
 }

@@ -92,7 +92,8 @@ void  ug_jsonrpc_curl_set_url (UgJsonrpcCurl* jrcurl, const char* url)
 	curl_easy_setopt (jrcurl->curl, CURLOPT_CONNECTTIMEOUT, 15);
 	curl_easy_setopt (jrcurl->curl, CURLOPT_NOSIGNAL, 1L);
 	// disable peer SSL certificate verification
-	curl_easy_setopt (jrcurl->curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+	curl_easy_setopt (jrcurl->curl, CURLOPT_SSL_VERIFYHOST, 0L);
+	curl_easy_setopt (jrcurl->curl, CURLOPT_SSL_VERIFYPEER, 0L);
 }
 
 static size_t	ug_jsonrpc_curl_write (char* buffer, size_t size, size_t nmemb, UgJsonrpcCurl* jrcurl)
