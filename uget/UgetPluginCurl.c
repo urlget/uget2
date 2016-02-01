@@ -471,31 +471,31 @@ static int  plugin_start (UgetPluginCurl* plugin, UgetNode* node)
 		plugin->proxy  = ug_data_copy (plugin->proxy);
 
 	plugin->http = ug_info_get (&node->info, UgetHttpInfo);
-	if (plugin->http)
+	if (plugin->http) {
 		plugin->http = ug_data_copy (plugin->http);
+		// check http->post_file
+		if (plugin->http->post_file) {
+			if (ug_file_is_exist (plugin->http->post_file) == FALSE) {
+				uget_plugin_post ((UgetPlugin*) plugin,
+						uget_event_new_error (UGET_EVENT_ERROR_POST_FILE_NOT_FOUND,
+						                      NULL));
+				return FALSE;
+			}
+		}
+		// check http->cookie_file
+		if (plugin->http->cookie_file) {
+			if (ug_file_is_exist (plugin->http->cookie_file) == FALSE) {
+				uget_plugin_post ((UgetPlugin*) plugin,
+						uget_event_new_error (UGET_EVENT_ERROR_COOKIE_FILE_NOT_FOUND,
+						                      NULL));
+				return FALSE;
+			}
+		}
+	}
 
 	plugin->ftp = ug_info_get (&node->info, UgetFtpInfo);
 	if (plugin->ftp)
 		plugin->ftp = ug_data_copy (plugin->ftp);
-
-	// check http->post_file
-	if (plugin->http->post_file) {
-		if (ug_file_is_exist (plugin->http->post_file) == FALSE) {
-			uget_plugin_post ((UgetPlugin*) plugin,
-					uget_event_new_error (UGET_EVENT_ERROR_POST_FILE_NOT_FOUND,
-					                      NULL));
-			return FALSE;
-		}
-	}
-	// check http->cookie_file
-	if (plugin->http->cookie_file) {
-		if (ug_file_is_exist (plugin->http->cookie_file) == FALSE) {
-			uget_plugin_post ((UgetPlugin*) plugin,
-					uget_event_new_error (UGET_EVENT_ERROR_COOKIE_FILE_NOT_FOUND,
-					                      NULL));
-			return FALSE;
-		}
-	}
 
 	// assign node before speed control
 	uget_node_ref (node);
