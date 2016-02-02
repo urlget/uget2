@@ -79,9 +79,20 @@ void  ugtk_node_dialog_init (UgtkNodeDialog* ndialog,
 {
 	GtkWindow*  window;
 	int         sensitive;
+	int         width, height, temp;
 
 	ugtk_node_dialog_init_ui (ndialog, has_category_form);
 	ndialog->app = app;
+
+	// decide width
+	if (app->setting.window.category) {
+		gtk_widget_get_size_request (ndialog->notebook, &width, &height);
+		temp = gtk_paned_get_position (ndialog->app->window.hpaned);
+		temp = temp * 3 / 2;  // (temp * 1.5)
+		if (width < temp)
+			gtk_widget_set_size_request (ndialog->notebook, temp, height);
+	}
+
 	window = (GtkWindow*) ndialog->self;
 	gtk_window_set_transient_for (window, app->window.self);
 	gtk_window_set_destroy_with_parent (window, TRUE);
