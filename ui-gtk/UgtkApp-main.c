@@ -188,6 +188,7 @@ gboolean  gst_inited  = FALSE;
 // ----------------------------------------------------------------------------
 // SIGTERM
 UgtkApp*  ugtk_app;
+gboolean  ugtk_quitting = FALSE;
 
 static void sys_signal_handler (int sig)
 {
@@ -198,12 +199,16 @@ static void sys_signal_handler (int sig)
 	case SIGTERM: // termination request
 	case SIGABRT: // Abnormal termination (abort)
 //	case SIGQUIT:
-		// This will quit gtk_main() to main()
-		ugtk_app_quit (ugtk_app);
+		// avoid crash when program re-enter signal handler.
+		if (ugtk_quitting == FALSE) {
+			ugtk_quitting = TRUE;
+			// This will quit gtk_main() to main()
+			ugtk_app_quit (ugtk_app);
 #if !(defined _WIN32 || defined _WIN64)
-		sync();
+			sync();
 #endif
-		break;
+			break;
+		}
 
 //	case SIGSEGV:
 //		signal (SIGSEGV, NULL);
@@ -301,6 +306,7 @@ int  main (int argc, char** argv)
 
 	gtk_main ();
 
+	ugtk_quitting = TRUE;
 	uget_app_clear_attachment ((UgetApp*) ugtk_app);
 	ugtk_app_final (ugtk_app);
 	g_free (ugtk_app);
