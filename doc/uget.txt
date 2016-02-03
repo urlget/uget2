@@ -8,18 +8,18 @@
 
  Root -+- Category1 -+- Download1 (URI) -+- File
        |             |                   |
-       |             |                   +  X cookie or post file (attachment)
+       |             |                   `- cookie or post file (attachment)
        |             |
        |             +- Download2 (URI) -+- File1
        |             |  (torrent path)   |
        |             |                   +- File2
        |             |                   |
-       |             |                   +- torrent file (attachment)
+       |             |                   `- torrent file (attachment)
        |             |
        |             +- Download3 (URI) -+- File
        |                (metalink path)  |
-       |                                 +- metalink file (attachment)
-       +-- Category2
+       |                                 `- metalink file (attachment)
+       `-- Category2
 
 -------------------------------------------------------------------------------
  UgetNode Tree chart for "All Category" Real node and Fake node:
@@ -41,8 +41,8 @@
             +--> queuing
             +--> finished
             +--> recycled
-			|
-            +--> sorted
+            |
+            `--> sorted
 
 -------------------------------------------------------------------------------
 
