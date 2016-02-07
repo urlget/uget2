@@ -221,8 +221,6 @@ static void plugin_init (UgetPluginCurl* plugin)
 
 static void plugin_final (UgetPluginCurl* plugin)
 {
-	if (plugin->node)
-		uget_node_unref (plugin->node);
 	if (plugin->common)
 		ug_data_free (plugin->common);
 	if (plugin->proxy)
@@ -237,6 +235,9 @@ static void plugin_final (UgetPluginCurl* plugin)
 //	curl_slist_free_all (plugin->ftp_command);
 	ug_free (plugin->file.path);
 	ug_free (plugin->aria2.path);
+	// unassign node
+	if (plugin->node)
+		uget_node_unref (plugin->node);
 
 	global_unref ();
 }
@@ -331,6 +332,7 @@ static int  plugin_sync (UgetPluginCurl* plugin)
 		return TRUE;
 
 	node = plugin->node;
+	// sync data between plug-in and node
 	common = ug_info_realloc (&node->info, UgetCommonInfo);
 	common->retry_count = plugin->common->retry_count;
 	// sync changed limit from UgetNode
@@ -456,26 +458,32 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin);
 
 static int  plugin_start (UgetPluginCurl* plugin, UgetNode* node)
 {
-	UgThread  thread;
-	int       ok;
-	int       speed[2];
+	UgThread    thread;
+	int         speed[2];
+	union {
+		UgetCommon*  common;
+		UgetProxy*   proxy;
+		UgetHttp*    http;
+		UgetHttp*    ftp;
+		int          ok;
+	} temp;
 
-	plugin->common = ug_info_get (&node->info, UgetCommonInfo);
-	if (plugin->common == NULL || plugin->common->uri == NULL)
-		return  FALSE;
-	plugin->common = ug_data_copy (plugin->common);
+	temp.common = ug_info_get (&node->info, UgetCommonInfo);
+	if (temp.common == NULL || temp.common->uri == NULL)
+		return FALSE;
+	plugin->common = ug_data_copy (temp.common);
 	plugin_setup_uris (plugin);
 
-	plugin->proxy = ug_info_get (&node->info, UgetProxyInfo);
-	if (plugin->proxy)
-		plugin->proxy  = ug_data_copy (plugin->proxy);
+	temp.proxy = ug_info_get (&node->info, UgetProxyInfo);
+	if (temp.proxy)
+		plugin->proxy  = ug_data_copy (temp.proxy);
 
-	plugin->http = ug_info_get (&node->info, UgetHttpInfo);
-	if (plugin->http) {
-		plugin->http = ug_data_copy (plugin->http);
+	temp.http = ug_info_get (&node->info, UgetHttpInfo);
+	if (temp.http) {
+		plugin->http = ug_data_copy (temp.http);
 		// check http->post_file
-		if (plugin->http->post_file) {
-			if (ug_file_is_exist (plugin->http->post_file) == FALSE) {
+		if (temp.http->post_file) {
+			if (ug_file_is_exist (temp.http->post_file) == FALSE) {
 				uget_plugin_post ((UgetPlugin*) plugin,
 						uget_event_new_error (UGET_EVENT_ERROR_POST_FILE_NOT_FOUND,
 						                      NULL));
@@ -483,8 +491,8 @@ static int  plugin_start (UgetPluginCurl* plugin, UgetNode* node)
 			}
 		}
 		// check http->cookie_file
-		if (plugin->http->cookie_file) {
-			if (ug_file_is_exist (plugin->http->cookie_file) == FALSE) {
+		if (temp.http->cookie_file) {
+			if (ug_file_is_exist (temp.http->cookie_file) == FALSE) {
 				uget_plugin_post ((UgetPlugin*) plugin,
 						uget_event_new_error (UGET_EVENT_ERROR_COOKIE_FILE_NOT_FOUND,
 						                      NULL));
@@ -493,9 +501,9 @@ static int  plugin_start (UgetPluginCurl* plugin, UgetNode* node)
 		}
 	}
 
-	plugin->ftp = ug_info_get (&node->info, UgetFtpInfo);
-	if (plugin->ftp)
-		plugin->ftp = ug_data_copy (plugin->ftp);
+	temp.ftp = ug_info_get (&node->info, UgetFtpInfo);
+	if (temp.ftp)
+		plugin->ftp = ug_data_copy (temp.ftp);
 
 	// assign node before speed control
 	uget_node_ref (node);
@@ -504,14 +512,15 @@ static int  plugin_start (UgetPluginCurl* plugin, UgetNode* node)
 	speed[0] = plugin->limit.download;
 	speed[1] = plugin->limit.upload;
 	plugin_ctrl_speed (plugin, speed);
+	// Don't notify speed limit changed if user set it before plugin start.
 	plugin->limit_changed = FALSE;
 
 	// try to start thread
 	plugin->paused = FALSE;
 	plugin->stopped = FALSE;
 	uget_plugin_ref ((UgetPlugin*) plugin);
-	ok = ug_thread_create (&thread, (UgThreadFunc) plugin_thread, plugin);
-	if (ok == UG_THREAD_OK)
+	temp.ok = ug_thread_create (&thread, (UgThreadFunc) plugin_thread, plugin);
+	if (temp.ok == UG_THREAD_OK)
 		ug_thread_unjoin (&thread);
 	else {
 		// failed to start thread
