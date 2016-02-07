@@ -399,15 +399,23 @@ int   ug_decode_uri (const char* uri, int uri_length, char* dest)
 		for (uri_end = uri + uri_length;  uri < uri_end;  dest_length++) {
 			if (uri[0] == '%' &&
 			    uri + 2 < uri_end &&
-				( ch1 = hex_char_to_int(uri[1]) ) != -1 &&
-				( ch2 = hex_char_to_int(uri[2]) ) != -1)
+			    (ch1 = hex_char_to_int(uri[1])) != -1 &&
+			    (ch2 = hex_char_to_int(uri[2])) != -1)
 			{
 				if (dest)
 					*dest++ = (ch1 << 4) + ch2;  // ch1*16 + ch2
 				uri += 3;
 			}
-			else if (dest)
-				*dest++ = *uri++;
+			else if (dest) {
+				// URLs cannot contain spaces.
+				// URL decoding replaces a plus (+) sign with a space.
+				if (uri[0] == '+') {
+					*dest++ = ' ';
+					uri++;
+				}
+				else
+					*dest++ = *uri++;
+			}
 		}
 	}
 
