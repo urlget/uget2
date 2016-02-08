@@ -1,3 +1,11 @@
+uGet 2.0.5: (2016-02-xx)
+1. curl plug-in: Disable SSL verification for host.
+2. curl plug-in: Don't check post and cookie file if no HTTP setting data.
+3. curl plug-in: Don't assign data if plug-in start failed.
+4. avoid crash when program re-enter signal handler. (e.g. SIGINT)
+5. adjust width of download properties form by width of category chooser.
+6. Fix: Can't stop all task when program into offline mode.
+
 uGet 2.0.4: (2016-01-01)
 1. save and restore width of download column.
 2. adjust schedule form for large font size.
