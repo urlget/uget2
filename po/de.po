@@ -5,13 +5,13 @@
 # Translators:
 # Michael Tunnell <michael@ugetdm.com>, 2013
 # Raphael Groner <projects.rg@smart.ms>, 2013-2014
-# Tobias Bannert <tobannert@gmail.com>, 2015
+# Tobias Bannert <tobannert@gmail.com>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2015-09-24 12:23+0000\n"
+"PO-Revision-Date: 2016-01-30 05:45+0000\n"
 "Last-Translator: Tobias Bannert <tobannert@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/uget/uget/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -344,7 +344,7 @@ msgstr "Neue Übertragung erstellen"
 #: ../../po/../ui-gtk/UgtkApp-ui.c:194 ../../po/../ui-gtk/UgtkMenubar-ui.c:58
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:59
 msgid "New _Download..."
-msgstr "Neue _Übertragung …"
+msgstr "_Neue Übertragung …"
 
 #. New Category
 #: ../../po/../ui-gtk/UgtkApp-ui.c:201 ../../po/../ui-gtk/UgtkMenubar-ui.c:65

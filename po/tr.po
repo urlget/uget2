@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Emin Tufan <etcetin@gmail.com>, 2013-2015
+# Emin Tufan <etcetin@gmail.com>, 2013-2016
 # yakup <mutouk@yandex.ru>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2015-05-07 16:56+0000\n"
+"PO-Revision-Date: 2016-01-03 15:44+0000\n"
 "Last-Translator: Emin Tufan <etcetin@gmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/uget/uget/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -245,7 +245,7 @@ msgstr "aria2: JSON-RPC isteği ayrıştırılamıyor."
 
 #: ../../po/../uget/UgetPluginAria2.c:306
 msgid "No response. Is aria2 shutdown?"
-msgstr ""
+msgstr "Cevap yok. aria2 kapalı mı?"
 
 #. debug
 #: ../../po/../uget/UgetPluginAria2.c:608
@@ -262,7 +262,7 @@ msgstr "Yiğit Ateş\nEmin Tufan Çetin <etcetin@gmail.com>"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:80
 msgid "uGet Founder: "
-msgstr ""
+msgstr "uGet Kurucusu:"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:81
 msgid "uGet Project Manager: "
@@ -782,7 +782,7 @@ msgstr ""
 #. Save All
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
 msgid "Save _all settings"
-msgstr ""
+msgstr "Tüm _ayarları kaydet"
 
 #. Offline mode
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:152
@@ -819,15 +819,15 @@ msgstr ""
 #. Completion Auto-Actions - Disable
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:200
 msgid "_Disable"
-msgstr ""
+msgstr "_Devredışı bırak"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:205
 msgid "Hibernate"
-msgstr ""
+msgstr "Uyut"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:210
 msgid "Suspend"
-msgstr ""
+msgstr "Beklet"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:215
 msgid "Shutdown"
@@ -839,7 +839,7 @@ msgstr "Yeniden Başlat"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:225
 msgid "Custom"
-msgstr ""
+msgstr "Özel"
 
 #. Completion Auto-Actions - Remember
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
@@ -1008,7 +1008,7 @@ msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:495
 msgid "Open _Containing folder"
-msgstr ""
+msgstr "Depolama _konumunu aç"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:504
 msgid "Force Start"
@@ -1413,7 +1413,7 @@ msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:87
 msgid "Monitor clipboard for specified file types:"
-msgstr ""
+msgstr "Belirtilen dosya türleri için panoyu izle:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:102
 msgid "Separate the types with character '|'."
@@ -1425,7 +1425,7 @@ msgstr "Burada düzenli ifadeleri kullanabilirsiniz."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:151
 msgid "Confirmation"
-msgstr ""
+msgstr "Onay"
 
 #. Confirmation check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:157
@@ -1438,7 +1438,7 @@ msgstr "Dosyalar silinirken onayla"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:166
 msgid "System Tray"
-msgstr ""
+msgstr "Sistem Tepsisi"
 
 #. System Tray check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:172
@@ -1451,7 +1451,7 @@ msgstr "Tepsiye küçültülmüş olarak başlat"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:178
 msgid "Close to tray on window close"
-msgstr ""
+msgstr "Pencere kapatıldığında sistem tepsisine küçült"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:182
 msgid "Use Ubuntu's App Indicator"
@@ -1480,7 +1480,7 @@ msgstr ""
 #. Global speed limit
 #: ../../po/../ui-gtk/UgtkSettingForm.c:270
 msgid "Global speed limit"
-msgstr ""
+msgstr "Genel hız sınırı"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:278
 #: ../../po/../ui-gtk/UgtkSettingForm.c:564
@@ -1544,7 +1544,7 @@ msgstr ""
 #. Speed Limits
 #: ../../po/../ui-gtk/UgtkSettingForm.c:556
 msgid "Global speed limit for aria2 only"
-msgstr ""
+msgstr "Sadece aria2 için genel hız sınırı"
 
 #. ------------------------------------------------------------------------
 #. aria2 works on local device
