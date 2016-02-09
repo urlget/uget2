@@ -59,6 +59,7 @@ extern "C" {
 // path
 
 const char* ugtk_get_data_dir (void);
+const char* ugtk_get_config_dir (void);
 const char* ugtk_get_locale_dir (void);
 
 #if defined _WIN32 || defined _WIN64

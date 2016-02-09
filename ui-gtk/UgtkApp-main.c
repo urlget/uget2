@@ -207,8 +207,8 @@ static void sys_signal_handler (int sig)
 #if !(defined _WIN32 || defined _WIN64)
 			sync();
 #endif
-			break;
 		}
+		break;
 
 //	case SIGSEGV:
 //		signal (SIGSEGV, NULL);
@@ -268,7 +268,7 @@ int  main (int argc, char** argv)
 
 	// JSON-RPC server
 	rpc = uget_rpc_new (NULL);
-	rpc->backup_dir = g_build_filename (g_get_user_config_dir (),
+	rpc->backup_dir = g_build_filename (ugtk_get_config_dir (),
 	                                    UGTK_APP_DIR, "attachment", NULL);
 	ug_create_dir_all (rpc->backup_dir, -1);
 	if (uget_rpc_start_server (rpc))
@@ -306,7 +306,9 @@ int  main (int argc, char** argv)
 
 	gtk_main ();
 
+	// avoid crash when program re-enter signal handler.
 	ugtk_quitting = TRUE;
+	// clear/free other resource
 	uget_app_clear_attachment ((UgetApp*) ugtk_app);
 	ugtk_app_final (ugtk_app);
 	g_free (ugtk_app);

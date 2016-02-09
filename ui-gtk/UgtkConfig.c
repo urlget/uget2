@@ -63,11 +63,31 @@ const char* ugtk_get_data_dir (void)
 	return data_dir;
 }
 
+const char* ugtk_get_config_dir (void)
+{
+#ifdef UGET_PORTABLE
+	static gchar* config_dir = NULL;
+
+	if (config_dir == NULL) {
+		config_dir = (char*) ugtk_get_data_dir ();
+		config_dir = g_build_filename (ugtk_get_data_dir(), "..", "config", NULL);
+	}
+	return config_dir;
+#endif
+
+	return g_get_user_config_dir ();
+}
+
 #else
 
 const char* ugtk_get_data_dir (void)
 {
 	return DATADIR;
+}
+
+const char* ugtk_get_config_dir (void)
+{
+	return g_get_user_config_dir ();
 }
 
 #endif // _WIN32 || _WIN64
@@ -82,4 +102,3 @@ const char* ugtk_get_locale_dir (void)
 
 	return locale_dir;
 }
-

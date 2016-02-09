@@ -56,7 +56,7 @@ void  ugtk_app_init (UgtkApp* app, UgetRpc* rpc)
 	app->rpc = rpc;
 	uget_app_init ((UgetApp*) app);
 	// set application config directory for each user
-	dir = g_build_filename (g_get_user_config_dir (), UGTK_APP_DIR, NULL);
+	dir = g_build_filename (ugtk_get_config_dir (), UGTK_APP_DIR, NULL);
 	uget_app_set_config_dir ((UgetApp*) app, dir);
 	g_free (dir);
 
@@ -137,7 +137,7 @@ void  ugtk_app_save (UgtkApp* app)
 	uget_rss_save_feeds (app->rss_builtin, file);
 	g_free (file);
 
-//	uget_app_save_categories ((UgetApp*) app, g_get_user_config_dir ());
+//	uget_app_save_categories ((UgetApp*) app, ugtk_get_config_dir ());
 	uget_app_save_categories ((UgetApp*) app, NULL);
 }
 
@@ -163,7 +163,7 @@ void  ugtk_app_load (UgtkApp* app)
 	uget_rss_load_feeds (app->rss_builtin, file);
 	g_free (file);
 
-//	uget_app_load_categories ((UgetApp*) app, g_get_user_config_dir ());
+//	uget_app_load_categories ((UgetApp*) app, ugtk_get_config_dir ());
 	counts = uget_app_load_categories ((UgetApp*) app, NULL);
 	if (counts == 0)
 		ugtk_app_add_default_category (app);
