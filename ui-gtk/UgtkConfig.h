@@ -64,6 +64,9 @@ const char* ugtk_get_locale_dir (void);
 
 #if defined _WIN32 || defined _WIN64
 
+const char* ugtk_get_install_dir (void);
+gboolean    ugtk_is_portable (void);
+
 #ifndef DATADIR
 #define DATADIR    ugtk_get_data_dir()
 #endif

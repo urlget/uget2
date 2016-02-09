@@ -42,11 +42,11 @@
 #if defined _WIN32 || defined _WIN64
 #include <windows.h>
 
-const char* ugtk_get_data_dir (void)
+const char* ugtk_get_install_dir (void)
 {
-	static gchar* data_dir = NULL;
+	static gchar* install_dir = NULL;
 
-	if (data_dir == NULL) {
+	if (install_dir == NULL) {
 		gchar*		path;
 		gunichar2*	path_wcs;
 		HMODULE		hmod;
@@ -57,25 +57,41 @@ const char* ugtk_get_data_dir (void)
 		GetModuleFileNameW (hmod, path_wcs, MAX_PATH);
 		path = g_utf16_to_utf8 (path_wcs, -1, NULL, NULL, NULL);
 		g_free (path_wcs);
-		data_dir = g_path_get_dirname (path);
+		install_dir = g_path_get_dirname (path);
 		g_free (path);
 	}
-	return data_dir;
+	return install_dir;
+}
+
+gboolean    ugtk_is_portable_mode (void)
+{
+	static int portable = -1;
+	char*      local_path;
+
+	if (portable == -1) {
+		local_path = g_build_filename (ugtk_get_install_dir(), "uget-portable-mode", NULL);
+		portable = g_file_test (local_path, G_FILE_TEST_EXISTS);
+		g_free (local_path);
+	}
+	return portable;
+}
+
+const char* ugtk_get_data_dir (void)
+{
+	return ugtk_get_install_dir ();
 }
 
 const char* ugtk_get_config_dir (void)
 {
-#ifdef UGET_PORTABLE
-	static gchar* config_dir = NULL;
+	static const gchar* config_dir = NULL;
 
 	if (config_dir == NULL) {
-		config_dir = (char*) ugtk_get_data_dir ();
-		config_dir = g_build_filename (ugtk_get_data_dir(), "..", "config", NULL);
+		if (ugtk_is_portable_mode () == TRUE)
+			config_dir = g_build_filename (ugtk_get_data_dir(), "config", NULL);
+		else
+			config_dir = g_get_user_config_dir ();
 	}
 	return config_dir;
-#endif
-
-	return g_get_user_config_dir ();
 }
 
 #else
