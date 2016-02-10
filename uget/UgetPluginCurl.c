@@ -128,7 +128,7 @@ static struct
 	int  ref_count;
 } global = {0, 0};
 
-static UgetResult  global_init  (void)
+static UgetResult  global_init (void)
 {
 	if (global.initialized == FALSE) {
 #if defined _WIN32 || defined _WIN64
@@ -453,8 +453,8 @@ static void plugin_clear_node (UgetPluginCurl* plugin)
 // ----------------------------------------------------------------------------
 // plugin_start
 
-static void plugin_setup_uris (UgetPluginCurl* plugin);
-static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin);
+static void  plugin_setup_uris (UgetPluginCurl* plugin);
+static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin);
 
 static int  plugin_start (UgetPluginCurl* plugin, UgetNode* node)
 {
@@ -520,8 +520,10 @@ static int  plugin_start (UgetPluginCurl* plugin, UgetNode* node)
 	plugin->stopped = FALSE;
 	uget_plugin_ref ((UgetPlugin*) plugin);
 	temp.ok = ug_thread_create (&thread, (UgThreadFunc) plugin_thread, plugin);
-	if (temp.ok == UG_THREAD_OK)
+	if (temp.ok == UG_THREAD_OK) {
 		ug_thread_unjoin (&thread);
+		plugin->start_time = time (NULL);
+	}
 	else {
 		// failed to start thread
 		plugin->paused = TRUE;
@@ -530,6 +532,11 @@ static int  plugin_start (UgetPluginCurl* plugin, UgetNode* node)
 				uget_event_new_error (UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 				                      NULL));
 		uget_plugin_unref ((UgetPlugin*) plugin);
+
+		// unassign node
+		uget_node_unref (node);
+		plugin->node = NULL;
+
 		return FALSE;
 	}
 	return TRUE;
@@ -608,7 +615,7 @@ static int  split_download (UgetPluginCurl* plugin, UgetCurl* ugcurl);
 static void adjust_speed_limit (UgetPluginCurl* plugin);
 static UgetCurl* create_segment (UgetPluginCurl* plugin);
 
-static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
+static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 {
 	UgetCommon* common;
 	UgetCurl*   ugcurl;
@@ -625,6 +632,7 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 	if (plugin->seg.n_max == 0)
 		plugin->seg.n_max = 1;
 
+	// create new segment and add it to seg.list
 	ugcurl = create_segment (plugin);
 	if (load_file_info (plugin)) {
 		uget_curl_open_file (ugcurl, plugin->file.path);
@@ -639,10 +647,9 @@ static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginCurl* plugin)
 		ugcurl->prepare.data = plugin;
 		ugcurl->header_store = TRUE;
 	}
-	// add to seg.list
 	ug_list_append (&plugin->seg.list, (void*) ugcurl);
-	// start curl and get starting time
-	plugin->start_time = time (NULL);
+
+	// start curl
 	uget_curl_run (ugcurl, FALSE);
 
 	// main loop
