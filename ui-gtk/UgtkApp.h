@@ -219,7 +219,7 @@ void  ugtk_app_delete_download (UgtkApp* app, gboolean delete_files);
 void  ugtk_app_edit_category (UgtkApp* app);
 void  ugtk_app_edit_download (UgtkApp* app);
 // queue/pause
-void  ugtk_app_queue_download (UgtkApp* app);
+void  ugtk_app_queue_download (UgtkApp* app, gboolean keep_active);
 void  ugtk_app_pause_download (UgtkApp* app);
 void  ugtk_app_switch_download_state (UgtkApp* app);
 // move selected node

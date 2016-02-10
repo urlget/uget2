@@ -572,6 +572,11 @@ static void on_set_download_force_start (GtkWidget* widget, UgtkApp* app)
 //	ugtk_summary_show (&app->summary, app->traveler.download.cursor.node);
 }
 
+static void on_set_download_runnable (GtkWidget* widget, UgtkApp* app)
+{
+	ugtk_app_queue_download (app, TRUE);
+}
+
 // UgtkMenubar.download.move_to
 static void on_move_download (GtkWidget* widget, UgtkApp* app)
 {
@@ -836,8 +841,8 @@ void ugtk_menubar_init_callback (UgtkMenubar* menubar, UgtkApp* app)
 	// change status
 	g_signal_connect (menubar->download.force_start, "activate",
 			G_CALLBACK (on_set_download_force_start), app);
-	g_signal_connect_swapped (menubar->download.runnable, "activate",
-			G_CALLBACK (ugtk_app_queue_download), app);
+	g_signal_connect (menubar->download.runnable, "activate",
+			G_CALLBACK (on_set_download_runnable), app);
 	g_signal_connect_swapped (menubar->download.pause, "activate",
 			G_CALLBACK (ugtk_app_pause_download), app);
 	// move

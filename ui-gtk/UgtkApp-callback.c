@@ -65,10 +65,15 @@ void  ugtk_app_init_callback (UgtkApp* app)
 
 // ----------------------------------------------------------------------------
 // Toolbar
-//
+
 static void  on_create_download (GtkWidget* widget, UgtkApp* app)
 {
 	ugtk_app_create_download (app, NULL, NULL);
+}
+
+static void  on_set_download_runnable (GtkWidget* widget, UgtkApp* app)
+{
+	ugtk_app_queue_download (app, TRUE);
 }
 
 // ----------------------------------------------------------------------------
@@ -455,8 +460,8 @@ static void ugtk_toolbar_init_callback (struct UgtkToolbar* toolbar, UgtkApp* ap
 	g_signal_connect_swapped (toolbar->save, "clicked",
 			G_CALLBACK (ugtk_app_save), app);
 	// change status
-	g_signal_connect_swapped (toolbar->runnable, "clicked",
-			G_CALLBACK (ugtk_app_queue_download), app);
+	g_signal_connect (toolbar->runnable, "clicked",
+			G_CALLBACK (on_set_download_runnable), app);
 	g_signal_connect_swapped (toolbar->pause, "clicked",
 			G_CALLBACK (ugtk_app_pause_download), app);
 	// change data

@@ -1001,7 +1001,7 @@ void  ugtk_app_edit_download (UgtkApp* app)
 // ------------------------------------
 // queue/pause
 
-void  ugtk_app_queue_download (UgtkApp* app)
+void  ugtk_app_queue_download (UgtkApp* app, gboolean keep_active)
 {
 	UgetNode*  node;
 	UgetNode*  cursor;
@@ -1014,6 +1014,8 @@ void  ugtk_app_queue_download (UgtkApp* app)
 		node = link->data;
 		node = node->data;
 		link->data = node;
+		if (keep_active && node->state & UGET_STATE_ACTIVE)
+			continue;
 		uget_app_queue_download ((UgetApp*) app, node);
 	}
 	if (app->traveler.state.cursor.pos == 0) {
