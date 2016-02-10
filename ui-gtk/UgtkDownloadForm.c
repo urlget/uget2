@@ -81,13 +81,13 @@ void  ugtk_download_form_init (UgtkDownloadForm* dform, UgtkProxyForm* proxy, Gt
 
 static void ugtk_download_form_init_page1 (UgtkDownloadForm* dform, UgtkProxyForm* proxy)
 {
-	GtkWidget*	widget;
-	GtkGrid*	top_grid;
-	GtkGrid*	grid;
-	GtkWidget*	frame;
+	GtkWidget*  widget;
+	GtkGrid*    top_grid;
+	GtkGrid*    grid;
+	GtkWidget*  frame;
 	GtkBox*	    top_vbox;
-	GtkWidget*	vbox;
-	GtkWidget*	hbox;
+	GtkWidget*  vbox;
+	GtkWidget*  hbox;
 
 	dform->page1 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 	top_vbox = (GtkBox*) dform->page1;
@@ -282,8 +282,8 @@ static void ugtk_download_form_init_page1 (UgtkDownloadForm* dform, UgtkProxyFor
 
 static void ugtk_download_form_init_page2 (UgtkDownloadForm* dform)
 {
-	GtkWidget*	widget;
-	GtkGrid*	grid;
+	GtkWidget*  widget;
+	GtkGrid*    grid;
 
 	dform->page2 = gtk_grid_new ();
 	grid = (GtkGrid*) dform->page2;

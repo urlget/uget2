@@ -239,9 +239,11 @@ void  ugtk_node_dialog_store_recent (UgtkNodeDialog* ndialog, UgtkApp* app)
 
 	app->recent.saved = TRUE;
 	gtk_tree_view_get_cursor (ndialog->node_view, &path, NULL);
-	nth = *gtk_tree_path_get_indices (path);
-	app->recent.category_index = nth;
-	gtk_tree_path_free (path);
+	if (path != NULL) {
+		nth = *gtk_tree_path_get_indices (path);
+		app->recent.category_index = nth;
+		gtk_tree_path_free (path);
+	}
 	ugtk_download_form_get (&ndialog->download, app->recent.infonode);
 }
 
