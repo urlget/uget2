@@ -4,6 +4,10 @@ noinst_PROGRAMS = \
 #	test-uglib-cxx  test-uget-cxx
 TESTS_LIBS = @PTHREAD_LIBS@  @CURL_LIBS@  @GLIB_LIBS@
 
+if WITH_LIBPWMD
+TESTS_LIBS += @LIBPWMD_LIBS@
+endif
+
 # set the include path found by configure
 AM_CPPFLAGS = -I$(top_srcdir)/uglib   -I$(top_srcdir)/uget
 AM_CFLAGS   = @PTHREAD_CFLAGS@  @LFS_CFLAGS@  @CURL_CFLAGS@  @GLIB_CFLAGS@
