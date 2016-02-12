@@ -116,7 +116,7 @@ void  test_node_download (void)
 	char*        uri;
 	char*        mirrors;
 
-	uri = "https://www.youtube.com/watch?v=x9P2s6SU5CU";
+	uri = "https://www.youtube.com/watch?v=y2004Xaz2HU";
 //	uri = "http://download.tuxfamily.org/notepadplus/6.5.3/npp.6.5.3.Installer.exe";
 //	uri = "http://ftp.gimp.org/pub/gimp/v2.8/windows/gimp-2.8.10-setup.exe";
 //	mirrors = "ftp://195.220.108.108/linux/fedora/linux/updates/19/x86_64/kernel-3.11.2-201.fc19.x86_64.rpm";

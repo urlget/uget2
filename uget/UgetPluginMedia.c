@@ -331,7 +331,7 @@ static int  plugin_sync (UgetPluginMedia* plugin)
 		ug_free (node->name);
 		// decide to show "[current/total] title" or "title"
 		if (plugin->item_total > 1) {
-			node->name = ug_strdup_printf ("[%d/%d] %s",
+			node->name = ug_strdup_printf ("(%d/%d) %s",
 					plugin->item_index + 1,
 					plugin->item_total,
 					plugin->title);

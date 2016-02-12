@@ -409,9 +409,7 @@ void  test_media (void)
 	int  temp;
 	char* uri;
 
-	uri = "https://www.youtube.com/watch?v=KgxxYEjgN4k&list=PLATwx1z00Hsfi77OSAgRoYd9zy3OlxL_v&index=1";
-	uri = "https://www.youtube.com/watch?v=x9P2s6SU5CU";
-	uri = "https://www.youtube.com/watch?v=Kog3QUmdB6s";
+	uri = "https://www.youtube.com/watch?v=y2004Xaz2HU";
 	um = uget_media_new (uri, UGET_MEDIA_YOUTUBE);
 	temp = uget_media_grab_items (um, NULL);
 	printf ("\nget %d media item\n", temp);

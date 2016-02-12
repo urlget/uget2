@@ -87,7 +87,7 @@ void  ugtk_clipboard_form_init (struct UgtkClipboardForm* cbform)
 	gtk_box_pack_start (vbox, gtk_label_new (""), FALSE, FALSE, 2);
 
 	// media website
-	widget = gtk_check_button_new_with_mnemonic (_("_Monitor media website"));
+	widget = gtk_check_button_new_with_mnemonic (_("_Monitor URL of media website"));
 	gtk_box_pack_start (vbox, widget, FALSE, FALSE, 1);
 	cbform->media_website = (GtkToggleButton*) widget;
 
