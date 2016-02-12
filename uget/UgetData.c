@@ -240,7 +240,7 @@ static const UgEntry  UgetProxyPwmdEntry[] =
 	{"socket",      offsetof (struct UgetProxyPwmd, socket),
 			UG_ENTRY_STRING, NULL, NULL},
 	{"socket-args", offsetof (struct UgetProxyPwmd, socket_args),
-			UG_TYPE_STRING,	 NULL, NULL},
+			UG_ENTRY_STRING, NULL, NULL},
 	{"file",        offsetof (struct UgetProxyPwmd, file),
 			UG_ENTRY_STRING, NULL, NULL},
 	{"element",     offsetof (struct UgetProxyPwmd, element),

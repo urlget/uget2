@@ -206,10 +206,18 @@ void  ugtk_proxy_form_get (UgtkProxyForm* pform, UgetNode* node)
 	proxy->port = gtk_spin_button_get_value_as_int ((GtkSpinButton*) pform->port);
 
 #ifdef HAVE_LIBPWMD
-	ug_str_set (&proxy->pwmd.socket,  gtk_entry_get_text ((GtkEntry*)pform->pwmd.socket),  -1);
-	ug_str_set (&proxy->pwmd.socket_args,  gtk_entry_get_text ((GtkEntry*)pform->pwmd.socket_args),  -1);
-	ug_str_set (&proxy->pwmd.file,    gtk_entry_get_text ((GtkEntry*)pform->pwmd.file),    -1);
-	ug_str_set (&proxy->pwmd.element, gtk_entry_get_text ((GtkEntry*)pform->pwmd.element), -1);
+        ug_free (proxy->pwmd.socket);
+	text = gtk_entry_get_text ((GtkEntry*)pform->pwmd.socket);
+        proxy->pwmd.socket = (*text) ? ug_strdup (text) : NULL;
+        ug_free (proxy->pwmd.socket_args);
+	text = gtk_entry_get_text ((GtkEntry*)pform->pwmd.socket_args);
+        proxy->pwmd.socket_args = (*text) ? ug_strdup (text) : NULL;
+        ug_free (proxy->pwmd.file);
+	text = gtk_entry_get_text ((GtkEntry*)pform->pwmd.file);
+        proxy->pwmd.file = (*text) ? ug_strdup (text) : NULL;
+        ug_free (proxy->pwmd.element);
+	text = gtk_entry_get_text ((GtkEntry*)pform->pwmd.element);
+        proxy->pwmd.element = (*text) ? ug_strdup (text) : NULL;
 #endif	// HAVE_LIBPWMD
 }
 

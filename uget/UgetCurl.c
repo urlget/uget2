@@ -243,6 +243,9 @@ void  uget_curl_run (UgetCurl* ugcurl, int joinable)
 {
 	CURL*  curl;
 
+        if (ugcurl->state == UGET_CURL_ERROR)
+                return;
+
 	curl = ugcurl->curl;
 	uget_curl_decide_login (ugcurl);
 
@@ -923,9 +926,8 @@ static int  uget_curl_set_proxy_pwmd (UgetCurl* ugcurl, UgetProxy* proxy)
 
 fail:
        ug_close_pwmd(&pwmd);
-       gchar *e = ug_strdup_printf("Pwmd ERR %i: %s", rc, gpg_strerror(rc));
-       if (ugcurl->event)
-               uget_event_free (ugcurl->event);
+       ugcurl->state = UGET_CURL_ERROR;
+       gchar *e = ug_strdup_printf("Pwmd ERR %u: %s", rc, gpg_strerror(rc));
        ugcurl->event = uget_event_new_error (UGET_EVENT_ERROR_CUSTOM, e);
        fprintf(stderr, "%s\n", e);
        g_free(e);
