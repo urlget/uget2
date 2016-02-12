@@ -226,6 +226,7 @@ void uget_rpc_send_command (UgetRpc* urpc, int argc, char** argv)
 		} else
 #endif // (_WIN32 || _WIN64) && HAVE_GLIB
 		value->c.string = ug_strdup (argv[index]);
+
 		// replace invalid characters \/:*?"<>| by _ in filename.
 		if (strncmp (value->c.string, "--filename=", 11) == 0)
 			ug_str_replace_chars (value->c.string +11, "\\/:*?\"<>|", '_');

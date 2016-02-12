@@ -110,6 +110,8 @@ struct UgtkApp
 		gchar*         text;
 		GRegex*        regex;
 		gboolean       processing;
+		// media website
+		gboolean       media_website;
 	} clipboard;
 
 	// dialogs

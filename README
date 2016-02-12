@@ -1,4 +1,9 @@
-uGet 2.0.5: (2016-02-xx)
+uGet 2
+1. if file "uget-portable-mode" exists, data files save in installed folder. (Windows)
+2. curl plug-in: avoid showing "99:99:99" in "elapsed" when downloading start.
+3. Fix: Program stop running download when user set "Runnable" to it.
+
+uGet 2.0.5: (2016-02-08)
 1. curl plug-in: Disable SSL verification for host.
 2. curl plug-in: Don't check post and cookie file if no HTTP setting data.
 3. curl plug-in: Don't assign data if plug-in start failed.

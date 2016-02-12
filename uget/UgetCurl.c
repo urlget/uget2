@@ -65,7 +65,7 @@ static size_t uget_curl_header_ftp0 (char *buffer, size_t size,
 static size_t uget_curl_output_none (char *buffer, size_t size,
                                      size_t nmemb, void* data);
 static size_t uget_curl_output_default (char *buffer, size_t size,
-										size_t nmemb, void* data);
+                                        size_t nmemb, void* data);
 static int    uget_curl_progress (UgetCurl* ugcurl,
                                   double  dltotal, double  dlnow,
                                   double  ultotal, double  ulnow);
@@ -155,7 +155,7 @@ static UG_THREAD_RETURN_TYPE  uget_curl_thread (UgetCurl* ugcurl)
 	case CURLE_OUT_OF_MEMORY:
 		ugcurl->state = UGET_CURL_ERROR;
 		ugcurl->event = uget_event_new_error (
-				UGET_EVENT_ERROR_OUT_OF_RESOURCE, ugcurl->error_string);
+				UGET_EVENT_ERROR_OUT_OF_RESOURCE, NULL);
 		goto exit;
 
 	// abort by user (exit)
@@ -419,59 +419,14 @@ void  uget_curl_set_common (UgetCurl* ugcurl, UgetCommon* common)
 
 void  uget_curl_set_proxy (UgetCurl* ugcurl, UgetProxy* proxy)
 {
-	CURL*    curl;
-
-	curl = ugcurl->curl;
-	if (proxy == NULL)
-		return;
-
-	// proxy type
-	switch (proxy->type) {
-	case UGET_PROXY_NONE:
-		curl_easy_setopt (curl, CURLOPT_PROXYTYPE, 0);
-		break;
-
-	default:
-	case UGET_PROXY_DEFAULT:
-	case UGET_PROXY_HTTP:
-		curl_easy_setopt (curl, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
-		break;
-
-	case UGET_PROXY_SOCKS4:
-		curl_easy_setopt (curl, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS4);
-		break;
-
-	case UGET_PROXY_SOCKS5:
-		curl_easy_setopt (curl, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
-		break;
-
 #ifdef HAVE_LIBPWMD
-	case UGET_PROXY_PWMD:
+	if (proxy->type == UGET_PROXY_PWMD) {
 		uget_curl_set_proxy_pwmd (ugcurl, proxy);
 		return;
+	}
 #endif
-	}
 
-	curl_easy_setopt (curl, CURLOPT_PROXY, proxy->host);
-	if (proxy->port)
-		curl_easy_setopt (curl, CURLOPT_PROXYPORT, proxy->port);
-	else
-		curl_easy_setopt (curl, CURLOPT_PROXYPORT, 80);
-	// proxy user and password
-	if ((proxy->user     && proxy->user[0]) ||
-		(proxy->password && proxy->password[0]) ||
-		proxy->type == UGET_PROXY_SOCKS4 ||
-		proxy->type == UGET_PROXY_SOCKS5)
-	{
-		curl_easy_setopt (curl, CURLOPT_PROXYUSERNAME,
-				(proxy->user)     ? proxy->user     : "");
-		curl_easy_setopt (curl, CURLOPT_PROXYPASSWORD,
-				(proxy->password) ? proxy->password : "");
-	}
-	else {
-		curl_easy_setopt (curl, CURLOPT_PROXYUSERNAME, NULL);
-		curl_easy_setopt (curl, CURLOPT_PROXYPASSWORD, NULL);
-	}
+	ug_curl_set_proxy (ugcurl->curl, proxy);
 }
 
 int   uget_curl_set_http (UgetCurl* ugcurl, UgetHttp* http)
@@ -649,6 +604,54 @@ void uget_curl_decide_login (UgetCurl* ugcurl)
 					(temp.ftp->password) ? temp.ftp->password : "");
 			return;
 		}
+	}
+}
+
+void  ug_curl_set_proxy (CURL* curl, UgetProxy* proxy)
+{
+	if (proxy == NULL)
+		return;
+
+	// proxy type
+	switch (proxy->type) {
+	case UGET_PROXY_NONE:
+		curl_easy_setopt (curl, CURLOPT_PROXYTYPE, 0);
+		break;
+
+	default:
+	case UGET_PROXY_DEFAULT:
+	case UGET_PROXY_HTTP:
+		curl_easy_setopt (curl, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
+		break;
+
+	case UGET_PROXY_SOCKS4:
+		curl_easy_setopt (curl, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS4);
+		break;
+
+	case UGET_PROXY_SOCKS5:
+		curl_easy_setopt (curl, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+		break;
+	}
+
+	curl_easy_setopt (curl, CURLOPT_PROXY, proxy->host);
+	if (proxy->port)
+		curl_easy_setopt (curl, CURLOPT_PROXYPORT, proxy->port);
+	else
+		curl_easy_setopt (curl, CURLOPT_PROXYPORT, 80);
+	// proxy user and password
+	if ((proxy->user     && proxy->user[0]) ||
+		(proxy->password && proxy->password[0]) ||
+		proxy->type == UGET_PROXY_SOCKS4 ||
+		proxy->type == UGET_PROXY_SOCKS5)
+	{
+		curl_easy_setopt (curl, CURLOPT_PROXYUSERNAME,
+				(proxy->user)     ? proxy->user     : "");
+		curl_easy_setopt (curl, CURLOPT_PROXYPASSWORD,
+				(proxy->password) ? proxy->password : "");
+	}
+	else {
+		curl_easy_setopt (curl, CURLOPT_PROXYUSERNAME, NULL);
+		curl_easy_setopt (curl, CURLOPT_PROXYPASSWORD, NULL);
 	}
 }
 
@@ -881,7 +884,7 @@ static int    uget_curl_progress (UgetCurl* ugcurl,
 // PWMD
 //
 #ifdef HAVE_LIBPWMD
-static int	uget_curl_set_proxy_pwmd (UgetCurl* ugcurl, UgetProxy* proxy)
+static int  uget_curl_set_proxy_pwmd (UgetCurl* ugcurl, UgetProxy* proxy)
 {
        CURL* curl;
        struct pwmd_proxy_s pwmd;

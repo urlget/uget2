@@ -80,7 +80,7 @@ static struct
 	int  ref_count;
 } global = {0, 0};
 
-static UgetResult  global_init  (void)
+static UgetResult  global_init (void)
 {
 	if (global.initialized == FALSE) {
 		//
@@ -107,7 +107,7 @@ static void  global_unref (void)
 
 	global.ref_count--;
 	if (global.ref_count == 0) {
-		global.initialized = 0;
+		global.initialized = FALSE;
 		//
 		// your global finalized code
 		//
@@ -162,6 +162,7 @@ static void plugin_init (UgetPluginEmpty* plugin)
 		global_init ();
 	else
 		global_ref ();
+
 	//
 	// your initialized code.
 	//
@@ -172,8 +173,11 @@ static void plugin_final (UgetPluginEmpty* plugin)
 	//
 	// your finalized code.
 	//
+
+	// unassign node
 	if (plugin->node)
 		uget_node_unref (plugin->node);
+
 	global_unref ();
 }
 
@@ -260,8 +264,10 @@ static int  plugin_start (UgetPluginEmpty* plugin, UgetNode* node)
 	if (common == NULL || common->uri == NULL)
 		return FALSE;
 
-	plugin->node = node;
+	// assign node
 	uget_node_ref (node);
+	plugin->node = node;
+
 	return TRUE;
 }
 

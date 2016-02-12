@@ -55,17 +55,20 @@ typedef enum {
 	UGET_PLUGIN_CTRL_START,    // UgetNode*
 	UGET_PLUGIN_CTRL_STOP,
 	UGET_PLUGIN_CTRL_SPEED,    // int*, int[0] = download, int[1] = upload
-	UGET_PLUGIN_CTRL_NODE_UPDATED,
-	UGET_PLUGIN_CTRL_LIMIT_CHANGED,
+
+	UGET_PLUGIN_CTRL_NODE_UPDATED,   // unused
+	UGET_PLUGIN_CTRL_LIMIT_CHANGED,  // unused
 } UgetPluginCtrlCode;
 
+// global
 typedef enum {
-	UGET_PLUGIN_INIT,            // get/set, parameter = 0 or 1 (FALSE or TRUE)
+	UGET_PLUGIN_INIT,            // get/set, parameter = (intptr_t = FALSE or TRUE)
 	UGET_PLUGIN_SETTING,         // get/set, parameter = (void* custom_struct)
-	UGET_PLUGIN_SPEED_LIMIT,     // get/set, parameter = (int* speed[2])
-	UGET_PLUGIN_SPEED,           // get, parameter = (int* speed[2])
+	UGET_PLUGIN_SPEED_LIMIT,     // get/set, parameter = (int  speed[2])
+	UGET_PLUGIN_SPEED,           // get, parameter = (int  speed[2])
 	UGET_PLUGIN_ERROR_CODE,      // get, parameter = (int* error_code)
 	UGET_PLUGIN_ERROR_STRING,    // get, parameter = (char** error_string)
+	UGET_PLUGIN_MATCH,           // get, parameter = (char*  url)
 
 	UGET_PLUGIN_OPTION_DERIVED = 10000,  // for derived plug-ins
 } UgetPluginOption;
@@ -149,8 +152,6 @@ int     uget_plugin_match (const UgetPluginInfo* info, UgUri* uuri);
 //void  uget_plugin_assign (UgetPlugin* plugin, UgetPlugin* src);
 #define uget_plugin_assign    ug_data_assign
 
-// plug-in will start after program call this function.
-// if node == NULL, plug-in will stop.
 // return TRUE or FALSE.
 int   uget_plugin_ctrl (UgetPlugin* plugin, int code, void* data);
 
@@ -161,9 +162,12 @@ int   uget_plugin_ctrl (UgetPlugin* plugin, int code, void* data);
 
 #define uget_plugin_ctrl_speed(plugin, dl_ul_int_array)  \
 		uget_plugin_ctrl (plugin, UGET_PLUGIN_CTRL_SPEED, dl_ul_int_array)
+
+// unused
 // notify plugin when other data was changed
 #define uget_plugin_data_changed(plugin)  \
 		uget_plugin_ctrl (plugin, UGET_PLUGIN_CTRL_DATA_CHANGED, NULL)
+// unused
 // notify plugin when speed_limit, retry_limit, max_connections...etc was changed
 #define uget_plugin_limit_changed(plugin) \
 		uget_plugin_ctrl (plugin, UGET_PLUGIN_CTRL_LIMIT_CHANGED, NULL)

@@ -41,6 +41,7 @@
 #include <UgHtmlFilter.h>
 #include <UgetPluginCurl.h>
 #include <UgetPluginAria2.h>
+#include <UgetPluginMedia.h>
 #include <UgtkApp.h>
 #include <UgtkUtil.h>
 #include <UgtkNodeDialog.h>
@@ -71,6 +72,7 @@ void  ugtk_app_init (UgtkApp* app, UgetRpc* rpc)
 	// plugin initialize
 	uget_plugin_set (UgetPluginCurlInfo,  UGET_PLUGIN_INIT, (void*) TRUE);
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) TRUE);
+	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) TRUE);
 	// apply UgtkSetting
 	ugtk_app_set_plugin_setting (app, &app->setting);
 	ugtk_app_set_window_setting (app, &app->setting);
@@ -465,6 +467,7 @@ void  ugtk_app_set_column_setting (UgtkApp* app, UgtkSetting* setting)
 
 void  ugtk_app_set_plugin_setting (UgtkApp* app, UgtkSetting* setting)
 {
+	const UgetPluginInfo*  default_plugin;
 	int  limit[2];
 	int  sensitive = FALSE;
 
@@ -472,29 +475,42 @@ void  ugtk_app_set_plugin_setting (UgtkApp* app, UgtkSetting* setting)
 	default:
 	case UGTK_PLUGIN_ORDER_CURL:
 		uget_app_remove_plugin ((UgetApp*) app, UgetPluginAria2Info);
-		uget_app_set_default_plugin ((UgetApp*) app, UgetPluginCurlInfo);
+		default_plugin = UgetPluginCurlInfo;
 		sensitive = FALSE;
 		break;
 
 	case UGTK_PLUGIN_ORDER_ARIA2:
 		uget_app_remove_plugin ((UgetApp*) app, UgetPluginCurlInfo);
-		uget_app_set_default_plugin ((UgetApp*) app, UgetPluginAria2Info);
+		default_plugin = UgetPluginAria2Info;
 		sensitive = TRUE;
 		break;
 
 	case UGTK_PLUGIN_ORDER_CURL_ARIA2:
 		uget_app_add_plugin ((UgetApp*) app, UgetPluginAria2Info);
-		uget_app_set_default_plugin ((UgetApp*) app, UgetPluginCurlInfo);
+		default_plugin = UgetPluginCurlInfo;
 		sensitive = TRUE;
 		break;
 
 	case UGTK_PLUGIN_ORDER_ARIA2_CURL:
 		uget_app_add_plugin ((UgetApp*) app, UgetPluginCurlInfo);
-		uget_app_set_default_plugin ((UgetApp*) app, UgetPluginAria2Info);
+		default_plugin = UgetPluginAria2Info;
 		sensitive = TRUE;
 		break;
 	}
 
+	// set default plug-in
+	uget_app_set_default_plugin ((UgetApp*) app, default_plugin);
+	// set media plug-in
+	uget_app_add_plugin ((UgetApp*) app, UgetPluginMediaInfo);
+	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_DEFAULT_PLUGIN,
+	                 (void*) default_plugin);
+	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_MATCH_MODE,
+	                 (void*)(intptr_t) setting->media.match_mode);
+	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_QUALITY,
+	                 (void*)(intptr_t) setting->media.quality);
+	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_TYPE,
+	                 (void*)(intptr_t) setting->media.type);
+	// set aria2 plug-in
 	if (setting->plugin_order >= UGTK_PLUGIN_ORDER_ARIA2) {
 		uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_ARIA2_URI,
 		                 setting->aria2.uri);
@@ -525,8 +541,8 @@ void  ugtk_app_set_plugin_setting (UgtkApp* app, UgtkSetting* setting)
 void  ugtk_app_set_other_setting (UgtkApp* app, UgtkSetting* setting)
 {
 	// clipboard & commandline
-	ugtk_clipboard_set_pattern (&app->clipboard,
-			setting->clipboard.pattern);
+	ugtk_clipboard_set_pattern (&app->clipboard, setting->clipboard.pattern);
+	app->clipboard.media_website = app->setting.clipboard.media_website;
 	// global speed limit
 	uget_task_set_speed (&app->task,
 			setting->bandwidth.normal.download * 1024,
@@ -846,16 +862,20 @@ void  ugtk_app_create_category (UgtkApp* app)
 void  ugtk_app_create_download (UgtkApp* app, const char* sub_title, const char* uri)
 {
 	UgtkNodeDialog*  ndialog;
+	UgUri      uuri;
 	UgetNode*  cnode;
-	gchar*     title;
 	GList*     list;
+	union {
+		gchar*     title;
+		UgetNode*  cnode;
+	} temp;
 
 	if (sub_title)
-		title = g_strconcat (UGTK_APP_NAME, " - ", sub_title, NULL);
+		temp.title = g_strconcat (UGTK_APP_NAME, " - ", sub_title, NULL);
 	else
-		title = g_strconcat (UGTK_APP_NAME, " - ", _("New Download"), NULL);
-	ndialog = ugtk_node_dialog_new (title, app, FALSE);
-	g_free (title);
+		temp.title = g_strconcat (UGTK_APP_NAME, " - ", _("New Download"), NULL);
+	ndialog = ugtk_node_dialog_new (temp.title, app, FALSE);
+	g_free (temp.title);
 	ugtk_download_form_set_folders (&ndialog->download, &app->setting);
 
 	// category list
@@ -863,21 +883,34 @@ void  ugtk_app_create_download (UgtkApp* app, const char* sub_title, const char*
 //	cnode = cnode->data;
 	if (cnode->parent != &app->real)
 		cnode = app->real.children;
-	ugtk_node_dialog_set_category (ndialog, cnode->data);
 
-	list = NULL;
-	if (uri)
-		gtk_entry_set_text (GTK_ENTRY (ndialog->download.uri_entry), uri);
-	else
-		list = ugtk_clipboard_get_uris (&app->clipboard);
-	// use first URI from clipboard to set URL entry
-	if (list) {
+	if (uri != NULL) {
+		// set URI entry
+		gtk_entry_set_text ((GtkEntry*) ndialog->download.uri_entry, uri);
 		ndialog->download.changed.uri = TRUE;
+		// match category by URI
+		ug_uri_init (&uuri, uri);
+		temp.cnode = uget_app_match_category ((UgetApp*) app, &uuri, NULL);
+		if (temp.cnode)
+			cnode = temp.cnode;
+	}
+	else if ( (list = ugtk_clipboard_get_uris (&app->clipboard)) != NULL ) {
+		// use first URI from clipboard to set URI entry
 		gtk_entry_set_text ((GtkEntry*) ndialog->download.uri_entry, list->data);
+		ndialog->download.changed.uri = TRUE;
+		// match category by URI from clipboard
+		ug_uri_init (&uuri, list->data);
+		temp.cnode = uget_app_match_category ((UgetApp*) app, &uuri, NULL);
+		if (temp.cnode)
+			cnode = temp.cnode;
+		//
 		g_list_free_full (list, g_free);
 		ugtk_download_form_complete_entry (&ndialog->download);
 	}
 
+	if (cnode)
+		cnode = cnode->data;
+	ugtk_node_dialog_set_category (ndialog, cnode);
 	ugtk_node_dialog_run (ndialog, UGTK_NODE_DIALOG_NEW_DOWNLOAD, NULL);
 }
 
@@ -1755,6 +1788,7 @@ void  ugtk_clipboard_init (struct UgtkClipboard* clipboard, const gchar* pattern
 	clipboard->self  = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
 	clipboard->text  = NULL;
 	clipboard->regex = g_regex_new (pattern, G_REGEX_CASELESS, 0, NULL);
+	clipboard->media_website = TRUE;
 }
 
 void  ugtk_clipboard_set_pattern (struct UgtkClipboard* clipboard, const gchar* pattern)
@@ -1824,8 +1858,13 @@ GList* ugtk_clipboard_get_matched (struct UgtkClipboard* clipboard, const gchar*
 			text = NULL;
 		// free URIs if not matched
 		if (text == NULL || g_regex_match (clipboard->regex, text+1, 0, NULL) == FALSE) {
-			g_free (link->data);
-			link->data = NULL;
+			// media website
+			if (clipboard->media_website == FALSE ||
+			    uget_media_get_site_id (link->data) == UGET_MEDIA_UNKNOWN)
+			{
+				g_free (link->data);
+				link->data = NULL;
+			}
 		}
 		ug_free (temp);
 	}

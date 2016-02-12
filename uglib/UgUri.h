@@ -125,6 +125,34 @@ int  ug_uri_match_schemes (UgUri* uuri, char** schemes);
 int  ug_uri_match_file_exts (UgUri* uuri, char** exts);
 
 // ------------------------------------
+// UgUriQuery
+
+// field1=value1&field2=value2&field3=value3,next_value
+
+typedef struct UgUriQuery         UgUriQuery;
+
+struct UgUriQuery {
+	int    field_len;
+	char*  value;
+	int    value_len;
+
+	char*  field_next;
+	char*  value_next;
+};
+
+// param query_field can be NULL
+// return 0: no field (end of query)
+// return 1: field only
+// return 2: field & value
+//
+// while (ug_uri_query_part (&uuquery, field) > 0) {
+//	// your code here
+//	field = uuquery->next;
+// }
+//
+int  ug_uri_query_part (UgUriQuery* uuquery, const char* query_field);
+
+// ------------------------------------
 // Other URI functions
 
 // return length of decoded uri. param dest can be param uri or NULL.

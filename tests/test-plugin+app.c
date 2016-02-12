@@ -34,10 +34,12 @@
  *
  */
 
+#include <stdio.h>
 #include <UgString.h>
 #include <UgetApp.h>
 #include <UgetPluginCurl.h>
 #include <UgetPluginAria2.h>
+#include <UgetPluginMedia.h>
 #include <UgetPluginEmpty.h>
 
 #if defined _WIN32 || defined _WIN64
@@ -114,7 +116,8 @@ void  test_node_download (void)
 	char*        uri;
 	char*        mirrors;
 
-	uri = "http://download.tuxfamily.org/notepadplus/6.5.3/npp.6.5.3.Installer.exe";
+	uri = "https://www.youtube.com/watch?v=x9P2s6SU5CU";
+//	uri = "http://download.tuxfamily.org/notepadplus/6.5.3/npp.6.5.3.Installer.exe";
 //	uri = "http://ftp.gimp.org/pub/gimp/v2.8/windows/gimp-2.8.10-setup.exe";
 //	mirrors = "ftp://195.220.108.108/linux/fedora/linux/updates/19/x86_64/kernel-3.11.2-201.fc19.x86_64.rpm";
 	mirrors = NULL;
@@ -136,8 +139,9 @@ void  test_node_download (void)
 	if (referrer)
 		http->referrer = ug_strdup (referrer);
 
+//	download_node (node, UgetPluginCurlInfo);
 //	download_node (node, UgetPluginAria2Info);
-	download_node (node, UgetPluginCurlInfo);
+	download_node (node, UgetPluginMediaInfo);
 	uget_node_unref (node);
 }
 
@@ -352,16 +356,18 @@ int   main (void)
 	// initialize plugin
 	uget_plugin_set (UgetPluginCurlInfo, UGET_PLUGIN_INIT, (void*) TRUE);
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) TRUE);
+	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) TRUE);
 //	test_setup_plugin_aria2 ();
 
-//	test_node_download ();
+	test_node_download ();
 //	test_task ();
 //	test_app ();
 
-	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_ARIA2_SHUTDOWN_NOW, (void*) TRUE);
+//	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_ARIA2_SHUTDOWN_NOW, (void*) TRUE);
 	// finalize plugin
 	uget_plugin_set (UgetPluginCurlInfo, UGET_PLUGIN_INIT, (void*) FALSE);
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) FALSE);
+	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) FALSE);
 	ug_sleep(1000);
 
 	return 0;

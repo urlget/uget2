@@ -194,6 +194,13 @@ static int  uget_task_dispatch1 (UgetTask* task, UgetNode* node, UgetPlugin* plu
 			active = FALSE;
 			break;
 
+#if 0
+		case UGET_EVENT_COMPLETED:
+			node->state |= UGET_STATE_COMPLETED;
+			uget_event_free (event);
+			break;
+#endif
+
 //		case UGET_EVENT_INFO:
 //		case UGET_EVENT_REMOVE:
 //		case UGET_EVENT_INSERT:

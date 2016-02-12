@@ -55,13 +55,13 @@ extern  const  UgetPluginInfo*           UgetPluginAria2Info;
 typedef enum {
 	UGET_PLUGIN_ARIA2_OPTION = UGET_PLUGIN_OPTION_DERIVED,
 	UGET_PLUGIN_ARIA2_URI,       // set parameter = (char* )
-//	UGET_PLUGIN_ARIA2_LOCAL,     // set parameter = (int* )
+//	UGET_PLUGIN_ARIA2_LOCAL,     // set parameter = (intptr_t)
 	UGET_PLUGIN_ARIA2_PATH,      // set parameter = (char* )
 	UGET_PLUGIN_ARIA2_ARGUMENT,  // set parameter = (char* )
 	UGET_PLUGIN_ARIA2_TOKEN,     // set parameter = (char* )
-	UGET_PLUGIN_ARIA2_LAUNCH,    // get/set parameter = (int* )
-	UGET_PLUGIN_ARIA2_SHUTDOWN,  // set parameter = (int* )
-	UGET_PLUGIN_ARIA2_SHUTDOWN_NOW,  // set parameter = (int* )
+	UGET_PLUGIN_ARIA2_LAUNCH,    // get/set parameter = (intptr_t)
+	UGET_PLUGIN_ARIA2_SHUTDOWN,  // set parameter = (intptr_t)
+	UGET_PLUGIN_ARIA2_SHUTDOWN_NOW,  // set parameter = (intptr_t)
 } UgetPluginAria2Code;
 
 typedef enum {
@@ -93,7 +93,9 @@ struct UgetPluginAria2
 //	UgMutex       mutex;
 //	int           ref_count;
 
+	// pointer to UgetNode that store in UgetApp
 	UgetNode*     node;
+
 	// aria2.addUri, aria2.addTorrent, aria2.addMetalink
 	UgJsonrpcObject*  start_request;
 	time_t            start_time;
@@ -105,6 +107,15 @@ struct UgetPluginAria2
 	Aria2FileArray    files;
 	int               files_per_gid;
 	int               files_per_gid_prev;
+
+	// aria2.tellStatus
+	int        status;
+	int        errorCode;
+	int64_t    totalLength;
+	int64_t    completedLength;
+	int64_t    uploadLength;
+	int        downloadSpeed;
+	int        uploadSpeed;
 
 	// speed limit control
 	// limit[0] = download speed limit
@@ -119,15 +130,6 @@ struct UgetPluginAria2
 	uint8_t    stopped:1;   // download is stopped
 	uint8_t    restart:1;   // for retry
 	uint8_t    node_named:1;
-
-	// aria2.tellStatus
-	int        status;
-	int        errorCode;
-	int64_t    totalLength;
-	int64_t    completedLength;
-	int64_t    uploadLength;
-	int        downloadSpeed;
-	int        uploadSpeed;
 };
 
 // ----------------------------------------------------------------------------
@@ -160,9 +162,7 @@ namespace Uget
 
 // This one is for derived use only. No data members here.
 // Your derived struct/class must be C++11 standard-layout
-struct PluginAria2Method : Uget::PluginMethod
-{
-};
+struct PluginAria2Method : Uget::PluginMethod {};
 
 // This one is for directly use only. You can NOT derived it.
 struct PluginAria2 : Uget::PluginAria2Method, UgetPluginAria2 {};

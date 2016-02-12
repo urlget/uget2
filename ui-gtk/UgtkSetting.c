@@ -37,6 +37,7 @@
 #include <UgStdio.h>
 #include <UgString.h>
 #include <UgJsonFile.h>
+#include <UgetMedia.h>
 #include <UgtkSetting.h>
 #include <UgtkNodeView.h>
 
@@ -231,14 +232,18 @@ static const UgEntry  UgtkUserInterfaceSettingEntry[] =
 
 static const UgEntry  UgtkClipboardSettingEntry[] =
 {
-	{"pattern",     offsetof (struct UgtkClipboardSetting, pattern),
+	{"pattern",      offsetof (struct UgtkClipboardSetting, pattern),
 			UG_ENTRY_STRING, NULL,  NULL},
-	{"monitor",     offsetof (struct UgtkClipboardSetting, monitor),
+	{"monitor",      offsetof (struct UgtkClipboardSetting, monitor),
 			UG_ENTRY_BOOL,   NULL,  NULL},
-	{"quiet",       offsetof (struct UgtkClipboardSetting, quiet),
+	{"quiet",        offsetof (struct UgtkClipboardSetting, quiet),
 			UG_ENTRY_BOOL,   NULL,  NULL},
-	{"NthCategory", offsetof (struct UgtkClipboardSetting, nth_category),
+	{"NthCategory",  offsetof (struct UgtkClipboardSetting, nth_category),
 			UG_ENTRY_INT,    NULL,  NULL},
+
+	{"MediaWebsite", offsetof (struct UgtkClipboardSetting, media_website),
+			UG_ENTRY_BOOL,   NULL,  NULL},
+
 	{NULL},    // null-terminated
 };
 
@@ -307,6 +312,20 @@ static const UgEntry  UgtkPluginAria2SettingEntry[] =
 };
 
 // ----------------------------------------------------------------------------
+// PluginMediaSetting
+
+static const UgEntry  UgtkPluginMediaSettingEntry[] =
+{
+	{"match_mode",  offsetof (struct UgtkPluginMediaSetting, match_mode),
+			UG_ENTRY_INT,  NULL,   NULL},
+	{"quality",     offsetof (struct UgtkPluginMediaSetting, quality),
+			UG_ENTRY_INT,  NULL,   NULL},
+	{"type",        offsetof (struct UgtkPluginMediaSetting, type),
+			UG_ENTRY_INT,  NULL,   NULL},
+	{NULL},    // null-terminated
+};
+
+// ----------------------------------------------------------------------------
 // UgtkCompletionSetting
 
 static const UgEntry  UgtkCompletionSettingEntry[] =
@@ -346,6 +365,8 @@ static const UgEntry  UgtkSettingEntry[] =
 			UG_ENTRY_INT,    NULL, NULL},
 	{"PluginAria2",     offsetof (UgtkSetting, aria2),
 			UG_ENTRY_OBJECT, (void*) UgtkPluginAria2SettingEntry, NULL},
+	{"PluginMedia",     offsetof (UgtkSetting, media),
+			UG_ENTRY_OBJECT, (void*) UgtkPluginMediaSettingEntry, NULL},
 
 	{"Completion",      offsetof (UgtkSetting, completion),
 			UG_ENTRY_OBJECT, (void*) UgtkCompletionSettingEntry, NULL},
@@ -372,6 +393,9 @@ void  ugtk_setting_init (UgtkSetting* setting)
 {
 	ug_array_init (&setting->scheduler.state, sizeof (int), 7*24);
 	memset (setting->scheduler.state.at, UGTK_SCHEDULE_NORMAL, 7*24);
+
+	// new setting
+	setting->clipboard.media_website = TRUE;
 }
 
 void  ugtk_setting_reset (UgtkSetting* setting)
@@ -442,6 +466,7 @@ void  ugtk_setting_reset (UgtkSetting* setting)
 	setting->clipboard.monitor = TRUE;
 	setting->clipboard.quiet = FALSE;
 	setting->clipboard.nth_category = 0;
+	setting->clipboard.media_website = TRUE;
 
 	// "BandwidthSetting"
 	setting->bandwidth.normal.upload = 0;
@@ -466,7 +491,7 @@ void  ugtk_setting_reset (UgtkSetting* setting)
 
 	// "PluginSetting"
 	setting->plugin_order = UGTK_PLUGIN_ORDER_CURL;
-	// aria2 plugin settings
+	// aria2 plug-in settings
 	setting->aria2.limit.download = 0;
 	setting->aria2.limit.upload = 0;
 	setting->aria2.launch = TRUE;
@@ -474,6 +499,10 @@ void  ugtk_setting_reset (UgtkSetting* setting)
 	setting->aria2.path = ug_strdup (UGTK_ARIA2_PATH);
 	setting->aria2.args = ug_strdup (UGTK_ARIA2_ARGS);
 	setting->aria2.uri  = ug_strdup (UGTK_ARIA2_URI);
+	// media plug-in settings
+	setting->media.match_mode = UGET_MEDIA_MATCH_NEAR;
+	setting->media.quality = UGET_MEDIA_QUALITY_360P;
+	setting->media.type = UGET_MEDIA_TYPE_MP4;
 
 	// Others
 	setting->completion.remember = TRUE;
@@ -640,4 +669,11 @@ void  ugtk_setting_fix_data (UgtkSetting* setting)
 		ug_free (setting->aria2.uri);
 		setting->aria2.uri  = ug_strdup (UGTK_ARIA2_URI);
 	}
+	// media plug-in settings
+	if (setting->media.match_mode < 0 || setting->media.match_mode > UGET_MEDIA_N_MATCH_MODE)
+		setting->media.match_mode = UGET_MEDIA_MATCH_NEAR;
+	if (setting->media.quality < 0 || setting->media.quality > UGET_MEDIA_N_QUALITY)
+		setting->media.quality = UGET_MEDIA_QUALITY_360P;
+	if (setting->media.type < 0 || setting->media.type > UGET_MEDIA_N_TYPE)
+		setting->media.type = UGET_MEDIA_TYPE_MP4;
 }

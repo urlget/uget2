@@ -24,9 +24,11 @@ libuget_a_SOURCES = \
 	UgetA2cf.c    \
 	UgetCurl.c    \
 	UgetAria2.c   \
-	UgetPluginEmpty.c  \
+	UgetMedia.c   \
+	UgetPluginCurl.c   \
 	UgetPluginAria2.c  \
-	UgetPluginCurl.c
+	UgetPluginMedia.c  \
+	UgetPluginEmpty.c
 
 noinst_HEADERS = \
 	UgetRss.h     \
@@ -42,9 +44,11 @@ noinst_HEADERS = \
 	UgetA2cf.h    \
 	UgetCurl.h    \
 	UgetAria2.h   \
-	UgetPluginEmpty.h  \
+	UgetMedia.h   \
+	UgetPluginCurl.h   \
 	UgetPluginAria2.h  \
-	UgetPluginCurl.h
+	UgetPluginMedia.h  \
+	UgetPluginEmpty.h  \
 
 if WITH_LIBPWMD
 libuget_a_CFLAGS += @LIBPWMD_CFLAGS@

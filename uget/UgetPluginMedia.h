@@ -34,30 +34,35 @@
  *
  */
 
-#ifndef UGET_PLUGIN_CURL_H
-#define UGET_PLUGIN_CURL_H
+#ifndef UGET_PLUGIN_MEDIA_H
+#define UGET_PLUGIN_MEDIA_H
 
-#include <time.h>
-#include <UgUri.h>
-#include <UgetData.h>
 #include <UgetPlugin.h>
-#include <UgetA2cf.h>
-//#include <curl/curl.h>    // curl_slist
+#include <UgetMedia.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct UgetPluginCurl     UgetPluginCurl;
+typedef struct	UgetPluginMedia          UgetPluginMedia;
 
-extern const UgetPluginInfo*  UgetPluginCurlInfo;
+typedef enum {
+	UGET_PLUGIN_MEDIA_BEGIN = UGET_PLUGIN_OPTION_DERIVED,    // begin
+
+	UGET_PLUGIN_MEDIA_DEFAULT_PLUGIN,   // set parameter = (UgetPluginInfo*)
+	UGET_PLUGIN_MEDIA_MATCH_MODE,       // set parameter = (UgetMediaMatchMode)
+	UGET_PLUGIN_MEDIA_QUALITY,          // set parameter = (UgetMediaQuality)
+	UGET_PLUGIN_MEDIA_TYPE,             // set parameter = (UgetMediaType)
+} UgetPluginMediaCode;
+
+extern const UgetPluginInfo*  UgetPluginMediaInfo;
 
 // ----------------------------------------------------------------------------
-// UgetPluginCurl: an empty plugin. It derived from UgetPlugin.
+// UgetPluginMedia: It derived from UgetPlugin.
 
-struct UgetPluginCurl
+struct UgetPluginMedia
 {
-	UGET_PLUGIN_MEMBERS;           // It derived from UgetPlugin
+	UGET_PLUGIN_MEMBERS;               // It derived from UgetPlugin
 //	const UgetPluginInfo*  info;
 //	UgetEvent*    messages;
 //	UgMutex       mutex;
@@ -66,67 +71,43 @@ struct UgetPluginCurl
 	// pointer to UgetNode that store in UgetApp
 	UgetNode*     node;
 
-	// copy of UgetNode data
-	UgetCommon*   common;
+	// This plug-in use other plug-in to download media files,
+	// so we need extra UgetPlugin and UgetNode.
+	struct
+	{
+		// plugin->ex.node is a copy of plugin->node
+		UgetNode*     node;
+		// copy child nodes from ex.node
+		UgetNode*     children;
+		// ex.plugin use ex.node to download
+		UgetPlugin*   plugin;
+	} ex;
+
+	// copy of UgetNode data, they store in ex.node
 	UgetProxy*    proxy;
-	UgetHttp*     http;
-	UgetFtp*      ftp;
+	UgetCommon*   common;
+	UgetProgress* progress;
 
-	// run-time info
-//	struct curl_slist*  ftp_command;
-	struct {
-		char*     path;        // folder + filename
-		time_t    time;        // date and time
-		int64_t   size;        // total size (0 if size unknown)
-	} file;
+	// plug-in use title to rename file
+	char*         title;
 
-	// aria2 ctrl file
-	struct {
-		char*     path;
-		UgetA2cf  ctrl;
-	} aria2;
+	// use these data to recount progress if plug-in download multiple files.
+	int           elapsed;
+	int           retry_count;
+	int           item_index;      // downloading nth files
+	int           item_total;      // number of files to download
 
-	// URI and it's mirror
-	struct {
-		UgList    list;
-		UgLink*   link;
-	} uri;
-
-	// segment (split download)
-	struct {
-		UgList    list;    // list of UgetCurl
-		int64_t   beg;
-		uintptr_t n_max;
-		uintptr_t n_active;
-		uintptr_t n_recycled;
-	} seg;
-
-	// progress for uget_plugin_sync()
-	time_t        start_time;
-
-	// base.download = base downloaded size  (existing downloaded size)
-	// base.upload = base uploaded size      (existing uploaded size)
-	// size.download = downloaded size  (base + threads downloaded size)
-	// size.upload = uploaded size      (base + threads uploaded size)
-	// speed.download = downloading speed
-	// speed.upload = uploading speed
-	// limit.download = download speed limit
-	// limit.upload = upload speed limit
-	struct {
-		int64_t   upload;
-		int64_t   download;
-	} base, size, speed, limit;
-
-	// flags
-	uint8_t       limit_by_user:1; // speed limit changed by user
-	uint8_t       limit_changed:1; // speed limit changed
-	uint8_t       file_renamed:1;  // has file path?
-	uint8_t       a2cf_named:1;    // has aria2 ctrl file name?
-	uint8_t       synced:1;
+	// speed limit control
+	// limit[0] = download speed limit
+	// limit[1] = upload speed limit
+	int           limit[2];
+	uint8_t       limit_changed:1;
 	uint8_t       paused:1;        // paused by user or program
 	uint8_t       stopped:1;       // all of downloading thread are stopped
-	uint8_t       prepared:1;      // prepare to download
+	uint8_t       synced:1;        // used by plugin_sync()
+	uint8_t       named:1;         // change node name by title
 };
+
 
 #ifdef __cplusplus
 }
@@ -142,15 +123,17 @@ namespace Uget
 
 // This one is for derived use only. No data members here.
 // Your derived struct/class must be C++11 standard-layout
-struct PluginCurlMethod : Uget::PluginMethod {};
+struct PluginMediaMethod : Uget::PluginMethod
+{
+};
 
 // This one is for directly use only. You can NOT derived it.
-struct PluginCurl : Uget::PluginEmptyMethod, UgetPluginCurl {};
+struct PluginMedia : Uget::PluginMediaMethod, UgetPluginMedia {};
 
 };  // namespace Uget
 
 #endif  // __cplusplus
 
 
-#endif  // End of UGET_PLUGIN_CURL_H
+#endif  // End of UGET_PLUGIN_MEDIA_H
 

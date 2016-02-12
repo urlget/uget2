@@ -1,0 +1,151 @@
+/*
+ *
+ *   Copyright (C) 2015-2016 by C.H. Huang
+ *   plushuang.tw@gmail.com
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ *  ---
+ *
+ *  In addition, as a special exception, the copyright holders give
+ *  permission to link the code of portions of this program with the
+ *  OpenSSL library under certain conditions as described in each
+ *  individual source file, and distribute linked combinations
+ *  including the two.
+ *  You must obey the GNU Lesser General Public License in all respects
+ *  for all of the code used other than OpenSSL.  If you modify
+ *  file(s) with this exception, you may extend this exception to your
+ *  version of the file(s), but you are not obligated to do so.  If you
+ *  do not wish to do so, delete this exception statement from your
+ *  version.  If you delete this exception statement from all source
+ *  files in the program, then also delete it here.
+ *
+ */
+
+// YouTube support
+#ifndef UGET_MEDIA_H
+#define UGET_MEDIA_H
+
+#include <UgList.h>
+#include <UgetData.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef struct UgetMedia         UgetMedia;
+typedef struct UgetMediaItem     UgetMediaItem;
+
+typedef enum UgetMediaMatchMode
+{
+	UGET_MEDIA_MATCH_0 = 0,
+	UGET_MEDIA_MATCH_1 = 1,
+	UGET_MEDIA_MATCH_2,
+	UGET_MEDIA_MATCH_NEAR,   // near quality
+
+	UGET_MEDIA_N_MATCH_MODE,
+} UgetMediaMatchMode;
+
+typedef enum UgetMediaQuality
+{
+	UGET_MEDIA_QUALITY_UNKNOWN = -1,
+
+	UGET_MEDIA_QUALITY_240P,    // Youtube small
+	UGET_MEDIA_QUALITY_360P,    // Youtube medium
+	UGET_MEDIA_QUALITY_480P,    // Youtube large
+	UGET_MEDIA_QUALITY_720P,    // Youtube hd720
+	UGET_MEDIA_QUALITY_1080P,   // Youtube hd1080
+
+	UGET_MEDIA_N_QUALITY,
+} UgetMediaQuality;
+
+typedef enum UgetMediaType
+{
+	UGET_MEDIA_TYPE_UNKNOWN = -1,
+
+	UGET_MEDIA_TYPE_MP4,
+	UGET_MEDIA_TYPE_WEBM,
+	UGET_MEDIA_TYPE_3GPP,
+	UGET_MEDIA_TYPE_FLV,
+
+	UGET_MEDIA_N_TYPE,
+} UgetMediaType;
+
+typedef enum UgetMediaSiteId
+{
+	UGET_MEDIA_UNKNOWN = -1,
+
+	UGET_MEDIA_YOUTUBE,
+} UgetMediaSiteId;
+
+
+struct UgetMedia
+{
+	UG_LIST_MEMBERS (UgetMediaItem);
+//	uintptr_t        size;
+//	UgetMediaItem*   head;
+//	UgetMediaItem*   tail;
+
+	UgUri  uuri;
+	int    site_id;
+	char*  url;
+	char*  title;
+
+	// error message
+	UgetEvent*  event;
+
+	// for internal use only
+	void*  data;
+	void*  data1;
+	void*  data2;
+	void*  data3;
+	void*  data4;
+};
+
+// return UgetMediaSiteId
+int  uget_media_get_site_id (const char* url);
+
+UgetMedia*  uget_media_new (const char* url, UgetMediaSiteId site_id);
+void        uget_media_free (UgetMedia* um);
+
+int         uget_media_grab_items (UgetMedia* um, UgetProxy* proxy);
+
+// return begin of matched items. Don't free it
+UgetMediaItem*  uget_media_match (UgetMedia*  um,
+                                  UgetMediaMatchMode  mode,
+                                  UgetMediaQuality    quality,
+                                  UgetMediaType       type);
+
+// Youtube:
+// http://www.youtube.com/watch?v=xxxxxxx
+
+struct UgetMediaItem
+{
+	UG_LINK_MEMBERS (UgetMediaItem, UgetMediaItem, self);
+//	UgetMediaItem* self;
+//	UgetMediaItem* next;
+//	UgetMediaItem* prev;
+
+	char* url;
+	int   quality;    // 480p, 720p
+	int   type;       // UgetMediaType
+};
+
+#ifdef __cplusplus
+}
+#endif  // __cplusplus
+
+#endif  // End of UGET_MEDIA_H
+

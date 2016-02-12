@@ -175,6 +175,8 @@ void  uget_curl_decide_login (UgetCurl* ugcurl);
 
 #define uget_curl_join_thread(ugcurl)   ug_thread_join (&(ugcurl)->thread)
 
+void  ug_curl_set_proxy (CURL* curl, UgetProxy* proxy);
+
 #ifdef __cplusplus
 }
 #endif

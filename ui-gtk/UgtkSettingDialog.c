@@ -137,6 +137,12 @@ UgtkSettingDialog*  ugtk_setting_dialog_new (const gchar* title, GtkWindow* pare
 	ugtk_setting_dialog_add (dialog, _("Plug-in"), dialog->plugin.self);
 
 	// ------------------------------------------------------------------------
+	// Plugin Media & Media Website settings page
+	ugtk_media_website_form_init (&dialog->media_website);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog->media_website.self), 2);
+	ugtk_setting_dialog_add (dialog, _("Media website"), dialog->media_website.self);
+
+	// ------------------------------------------------------------------------
 	// Others settings page
 	vbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
@@ -182,6 +188,7 @@ void  ugtk_setting_dialog_set (UgtkSettingDialog* dialog, UgtkSetting* setting)
 	ugtk_auto_save_form_set (&dialog->auto_save, setting);
 	ugtk_commandline_form_set (&dialog->commandline, setting);
 	ugtk_plugin_form_set (&dialog->plugin, setting);
+	ugtk_media_website_form_set (&dialog->media_website, setting);
 }
 
 void  ugtk_setting_dialog_get (UgtkSettingDialog* dialog, UgtkSetting* setting)
@@ -194,6 +201,7 @@ void  ugtk_setting_dialog_get (UgtkSettingDialog* dialog, UgtkSetting* setting)
 	ugtk_auto_save_form_get (&dialog->auto_save, setting);
 	ugtk_commandline_form_get (&dialog->commandline, setting);
 	ugtk_plugin_form_get (&dialog->plugin, setting);
+	ugtk_media_website_form_get (&dialog->media_website, setting);
 }
 
 void  ugtk_setting_dialog_add (UgtkSettingDialog* sdialog,

@@ -137,7 +137,7 @@ void  uget_app_add_plugin (UgetApp* app, const UgetPluginInfo* pinfo);
 void  uget_app_remove_plugin (UgetApp* app, const UgetPluginInfo* pinfo);
 int   uget_app_find_plugin (UgetApp* app, const char* name, const UgetPluginInfo** pinfo);
 void  uget_app_set_default_plugin (UgetApp* app, const UgetPluginInfo* pinfo);
-UgetPluginInfo*  uget_app_match_plugin (UgetApp* app, UgetNode* node);
+UgetPluginInfo*  uget_app_match_plugin (UgetApp* app, UgetNode* node, const UgetPluginInfo* exclude);
 
 // ----------------------------------------------------------------------------
 // save/load categories

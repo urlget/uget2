@@ -75,6 +75,7 @@ UgetResult  uget_plugin_get (const UgetPluginInfo* info, int option, void* param
 
 int  uget_plugin_match (const UgetPluginInfo* info, UgUri* uuri)
 {
+	UgetResult   res;
 	const char*  str;
 	int          len;
 	int          matched_count = 0;
@@ -83,8 +84,15 @@ int  uget_plugin_match (const UgetPluginInfo* info, UgUri* uuri)
 		return 0;
 
 	if (info->hosts && (len = ug_uri_part_host (uuri, &str))) {
-		if (ug_uri_match_hosts (uuri, (char**)info->hosts) >= 0)
+		if (ug_uri_match_hosts (uuri, (char**)info->hosts) >= 0) {
 			matched_count++;
+			// Don't match this plug-in if it is for specify host.
+			res = uget_plugin_get (info, UGET_PLUGIN_MATCH, (void*) uuri->uri);
+			if (res == UGET_RESULT_FAILED)
+				matched_count = -1;
+			else if (res == UGET_RESULT_OK)
+				matched_count = 2;
+		}
 	}
 
 	if (info->schemes && (len = ug_uri_part_scheme (uuri, &str))) {

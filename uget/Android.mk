@@ -21,8 +21,10 @@ LOCAL_SRC_FILES  := \
 	UgetA2cf.c    \
 	UgetCurl.c    \
 	UgetAria2.c   \
+	UgetMedia.c   \
+	UgetPluginCurl.c   \
 	UgetPluginAria2.c  \
-	UgetPluginCurl.c
+	UGetPluginMedia.c
 
 include $(BUILD_STATIC_LIBRARY)
 

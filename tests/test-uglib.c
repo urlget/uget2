@@ -89,8 +89,10 @@ void  test_uri (void)
 	char*  exts[]    = {"png", "bmp", "jpg", NULL};
 	char*  schemes[] = {"ftp", "http", "git", NULL};
 //	const char*  uri   = "ftp://i.am.ftp.you.com/file.bmp";
-	const char*  uri   = "http://my.and.your.org/file%200.png";
+	const char*  uri   = "http://my.and.your.org/file%200.png?field1=value1&field2=value2&field3";
 //	const char*  uri   = "git://this.edu/file.jpg";
+	const char*  query;
+	UgUriQuery   uquery;
 	UgUri  uuri;
 	int    index;
 
@@ -107,6 +109,15 @@ void  test_uri (void)
 	temp = ug_uri_get_file (&uuri);
 	puts (temp);
 	ug_free (temp);
+
+	query = uri + uuri.query;
+	while ((index = ug_uri_query_part (&uquery, query)) > 0) {
+        printf ("ug_uri_query_part() return %d, %.*s=%.*s\n",
+		        index,
+		        uquery.field_len, query,
+		        uquery.value_len, uquery.value);
+		query = uquery.field_next;
+	}
 
 	temp = ug_strdup ("file%20%%20100%2f%20.jpg");
 	index = ug_decode_uri (temp, -1, temp);

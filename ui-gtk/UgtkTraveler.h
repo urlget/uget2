@@ -60,6 +60,8 @@ struct UgtkTraveler
 		UgtkNodeList* model;
 
 		struct {
+			// pos_last used by "cursor-changed" signal handler
+			// if selection changed by user, pos != pos_last.
 			int       pos;
 			int       pos_last;
 			UgetNode* node;
@@ -72,6 +74,8 @@ struct UgtkTraveler
 		UgtkNodeTree* model;
 
 		struct {
+			// pos_last used by "cursor-changed" signal handler
+			// if selection changed by user, pos != pos_last.
 			int       pos;
 			int       pos_last;
 			UgetNode* node;
@@ -84,6 +88,8 @@ struct UgtkTraveler
 		UgtkNodeTree* model;
 
 		struct {
+			// pos_last used by "cursor-changed" signal handler
+			// if selection changed by user, pos != pos_last.
 			int       pos;
 			int       pos_last;
 			UgetNode* node;

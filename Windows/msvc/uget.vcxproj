@@ -11,41 +11,45 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\uget\UgetA2cf.h" />
     <ClInclude Include="..\..\uget\UgetApp.h" />
-    <ClInclude Include="..\..\uget\UgetAria2.h" />
-    <ClInclude Include="..\..\uget\UgetCurl.h" />
     <ClInclude Include="..\..\uget\UgetData.h" />
     <ClInclude Include="..\..\uget\UgetEvent.h" />
     <ClInclude Include="..\..\uget\UgetNode.h" />
     <ClInclude Include="..\..\uget\UgetOption.h" />
-    <ClInclude Include="..\..\uget\UgetPluginAria2.h" />
-    <ClInclude Include="..\..\uget\UgetPluginCurl.h" />
-    <ClInclude Include="..\..\uget\UgetPluginEmpty.h" />
     <ClInclude Include="..\..\uget\UgetPlugin.h" />
     <ClInclude Include="..\..\uget\UgetRpc.h" />
     <ClInclude Include="..\..\uget\UgetRss.h" />
     <ClInclude Include="..\..\uget\UgetTask.h" />
     <ClInclude Include="..\..\uget\UgetHash.h" />
+    <ClInclude Include="..\..\uget\UgetA2cf.h" />
+    <ClInclude Include="..\..\uget\UgetCurl.h" />
+    <ClInclude Include="..\..\uget\UgetAria2.h" />
+    <ClInclude Include="..\..\uget\UgetMedia.h" />
+    <ClInclude Include="..\..\uget\UgetPluginCurl.h" />
+    <ClInclude Include="..\..\uget\UgetPluginAria2.h" />
+    <ClInclude Include="..\..\uget\UgetPluginMedia.h" />
+    <ClInclude Include="..\..\uget\UgetPluginEmpty.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\uget\UgetA2cf.c" />
     <ClCompile Include="..\..\uget\UgetApp.c" />
-    <ClCompile Include="..\..\uget\UgetAria2.c" />
-    <ClCompile Include="..\..\uget\UgetCurl.c" />
     <ClCompile Include="..\..\uget\UgetData.c" />
     <ClCompile Include="..\..\uget\UgetEvent.c" />
     <ClCompile Include="..\..\uget\UgetNode.c" />
     <ClCompile Include="..\..\uget\UgetNode-compare.c" />
     <ClCompile Include="..\..\uget\UgetOption.c" />
-    <ClCompile Include="..\..\uget\UgetPluginAria2.c" />
-    <ClCompile Include="..\..\uget\UgetPluginCurl.c" />
-    <ClCompile Include="..\..\uget\UgetPluginEmpty.c" />
     <ClCompile Include="..\..\uget\UgetPlugin.c" />
     <ClCompile Include="..\..\uget\UgetRpc.c" />
     <ClCompile Include="..\..\uget\UgetRss.c" />
     <ClCompile Include="..\..\uget\UgetTask.c" />
     <ClCompile Include="..\..\uget\UgetHash.c" />
+    <ClCompile Include="..\..\uget\UgetA2cf.c" />
+    <ClCompile Include="..\..\uget\UgetCurl.c" />
+    <ClCompile Include="..\..\uget\UgetAria2.c" />
+    <ClCompile Include="..\..\uget\UgetMedia.c" />
+    <ClCompile Include="..\..\uget\UgetPluginCurl.c" />
+    <ClCompile Include="..\..\uget\UgetPluginAria2.c" />
+    <ClCompile Include="..\..\uget\UgetPluginMedia.c" />
+    <ClCompile Include="..\..\uget\UgetPluginEmpty.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A98D36E8-7119-4AC4-8820-65B902C6B69E}</ProjectGuid>

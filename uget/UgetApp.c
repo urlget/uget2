@@ -592,6 +592,7 @@ int  uget_app_add_download (UgetApp* app, UgetNode* dnode, UgetNode* cnode, int 
 	// decode name, filename, and category
 	if (temp.common->uri) {
 		ug_uri_init (&uuri, temp.common->uri);
+		// assign node name if it's name is NULL
 		if (dnode->name == NULL) {
 			if (temp.common->file)
 				dnode->name = ug_strdup (temp.common->file);
@@ -760,7 +761,7 @@ int   uget_app_activate_download (UgetApp* app, UgetNode* dnode)
 		return FALSE;
 	// match plugin
 	log = ug_info_realloc (&dnode->info, UgetLogInfo);
-	temp.pinfo = uget_app_match_plugin (app, dnode);
+	temp.pinfo = uget_app_match_plugin (app, dnode, NULL);
 	if (temp.pinfo == NULL) {
 		// no plugin support
 		uget_app_queue_download (app, dnode);
@@ -1044,7 +1045,7 @@ void  uget_app_set_default_plugin (UgetApp* app, const UgetPluginInfo* pinfo)
 	app->plugin_default = (UgetPluginInfo*) pinfo;
 }
 
-UgetPluginInfo*  uget_app_match_plugin (UgetApp* app, UgetNode* node)
+UgetPluginInfo*  uget_app_match_plugin (UgetApp* app, UgetNode* node, const UgetPluginInfo* exclude)
 {
 	UgetCommon*      common;
 	UgetPluginInfo*  info;
@@ -1061,20 +1062,22 @@ UgetPluginInfo*  uget_app_match_plugin (UgetApp* app, UgetNode* node)
 		return NULL;
 
 	ug_uri_init (&uuri, common->uri);
-	if (app->plugin_default) {
+	if (app->plugin_default && app->plugin_default != exclude) {
 		matched.info  = app->plugin_default;
 		matched.count = uget_plugin_match (matched.info, &uuri);
-		if (matched.count == 3)
+		if (matched.count >= 3)
 			return matched.info;
 	}
 	for (index = 0;  index < app->plugins.length;  index++) {
-		info  = app->plugins.at[index].data;
-		count = uget_plugin_match (info, &uuri);
-		if (matched.count < count) {
-			matched.count = count;
-			matched.info  = info;
-			if (matched.count == 3)
-				break;
+		info = app->plugins.at[index].data;
+		if (info != exclude) {
+			count = uget_plugin_match (info, &uuri);
+			if (matched.count < count) {
+				matched.count = count;
+				matched.info  = info;
+				if (matched.count >= 3)
+					break;
+			}
 		}
 	}
 

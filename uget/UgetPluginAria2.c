@@ -131,8 +131,8 @@ const UgetPluginInfo* UgetPluginAria2Info = &UgetPluginAria2InfoStatic;
 
 static struct
 {
-	struct UgetAria2* data;
-	int               ref_count;
+	UgetAria2* data;
+	int        ref_count;
 } global = {NULL, 0};
 
 static UgetResult  global_init (void)
@@ -331,7 +331,7 @@ static void  plugin_final (UgetPluginAria2* plugin)
 		ug_value_foreach (&plugin->start_request->params, ug_value_set_name, NULL);
 		uget_aria2_recycle (global.data, plugin->start_request);
 	}
-	// unref node
+	// unassign node
 	if (plugin->node)
 		uget_node_unref (plugin->node);
 
@@ -430,6 +430,7 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 		return TRUE;
 
 	node = plugin->node;
+	// sync data between plug-in and node
 	// ------------------------------------------------
 	// update progress
 	temp.progress = ug_info_realloc (&node->info, UgetProgressInfo);
@@ -453,8 +454,8 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 	if (temp.progress->download_speed > 0 && temp.progress->total > 0)
 		temp.progress->left = (temp.progress->total - temp.progress->complete) / temp.progress->download_speed;
 
-	// ------------------------------------------------
 	temp.common = ug_info_realloc (&node->info, UgetCommonInfo);
+	// ------------------------------------------------
 	// sync changed limit from UgetNode
 	if (plugin->limit[1] != temp.common->max_upload_speed ||
 		plugin->limit[0] != temp.common->max_download_speed)
@@ -708,7 +709,7 @@ static void              recycle_speed_request (UgJsonrpcObject* object);
 static UgJsonrpcObject*  alloc_status_request (UgValue** gid);
 static void              recycle_status_request (UgJsonrpcObject* object);
 
-static UG_THREAD_RETURN_TYPE plugin_thread (UgetPluginAria2* plugin)
+static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginAria2* plugin)
 {
 	UgJsonrpcObject*  req;
 	UgJsonrpcObject*  res;
@@ -1321,8 +1322,9 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 	plugin->start_time = time (NULL);
 	plugin->start_request = request;
 
-	plugin->node = node;
+	// assign node
 	uget_node_ref (node);
+	plugin->node = node;
 
 	uget_aria2_request (global.data, request);
 	uget_plugin_ref ((UgetPlugin*) plugin);
@@ -1334,6 +1336,11 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 				uget_event_new_error (UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 				                      NULL));
 		uget_plugin_unref ((UgetPlugin*) plugin);
+
+		// unassign node
+		uget_node_unref (plugin->node);
+		plugin->node = NULL;
+
 		return FALSE;
 	}
 	return TRUE;

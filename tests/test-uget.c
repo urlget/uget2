@@ -43,6 +43,7 @@
 #include <UgetA2cf.h>
 #include <UgetCurl.h>
 #include <UgetRss.h>
+#include <UgetMedia.h>
 
 // ----------------------------------------------------------------------------
 // UgetNode
@@ -399,6 +400,39 @@ void test_uget_rss (void)
 }
 
 // ----------------------------------------------------------------------------
+// UgetMedia
+
+void  test_media (void)
+{
+	UgetMedia*     um;
+	UgetMediaItem* umitem;
+	int  temp;
+	char* uri;
+
+	uri = "https://www.youtube.com/watch?v=KgxxYEjgN4k&list=PLATwx1z00Hsfi77OSAgRoYd9zy3OlxL_v&index=1";
+	uri = "https://www.youtube.com/watch?v=x9P2s6SU5CU";
+	uri = "https://www.youtube.com/watch?v=Kog3QUmdB6s";
+	um = uget_media_new (uri, UGET_MEDIA_YOUTUBE);
+	temp = uget_media_grab_items (um, NULL);
+	printf ("\nget %d media item\n", temp);
+
+	umitem = uget_media_match (um, UGET_MEDIA_MATCH_1,
+	                               UGET_MEDIA_QUALITY_UNKNOWN,
+	                               UGET_MEDIA_TYPE_MP4);
+//	umitem = uget_media_match (um, UGET_MEDIA_MATCH_0,
+//	                               UGET_MEDIA_QUALITY_UNKNOWN,
+//	                               UGET_MEDIA_TYPE_MP4);
+
+	for (;  umitem;  umitem = umitem->next) {
+//		printf ("URL %s" "\n", umitem->url);
+		printf ("quality %d, type %d, has_url %d\n",
+		        umitem->quality, umitem->type,
+		        (umitem->url) ? 1 : 0);
+	}
+	uget_media_free (um);
+}
+
+// ----------------------------------------------------------------------------
 // main
 
 int main (void)
@@ -408,7 +442,8 @@ int main (void)
 
 //	test_uget_a2cf ();
 //	test_uget_curl ();
-	test_uget_rss ();
+//	test_uget_rss ();
+	test_media ();
 
 	return 0;
 }

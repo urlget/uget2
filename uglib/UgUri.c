@@ -117,7 +117,10 @@ int  ug_uri_init (UgUri* upart, const char* uri)
 		upart->fragment = -1;
 	else {
 		cur = tmp + 1;
-		upart->fragment = cur - uri;
+		if (cur - uri <= INT16_MAX)
+			upart->fragment = cur - uri;
+		else
+			upart->fragment = -1;
 	}
 
 	// host & port
@@ -360,6 +363,54 @@ int  ug_uri_match_file_exts (UgUri* uuri, char** exts)
 		}
 	}
 	return -1;
+}
+
+// ------------------------------------
+// UgUriQuery
+
+int  ug_uri_query_part (UgUriQuery* uuquery, const char* query_field)
+{
+	int  ret_value;
+
+	if (query_field == NULL)
+		return 0;
+	uuquery->field_len = strcspn (query_field, "=&#;,");
+	if (uuquery->field_len == 0)
+		return 0;
+
+	query_field += uuquery->field_len;
+	if (query_field[0] == '=') {
+		uuquery->value = (char*) query_field + 1;   // + '='
+		uuquery->value_len = strcspn (uuquery->value, "&#;,");
+		query_field = uuquery->value + uuquery->value_len;
+		ret_value = 2;
+	}
+	else {
+		uuquery->value = NULL;
+		uuquery->value_len = 0;
+		ret_value = 1;
+	}
+
+	// next field or next value
+	switch (query_field[0]) {
+	case ',':
+		uuquery->value_next = (char*) query_field + 1;
+		uuquery->field_next = NULL;
+		break;
+
+	case '&':
+	case ';':
+		uuquery->value_next = NULL;
+		uuquery->field_next = (char*) query_field + 1;
+		break;
+
+	default:
+		uuquery->value_next = NULL;
+		uuquery->field_next = NULL;
+		break;
+	}
+
+	return ret_value;
 }
 
 // ------------------------------------
