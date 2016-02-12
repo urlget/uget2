@@ -48,7 +48,7 @@ noinst_HEADERS = \
 	UgetPluginCurl.h   \
 	UgetPluginAria2.h  \
 	UgetPluginMedia.h  \
-	UgetPluginEmpty.h  \
+	UgetPluginEmpty.h
 
 if WITH_LIBPWMD
 libuget_a_CFLAGS += @LIBPWMD_CFLAGS@
