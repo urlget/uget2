@@ -78,8 +78,9 @@ static int  plugin_sync  (UgetPluginMedia* plugin);
 static UgetResult  global_set (int code, void* parameter);
 static UgetResult  global_get (int code, void* parameter);
 
-static const char* hosts[]   = {"youtube.com", NULL};
 static const char* schemes[] = {"http", "https", NULL};
+static const char* hosts[]   = {"youtube.com", "youtu.be",
+                                NULL};
 
 static const UgetPluginInfo UgetPluginMediaInfoStatic =
 {

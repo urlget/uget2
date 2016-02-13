@@ -79,18 +79,27 @@ static size_t curl_output_youtube (char *buffer, size_t size,
 int  uget_media_get_site_id (const char* url)
 {
 	UgUri       uuri;
-//	const char* str;
-//	int         str_len;
+	const char* str;
+	int         length;
 
 	if (ug_uri_init (&uuri, url) == 0)
 		return UGET_MEDIA_UNKNOWN;
 
 	if (uuri.scheme_len >=4 && strncmp (url, "http", 4) == 0) {
-		// youtube
-		if (strncmp (url + uuri.host , "www.youtube.com", 15) == 0) {
-			if (strncmp (url + uuri.file , "watch?", 6) != 0)
-				return UGET_MEDIA_UNKNOWN;
-			return UGET_MEDIA_YOUTUBE;
+		length = ug_uri_host (&uuri, &str);
+
+		// youtube.com
+		// https://youtube.com/watch?=xxxxxxxxxxx
+		// https://youtu.be/xxxxxxxxxxx
+		if (length >= 11 && strncmp (str + length - 11, "youtube.com", 11) == 0)
+		{
+			if (strncmp (url + uuri.file , "watch?", 6) == 0)
+				return UGET_MEDIA_YOUTUBE;
+		}
+		else if (length >= 8 && strncmp (str + length - 8, "youtu.be", 8) == 0)
+		{
+			if (uuri.file != -1)
+				return UGET_MEDIA_YOUTUBE;
 		}
 	}
 
@@ -322,26 +331,39 @@ static int    grab_items_youtube (UgetMedia* um, CURL* curl)
 
 	um->data = uget_youtube_new ();
 	ug_uri_init (&um->uuri, um->url);
-	if (um->uuri.query == -1)
-		return 0;
-
-	// "watch?v=xxxx"
 	video_id_str = NULL;
-	str = um->url + um->uuri.query;
-	while (ug_uri_query_part (&query, str)) {
-		if (strncmp ("v", str, query.field_len) == 0 && query.value) {
-			video_id_str = query.value;
-			video_id_len = query.value_len;
-			break;
+	video_id_len = 0;
+
+	// get youtube video_id
+	if (um->uuri.query != -1) {
+		// http://youtube.com/watch?v=xxxxxxxxxxx
+		str = um->url + um->uuri.query;
+		while (ug_uri_query_part (&query, str)) {
+			if (strncmp ("v", str, query.field_len) == 0 && query.value) {
+				video_id_str = query.value;
+				video_id_len = query.value_len;
+				break;
+			}
+			str = query.field_next;
 		}
-		str = query.field_next;
 	}
-	if (video_id_str == NULL)
+	else {
+		// http://youtu.be/xxxxxxxxxxx
+		video_id_len = ug_uri_file (&um->uuri, (const char**)&video_id_str);
+	}
+	if (video_id_str == NULL || video_id_len == 0)
 		return 0;
 
-	str = ug_strdup_printf ("%.*sget_video_info?video_id=%.*s",
-	                        um->uuri.file, um->url,
-	                        video_id_len, video_id_str);
+	// get query URL
+	if (um->uuri.query != -1) {
+		str = ug_strdup_printf ("%.*sget_video_info?video_id=%.*s",
+		                        um->uuri.file, um->url,
+		                        video_id_len, video_id_str);
+	}
+	else {
+		str = ug_strdup_printf ("http://www.youtube.com/get_video_info?video_id=%.*s",
+		                        video_id_len, video_id_str);
+	}
 
 	curl_easy_setopt (curl, CURLOPT_URL, str);
 	curl_easy_setopt (curl, CURLOPT_NOSIGNAL, 1L);
