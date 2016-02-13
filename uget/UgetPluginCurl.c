@@ -710,11 +710,12 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 			if (plugin->aria2.path)
 				uget_a2cf_fill (&plugin->aria2.ctrl, ugcurl->beg, ugcurl->pos);
 			// progress
-			if (ugcurl->state > UGET_CURL_RUN) {
+			if (ugcurl->state >= UGET_CURL_OK) {
+				// ugcurl has stopped
 				plugin->base.upload += ugcurl->size[1];
 				plugin->base.download += ugcurl->size[0];
 			}
-			else if (ugcurl->state > UGET_CURL_READY) {
+			else if (ugcurl->state == UGET_CURL_RUN) {
 				size.upload += ugcurl->size[1];
 				size.download += ugcurl->size[0];
 				speed.upload += ugcurl->speed[1];
@@ -831,6 +832,17 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 		if (plugin->file.size) {
 			// response error if file size is different
 			if (plugin->file.size < plugin->size.download) {
+#if 0
+
+#ifndef NDEBUG
+				if (common->debug_level) {
+					printf ("file size is different\n");
+					printf ("plugin->file.size = %d\n",     (int)plugin->file.size);
+					printf ("plugin->size.download = %d\n", (int)plugin->size.download);
+				}
+#endif  // NDEBUG
+				plugin->file.size = plugin->size.download;
+#else
 				plugin->paused = TRUE;
 				if (N_THREAD (plugin) > 0)
 					continue;    // wait other thread
@@ -844,6 +856,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 					plugin->synced = FALSE;
 					break;
 				}
+#endif
 			}
 			// download completed
 			if (plugin->file.size == plugin->size.download) {

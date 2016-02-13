@@ -255,9 +255,12 @@ void  uget_curl_run (UgetCurl* ugcurl, int joinable)
 	ugcurl->response = 0;
 	ugcurl->event_code = 0;
 	ugcurl->progress_count = PROGRESS_COUNT_LIMIT;
-	// reset speed
+	// reset download/upload speed
 	ugcurl->speed[0] = 0;
 	ugcurl->speed[1] = 0;
+	// reset downloaded/uploaded size
+	ugcurl->size[0] = 0;
+	ugcurl->size[1] = 0;
 
 	ug_free (ugcurl->header.uri);
 	ug_free (ugcurl->header.filename);
