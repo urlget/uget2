@@ -802,15 +802,15 @@ void  ugtk_media_website_form_init (struct UgtkMediaWebsiteForm* mwform)
 	widget = gtk_combo_box_text_new ();
 	mwform->quality = (GtkComboBoxText*) widget;
 	gtk_combo_box_text_insert_text (mwform->quality,
-			UGET_MEDIA_QUALITY_240P, "240P");
+			UGET_MEDIA_QUALITY_240P, "240p");
 	gtk_combo_box_text_insert_text (mwform->quality,
-			UGET_MEDIA_QUALITY_360P, "360P");
+			UGET_MEDIA_QUALITY_360P, "360p");
 	gtk_combo_box_text_insert_text (mwform->quality,
-			UGET_MEDIA_QUALITY_480P, "480P");
+			UGET_MEDIA_QUALITY_480P, "480p");
 	gtk_combo_box_text_insert_text (mwform->quality,
-			UGET_MEDIA_QUALITY_720P, "720P");
+			UGET_MEDIA_QUALITY_720P, "720p");
 	gtk_combo_box_text_insert_text (mwform->quality,
-			UGET_MEDIA_QUALITY_1080P, "1080P");
+			UGET_MEDIA_QUALITY_1080P, "1080p");
 	g_object_set (widget, "margin-left", 3, "margin-right", 3, NULL);
 	g_object_set (widget, "margin-top", 2, "margin-bottom", 2, NULL);
 	gtk_grid_attach (grid, widget, 1, 0, 1, 1);
