@@ -106,6 +106,8 @@ struct UgetPluginMedia
 	uint8_t       stopped:1;       // all of downloading thread are stopped
 	uint8_t       synced:1;        // used by plugin_sync()
 	uint8_t       named:1;         // change node name by title
+	uint8_t       sync_fname:1;    // downloading filename changed
+	uint8_t       sync_child:1;    // ex.children->children changed
 };
 
 
