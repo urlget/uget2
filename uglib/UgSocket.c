@@ -59,6 +59,7 @@ int  ug_socket_connect (SOCKET fd, const char* addr, const char* port_or_serv)
 	struct addrinfo* cur;
 	socklen_t  len;
 	int        type;
+        int        opt = 1;
 
 	len = sizeof (type);
 	if (getsockopt (fd, SOL_SOCKET, SO_TYPE, (char*) &type, &len) == -1)
@@ -75,6 +76,9 @@ int  ug_socket_connect (SOCKET fd, const char* addr, const char* port_or_serv)
 //	hints.ai_flags = AI_NUMERICSERV | AI_PASSIVE;
 	if (getaddrinfo (addr, port_or_serv, &hints, &result) != 0)
 		return SOCKET_ERROR;
+
+        if (setsockopt (fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof (int)) == -1)
+                return SOCKET_ERROR;
 
 	/*
 	struct sockaddr_in	saddr;
