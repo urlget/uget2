@@ -67,7 +67,9 @@ static void ugtk_app_notify_error (UgtkApp* app);
 static void ugtk_app_notify_starting (UgtkApp* app);
 static void ugtk_app_notify_completed (UgtkApp* app);
 // GSourceFunc
+#ifdef HAVE_RSS_NOTIFY
 static gboolean  ugtk_app_timeout_rss (UgtkApp* app);
+#endif
 static gboolean  ugtk_app_timeout_rpc (UgtkApp* app);
 static gboolean  ugtk_app_timeout_queuing (UgtkApp* app);
 static gboolean  ugtk_app_timeout_clipboard (UgtkApp* app);
@@ -84,9 +86,11 @@ void  ugtk_app_init_timeout (UgtkApp* app)
 	// 2 seconds
 	g_timeout_add_seconds_full (G_PRIORITY_DEFAULT_IDLE, 2,
 			(GSourceFunc) ugtk_app_timeout_clipboard, app, NULL);
+#ifdef HAVE_RSS_NOTIFY
 	// 3 seconds
 	g_timeout_add_seconds_full (G_PRIORITY_DEFAULT_IDLE, 3,
 			(GSourceFunc) ugtk_app_timeout_rss, app, NULL);
+#endif  // HAVE_RSS_NOTIFY
 	// 1 minutes
 	g_timeout_add_seconds_full (G_PRIORITY_DEFAULT_IDLE, 60,
 			(GSourceFunc) ugtk_app_timeout_autosave, app, NULL);
@@ -577,6 +581,7 @@ static gboolean  ugtk_app_timeout_rpc (UgtkApp* app)
 // ----------------------------------------------------------------------------
 // RSS
 
+#ifdef HAVE_RSS_NOTIFY
 static gboolean  ugtk_app_timeout_rss_update (UgtkApp* app)
 {
 	uget_rss_update (app->rss_builtin, FALSE);
@@ -602,6 +607,7 @@ static gboolean  ugtk_app_timeout_rss (UgtkApp* app)
 	}
 	return TRUE;
 }
+#endif  // HAVE_RSS_NOTIFY
 
 // ----------------------------------------------------------------------------
 // sound

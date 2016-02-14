@@ -218,6 +218,18 @@ if test "x$enable_pwmd" = "xyes"; then
 fi
 AM_CONDITIONAL([WITH_LIBPWMD],  [test "x$enable_pwmd" = "xyes"])
 
+## -----------------
+## RSS Notify
+AC_ARG_ENABLE(
+	[rss-notify],
+	AC_HELP_STRING([--disable-rss-notify], [Disable RSS Notify.]),
+	[enable_rss_notify="$enableval"],
+	[enable_rss_notify="yes"]
+)
+if test "x$enable_rss_notify" = "xyes"; then
+  AC_DEFINE(HAVE_RSS_NOTIFY, 1, [Define to 1 to enable RSS Notify.])
+fi
+
 ## ----------------------------------------------
 ## output
 AC_CONFIG_FILES([
