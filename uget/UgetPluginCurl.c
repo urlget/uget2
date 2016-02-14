@@ -832,7 +832,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 		if (plugin->file.size) {
 			// response error if file size is different
 			if (plugin->file.size < plugin->size.download) {
-#if 0
+#if 1
 
 #ifndef NDEBUG
 				if (common->debug_level) {
@@ -841,7 +841,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 					printf ("plugin->size.download = %d\n", (int)plugin->size.download);
 				}
 #endif  // NDEBUG
-				plugin->file.size = plugin->size.download;
+				plugin->size.download = plugin->file.size;
 #else
 				plugin->paused = TRUE;
 				if (N_THREAD (plugin) > 0)
