@@ -136,6 +136,10 @@ int  ug_socket_listen (SOCKET fd, const char* addr, const char* port_or_serv,
 	struct addrinfo* cur;
 	socklen_t  len;
 	int        type;
+	int        opt = 1;
+
+	if (setsockopt (fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof (int)) == -1)
+		return SOCKET_ERROR;
 
 	len = sizeof (type);
 	if (getsockopt (fd, SOL_SOCKET, SO_TYPE, (char*) &type, &len) == -1)
