@@ -391,11 +391,15 @@ static const UgEntry  UgtkSettingEntry[] =
 //
 void  ugtk_setting_init (UgtkSetting* setting)
 {
+	// "SchedulerSetting"
 	ug_array_init (&setting->scheduler.state, sizeof (int), 7*24);
 	memset (setting->scheduler.state.at, UGTK_SCHEDULE_NORMAL, 7*24);
 
-	// new setting
+	// default settings for media website
 	setting->clipboard.media_website = TRUE;
+	setting->media.match_mode = UGET_MEDIA_MATCH_NEAR;
+	setting->media.quality = UGET_MEDIA_QUALITY_360P;
+	setting->media.type = UGET_MEDIA_TYPE_MP4;
 }
 
 void  ugtk_setting_reset (UgtkSetting* setting)
