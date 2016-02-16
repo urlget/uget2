@@ -404,22 +404,26 @@ void test_uget_rss (void)
 
 void  test_media (void)
 {
-	UgetMedia*     um;
+	UgetMedia*     umedia;
 	UgetMediaItem* umitem;
-	int  temp;
+	int   count;
 	char* uri;
 
 	uri = "https://www.youtube.com/watch?v=y2004Xaz2HU";
-	um = uget_media_new (uri, UGET_MEDIA_YOUTUBE);
-	temp = uget_media_grab_items (um, NULL);
-	printf ("\nget %d media item\n", temp);
+	count = uget_media_get_site_id (uri);
+	umedia = uget_media_new (uri, UGET_MEDIA_YOUTUBE);
+	count  = uget_media_grab_items (umedia, NULL);
+	printf ("\nget %d media item\n", count);
 
-	umitem = uget_media_match (um, UGET_MEDIA_MATCH_1,
-	                               UGET_MEDIA_QUALITY_UNKNOWN,
-	                               UGET_MEDIA_TYPE_MP4);
-//	umitem = uget_media_match (um, UGET_MEDIA_MATCH_0,
-//	                               UGET_MEDIA_QUALITY_UNKNOWN,
-//	                               UGET_MEDIA_TYPE_MP4);
+	umitem = uget_media_match (umedia,
+			UGET_MEDIA_MATCH_1,
+			UGET_MEDIA_QUALITY_UNKNOWN,
+			UGET_MEDIA_TYPE_MP4);
+
+//	umitem = uget_media_match (umedia,
+//			UGET_MEDIA_MATCH_0,
+//			UGET_MEDIA_QUALITY_UNKNOWN,
+//			UGET_MEDIA_TYPE_MP4);
 
 	for (;  umitem;  umitem = umitem->next) {
 //		printf ("URL %s" "\n", umitem->url);
@@ -427,7 +431,7 @@ void  test_media (void)
 		        umitem->quality, umitem->type,
 		        (umitem->url) ? 1 : 0);
 	}
-	uget_media_free (um);
+	uget_media_free (umedia);
 }
 
 // ----------------------------------------------------------------------------

@@ -12,7 +12,8 @@ LOCAL_SRC_FILES  := \
 	UgetRpc.c     \
 	UgetOption.c  \
 	UgetData.c    \
-	UgetNode.c  UgetNode-compare.c  \
+	UgetNode.c    \
+	UgetNode-compare.c  \
 	UgetTask.c    \
 	UgetHash.c    \
 	UgetApp.c     \
@@ -22,6 +23,7 @@ LOCAL_SRC_FILES  := \
 	UgetCurl.c    \
 	UgetAria2.c   \
 	UgetMedia.c   \
+	UgetMedia-youtube.c   \
 	UgetPluginCurl.c   \
 	UgetPluginAria2.c  \
 	UgetPluginMedia.c

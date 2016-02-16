@@ -73,6 +73,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../uget/UgetHash.h" />
+		<Unit filename="../../uget/UgetMedia-youtube.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../uget/UgetMedia.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -118,18 +118,19 @@ struct UgetMedia
 int  uget_media_get_site_id (const char* url);
 
 UgetMedia*  uget_media_new (const char* url, UgetMediaSiteId site_id);
-void        uget_media_free (UgetMedia* um);
+void        uget_media_free (UgetMedia* umedia);
+void        uget_media_clear (UgetMedia* umedia, int free_items);
 
-int         uget_media_grab_items (UgetMedia* um, UgetProxy* proxy);
+int         uget_media_grab_items (UgetMedia* umedia, UgetProxy* proxy);
 
 // return begin of matched items. Don't free it
-UgetMediaItem*  uget_media_match (UgetMedia*  um,
+UgetMediaItem*  uget_media_match (UgetMedia*          umedia,
                                   UgetMediaMatchMode  mode,
                                   UgetMediaQuality    quality,
                                   UgetMediaType       type);
 
-// Youtube:
-// http://www.youtube.com/watch?v=xxxxxxx
+// ----------------------------------------------------------------------------
+// UgetMediaItem
 
 struct UgetMediaItem
 {
@@ -142,6 +143,9 @@ struct UgetMediaItem
 	int   quality;    // 480p, 720p
 	int   type;       // UgetMediaType
 };
+
+UgetMediaItem*  uget_media_item_new (UgetMedia* umedia);
+void            uget_media_item_free (UgetMediaItem* umitem);
 
 #ifdef __cplusplus
 }

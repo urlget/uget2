@@ -70,7 +70,7 @@ struct	UgHtml
 
 	// stack of parser
 	// index 0, 2, 4, 6... : UgHtmlParser*  parser
-	// index 1, 3, 5, 7... : void*         user_data
+	// index 1, 3, 5, 7... : void*          user_data
 	UgArrayPtr   stack;
 
 	// attribute name & value for callback
@@ -97,11 +97,12 @@ void  ug_html_final (UgHtml* uhtml);
 void  ug_html_push (UgHtml* uhtml, const UgHtmlParser* parser, void* dest, void* data);
 void  ug_html_pop  (UgHtml* uhtml);
 
+// use ug_html_push() to push UgHtmlParser before you call thus function.
+int   ug_html_parse_file (UgHtml* uhtml, const char* file_utf8);
+
 void         ug_html_begin_parse (UgHtml* uhtml);
 UgHtmlError  ug_html_end_parse   (UgHtml* uhtml);
 UgHtmlError  ug_html_parse (UgHtml* uhtml, const char* buffer, int buffer_len);
-
-int  ug_html_parse_file (UgHtml* uhtml, const char* file_utf8);
 
 // ----------------------------------------------------------------------------
 // UgHtmlParser
@@ -112,6 +113,17 @@ typedef void (*UgHtmlParserStartElementFunc) (UgHtml*        uhtml,
                                               const char**   attribute_values,
                                               void*          dest,
                                               void*          data);
+
+typedef void (*UgHtmlParserEndElementFunc) (UgHtml*        uhtml,
+                                            const char*    element_name,
+                                            void*          dest,
+                                            void*          data);
+
+typedef void (*UgHtmlParserTextFunc) (UgHtml*        uhtml,
+                                      const char*    text,
+                                      int            text_len,
+                                      void*          dest,
+                                      void*          data);
 
 // This one is similar to GMarkupParser
 struct UgHtmlParser
@@ -126,18 +138,20 @@ struct UgHtmlParser
 //	                        void*          data);
 
 	/* Called for close tags </foo> */
-	void  (*end_element)   (UgHtml*        uhtml,
-	                        const char*    element_name,
-	                        void*          dest,
-	                        void*          data);
+	UgHtmlParserEndElementFunc      end_element;
+//	void  (*end_element)   (UgHtml*        uhtml,
+//	                        const char*    element_name,
+//	                        void*          dest,
+//	                        void*          data);
 
 	/* Called for character data */
 	/* text is not null-terminated */
-	void  (*text)          (UgHtml*        uhtml,
-	                        const char*    text,
-	                        int            text_len,
-	                        void*          dest,
-	                        void*          data);
+	UgHtmlParserTextFunc            text;
+//	void  (*text)          (UgHtml*        uhtml,
+//	                        const char*    text,
+//	                        int            text_len,
+//	                        void*          dest,
+//	                        void*          data);
 };
 
 

@@ -46,6 +46,7 @@
     <ClCompile Include="..\..\uget\UgetCurl.c" />
     <ClCompile Include="..\..\uget\UgetAria2.c" />
     <ClCompile Include="..\..\uget\UgetMedia.c" />
+    <ClCompile Include="..\..\uget\UgetMedia-youtube.c" />
     <ClCompile Include="..\..\uget\UgetPluginCurl.c" />
     <ClCompile Include="..\..\uget\UgetPluginAria2.c" />
     <ClCompile Include="..\..\uget\UgetPluginMedia.c" />

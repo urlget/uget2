@@ -469,8 +469,10 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 	common = plugin->common;
 	umedia = uget_media_new (common->uri, 0);
 	if (uget_media_grab_items (umedia, plugin->proxy) == 0) {
-		if (umedia->event)
+		if (umedia->event) {
 			uget_plugin_post ((UgetPlugin*) plugin, umedia->event);
+			umedia->event = NULL;
+		}
 		else {
 			uget_plugin_post ((UgetPlugin*) plugin,
 					uget_event_new_error (UGET_EVENT_ERROR_CUSTOM,
@@ -498,9 +500,12 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 	plugin->item_total = umedia->size -
 			ug_list_position ((UgList*) umedia, (UgLink*) umitem);
 
-	// setup HTTP referrer
+	// set HTTP referrer
 	http = ug_info_realloc (&plugin->ex.node->info, UgetHttpInfo);
-	http->referrer = common->uri;
+	if (http->referrer == NULL)
+		http->referrer = ug_strdup_printf ("%s%s", common->uri, "# ");
+	// clear copied common URI
+	ug_free (common->uri);
 	common->uri = NULL;
 	// reset grand total data
 	plugin->elapsed = 0;
@@ -571,7 +576,6 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 
 		// use media link to replace common->uri
 		common->uri = umitem->url;
-		umitem->url = NULL;
 
 		// tell plugin_sync() to change node name
 		plugin->named = FALSE;
@@ -591,8 +595,9 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 			uget_plugin_post ((UgetPlugin*) plugin, msg);
 		}
 
-		while (uget_plugin_sync (plugin->ex.plugin)) {
-			plugin->synced = FALSE;
+		do {
+			// sleep 0.5 second
+			ug_sleep (500);
 			// stop ex.plugin when user paused this plug-in.
 			if (plugin->paused) {
 				uget_plugin_stop (plugin->ex.plugin);
@@ -632,10 +637,9 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 				// post event to plugin
 				uget_plugin_post ((UgetPlugin*) plugin, msg);
 			}
-
-			// sleep 0.5 second
-			ug_sleep (500);
-		}
+			// sync data in plugin_sync()
+			plugin->synced = FALSE;
+		} while (uget_plugin_sync (plugin->ex.plugin));
 
 		// sync file node
 		ug_mutex_lock (&plugin->mutex);

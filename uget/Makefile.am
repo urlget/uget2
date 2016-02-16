@@ -15,7 +15,8 @@ libuget_a_SOURCES = \
 	UgetRpc.c     \
 	UgetOption.c  \
 	UgetData.c    \
-	UgetNode.c  UgetNode-compare.c  \
+	UgetNode.c    \
+	UgetNode-compare.c  \
 	UgetTask.c    \
 	UgetHash.c    \
 	UgetApp.c     \
@@ -25,6 +26,7 @@ libuget_a_SOURCES = \
 	UgetCurl.c    \
 	UgetAria2.c   \
 	UgetMedia.c   \
+	UgetMedia-youtube.c   \
 	UgetPluginCurl.c   \
 	UgetPluginAria2.c  \
 	UgetPluginMedia.c  \
