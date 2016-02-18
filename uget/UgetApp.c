@@ -694,10 +694,11 @@ int   uget_app_move_download_to (UgetApp* app, UgetNode* dnode, UgetNode* cnode)
 	return TRUE;
 }
 
-void  uget_app_delete_download (UgetApp* app, UgetNode* dnode, int delete_file)
+int  uget_app_delete_download (UgetApp* app, UgetNode* dnode, int delete_file)
 {
 	UgetNode*  fnode;   // filenode
 	UgetNode*  cnode;
+	int        error = 0;
 
 	cnode = dnode->parent;
 	uget_task_remove (&app->task, dnode);
@@ -711,12 +712,17 @@ void  uget_app_delete_download (UgetApp* app, UgetNode* dnode, int delete_file)
 //			if (ug_file_is_exist (fnode->name) == FALSE)
 //				continue;
 			if (ug_file_is_dir (fnode->name) == FALSE)
-				ug_unlink (fnode->name);
+				error = ug_unlink (fnode->name);
 			else
-				ug_delete_dir (fnode->name);
+				error = ug_delete_dir (fnode->name);
 		}
 	}
 	uget_node_unref (dnode);
+
+	if (error == -1)
+		return FALSE;
+	else
+		return TRUE;
 }
 
 int  uget_app_recycle_download (UgetApp* app, UgetNode* dnode)

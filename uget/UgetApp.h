@@ -115,7 +115,7 @@ int   uget_app_add_download_uri (UgetApp* app, const char* uri, UgetNode* cnode,
 int   uget_app_add_download (UgetApp* app, UgetNode* dnode, UgetNode* cnode, int apply);
 int   uget_app_move_download (UgetApp* app, UgetNode* dnode, UgetNode* dnode_position);
 int   uget_app_move_download_to (UgetApp* app, UgetNode* dnode, UgetNode* cnode);
-void  uget_app_delete_download (UgetApp* app, UgetNode* dnode, int delete_file);
+int   uget_app_delete_download (UgetApp* app, UgetNode* dnode, int delete_file);
 int   uget_app_recycle_download (UgetApp* app, UgetNode* dnode);
 int   uget_app_activate_download (UgetApp* app, UgetNode* dnode);
 int   uget_app_pause_download (UgetApp* app, UgetNode* dnode);
