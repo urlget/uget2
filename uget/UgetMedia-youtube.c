@@ -78,29 +78,41 @@ int  uget_media_grab_youtube_method_2 (UgetMedia* umedia, UgetProxy* proxy);
 
 int  uget_media_grab_youtube (UgetMedia* umedia, UgetProxy* proxy)
 {
-	int  n_items;
+	int   n;
+	char* string;
 
-	n_items = uget_media_grab_youtube_method_1 (umedia, proxy);
-#if 0
-	if (n_items == 0) {
+	ug_uri_init (&umedia->uuri, umedia->url);
+	// replace scheme "http" by "https"
+	if (umedia->uuri.scheme_len==4 && strncmp (umedia->url, "http", 4)==0) {
+		n = strlen (umedia->url);
+		string = ug_malloc (n + 1 + 1); // + 's' + '\0'
+		string[0] = 0;
+		strcat (string, "https");
+		strcat (string, umedia->url + 4);
+		ug_free (umedia->url);
+		umedia->url = string;
+	}
+
+	n = uget_media_grab_youtube_method_1 (umedia, proxy);
+
+	if (n == 0) {
 		ug_free (umedia->title);
 		umedia->title = NULL;
 		if (umedia->event) {
 			uget_event_free (umedia->event);
 			umedia->event = NULL;
 		}
-		n_items = uget_media_grab_youtube_method_2 (umedia, proxy);
+		n = uget_media_grab_youtube_method_2 (umedia, proxy);
 	}
-#endif
 
-	return n_items;
+	return n;
 }
 
 // --------------------------------------------------------
 // UgetMedia for YouTube
 // Youtube:
-// http://www.youtube.com/watch?v=xxxxxxxxxxx
-// http://youtu.be/xxxxxxxxxxx
+// https://www.youtube.com/watch?v=xxxxxxxxxxx
+// https://youtu.be/xxxxxxxxxxx
 
 typedef struct UgetYouTube    UgetYouTube;
 
@@ -280,10 +292,10 @@ int  uget_media_grab_youtube_method_1 (UgetMedia* umedia, UgetProxy* proxy)
  	UgetYouTube* uyoutube;
  	int          vevo_retry = FALSE;
 
- 	uyoutube = uget_youtube_new ();
+	// ug_uri_init() has been called by uget_media_grab_youtube()
+	uyoutube = uget_youtube_new ();
 	query = &uyoutube->query;
 	umedia->data = uyoutube;
-	ug_uri_init (&umedia->uuri, umedia->url);
 	video_id_str = NULL;
 	video_id_len = 0;
 
@@ -310,16 +322,17 @@ int  uget_media_grab_youtube_method_1 (UgetMedia* umedia, UgetProxy* proxy)
 		return 0;
 	}
 
-	// get query URL
-	if (umedia->uuri.query != -1) {
+	// URL
+	if (umedia->uuri.query == -1) {
+		// if no query in URL
 		string = ug_strdup_printf (
-				"%.*sget_video_info?video_id=%.*s",
-				umedia->uuri.file, umedia->url,
+				"https://www.youtube.com/get_video_info?video_id=%.*s",
 				video_id_len, video_id_str);
 	}
 	else {
 		string = ug_strdup_printf (
-				"http://www.youtube.com/get_video_info?video_id=%.*s",
+				"%.*sget_video_info?video_id=%.*s",
+				umedia->uuri.file, umedia->url,
 				video_id_len, video_id_str);
 	}
 
