@@ -1282,7 +1282,7 @@ void  ugtk_app_create_torrent (UgtkApp* app)
 	title = g_strconcat (UGTK_APP_NAME " - ", _("Open Torrent file"), NULL);
 	dialog = create_file_chooser (app->window.self,
 			GTK_FILE_CHOOSER_ACTION_OPEN,
-			title, "Torrent file (*.torrent)", "application/x-bittorrent");
+			title, _("Torrent file (*.torrent)"), "application/x-bittorrent");
 	g_free (title);
 	g_signal_connect (dialog, "response",
 			G_CALLBACK (on_create_torrent_response), app);
@@ -1387,7 +1387,7 @@ void  ugtk_app_load_category (UgtkApp* app)
 	title = g_strconcat (UGTK_APP_NAME " - ", _("Open Category file"), NULL);
 	dialog = create_file_chooser (app->window.self,
 			GTK_FILE_CHOOSER_ACTION_OPEN,
-			title, "JSON file (*.json)", "application/json");
+			title, _("JSON file (*.json)"), "application/json");
 	g_free (title);
 
 	g_signal_connect (dialog, "response",
@@ -1543,7 +1543,7 @@ void  ugtk_app_import_html_file (UgtkApp* app)
 	title = g_strconcat (UGTK_APP_NAME " - ", _("Import URLs from HTML file"), NULL);
 	dialog = create_file_chooser (app->window.self,
 			GTK_FILE_CHOOSER_ACTION_OPEN,
-			title, "HTML file (*.htm, *.html)", "text/html");
+			title, _("HTML file (*.htm, *.html)"), "text/html");
 	g_free (title);
 	g_signal_connect (dialog, "response",
 			G_CALLBACK (on_import_html_file_response), app);
@@ -1558,7 +1558,7 @@ void  ugtk_app_import_text_file (UgtkApp* app)
 	title = g_strconcat (UGTK_APP_NAME " - ", _("Import URLs from text file"), NULL);
 	dialog = create_file_chooser (app->window.self,
 			GTK_FILE_CHOOSER_ACTION_OPEN,
-			title, "Plain text file", "text/plain");
+			title, _("Plain text file"), "text/plain");
 	g_free (title);
 	g_signal_connect (dialog, "response",
 			G_CALLBACK (on_import_text_file_response), app);
