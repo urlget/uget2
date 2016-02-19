@@ -138,7 +138,7 @@ int  ug_socket_listen (SOCKET fd, const char* addr, const char* port_or_serv,
 	int        type;
 	int        opt = 1;
 
-	if (setsockopt (fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof (int)) == -1)
+	if (setsockopt (fd, SOL_SOCKET, SO_REUSEADDR, (const char*)&opt, sizeof (int)) == -1)
 		return SOCKET_ERROR;
 
 	len = sizeof (type);
