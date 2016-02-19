@@ -313,8 +313,8 @@ int  main (int argc, char** argv)
 	ugtk_app_final (ugtk_app);
 	g_free (ugtk_app);
 
-	// sleep 3 second to wait thread and shutdown RPC
-	g_usleep (3 * 1000000);
+	// sleep 2 second to wait thread and shutdown RPC
+	g_usleep (2 * 1000000);
 	uget_rpc_free (rpc);
 
 	// libnotify
