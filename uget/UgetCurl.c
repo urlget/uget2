@@ -785,7 +785,7 @@ static size_t uget_curl_header_http0 (char *buffer, size_t size,
 		ug_free (buffer);
 	}
 
-	return nmemb;
+	return nmemb * size;
 }
 
 static size_t uget_curl_header_ftp0 (char *buffer, size_t size,
@@ -799,13 +799,13 @@ static size_t uget_curl_header_ftp0 (char *buffer, size_t size,
 		curl_easy_setopt (ugcurl->curl, CURLOPT_HEADERDATA, NULL);
 	}
 
-	return nmemb;
+	return nmemb * size;
 }
 
 static size_t uget_curl_output_none (char *buffer, size_t size,
                                      size_t nmemb, void* data)
 {
-	return nmemb;
+	return nmemb * size;
 }
 
 static size_t uget_curl_output_default (char *buffer, size_t size,

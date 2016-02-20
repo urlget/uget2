@@ -94,7 +94,7 @@ static UgetAria2Thread* uget_aria2_thread_new (UgetAria2* uaria2)
 	ug_jsonrpc_array_init (&uat->response, 16);
 	ug_jsonrpc_curl_init (&uat->json);
 	ug_jsonrpc_curl_set_url (&uat->json, uaria2->uri);
-	uat->finalized = 0;
+	uat->finalized = FALSE;
 
 	uget_aria2_ref (uaria2);
 	ug_thread_create (&thread, (UgThreadFunc) uget_aria2_thread, uat);
@@ -297,7 +297,7 @@ static UG_THREAD_RETURN_TYPE  uget_aria2_thread (UgetAria2Thread* uathread)
 
 	for (counts = 0;  ;  counts++) {
 		// finalize
-		if (uathread->finalized) {
+		if (uathread->finalized == TRUE) {
 			// shutdown request
 			if (uaria2->shutdown && jreq_shutdown == NULL) {
 				jreq_shutdown = uget_aria2_alloc (uaria2, TRUE, TRUE);
