@@ -184,14 +184,26 @@ static void ugtk_statusbar_init_ui (struct UgtkStatusbar* sbar)
 {
 	GtkBox*    hbox;
 	GtkWidget* widget;
+	PangoContext*  context;
+	PangoLayout*   layout;
+	int            text_width;
 
 	sbar->self = (GtkStatusbar*) gtk_statusbar_new ();
 	hbox = GTK_BOX (sbar->self);
 
+	// calculate text width
+	context = gtk_widget_get_pango_context (GTK_WIDGET (sbar->self));
+	layout = pango_layout_new (context);
+	pango_layout_set_text (layout, "9999 MiB/s", -1);
+	pango_layout_get_pixel_size (layout, &text_width, NULL);
+	g_object_unref (layout);
+	if (text_width < 100)
+		text_width = 100;
+
 	// upload speed label
 	widget = gtk_label_new ("");
 	sbar->up_speed = (GtkLabel*) widget;
-	gtk_widget_set_size_request (widget, 100, 0);
+	gtk_widget_set_size_request (widget, text_width, 0);
 	gtk_box_pack_end (hbox, widget, FALSE, TRUE, 2);
 //	gtk_label_set_width_chars (sbar->down_speed, 15);
 	gtk_misc_set_alignment (GTK_MISC (widget), 0, 0.5);
@@ -202,7 +214,7 @@ static void ugtk_statusbar_init_ui (struct UgtkStatusbar* sbar)
 	// download speed label
 	widget = gtk_label_new ("");
 	sbar->down_speed = (GtkLabel*) widget;
-	gtk_widget_set_size_request (widget, 100, 0);
+	gtk_widget_set_size_request (widget, text_width, 0);
 	gtk_box_pack_end (hbox, widget, FALSE, TRUE, 2);
 //	gtk_label_set_width_chars (sbar->down_speed, 15);
 	gtk_misc_set_alignment (GTK_MISC (widget), 0, 0.5);
