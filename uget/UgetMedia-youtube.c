@@ -49,65 +49,6 @@
 #define _(x)   x
 #endif
 
-int  uget_media_is_youtube (UgUri* uuri)
-{
-	int         length;
-	const char* string;
-
-	// youtube.com
-	// https://youtube.com/watch?=xxxxxxxxxxx
-	// https://youtu.be/xxxxxxxxxxx
-
-	length = ug_uri_host (uuri, &string);
-	if (length >= 11 && strncmp (string + length - 11, "youtube.com", 11) == 0)
-	{
-		if (strncmp (uuri->uri + uuri->file , "watch?", 6) == 0)
-			return TRUE;
-	}
-	else if (length >= 8 && strncmp (string + length - 8, "youtu.be", 8) == 0)
-	{
-		if (uuri->file != -1)
-			return TRUE;
-	}
-
-	return FALSE;
-}
-
-int  uget_media_grab_youtube_method_1 (UgetMedia* umedia, UgetProxy* proxy);
-int  uget_media_grab_youtube_method_2 (UgetMedia* umedia, UgetProxy* proxy);
-
-int  uget_media_grab_youtube (UgetMedia* umedia, UgetProxy* proxy)
-{
-	int   n;
-	char* string;
-
-	ug_uri_init (&umedia->uuri, umedia->url);
-	// replace scheme "http" by "https"
-	if (umedia->uuri.scheme_len==4 && strncmp (umedia->url, "http", 4)==0) {
-		n = strlen (umedia->url);
-		string = ug_malloc (n + 1 + 1); // + 's' + '\0'
-		string[0] = 0;
-		strcat (string, "https");
-		strcat (string, umedia->url + 4);
-		ug_free (umedia->url);
-		umedia->url = string;
-	}
-
-	n = uget_media_grab_youtube_method_1 (umedia, proxy);
-
-	if (n == 0) {
-		ug_free (umedia->title);
-		umedia->title = NULL;
-		if (umedia->event) {
-			uget_event_free (umedia->event);
-			umedia->event = NULL;
-		}
-		n = uget_media_grab_youtube_method_2 (umedia, proxy);
-	}
-
-	return n;
-}
-
 // --------------------------------------------------------
 // UgetMedia for YouTube
 // Youtube:
@@ -119,15 +60,20 @@ typedef struct UgetYouTube    UgetYouTube;
 struct UgetYouTube
 {
 	UgUriQuery  query;
+	char*       video_id;
 
 	// Method 1
 	UgBuffer    buffer;
 	char*       reason;    // VEVO
 	char*       status;    // VEVO
+	int         error_code;
+	// errorcode = 100, This video has been removed.
+	// errorcode = 101 or 150, The video requested does not allow playback in an embedded player.
 
 	// method 2
 	UgHtml      html;
 	UgJson      json;
+	char*       js;        // JavaScript player URL
 };
 
 static UgetYouTube* uget_youtube_new (void)
@@ -142,6 +88,7 @@ static UgetYouTube* uget_youtube_new (void)
 
 	ug_html_init (&uyoutube->html);
 	ug_json_init (&uyoutube->json);
+	uyoutube->js = NULL;
 	return uyoutube;
 }
 
@@ -153,6 +100,7 @@ static void  uget_youtube_free (UgetYouTube* uyoutube)
 
 	ug_html_final (&uyoutube->html);
 	ug_json_final (&uyoutube->json);
+	ug_free (uyoutube->js);
 
 	ug_free (uyoutube);
 }
@@ -216,7 +164,7 @@ static void  uget_youtube_parse_map (UgetYouTube* uyoutube, UgetMedia* umedia, c
 
 // ----------------------------------------------------------------------------
 // method 1
-// http://www.youtube.com/get_video_info?video_id=xxxxxxxxxxx
+// https://www.youtube.com/get_video_info?video_id=xxxxxxxxxxx
 // https://www.youtube.com/get_video_info?video_id=xxxxxxxxxxx&el=vevo&el=embedded&asv=3&sts=15902
 
 static void  uget_youtube_parse_query (UgetYouTube* uyoutube, UgetMedia* umedia)
@@ -251,6 +199,11 @@ static void  uget_youtube_parse_query (UgetYouTube* uyoutube, UgetMedia* umedia)
 		uyoutube->status = ug_strndup (uyoutube->query.value, uyoutube->query.value_len);
 		ug_decode_uri (uyoutube->status, uyoutube->query.value_len, uyoutube->status);
 	}
+	else if (uyoutube->query.field_len == 9 &&
+	         strncmp (uyoutube->buffer.beg, "errorcode", 9) == 0)
+	{
+		uyoutube->error_code = strtol (uyoutube->query.value, NULL, 10);
+	}
 }
 
 static size_t curl_output_youtube (char* beg, size_t size,
@@ -283,58 +236,16 @@ static size_t curl_output_youtube (char* beg, size_t size,
 
 int  uget_media_grab_youtube_method_1 (UgetMedia* umedia, UgetProxy* proxy)
 {
-	char*  string;
-	char*  video_id_str;
-	int    video_id_len;
-	CURL*        curl;
-	CURLcode     code;
- 	UgUriQuery*  query;
- 	UgetYouTube* uyoutube;
- 	int          vevo_retry = FALSE;
+	CURL*         curl;
+	CURLcode      code;
+	UgetYouTube*  uyoutube;
+	char*         string;
+	int           retry = FALSE;
 
-	// ug_uri_init() has been called by uget_media_grab_youtube()
-	uyoutube = uget_youtube_new ();
-	query = &uyoutube->query;
-	umedia->data = uyoutube;
-	video_id_str = NULL;
-	video_id_len = 0;
-
-	// get youtube video_id
-	if (umedia->uuri.query != -1) {
-		// http://youtube.com/watch?v=xxxxxxxxxxx
-		string = umedia->url + umedia->uuri.query;
-		while (ug_uri_query_part (query, string)) {
-			if (strncmp ("v", string, query->field_len) == 0 && query->value) {
-				video_id_str = query->value;
-				video_id_len = query->value_len;
-				break;
-			}
-			string = query->field_next;
-		}
-	}
-	else {
-		// http://youtu.be/xxxxxxxxxxx
-		video_id_len = ug_uri_file (&umedia->uuri, (const char**)&video_id_str);
-	}
-	if (video_id_str == NULL || video_id_len == 0) {
-		umedia->event = uget_event_new_error (UGET_EVENT_ERROR_CUSTOM,
-				_("No video_id found in URL of YouTube."));
-		return 0;
-	}
-
-	// URL
-	if (umedia->uuri.query == -1) {
-		// if no query in URL
-		string = ug_strdup_printf (
-				"https://www.youtube.com/get_video_info?video_id=%.*s",
-				video_id_len, video_id_str);
-	}
-	else {
-		string = ug_strdup_printf (
-				"%.*sget_video_info?video_id=%.*s",
-				umedia->uuri.file, umedia->url,
-				video_id_len, video_id_str);
-	}
+ 	uyoutube = umedia->data;
+	string = ug_strdup_printf (
+			"https://www.youtube.com/get_video_info?video_id=%s",
+			uyoutube->video_id);
 
 	curl = curl_easy_init ();
 	if (proxy)
@@ -350,12 +261,19 @@ int  uget_media_grab_youtube_method_1 (UgetMedia* umedia, UgetProxy* proxy)
 		curl_easy_setopt (curl, CURLOPT_URL, string);
 		code = curl_easy_perform (curl);
 		ug_free (string);
+		string = NULL;
 
 		switch (code) {
 		case CURLE_OK:
 			if (uyoutube->buffer.beg != uyoutube->buffer.cur) {
 				ug_buffer_write_char (&uyoutube->buffer, 0);
 				uget_youtube_parse_query (umedia->data, umedia);
+			}
+			if (uyoutube->error_code == 100) {
+				umedia->event = uget_event_new_error (
+						UGET_EVENT_ERROR_CUSTOM,
+						_("This video has been removed."));
+				goto break_do_loop;
 			}
 			break;
 
@@ -371,15 +289,15 @@ int  uget_media_grab_youtube_method_1 (UgetMedia* umedia, UgetProxy* proxy)
 			goto break_do_loop;
 		}
 
-		// retry for VEVO
-		if (vevo_retry == TRUE) {
-			vevo_retry = FALSE;
+#if 0
+		if (retry == TRUE) {
+			retry = FALSE;
 			// decrypt_signature
 		}
 		else if (uyoutube->status && strcmp (uyoutube->status, "ok") != 0) {
 			if (uyoutube->reason && strstr (uyoutube->reason, "VEVO") == NULL)
 				break;
-			vevo_retry = TRUE;
+			retry = TRUE;
 			// reset data if we need retry
 			ug_buffer_restart(&uyoutube->buffer);
 			ug_free (uyoutube->reason);
@@ -387,15 +305,14 @@ int  uget_media_grab_youtube_method_1 (UgetMedia* umedia, UgetProxy* proxy)
 			ug_free (uyoutube->status);
 			uyoutube->status = NULL;
 			string = ug_strdup_printf (
-					"https://www.youtube.com/get_video_info?video_id=%.*s&el=vevo&el=embedded&asv=3&sts=15902",
-					video_id_len, video_id_str);
+					"https://www.youtube.com/get_video_info?video_id=%s&el=vevo&el=embedded&asv=3&sts=15902",
+					uyoutube->video_id);
 		}
-	} while (vevo_retry == TRUE);
+#endif
+	} while (retry == TRUE);
 
 break_do_loop:
 	curl_easy_cleanup (curl);
-	uget_youtube_free (uyoutube);
-	umedia->data = NULL;
 	return umedia->size;
 }
 
@@ -406,36 +323,23 @@ break_do_loop:
 // ------------------------------------
 // JSON parser
 
-static UgJsonError  ug_json_parse_youtube_map (UgJson* json,
-                                              const char* name,
-                                              const char* value,
-                                              void* umedia, void* data);
-
-static const UgEntry youtube_json_entry[] =
+static UgJsonError  ug_json_parse_assets_js (UgJson* json,
+                                             const char* name,
+                                             const char* value,
+                                             void* umedia, void* data)
 {
-	{"title",    offsetof (UgetMedia, title),
-			UG_ENTRY_STRING, NULL, NULL},
-	{"url_encoded_fmt_stream_map",  0,
-			UG_ENTRY_CUSTOM, ug_json_parse_youtube_map, NULL},
-	{NULL}    // null-terminated
-};
+	UgetYouTube* uyoutube;
 
-static UgJsonError  ug_json_parse_youtube (UgJson* json,
-                                           const char* name,
-                                           const char* value,
-                                           void* dest, void* data)
-{
-	if (strcmp (name, "args") == 0 && json->type == UG_JSON_OBJECT)
-		ug_json_push (json, ug_json_parse_entry, dest, (void*) youtube_json_entry);
-//	else if (json->type >= UG_JSON_OBJECT)
-//		ug_json_push (json, ug_json_parse_unknown, NULL, NULL);
+	uyoutube = ((UgetMedia*)umedia)->data;
+	uyoutube->js = ug_strdup (value);
+
 	return UG_JSON_ERROR_NONE;
 }
 
-static UgJsonError  ug_json_parse_youtube_map (UgJson* json,
-                                               const char* name,
-                                               const char* value,
-                                               void* umedia, void* data)
+static UgJsonError  ug_json_parse_args_map (UgJson* json,
+                                            const char* name,
+                                            const char* value,
+                                            void* umedia, void* data)
 {
 	UgetYouTube* uyoutube;
 
@@ -444,6 +348,31 @@ static UgJsonError  ug_json_parse_youtube_map (UgJson* json,
 
 	return UG_JSON_ERROR_NONE;
 }
+
+static const UgEntry  youtube_assets_entry[] =
+{
+	{"js",    0,
+			UG_ENTRY_CUSTOM, ug_json_parse_assets_js, NULL},
+	{NULL}    // null-terminated
+};
+
+static const UgEntry  youtube_args_entry[] =
+{
+	{"title",    offsetof (UgetMedia, title),
+			UG_ENTRY_STRING, NULL, NULL},
+	{"url_encoded_fmt_stream_map",  0,
+			UG_ENTRY_CUSTOM, ug_json_parse_args_map, NULL},
+	{NULL}    // null-terminated
+};
+
+static const UgEntry  youtube_config_entry[] =
+{
+	{"assets",    0,
+			UG_ENTRY_OBJECT, (void*) youtube_assets_entry, NULL},
+	{"args",      0,
+			UG_ENTRY_OBJECT, (void*) youtube_args_entry, NULL},
+	{NULL}    // null-terminated
+};
 
 // ------------------------------------
 // HTML parser
@@ -512,7 +441,7 @@ static void  youtube_script_text (UgHtml*        uhtml,
 
 	json = &uyoutube->json;
 	ug_json_begin_parse (json);
-	ug_json_push (json, ug_json_parse_youtube, umedia, NULL);
+	ug_json_push (json, ug_json_parse_entry, umedia, (void*) youtube_config_entry);
 	ug_json_push (json, ug_json_parse_object, NULL, NULL);
 	ug_json_parse (json, cur, text_len - (cur - text));
 	ug_json_end_parse (json);
@@ -554,30 +483,44 @@ int  uget_media_grab_youtube_method_2 (UgetMedia* umedia, UgetProxy* proxy)
 	CURL*        curl;
 	CURLcode     code;
 	UgetYouTube* uyoutube;
+	char*        string;
 
+	ug_free (umedia->title);
+	umedia->title = NULL;
+	uyoutube = umedia->data;
+
+	// create URL string
+	string = ug_strdup_printf ("https://www.youtube.com/watch?v=%s",
+	                           uyoutube->video_id);
+	// setup option
 	curl = curl_easy_init ();
 	if (proxy)
 		ug_curl_set_proxy (curl, proxy);
-
-	uyoutube = uget_youtube_new ();
-	umedia->data = uyoutube;
-	ug_free (umedia->title);
-	umedia->title = NULL;
-
-	curl_easy_setopt (curl, CURLOPT_URL, umedia->url);
+	curl_easy_setopt (curl, CURLOPT_URL, string);
 	curl_easy_setopt (curl, CURLOPT_NOSIGNAL, 1L);
 	curl_easy_setopt (curl, CURLOPT_SSL_VERIFYHOST, 0L);
 	curl_easy_setopt (curl, CURLOPT_SSL_VERIFYPEER, 0L);
 	curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION, curl_output_youtube_html);
 	curl_easy_setopt (curl, CURLOPT_WRITEDATA, umedia);
-
+	// run & parse
 	ug_html_begin_parse (&uyoutube->html);
 	ug_html_push (&uyoutube->html, &youtube_html_parser, umedia, uyoutube);
 	code = curl_easy_perform (curl);
 	ug_html_end_parse (&uyoutube->html);
+	// free URL string
+	ug_free (string);
 
 	switch (code) {
 	case CURLE_OK:
+		// player URL
+		if (uyoutube->js && strncmp (uyoutube->js, "//", 2) == 0) {
+			string = ug_malloc (strlen (uyoutube->js) + 6 + 1); // "https:" + '\0'
+			string[0] = 0;
+			strcat (string, "https:");
+			strcat (string, uyoutube->js);
+			ug_free (uyoutube->js);
+			uyoutube->js = string;
+		}
 		break;
 
 	case CURLE_OUT_OF_MEMORY:
@@ -588,13 +531,99 @@ int  uget_media_grab_youtube_method_2 (UgetMedia* umedia, UgetProxy* proxy)
 	default:
 		umedia->event = uget_event_new_error (
 				UGET_EVENT_ERROR_CUSTOM,
-				_("Error occurred during getting video info."));
+				_("Error occurred during getting video web page."));
 		break;
 	}
 
 	curl_easy_cleanup (curl);
+	return umedia->size;
+}
+
+// ----------------------------------------------------------------------------
+// UgetMedia functions
+
+int  uget_media_is_youtube (UgUri* uuri)
+{
+	int         length;
+	const char* string;
+
+	// youtube.com
+	// https://youtube.com/watch?=xxxxxxxxxxx
+	// https://youtu.be/xxxxxxxxxxx
+
+	length = ug_uri_host (uuri, &string);
+	if (length >= 11 && strncmp (string + length - 11, "youtube.com", 11) == 0)
+	{
+		if (strncmp (uuri->uri + uuri->file , "watch?", 6) == 0)
+			return TRUE;
+	}
+	else if (length >= 8 && strncmp (string + length - 8, "youtu.be", 8) == 0)
+	{
+		if (uuri->file != -1)
+			return TRUE;
+	}
+
+	return FALSE;
+}
+
+int  uget_media_grab_youtube_method_1 (UgetMedia* umedia, UgetProxy* proxy);
+int  uget_media_grab_youtube_method_2 (UgetMedia* umedia, UgetProxy* proxy);
+
+int  uget_media_grab_youtube (UgetMedia* umedia, UgetProxy* proxy)
+{
+	int    n;
+	char*  string;
+	char*  video_id_str;
+	int    video_id_len;
+	UgUriQuery*   query;
+	UgetYouTube*  uyoutube;
+
+	ug_uri_init (&umedia->uuri, umedia->url);
+	query = &umedia->uquery;
+	video_id_str = NULL;
+	video_id_len = 0;
+
+	// get youtube video_id
+	if (umedia->uuri.query != -1) {
+		// https://www.youtube.com/watch?v=xxxxxxxxxxx
+		string = umedia->url + umedia->uuri.query;
+		while (ug_uri_query_part (query, string)) {
+			if (strncmp ("v", string, query->field_len) == 0 && query->value) {
+				video_id_str = query->value;
+				video_id_len = query->value_len;
+				break;
+			}
+			string = query->field_next;
+		}
+	}
+	else {
+		// http://youtu.be/xxxxxxxxxxx
+		video_id_len = ug_uri_file (&umedia->uuri, (const char**)&video_id_str);
+	}
+
+	if (video_id_str == NULL || video_id_len == 0) {
+		umedia->event = uget_event_new_error (UGET_EVENT_ERROR_CUSTOM,
+				_("No video_id found in URL of YouTube."));
+		return 0;
+	}
+
+	uyoutube = uget_youtube_new ();
+	uyoutube->video_id = ug_strndup (video_id_str, video_id_len);
+	umedia->data = uyoutube;
+
+	n = uget_media_grab_youtube_method_1 (umedia, proxy);
+	if (n == 0 && uyoutube->error_code != 100) {
+		ug_free (umedia->title);
+		umedia->title = NULL;
+		if (umedia->event) {
+			uget_event_free (umedia->event);
+			umedia->event = NULL;
+		}
+		n = uget_media_grab_youtube_method_2 (umedia, proxy);
+	}
+
 	uget_youtube_free (uyoutube);
 	umedia->data = NULL;
 
-	return umedia->size;
+	return n;
 }

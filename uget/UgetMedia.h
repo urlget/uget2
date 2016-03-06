@@ -98,7 +98,9 @@ struct UgetMedia
 //	UgetMediaItem*   head;
 //	UgetMediaItem*   tail;
 
-	UgUri  uuri;
+	UgUri       uuri;
+	UgUriQuery  uquery;
+
 	int    site_id;
 	char*  url;
 	char*  title;
