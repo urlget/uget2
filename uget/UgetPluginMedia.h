@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2016 by C.H. Huang
+ *   Copyright (C) 2016 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -125,9 +125,7 @@ namespace Uget
 
 // This one is for derived use only. No data members here.
 // Your derived struct/class must be C++11 standard-layout
-struct PluginMediaMethod : Uget::PluginMethod
-{
-};
+struct PluginMediaMethod : Uget::PluginMethod {};
 
 // This one is for directly use only. You can NOT derived it.
 struct PluginMedia : Uget::PluginMediaMethod, UgetPluginMedia {};

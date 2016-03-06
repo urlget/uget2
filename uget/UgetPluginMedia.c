@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2016 by C.H. Huang
+ *   Copyright (C) 2016 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -84,7 +84,7 @@ static const char* hosts[]   = {"youtube.com", "youtu.be",
 
 static const UgetPluginInfo UgetPluginMediaInfoStatic =
 {
-	"empty",
+	"media",
 	sizeof (UgetPluginMedia),
 	(const UgEntry*) NULL,
 	(UgInitFunc)   plugin_init,
