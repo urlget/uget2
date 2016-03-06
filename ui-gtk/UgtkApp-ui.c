@@ -121,7 +121,7 @@ static void ugtk_app_init_size (UgtkApp* app)
 	else {
 		width = width * 85 / 100;
 		height = height * 8 / 10;
-		paned_position = 220;
+		paned_position = width * 22 / 100;
 	}
 
 	gtk_window_resize (app->window.self, width, height);
