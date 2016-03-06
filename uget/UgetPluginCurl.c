@@ -98,7 +98,6 @@ static UgetResult  global_set (int code, void* parameter);
 static UgetResult  global_get (int code, void* parameter);
 
 static const char* schemes[] = {"http", "https", "ftp", "ftps", NULL};
-static const char* types[]   = {NULL};
 
 static const UgetPluginInfo UgetPluginCurlInfoStatic =
 {
@@ -112,7 +111,7 @@ static const UgetPluginInfo UgetPluginCurlInfoStatic =
 	(UgetPluginSyncFunc) plugin_sync,
 	NULL,
 	schemes,
-	types,
+	NULL,
 	(UgetPluginSetFunc) global_set,
 	(UgetPluginGetFunc) global_get
 };
