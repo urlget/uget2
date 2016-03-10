@@ -109,7 +109,7 @@ struct UgetAria2
 	int       limit_count;
 };
 
-UgetAria2* uget_aria2_new ();
+UgetAria2* uget_aria2_new (void);
 void uget_aria2_ref (UgetAria2* ua2);
 void uget_aria2_unref (UgetAria2* ua2);
 

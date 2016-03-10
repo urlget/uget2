@@ -69,9 +69,16 @@ static gboolean	uget_plugin_aria2_set_proxy_pwmd (UgetPluginAria2 *plugin, UgVal
 #define  _(x)   x
 #endif
 
+static UgJsonrpcObject*  alloc_speed_request (UgetPluginAria2* plugin);
+static void              recycle_speed_request (UgJsonrpcObject* object);
+static UgJsonrpcObject*  alloc_status_request (UgValue** gid);
+static void              recycle_status_request (UgJsonrpcObject* object);
+
 static void  aria2_file_clear (Aria2File* afile);
 static void* aria2_file_array_find (Aria2FileArray* afiles, const char* path);
-static void* ug_file_to_base64  (const char* file, int* length);
+static void* ug_file_to_base64 (const char* file, int* length);
+static int   decide_file_type (UgetPluginAria2* plugin);
+static void  add_uri_mirrors  (UgValue* varray, const char* mirrors);
 
 enum UgetPluginAria2UriType {
 	URI_UNSUPPORTED,
@@ -584,7 +591,9 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 		if (plugin->errorCode == 5 || plugin->errorCode == 19) {
 #endif
 			// retry
-			if (temp.common->retry_count < temp.common->retry_limit || temp.common->retry_limit == 0) {
+			if (temp.common->retry_count < temp.common->retry_limit ||
+			    temp.common->retry_limit == 0)
+			{
 				temp.common->retry_count++;
 				plugin->restart = TRUE;
 #ifndef NDEBUG
@@ -650,10 +659,6 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 		// If no followed gid and no need to retry, it must stop.
 		if (plugin->restart == FALSE)
 			plugin->paused = TRUE;
-		else {
-			plugin->retry_delay = temp.common->retry_delay;
-			uget_aria2_request (global.data, plugin->start_request);
-		}
 	}
 
 	// if plug-in was stopped, don't sync data with thread
@@ -703,25 +708,28 @@ static int  plugin_insert_node (UgetPluginAria2* plugin,
 // ----------------------------------------------------------------------------
 // plugin_thread
 
-static void  add_gids_by_value_array (UgArrayStr* gids, UgValueArray* varray);
-static UgJsonrpcObject*  alloc_speed_request (UgetPluginAria2* plugin);
-static void              recycle_speed_request (UgJsonrpcObject* object);
-static UgJsonrpcObject*  alloc_status_request (UgValue** gid);
-static void              recycle_status_request (UgJsonrpcObject* object);
-
-static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginAria2* plugin)
+static void  add_gids_by_value_array (UgArrayStr* gids, UgValueArray* varray)
 {
-	UgJsonrpcObject*  req;
-	UgJsonrpcObject*  res;
-	UgJsonrpcObject*  speed_req;
-	UgJsonrpcObject*  speed_res;
-	UgValue*          gid;
-	UgValue*          value;
-	UgValue*          member;
-	int               index;
+	UgValue*  value;
+	int       index;
 
-restart_thread:
-	plugin->restart = FALSE;
+#ifndef NDEBUG
+	// debug
+	printf ("add %d gids\n", varray->length);
+#endif
+	for (index = 0;  index < varray->length;  index++) {
+		value = varray->at + index;
+		*(char**) ug_array_alloc (gids, 1) = value->c.string;
+		value->c.string = NULL;
+		value->type = UG_VALUE_NONE;
+	}
+}
+
+static int  send_start_request (UgetPluginAria2* plugin)
+{
+	UgJsonrpcObject*  res;
+
+	uget_aria2_request (global.data, plugin->start_request);
 	res = uget_aria2_respond (global.data, plugin->start_request);
 	if (res == NULL) {
 #ifdef HAVE_GLIB
@@ -732,14 +740,14 @@ restart_thread:
 				uget_event_new_error(0, aria2_no_response));
 #endif
 //		plugin->node->state |= UGET_STATE_ERROR;
-		goto exit;
+		return FALSE;
 	}
 	if (res->error.code) {
 		uget_plugin_post ((UgetPlugin*)plugin,
 				uget_event_new_error(0, res->error.message));
 		uget_aria2_recycle (global.data, res);
 //		plugin->node->state |= UGET_STATE_ERROR;
-		goto exit;
+		return FALSE;
 	}
 
 	// add gid from response
@@ -751,26 +759,54 @@ restart_thread:
 	}
 	// recycle response
 	uget_aria2_recycle (global.data, res);
+	return TRUE;
+}
 
-	// update status --- begin ---
-	res = NULL;
-	req = alloc_status_request (&gid);
+static int  plugin_delay (UgetPluginAria2* plugin)
+{
+	int  count;
+
+	for (count = 0;  count < plugin->retry_delay;  count++) {
+		if (plugin->paused)
+			return FALSE;
+		// sleep 1 second every time
+		ug_sleep (1000);
+	}
+	return TRUE;
+}
+
+static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginAria2* plugin)
+{
+	UgJsonrpcObject*  req;
+	UgJsonrpcObject*  res;
+	UgJsonrpcObject*  status_req;
+	UgValue*          status_gid;
+	UgValue*          value;
+	UgValue*          member;
+	int               count;
+
+	// create status_req and initialize status_gid
+	status_req = alloc_status_request (&status_gid);
+	// send start_request to server
+	plugin->restart = FALSE;
+	if (send_start_request (plugin) == FALSE)
+		goto exit;
 
 	while (plugin->paused == FALSE) {
+		// retry
 		if (plugin->restart == TRUE) {
-			if (plugin->retry_delay) {
-				// sleep 1 second every time
-				ug_sleep (1000);
-				plugin->retry_delay--;
+			if (plugin_delay (plugin) == FALSE)
 				continue;
-			}
-			recycle_status_request (req);
 #ifndef NDEBUG
 			// debug
-			printf ("thread restart\n");
+			printf ("retry\n");
 #endif
-			goto restart_thread;
+			// send start_request to server again
+			plugin->restart = FALSE;
+			if (send_start_request (plugin) == FALSE)
+				goto exit;
 		}
+		// Don't update status until user call plugin_sync()
 		if (plugin->synced == FALSE) {
 			// sleep 0.5 second
 			ug_sleep (500);
@@ -778,24 +814,23 @@ restart_thread:
 		}
 
 		// set gid for status request
-//		req->params.c.array->at[0].c.string = plugin->gids.at[0];
-		gid->c.string = plugin->gids.at[0];
+//		status_req->params.c.array->at[0].c.string = plugin->gids.at[0];
+		status_gid->c.string = plugin->gids.at[0];
 		// status request
-		uget_aria2_request (global.data, req);
+		uget_aria2_request (global.data, status_req);
 		// speed control : speed request & response
-		speed_req = NULL;
 		if (plugin->limit_changed) {
 			plugin->limit_changed = FALSE;
 			// request & response
-			speed_req = alloc_speed_request (plugin);
-			uget_aria2_request (global.data, speed_req);
-			speed_res = uget_aria2_respond (global.data, speed_req);
+			req = alloc_speed_request (plugin);
+			uget_aria2_request (global.data, req);
+			res = uget_aria2_respond (global.data, req);
 			// recycle
-			uget_aria2_recycle (global.data, speed_res);
-			recycle_speed_request (speed_req);
+			uget_aria2_recycle (global.data, res);
+			recycle_speed_request (req);
 		}
 		// status respond
-		res = uget_aria2_respond (global.data, req);
+		res = uget_aria2_respond (global.data, status_req);
 		if (res == NULL) {
 #ifdef HAVE_GLIB
 			uget_plugin_post ((UgetPlugin*) plugin,
@@ -804,7 +839,6 @@ restart_thread:
 			uget_plugin_post ((UgetPlugin*) plugin,
 					uget_event_new_error(0, aria2_no_response));
 #endif
-			recycle_status_request (req);
 //			plugin->node->state |= UGET_STATE_ERROR;
 			goto exit;
 		}
@@ -863,8 +897,8 @@ restart_thread:
 			Aria2File*     afile;
 
 			files = value->c.array;
-			for (index = 0;  index < files->length;  index++) {
-				value = files->at + index;
+			for (count = 0;  count < files->length;  count++) {
+				value = files->at + count;
 				ug_value_sort_name (value);
 				member = ug_value_find_name (value, "path");
 				if (member == NULL || member->c.string[0] == '\0')
@@ -891,9 +925,6 @@ restart_thread:
 		plugin->synced = FALSE;
 	}
 
-	recycle_status_request (req);
-	// update status --- end ---
-
 	if (plugin->gids.length) {
 		req = uget_aria2_alloc (global.data, TRUE, TRUE);
 		req->method_static = "aria2.remove";
@@ -902,9 +933,9 @@ restart_thread:
 			ug_value_init_array (&req->params, plugin->gids.length);
 		// add gids to params.
 		value = ug_value_alloc (&req->params, plugin->gids.length);
-		for (index = 0;  index < plugin->gids.length;  index++, value++) {
+		for (count = 0;  count < plugin->gids.length;  count++, value++) {
 			value->type = UG_VALUE_STRING;
-			value->c.string = ug_strdup (plugin->gids.at[index]);
+			value->c.string = ug_strdup (plugin->gids.at[count]);
 		}
 		// call "aria2.remove"
 		uget_aria2_request (global.data, req);
@@ -922,122 +953,14 @@ restart_thread:
 	}
 
 exit:
+	recycle_status_request (status_req);
 	plugin->stopped = TRUE;
 	uget_plugin_unref ((UgetPlugin*)plugin);
 	return UG_THREAD_RETURN_VALUE;
 }
 
-// ------------------------------------
-
-static void  add_gids_by_value_array (UgArrayStr* gids, UgValueArray* varray)
-{
-	UgValue*  value;
-	int       index;
-
-#ifndef NDEBUG
-	// debug
-	printf ("add %d gids\n", varray->length);
-#endif
-	for (index = 0;  index < varray->length;  index++) {
-		value = varray->at + index;
-		*(char**) ug_array_alloc (gids, 1) = value->c.string;
-		value->c.string = NULL;
-		value->type = UG_VALUE_NONE;
-	}
-}
-
-// speed control
-static UgJsonrpcObject*  alloc_speed_request (UgetPluginAria2* plugin)
-{
-	UgJsonrpcObject*  object;
-	UgValue*          options;
-	UgValue*          value;
-
-	object = uget_aria2_alloc (global.data, TRUE, TRUE);
-	object->method_static = "aria2.changeOption";
-	if (object->params.type == UG_VALUE_NONE)
-		ug_value_init_array (&object->params, 2);
-	// gid
-	value = ug_value_alloc (&object->params, 1);
-	value->type = UG_VALUE_STRING;
-	value->c.string = plugin->gids.at[0];
-	// object
-	options = ug_value_alloc (&object->params, 1);
-	ug_value_init_object (options, 2);
-	// max-download-limit
-	value = ug_value_alloc (options, 1);
-	value->name = ug_strdup ("max-download-limit");
-	value->type = UG_VALUE_STRING;
-	value->c.string = ug_strdup_printf ("%d", plugin->limit[0]);
-	// max-upload-limit
-	value = ug_value_alloc (options, 1);
-	value->name = ug_strdup ("max-upload-limit");
-	value->type = UG_VALUE_STRING;
-	value->c.string = ug_strdup_printf ("%d", plugin->limit[1]);
-
-	return object;
-}
-
-static void  recycle_speed_request (UgJsonrpcObject* object)
-{
-	UgValue*  value;
-
-	value = uget_aria2_clear_token (object);
-	// params[0] is gid
-//	value = object->params.c.array->at;
-	value->type = UG_VALUE_NONE;
-	value->c.array = NULL;
-	// ready to recycle it
-	uget_aria2_recycle (global.data, object);
-}
-
-static UgJsonrpcObject*  alloc_status_request (UgValue** gid)
-{
-	UgJsonrpcObject*  object;
-	UgValue*  params;
-	UgValue*  keys;
-
-	// prepare JSON-RPC object for "aria2.tellStatus"
-	object = uget_aria2_alloc (global.data, TRUE, TRUE);
-	object->method_static = "aria2.tellStatus";
-	params = &object->params;
-	if (params->type == UG_VALUE_NONE)
-		ug_value_init_array (params, 2);
-	// gid
-	gid[0] = ug_value_alloc (params, 1);
-	gid[0]->type = UG_VALUE_STRING;
-	gid[0]->c.string = NULL;
-	// keys array from UgetAria2.status_keys
-	keys = ug_value_alloc (params, 1);
-	keys->type = UG_VALUE_ARRAY;
-	keys->c.array = global.data->status_keys.c.array;
-
-	return  object;
-}
-
-static void  recycle_status_request (UgJsonrpcObject* object)
-{
-	UgValue*  value;
-
-	value = uget_aria2_clear_token (object);
-	// params[0] is gid
-//	value = object->params.c.array->at;
-	value->type = UG_VALUE_NONE;
-	value->c.array = NULL;
-	// params[1] is keys of status
-//	value = object->params.c.array->at + 1;
-	value++;
-	value->type = UG_VALUE_NONE;
-	value->c.array = NULL;
-	// ready to recycle it
-	uget_aria2_recycle (global.data, object);
-}
-
 // ----------------------------------------------------------------------------
 // plugin_start
-
-static int  decide_file_type (UgetPluginAria2* plugin);
-static void add_uri_mirrors  (UgValue* varray, const char* mirrors);
 
 static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 {
@@ -1045,8 +968,8 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 	UgValue*  value;
 	UgValue*  member;
 	UgThread  thread;
-	char*     data = NULL;
 	char*     uri;
+	char*     data     = NULL;
 	char*     user     = NULL;
 	char*     password = NULL;
 	union {
@@ -1140,7 +1063,7 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 	member->c.boolean = TRUE;
 
 	if ((temp.common->user     && temp.common->user[0]) ||
-		(temp.common->password && temp.common->password[0]))
+	    (temp.common->password && temp.common->password[0]))
 	{
 		user     = (temp.common->user)     ? temp.common->user : "";
 		password = (temp.common->password) ? temp.common->password : "";
@@ -1174,13 +1097,6 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 	member->name = "max-tries";
 	member->type = UG_VALUE_STRING;
 	member->c.string = ug_strdup_printf ("%u", temp.common->retry_limit);
-
-	// speed control
-	if (plugin->limit_changed) {
-		plugin->node = node;
-		plugin_ctrl_speed (plugin, plugin->limit);
-		plugin->node = NULL;
-	}
 
 	member = ug_value_alloc (value, 1);
 	member->name = "max-download-limit";
@@ -1235,7 +1151,7 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 					temp.proxy->host, temp.proxy->port);
 		}
 		if ((temp.proxy->user     && temp.proxy->user[0]) ||
-			(temp.proxy->password && temp.proxy->password[0]))
+		    (temp.proxy->password && temp.proxy->password[0]))
 		{
 			member = ug_value_alloc (value, 1);
 			member->name = "all-proxy-user";
@@ -1257,7 +1173,7 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 		    strncmp (uri, "http", 4) == 0)
 		{
 			if ((temp.http->user     && temp.http->user[0]) ||
-				(temp.http->password && temp.http->password[0]))
+			    (temp.http->password && temp.http->password[0]))
 			{
 				user     = (temp.http->user)     ? temp.http->user : "";
 				password = (temp.http->password) ? temp.http->password : "";
@@ -1287,7 +1203,7 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 	if (temp.ftp) {
 		if (plugin->uri_part.scheme_len >= 3 && strncmp (uri, "ftp", 3) == 0) {
 			if ((temp.ftp->user     && temp.ftp->user[0]) ||
-				(temp.ftp->password && temp.ftp->password[0]))
+			    (temp.ftp->password && temp.ftp->password[0]))
 			{
 				user     = (temp.ftp->user)     ? temp.ftp->user : "";
 				password = (temp.ftp->password) ? temp.ftp->password : "";
@@ -1325,8 +1241,9 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 	// assign node
 	uget_node_ref (node);
 	plugin->node = node;
+	// speed control
+	plugin_ctrl_speed (plugin, plugin->limit);
 
-	uget_aria2_request (global.data, request);
 	uget_plugin_ref ((UgetPlugin*) plugin);
 	temp.ok = ug_thread_create (&thread, (UgThreadFunc) plugin_thread, plugin);
 	if (temp.ok == UG_THREAD_OK)
@@ -1346,7 +1263,158 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 	return TRUE;
 }
 
-// ------------------------------------
+// ----------------------------------------------------------------------------
+// JSON-RPC request
+
+// speed control
+static UgJsonrpcObject*  alloc_speed_request (UgetPluginAria2* plugin)
+{
+	UgJsonrpcObject*  object;
+	UgValue*          options;
+	UgValue*          value;
+
+	object = uget_aria2_alloc (global.data, TRUE, TRUE);
+	object->method_static = "aria2.changeOption";
+	if (object->params.type == UG_VALUE_NONE)
+		ug_value_init_array (&object->params, 2);
+	// gid
+	value = ug_value_alloc (&object->params, 1);
+	value->type = UG_VALUE_STRING;
+	value->c.string = plugin->gids.at[0];
+	// object
+	options = ug_value_alloc (&object->params, 1);
+	ug_value_init_object (options, 2);
+	// max-download-limit
+	value = ug_value_alloc (options, 1);
+	value->name = ug_strdup ("max-download-limit");
+	value->type = UG_VALUE_STRING;
+	value->c.string = ug_strdup_printf ("%d", plugin->limit[0]);
+	// max-upload-limit
+	value = ug_value_alloc (options, 1);
+	value->name = ug_strdup ("max-upload-limit");
+	value->type = UG_VALUE_STRING;
+	value->c.string = ug_strdup_printf ("%d", plugin->limit[1]);
+
+	return object;
+}
+
+static void  recycle_speed_request (UgJsonrpcObject* object)
+{
+	UgValue*  value;
+
+	value = uget_aria2_clear_token (object);
+	// params[0] is gid
+//	value = object->params.c.array->at;
+	value->type = UG_VALUE_NONE;
+	value->c.array = NULL;
+	// ready to recycle it
+	uget_aria2_recycle (global.data, object);
+}
+
+static UgJsonrpcObject*  alloc_status_request (UgValue** gid)
+{
+	UgJsonrpcObject*  object;
+	UgValue*  params;
+	UgValue*  keys;
+
+	// prepare JSON-RPC object for "aria2.tellStatus"
+	object = uget_aria2_alloc (global.data, TRUE, TRUE);
+	object->method_static = "aria2.tellStatus";
+	params = &object->params;
+	if (params->type == UG_VALUE_NONE)
+		ug_value_init_array (params, 2);
+	// gid
+	gid[0] = ug_value_alloc (params, 1);
+	gid[0]->type = UG_VALUE_STRING;
+	gid[0]->c.string = NULL;
+	// keys array from UgetAria2.status_keys
+	keys = ug_value_alloc (params, 1);
+	keys->type = UG_VALUE_ARRAY;
+	keys->c.array = global.data->status_keys.c.array;
+
+	return  object;
+}
+
+static void  recycle_status_request (UgJsonrpcObject* object)
+{
+	UgValue*  value;
+
+	value = uget_aria2_clear_token (object);
+	// params[0] is gid
+//	value = object->params.c.array->at;
+	value->type = UG_VALUE_NONE;
+	value->c.array = NULL;
+	// params[1] is keys of status
+//	value = object->params.c.array->at + 1;
+	value++;
+	value->type = UG_VALUE_NONE;
+	value->c.array = NULL;
+	// ready to recycle it
+	uget_aria2_recycle (global.data, object);
+}
+
+// ----------------------------------------------------------------------------
+// static utility functions
+
+static void  aria2_file_clear (Aria2File* afile)
+{
+	afile->completedLength = 0;
+	afile->length = 0;
+	ug_free (afile->path);
+}
+
+static void* aria2_file_array_find (Aria2FileArray* afiles, const char* path)
+{
+	Aria2File*  beg;
+	Aria2File*  end;
+
+	beg = afiles->at;
+	end = beg + afiles->length;
+	for (;  beg < end;  beg++) {
+		if (strcmp (beg->path, path) == 0)
+			return beg;
+	}
+	return NULL;
+}
+
+static void*  ug_file_to_base64 (const char* file, int* length)
+{
+	int     fd;
+	int     fsize, fpos = 0;
+	int     result_len;
+	void*   buffer;
+	void*   result;
+
+//	fd = open (file, O_RDONLY | O_BINARY, S_IREAD);
+	fd = ug_open (file, UG_O_READONLY | UG_O_BINARY, UG_S_IREAD);
+	if (fd == -1)
+		return NULL;
+//	lseek (fd, 0, SEEK_END);
+	ug_seek (fd, 0, SEEK_END);
+	fsize = (int) ug_tell (fd);
+	buffer = ug_malloc (fsize);
+//	lseek (fd, 0, SEEK_SET);
+	ug_seek (fd, 0, SEEK_SET);
+
+	do {
+		result_len = ug_read (fd, buffer, fsize - fpos);
+//		result_len = read (fd, buffer, fsize - fpos);
+		fpos += result_len;
+	} while (result_len > 0);
+//	close (fd);
+	ug_close (fd);
+
+	if (fsize != fpos) {
+		ug_free (buffer);
+		return NULL;
+	}
+
+	result = ug_base64_encode (buffer, fsize, &result_len);
+	ug_free (buffer);
+	if (length)
+		*length = result_len;
+	return result;
+}
 
 static int  decide_file_type (UgetPluginAria2* plugin)
 {
@@ -1468,67 +1536,4 @@ fail:
 }
 
 #endif	// HAVE_LIBPWMD
-
-// ----------------------------------------------------------------------------
-// static utility functions
-
-static void  aria2_file_clear (Aria2File* afile)
-{
-	afile->completedLength = 0;
-	afile->length = 0;
-	ug_free (afile->path);
-}
-
-static void* aria2_file_array_find (Aria2FileArray* afiles, const char* path)
-{
-	Aria2File*  beg;
-	Aria2File*  end;
-
-	beg = afiles->at;
-	end = beg + afiles->length;
-	for (;  beg < end;  beg++) {
-		if (strcmp (beg->path, path) == 0)
-			return beg;
-	}
-	return NULL;
-}
-
-static void*  ug_file_to_base64  (const char* file, int* length)
-{
-	int     fd;
-	int     fsize, fpos = 0;
-	int     result_len;
-	void*   buffer;
-	void*   result;
-
-//	fd = open (file, O_RDONLY | O_BINARY, S_IREAD);
-	fd = ug_open (file, UG_O_READONLY | UG_O_BINARY, UG_S_IREAD);
-	if (fd == -1)
-		return NULL;
-//	lseek (fd, 0, SEEK_END);
-	ug_seek (fd, 0, SEEK_END);
-	fsize = (int) ug_tell (fd);
-	buffer = ug_malloc (fsize);
-//	lseek (fd, 0, SEEK_SET);
-	ug_seek (fd, 0, SEEK_SET);
-
-	do {
-		result_len = ug_read (fd, buffer, fsize - fpos);
-//		result_len = read (fd, buffer, fsize - fpos);
-		fpos += result_len;
-	} while (result_len > 0);
-//	close (fd);
-	ug_close (fd);
-
-	if (fsize != fpos) {
-		ug_free (buffer);
-		return NULL;
-	}
-
-	result = ug_base64_encode (buffer, fsize, &result_len);
-	ug_free (buffer);
-	if (length)
-		*length = result_len;
-	return result;
-}
 

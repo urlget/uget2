@@ -364,7 +364,7 @@ static UG_THREAD_RETURN_TYPE  uget_aria2_thread (UgetAria2Thread* uathread)
 // ----------------------------------------------------------------------------
 // UgetAria2
 
-UgetAria2* uget_aria2_new ()
+UgetAria2* uget_aria2_new (void)
 {
 	UgetAria2*    uaria2;
 	UgValue*      value;
@@ -545,7 +545,7 @@ typedef struct {
 	char       cmd[1];
 } Aria2LaunchData;
 
-static UG_THREAD_RETURN_TYPE aria2_launch_thread (Aria2LaunchData* uald)
+static UG_THREAD_RETURN_TYPE  aria2_launch_thread (Aria2LaunchData* uald)
 {
 	int  result;
 
@@ -635,7 +635,7 @@ int  uget_aria2_launch (UgetAria2* uaria2)
 		temp = -1;
 	}
 	else if (pid == 0) {
-		// child process
+		// child process, [0] input, [1] output
 		close (execpipe[0]);
 		// on success, never returns
 		execvp (uaria2->path, argv);
@@ -645,7 +645,7 @@ int  uget_aria2_launch (UgetAria2* uaria2)
 		exit(0);
 	}
 	else {
-		// parent process
+		// parent process, [0] input, [1] output
 		close (execpipe[1]);
 		// if exec failed, read the child's errno value
 		if (read (execpipe[0], &temp, sizeof(temp)) == sizeof(temp))
