@@ -670,7 +670,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 				if (ugcurl->prev == NULL || ugcurl->prev->end < ugcurl->beg)
 					ugcurl->split = FALSE;
 				// if prev one overwrite.
-				else if (ugcurl->pos < ugcurl->prev->pos) {
+				else if (ugcurl->beg < ugcurl->prev->pos) {
 					ugcurl->split = FALSE;
 					ugcurl->stopped = TRUE;
 					ugcurl->end = ugcurl->beg;
