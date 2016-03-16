@@ -61,21 +61,28 @@ typedef struct UgetCurl     UgetCurl;
 typedef int (*UgetCurlFunc) (UgetCurl* ugcurl, void* data);
 
 // UgetCurlState flow:
-// UGET_CURL_READY -+-> UGET_CURL_RUN   -> UGET_CURL_OK -> UGET_CURL_READY
-//                  +-> UGET_CURL_ERROR -> UGET_CURL_RECYCLED
-//                  +-> UGET_CURL_RETRY -> UGET_CURL_READY
-//                  +-> UGET_CURL_ABORT -> UGET_CURL_READY
-//                  +-> UGET_CURL_NOT_RESUMABLE -> UGET_CURL_READY
+// UGET_CURL_READY
+//         |
+//         `-> UGET_CURL_RUN -+-> UGET_CURL_OK    ---> UGET_CURL_RESPLIT
+//                            |
+//                            +-> UGET_CURL_ERROR
+//                            |
+//                            +-> UGET_CURL_RETRY
+//                            |
+//                            +-> UGET_CURL_ABORT
+//                            |
+//                            `-> UGET_CURL_NOT_RESUMABLE
+
 enum UgetCurlState
 {
-	UGET_CURL_RECYCLED,
+	UGET_CURL_RESPLIT,          // used by curl plug-in
 	UGET_CURL_READY,
 	UGET_CURL_RUN,
-	UGET_CURL_OK,       // alloc block to download, if alloc fail, clear it
-	UGET_CURL_ERROR,    // clear and free, set limit?
-	UGET_CURL_RETRY,    // retry
+	UGET_CURL_OK,
+	UGET_CURL_ERROR,
+	UGET_CURL_RETRY,
 	UGET_CURL_ABORT,
-	UGET_CURL_NOT_RESUMABLE,    // redownload - retry
+	UGET_CURL_NOT_RESUMABLE,    // redownload + retry
 };
 
 // ----------------------------------------------------------------------------

@@ -243,9 +243,6 @@ void  uget_curl_run (UgetCurl* ugcurl, int joinable)
 {
 	CURL*  curl;
 
-        if (ugcurl->state == UGET_CURL_ERROR)
-                return;
-
 	curl = ugcurl->curl;
 	uget_curl_decide_login (ugcurl);
 
@@ -273,7 +270,7 @@ void  uget_curl_run (UgetCurl* ugcurl, int joinable)
 	// disable peer SSL certificate verification
 	curl_easy_setopt (curl, CURLOPT_SSL_VERIFYHOST, 0L);
 	curl_easy_setopt (curl, CURLOPT_SSL_VERIFYPEER, 0L);
-	// SSL Version and cipher
+	// SSL version and cipher
 //	curl_easy_setopt (curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_DEFAULT);
 //	curl_easy_setopt (curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_SSLv3);
 //	curl_easy_setopt (curl, CURLOPT_SSL_CIPHER_LIST, "ALL:!aNULL:!LOW:!EXPORT:!SSLv2");

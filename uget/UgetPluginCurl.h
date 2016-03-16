@@ -80,7 +80,7 @@ struct UgetPluginCurl
 		int64_t   size;        // total size (0 if size unknown)
 	} file;
 
-	// aria2 ctrl file
+	// aria2 control file
 	struct {
 		char*     path;
 		UgetA2cf  ctrl;
@@ -95,11 +95,11 @@ struct UgetPluginCurl
 	// segment (split download)
 	struct {
 		UgList    list;    // list of UgetCurl
-		int64_t   beg;
+		int64_t   beg;     // beginning of undownloaded position
 		uintptr_t n_max;
 		uintptr_t n_active;
 		uintptr_t n_recycled;
-	} seg;
+	} segment;
 
 	// progress for uget_plugin_sync()
 	time_t        start_time;
@@ -145,7 +145,7 @@ namespace Uget
 struct PluginCurlMethod : Uget::PluginMethod {};
 
 // This one is for directly use only. You can NOT derived it.
-struct PluginCurl : Uget::PluginEmptyMethod, UgetPluginCurl {};
+struct PluginCurl : Uget::PluginCurlMethod, UgetPluginCurl {};
 
 };  // namespace Uget
 
