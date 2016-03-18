@@ -659,7 +659,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 	for (counter = 0;  N_THREAD(plugin) > 0;  counter++) {
 		// sleep 0.5 second
 		ug_sleep (500);
-		// reset data, program will count them later
+		// reset data, plug-in will count them (in segment loop) later
 		plugin->segment.n_active = 0;
 		size.upload = 0;
 		size.download = 0;
@@ -670,44 +670,49 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 		ugcurl = (UgetCurl*) plugin->segment.list.head;
 		for (;  ugcurl;  ugcurl = ugnext) {
 			ugnext = ugcurl->next;
-			// split download, use with split_download()
+
+			// split download, use these code with split_download()
 			if (ugcurl->split) {
 				if (ugcurl->prev == NULL || ugcurl->prev->end < ugcurl->beg)
 					ugcurl->split = FALSE;
-				// if prev one overwrite.
 				else if (ugcurl->beg < ugcurl->prev->pos) {
+					// if previous segment overwrite current one.
 					ugcurl->split = FALSE;
-					ugcurl->stopped = TRUE;
+					ugcurl->paused = TRUE;
 					ugcurl->end = ugcurl->beg;
 					ugcurl->pos = ugcurl->beg;
 					ugcurl->size[0] = 0;
 #ifndef NDEBUG
 					if (common->debug_level) {
-						printf ("\n" "overwrite %u KiB\n",
-								(unsigned) ugcurl->beg / 1024);
+						printf ("\n"
+						        "previous segment overwrite at %u KiB\n",
+						        (unsigned) (ugcurl->beg / 1024));
 					}
 #endif
 				}
-				else if (ugcurl->state == UGET_CURL_RUN) {
+				else if (ugcurl->beg < ugcurl->pos) {
+					// If this segment has downloaded data,
+					// plug-in split new segment from previous one.
 					ugcurl->split = FALSE;
 					ugcurl->prev->end = ugcurl->beg;
 					if (ugcurl->prev->pos > ugcurl->beg) {
 						ugcurl->prev->pos = ugcurl->beg;
-						ugcurl->prev->stopped = TRUE;
 						ugcurl->prev->size[0] = ugcurl->prev->pos -
 						                        ugcurl->prev->beg;
 					}
 #ifndef NDEBUG
 					if (common->debug_level) {
-						printf ("\n" "split %u KiB\n",
-								(unsigned) ugcurl->beg / 1024);
+						printf ("\n"
+						        "split new segment at %u KiB\n",
+						        (unsigned) (ugcurl->beg / 1024));
 					}
 #endif
 				}
 			}
+
 			// if user want to stop plugin, it must stop all UgetCurl in list.
 			if (plugin->paused) {
-				ugcurl->stopped = TRUE;
+				ugcurl->paused = TRUE;
 				plugin->segment.n_max = 0;
 			}
 			// update aria2 control file progress
@@ -837,8 +842,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 				}
 			}
 		}
-
-		// progress
+		// progress ---------------------
 		plugin->size.upload = plugin->base.upload + size.upload;
 		plugin->size.download = plugin->base.download + size.download;
 		// Don't update speed when stopping
@@ -847,7 +851,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 			plugin->speed.download = speed.download;
 		}
 		plugin->synced = FALSE;
-		// check file size
+		// check file size --------------
 		if (plugin->file.size) {
 			// response error if file size is different
 			if (plugin->file.size < plugin->size.download) {
@@ -884,17 +888,17 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 				else {
 					complete_file (plugin);
 					plugin->synced = FALSE;
-					plugin->paused = TRUE;
 					break;
 				}
 			}
 		}
+		// timer ------------------------
 		// adjust speed every 0.5 x 2 = 1 second.
 		if (counter & 1)
 			adjust_speed_limit (plugin);
 		// save aria2 control file every 0.5 x 4 = 2 seconds.
-		if (plugin->aria2.path) {
-			if ((counter & 3) == 3 || N_THREAD (plugin) == 0)
+		if ((counter & 3) == 3 || N_THREAD (plugin) == 0) {
+			if (plugin->aria2.path)
 				uget_a2cf_save (&plugin->aria2.ctrl, plugin->aria2.path);
 		}
 		// split download every 0.5 x 8 = 4 seconds.
@@ -906,7 +910,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 				split_download (plugin, NULL);
 			}
 		}
-		// retry
+		// retry ------------------------
 		if (common->retry_count >= common->retry_limit && common->retry_limit != 0) {
 			uget_plugin_post ((UgetPlugin*) plugin,
 					uget_event_new_error (

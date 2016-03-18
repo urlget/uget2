@@ -122,7 +122,7 @@ static UG_THREAD_RETURN_TYPE  uget_curl_thread (UgetCurl* ugcurl)
 		ugcurl->event = NULL;
 	}
 
-	// response error
+	// HTTP response error code: 4xx Client Error, 5xx Server Error
 	if (ugcurl->response >= 400 && ugcurl->scheme_type == SCHEME_HTTP) {
 		ugcurl->state = UGET_CURL_ERROR;
 		tempstr = ug_strdup_printf ("Server response code : %ld",
@@ -130,6 +130,9 @@ static UG_THREAD_RETURN_TYPE  uget_curl_thread (UgetCurl* ugcurl)
 		ugcurl->event = uget_event_new_error (
 				UGET_EVENT_ERROR_CUSTOM, tempstr);
 		ug_free (tempstr);
+		// discard data if error occurred
+		ugcurl->pos = ugcurl->beg;
+		ugcurl->size[0] = 0;
 		goto exit;
 	}
 
@@ -144,10 +147,6 @@ static UG_THREAD_RETURN_TYPE  uget_curl_thread (UgetCurl* ugcurl)
 			ugcurl->state = UGET_CURL_ERROR;
 			ugcurl->event = uget_event_new_error (ugcurl->event_code, NULL);
 			ugcurl->test_ok = FALSE;
-			goto exit;
-		}
-		if (ugcurl->end > 0 && ugcurl->pos >= ugcurl->end) {
-			ugcurl->state = UGET_CURL_OK;
 			break;
 		}
 		// Don't break here
@@ -156,12 +155,16 @@ static UG_THREAD_RETURN_TYPE  uget_curl_thread (UgetCurl* ugcurl)
 		ugcurl->state = UGET_CURL_ERROR;
 		ugcurl->event = uget_event_new_error (
 				UGET_EVENT_ERROR_OUT_OF_RESOURCE, NULL);
-		goto exit;
+		break;
 
-	// abort by user (exit)
+	// abort download in progress callback
 	case CURLE_ABORTED_BY_CALLBACK:
-		ugcurl->state = UGET_CURL_ABORT;
-		goto exit;
+		// segment is completed or paused by user
+		if (ugcurl->paused == FALSE)
+			ugcurl->state = UGET_CURL_OK;
+		else
+			ugcurl->state = UGET_CURL_ABORT;
+		break;
 
 	// can resume (retry)
 	case CURLE_RECV_ERROR:
@@ -203,14 +206,14 @@ static UG_THREAD_RETURN_TYPE  uget_curl_thread (UgetCurl* ugcurl)
 		ugcurl->state = UGET_CURL_ERROR;
 		ugcurl->event = uget_event_new_error (
 				UGET_EVENT_ERROR_CUSTOM, ugcurl->error_string);
-		goto exit;
+		break;
 
 	// exit
 	case CURLE_UNSUPPORTED_PROTOCOL:
 		ugcurl->state = UGET_CURL_ERROR;
 		ugcurl->event = uget_event_new_error (
 				UGET_EVENT_ERROR_UNSUPPORTED_SCHEME, ugcurl->error_string);
-		goto exit;
+		break;
 
 	// other error (exit)
 #ifdef NO_RETRY_IF_CONNECT_FAILED
@@ -225,14 +228,10 @@ static UG_THREAD_RETURN_TYPE  uget_curl_thread (UgetCurl* ugcurl)
 		ugcurl->state = UGET_CURL_ERROR;
 		ugcurl->event = uget_event_new_error (
 				UGET_EVENT_ERROR_CUSTOM, ugcurl->error_string);
-		goto exit;
+		break;
 	}
 
 exit:
-	// if user stop downloading, set state to UGET_CURL_ABORT
-	if (ugcurl->stopped == TRUE)
-		ugcurl->state = UGET_CURL_ABORT;
-
 	if (ugcurl->state == UGET_CURL_ERROR)
 		ugcurl->test_ok = FALSE;
 	ugcurl->stopped = TRUE;
@@ -248,6 +247,7 @@ void  uget_curl_run (UgetCurl* ugcurl, int joinable)
 
 	ugcurl->pos = ugcurl->beg;
 	ugcurl->state = UGET_CURL_READY;
+	ugcurl->paused = FALSE;
 	ugcurl->stopped = FALSE;    // if thread stop, this value will be TRUE.
 	ugcurl->response = 0;
 	ugcurl->event_code = 0;
@@ -874,11 +874,12 @@ static int    uget_curl_progress (UgetCurl* ugcurl,
 	// to abort the transfer and return CURLE_ABORTED_BY_CALLBACK.
 	if (ugcurl->end > 0 && ugcurl->pos >= ugcurl->end) {
 		ugcurl->pos = ugcurl->end;
-		ugcurl->stopped = TRUE;
+		ugcurl->size[0] = ugcurl->pos - ugcurl->beg;
+		return 1;
 	}
-	ugcurl->size[0] = ugcurl->pos - ugcurl->beg;
 
-	if (ugcurl->stopped)
+	ugcurl->size[0] = ugcurl->pos - ugcurl->beg;
+	if (ugcurl->paused)
 		return 1;
 	return 0;
 }

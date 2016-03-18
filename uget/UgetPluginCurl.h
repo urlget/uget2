@@ -98,7 +98,6 @@ struct UgetPluginCurl
 		int64_t   beg;     // beginning of undownloaded position
 		uintptr_t n_max;
 		uintptr_t n_active;
-		uintptr_t n_recycled;
 	} segment;
 
 	// progress for uget_plugin_sync()

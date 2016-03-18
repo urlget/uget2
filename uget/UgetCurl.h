@@ -61,15 +61,16 @@ typedef struct UgetCurl     UgetCurl;
 typedef int (*UgetCurlFunc) (UgetCurl* ugcurl, void* data);
 
 // UgetCurlState flow:
+//
 // UGET_CURL_READY
-//         |
-//         `-> UGET_CURL_RUN -+-> UGET_CURL_OK    ---> UGET_CURL_RESPLIT
+//        |
+//        `--> UGET_CURL_RUN -+-> UGET_CURL_OK    ---> UGET_CURL_RESPLIT
+//                            |
+//                            +-> UGET_CURL_ABORT
 //                            |
 //                            +-> UGET_CURL_ERROR
 //                            |
 //                            +-> UGET_CURL_RETRY
-//                            |
-//                            +-> UGET_CURL_ABORT
 //                            |
 //                            `-> UGET_CURL_NOT_RESUMABLE
 
@@ -79,9 +80,9 @@ enum UgetCurlState
 	UGET_CURL_READY,
 	UGET_CURL_RUN,
 	UGET_CURL_OK,
+	UGET_CURL_ABORT,            // paused by user
 	UGET_CURL_ERROR,
 	UGET_CURL_RETRY,
-	UGET_CURL_ABORT,
 	UGET_CURL_NOT_RESUMABLE,    // redownload + retry
 };
 
@@ -153,11 +154,12 @@ struct UgetCurl
 	uint8_t     limit_changed:1; // speed limit changed
 	uint8_t     header_store:1;  // save uri and filename from header.
 	uint8_t     resumable:1;     // get resumable in header callback
-	uint8_t     stopped:1;  // running control & status
-	uint8_t     tested:1;   // URI tested
-	uint8_t     test_ok:1;  // URI test ok
-	uint8_t     split:1;    // split previous
-	uint8_t     html:1;     // "Content-Type: text/html"
+	uint8_t     stopped:1;       // downloading thread is stopped
+	uint8_t     paused:1;        // paused by user
+	uint8_t     tested:1;        // URI tested
+	uint8_t     test_ok:1;       // URI test ok
+	uint8_t     split:1;         // split previous segment
+	uint8_t     html:1;          // "Content-Type: text/html"
 
 	char        error_string[CURL_ERROR_SIZE];
 };
