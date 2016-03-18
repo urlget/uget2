@@ -622,6 +622,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 	UgetCurl*   ugcurl;
 	UgetCurl*   ugnext;
 	int         counter;
+	int         n_active_last = 0;
 	struct {
 		int64_t upload;
 		int64_t download;
@@ -894,8 +895,10 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 		}
 		// timer ------------------------
 		// adjust speed every 0.5 x 2 = 1 second.
-		if (counter & 1)
+		if ((counter & 1) == 1 || n_active_last != plugin->segment.n_active) {
+			n_active_last = plugin->segment.n_active;
 			adjust_speed_limit (plugin);
+		}
 		// save aria2 control file every 0.5 x 4 = 2 seconds.
 		if ((counter & 3) == 3 || N_THREAD (plugin) == 0) {
 			if (plugin->aria2.path)
