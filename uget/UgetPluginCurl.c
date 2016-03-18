@@ -1341,6 +1341,7 @@ static int  split_download (UgetPluginCurl* plugin, UgetCurl* ugcurl)
 
 	if (plugin->aria2.path == NULL)
 		return FALSE;
+
 	// try to find unused space
 	cur = plugin->segment.beg;
 	if (uget_a2cf_lack (&plugin->aria2.ctrl, &cur, &end)) {
@@ -1353,8 +1354,9 @@ static int  split_download (UgetPluginCurl* plugin, UgetCurl* ugcurl)
 		}
 #endif
 	}
+	// if no unused space, try to split downloading segment.
 	else {
-		// if no unused space, try to split current download
+		// cur = segment size;  end = the largest segment size;
 		end = 0;
 		for (temp = (void*)plugin->segment.list.head;  temp;  temp = temp->next) {
 			cur = temp->end - temp->pos;
@@ -1365,10 +1367,11 @@ static int  split_download (UgetPluginCurl* plugin, UgetCurl* ugcurl)
 		}
 		if (sibling == NULL)
 			return FALSE;
-		//
 		cur = (sibling->end - sibling->pos) >> 1;
-		if (cur < 16384 * 3)
+		// if segment is too small, don't split it.
+		if (cur < 16384 * 4 || cur < plugin->speed.download * 8)
 			return FALSE;
+		// cur = begin of new segment;  end = end of new segment;
 		cur = sibling->end - cur;
 		end = sibling->end;
 		if (cur & 16383)
