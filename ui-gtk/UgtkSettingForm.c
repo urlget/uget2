@@ -420,20 +420,26 @@ void  ugtk_auto_save_form_init (struct UgtkAutoSaveForm* asform)
 	g_signal_connect (widget, "toggled",
 			G_CALLBACK (on_auto_save_toggled), asform);
 	asform->enable = (GtkToggleButton*) widget;
-	// auto save spin & label (interval)
-	widget = gtk_label_new_with_mnemonic (_("minutes"));
-	gtk_box_pack_end (hbox, widget, FALSE, FALSE, 2);
-	asform->minutes_label = widget;
-	widget = gtk_spin_button_new_with_range (1.0, 120.0, 1.0);
-	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
-	gtk_box_pack_end (hbox, widget, FALSE, FALSE, 2);
-	asform->interval_spin = (GtkSpinButton*) widget;
-	// auto save label
+
+	// space
+	widget = gtk_label_new ("");
+	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 30);
+
+	// auto save interval label
 	widget = gtk_label_new_with_mnemonic (_("_Interval:"));
-	gtk_box_pack_end (hbox, widget, FALSE, FALSE, 2);
+	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 2);
 	asform->interval_label = widget;
 	gtk_label_set_mnemonic_widget (GTK_LABEL (asform->interval_label),
 			(GtkWidget*) asform->interval_spin);
+	// auto save interval spin
+	widget = gtk_spin_button_new_with_range (1.0, 120.0, 1.0);
+	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
+	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 2);
+	asform->interval_spin = (GtkSpinButton*) widget;
+	// auto save interval unit label
+	widget = gtk_label_new_with_mnemonic (_("minutes"));
+	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 2);
+	asform->minutes_label = widget;
 }
 
 void  ugtk_auto_save_form_set (struct UgtkAutoSaveForm* asform, UgtkSetting* setting)
