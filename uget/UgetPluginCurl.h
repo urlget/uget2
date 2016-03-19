@@ -96,8 +96,8 @@ struct UgetPluginCurl
 	struct {
 		UgList    list;    // list of UgetCurl
 		int64_t   beg;     // beginning of undownloaded position
-		uintptr_t n_max;
-		uintptr_t n_active;
+		int       n_max;
+		int       n_active;
 	} segment;
 
 	// progress for uget_plugin_sync()

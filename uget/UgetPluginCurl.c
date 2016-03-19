@@ -69,6 +69,7 @@
 #define strtoll		_strtoi64    // stdlib.h
 #endif
 
+#define MIN_SPLIT_SIZE       (10 * 1024 * 1024)  // can't less than 16384 x 2
 #define MAX_REPEAT_DIGITS    5       //  + '.' + digits
 #define MAX_REPEAT_COUNTS    10000   // <= 9999
 
@@ -1372,7 +1373,7 @@ static int  split_download (UgetPluginCurl* plugin, UgetCurl* ugcurl)
 			return FALSE;
 		cur = (sibling->end - sibling->pos) >> 1;
 		// if segment is too small, don't split it.
-		if (cur < 16384 * 4 || cur < plugin->speed.download * 8)
+		if (cur < MIN_SPLIT_SIZE)
 			return FALSE;
 		// cur = begin of new segment;  end = end of new segment;
 		cur = sibling->end - cur;
