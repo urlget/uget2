@@ -1469,7 +1469,7 @@ msgid "Sound when download is finished"
 msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recent download settings"
+msgid "Apply recently download settings"
 msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264

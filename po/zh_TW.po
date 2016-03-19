@@ -1384,7 +1384,7 @@ msgstr "排程器"
 
 #: ../ui-gtk/UgtkSettingDialog.c:121
 msgid "Plug-in"
-msgstr "插件"
+msgstr "外掛程式"
 
 #: ../ui-gtk/UgtkSettingDialog.c:127
 msgid "Others"
@@ -1474,7 +1474,7 @@ msgstr "套用上一次的下載設定"
 
 #: ../ui-gtk/UgtkSettingForm.c:264
 msgid "These will affect all plug-ins."
-msgstr "這些將影響到所有的插件。"
+msgstr "這些將影響到所有的外掛程式。"
 
 #. Global speed limit
 #: ../ui-gtk/UgtkSettingForm.c:270
@@ -1529,11 +1529,11 @@ msgstr "預設使用 '--quiet' 參數"
 
 #: ../ui-gtk/UgtkSettingForm.c:508
 msgid "Plug-in matching order:"
-msgstr "插件匹配順序:"
+msgstr "外掛程式匹配順序:"
 
 #: ../ui-gtk/UgtkSettingForm.c:531
 msgid "Aria2 plug-in options"
-msgstr "Aria2 插件選項"
+msgstr "Aria2 外掛程式選項"
 
 #: ../ui-gtk/UgtkSettingForm.c:547
 msgid "RPC authorization secret token"

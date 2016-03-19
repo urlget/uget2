@@ -5,13 +5,14 @@
 # Translators:
 # Oleh, 2014
 # Serhij Dubyk <serhijdubyk@gmail.com>, 2011
+# Микола Ткач <Stuartlittle1970@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2014-11-27 06:57+0000\n"
-"Last-Translator: Michael Tunnell <michael@ugetdm.com>\n"
+"PO-Revision-Date: 2016-03-03 19:54+0000\n"
+"Last-Translator: Микола Ткач <Stuartlittle1970@gmail.com>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/uget/uget/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +22,7 @@ msgstr ""
 
 #: ../../po/../uget/UgetApp.c:95
 msgid "All Category"
-msgstr ""
+msgstr "Усі категорії"
 
 #. UGET_EVENT_NORMAL_CUSTOM
 #: ../../po/../uget/UgetEvent.c:58
@@ -87,17 +88,17 @@ msgstr "Не вдалося відкрити файл."
 #. UGET_EVENT_ERROR_FILE_OPEN_FAILED
 #: ../../po/../uget/UgetEvent.c:85
 msgid "Unable to create thread."
-msgstr ""
+msgstr "Не вдається створити потік."
 
 #. UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 #: ../../po/../uget/UgetEvent.c:86
 msgid "Incorrect source (different file size)."
-msgstr ""
+msgstr "Невірне джерело (різний розмір файлу)."
 
 #. UGET_EVENT_ERROR_INCORRECT_SOURCE,
 #: ../../po/../uget/UgetEvent.c:87
 msgid "Out of resource (disk full or run out of memory)."
-msgstr "Недостатно ресурсів (диск заповнений чи недостатньо пам’яті)."
+msgstr "Бракує ресурсів (диск заповнений чи брак пам’яті)."
 
 #. UGET_EVENT_ERROR_OUT_OF_RESOURCE
 #: ../../po/../uget/UgetEvent.c:88
@@ -112,7 +113,7 @@ msgstr "Немає вихідних налаштувань."
 #. UGET_EVENT_ERROR_NO_OUTPUT_SETTING
 #: ../../po/../uget/UgetEvent.c:90
 msgid "Too many retries."
-msgstr "Занадто багато спроб."
+msgstr "Забагато спроб."
 
 #. UGET_EVENT_ERROR_TOO_MANY_RETRIES
 #: ../../po/../uget/UgetEvent.c:91
@@ -127,146 +128,146 @@ msgstr "Непідтримуваний файл."
 #. 1 - 10
 #: ../../po/../uget/UgetPluginAria2.c:272
 msgid "aria2: an unknown error occurred."
-msgstr ""
+msgstr "aria2: сталася невідома помилка."
 
 #: ../../po/../uget/UgetPluginAria2.c:273
 msgid "aria2: time out occurred."
-msgstr ""
+msgstr "aria2: час сплив."
 
 #: ../../po/../uget/UgetPluginAria2.c:274
 msgid "aria2: resource was not found."
-msgstr ""
+msgstr "aria2: ресурс не знайдено."
 
 #: ../../po/../uget/UgetPluginAria2.c:275
 msgid ""
 "aria2 saw the specfied number of 'resource not found' error. See --max-file-"
 "not-found option"
-msgstr ""
+msgstr "aria2 отримала певне число помилок \"ресурс не знайдено\". Дивіться параметр --max-file-not-found"
 
 #: ../../po/../uget/UgetPluginAria2.c:276
 msgid "aria2: speed was too slow."
-msgstr ""
+msgstr "aria2: швидкість була замалою."
 
 #: ../../po/../uget/UgetPluginAria2.c:277
 msgid "aria2: network problem occurred."
-msgstr ""
+msgstr "aria2: виникла проблема з мережею."
 
 #: ../../po/../uget/UgetPluginAria2.c:278
 msgid "aria2: unfinished downloads."
-msgstr ""
+msgstr "aria2: незавершені завантаження."
 
 #. _("Not Resumable"),
 #: ../../po/../uget/UgetPluginAria2.c:280
 msgid "Out of resource"
-msgstr ""
+msgstr "Немає ресурсів"
 
 #. _(),
 #: ../../po/../uget/UgetPluginAria2.c:281
 msgid "aria2: piece length was different from one in .aria2 control file."
-msgstr ""
+msgstr "aria2: розмір блоку відрізнявся від вказаного у контрольному .aria2-файлі"
 
 #. 11 - 20
 #: ../../po/../uget/UgetPluginAria2.c:283
 msgid "aria2 was downloading same file."
-msgstr ""
+msgstr "aria2 був завантажений один і той самий файл."
 
 #: ../../po/../uget/UgetPluginAria2.c:284
 msgid "aria2 was downloading same info hash torrent."
-msgstr ""
+msgstr "aria2 був завантажений один і той самий хеш торенту."
 
 #: ../../po/../uget/UgetPluginAria2.c:285
 msgid "aria2: file already existed. See --allow-overwrite option."
-msgstr ""
+msgstr "aria2: файл вже існує. Дивіться параметр --allow-overwrite."
 
 #. _("Output file can't be renamed."),
 #: ../../po/../uget/UgetPluginAria2.c:287
 msgid "aria2: could not open existing file."
-msgstr ""
+msgstr "aria2: не вдалося відкрити існуючий файл."
 
 #: ../../po/../uget/UgetPluginAria2.c:288
 msgid "aria2: could not create new file or truncate existing file."
-msgstr ""
+msgstr "aria2: не вдалося створити новий файл або обнулити існуючий файл."
 
 #: ../../po/../uget/UgetPluginAria2.c:289
 msgid "aria2: file I/O error occurred."
-msgstr ""
+msgstr "aria2: сталася помилка читання/запису файлу."
 
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../../po/../uget/UgetPluginAria2.c:291
 msgid "aria2: name resolution failed."
-msgstr ""
+msgstr "aria2: дозвіл імен не вдався."
 
 #: ../../po/../uget/UgetPluginAria2.c:292
 msgid "aria2: could not parse Metalink document."
-msgstr ""
+msgstr "aria2: не вдалося проаналізувати Metalink-документ."
 
 #. 21 - 30
 #: ../../po/../uget/UgetPluginAria2.c:294
 msgid "aria2: FTP command failed."
-msgstr ""
+msgstr "aria2: FTP команда не вдалася."
 
 #: ../../po/../uget/UgetPluginAria2.c:295
 msgid "aria2: HTTP response header was bad or unexpected."
-msgstr ""
+msgstr "aria2: HTTP-заголовок відповіді був зіпсованим або неочікуваним."
 
 #: ../../po/../uget/UgetPluginAria2.c:296
 msgid "Too many redirections."
-msgstr "Занадто багато перенаправлень."
+msgstr "Забагато переспрямувань."
 
 #: ../../po/../uget/UgetPluginAria2.c:297
 msgid "aria2: HTTP authorization failed."
-msgstr ""
+msgstr "ria2: HTTP-авторизація не вдалася."
 
 #: ../../po/../uget/UgetPluginAria2.c:298
 msgid "aria2: could not parse bencoded file(usually .torrent file)."
-msgstr ""
+msgstr "aria2: не вдалося проаналізувати закодований файл (зазвичай файл \".torrent\")."
 
 #: ../../po/../uget/UgetPluginAria2.c:299
 msgid "aria2: torrent file was corrupted or missing information."
-msgstr ""
+msgstr "aria2: торент-файл пошкоджений або бракує інформації."
 
 #: ../../po/../uget/UgetPluginAria2.c:300
 msgid "aria2: Magnet URI was bad."
-msgstr ""
+msgstr "aria2: поганий Magnet URI."
 
 #: ../../po/../uget/UgetPluginAria2.c:301
 msgid ""
 "aria2: bad/unrecognized option was given or unexpected option argument was "
 "given."
-msgstr ""
+msgstr "aria2:  задано поганий/нерозпізнаний параметр або неочкуваний аргумент до нього"
 
 #: ../../po/../uget/UgetPluginAria2.c:302
 msgid "aria2: remote server was unable to handle the request."
-msgstr ""
+msgstr "aria2: віддалений сервер не зміг опрацювати запит."
 
 #: ../../po/../uget/UgetPluginAria2.c:303
 msgid "aria2: could not parse JSON-RPC request."
-msgstr ""
+msgstr "aria2: не вдалося проаналізувати JSON-RPC запит."
 
 #: ../../po/../uget/UgetPluginAria2.c:306
 msgid "No response. Is aria2 shutdown?"
-msgstr ""
+msgstr "Немає відповіді. Можливо aria2 відімкнена?"
 
 #. debug
 #: ../../po/../uget/UgetPluginAria2.c:608
 msgid "aria2: gid was removed."
-msgstr ""
+msgstr "aria2: gid був вилучений."
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:46
 msgid "Download Manager"
-msgstr "Менеджер звантажень"
+msgstr "Керівник звантажень"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:48
 msgid "translator-credits"
-msgstr "Сергій Дубик <serhijdubyk@gmail.com>\nМакс Ляшук <m_lyashuk@ukr.net>"
+msgstr "Сергій Дубик <serhijdubyk@gmail.com>\nМакс Ляшук <m_lyashuk@ukr.net>\nМикола Ткач <Stuartlittle1970@gmail.com>"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:80
 msgid "uGet Founder: "
-msgstr ""
+msgstr "Засновник uGet: "
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:81
 msgid "uGet Project Manager: "
-msgstr ""
+msgstr "Керівник проєкту uGet: "
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:255
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:204
@@ -275,7 +276,7 @@ msgstr "завдання"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:374
 msgid "New from Clipboard"
-msgstr "Нове звантаження з буфера обміну"
+msgstr "Нове звантаження з буферу обміну"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:376 ../../po/../ui-gtk/UgtkApp.c:662
 msgid "New Download"
@@ -292,11 +293,11 @@ msgstr "Командний рядок"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:758
 msgid "Error Occurred"
-msgstr ""
+msgstr "Сталася помилка"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:759
 msgid "Error Occurred when downloading."
-msgstr ""
+msgstr "Сталася помилка при завантаженні."
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:760
 msgid "Download Starting"
@@ -353,12 +354,12 @@ msgstr "Нова _категорія…"
 #. New Clipboard batch
 #: ../../po/../ui-gtk/UgtkApp-ui.c:207 ../../po/../ui-gtk/UgtkTrayIcon.c:66
 msgid "New Clipboard _batch..."
-msgstr "Нове завантаження з _буфера обміну…"
+msgstr "Нове завантаження з _буферу обміну…"
 
 #. New URL Sequence batch
 #: ../../po/../ui-gtk/UgtkApp-ui.c:214
 msgid "New _URL Sequence batch..."
-msgstr "Новий список посилань"
+msgstr "Новий перелік посилань"
 
 #. New Torrent
 #. separator
@@ -368,7 +369,7 @@ msgstr "Новий список посилань"
 #: ../../po/../ui-gtk/UgtkApp-ui.c:224 ../../po/../ui-gtk/UgtkMenubar-ui.c:73
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:75
 msgid "New Torrent..."
-msgstr "Новий torrent..."
+msgstr "Новий торент..."
 
 #. New Metalink
 #: ../../po/../ui-gtk/UgtkApp-ui.c:231 ../../po/../ui-gtk/UgtkMenubar-ui.c:79
@@ -378,7 +379,7 @@ msgstr "Нове метапосилання..."
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:240
 msgid "Save all settings"
-msgstr ""
+msgstr "Зберегти усі налаштування"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:248
 msgid "Set selected download runnable"
@@ -390,11 +391,11 @@ msgstr "Призупинити вибрані звантаження"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:258
 msgid "Set selected download properties"
-msgstr "Встановити властивості вибраних звантажень"
+msgstr "Встановити ціхи вибраних звантажень"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:266
 msgid "Move selected download up"
-msgstr "Перемістити обрану звантаження вище"
+msgstr "Перемістити обране звантаження вище"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:271
 msgid "Move selected download down"
@@ -426,7 +427,7 @@ msgstr "Властивості звантаження"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1028
 msgid "New Torrent"
-msgstr "Новий torrent"
+msgstr "Новий торент"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1044
 msgid "New Metalink"
@@ -442,19 +443,19 @@ msgstr "Відкрити файл метапосилань"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1109
 msgid "Failed to save category file."
-msgstr ""
+msgstr "Не вдалося зберегти файл категорії."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1129
 msgid "Failed to load category file."
-msgstr ""
+msgstr "Не вдалося завантажити файл категорії."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1140
 msgid "Save Category file"
-msgstr ""
+msgstr "Зберегти файл категорії"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1158
 msgid "Open Category file"
-msgstr ""
+msgstr "Відкрити файл категорії"
 
 #. add link
 #: ../../po/../ui-gtk/UgtkApp.c:1217
@@ -480,11 +481,11 @@ msgstr "Імпортувати URL-адреси з текстового файл
 
 #: ../../po/../ui-gtk/UgtkApp.c:1344
 msgid "Export URLs to text file"
-msgstr ""
+msgstr "Експорт URL-адрес у текстовий файл"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1363
 msgid "URL Sequence batch"
-msgstr "Список посилань"
+msgstr "Перелік посилань"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1390
 msgid "No URLs found in clipboard."
@@ -492,15 +493,15 @@ msgstr "У буфері обміну не знайдено URL-адрес."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1399
 msgid "All URLs had existed."
-msgstr ""
+msgstr "Усі URL-адреси вже існують."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1404
 msgid "Clipboard batch"
-msgstr "З буфера обміну"
+msgstr "З буферу обміну"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1494
 msgid "New"
-msgstr ""
+msgstr "Нова"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1613 ../../po/../ui-gtk/UgtkMenubar.c:383
 #: ../../po/../ui-gtk/UgtkMenubar.c:415 ../../po/../ui-gtk/UgtkNodeView.c:609
@@ -557,53 +558,53 @@ msgstr "Кількість вилучених:"
 #. URI Matching conditions
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:111
 msgid "URI Matching conditions"
-msgstr ""
+msgstr "Умови розпізнавання URI"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:118
 msgid "Matched _Hosts:"
-msgstr ""
+msgstr "Розпізнавати _хости:"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:129
 msgid "Matched _Schemes:"
-msgstr ""
+msgstr "Розпізнавати _схеми:"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:140
 msgid "Matched _Types:"
-msgstr ""
+msgstr "Розпізнавати _типи:"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:64
 msgid "Really Quit?"
-msgstr "Дійсно вийти?"
+msgstr "Справді вийти?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:65
 msgid "Are you sure you want to quit?"
-msgstr "Ви дійсно хочете вийти?"
+msgstr "Ви справді бажаєте вийти?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:69
 msgid "Really delete files?"
-msgstr "Дійсно хочете вилучити файли?"
+msgstr "Справді волієте вилучити файли?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:70
 msgid "Are you sure you want to delete files?"
-msgstr "Ви впевнені, що хочете вилучити файли?"
+msgstr "Ви впевнені, що бажаєте вилучити файли?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:74
 msgid "Really delete category?"
-msgstr ""
+msgstr "Справді вилучити категорію?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:75
 msgid "Are you sure you want to delete category?"
-msgstr ""
+msgstr "Ви впевнені, що волієте вилучити категорію?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:106
 msgid "Don't ask me again"
-msgstr ""
+msgstr "Не питати знову"
 
 #. URL - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:109
 #: ../../po/../ui-gtk/UgtkSequencer.c:63
 msgid "_URI:"
-msgstr ""
+msgstr "_URI:"
 
 #. Mirrors - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:128
@@ -634,7 +635,7 @@ msgstr "Посилання на сторінку:"
 #. "Max Connections:" - title label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:207
 msgid "_Max Connections:"
-msgstr ""
+msgstr "_Максимальне число з’єднань:"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:226
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:510
@@ -713,7 +714,7 @@ msgstr "Максимальна швидкість завантаження:"
 #. Retry limit - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:385
 msgid "Retry _limit:"
-msgstr "Гранична кількість спроб:"
+msgstr "Межа кількости спроб:"
 
 #. counts - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:400
@@ -742,17 +743,17 @@ msgstr "_Файл"
 #. Batch Downloads --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:86
 msgid "_Batch Downloads"
-msgstr "_Пакетне завантаження"
+msgstr "_Пакункове завантаження"
 
 #. Batch downloads - Clipboard batch
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:92
 msgid "_Clipboard batch..."
-msgstr "_З буфера обміну"
+msgstr "_З буферу обміну"
 
 #. Batch downloads - URL Sequence batch
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:98
 msgid "_URL Sequence batch..."
-msgstr "_Список посилань"
+msgstr "_Перелік посилань"
 
 #. Batch downloads - Text file import (.txt)
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:104
@@ -772,22 +773,22 @@ msgstr "_Експортувати до текстового файлу (.txt)"
 #. Open Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:128
 msgid "_Open category..."
-msgstr ""
+msgstr "_Відкрити категорію..."
 
 #. Save Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:135
 msgid "_Save category as..."
-msgstr ""
+msgstr "_Зберегти категорію як..."
 
 #. Save All
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
 msgid "Save _all settings"
-msgstr ""
+msgstr "Зберегти _усі налаштування"
 
 #. Offline mode
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:152
 msgid "Offline Mode"
-msgstr ""
+msgstr "Режим офлайн"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:170
 msgid "_Edit"
@@ -797,54 +798,54 @@ msgstr "_Редагування"
 #. );
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:175
 msgid "Clipboard _Monitor"
-msgstr "Слідкувати за _буфером обміну"
+msgstr "Стежити за _буфером обміну"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:179
 msgid "Clipboard works quietly"
-msgstr ""
+msgstr "Буфер обміну у автоматичному режимі"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:183
 msgid "Command-line works quietly"
-msgstr ""
+msgstr "Командний рядок у автоматичному режимі"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:187
 msgid "Skip existing URI"
-msgstr ""
+msgstr "Пропускати існуючі URI"
 
 #. --- Completion Auto-Actions --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:194
 msgid "Completion _Auto-Actions"
-msgstr ""
+msgstr "_Дії після завершення"
 
 #. Completion Auto-Actions - Disable
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:200
 msgid "_Disable"
-msgstr ""
+msgstr "_Відімкнено"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:205
 msgid "Hibernate"
-msgstr ""
+msgstr "Гібернація"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:210
 msgid "Suspend"
-msgstr ""
+msgstr "Режим очікування"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:215
 msgid "Shutdown"
-msgstr ""
+msgstr "Завершення роботи"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:220
 msgid "Reboot"
-msgstr ""
+msgstr "Перезавантаження"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:225
 msgid "Custom"
-msgstr ""
+msgstr "Користувацьке"
 
 #. Completion Auto-Actions - Remember
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
 msgid "Remember setting"
-msgstr ""
+msgstr "Запам’ятати налаштування"
 
 #. Completion Auto-Actions - Help
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:235
@@ -866,7 +867,7 @@ msgstr "_Перегляд"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:260
 msgid "_Toolbar"
-msgstr "_Панель інструментів"
+msgstr "_Панель знарядь"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:265
 msgid "Statusbar"
@@ -910,7 +911,7 @@ msgstr "_Повідомлення"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:328
 msgid "Download _Columns"
-msgstr "_Стовпці списку звантажень"
+msgstr "_Стовпці переліку звантажень"
 
 #. Download Columns - Completed
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:333
@@ -1000,15 +1001,15 @@ msgstr "_Звантаження"
 #. accel_group);
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:473
 msgid "_Delete Entry"
-msgstr ""
+msgstr "_Вилучити запис"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:480
 msgid "Delete Entry and _File"
-msgstr ""
+msgstr "Вилучити запис і _файл"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:495
 msgid "Open _Containing folder"
-msgstr ""
+msgstr "Відкрити _каталог, що містить"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:504
 msgid "Force Start"
@@ -1022,19 +1023,19 @@ msgstr "_Перемістити до"
 #. Priority --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:573
 msgid "Priority"
-msgstr ""
+msgstr "Пріоритет"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:582
 msgid "_High"
-msgstr ""
+msgstr "_Високий"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:587
 msgid "_Normal"
-msgstr ""
+msgstr "_Звичайний"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:592
 msgid "_Low"
-msgstr ""
+msgstr "_Низький"
 
 #. Get Help Online
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:615
@@ -1064,7 +1065,7 @@ msgstr "Сповістити про недолік"
 #. Keyboard Shortcuts
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:650
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Скорочення клавіш"
 
 #. Check for Updates
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:657
@@ -1078,22 +1079,22 @@ msgstr "Налаштування"
 #: ../../po/../ui-gtk/UgtkMenubar.c:377
 #, c-format
 msgid "Can't launch default application for file '%s'."
-msgstr "Не вдається запустити програму за умовчанням для файлу „%s“"
+msgstr "Не вдається запустити типову проґраму для файлу „%s“"
 
 #: ../../po/../ui-gtk/UgtkMenubar.c:409
 #, c-format
 msgid "'%s' - This folder does not exist."
-msgstr "'%s' – ця тека не існує."
+msgstr "'%s' – цієї теки не існує."
 
 #. title
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:205
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:209
 msgid "URI had existed"
-msgstr ""
+msgstr "URI вже існує"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:207
 msgid "This URI had existed, are you sure to continue?"
-msgstr ""
+msgstr "Цей URI вже існує, Ви впевнені, що бажаєте продовжити?"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:343
 msgid "General"
@@ -1122,15 +1123,15 @@ msgstr "неназване"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:610
 msgid "Paused"
-msgstr ""
+msgstr "Призупинено"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:611
 msgid "Uploading"
-msgstr ""
+msgstr "Вивантаження"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:612
 msgid "Completed"
-msgstr ""
+msgstr "Завершено"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:614
 msgid "Recycled"
@@ -1146,7 +1147,7 @@ msgstr "Активно"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:637
 msgid "All Status"
-msgstr ""
+msgstr "Усі стани"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:734
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:85
@@ -1178,7 +1179,7 @@ msgstr "Залишилося"
 #: ../../po/../ui-gtk/UgtkSettingForm.c:538
 #: ../../po/../ui-gtk/UgtkSummary.c:151
 msgid "URI"
-msgstr ""
+msgstr "URI"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:954
 msgid "Quantity"
@@ -1195,7 +1196,7 @@ msgstr "Не використовувати"
 
 #: ../../po/../ui-gtk/UgtkProxyForm.c:69
 msgid "Default"
-msgstr "За умовчанням"
+msgstr "Типово"
 
 #. host label & entry
 #: ../../po/../ui-gtk/UgtkProxyForm.c:121
@@ -1259,7 +1260,7 @@ msgstr "Вимкнути"
 #. Turn off - help label
 #: ../../po/../ui-gtk/UgtkScheduleForm.c:146
 msgid "- stop all task"
-msgstr "- зупинити всі завдання"
+msgstr "- зупинити усі завдання"
 
 #. Normal - label
 #: ../../po/../ui-gtk/UgtkScheduleForm.c:156
@@ -1269,7 +1270,7 @@ msgstr "Нормальний"
 #. Normal - help label
 #: ../../po/../ui-gtk/UgtkScheduleForm.c:161
 msgid "- run task normally"
-msgstr "- запустити завдання в звичайному режимі"
+msgstr "- запустити завдання у звичайному режимі"
 
 #: ../../po/../ui-gtk/UgtkSelector.c:254
 msgid "All"
@@ -1361,7 +1362,7 @@ msgstr "Не використовувати символ підстановки 
 
 #: ../../po/../ui-gtk/UgtkSequencer.c:192
 msgid "URL is not valid."
-msgstr "Невірний URL."
+msgstr "Невірна URL."
 
 #: ../../po/../ui-gtk/UgtkSequencer.c:196
 msgid "No character in 'From' or 'To' entry."
@@ -1373,11 +1374,11 @@ msgstr "Попередній перегляд"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:97
 msgid "User Interface"
-msgstr ""
+msgstr "Користувацький інтерфейс"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:109
 msgid "Bandwidth"
-msgstr ""
+msgstr "Пропускна здатність"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:115
 msgid "Scheduler"
@@ -1394,26 +1395,26 @@ msgstr "Інше"
 #. Monitor button
 #: ../../po/../ui-gtk/UgtkSettingForm.c:57
 msgid "_Enable clipboard monitor"
-msgstr ""
+msgstr "_Увімкнути моніторинг буферу обміну"
 
 #. quiet mode
 #: ../../po/../ui-gtk/UgtkSettingForm.c:62
 msgid "_Quiet mode"
-msgstr "_Тихий\n режим"
+msgstr "_У автоматичному режимі"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:68
 #: ../../po/../ui-gtk/UgtkSettingForm.c:446
 msgid "Default category index"
-msgstr ""
+msgstr "Індекс типової категорії"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:80
 #: ../../po/../ui-gtk/UgtkSettingForm.c:458
 msgid "Adding to Nth category if no matched category."
-msgstr ""
+msgstr "Долучення до N-ої категорії, якщо категорія не розпізнана."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:87
 msgid "Monitor clipboard for specified file types:"
-msgstr ""
+msgstr "Стежити за ціма типами файлів у буфері обміну:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:102
 msgid "Separate the types with character '|'."
@@ -1425,25 +1426,25 @@ msgstr "Тут Ви можете використовувати регулярн
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:151
 msgid "Confirmation"
-msgstr ""
+msgstr "Підтвердження"
 
 #. Confirmation check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:157
 msgid "Show confirmation dialog on exit"
-msgstr ""
+msgstr "Показувати вікно підтвердження при виході"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:160
 msgid "Confirm when deleting files"
-msgstr "Питати підтвердження при вилученні файлів"
+msgstr "Питати схвалення при вилученні файлів"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:166
 msgid "System Tray"
-msgstr ""
+msgstr "Системна таця"
 
 #. System Tray check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:172
 msgid "Always show tray icon"
-msgstr "Завжди показувати іконку в треї"
+msgstr "Завжди показувати піктограму у треї"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:175
 msgid "Minimize to tray on startup"
@@ -1451,11 +1452,11 @@ msgstr "Ховати до системної таці при запуску"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:178
 msgid "Close to tray on window close"
-msgstr ""
+msgstr "Приховувати у тацю при закриванні вікна"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:182
 msgid "Use Ubuntu's App Indicator"
-msgstr ""
+msgstr "Використовувати індикатор застосунків Ubuntu"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:189
 msgid "Enable offline mode on startup"
@@ -1470,43 +1471,43 @@ msgid "Sound when download is finished"
 msgstr "Звук при завершенні звантаження"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recent download settings"
+msgid "Apply recently download settings"
 msgstr "Встановити налаштування останнього завантаження"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264
 msgid "These will affect all plug-ins."
-msgstr ""
+msgstr "Вони впливають на усі втулки."
 
 #. Global speed limit
 #: ../../po/../ui-gtk/UgtkSettingForm.c:270
 msgid "Global speed limit"
-msgstr ""
+msgstr "Глобальні обмеження швидкості"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:278
 #: ../../po/../ui-gtk/UgtkSettingForm.c:564
 msgid "Max upload speed"
-msgstr ""
+msgstr "Максимальна швидкість вивантаження"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:290
 #: ../../po/../ui-gtk/UgtkSettingForm.c:576
 msgid "Max download speed"
-msgstr ""
+msgstr "Максимальна швидкість завантаження"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:323
 msgid "Completion Auto-Actions"
-msgstr ""
+msgstr "Дії після завершення"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:331
 msgid "Custom command:"
-msgstr ""
+msgstr "Користувацька команда:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:343
 msgid "Custom command if error occured:"
-msgstr ""
+msgstr "Користувацька команда при виникненні помилки:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:388
 msgid "_Autosave"
-msgstr ""
+msgstr "_Автозбереження"
 
 #. auto save spin & label (interval)
 #: ../../po/../ui-gtk/UgtkSettingForm.c:394
@@ -1526,25 +1527,25 @@ msgstr "Налаштування командного рядка"
 #. --quiet
 #: ../../po/../ui-gtk/UgtkSettingForm.c:440
 msgid "Use '--quiet' by default"
-msgstr "Використовувати '--quiet' за замовченням"
+msgstr "Типово використовувати '--quiet'"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:508
 msgid "Plug-in matching order:"
-msgstr ""
+msgstr "Порядок розпізнавання втулок:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:531
 msgid "Aria2 plug-in options"
-msgstr ""
+msgstr "Параметри втулки aria2"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:547
 msgid "RPC authorization secret token"
-msgstr ""
+msgstr "Секретний токен RPC-авторизації"
 
 #. ------------------------------------------------------------------------
 #. Speed Limits
 #: ../../po/../ui-gtk/UgtkSettingForm.c:556
 msgid "Global speed limit for aria2 only"
-msgstr ""
+msgstr "Глобальні обмеження швидкості лише для aria2"
 
 #. ------------------------------------------------------------------------
 #. aria2 works on local device
@@ -1562,11 +1563,11 @@ msgstr "_Закривати aria2 при виході"
 #. Local options
 #: ../../po/../ui-gtk/UgtkSettingForm.c:601
 msgid "Launch aria2 on local device"
-msgstr ""
+msgstr "Запускати aria2 на локальному пристрої"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:610
 msgid "Path"
-msgstr "Шляш"
+msgstr "Шлях"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:621
 msgid "Arguments"
@@ -1575,7 +1576,7 @@ msgstr "Аргументи"
 #. Arguments - hint
 #: ../../po/../ui-gtk/UgtkSettingForm.c:626
 msgid "You must restart uGet after modifying it."
-msgstr ""
+msgstr "Ви повинні перезавантажити uGet після внесення змін."
 
 #: ../../po/../ui-gtk/UgtkSummary.c:112
 msgid "File"
