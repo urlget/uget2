@@ -345,6 +345,16 @@ static int  plugin_sync (UgetPluginMedia* plugin)
 	common = ug_info_realloc (&node->info, UgetCommonInfo);
 	// sum retry count
 	common->retry_count = plugin->common->retry_count + plugin->retry_count;
+	// sync changed limit from UgetNode
+	if (plugin->common->max_upload_speed != common->max_upload_speed ||
+		plugin->common->max_download_speed != common->max_download_speed)
+	{
+		plugin->common->max_upload_speed = common->max_upload_speed;
+		plugin->common->max_download_speed = common->max_download_speed;
+	}
+	plugin->common->max_connections = common->max_connections;
+	plugin->common->retry_limit = common->retry_limit;
+
 	// downloading file name changed
 	if (plugin->sync_fname == TRUE) {
 		plugin->sync_fname = FALSE;
