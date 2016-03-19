@@ -178,7 +178,7 @@ static gboolean  ugtk_app_decide_schedule_state (UgtkApp* app)
 static gboolean  ugtk_app_timeout_queuing (UgtkApp* app)
 {
 	static int  n_counts = 0;
-	static int  n_active_prev = 0;
+	static int  n_active_last = 0;
 	int         n_active;
 	int         no_queuing = FALSE;
 	gchar*      string;
@@ -198,15 +198,15 @@ static gboolean  ugtk_app_timeout_queuing (UgtkApp* app)
 	}
 
 	n_active = uget_app_grow ((UgetApp*) app, no_queuing);
-	if (n_active != n_active_prev) {
+	if (n_active != n_active_last) {
 		// start downloading
-		if (n_active > 0 && n_active_prev == 0) {
+		if (n_active > 0 && n_active_last == 0) {
 			// starting notification
 			if (app->setting.ui.start_notification)
 				ugtk_app_notify_starting (app);
 		}
 		// stop downloading
-		else if (n_active == 0 && n_active_prev > 0) {
+		else if (n_active == 0 && n_active_last > 0) {
 			if (app->n_error > 0) {
 				// error notification
 				ugtk_app_notify_error (app);
@@ -298,7 +298,7 @@ static gboolean  ugtk_app_timeout_queuing (UgtkApp* app)
 
 	app->user_action = FALSE;
 	app->n_moved = 0;   // reset counter
-	n_active_prev = n_active;
+	n_active_last = n_active;
 	n_counts++;
 	return TRUE;
 }
@@ -576,6 +576,8 @@ static gboolean  ugtk_app_timeout_rpc (UgtkApp* app)
 		}
 		req->free (req);
 	}
+
+	return TRUE;
 }
 
 // ----------------------------------------------------------------------------

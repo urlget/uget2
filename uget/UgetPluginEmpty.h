@@ -87,9 +87,7 @@ namespace Uget
 
 // This one is for derived use only. No data members here.
 // Your derived struct/class must be C++11 standard-layout
-struct PluginEmptyMethod : Uget::PluginMethod
-{
-};
+struct PluginEmptyMethod : Uget::PluginMethod {};
 
 // This one is for directly use only. You can NOT derived it.
 struct PluginEmpty : Uget::PluginEmptyMethod, UgetPluginEmpty {};
