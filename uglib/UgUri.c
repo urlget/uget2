@@ -424,53 +424,39 @@ char* ug_filename_from_uri (const char* str)
 	return ug_uri_get_file ((UgUri*) &uuri);
 }
 
-// used by ug_decode_uri()
-static int  hex_char_to_int (char ch)
-{
-	if (ch >= '0' && ch <= '9')
-		return ch - '0';
-	if (ch >= 'a' && ch <= 'f')
-		return ch - 'a' + 10;
-	if (ch >= 'A' && ch <= 'F')
-		return ch - 'A' + 10;
-	return -1;
-}
-
 // return length of decoded uri. param dest can be param uri or NULL.
-int   ug_decode_uri (const char* uri, int uri_length, char* dest)
+int   ug_decode_uri (const char* uri, int length, char* dest)
 {
-	const char* uri_end;
-	int   dest_length = 0;
-	int   ch1, ch2;
+	char*  eptr;
+	char*  str;
+	const char*  end;
 
-	if (uri) {
-		if (uri_length == -1)
-			uri_length = strlen (uri);
+	if (length == -1)
+		length = strlen (uri);
+	end = uri + length;
+	str = dest;
 
-		for (uri_end = uri + uri_length;  uri < uri_end;  dest_length++) {
-			if (uri[0] == '%' &&
-			    uri + 2 < uri_end &&
-			    (ch1 = hex_char_to_int(uri[1])) != -1 &&
-			    (ch2 = hex_char_to_int(uri[2])) != -1)
-			{
-				if (dest)
-					*dest++ = (ch1 << 4) + ch2;  // ch1*16 + ch2
-				uri += 3;
-			}
-			else if (dest) {
-				// URLs cannot contain spaces.
-				// URL decoding replaces a plus (+) sign with a space.
-				if (uri[0] == '+') {
-					*dest++ = ' ';
-					uri++;
-				}
-				else
-					*dest++ = *uri++;
+	while (uri < end) {
+		if (uri[0] == '%' && uri + 2 < end) {
+			str[0] = uri[1];
+			str[1] = uri[2];
+			str[2] = 0;
+			eptr = NULL;
+			*(uint8_t*)str = (uint8_t) strtoul (str, &eptr, 16);
+			if (eptr == str + 2) {
+				str++;
+				uri+=3;
+				continue;
 			}
 		}
+
+		if (uri[0] == '+') {
+			*str++ = ' ';
+			uri++;
+		}
+		else
+			*str++ = *uri++;
 	}
-
-	*dest = 0;
-	return dest_length;
+	*str = 0;
+	return str - dest;
 }
-
