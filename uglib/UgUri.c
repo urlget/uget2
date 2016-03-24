@@ -427,36 +427,39 @@ char* ug_filename_from_uri (const char* str)
 // return length of decoded uri. param dest can be param uri or NULL.
 int   ug_decode_uri (const char* uri, int length, char* dest)
 {
-	char*  eptr;
-	char*  str;
-	const char*  end;
+	const char*  uri_end;
+	char*  dest_beg;
+	char*  endptr;
+	char   buf[3];
 
 	if (length == -1)
 		length = strlen (uri);
-	end = uri + length;
-	str = dest;
+	dest_beg = dest;
 
-	while (uri < end) {
-		if (uri[0] == '%' && uri + 2 < end) {
-			str[0] = uri[1];
-			str[1] = uri[2];
-			str[2] = 0;
-			eptr = NULL;
-			*(uint8_t*)str = (uint8_t) strtoul (str, &eptr, 16);
-			if (eptr == str + 2) {
-				str++;
-				uri+=3;
+	for (uri_end = uri + length;  uri < uri_end;  uri++, dest++) {
+		if (uri[0] == '%' && uri + 2 < uri_end) {
+			buf[0] = uri[1];
+			buf[1] = uri[2];
+			buf[2] = 0;
+			endptr = NULL;
+			*(uint8_t*)buf = (uint8_t) strtoul (buf, &endptr, 16);
+			if (endptr == buf + 2) {
+				if (dest_beg)
+					*dest = *buf;
+				uri += 2;
 				continue;
 			}
 		}
 
-		if (uri[0] == '+') {
-			*str++ = ' ';
-			uri++;
+		if (dest_beg) {
+			if (uri[0] == '+')
+				*dest = ' ';
+			else
+				*dest = *uri;
 		}
-		else
-			*str++ = *uri++;
 	}
-	*str = 0;
-	return str - dest;
+
+	if (dest_beg)
+		*dest = 0;
+	return dest - dest_beg;
 }
