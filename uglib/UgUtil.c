@@ -44,6 +44,7 @@
 
 #include <stdarg.h>
 #include <stdlib.h>     // strtoul()
+#include <wchar.h>      // wcslen()
 #include <UgDefine.h>
 #include <UgUtil.h>
 #include <UgString.h>   // ug_strdup()
@@ -55,10 +56,6 @@
 #include <stdio.h>      // popen()
 #include <unistd.h>
 #include <sys/time.h>
-#endif
-
-#if defined __OpenBSD__    // Others?
-#include <wchar.h>      // wcslen()
 #endif
 
 // ----------------------------------------------------------------------------
@@ -189,7 +186,7 @@ uint8_t*   ug_utf16_to_utf8 (uint16_t* string, int count,
 	const uint16_t* end;
 
 	if (count == -1)
-		count  = wcslen (string);
+		count  = wcslen ((wchar_t*) string);
 	end  = string + count;
 	result = ug_malloc (sizeof (uint8_t) * (count+1) * 3);
 	dest   = result;
