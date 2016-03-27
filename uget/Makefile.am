@@ -25,11 +25,8 @@ libuget_a_SOURCES = \
 	UgetA2cf.c    \
 	UgetCurl.c    \
 	UgetAria2.c   \
-	UgetMedia.c   \
-	UgetMedia-youtube.c   \
 	UgetPluginCurl.c   \
 	UgetPluginAria2.c  \
-	UgetPluginMedia.c  \
 	UgetPluginEmpty.c
 
 noinst_HEADERS = \
@@ -49,7 +46,6 @@ noinst_HEADERS = \
 	UgetMedia.h   \
 	UgetPluginCurl.h   \
 	UgetPluginAria2.h  \
-	UgetPluginMedia.h  \
 	UgetPluginEmpty.h
 
 if WITH_LIBPWMD

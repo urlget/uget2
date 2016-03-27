@@ -39,7 +39,6 @@
 #include <UgetApp.h>
 #include <UgetPluginCurl.h>
 #include <UgetPluginAria2.h>
-#include <UgetPluginMedia.h>
 #include <UgetPluginEmpty.h>
 
 #if defined _WIN32 || defined _WIN64
@@ -139,9 +138,8 @@ void  test_node_download (void)
 	if (referrer)
 		http->referrer = ug_strdup (referrer);
 
-//	download_node (node, UgetPluginCurlInfo);
+	download_node (node, UgetPluginCurlInfo);
 //	download_node (node, UgetPluginAria2Info);
-	download_node (node, UgetPluginMediaInfo);
 	uget_node_unref (node);
 }
 
@@ -356,7 +354,6 @@ int   main (void)
 	// initialize plugin
 	uget_plugin_set (UgetPluginCurlInfo, UGET_PLUGIN_INIT, (void*) TRUE);
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) TRUE);
-	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) TRUE);
 //	test_setup_plugin_aria2 ();
 
 	test_node_download ();
@@ -367,7 +364,6 @@ int   main (void)
 	// finalize plugin
 	uget_plugin_set (UgetPluginCurlInfo, UGET_PLUGIN_INIT, (void*) FALSE);
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) FALSE);
-	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) FALSE);
 	ug_sleep(1000);
 
 	return 0;

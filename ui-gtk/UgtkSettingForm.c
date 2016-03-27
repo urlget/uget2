@@ -86,13 +86,6 @@ void  ugtk_clipboard_form_init (struct UgtkClipboardForm* cbform)
 
 	gtk_box_pack_start (vbox, gtk_label_new (""), FALSE, FALSE, 2);
 
-	// media website
-	widget = gtk_check_button_new_with_mnemonic (_("_Monitor URL of media website"));
-	gtk_box_pack_start (vbox, widget, FALSE, FALSE, 1);
-	cbform->media_website = (GtkToggleButton*) widget;
-
-	gtk_box_pack_start (vbox, gtk_label_new (""), FALSE, FALSE, 2);
-
 	// get text height --- begin ---
 	context = gtk_widget_get_pango_context (widget);
 	layout = pango_layout_new (context);
@@ -137,7 +130,6 @@ void  ugtk_clipboard_form_set (struct UgtkClipboardForm* cbform, UgtkSetting* se
 		gtk_text_buffer_set_text (cbform->buffer, setting->clipboard.pattern, -1);
 	gtk_toggle_button_set_active (cbform->monitor, setting->clipboard.monitor);
 	gtk_toggle_button_set_active (cbform->quiet, setting->clipboard.quiet);
-	gtk_toggle_button_set_active (cbform->media_website, setting->clipboard.media_website);
 	gtk_spin_button_set_value (cbform->nth_spin, setting->clipboard.nth_category);
 	gtk_toggle_button_toggled (cbform->monitor);
 	gtk_toggle_button_toggled (cbform->quiet);
@@ -156,7 +148,6 @@ void  ugtk_clipboard_form_get (struct UgtkClipboardForm* cbform, UgtkSetting* se
 	setting->clipboard.pattern = gtk_text_buffer_get_text (cbform->buffer, &iter1, &iter2, FALSE);
 	setting->clipboard.monitor = gtk_toggle_button_get_active (cbform->monitor);
 	setting->clipboard.quiet = gtk_toggle_button_get_active (cbform->quiet);
-	setting->clipboard.media_website = gtk_toggle_button_get_active (cbform->media_website);
 	setting->clipboard.nth_category = gtk_spin_button_get_value_as_int (cbform->nth_spin);
 	// remove line break
 	ug_str_remove_crlf (setting->clipboard.pattern, setting->clipboard.pattern);
@@ -741,117 +732,4 @@ void  ugtk_plugin_form_get (struct UgtkPluginForm* psform, UgtkSetting* setting)
 
 	setting->aria2.limit.upload   = (guint) gtk_spin_button_get_value (psform->upload);
 	setting->aria2.limit.download = (guint) gtk_spin_button_get_value (psform->download);
-}
-
-// ----------------------------------------------------------------------------
-// UgtkMediaWebsiteForm
-//
-
-static void on_match_mode_changed (GtkComboBox* widget, struct UgtkMediaWebsiteForm* mwform)
-{
-	gboolean sensitive;
-	int      index;
-
-	index = gtk_combo_box_get_active (widget);
-	if (index == UGET_MEDIA_MATCH_0)
-		sensitive = FALSE;
-	else
-		sensitive = TRUE;
-
-	gtk_widget_set_sensitive ((GtkWidget*) mwform->quality, sensitive);
-	gtk_widget_set_sensitive ((GtkWidget*) mwform->type, sensitive);
-}
-
-void  ugtk_media_website_form_init (struct UgtkMediaWebsiteForm* mwform)
-{
-	GtkBox*     vbox;
-	GtkBox*     hbox;
-	GtkWidget*  widget;
-	GtkGrid*    grid;
-
-	mwform->self = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-	vbox = (GtkBox*) mwform->self;
-
-	hbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-	gtk_box_pack_start (vbox, (GtkWidget*) hbox, FALSE, TRUE, 2);
-	widget = gtk_label_new (_("Media matching mode:"));
-	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 0);
-	widget = gtk_combo_box_text_new ();
-	mwform->match_mode = (GtkComboBoxText*) widget;
-	gtk_combo_box_text_insert_text (mwform->match_mode,
-			UGET_MEDIA_MATCH_0, "Don't match");
-	gtk_combo_box_text_insert_text (mwform->match_mode,
-			UGET_MEDIA_MATCH_1, "Match 1 condition");
-	gtk_combo_box_text_insert_text (mwform->match_mode,
-			UGET_MEDIA_MATCH_2, "Match 2 condition");
-	gtk_combo_box_text_insert_text (mwform->match_mode,
-			UGET_MEDIA_MATCH_NEAR, "Near quality");
-	g_signal_connect (mwform->match_mode, "changed",
-			G_CALLBACK (on_match_mode_changed), mwform);
-	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 4);
-
-	hbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-	gtk_box_pack_start (vbox, (GtkWidget*) hbox, FALSE, TRUE, 4);
-	widget = gtk_label_new (_("Match conditions"));
-	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 0);
-	gtk_box_pack_start (hbox,
-			gtk_separator_new (GTK_ORIENTATION_HORIZONTAL), TRUE, TRUE, 4);
-
-	// conditions
-	grid = (GtkGrid*) gtk_grid_new ();
-	gtk_box_pack_start (vbox, (GtkWidget*) grid, FALSE, FALSE, 0);
-	// Quality
-	widget = gtk_label_new (_("Quality:"));
-	g_object_set (widget, "margin-left", 3, "margin-right", 3, NULL);
-	g_object_set (widget, "margin-top", 2, "margin-bottom", 2, NULL);
-	gtk_grid_attach (grid, widget, 0, 0, 1, 1);
-	widget = gtk_combo_box_text_new ();
-	mwform->quality = (GtkComboBoxText*) widget;
-	gtk_combo_box_text_insert_text (mwform->quality,
-			UGET_MEDIA_QUALITY_240P, "240p");
-	gtk_combo_box_text_insert_text (mwform->quality,
-			UGET_MEDIA_QUALITY_360P, "360p");
-	gtk_combo_box_text_insert_text (mwform->quality,
-			UGET_MEDIA_QUALITY_480P, "480p");
-	gtk_combo_box_text_insert_text (mwform->quality,
-			UGET_MEDIA_QUALITY_720P, "720p");
-	gtk_combo_box_text_insert_text (mwform->quality,
-			UGET_MEDIA_QUALITY_1080P, "1080p");
-	g_object_set (widget, "margin-left", 3, "margin-right", 3, NULL);
-	g_object_set (widget, "margin-top", 2, "margin-bottom", 2, NULL);
-	gtk_grid_attach (grid, widget, 1, 0, 1, 1);
-	// Type
-	widget = gtk_label_new (_("Type:"));
-	g_object_set (widget, "margin-left", 3, "margin-right", 3, NULL);
-	g_object_set (widget, "margin-top", 2, "margin-bottom", 2, NULL);
-	gtk_grid_attach (grid, widget, 0, 1, 1, 1);
-	widget = gtk_combo_box_text_new ();
-	mwform->type = (GtkComboBoxText*) widget;
-	gtk_combo_box_text_insert_text (mwform->type,
-			UGET_MEDIA_TYPE_MP4, "mp4");
-	gtk_combo_box_text_insert_text (mwform->type,
-			UGET_MEDIA_TYPE_WEBM, "webm");
-	gtk_combo_box_text_insert_text (mwform->type,
-			UGET_MEDIA_TYPE_3GPP, "3gpp");
-	gtk_combo_box_text_insert_text (mwform->type,
-			UGET_MEDIA_TYPE_FLV, "flv");
-	g_object_set (widget, "margin-left", 3, "margin-right", 3, NULL);
-	g_object_set (widget, "margin-top", 2, "margin-bottom", 2, NULL);
-	gtk_grid_attach (grid, widget, 1, 1, 1, 1);
-
-	gtk_widget_show (mwform->self);
-}
-
-void  ugtk_media_website_form_set (struct UgtkMediaWebsiteForm* mwform, UgtkSetting* setting)
-{
-	gtk_combo_box_set_active ((GtkComboBox*) mwform->match_mode, setting->media.match_mode);
-	gtk_combo_box_set_active ((GtkComboBox*) mwform->quality, setting->media.quality);
-	gtk_combo_box_set_active ((GtkComboBox*) mwform->type, setting->media.type);
-}
-
-void  ugtk_media_website_form_get (struct UgtkMediaWebsiteForm* mwform, UgtkSetting* setting)
-{
-	setting->media.match_mode = gtk_combo_box_get_active ((GtkComboBox*) mwform->match_mode);
-	setting->media.quality = gtk_combo_box_get_active ((GtkComboBox*) mwform->quality);
-	setting->media.type = gtk_combo_box_get_active ((GtkComboBox*) mwform->type);
 }

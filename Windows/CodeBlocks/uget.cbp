@@ -107,10 +107,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../uget/UgetPluginEmpty.h" />
-		<Unit filename="../../uget/UgetPluginMedia.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../uget/UgetPluginMedia.h" />
 		<Unit filename="../../uget/UgetRpc.c">
 			<Option compilerVar="CC" />
 		</Unit>

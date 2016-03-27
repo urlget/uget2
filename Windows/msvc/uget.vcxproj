@@ -24,10 +24,8 @@
     <ClInclude Include="..\..\uget\UgetA2cf.h" />
     <ClInclude Include="..\..\uget\UgetCurl.h" />
     <ClInclude Include="..\..\uget\UgetAria2.h" />
-    <ClInclude Include="..\..\uget\UgetMedia.h" />
     <ClInclude Include="..\..\uget\UgetPluginCurl.h" />
     <ClInclude Include="..\..\uget\UgetPluginAria2.h" />
-    <ClInclude Include="..\..\uget\UgetPluginMedia.h" />
     <ClInclude Include="..\..\uget\UgetPluginEmpty.h" />
   </ItemGroup>
   <ItemGroup>
@@ -45,11 +43,8 @@
     <ClCompile Include="..\..\uget\UgetA2cf.c" />
     <ClCompile Include="..\..\uget\UgetCurl.c" />
     <ClCompile Include="..\..\uget\UgetAria2.c" />
-    <ClCompile Include="..\..\uget\UgetMedia.c" />
-    <ClCompile Include="..\..\uget\UgetMedia-youtube.c" />
     <ClCompile Include="..\..\uget\UgetPluginCurl.c" />
     <ClCompile Include="..\..\uget\UgetPluginAria2.c" />
-    <ClCompile Include="..\..\uget\UgetPluginMedia.c" />
     <ClCompile Include="..\..\uget\UgetPluginEmpty.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

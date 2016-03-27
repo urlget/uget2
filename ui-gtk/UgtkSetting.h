@@ -181,7 +181,6 @@ struct UgtkSetting
 		int    monitor;
 		int    quiet;
 		int    nth_category;
-		int    media_website;
 	} clipboard;
 
 	// "BandwidthSetting" - global speed limits
@@ -225,13 +224,6 @@ struct UgtkSetting
 		char*  args;
 		char*  uri;
 	} aria2;
-
-	// UgetPluginMedia option
-	struct UgtkPluginMediaSetting {
-		int    match_mode;
-		int    quality;
-		int    type;
-	} media;
 
 	// Completion Auto-Actions
 	struct UgtkCompletionSetting {

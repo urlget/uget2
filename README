@@ -1,21 +1,16 @@
-uGet 2.1.1: (2016-03-20)
+uGet 2.0.6: (2016-03-27)
 1. curl plug-in: fix a bug that downloaded file may be incomplete in some case.
 2. curl plug-in: improve downloaded segment handler.
 3. curl plug-in: set min split size to 10 MiB.
-4. curl plug-in: adjust speed if plug-in add/remove segments in speed limit mode.
-5. aria2 plug-in: fix a memory leak.
-6. media plug-in: report error if YouTube video has been removed.
+4. curl plug-in: adjust speed when plug-in add/remove segments in speed limit mode.
+5. curl plug-in: avoid showing "99:99:99" in "elapsed" when downloading start.
+6. aria2 plug-in: fix a memory leak.
+7. Fix: Program stop running download when user set "Runnable" to it.
+8. Revert uri deocder to 2.0.4, this may fix incorrect encoding on some chracters.
+9. if file "uget-portable-mode" exists, data files save in installed folder. (Windows)
 
 * This version fix bug that download speed is slow when progress near 100%
 * If you usually get error message "Incorrect source", I suggest you use this version.
-
-uGet 2.1.0: (2016-02-20)
-1. Add new media plug-in to get link from media website.
-2. if file "uget-portable-mode" exists, data files save in installed folder. (Windows)
-3. curl plug-in: avoid showing "99:99:99" in "elapsed" when downloading start.
-4. curl plug-in: avoid reporting "Incorrect source" when downloading finished.
-5. Fix: Program stop running download when user set "Runnable" to it.
-
 * In Windows, If "uget-portable-mode" and "uget.exe" place in the same folder, data files will save in uGet installed folder.
 
 uGet 2.0.5: (2016-02-08)

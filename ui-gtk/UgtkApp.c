@@ -41,7 +41,6 @@
 #include <UgHtmlFilter.h>
 #include <UgetPluginCurl.h>
 #include <UgetPluginAria2.h>
-#include <UgetPluginMedia.h>
 #include <UgtkApp.h>
 #include <UgtkUtil.h>
 #include <UgtkNodeDialog.h>
@@ -72,7 +71,6 @@ void  ugtk_app_init (UgtkApp* app, UgetRpc* rpc)
 	// plugin initialize
 	uget_plugin_set (UgetPluginCurlInfo,  UGET_PLUGIN_INIT, (void*) TRUE);
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) TRUE);
-	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) TRUE);
 	// apply UgtkSetting
 	ugtk_app_set_plugin_setting (app, &app->setting);
 	ugtk_app_set_window_setting (app, &app->setting);
@@ -500,16 +498,6 @@ void  ugtk_app_set_plugin_setting (UgtkApp* app, UgtkSetting* setting)
 
 	// set default plug-in
 	uget_app_set_default_plugin ((UgetApp*) app, default_plugin);
-	// set media plug-in
-	uget_app_add_plugin ((UgetApp*) app, UgetPluginMediaInfo);
-	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_DEFAULT_PLUGIN,
-	                 (void*) default_plugin);
-	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_MATCH_MODE,
-	                 (void*)(intptr_t) setting->media.match_mode);
-	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_QUALITY,
-	                 (void*)(intptr_t) setting->media.quality);
-	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_TYPE,
-	                 (void*)(intptr_t) setting->media.type);
 	// set aria2 plug-in
 	if (setting->plugin_order >= UGTK_PLUGIN_ORDER_ARIA2) {
 		uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_ARIA2_URI,
@@ -542,7 +530,6 @@ void  ugtk_app_set_other_setting (UgtkApp* app, UgtkSetting* setting)
 {
 	// clipboard & commandline
 	ugtk_clipboard_set_pattern (&app->clipboard, setting->clipboard.pattern);
-	app->clipboard.media_website = app->setting.clipboard.media_website;
 	// global speed limit
 	uget_task_set_speed (&app->task,
 			setting->bandwidth.normal.download * 1024,
@@ -1858,13 +1845,8 @@ GList* ugtk_clipboard_get_matched (struct UgtkClipboard* clipboard, const gchar*
 			text = NULL;
 		// free URIs if not matched
 		if (text == NULL || g_regex_match (clipboard->regex, text+1, 0, NULL) == FALSE) {
-			// media website
-			if (clipboard->media_website == FALSE ||
-			    uget_media_get_site_id (link->data) == UGET_MEDIA_UNKNOWN)
-			{
-				g_free (link->data);
-				link->data = NULL;
-			}
+			g_free (link->data);
+			link->data = NULL;
 		}
 		ug_free (temp);
 	}

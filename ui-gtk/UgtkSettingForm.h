@@ -59,9 +59,6 @@ struct UgtkClipboardForm
 	// add download to Nth category
 	GtkWidget*			nth_label;
 	GtkSpinButton*		nth_spin;
-
-	// Monitor media website address
-	GtkToggleButton*    media_website;
 };
 
 void  ugtk_clipboard_form_init (struct UgtkClipboardForm* cbform);
@@ -182,22 +179,6 @@ struct UgtkPluginForm
 void  ugtk_plugin_form_init (struct UgtkPluginForm* psform);
 void  ugtk_plugin_form_set (struct UgtkPluginForm* psform, UgtkSetting* setting);
 void  ugtk_plugin_form_get (struct UgtkPluginForm* psform, UgtkSetting* setting);
-
-// ----------------------------------------------------------------------------
-// UgtkMediaWebsiteForm
-struct UgtkMediaWebsiteForm
-{
-	GtkWidget*  self;
-
-	GtkComboBoxText*    match_mode;
-	GtkComboBoxText*    quality;
-	GtkComboBoxText*    type;
-};
-
-void  ugtk_media_website_form_init (struct UgtkMediaWebsiteForm* mwform);
-void  ugtk_media_website_form_set (struct UgtkMediaWebsiteForm* mwform, UgtkSetting* setting);
-void  ugtk_media_website_form_get (struct UgtkMediaWebsiteForm* mwform, UgtkSetting* setting);
-
 
 #ifdef __cplusplus
 }

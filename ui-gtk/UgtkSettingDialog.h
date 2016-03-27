@@ -72,7 +72,6 @@ struct UgtkSettingDialog
 	struct UgtkScheduleForm       scheduler;
 	struct UgtkCommandlineForm    commandline;
 	struct UgtkPluginForm         plugin;
-	struct UgtkMediaWebsiteForm   media_website;
 };
 
 UgtkSettingDialog*  ugtk_setting_dialog_new ();

@@ -240,10 +240,6 @@ static const UgEntry  UgtkClipboardSettingEntry[] =
 			UG_ENTRY_BOOL,   NULL,  NULL},
 	{"NthCategory",  offsetof (struct UgtkClipboardSetting, nth_category),
 			UG_ENTRY_INT,    NULL,  NULL},
-
-	{"MediaWebsite", offsetof (struct UgtkClipboardSetting, media_website),
-			UG_ENTRY_BOOL,   NULL,  NULL},
-
 	{NULL},    // null-terminated
 };
 
@@ -312,20 +308,6 @@ static const UgEntry  UgtkPluginAria2SettingEntry[] =
 };
 
 // ----------------------------------------------------------------------------
-// PluginMediaSetting
-
-static const UgEntry  UgtkPluginMediaSettingEntry[] =
-{
-	{"match_mode",  offsetof (struct UgtkPluginMediaSetting, match_mode),
-			UG_ENTRY_INT,  NULL,   NULL},
-	{"quality",     offsetof (struct UgtkPluginMediaSetting, quality),
-			UG_ENTRY_INT,  NULL,   NULL},
-	{"type",        offsetof (struct UgtkPluginMediaSetting, type),
-			UG_ENTRY_INT,  NULL,   NULL},
-	{NULL},    // null-terminated
-};
-
-// ----------------------------------------------------------------------------
 // UgtkCompletionSetting
 
 static const UgEntry  UgtkCompletionSettingEntry[] =
@@ -365,8 +347,6 @@ static const UgEntry  UgtkSettingEntry[] =
 			UG_ENTRY_INT,    NULL, NULL},
 	{"PluginAria2",     offsetof (UgtkSetting, aria2),
 			UG_ENTRY_OBJECT, (void*) UgtkPluginAria2SettingEntry, NULL},
-	{"PluginMedia",     offsetof (UgtkSetting, media),
-			UG_ENTRY_OBJECT, (void*) UgtkPluginMediaSettingEntry, NULL},
 
 	{"Completion",      offsetof (UgtkSetting, completion),
 			UG_ENTRY_OBJECT, (void*) UgtkCompletionSettingEntry, NULL},
@@ -394,12 +374,6 @@ void  ugtk_setting_init (UgtkSetting* setting)
 	// "SchedulerSetting"
 	ug_array_init (&setting->scheduler.state, sizeof (int), 7*24);
 	memset (setting->scheduler.state.at, UGTK_SCHEDULE_NORMAL, 7*24);
-
-	// default settings for media website
-	setting->clipboard.media_website = TRUE;
-	setting->media.match_mode = UGET_MEDIA_MATCH_NEAR;
-	setting->media.quality = UGET_MEDIA_QUALITY_360P;
-	setting->media.type = UGET_MEDIA_TYPE_MP4;
 }
 
 void  ugtk_setting_reset (UgtkSetting* setting)
@@ -470,7 +444,6 @@ void  ugtk_setting_reset (UgtkSetting* setting)
 	setting->clipboard.monitor = TRUE;
 	setting->clipboard.quiet = FALSE;
 	setting->clipboard.nth_category = 0;
-	setting->clipboard.media_website = TRUE;
 
 	// "BandwidthSetting"
 	setting->bandwidth.normal.upload = 0;
@@ -503,10 +476,6 @@ void  ugtk_setting_reset (UgtkSetting* setting)
 	setting->aria2.path = ug_strdup (UGTK_ARIA2_PATH);
 	setting->aria2.args = ug_strdup (UGTK_ARIA2_ARGS);
 	setting->aria2.uri  = ug_strdup (UGTK_ARIA2_URI);
-	// media plug-in settings
-	setting->media.match_mode = UGET_MEDIA_MATCH_NEAR;
-	setting->media.quality = UGET_MEDIA_QUALITY_360P;
-	setting->media.type = UGET_MEDIA_TYPE_MP4;
 
 	// Others
 	setting->completion.remember = TRUE;
@@ -673,11 +642,4 @@ void  ugtk_setting_fix_data (UgtkSetting* setting)
 		ug_free (setting->aria2.uri);
 		setting->aria2.uri  = ug_strdup (UGTK_ARIA2_URI);
 	}
-	// media plug-in settings
-	if (setting->media.match_mode < 0 || setting->media.match_mode > UGET_MEDIA_N_MATCH_MODE)
-		setting->media.match_mode = UGET_MEDIA_MATCH_NEAR;
-	if (setting->media.quality < 0 || setting->media.quality > UGET_MEDIA_N_QUALITY)
-		setting->media.quality = UGET_MEDIA_QUALITY_360P;
-	if (setting->media.type < 0 || setting->media.type > UGET_MEDIA_N_TYPE)
-		setting->media.type = UGET_MEDIA_TYPE_MP4;
 }
