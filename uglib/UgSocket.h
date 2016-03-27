@@ -84,10 +84,11 @@ extern "C" {
 // Client API
 
 // IPv4 or IPv6
-// return SOCKET, return SOCKET_ERROR in error
+// return SOCKET_ERROR(-1) if error occurred.
 int  ug_socket_connect (SOCKET fd, const char* addr, const char* port_or_serv);
 
 #if !(defined _WIN32 || defined _WIN64)
+// UNIX Domain Socket
 int  ug_socket_connect_unix (SOCKET fd, const char* path, int path_len);
 #endif // ! (_WIN32 || _WIN64)
 
@@ -102,6 +103,7 @@ int  ug_socket_listen (SOCKET fd, const char* addr, const char* port_or_serv,
                        int backlog);
 
 #if !(defined _WIN32 || defined _WIN64)
+// UNIX Domain Socket
 int  ug_socket_listen_unix (SOCKET fd, const char* path, int path_len, int backlog);
 #endif // ! (_WIN32 || _WIN64)
 
@@ -173,6 +175,7 @@ UgSocketServer* ug_socket_server_new (SOCKET server_fd);
 UgSocketServer* ug_socket_server_new_addr (const char* addr,
                                            const char* port_or_serv);
 #if !(defined _WIN32 || defined _WIN64)
+// UNIX Domain Socket
 UgSocketServer* ug_socket_server_new_unix (const char* path,
                                            int         path_len);
 #endif

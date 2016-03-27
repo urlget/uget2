@@ -125,7 +125,7 @@ void  ug_json_write_rpc_object (UgJson* json, UgJsonrpcObject* jrobj);
 #define ug_jsonrpc_array_init(array, allocated_len)   \
 		ug_array_init (array, sizeof (UgJsonrpcObject*), allocated_len)
 
-// bool free_objects
+// param free_objects: TRUE or FALSE
 void  ug_jsonrpc_array_clear (UgJsonrpcArray* joarray, int free_objects);
 
 UgJsonrpcObject*  ug_jsonrpc_array_find (UgJsonrpcArray* joarray, UgValue* id, int* index);
@@ -135,8 +135,9 @@ UgJsonrpcObject*  ug_jsonrpc_array_alloc (UgJsonrpcArray* joarray);
 UgJsonError  ug_json_parse_rpc_array (UgJson* json,
                                       const char* name, const char* value,
                                       void* jrarray, void* none);
-// bool noArrayIfOk
-void  ug_json_write_rpc_array (UgJson* json, UgJsonrpcArray* objects, int noArrayIfOk);
+// param noArrayIfPossible: TRUE or FALSE
+void         ug_json_write_rpc_array (UgJson* json, UgJsonrpcArray* objects,
+                                      int  noArrayIfPossible);
 
 // If program doesn't known incoming data type,
 // this function can parse UgJsonrpcArray or UgJsonrpcObject.

@@ -94,7 +94,7 @@ struct UgetPluginCurl
 
 	// segment (split download)
 	struct {
-		UgList    list;    // list of UgetCurl
+		UgList    list;    // list of segment (UgetCurl)
 		int64_t   beg;     // beginning of undownloaded position
 		int       n_max;
 		int       n_active;

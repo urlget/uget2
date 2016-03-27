@@ -70,6 +70,7 @@
 #endif
 
 #define MIN_SPLIT_SIZE       (10 * 1024 * 1024)  // can't less than 16384 x 2
+#define MIN_SPEED_LIMIT      256     // speed control
 #define MAX_REPEAT_DIGITS    5       //  + '.' + digits
 #define MAX_REPEAT_COUNTS    10000   // <= 9999
 
@@ -1448,8 +1449,6 @@ static UgetCurl* create_segment (UgetPluginCurl* plugin)
 }
 
 // speed control
-#define SPEED_MIN    256
-
 static void  adjust_speed_limit_index (UgetPluginCurl* plugin, int idx, int64_t remain)
 {
 	UgetCurl*  ucurl;
@@ -1461,19 +1460,20 @@ static void  adjust_speed_limit_index (UgetPluginCurl* plugin, int idx, int64_t 
 		if (ucurl->state != UGET_CURL_RUN)
 			continue;
 		ucurl->limit[idx] = ucurl->speed[idx] + remain;
-		if (ucurl->limit[idx] < SPEED_MIN)
-			ucurl->limit[idx] = SPEED_MIN;
+		if (ucurl->limit[idx] < MIN_SPEED_LIMIT)
+			ucurl->limit[idx] = MIN_SPEED_LIMIT;
 		ucurl->limit_changed = TRUE;
 	}
 }
 
 static void  disable_speed_limit (UgetPluginCurl* plugin, int idx)
 {
-	UgetCurl*  ucurl;
+	UgetCurl*  ugcurl;
 
-	for (ucurl = (UgetCurl*) plugin->segment.list.head; ucurl; ucurl=ucurl->next) {
-		ucurl->limit[idx] = 0;
-		ucurl->limit_changed = TRUE;
+	ugcurl = (UgetCurl*) plugin->segment.list.head;
+	for (;  ugcurl;  ugcurl = ugcurl->next) {
+		ugcurl->limit[idx] = 0;
+		ugcurl->limit_changed = TRUE;
 	}
 }
 

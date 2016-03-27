@@ -268,12 +268,13 @@ UgJsonError  ug_json_parse_rpc_array (UgJson* json,
 	return UG_JSON_ERROR_NONE;
 }
 
-void  ug_json_write_rpc_array (UgJson* json, UgJsonrpcArray* objects, int noArrayIfOk)
+void  ug_json_write_rpc_array (UgJson* json, UgJsonrpcArray* objects,
+                               int  noArrayIfPossible)
 {
 	UgJsonrpcObject**   cur;
 	UgJsonrpcObject**   end;
 
-	if (noArrayIfOk == 0 || objects->length > 1)
+	if (noArrayIfPossible == FALSE || objects->length > 1)
 		ug_json_write_array_head (json);
 
 	end = objects->at + objects->length;
@@ -281,7 +282,7 @@ void  ug_json_write_rpc_array (UgJson* json, UgJsonrpcArray* objects, int noArra
 	for (;  cur < end;  cur++)
 		ug_json_write_rpc_object (json, *cur);
 
-	if (noArrayIfOk == 0 || objects->length > 1)
+	if (noArrayIfPossible == FALSE || objects->length > 1)
 		ug_json_write_array_tail (json);
 }
 
