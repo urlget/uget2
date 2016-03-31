@@ -445,18 +445,17 @@ static int  plugin_start (UgetPluginMedia* plugin, UgetNode* node)
 	if (ok == UG_THREAD_OK)
 		ug_thread_unjoin (&thread);
 	else {
-		// failed to start thread
+		// failed to start thread -----------------
 		plugin->paused = TRUE;
 		plugin->stopped = TRUE;
+		// don't assign node
+		uget_node_unref (plugin->node);
+		plugin->node = NULL;
+		// post error message and decreases the reference count
 		uget_plugin_post ((UgetPlugin*) plugin,
 				uget_event_new_error (UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 				                      NULL));
 		uget_plugin_unref ((UgetPlugin*) plugin);
-
-		// unassign node
-		uget_node_unref (plugin->node);
-		plugin->node = NULL;
-
 		return FALSE;
 	}
 
