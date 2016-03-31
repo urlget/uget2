@@ -44,6 +44,8 @@
 #endif  // HAVE_LIBPWMD
 
 #define PROGRESS_COUNT_LIMIT    2
+#define LOW_SPEED_LIMIT         128
+#define LOW_SPEED_TIME          60
 
 enum SchemeType
 {
@@ -130,7 +132,7 @@ static UG_THREAD_RETURN_TYPE  uget_curl_thread (UgetCurl* ugcurl)
 		ugcurl->event = uget_event_new_error (
 				UGET_EVENT_ERROR_CUSTOM, tempstr);
 		ug_free (tempstr);
-		// discard data if error occurred
+		// discard data if remote site response error.
 		ugcurl->pos = ugcurl->beg;
 		ugcurl->size[0] = 0;
 		goto exit;
@@ -278,8 +280,8 @@ void  uget_curl_run (UgetCurl* ugcurl, int joinable)
 //	curl_easy_setopt (curl, CURLOPT_SSL_CIPHER_LIST, "SSLv3");
 
 	// low speed limit for unstable network
-	curl_easy_setopt (curl, CURLOPT_LOW_SPEED_LIMIT, 128);
-	curl_easy_setopt (curl, CURLOPT_LOW_SPEED_TIME, 60);
+	curl_easy_setopt (curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
+	curl_easy_setopt (curl, CURLOPT_LOW_SPEED_TIME,  LOW_SPEED_TIME);
 
 	// resume
 	curl_easy_setopt (ugcurl->curl, CURLOPT_RESUME_FROM_LARGE,

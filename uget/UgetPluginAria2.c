@@ -1232,8 +1232,6 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 
 	plugin->files_per_gid = 0;
 	plugin->files_per_gid_prev = 0;
-	plugin->stopped = FALSE;
-	plugin->paused = FALSE;
 	plugin->synced = TRUE;
 	plugin->start_time = time (NULL);
 	plugin->start_request = request;
@@ -1244,20 +1242,25 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 	// speed control
 	plugin_ctrl_speed (plugin, plugin->limit);
 
+	// try to start thread
+	plugin->paused = FALSE;
+	plugin->stopped = FALSE;
 	uget_plugin_ref ((UgetPlugin*) plugin);
 	temp.ok = ug_thread_create (&thread, (UgThreadFunc) plugin_thread, plugin);
 	if (temp.ok == UG_THREAD_OK)
 		ug_thread_unjoin (&thread);
 	else {
+		// failed to start thread -----------------
+		plugin->paused = TRUE;
+		plugin->stopped = TRUE;
+		// don't assign node
+		uget_node_unref (plugin->node);
+		plugin->node = NULL;
+		// post error message and decreases the reference count
 		uget_plugin_post ((UgetPlugin*) plugin,
 				uget_event_new_error (UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 				                      NULL));
 		uget_plugin_unref ((UgetPlugin*) plugin);
-
-		// unassign node
-		uget_node_unref (plugin->node);
-		plugin->node = NULL;
-
 		return FALSE;
 	}
 	return TRUE;

@@ -47,11 +47,11 @@ int  ug_uri_init (UgUri* upart, const char* uri)
 	const char* cur;
 	const char* tmp;
 
-	// scheme
+	// scheme - make sure ':' before '/', '%', '?', and '#'
 #if defined _WIN32 || defined _WIN64
-	cur = strpbrk (uri, ":\\/?#");  // make sure ':' before '/', '?', and '#'
+	cur = strpbrk (uri, ":\\/%?#");
 #else
-	cur = strpbrk (uri, ":/?#");    // make sure ':' before '/', '?', and '#'
+	cur = strpbrk (uri, ":/%?#");
 #endif
 	if (cur && cur[0] == ':') {
 		if (upart == NULL)

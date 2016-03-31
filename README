@@ -1,4 +1,4 @@
-uGet 2.0.6: (2016-03-27)
+uGet 2.0.6: (2016-04-01)
 1. curl plug-in: fix a bug that downloaded file may be incomplete in some case.
 2. curl plug-in: improve downloaded segment handler.
 3. curl plug-in: set min split size to 10 MiB.
