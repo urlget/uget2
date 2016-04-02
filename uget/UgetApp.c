@@ -218,7 +218,7 @@ int  uget_app_grow (UgetApp* app, int no_queuing)
 	UgetNode*      dnode;
 	int            n_active = 0;
 
-	// dispatch plugin event, calc speed
+	// dispatch plug-in event, calc speed
 	uget_task_dispatch (&app->task);
 	// active, queuing, finished, recycled
 	for (cnode = app->real.children;  cnode;  cnode = cnode->next) {
@@ -765,11 +765,11 @@ int   uget_app_activate_download (UgetApp* app, UgetNode* dnode)
 
 	if (dnode->state & UGET_STATE_ACTIVE)
 		return FALSE;
-	// match plugin
+	// match plug-in
 	log = ug_info_realloc (&dnode->info, UgetLogInfo);
 	temp.pinfo = uget_app_match_plugin (app, dnode, NULL);
 	if (temp.pinfo == NULL) {
-		// no plugin support
+		// no plug-in support
 		uget_app_queue_download (app, dnode);
 		dnode->state |= UGET_STATE_ERROR;
 		ug_list_prepend (&log->messages,
@@ -786,10 +786,10 @@ int   uget_app_activate_download (UgetApp* app, UgetNode* dnode)
 		log->messages.head = NULL;
 		log->messages.tail = NULL;
 	}
-	// start node with plugin
+	// start node with plug-in
 	cnode = dnode->parent;
 	if (uget_task_add (&app->task, dnode, temp.pinfo) == FALSE) {
-		// plugin start failed.
+		// plug-in start failed.
 		uget_app_queue_download (app, dnode);
 		dnode->state |=  UGET_STATE_ERROR;
 		uget_node_updated (dnode);

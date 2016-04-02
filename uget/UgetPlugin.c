@@ -153,7 +153,7 @@ void  uget_plugin_unref (UgetPlugin* plugin)
 			next = curr->next;
 			uget_event_free (curr);
 		}
-		// free plugin
+		// free plug-in
 		ug_free (plugin);
 	}
 }

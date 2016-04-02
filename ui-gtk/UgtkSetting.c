@@ -629,7 +629,7 @@ void  ugtk_setting_fix_data (UgtkSetting* setting)
 	{
 		setting->plugin_order = UGTK_PLUGIN_ORDER_CURL;
 	}
-	// aria2 plugin settings
+	// aria2 plug-in settings
 	if (setting->aria2.path == NULL || setting->aria2.path[0] == 0) {
 		ug_free (setting->aria2.path);
 		setting->aria2.path = ug_strdup (UGTK_ARIA2_PATH);

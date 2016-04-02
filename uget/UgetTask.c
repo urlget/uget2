@@ -69,7 +69,7 @@ int   uget_task_add (UgetTask* task, UgetNode* node, const UgetPluginInfo* info)
 		UgetCommon*    common;
 	} temp;
 
-	// UgetRelation: check exist plugin
+	// UgetRelation: check exist plug-in
 	relation = ug_info_realloc (&node->info, UgetRelationInfo);
 	if (relation->task.plugin)
 		return FALSE;
@@ -101,9 +101,9 @@ int   uget_task_add (UgetTask* task, UgetNode* node, const UgetPluginInfo* info)
 		uget_plugin_ctrl_speed (relation->task.plugin, dl_ul_int_array);
 	}
 	if (uget_plugin_start (relation->task.plugin, node) == FALSE) {
-		// dispatch error message from plugin
+		// dispatch error message from plug-in
 		uget_task_dispatch1 (task, node, relation->task.plugin);
-		// release plugin
+		// release plug-in
 		uget_plugin_unref (relation->task.plugin);
 		relation->task.plugin = NULL;
 		return FALSE;

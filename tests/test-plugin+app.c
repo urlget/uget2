@@ -351,7 +351,7 @@ void  test_app (void)
 
 int   main (void)
 {
-	// initialize plugin
+	// initialize plug-in
 	uget_plugin_set (UgetPluginCurlInfo, UGET_PLUGIN_INIT, (void*) TRUE);
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) TRUE);
 //	test_setup_plugin_aria2 ();
@@ -361,7 +361,7 @@ int   main (void)
 //	test_app ();
 
 //	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_ARIA2_SHUTDOWN_NOW, (void*) TRUE);
-	// finalize plugin
+	// finalize plug-in
 	uget_plugin_set (UgetPluginCurlInfo, UGET_PLUGIN_INIT, (void*) FALSE);
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) FALSE);
 	ug_sleep(1000);

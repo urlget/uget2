@@ -68,7 +68,7 @@ void  ugtk_app_init (UgtkApp* app, UgetRpc* rpc)
 		ugtk_app_add_default_category (app);
 	// clipboard
 	ugtk_clipboard_init (&app->clipboard, app->setting.clipboard.pattern);
-	// plugin initialize
+	// plug-in initialize
 	uget_plugin_set (UgetPluginCurlInfo,  UGET_PLUGIN_INIT, (void*) TRUE);
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) TRUE);
 	// apply UgtkSetting
@@ -115,7 +115,7 @@ void  ugtk_app_final (UgtkApp* app)
 		shutdown_now = FALSE;
 	uget_rss_unref (app->rss_builtin);
 	uget_app_final ((UgetApp*) app);
-	// plugin finalize
+	// plug-in finalize
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_ARIA2_SHUTDOWN_NOW,
 			(void*)(intptr_t) shutdown_now);
 	uget_plugin_set (UgetPluginCurlInfo,  UGET_PLUGIN_INIT, (void*) FALSE);
@@ -177,7 +177,7 @@ void  ugtk_app_quit (UgtkApp* app)
 	ugtk_app_get_window_setting (app, &app->setting);
 	ugtk_app_get_column_setting (app, &app->setting);
 	ugtk_app_save (app);
-	// clear plugin
+	// clear plug-in
 	uget_app_clear_plugins ((UgetApp*) app);
 	// hide icon in system tray before quit
 	ugtk_tray_icon_set_visible (&app->trayicon, FALSE);

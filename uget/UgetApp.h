@@ -130,7 +130,7 @@ void  uget_app_use_uri_hash (UgetApp* app);
 void  uget_app_clear_attachment (UgetApp* app);
 #endif
 
-// plugin functions
+// plug-in functions
 // uget_app_find_plugin() return TRUE or FALSE
 void  uget_app_clear_plugins (UgetApp* app);
 void  uget_app_add_plugin (UgetApp* app, const UgetPluginInfo* pinfo);

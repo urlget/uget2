@@ -6,7 +6,7 @@ uGet 2.0.6: (2016-04-01)
 5. curl plug-in: avoid showing "99:99:99" in "elapsed" when downloading start.
 6. aria2 plug-in: fix a memory leak.
 7. Fix: Program stop running download when user set "Runnable" to it.
-8. Revert uri deocder to 2.0.4, this may fix incorrect encoding on some chracters.
+8. Revert URI decoder to 2.0.4, this may fix incorrect encoding on some characters.
 9. if file "uget-portable-mode" exists, data files save in installed folder. (Windows)
 
 * This version fix bug that download speed is slow when progress near 100%

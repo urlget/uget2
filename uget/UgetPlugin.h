@@ -109,7 +109,7 @@ struct UgetPluginInfo
 	const char**    schemes;
 	const char**    file_exts;
 
-	// global set/get function for plugin special setting.
+	// global set/get function for plug-in special setting.
 	UgetPluginSetFunc  set;
 	UgetPluginGetFunc  get;
 };
@@ -164,16 +164,16 @@ int   uget_plugin_ctrl (UgetPlugin* plugin, int code, void* data);
 		uget_plugin_ctrl (plugin, UGET_PLUGIN_CTRL_SPEED, dl_ul_int_array)
 
 // unused
-// notify plugin when other data was changed
+// notify plug-in when other data was changed
 #define uget_plugin_data_changed(plugin)  \
 		uget_plugin_ctrl (plugin, UGET_PLUGIN_CTRL_DATA_CHANGED, NULL)
 // unused
-// notify plugin when speed_limit, retry_limit, max_connections...etc was changed
+// notify plug-in when speed_limit, retry_limit, max_connections...etc was changed
 #define uget_plugin_limit_changed(plugin) \
 		uget_plugin_ctrl (plugin, UGET_PLUGIN_CTRL_LIMIT_CHANGED, NULL)
 
-// teturn TRUE  if plugin running.
-// return FALSE if plugin stopped.
+// teturn TRUE  if plug-in running.
+// return FALSE if plug-in stopped.
 int   uget_plugin_sync (UgetPlugin* plugin);
 
 void  uget_plugin_ref (UgetPlugin* plugin);

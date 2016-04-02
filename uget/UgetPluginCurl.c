@@ -304,7 +304,7 @@ static int  plugin_ctrl_speed (UgetPluginCurl* plugin, int* speed)
 		}
 		plugin->limit.upload = value;
 	}
-	// notify plugin that speed limit has been changed
+	// notify plug-in that speed limit has been changed
 	plugin->limit_changed = TRUE;
 	return TRUE;
 }
@@ -514,7 +514,7 @@ static int  plugin_start (UgetPluginCurl* plugin, UgetNode* node)
 	speed[0] = plugin->limit.download;
 	speed[1] = plugin->limit.upload;
 	plugin_ctrl_speed (plugin, speed);
-	// Don't notify speed limit changed if user set it before plugin start.
+	// Don't notify speed limit changed if user set it before plug-in start.
 	plugin->limit_changed = FALSE;
 
 	// try to start thread
@@ -711,7 +711,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 				}
 			}
 
-			// if user want to stop plugin, it must stop all UgetCurl in list.
+			// if user want to stop plug-in, it must stop all UgetCurl in list.
 			if (plugin->paused) {
 				ugcurl->paused = TRUE;
 				plugin->segment.n_max = 0;
