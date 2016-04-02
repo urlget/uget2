@@ -230,7 +230,7 @@ static void plugin_init (UgetPluginMedia* plugin)
 
 static void plugin_final (UgetPluginMedia* plugin)
 {
-	// extent data and plugin
+	// extent data and plug-in
 	if (plugin->ex.node)
 		uget_node_unref (plugin->ex.node);
 	if (plugin->ex.children)
@@ -304,7 +304,7 @@ static int  plugin_ctrl_speed (UgetPluginMedia* plugin, int* speed)
 		}
 		plugin->limit[1] = value;
 	}
-	// notify plugin that speed limit has been changed
+	// notify plug-in that speed limit has been changed
 	plugin->limit_changed = TRUE;
 	return TRUE;
 }
@@ -409,7 +409,7 @@ static int  plugin_sync (UgetPluginMedia* plugin)
 		progress->elapsed += plugin->elapsed;
 	}
 
-	// if plugin was stopped, return FALSE.
+	// if plug-in was stopped, return FALSE.
 	return TRUE;
 }
 
@@ -623,7 +623,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 			                                      plugin->ex.node, TRUE);
 			ug_mutex_unlock (&plugin->mutex);
 
-			// move event from ex.plugin to plugin
+			// move event from ex.plugin to plug-in
 			msg = uget_plugin_pop ((UgetPlugin*) plugin->ex.plugin);
 			for (;  msg;  msg = msg_next) {
 				msg_next = msg->next;
@@ -643,7 +643,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 					uget_event_free (msg);
 					continue;
 				}
-				// post event to plugin
+				// post event to plug-in
 				uget_plugin_post ((UgetPlugin*) plugin, msg);
 			}
 			// sync data in plugin_sync()

@@ -53,7 +53,7 @@ typedef enum {
 extern const UgetPluginInfo*  UgetPluginEmptyInfo;
 
 // ----------------------------------------------------------------------------
-// UgetPluginEmpty: an empty plugin. It derived from UgetPlugin.
+// UgetPluginEmpty: an empty plug-in. It derived from UgetPlugin.
 
 struct UgetPluginEmpty
 {

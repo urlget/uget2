@@ -240,7 +240,7 @@ static int  plugin_ctrl_speed (UgetPluginEmpty* plugin, int* speed)
 		}
 		plugin->limit[1] = value;
 	}
-	// notify plugin that speed limit has been changed
+	// notify plug-in that speed limit has been changed
 	plugin->limit_changed = TRUE;
 	return TRUE;
 }
@@ -250,7 +250,7 @@ static int  plugin_ctrl_speed (UgetPluginEmpty* plugin, int* speed)
 
 static int  plugin_sync (UgetPluginEmpty* plugin)
 {
-	// if plugin was stopped, return FALSE.
+	// if plug-in was stopped, return FALSE.
 	return FALSE;
 }
 

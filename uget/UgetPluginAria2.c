@@ -406,7 +406,7 @@ static int  plugin_ctrl_speed (UgetPluginAria2* plugin, int* speed)
 		}
 		plugin->limit[1] = value;
 	}
-	// notify plugin that speed limit has been changed
+	// notify plug-in that speed limit has been changed
 	plugin->limit_changed = TRUE;
 	return TRUE;
 }
@@ -921,7 +921,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginAria2* plugin)
 
 		// recycle status response
 		uget_aria2_recycle (global.data, res);
-		// plugin and it's node will update
+		// plug-in and it's node will update
 		plugin->synced = FALSE;
 	}
 

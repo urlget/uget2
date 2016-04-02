@@ -58,7 +58,7 @@ typedef enum {
 	UGET_EVENT_NORMAL,     // e.g. connecting to host
 	UGET_EVENT_ERROR,
 
-	// plugin notifition
+	// plug-in notifition
 	UGET_EVENT_STOP,
 	UGET_EVENT_START,
 	UGET_EVENT_COMPLETED,  // Download completed

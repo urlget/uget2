@@ -1,5 +1,5 @@
 uGet 2.1.2: (2016-04-01)
-Revert uri deocder to 2.0.4, it may fix incorrect encoding on some chracters.
+Revert URI decoder to 2.0.4, it may fix incorrect encoding on some characters.
 
 uGet 2.1.1: (2016-03-20)
 1. curl plug-in: fix a bug that downloaded file may be incomplete in some case.
