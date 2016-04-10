@@ -1,3 +1,8 @@
+uGet 2.0.7: (2016-04-09)
+1. Fix: UI freeze if user activate download in sorted list.
+2. Add Keywords entry into desktop file (Elías Alejandro Año Mendoza)
+3. update translation files.
+
 uGet 2.0.6: (2016-04-01)
 1. curl plug-in: fix a bug that downloaded file may be incomplete in some case.
 2. curl plug-in: improve downloaded segment handler.
