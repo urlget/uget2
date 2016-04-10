@@ -1,3 +1,8 @@
+uGet 2.1.3: (2016-04-10)
+1. Fix: UI freeze if user activate download in sorted list.
+2. Add Keywords entry into desktop file (Elías Alejandro Año Mendoza)
+3. update translation files.
+
 uGet 2.1.2: (2016-04-01)
 Revert URI decoder to 2.0.4, it may fix incorrect encoding on some characters.
 
