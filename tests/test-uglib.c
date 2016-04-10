@@ -119,7 +119,7 @@ void  test_uri (void)
 		query = uquery.field_next;
 	}
 
-	temp = ug_strdup ("file%20%%20100%2f%20.jpg");
+	temp = ug_strdup ("file%2020%%20100%2f%20.jpg");
 	index = ug_decode_uri (temp, -1, temp);
 	printf ("ug_decode_uri() return %d, output - '%s'\n", index, temp);
 	ug_free (temp);
@@ -231,29 +231,57 @@ void  test_buffer ()
 // ----------------------------------------------------------------------------
 // UgSLink
 
+static void slinks_add_range (UgSLinks* slinks, char** strings,
+                              int  beg, int  end)
+{
+	for (;  beg < end;  beg++) {
+		strings[beg] = ug_strdup_printf ("%.3d", beg);
+		ug_slinks_add (slinks, strings[beg]);
+	}
+}
+
+static void slinks_remove_range (UgSLinks* slinks, char** strings,
+                                 int  beg, int  end)
+{
+	for (;  beg < end;  beg++) {
+		ug_slinks_remove (slinks, strings[beg], NULL);
+		ug_free (strings[beg]);
+		strings[beg] = NULL;
+	}
+}
+
 void test_slink ()
 {
+	char**    strings;
 	UgSLinks  slinks;
-	char*     data1 = "1th";
-	char*     data2 = "2th";
-	char*     data3 = "3th";
-	char*     data4 = "4th";
 
 	puts ("\n--- test_slink:");
 	ug_slinks_init (&slinks, 16);
+	strings = ug_malloc0 (sizeof (char*) * 100);
 
-	ug_slinks_add (&slinks, data1);
-	ug_slinks_add (&slinks, data2);
-	ug_slinks_add (&slinks, data3);
-	ug_slinks_add (&slinks, data4);
-	ug_slinks_remove (&slinks, data1, NULL);
-	ug_slinks_remove (&slinks, data3, NULL);
-	ug_slinks_remove (&slinks, data2, NULL);
-	ug_slinks_remove (&slinks, data4, NULL);
-	ug_slinks_add (&slinks, data2);
-	ug_slinks_add (&slinks, data4);
+	slinks_add_range (&slinks, strings, 40, 60);
+	slinks_add_range (&slinks, strings,  0, 20);
+	slinks_add_range (&slinks, strings, 80, 100);
+	slinks_add_range (&slinks, strings, 20, 40);
+	slinks_add_range (&slinks, strings, 60, 80);
 
+	slinks_remove_range (&slinks, strings,  0, 10);
+	slinks_remove_range (&slinks, strings, 90, 100);
+	slinks_remove_range (&slinks, strings, 70, 90);
+	slinks_remove_range (&slinks, strings, 10, 30);
+	slinks_remove_range (&slinks, strings, 30, 50);
+	slinks_remove_range (&slinks, strings, 50, 70);
+
+	slinks_add_range (&slinks, strings,  0, 20);
+	slinks_add_range (&slinks, strings, 80, 100);
+
+	slinks_remove_range (&slinks, strings,  0, 10);
+	slinks_remove_range (&slinks, strings, 90, 100);
 	ug_slinks_foreach (&slinks, (void*)puts, NULL);
+	slinks_remove_range (&slinks, strings, 10, 20);
+	slinks_remove_range (&slinks, strings, 80, 90);
+
+	ug_free (strings);
 	ug_slinks_final (&slinks);
 }
 

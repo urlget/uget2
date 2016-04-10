@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2016-01-03 15:44+0000\n"
+"PO-Revision-Date: 2016-04-06 07:18+0000\n"
 "Last-Translator: Emin Tufan <etcetin@gmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/uget/uget/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -194,7 +194,7 @@ msgstr "aria2: dosya G/Ç hatası meydana geldi."
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../../po/../uget/UgetPluginAria2.c:291
 msgid "aria2: name resolution failed."
-msgstr ""
+msgstr "aria2: isim çözümleme başarısız."
 
 #: ../../po/../uget/UgetPluginAria2.c:292
 msgid "aria2: could not parse Metalink document."
@@ -227,7 +227,7 @@ msgstr "aria2: torrent dosyası bozuk ya da eksik bilgi içeriyor."
 
 #: ../../po/../uget/UgetPluginAria2.c:300
 msgid "aria2: Magnet URI was bad."
-msgstr ""
+msgstr "aria2: Magnet adresi kötü."
 
 #: ../../po/../uget/UgetPluginAria2.c:301
 msgid ""
@@ -442,19 +442,19 @@ msgstr "Metalink dosyası aç"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1109
 msgid "Failed to save category file."
-msgstr ""
+msgstr "Kategori dosyası kaydetme başarısız."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1129
 msgid "Failed to load category file."
-msgstr ""
+msgstr "Kategori dosyası yüklemesi başarısız."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1140
 msgid "Save Category file"
-msgstr ""
+msgstr "Kategori dosyası kaydet"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1158
 msgid "Open Category file"
-msgstr ""
+msgstr "Kategori dosyası aç"
 
 #. add link
 #: ../../po/../ui-gtk/UgtkApp.c:1217
@@ -772,12 +772,12 @@ msgstr "M_etin dosyasına dışarı aktar (.txt)..."
 #. Open Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:128
 msgid "_Open category..."
-msgstr ""
+msgstr "Kateg_ori Aç..."
 
 #. Save Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:135
 msgid "_Save category as..."
-msgstr ""
+msgstr "Kategoriyi farklı _kaydet..."
 
 #. Save All
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
@@ -801,11 +801,11 @@ msgstr "Pano _İzleyici"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:179
 msgid "Clipboard works quietly"
-msgstr ""
+msgstr "Pano usulca çalışıyor"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:183
 msgid "Command-line works quietly"
-msgstr ""
+msgstr "Komut satırı usulca çalışıyor"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:187
 msgid "Skip existing URI"
@@ -1000,11 +1000,11 @@ msgstr "_İndirme"
 #. accel_group);
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:473
 msgid "_Delete Entry"
-msgstr ""
+msgstr "Gir_diyi Sil"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:480
 msgid "Delete Entry and _File"
-msgstr ""
+msgstr "Girdiyi ve _Dosyayı Sil"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:495
 msgid "Open _Containing folder"
@@ -1093,7 +1093,7 @@ msgstr ""
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:207
 msgid "This URI had existed, are you sure to continue?"
-msgstr ""
+msgstr "Bu URI zaten var, devam etmek istediğine emin misin?"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:343
 msgid "General"
@@ -1178,7 +1178,7 @@ msgstr "Kalan"
 #: ../../po/../ui-gtk/UgtkSettingForm.c:538
 #: ../../po/../ui-gtk/UgtkSummary.c:151
 msgid "URI"
-msgstr ""
+msgstr "URI"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:954
 msgid "Quantity"
@@ -1455,7 +1455,7 @@ msgstr "Pencere kapatıldığında sistem tepsisine küçült"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:182
 msgid "Use Ubuntu's App Indicator"
-msgstr ""
+msgstr "Ubuntu App Indicator'u kullan"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:189
 msgid "Enable offline mode on startup"
@@ -1470,12 +1470,12 @@ msgid "Sound when download is finished"
 msgstr "İndirme tamamlandıktan sonra ses çıkar"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recent download settings"
+msgid "Apply recently download settings"
 msgstr "Yeni indirme ayarlarını uygula"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:264
 msgid "These will affect all plug-ins."
-msgstr ""
+msgstr "Bu tüm eklentileri etkileyecek."
 
 #. Global speed limit
 #: ../../po/../ui-gtk/UgtkSettingForm.c:270
@@ -1506,7 +1506,7 @@ msgstr "Hata oluşursa özel komut:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:388
 msgid "_Autosave"
-msgstr ""
+msgstr "Otom_atik kaydet"
 
 #. auto save spin & label (interval)
 #: ../../po/../ui-gtk/UgtkSettingForm.c:394
@@ -1534,7 +1534,7 @@ msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:531
 msgid "Aria2 plug-in options"
-msgstr ""
+msgstr "Aria2 eklenti seçenekleri"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:547
 msgid "RPC authorization secret token"
@@ -1562,7 +1562,7 @@ msgstr "Çıkışta aria2'yi _kapat"
 #. Local options
 #: ../../po/../ui-gtk/UgtkSettingForm.c:601
 msgid "Launch aria2 on local device"
-msgstr ""
+msgstr "aria2'yi yerel cihazda çalıştır"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:610
 msgid "Path"

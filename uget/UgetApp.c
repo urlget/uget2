@@ -90,17 +90,17 @@ void  uget_app_init (UgetApp* app)
 	app->sorted.notification = &notification_sorted;
 	app->mix.notification = &notification_mix;
 	app->mix_split.notification = &notification_mix_split;
-
 	// add virtual category - "All Category"
 	node = uget_node_new (NULL);
 	node->name = ug_strdup (_("All Category"));
 	uget_node_append (&app->mix, node);
 
+	uget_task_init (&app->task);
+	ug_array_init (&app->nodes, sizeof (void*), 32);
+
 	// plug-in registry
 	app->plugin_default = NULL;
 	ug_registry_init (&app->plugins);
-	uget_task_init (&app->task);
-
 	// info registry
 	ug_registry_init (&app->infos);
 	ug_registry_add (&app->infos, UgetCommonInfo);
@@ -117,6 +117,7 @@ void  uget_app_init (UgetApp* app)
 
 void  uget_app_final (UgetApp* app)
 {
+	ug_array_clear (&app->nodes);
 	uget_task_final (&app->task);
 	uget_app_clear_plugins (app);
 
@@ -133,21 +134,43 @@ void  uget_app_final (UgetApp* app)
 	app->uri_hash = NULL;
 }
 
+static UgArrayPtr* uget_app_store_nodes (UgetApp* app, UgetNode* parent)
+{
+	UgetNode*   dnode;
+	UgArrayPtr* array;
+	int         index;
+
+	array = &app->nodes;
+//	array->length = 0;
+	ug_array_alloc (array, parent->n_children);
+	for (index = 0, dnode = parent->children;  dnode;  dnode = dnode->next)
+		array->at[index++] = dnode->data;
+
+	return array;
+}
+
+static void     uget_app_clear_nodes (UgetApp* app)
+{
+	app->nodes.length = 0;
+}
+
 static int  uget_app_activate (UgetApp* app, UgetNode* cnode, UgetCategory* category)
 {
-	UgetNode*  dnode;
-	UgetNode*  sibling;
-	UgetNode*  dfake;
-	UgetNode*  dfake_next;
-	UgetLog*   log;
+	UgetNode*   dnode;
+	UgetNode*   sibling;
+	UgetLog*    log;
+	UgArrayPtr* array;
+	int         index;
 
-	for (dfake = category->active->children;  dfake;  dfake = dfake_next) {
-		dfake_next = dfake->next;
-		dnode = dfake->real;
+	// Because this function will change node linking,
+	// program must store active nodes to array.
+	array = uget_app_store_nodes (app, category->active);
 
+	for (index = 0;  index < array->length;  index++) {
+		dnode = array->at[index];
 		uget_node_updated (dnode);
 		if (dnode->state & UGET_STATE_ACTIVE) {
-			// remove and insert to resort node
+			// remove node and insert it again to sort node
 			if (app->mix.notification->compare) {
 				sibling = dnode->next;
 				uget_node_remove (cnode, dnode);
@@ -188,19 +211,22 @@ static int  uget_app_activate (UgetApp* app, UgetNode* cnode, UgetCategory* cate
 		app->n_moved++;
 	}
 
+	uget_app_clear_nodes (app);    // clear stored nodes
 	return category->active->n_children;
 }
 
 static void uget_app_queuing (UgetApp* app, UgetNode* cnode, UgetCategory* category)
 {
-	UgetNode*  dnode;
-	UgetNode*  dfake;
-	UgetNode*  dfake_next;
+	UgetNode*   dnode;
+	UgArrayPtr* array;
+	int         index;
 
-	for (dfake = category->queuing->children;  dfake;  dfake = dfake_next) {
-		dfake_next = dfake->next;
-		dnode = dfake->real;
+	// Because uget_app_activate_download() will change node linking,
+	// program must store queuing nodes to array before calling uget_app_activate_download()
+	array = uget_app_store_nodes (app, category->queuing);
 
+	for (index = 0;  index < array->length;  index++) {
+		dnode = array->at[index];
 		if (category->active->n_children >= category->active_limit)
 			break;
 		if (dnode->state & UGET_STATE_INACTIVE)
@@ -208,6 +234,8 @@ static void uget_app_queuing (UgetApp* app, UgetNode* cnode, UgetCategory* categ
 		uget_app_activate_download (app, dnode);
 		app->n_moved++;
 	}
+
+	uget_app_clear_nodes (app);    // clear stored nodes
 }
 
 // return number of active download
@@ -482,15 +510,21 @@ void  uget_app_stop_category (UgetApp* app, UgetNode* cnode)
 {
 	UgetCategory*  category;
 	UgetNode*      dnode;
-	UgetNode*      dnext;
+	UgArrayPtr*    array;
+	int            index;
 
 	category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
-	for (dnode = category->active->children;  dnode;  dnode = dnext) {
-		// because uget_app_queue_download() will change node linking,
-		// program must get next node before calling uget_app_queue_download()
-		dnext = dnode->next;
-		uget_app_queue_download (app, dnode->data);
+
+	// Because uget_app_queue_download() will change node linking,
+	// program must store active nodes to array before calling uget_app_queue_download()
+	array = uget_app_store_nodes (app, category->active);
+
+	for (index = 0;  index < array->length;  index++) {
+		dnode = array->at[index];
+		uget_app_queue_download (app, dnode);
 	}
+
+	uget_app_clear_nodes (app);    // clear stored nodes
 }
 
 static int  ug_match_file_exts (const char* file, char** exts)

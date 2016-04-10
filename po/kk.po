@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Baurzhan Muftakhidinov <baurthefirst@gmail.com>, 2015
+# Baurzhan Muftakhidinov <baurthefirst@gmail.com>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2015-03-26 09:25+0000\n"
+"PO-Revision-Date: 2016-03-28 04:21+0000\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh (http://www.transifex.com/uget/uget/language/kk/)\n"
 "MIME-Version: 1.0\n"
@@ -270,7 +270,7 @@ msgstr ""
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:255
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:204
 msgid "tasks"
-msgstr "тапсырмалар"
+msgstr "тапсырма"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:374
 msgid "New from Clipboard"
