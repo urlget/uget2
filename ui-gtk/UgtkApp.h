@@ -80,6 +80,7 @@ struct UgtkApp
 //	UgRegistry      plugins;
 //	UgetPluginInfo* plugin;
 //	UgetTask        task;
+//	UgArrayPtr      nodes;
 //	void*           uri_hash;
 //	char*           config_dir;
 //	int             n_error;    // these n_xxxx increase by grow()
