@@ -125,7 +125,6 @@ UgJsonError  ug_json_end_parse (UgJson* json)
 
 	// clear stack
 	stack_length = json->stack.length;
-	json->stack.length = 0;
 
 	if (stack_length > PARSER_STACK_UNIT)
 		return UG_JSON_ERROR_UNCOMPLETED;
@@ -150,9 +149,11 @@ UgJsonError  ug_json_end_parse (UgJson* json)
 		}
 		// parse remain value
 		ug_json_call_parser (json);
+		json->stack.length = 0;
 		return (UgJsonError) json->error;
 	}
 
+	json->stack.length = 0;
 	return UG_JSON_ERROR_NONE;
 }
 
@@ -521,8 +522,8 @@ TopLevelSwitch:
 					json->buf.at[json->buf.length++] = 0x80 | ((value >>  0) & 0x3F);
 				}
 				else {
-					json->buf.at[json->buf.length++] = 0xC0 | ((value >> 12) & 0x1F);
-					json->buf.at[json->buf.length++] = 0x80 | ((value >>  6) & 0x3F);
+					json->buf.at[json->buf.length++] = 0xC0 | ((value >>  6) & 0x1F);
+					json->buf.at[json->buf.length++] = 0x80 | ((value >>  0) & 0x3F);
 				}
 			}
 			break;

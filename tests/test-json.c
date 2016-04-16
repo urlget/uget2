@@ -753,8 +753,11 @@ void  test_json_value (void)
 	const char* json_string = "true";
 #elif 0
 	const char* json_string = "tr";         // uncompleted true
-#else
+#elif 0
 	const char* json_string = "{";          // uncompleted object
+#else
+	// "Sam a tűzoltó - Világcsúcs kísérletek"
+	const char* json_string = "\"Sam a t\\u0171zolt\\u00f3 - Vil\\u00e1gcs\\u00facs k\\u00eds\\u00e9rletek\"";
 #endif
 
 	puts ("\n--- test_json_value:");
@@ -806,7 +809,8 @@ void  test_json_writer (void)
 	ug_json_write_array_tail (&json);
 	// --- array2 end
 	ug_json_write_string (&json, "name2");
-	ug_json_write_string (&json, "value2");
+//	ug_json_write_string (&json, "value2");
+	ug_json_write_string (&json, "Sam a tűzoltó - Világcsúcs kísérletek");
 	ug_json_write_object_tail (&json);
 	// --- object2 end
 
