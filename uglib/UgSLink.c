@@ -59,12 +59,13 @@ void  ug_slinks_add (UgSLinks* slinks, void* data)
 	old_used = slinks->used;
 	if (slinks->freed != NULL) {
 		link = slinks->freed;
-		link->next = old_used;
 		slinks->freed = link->next;
+		// move link from freed list to used list.
+		link->next = old_used;
 	}
 	else {
 		old_at = slinks->at;
-		link = ug_array_alloc (slinks, 1);
+		link = (UgSLink*) ug_array_alloc (slinks, 1);
 		if (old_at != slinks->at && old_used) {
 			slinks->used = slinks->at + (old_used - old_at);
 			for (current = slinks->used;  ;  current = current->next) {
@@ -73,6 +74,7 @@ void  ug_slinks_add (UgSLinks* slinks, void* data)
 				current->next = slinks->at + (current->next - old_at);
 			}
 		}
+		// move link to used list.
 		link->next = slinks->used;
 	}
 	link->data = data;
