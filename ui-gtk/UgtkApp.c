@@ -122,6 +122,7 @@ void  ugtk_app_final (UgtkApp* app)
 			(void*)(intptr_t) shutdown_now);
 	uget_plugin_set (UgetPluginCurlInfo,  UGET_PLUGIN_INIT, (void*) FALSE);
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) FALSE);
+	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) FALSE);
 }
 
 void  ugtk_app_save (UgtkApp* app)
@@ -280,8 +281,8 @@ void  ugtk_app_set_window_setting (UgtkApp* app, UgtkSetting* setting)
 	if (setting->window.nth_state >= app->split.n_children)
 		setting->window.nth_state = 0;
 	ugtk_traveler_select_category (&app->traveler,
-				setting->window.nth_category,
-				setting->window.nth_state);
+	                               setting->window.nth_category,
+	                               setting->window.nth_state);
 	// menu
 	ugtk_app_set_menu_setting (app, setting);
 }
