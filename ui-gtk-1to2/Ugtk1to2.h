@@ -54,9 +54,10 @@ struct Ugtk1to2
 	UgtkSetting setting;
 
 	UgetNode    real;
+	char*       config_path;
 };
 
-Ugtk1to2*  ugtk_1to2_new (void);
+Ugtk1to2*  ugtk_1to2_new (const char* config_path);
 void       ugtk_1to2_free (Ugtk1to2* u1t2);
 
 // return TRUE/FALSE
