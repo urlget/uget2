@@ -76,6 +76,10 @@ UgetRpc*  uget_rpc_new (const char* backup_dir)
 		urpc->backup_dir = ug_strdup (backup_dir);
 	else
 		urpc->backup_dir = NULL;
+#ifdef USE_UNIX_DOMAIN_SOCKET
+	urpc->socket_path = NULL;
+	urpc->socket_path_len = 0;
+#endif
 	return urpc;
 }
 
@@ -88,6 +92,24 @@ void  uget_rpc_free (UgetRpc* urpc)
 		ug_socket_server_unref (urpc->server);
 	}
 }
+
+#ifdef USE_UNIX_DOMAIN_SOCKET
+void  uget_rpc_use_unix_socket (UgetRpc* urpc, const char* path, int path_len)
+{
+	if (path_len > 0 && path[0] == 0) {
+		// for Linux abstract socket
+		urpc->socket_path = ug_malloc (path_len);
+		memcpy (urpc->socket_path, path, path_len);
+	}
+	else {
+		// for unix domain socket
+		if (path_len == -1)
+			path_len = strlen (path);
+		urpc->socket_path = ug_strndup (path, path_len);
+	}
+	urpc->socket_path_len = path_len;
+}
+#endif  // USE_UNIX_DOMAIN_SOCKET
 
 static void uget_rpc_on_destroy (void* data)
 {
@@ -106,6 +128,12 @@ static void uget_rpc_on_destroy (void* data)
 //	ug_list_clear (&urpc->queue, FALSE);
 	ug_mutex_clear (&urpc->queue_lock);
 
+#ifdef USE_UNIX_DOMAIN_SOCKET
+	// Don't delete file if path is abstract socket names (begin with 0)
+	if (urpc->server && urpc->socket_path[0])
+		ug_unlink (urpc->socket_path);
+	ug_free (urpc->socket_path);
+#endif
 	ug_free (urpc->backup_dir);
 	ug_free (urpc);
 }
@@ -236,6 +264,14 @@ void uget_rpc_send_command (UgetRpc* urpc, int argc, char** argv)
 		uget_rpc_do_request (urpc, jobj);
 	else {
 		jres = ug_jsonrpc_object_new ();
+#ifdef USE_UNIX_DOMAIN_SOCKET
+		if (urpc->socket_path) {
+			ug_jsonrpc_socket_connect_unix ((UgJsonrpcSocket*) urpc,
+			                                urpc->socket_path,
+			                                urpc->socket_path_len);
+		}
+		else
+#endif
 		ug_jsonrpc_socket_connect ((UgJsonrpcSocket*) urpc,
 		                           UGET_RPC_ADDR, UGET_RPC_PORT);
 		ug_jsonrpc_call (&urpc->rpc, jobj, jres);
@@ -256,6 +292,14 @@ void  uget_rpc_present (UgetRpc* urpc)
 		uget_rpc_do_request (urpc, jobj);
 	else {
 		jres = ug_jsonrpc_object_new ();
+#ifdef USE_UNIX_DOMAIN_SOCKET
+		if (urpc->socket_path) {
+			ug_jsonrpc_socket_connect_unix ((UgJsonrpcSocket*) urpc,
+			                                urpc->socket_path,
+			                                urpc->socket_path_len);
+		}
+		else
+#endif
 		ug_jsonrpc_socket_connect ((UgJsonrpcSocket*) urpc,
 		                           UGET_RPC_ADDR, UGET_RPC_PORT);
 		ug_jsonrpc_call (&urpc->rpc, jobj, jres);
@@ -275,13 +319,34 @@ int   uget_rpc_start_server (UgetRpc* urpc)
 	}
 
 	// detect server
-	fd = socket (AF_INET, SOCK_STREAM, 0);
-	result = ug_socket_connect (fd, UGET_RPC_ADDR, UGET_RPC_PORT);
+#ifdef USE_UNIX_DOMAIN_SOCKET
+	if (urpc->socket_path) {
+		fd = socket (AF_UNIX, SOCK_STREAM, 0);
+		result = ug_socket_connect_unix (fd,
+		                                 urpc->socket_path,
+		                                 urpc->socket_path_len);
+	}
+	else
+#endif
+	{
+		fd = socket (AF_INET, SOCK_STREAM, 0);
+		result = ug_socket_connect (fd, UGET_RPC_ADDR, UGET_RPC_PORT);
+	}
 	closesocket (fd);
 	if (result != -1) {
 		return FALSE;
 	}
 	// create server
+#ifdef USE_UNIX_DOMAIN_SOCKET
+	if (urpc->socket_path) {
+		// Don't delete file if path is abstract socket names (begin with 0)
+		if (urpc->socket_path[0])
+			ug_unlink (urpc->socket_path);
+		urpc->server = ug_socket_server_new_unix (urpc->socket_path,
+		                                          urpc->socket_path_len);
+	}
+	else
+#endif
 	urpc->server = ug_socket_server_new_addr (UGET_RPC_ADDR, UGET_RPC_PORT);
 	if (urpc->server == NULL)
 		return FALSE;

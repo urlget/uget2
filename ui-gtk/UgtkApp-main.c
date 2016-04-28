@@ -268,6 +268,12 @@ int  main (int argc, char** argv)
 
 	// JSON-RPC server
 	rpc = uget_rpc_new (NULL);
+#ifdef USE_UNIX_DOMAIN_SOCKET
+	rpc->backup_dir = ug_build_filename (ugtk_get_config_dir (),
+	                                     UGTK_APP_DIR, "RPC-socket", NULL);
+	uget_rpc_use_unix_socket (rpc, rpc->backup_dir, -1);
+	ug_free (rpc->backup_dir);
+#endif
 	rpc->backup_dir = g_build_filename (ugtk_get_config_dir (),
 	                                    UGTK_APP_DIR, "attachment", NULL);
 	ug_create_dir_all (rpc->backup_dir, -1);
@@ -314,8 +320,9 @@ int  main (int argc, char** argv)
 	g_free (ugtk_app);
 
 	// sleep 2 second to wait thread and shutdown RPC
-	g_usleep (2 * 1000000);
+	g_usleep (1000000);
 	uget_rpc_free (rpc);
+	g_usleep (1000000);
 
 	// libnotify
 #ifdef HAVE_LIBNOTIFY
