@@ -114,6 +114,8 @@ static const UgEntry  UgtkSummarySettingEntry[] =
 
 static const UgEntry  UgtkDownloadColumnWidthEntry[] =
 {
+	{"state",       offsetof (struct UgtkDownloadColumnWidth, state),
+			UG_ENTRY_INT,  NULL,  NULL},
 	{"name",        offsetof (struct UgtkDownloadColumnWidth, name),
 			UG_ENTRY_INT,  NULL,  NULL},
 	{"complete",    offsetof (struct UgtkDownloadColumnWidth, complete),

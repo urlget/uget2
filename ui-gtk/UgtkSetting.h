@@ -131,6 +131,7 @@ struct UgtkSetting
 		// width: integer
 		struct UgtkDownloadColumnWidth
 		{
+			int    state;      // state icon
 			int    name;
 			int    complete;
 			int    total;

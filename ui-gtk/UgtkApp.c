@@ -292,6 +292,11 @@ void  ugtk_app_get_column_setting (UgtkApp* app, UgtkSetting* setting)
 	GtkTreeViewColumn* column;
 	int                width;
 
+	// state
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_STATE);
+	width = gtk_tree_view_column_get_width (column);
+	setting->download_column.width.state = width;
 	// name
 	column = gtk_tree_view_get_column (app->traveler.download.view,
 			UGTK_NODE_COLUMN_NAME);
@@ -374,6 +379,12 @@ void  ugtk_app_set_column_setting (UgtkApp* app, UgtkSetting* setting)
 	GtkTreeViewColumn* column;
 	int                width;
 
+	// state
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_STATE);
+	width = setting->download_column.width.state;
+	if (width > 0)
+		gtk_tree_view_column_set_fixed_width (column, width);
 	// name
 	column = gtk_tree_view_get_column (app->traveler.download.view,
 			UGTK_NODE_COLUMN_NAME);

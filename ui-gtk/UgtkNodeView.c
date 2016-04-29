@@ -120,7 +120,7 @@ static void col_set_name (GtkTreeViewColumn *tree_column,
                           gpointer           data)
 {
 //	UgtkNodeTree* utree;
-	UgetCommon*	  common;
+	UgetCommon*   common;
 	UgetNode*     node;
 	char*         name;
 
@@ -773,6 +773,10 @@ GtkWidget*  ugtk_node_view_new_for_download (void)
 			col_set_name, _("Name"));
 	selection = gtk_tree_view_get_selection (view);
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
+
+	// UGTK_NODE_COLUMN_STATE
+	column = gtk_tree_view_get_column (view, UGTK_NODE_COLUMN_STATE);
+	gtk_tree_view_column_set_resizable (column, TRUE);
 
 	// UGTK_NODE_COLUMN_NAME
 	column = gtk_tree_view_get_column (view, UGTK_NODE_COLUMN_NAME);
