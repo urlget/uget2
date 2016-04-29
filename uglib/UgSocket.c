@@ -84,15 +84,15 @@ int  ug_socket_connect (SOCKET fd, const char* addr, const char* port_or_serv)
 	connect (fd, (struct sockaddr *) &saddr, sizeof(saddr));
 	*/
 	for (cur = result;  cur;  cur = cur->ai_next) {
-		if (connect (fd, result->ai_addr, result->ai_addrlen) == 0)
+		if (connect (fd, cur->ai_addr, cur->ai_addrlen) == 0)
 			break;
 	}
-	if (cur == NULL) {
-		freeaddrinfo (result);
-		return SOCKET_ERROR;
-	}
 
-	freeaddrinfo (result);
+	freeaddrinfo (result);    // free result from getaddrinfo()
+
+	if (cur == NULL)
+		return SOCKET_ERROR;
+
 	return fd;
 }
 
@@ -165,21 +165,18 @@ int  ug_socket_listen (SOCKET fd, const char* addr, const char* port_or_serv,
 	*/
 
 	for (cur = result;  cur;  cur = cur->ai_next) {
-		if (bind (fd, result->ai_addr, result->ai_addrlen) == 0)
+		if (bind (fd, cur->ai_addr, cur->ai_addrlen) == 0)
 			break;
 	}
+
+	freeaddrinfo (result);    // free result from getaddrinfo()
+
 	if (cur == NULL)
-		goto error_exit;
-
+		return SOCKET_ERROR;
 	if (listen (fd, backlog) == -1)
-		goto error_exit;
+		return SOCKET_ERROR;
 
-	freeaddrinfo (result);
 	return fd;
-
-error_exit:
-	freeaddrinfo (result);
-	return SOCKET_ERROR;
 }
 
 #if !(defined _WIN32 || defined _WIN64)
