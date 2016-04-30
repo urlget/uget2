@@ -222,6 +222,8 @@ static const UgEntry  UgtkUserInterfaceSettingEntry[] =
 			UG_ENTRY_BOOL,  NULL,  NULL},
 	{"SkipExisting",       offsetof (struct UgtkUserInterfaceSetting, skip_existing),
 			UG_ENTRY_BOOL,  NULL,  NULL},
+	{"LargeIcon",          offsetof (struct UgtkUserInterfaceSetting, large_icon),
+			UG_ENTRY_BOOL,  NULL,  NULL},
 #ifdef HAVE_APP_INDICATOR
 	{"AppIndicator",       offsetof (struct UgtkUserInterfaceSetting, app_indicator),
 			UG_ENTRY_BOOL,  NULL,  NULL},
@@ -462,6 +464,7 @@ void  ugtk_setting_reset (UgtkSetting* setting)
 	setting->ui.sound_notification = TRUE;
 	setting->ui.apply_recent = TRUE;
 	setting->ui.skip_existing = FALSE;
+	setting->ui.large_icon = FALSE;
 #ifdef HAVE_APP_INDICATOR
 	setting->ui.app_indicator = TRUE;
 #endif

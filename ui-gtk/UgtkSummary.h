@@ -46,6 +46,14 @@ extern "C" {
 
 typedef	struct	UgtkSummary            UgtkSummary;
 
+enum UGTK_SUMMARY_COLUMN
+{
+	UGTK_SUMMARY_COLUMN_ICON,
+	UGTK_SUMMARY_COLUMN_NAME,
+	UGTK_SUMMARY_COLUMN_VALUE,
+	UGTK_SUMMARY_N_COLUMN
+};
+
 struct UgtkSummary
 {
 	GtkWidget*      self;    // (GtkScrolledWindow) container for view

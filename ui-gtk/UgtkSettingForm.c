@@ -226,6 +226,9 @@ void  ugtk_user_interface_form_init (struct UgtkUserInterfaceForm* uiform)
 //	widget = gtk_check_button_new_with_label (_("Skip existing URI from clipboard and command-line"));
 //	uiform->skip_existing = (GtkToggleButton*) widget;
 //	gtk_box_pack_start (vbox, widget, FALSE, FALSE, 1);
+	widget = gtk_check_button_new_with_label (_("Display large icon"));
+	uiform->large_icon = (GtkToggleButton*) widget;
+	gtk_box_pack_start (vbox, widget, FALSE, FALSE, 1);
 }
 
 void  ugtk_user_interface_form_set (struct UgtkUserInterfaceForm* uiform, UgtkSetting* setting)
@@ -250,6 +253,8 @@ void  ugtk_user_interface_form_set (struct UgtkUserInterfaceForm* uiform, UgtkSe
 			setting->ui.apply_recent);
 //	gtk_toggle_button_set_active (uiform->skip_existing,
 //			setting->ui.skip_existing);
+	gtk_toggle_button_set_active (uiform->large_icon,
+			setting->ui.large_icon);
 #ifdef HAVE_APP_INDICATOR
 	gtk_toggle_button_set_active (uiform->app_indicator,
 			setting->ui.app_indicator);
@@ -268,6 +273,7 @@ void  ugtk_user_interface_form_get (struct UgtkUserInterfaceForm* uiform, UgtkSe
 	setting->ui.sound_notification = gtk_toggle_button_get_active (uiform->sound_notification);
 	setting->ui.apply_recent = gtk_toggle_button_get_active (uiform->apply_recent);
 //	setting->ui.skip_existing = gtk_toggle_button_get_active (uiform->skip_existing);
+	setting->ui.large_icon = gtk_toggle_button_get_active (uiform->large_icon);
 #ifdef HAVE_APP_INDICATOR
 	setting->ui.app_indicator = gtk_toggle_button_get_active (uiform->app_indicator);
 #endif

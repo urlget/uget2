@@ -693,12 +693,35 @@ void  ugtk_app_set_menu_setting (UgtkApp* app, UgtkSetting* setting)
 
 void  ugtk_app_set_ui_setting (UgtkApp* app, UgtkSetting* setting)
 {
+	GtkIconSize   icon_size;
+
 #ifdef HAVE_APP_INDICATOR
 	// AppIndicator
 	ugtk_tray_icon_use_indicator (&app->trayicon, setting->ui.app_indicator);
 #endif
 
 	ugtk_tray_icon_set_visible (&app->trayicon, setting->ui.show_trayicon);
+
+	// ----------------------------------------------------
+	// large icon
+	if (setting->ui.large_icon)
+		icon_size = GTK_ICON_SIZE_LARGE_TOOLBAR;
+	else
+		icon_size = GTK_ICON_SIZE_SMALL_TOOLBAR;
+	// toolbar
+	gtk_toolbar_set_icon_size ((GtkToolbar*) app->toolbar.self, icon_size);
+	// state list
+	ugtk_node_view_use_large_icon (app->traveler.state.view,
+	                               setting->ui.large_icon);
+	// category list
+	ugtk_node_view_use_large_icon (app->traveler.category.view,
+	                               setting->ui.large_icon);
+	// download list
+	ugtk_node_view_use_large_icon (app->traveler.download.view,
+	                               setting->ui.large_icon);
+	// summary
+	ugtk_node_view_use_large_icon (app->summary.view,
+	                               setting->ui.large_icon);
 }
 
 // decide sensitive for menu, toolbar

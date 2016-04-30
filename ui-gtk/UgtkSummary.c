@@ -40,14 +40,6 @@
 
 #include <glib/gi18n.h>
 
-enum UGTK_SUMMARY_COLUMN
-{
-	UGTK_SUMMARY_COLUMN_ICON,
-	UGTK_SUMMARY_COLUMN_NAME,
-	UGTK_SUMMARY_COLUMN_VALUE,
-	UGTK_SUMMARY_N_COLUMN
-};
-
 // static functions
 static GtkTreeView* ugtk_summary_view_new ();
 static void         ugtk_summary_store_realloc_next (GtkListStore* store, GtkTreeIter* iter);

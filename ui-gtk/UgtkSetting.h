@@ -170,6 +170,7 @@ struct UgtkSetting
 		int    sound_notification;
 		int    apply_recent;
 		int    skip_existing;
+		int    large_icon;
 #ifdef HAVE_APP_INDICATOR
 		int    app_indicator;
 #endif
