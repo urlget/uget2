@@ -67,8 +67,8 @@ const char* ugtk_get_locale_dir (void);
 const char* ugtk_get_install_dir (void);
 gboolean    ugtk_is_portable (void);
 
-#ifndef DATADIR
-#define DATADIR    ugtk_get_data_dir()
+#ifndef UG_DATADIR
+#define UG_DATADIR    ugtk_get_data_dir()
 #endif
 
 #ifndef LOCALEDIR
@@ -77,12 +77,12 @@ gboolean    ugtk_is_portable (void);
 
 #else
 
-#ifndef DATADIR
-#define DATADIR    "/usr/share"
+#ifndef UG_DATADIR
+#define UG_DATADIR    "/usr/share"
 #endif
 
 #ifndef LOCALEDIR
-#define LOCALEDIR  DATADIR "/locale"
+#define LOCALEDIR  UG_DATADIR "/locale"
 #endif
 
 #endif // _WIN32 || _WIN64

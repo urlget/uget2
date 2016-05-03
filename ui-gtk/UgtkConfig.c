@@ -98,7 +98,7 @@ const char* ugtk_get_config_dir (void)
 
 const char* ugtk_get_data_dir (void)
 {
-	return DATADIR;
+	return UG_DATADIR;
 }
 
 const char* ugtk_get_config_dir (void)

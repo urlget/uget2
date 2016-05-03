@@ -55,7 +55,7 @@ void  ugtk_app_init_ui (UgtkApp* app)
 	gchar*          path;
 
 	icon_theme = gtk_icon_theme_get_default ();
-	path = g_build_filename (DATADIR, "icons", NULL);
+	path = g_build_filename (UG_DATADIR, "icons", NULL);
 	gtk_icon_theme_append_search_path (icon_theme, path);
 	g_free (path);
 #endif	// _WIN32 || _WIN64
