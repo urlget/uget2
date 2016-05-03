@@ -49,7 +49,7 @@ static void ugtk_app_init_size     (UgtkApp* app);
 
 void  ugtk_app_init_ui (UgtkApp* app)
 {
-#if defined _WIN32 || defined _WIN64
+#if 0    // defined _WIN32 || defined _WIN64
 	// This will use icons\hicolor\index.theme
 	GtkIconTheme*   icon_theme;
 	gchar*          path;
