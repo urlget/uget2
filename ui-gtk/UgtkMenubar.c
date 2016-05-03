@@ -36,6 +36,7 @@
 
 #if defined _WIN32 || defined _WIN64
 #include <windows.h>
+#include <shellapi.h>  // ShellExecuteW()
 #endif
 
 #include <UgtkMenubar.h>
@@ -497,7 +498,7 @@ static void on_open_download_folder (GtkWidget* widget, UgtkApp* app)
 	}
 	g_free (string);
 
-#ifdef _WIN32
+#if defined _WIN32 || defined _WIN64
 	{
 		UgUri       uuri;
 		gchar*		path;
