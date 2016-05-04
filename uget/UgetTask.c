@@ -63,7 +63,8 @@ void  uget_task_final (UgetTask* task)
 int   uget_task_add (UgetTask* task, UgetNode* node, const UgetPluginInfo* info)
 {
 	UgetRelation*  relation;
-	int            dl_ul_int_array[2];
+	int            dlul_int_array[2];
+	int            temp_int_array[2];
 	union {
 		UgetProgress*  progress;
 		UgetCommon*    common;
@@ -96,9 +97,20 @@ int   uget_task_add (UgetTask* task, UgetNode* node, const UgetPluginInfo* info)
 	// create plug-in and control it
 	relation->task.plugin = uget_plugin_new (info);
 	if (task->limit.download || task->limit.upload) {
-		dl_ul_int_array[0] = task->limit.download / (task->n_links + 1);
-		dl_ul_int_array[1] = task->limit.upload   / (task->n_links + 1);
-		uget_plugin_ctrl_speed (relation->task.plugin, dl_ul_int_array);
+		// backup current speed limit
+		temp_int_array[0] = task->limit.download;
+		temp_int_array[1] = task->limit.upload;
+		// set speed limit for existing task
+		dlul_int_array[0] = task->limit.download / (task->n_links + 1);
+		dlul_int_array[1] = task->limit.upload   / (task->n_links + 1);
+		uget_task_set_speed (task,
+		                     temp_int_array[0] - dlul_int_array[0],
+		                     temp_int_array[1] - dlul_int_array[1]);
+		// set speed limit for new task
+		uget_plugin_ctrl_speed (relation->task.plugin, dlul_int_array);
+		// restore current speed limit
+		task->limit.download = temp_int_array[0];
+		task->limit.upload   = temp_int_array[1];
 	}
 	if (uget_plugin_start (relation->task.plugin, node) == FALSE) {
 		// dispatch error message from plug-in
