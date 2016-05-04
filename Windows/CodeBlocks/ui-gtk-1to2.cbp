@@ -43,16 +43,15 @@
 			<Add option="-Wall" />
 			<Add option="-mms-bitfields" />
 			<Add option="-DHAVE_GLIB" />
-			<Add directory="D:/devpack/gtk3/include" />
-			<Add directory="D:/devpack/gtk3/include/glib-2.0" />
-			<Add directory="D:/devpack/gtk3/include/gtk-3.0" />
-			<Add directory="D:/devpack/gtk3/include/gdk-pixbuf-2.0" />
-			<Add directory="D:/devpack/gtk3/include/pango-1.0" />
-			<Add directory="D:/devpack/gtk3/include/atk-1.0" />
-			<Add directory="D:/devpack/gtk3/include/cairo" />
-			<Add directory="D:/devpack/gtk3/lib/glib-2.0/include" />
-			<Add directory="D:/devpack/gtk3/lib/gtk-3.0/include" />
-			<Add directory="D:/devpack/curl-mingw/include" />
+			<Add directory="D:/msys64/mingw32/include" />
+			<Add directory="D:/msys64/mingw32/include/glib-2.0" />
+			<Add directory="D:/msys64/mingw32/lib/glib-2.0/include" />
+			<Add directory="D:/msys64/mingw32/include/gtk-3.0" />
+			<Add directory="D:/msys64/mingw32/lib/gtk-3.0/include" />
+			<Add directory="D:/msys64/mingw32/include/gdk-pixbuf-2.0" />
+			<Add directory="D:/msys64/mingw32/include/pango-1.0" />
+			<Add directory="D:/msys64/mingw32/include/atk-1.0" />
+			<Add directory="D:/msys64/mingw32/include/cairo" />
 			<Add directory="../../uglib" />
 			<Add directory="../../uget" />
 			<Add directory="../../ui-gtk" />
@@ -62,7 +61,7 @@
 			<Add library="uglib" />
 			<Add library="glib-2.0.dll" />
 			<Add library="intl.dll" />
-			<Add directory="D:/devpack/gtk3/lib" />
+			<Add directory="D:/msys64/mingw32/lib" />
 		</Linker>
 		<Unit filename="../../ui-gtk-1to2/UgCategory.c">
 			<Option compilerVar="CC" />

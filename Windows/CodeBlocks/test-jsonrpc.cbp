@@ -37,19 +37,19 @@
 			<Add option="-DHAVE_GLIB" />
 			<Add directory="../../uglib" />
 			<Add directory="../../uget" />
-			<Add directory="D:/devpack/curl-mingw/include" />
-			<Add directory="D:/devpack/gtk3/include/glib-2.0" />
-			<Add directory="D:/devpack/gtk3/lib/glib-2.0/include" />
+			<Add directory="D:/msys64/mingw32/include" />
+			<Add directory="D:/msys64/mingw32/include/glib-2.0" />
+			<Add directory="D:/msys64/mingw32/lib/glib-2.0/include" />
 		</Compiler>
 		<Linker>
-			<Add library="libuget.a" />
-			<Add library="libuglib.a" />
+			<Add library="uget" />
+			<Add library="uglib" />
 			<Add library="ws2_32" />
-			<Add library="D:\devpack\curl-mingw\lib\libcurldll.a" />
+			<Add library="curl.dll" />
 			<Add library="glib-2.0.dll" />
 			<Add library="libintl.dll" />
 			<Add library="PowrProf" />
-			<Add directory="D:/devpack/gtk3/lib" />
+			<Add directory="D:/msys64/mingw32/lib" />
 		</Linker>
 		<Unit filename="../../tests/test-jsonrpc.c">
 			<Option compilerVar="CC" />
