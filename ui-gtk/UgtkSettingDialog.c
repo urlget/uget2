@@ -84,7 +84,7 @@ UgtkSettingDialog*  ugtk_setting_dialog_new (const gchar* title, GtkWindow* pare
 	pango_layout_set_text (layout, "User Interface", -1);
 	pango_layout_get_pixel_size (layout, &text_width, NULL);
 	g_object_unref (layout);
-	text_width = text_width * 3 / 2;
+	text_width = text_width * 5 / 3;
 	if (text_width < 130)
 		text_width = 130;
 	// TreeView
