@@ -60,12 +60,13 @@
 			<Add library="gthread-2.0.dll" />
 			<Add library="gmodule-2.0.dll" />
 			<Add library="gobject-2.0.dll" />
+			<Add library="gio-2.0.dll" />
 			<Add library="gtk-3.dll" />
 			<Add library="gdk-3.dll" />
 			<Add library="gdk_pixbuf-2.0.dll" />
 			<Add library="pango-1.0.dll" />
 			<Add library="pangocairo-1.0.dll" />
-			<Add library="cairo" />
+			<Add library="cairo.dll" />
 			<Add library="intl.dll" />
 			<Add library="curl.dll" />
 			<Add library="ws2_32" />

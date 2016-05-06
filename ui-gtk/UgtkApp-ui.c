@@ -46,20 +46,12 @@ static void ugtk_statusbar_init_ui (struct UgtkStatusbar* app_statusbar);
 static void ugtk_toolbar_init_ui   (struct UgtkToolbar* app_toolbar, GtkAccelGroup* accel_group);
 static void ugtk_window_init_ui    (struct UgtkWindow* window, UgtkApp* app);
 static void ugtk_app_init_size     (UgtkApp* app);
+#if defined _WIN32 || defined _WIN64
+static void ugtk_app_init_ui_win32 (UgtkApp* app, int screen_width);
+#endif
 
 void  ugtk_app_init_ui (UgtkApp* app)
 {
-#if 0    // defined _WIN32 || defined _WIN64
-	// This will use icons\hicolor\index.theme
-	GtkIconTheme*   icon_theme;
-	gchar*          path;
-
-	icon_theme = gtk_icon_theme_get_default ();
-	path = g_build_filename (UG_DATADIR, "icons", NULL);
-	gtk_icon_theme_append_search_path (icon_theme, path);
-	g_free (path);
-#endif	// _WIN32 || _WIN64
-
 	// Registers a new accelerator "Ctrl+N" with the global accelerator map.
 	gtk_accel_map_add_entry (UGTK_APP_ACCEL_PATH_NEW,      GDK_KEY_n,      GDK_CONTROL_MASK);
 	gtk_accel_map_add_entry (UGTK_APP_ACCEL_PATH_LOAD,     GDK_KEY_o,      GDK_CONTROL_MASK);
@@ -126,7 +118,44 @@ static void ugtk_app_init_size (UgtkApp* app)
 
 	gtk_window_resize (app->window.self, width, height);
 	gtk_paned_set_position (app->window.hpaned, paned_position);
+
+#if defined _WIN32 || defined _WIN64
+	ugtk_app_init_ui_win32 (app, width);
+#endif
 }
+
+#if defined _WIN32 || defined _WIN64
+static void ugtk_app_init_ui_win32 (UgtkApp* app, int screen_width)
+{
+	GSettings*  gset;
+	gint        sidebar_width;
+
+#if 0
+	// This will use icons\hicolor\index.theme
+	GtkIconTheme*   icon_theme;
+	gchar*          path;
+
+	icon_theme = gtk_icon_theme_get_default ();
+	path = g_build_filename (UG_DATADIR, "icons", NULL);
+	gtk_icon_theme_append_search_path (icon_theme, path);
+	g_free (path);
+#endif
+
+	if (screen_width <= 800)
+		sidebar_width = 0;
+	else if (screen_width <= 1200)
+		sidebar_width = 180;
+	else
+		sidebar_width = 220;
+
+	gset = g_settings_new ("org.gtk.Settings.FileChooser");
+	g_settings_set_boolean (gset, "sort-directories-first", TRUE);
+
+	// default of "sidebar-width" == 148
+	if (sidebar_width > 0 && g_settings_get_int(gset, "sidebar-width") == 148)
+		g_settings_set_int (gset, "sidebar-width", sidebar_width);
+}
+#endif  // _WIN32 || _WIN64
 
 // ----------------------------------------------------------------------------
 // UgtkWindow
