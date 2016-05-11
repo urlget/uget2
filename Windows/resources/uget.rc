@@ -1,2 +1,26 @@
 MAINICON ICON DISCARDABLE "uget-icon.ico"
 
+1 VERSIONINFO
+FILEVERSION     2,1,4,0
+PRODUCTVERSION  2,1,4,0
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904E4"
+    BEGIN
+      VALUE "CompanyName", "uget.ugetdm.com"
+      VALUE "FileDescription", "uGet download manager"
+      VALUE "FileVersion", "2.1.4"
+      VALUE "InternalName", "uGet"
+      VALUE "LegalCopyright", "Copyright (C) 2005-2016 by C.H. Huang"
+      VALUE "OriginalFilename", "uget.exe"
+      VALUE "ProductName", "uGet"
+      VALUE "ProductVersion", "2.1.4"
+    END
+  END
+
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x409, 1252
+  END
+END
