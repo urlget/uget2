@@ -44,7 +44,7 @@
 
 #define UGET_RPC_PORT      "14777"
 #define UGET_RPC_ADDR      "127.0.0.1"
-//#define UGET_RPC_NAME      "uGetIPC-"
+//#define UGET_RPC_NAME      "RPC-socket"
 //#define UGET_RPC_NAME_ABS  "com.ugetdm.uget"
 //#define UGET_RPC_LIMIT     50
 
