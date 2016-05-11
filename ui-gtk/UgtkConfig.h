@@ -69,8 +69,8 @@ gboolean    ugtk_is_portable (void);
 
 // Please undef UG_DATADIR and LOCALEDIR if you doesn't want to use fixed path
 // to load data and you use autoconf and automake to build uGet in MSYS2.
-//#undef UG_DATADIR
-//#undef LOCALEDIR
+#undef UG_DATADIR
+#undef LOCALEDIR
 
 #ifndef UG_DATADIR
 #define UG_DATADIR    ugtk_get_data_dir()
