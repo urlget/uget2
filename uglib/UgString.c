@@ -107,14 +107,13 @@ int    ug_str_remove_crlf (const char* src, char* dest)
 // return number of characters was replaced by to_char
 int    ug_str_replace_chars (char* str, const char* from_chars, int to_char)
 {
-	char* cur;
 	int   counts;
 
-	for (counts = 0, cur = str;  ; counts++) {
-		cur = strpbrk (cur, from_chars);
-		if (cur == NULL)
+	for (counts = 0;  ; counts++) {
+		str = strpbrk (str, from_chars);
+		if (str == NULL)
 			break;
-		cur[0] = to_char;
+		str[0] = to_char;
 	}
 	return counts;
 }
