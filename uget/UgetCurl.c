@@ -556,6 +556,7 @@ void uget_curl_decide_login (UgetCurl* ugcurl)
 
 	curl = ugcurl->curl;
 
+//	curl_easy_setopt (curl, CURLOPT_LOGIN_OPTIONS, "AUTH=NTLM");
 	// ------------------------------------------------------------------------
 	// common
 	temp.common = ugcurl->common;
@@ -568,13 +569,16 @@ void uget_curl_decide_login (UgetCurl* ugcurl)
 					(temp.common->user)     ? temp.common->user     : "");
 			curl_easy_setopt (curl, CURLOPT_PASSWORD,
 					(temp.common->password) ? temp.common->password : "");
-			curl_easy_setopt (curl, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+			// Don't set CURLOPT_HTTPAUTH to a bitmask
+			// Don't use CURLAUTH_ANY, it causes authentication failed.
+//			curl_easy_setopt (curl, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
+//			curl_easy_setopt (curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+//			curl_easy_setopt (curl, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
 		}
 		else {
 			// clear user & password (for HTTP redirection)
 			curl_easy_setopt (curl, CURLOPT_USERNAME, NULL);
 			curl_easy_setopt (curl, CURLOPT_PASSWORD, NULL);
-			curl_easy_setopt (curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 		}
 	}
 
@@ -590,7 +594,11 @@ void uget_curl_decide_login (UgetCurl* ugcurl)
 					(temp.http->user)     ? temp.http->user     : "");
 			curl_easy_setopt (curl, CURLOPT_PASSWORD,
 					(temp.http->password) ? temp.http->password : "");
-			curl_easy_setopt (curl, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+			// Don't set CURLOPT_HTTPAUTH to a bitmask
+			// Don't use CURLAUTH_ANY, it causes authentication failed.
+//			curl_easy_setopt (curl, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
+//			curl_easy_setopt (curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+//			curl_easy_setopt (curl, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
 			return;
 		}
 	}
