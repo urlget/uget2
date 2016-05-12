@@ -44,7 +44,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\uglib;..\..\uget;D:\devpack\curl-msvc\include;D:\devpack\gtk3\lib\glib-2.0\include;D:\devpack\gtk3\include\glib-2.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\uglib;..\..\uget;D:\devpack\curl-msvc\include;D:\devpack\gtk3-msvc\lib\glib-2.0\include;D:\devpack\gtk3-msvc\include\glib-2.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;HAVE_GLIB;inline=__inline;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -53,7 +53,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>uglib.lib;glib-2.0.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\devpack\gtk3\lib;D:\devpack\curl-msvc\lib\Debug;Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\devpack\gtk3-msvc\lib;D:\devpack\curl-msvc\lib\Debug;Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>uglib.lib;uget.lib;Ws2_32.lib;curllib.lib;glib-2.0.lib;intl.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
@@ -61,7 +61,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\uglib;..\..\uget;D:\devpack\curl-msvc\include;D:\devpack\gtk3\lib\glib-2.0\include;D:\devpack\gtk3\include\glib-2.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\uglib;..\..\uget;D:\devpack\curl-msvc\include;D:\devpack\gtk3-msvc\lib\glib-2.0\include;D:\devpack\gtk3-msvc\include\glib-2.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;HAVE_GLIB;inline=__inline;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>
@@ -69,7 +69,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>uglib.lib;glib-2.0.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\devpack\gtk3\lib;D:\devpack\curl-msvc\lib\Release;Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\devpack\gtk3-msvc\lib;D:\devpack\curl-msvc\lib\Release;Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>uglib.lib;uget.lib;Ws2_32.lib;curllib.lib;glib-2.0.lib;intl.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>

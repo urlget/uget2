@@ -47,7 +47,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\uglib;..\..\uget;D:\devpack\curl-msvc\include;D:\devpack\gtk3\lib\glib-2.0\include;D:\devpack\gtk3\include\glib-2.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\uglib;..\..\uget;D:\devpack\curl-msvc\include;D:\devpack\gtk3-msvc\lib\glib-2.0\include;D:\devpack\gtk3-msvc\include\glib-2.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;HAVE_GLIB;inline=__inline;_DEBUG;_CONSOLE;HAVE_GLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -59,7 +59,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>uglib.lib;uget.lib;Ws2_32.lib;curllib.lib;glib-2.0.lib;intl.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\devpack\curl-msvc\lib\Debug;D:\devpack\gtk3\lib;Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\devpack\curl-msvc\lib\Debug;D:\devpack\gtk3-msvc\lib;Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -69,7 +69,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\uglib;..\..\uget;D:\devpack\curl-msvc\include;D:\devpack\gtk3\lib\glib-2.0\include;D:\devpack\gtk3\include\glib-2.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\uglib;..\..\uget;D:\devpack\curl-msvc\include;D:\devpack\gtk3-msvc\lib\glib-2.0\include;D:\devpack\gtk3-msvc\include\glib-2.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;HAVE_GLIB;inline=__inline;NDEBUG;_CONSOLE;HAVE_GLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -80,7 +80,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>uglib.lib;uget.lib;Ws2_32.lib;curllib.lib;glib-2.0.lib;intl.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\devpack\curl-msvc\lib\Release;D:\devpack\gtk3\lib;Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\devpack\curl-msvc\lib\Release;D:\devpack\gtk3-msvc\lib;Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
