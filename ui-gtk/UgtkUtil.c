@@ -41,6 +41,7 @@
 
 #if defined _WIN32 || defined _WIN64
 #include <windows.h>
+#include <shellapi.h>  // ShellExecuteW()
 #endif
 
 #if defined _WIN32 || defined _WIN64

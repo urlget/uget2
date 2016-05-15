@@ -230,6 +230,18 @@ if test "x$enable_rss_notify" = "xyes"; then
   AC_DEFINE(HAVE_RSS_NOTIFY, 1, [Define to 1 to enable RSS Notify.])
 fi
 
+## -----------------
+## UNIX Domain Socket
+AC_ARG_ENABLE(
+	[unix-socket],
+	AC_HELP_STRING([--enable-unix-socket], [Enable UNIX Domain Socket.]),
+	[enable_unix_socket="$enableval"],
+	[enable_unix_socket="no"]
+)
+if test "x$enable_unix_socket" = "xyes"; then
+  AC_DEFINE(USE_UNIX_DOMAIN_SOCKET, 1, [Define to 1 to use UNIX Domain Socket.])
+fi
+
 ## ----------------------------------------------
 ## output
 AC_CONFIG_FILES([

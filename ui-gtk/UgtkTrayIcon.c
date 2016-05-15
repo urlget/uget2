@@ -157,7 +157,7 @@ void ugtk_tray_icon_init (UgtkTrayIcon* trayicon)
 	trayicon->menu.self = menu;
 
 	// decide tray icon
-	file_name = g_build_filename (DATADIR, "icons",
+	file_name = g_build_filename (UG_DATADIR, "icons",
 	                         "hicolor", "16x16", "apps",
 	                         "uget-icon.png", NULL);
 	if (g_file_test (file_name, G_FILE_TEST_IS_REGULAR))

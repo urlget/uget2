@@ -88,7 +88,7 @@ void  ugtk_node_dialog_init (UgtkNodeDialog* ndialog,
 	if (app->setting.window.category) {
 		gtk_widget_get_size_request (ndialog->notebook, &width, &height);
 		temp = gtk_paned_get_position (ndialog->app->window.hpaned);
-		temp = temp * 3 / 2;  // (temp * 1.5)
+		temp = temp * 5 / 3;  // (temp * 1.666)
 		if (width < temp)
 			gtk_widget_set_size_request (ndialog->notebook, temp, height);
 	}
@@ -400,6 +400,9 @@ static void ugtk_node_dialog_init_list_ui (UgtkNodeDialog* ndialog,
 	ndialog->node_view = (GtkTreeView*) ugtk_node_view_new_for_category ();
 	model = GTK_TREE_MODEL (ndialog->node_tree);
 	gtk_tree_view_set_model (ndialog->node_view, model);
+	ugtk_node_view_use_large_icon (ndialog->node_view,
+			ndialog->app->setting.ui.large_icon,
+			ndialog->app->setting.download_column.width.state);
 
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
 	gtk_widget_set_size_request (scrolled, width, 200);

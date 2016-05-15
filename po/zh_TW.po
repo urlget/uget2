@@ -1472,6 +1472,9 @@ msgstr "下載完成時發出聲音"
 msgid "Apply recent download settings"
 msgstr "套用上一次的下載設定"
 
+msgid "Display large icon"
+msgstr "顯示大圖示"
+
 #: ../ui-gtk/UgtkSettingForm.c:264
 msgid "These will affect all plug-ins."
 msgstr "這些將影響到所有的外掛程式。"

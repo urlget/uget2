@@ -43,6 +43,7 @@
 
 #if defined _WIN32 || defined _WIN64
 #include <windows.h>
+#include <shellapi.h>  // ShellExecuteW()
 #else
 #include <unistd.h>    // fork(), execlp()
 #include <fcntl.h>

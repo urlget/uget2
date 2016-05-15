@@ -114,6 +114,8 @@ static const UgEntry  UgtkSummarySettingEntry[] =
 
 static const UgEntry  UgtkDownloadColumnWidthEntry[] =
 {
+	{"state",       offsetof (struct UgtkDownloadColumnWidth, state),
+			UG_ENTRY_INT,  NULL,  NULL},
 	{"name",        offsetof (struct UgtkDownloadColumnWidth, name),
 			UG_ENTRY_INT,  NULL,  NULL},
 	{"complete",    offsetof (struct UgtkDownloadColumnWidth, complete),
@@ -219,6 +221,8 @@ static const UgEntry  UgtkUserInterfaceSettingEntry[] =
 	{"ApplyRecent",        offsetof (struct UgtkUserInterfaceSetting, apply_recent),
 			UG_ENTRY_BOOL,  NULL,  NULL},
 	{"SkipExisting",       offsetof (struct UgtkUserInterfaceSetting, skip_existing),
+			UG_ENTRY_BOOL,  NULL,  NULL},
+	{"LargeIcon",          offsetof (struct UgtkUserInterfaceSetting, large_icon),
 			UG_ENTRY_BOOL,  NULL,  NULL},
 #ifdef HAVE_APP_INDICATOR
 	{"AppIndicator",       offsetof (struct UgtkUserInterfaceSetting, app_indicator),
@@ -434,6 +438,7 @@ void  ugtk_setting_reset (UgtkSetting* setting)
 	setting->ui.sound_notification = TRUE;
 	setting->ui.apply_recent = TRUE;
 	setting->ui.skip_existing = FALSE;
+	setting->ui.large_icon = FALSE;
 #ifdef HAVE_APP_INDICATOR
 	setting->ui.app_indicator = TRUE;
 #endif

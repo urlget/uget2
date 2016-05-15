@@ -81,6 +81,7 @@ struct UgtkUserInterfaceForm
 	GtkToggleButton*    sound_notification;
 	GtkToggleButton*    apply_recent;
 	GtkToggleButton*    skip_existing;
+	GtkToggleButton*    large_icon;
 #ifdef HAVE_APP_INDICATOR
 	GtkToggleButton*    app_indicator;
 #endif

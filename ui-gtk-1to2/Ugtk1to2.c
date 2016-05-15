@@ -340,13 +340,14 @@ static UgetNode* uget_node_from_category (UgCategory* category1)
 	return node;
 }
 
-Ugtk1to2*  ugtk_1to2_new (void)
+Ugtk1to2*  ugtk_1to2_new (const char* config_path)
 {
 	Ugtk1to2*  u1t2;
 
 	u1t2 = g_malloc0 (sizeof (Ugtk1to2));
 	ug_setting_init (&u1t2->setting1);
 	uget_node_init (&u1t2->real, NULL);
+	u1t2->config_path = g_strdup (config_path);
 	return u1t2;
 }
 
@@ -361,8 +362,8 @@ int   ugtk_1to2_load_setting (Ugtk1to2* u1t2)
 	int     result;
 
 	// load setting
-	path = g_build_filename (g_get_user_config_dir (),
-			UGTK_APP_DIR, UGTK_APP_SETTING_FILE1, NULL);
+	path = g_build_filename (u1t2->config_path,
+	                         UGTK_APP_SETTING_FILE1, NULL);
 	result = ug_setting_load (&u1t2->setting1, path);
 	g_free (path);
 	if (result == TRUE)
@@ -376,8 +377,8 @@ int   ugtk_1to2_save_setting (Ugtk1to2* u1t2)
 	int     result;
 
 	// save setting
-	path = g_build_filename (g_get_user_config_dir (),
-			UGTK_APP_DIR, UGTK_APP_SETTING_FILE, NULL);
+	path = g_build_filename (u1t2->config_path,
+	                         UGTK_APP_SETTING_FILE, NULL);
 	result = ugtk_setting_save (&u1t2->setting, path);
 	g_free (path);
 	return result;
@@ -392,13 +393,13 @@ int  ugtk_1to2_load_category (Ugtk1to2* u1t2)
 	gchar*	file;
 
 	// load all download from file
-	file = g_build_filename (g_get_user_config_dir (),
-			UGTK_APP_DIR, UGTK_APP_DOWNLOAD_FILE, NULL);
+	file = g_build_filename (u1t2->config_path,
+	                         UGTK_APP_DOWNLOAD_FILE, NULL);
 	download_list = ug_download_list_load (file);
 	g_free (file);
 	// load all categories
-	file = g_build_filename (g_get_user_config_dir (),
-			UGTK_APP_DIR, UGTK_APP_CATEGORY_FILE, NULL);
+	file = g_build_filename (u1t2->config_path,
+	                         UGTK_APP_CATEGORY_FILE, NULL);
 	category_list = ug_category_list_load (file);
 	g_free (file);
 	// link and add tasks to categories
@@ -426,8 +427,8 @@ int  ugtk_1to2_save_category (Ugtk1to2* u1t2)
 	UgetNode*       cnode;
 	UgJsonFile*     jfile;
 
-	path_base = g_build_filename (g_get_user_config_dir (),
-			UGTK_APP_DIR, "category", NULL);
+	path_base = g_build_filename (u1t2->config_path,
+	                              "category", NULL);
 	ug_create_dir_all (path_base, -1);
 
 	jfile = ug_json_file_new (4096);

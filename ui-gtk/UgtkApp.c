@@ -120,6 +120,7 @@ void  ugtk_app_final (UgtkApp* app)
 			(void*)(intptr_t) shutdown_now);
 	uget_plugin_set (UgetPluginCurlInfo,  UGET_PLUGIN_INIT, (void*) FALSE);
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) FALSE);
+	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) FALSE);
 }
 
 void  ugtk_app_save (UgtkApp* app)
@@ -278,8 +279,8 @@ void  ugtk_app_set_window_setting (UgtkApp* app, UgtkSetting* setting)
 	if (setting->window.nth_state >= app->split.n_children)
 		setting->window.nth_state = 0;
 	ugtk_traveler_select_category (&app->traveler,
-				setting->window.nth_category,
-				setting->window.nth_state);
+	                               setting->window.nth_category,
+	                               setting->window.nth_state);
 	// menu
 	ugtk_app_set_menu_setting (app, setting);
 }
@@ -289,6 +290,11 @@ void  ugtk_app_get_column_setting (UgtkApp* app, UgtkSetting* setting)
 	GtkTreeViewColumn* column;
 	int                width;
 
+	// state
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_STATE);
+	width = gtk_tree_view_column_get_width (column);
+	setting->download_column.width.state = width;
 	// name
 	column = gtk_tree_view_get_column (app->traveler.download.view,
 			UGTK_NODE_COLUMN_NAME);
@@ -371,6 +377,12 @@ void  ugtk_app_set_column_setting (UgtkApp* app, UgtkSetting* setting)
 	GtkTreeViewColumn* column;
 	int                width;
 
+	// state
+	column = gtk_tree_view_get_column (app->traveler.download.view,
+			UGTK_NODE_COLUMN_STATE);
+	width = setting->download_column.width.state;
+	if (width > 0)
+		gtk_tree_view_column_set_fixed_width (column, width);
 	// name
 	column = gtk_tree_view_get_column (app->traveler.download.view,
 			UGTK_NODE_COLUMN_NAME);
@@ -668,12 +680,39 @@ void  ugtk_app_set_menu_setting (UgtkApp* app, UgtkSetting* setting)
 
 void  ugtk_app_set_ui_setting (UgtkApp* app, UgtkSetting* setting)
 {
+	GtkIconSize   icon_size;
+
 #ifdef HAVE_APP_INDICATOR
 	// AppIndicator
 	ugtk_tray_icon_use_indicator (&app->trayicon, setting->ui.app_indicator);
 #endif
 
 	ugtk_tray_icon_set_visible (&app->trayicon, setting->ui.show_trayicon);
+
+	// ----------------------------------------------------
+	// large icon
+	if (setting->ui.large_icon)
+		icon_size = GTK_ICON_SIZE_LARGE_TOOLBAR;
+	else
+		icon_size = GTK_ICON_SIZE_SMALL_TOOLBAR;
+	// toolbar
+	gtk_toolbar_set_icon_size ((GtkToolbar*) app->toolbar.self, icon_size);
+	// state list
+	ugtk_node_view_use_large_icon (app->traveler.state.view,
+	                               setting->ui.large_icon,
+	                               setting->download_column.width.state);
+	// category list
+	ugtk_node_view_use_large_icon (app->traveler.category.view,
+	                               setting->ui.large_icon,
+	                               setting->download_column.width.state);
+	// download list
+	ugtk_node_view_use_large_icon (app->traveler.download.view,
+	                               setting->ui.large_icon,
+	                               setting->download_column.width.state);
+	// summary
+	ugtk_node_view_use_large_icon (app->summary.view,
+	                               setting->ui.large_icon,
+	                               setting->download_column.width.state);
 }
 
 // decide sensitive for menu, toolbar

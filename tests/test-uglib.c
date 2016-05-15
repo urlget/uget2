@@ -50,6 +50,7 @@
 #if defined _WIN32 || defined _WIN64
 #include <UgUtil.h>
 #include <windows.h>
+#include <shellapi.h>  // ShellExecuteW()
 
 void  test_launch (void)
 {

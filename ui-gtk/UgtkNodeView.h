@@ -78,6 +78,8 @@ GtkWidget*  ugtk_node_view_new_for_download (void);
 GtkWidget*  ugtk_node_view_new_for_category (void);
 GtkWidget*  ugtk_node_view_new_for_state (void);
 
+void  ugtk_node_view_use_large_icon (GtkTreeView* view, gboolean is_large, int fixed_width);
+
 #ifdef __cplusplus
 }
 #endif

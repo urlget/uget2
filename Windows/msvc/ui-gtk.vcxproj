@@ -48,7 +48,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\uglib;..\..\uget;..\..\ui-gtk;D:\devpack\curl-msvc\include;D:\devpack\gtk3\include;D:\devpack\gtk3\lib\glib-2.0\include;D:\devpack\gtk3\include\glib-2.0;D:\devpack\gtk3\lib\gtk-3.0\include;D:\devpack\gtk3\include\gtk-3.0;D:\devpack\gtk3\include\gdk-pixbuf-2.0;D:\devpack\gtk3\include\pango-1.0;D:\devpack\gtk3\include\atk-1.0;D:\devpack\gtk3\include\cairo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\uglib;..\..\uget;..\..\ui-gtk;D:\devpack\curl-msvc\include;D:\devpack\gtk3-msvc\include;D:\devpack\gtk3-msvc\lib\glib-2.0\include;D:\devpack\gtk3-msvc\include\glib-2.0;D:\devpack\gtk3-msvc\lib\gtk-3.0\include;D:\devpack\gtk3-msvc\include\gtk-3.0;D:\devpack\gtk3-msvc\include\gdk-pixbuf-2.0;D:\devpack\gtk3-msvc\include\pango-1.0;D:\devpack\gtk3-msvc\include\atk-1.0;D:\devpack\gtk3-msvc\include\cairo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;HAVE_GLIB;inline=__inline;_DEBUG;_CONSOLE;DATADIR_WIN_PROG;HAVE_PLUGIN_ARIA2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -59,8 +59,8 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glib-2.0.lib;gthread-2.0.lib;gmodule-2.0.lib;gobject-2.0.lib;gtk-win32-3.0.lib;gdk-win32-3.0.lib;gdk_pixbuf-2.0.lib;pango-1.0.lib;pangocairo-1.0.lib;pangowin32-1.0.lib;atk-1.0.lib;intl.lib;cairo.lib;libcurl.lib;Ws2_32.lib;winmm.lib;uget.lib;uglib.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\devpack\gtk3\lib;D:\devpack\curl-msvc;Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glib-2.0.lib;gthread-2.0.lib;gmodule-2.0.lib;gobject-2.0.lib;gio-2.0.lib;gtk-win32-3.0.lib;gdk-win32-3.0.lib;gdk_pixbuf-2.0.lib;pango-1.0.lib;pangocairo-1.0.lib;pangowin32-1.0.lib;atk-1.0.lib;intl.lib;cairo.lib;libcurl.lib;Ws2_32.lib;winmm.lib;uget.lib;uglib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\devpack\gtk3-msvc\lib;D:\devpack\curl-msvc;Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -70,7 +70,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\uglib;..\..\uget;..\..\ui-gtk;D:\devpack\curl-msvc\include;D:\devpack\gtk3\include;D:\devpack\gtk3\lib\glib-2.0\include;D:\devpack\gtk3\include\glib-2.0;D:\devpack\gtk3\lib\gtk-3.0\include;D:\devpack\gtk3\include\gtk-3.0;D:\devpack\gtk3\include\gdk-pixbuf-2.0;D:\devpack\gtk3\include\pango-1.0;D:\devpack\gtk3\include\atk-1.0;D:\devpack\gtk3\include\cairo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\uglib;..\..\uget;..\..\ui-gtk;D:\devpack\curl-msvc\include;D:\devpack\gtk3-msvc\include;D:\devpack\gtk3-msvc\lib\glib-2.0\include;D:\devpack\gtk3-msvc\include\glib-2.0;D:\devpack\gtk3-msvc\lib\gtk-3.0\include;D:\devpack\gtk3-msvc\include\gtk-3.0;D:\devpack\gtk3-msvc\include\gdk-pixbuf-2.0;D:\devpack\gtk3-msvc\include\pango-1.0;D:\devpack\gtk3-msvc\include\atk-1.0;D:\devpack\gtk3-msvc\include\cairo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;HAVE_GLIB;inline=__inline;NDEBUG;_WINDOWS;DATADIR_WIN_PROG;HAVE_PLUGIN_ARIA2;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -80,8 +80,8 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glib-2.0.lib;gthread-2.0.lib;gmodule-2.0.lib;gobject-2.0.lib;gtk-win32-3.0.lib;gdk-win32-3.0.lib;gdk_pixbuf-2.0.lib;pango-1.0.lib;pangocairo-1.0.lib;pangowin32-1.0.lib;atk-1.0.lib;cairo.lib;intl.lib;libcurl.lib;Ws2_32.lib;winmm.lib;uget.lib;uglib.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\devpack\gtk3\lib;D:\devpack\curl-msvc\;Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glib-2.0.lib;gthread-2.0.lib;gmodule-2.0.lib;gobject-2.0.lib;gio-2.0.lib;gtk-win32-3.0.lib;gdk-win32-3.0.lib;gdk_pixbuf-2.0.lib;pango-1.0.lib;pangocairo-1.0.lib;pangowin32-1.0.lib;atk-1.0.lib;cairo.lib;intl.lib;libcurl.lib;Ws2_32.lib;winmm.lib;uget.lib;uglib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\devpack\gtk3-msvc\lib;D:\devpack\curl-msvc\;Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>

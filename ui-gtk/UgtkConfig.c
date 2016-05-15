@@ -78,7 +78,11 @@ gboolean    ugtk_is_portable_mode (void)
 
 const char* ugtk_get_data_dir (void)
 {
-	return ugtk_get_install_dir ();
+	static gchar* data_dir = NULL;
+
+	if (data_dir == NULL)
+		data_dir = g_build_filename (ugtk_get_install_dir(), "..", "share", NULL);
+	return data_dir;
 }
 
 const char* ugtk_get_config_dir (void)
@@ -87,7 +91,7 @@ const char* ugtk_get_config_dir (void)
 
 	if (config_dir == NULL) {
 		if (ugtk_is_portable_mode () == TRUE)
-			config_dir = g_build_filename (ugtk_get_data_dir(), "config", NULL);
+			config_dir = g_build_filename (ugtk_get_install_dir(), "..", "config", NULL);
 		else
 			config_dir = g_get_user_config_dir ();
 	}
@@ -98,7 +102,7 @@ const char* ugtk_get_config_dir (void)
 
 const char* ugtk_get_data_dir (void)
 {
-	return DATADIR;
+	return UG_DATADIR;
 }
 
 const char* ugtk_get_config_dir (void)

@@ -120,7 +120,7 @@ static void col_set_name (GtkTreeViewColumn *tree_column,
                           gpointer           data)
 {
 //	UgtkNodeTree* utree;
-	UgetCommon*	  common;
+	UgetCommon*   common;
 	UgetNode*     node;
 	char*         name;
 
@@ -774,6 +774,10 @@ GtkWidget*  ugtk_node_view_new_for_download (void)
 	selection = gtk_tree_view_get_selection (view);
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
 
+	// UGTK_NODE_COLUMN_STATE
+	column = gtk_tree_view_get_column (view, UGTK_NODE_COLUMN_STATE);
+	gtk_tree_view_column_set_resizable (column, TRUE);
+
 	// UGTK_NODE_COLUMN_NAME
 	column = gtk_tree_view_get_column (view, UGTK_NODE_COLUMN_NAME);
 	gtk_tree_view_column_set_min_width (column, 180);
@@ -1044,3 +1048,26 @@ GtkWidget*  ugtk_node_view_new_for_state (void)
 	return (GtkWidget*) view;
 }
 
+void  ugtk_node_view_use_large_icon (GtkTreeView* view, gboolean is_large, int fixed_width)
+{
+	GtkTreeViewColumn*  column;
+	GtkIconSize         icon_size;
+	int                 icon_width;
+	GList*              list;
+
+	if (is_large) {
+		icon_size = GTK_ICON_SIZE_LARGE_TOOLBAR;
+		icon_width = 24 + 2;    // icon size + 2 pixel
+	}
+	else {
+		icon_size = GTK_ICON_SIZE_SMALL_TOOLBAR;
+		icon_width = 16 + 2;    // icon size + 2 pixel
+	}
+
+	column = gtk_tree_view_get_column (view, UGTK_NODE_COLUMN_STATE);
+	gtk_tree_view_column_set_min_width (column, icon_width);
+	gtk_tree_view_column_set_fixed_width (column, fixed_width);
+	list = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT(column));
+	g_object_set (list->data, "stock-size", icon_size, NULL);
+	g_list_free (list);
+}

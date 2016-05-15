@@ -82,7 +82,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\uglib;..\..\uget;D:\devpack\curl-msvc\include;D:\devpack\gtk3\lib\glib-2.0\include;D:\devpack\gtk3\include\glib-2.0;D:\devpack\gtk3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\uglib;..\..\uget;D:\devpack\curl-msvc\include;D:\devpack\gtk3-msvc\lib\glib-2.0\include;D:\devpack\gtk3-msvc\include\glib-2.0;D:\devpack\gtk3-msvc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;HAVE_GLIB;inline=__inline;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -95,7 +95,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\uglib;..\..\uget;D:\devpack\curl-msvc\include;D:\devpack\gtk3\lib\glib-2.0\include;D:\devpack\gtk3\include\glib-2.0;D:\devpack\gtk3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\uglib;..\..\uget;D:\devpack\curl-msvc\include;D:\devpack\gtk3-msvc\lib\glib-2.0\include;D:\devpack\gtk3-msvc\include\glib-2.0;D:\devpack\gtk3-msvc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;HAVE_GLIB;inline=__inline;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>

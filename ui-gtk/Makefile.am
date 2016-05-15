@@ -1,7 +1,7 @@
 bin_PROGRAMS = uget-gtk
 
 uget_gtk_CPPFLAGS = \
-	-DDATADIR='"$(datadir)"'  \
+	-DUG_DATADIR='"$(datadir)"'  \
 	-I$(top_srcdir)/ui-gtk    \
 	-I$(top_srcdir)/uget      \
 	-I$(top_srcdir)/uglib

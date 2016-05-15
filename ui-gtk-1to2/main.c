@@ -58,8 +58,7 @@ int  main (int argc, char** argv)
 	char*      path;
 	int        n;
 
-	path = g_build_filename (g_get_user_config_dir (),
-			"uGet", NULL);
+	path = g_build_filename (g_get_user_config_dir (), "uGet", NULL);
 	puts ("\n"
 	      "Convert uGet for GTK+ data file from 1.10.x to 2.x" "\n");
 	puts ("Usage:");
@@ -73,7 +72,7 @@ int  main (int argc, char** argv)
 
 	// starting convert
 	register_iface ();
-	u1t2 = ugtk_1to2_new ();
+	u1t2 = ugtk_1to2_new (argv[1]);
 
 	// setting
 	n = ugtk_1to2_load_setting (u1t2);

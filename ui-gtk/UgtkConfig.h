@@ -67,22 +67,27 @@ const char* ugtk_get_locale_dir (void);
 const char* ugtk_get_install_dir (void);
 gboolean    ugtk_is_portable (void);
 
-#ifndef DATADIR
-#define DATADIR    ugtk_get_data_dir()
+// Please undef UG_DATADIR and LOCALEDIR if you doesn't want to use fixed path
+// to load data and you use autoconf and automake to build uGet in MSYS2.
+#undef UG_DATADIR
+#undef LOCALEDIR
+
+#ifndef UG_DATADIR
+#define UG_DATADIR    ugtk_get_data_dir()
 #endif
 
 #ifndef LOCALEDIR
-#define LOCALEDIR  ugtk_get_locale_dir()
+#define LOCALEDIR     ugtk_get_locale_dir()
 #endif
 
 #else
 
-#ifndef DATADIR
-#define DATADIR    "/usr/share"
+#ifndef UG_DATADIR
+#define UG_DATADIR    "/usr/share"
 #endif
 
 #ifndef LOCALEDIR
-#define LOCALEDIR  DATADIR "/locale"
+#define LOCALEDIR     UG_DATADIR "/locale"
 #endif
 
 #endif // _WIN32 || _WIN64

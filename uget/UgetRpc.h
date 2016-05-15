@@ -71,10 +71,19 @@ struct UgetRpc {
 	UgList           queue;
 	UgMutex          queue_lock;
 	char*            backup_dir;
+
+#ifdef USE_UNIX_DOMAIN_SOCKET
+	char*            socket_path;
+	int              socket_path_len;
+#endif
 };
 
 UgetRpc*  uget_rpc_new (const char* backup_dir);
 void      uget_rpc_free (UgetRpc* urpc);
+
+#ifdef USE_UNIX_DOMAIN_SOCKET
+void  uget_rpc_use_unix_socket (UgetRpc* urpc, const char* path, int path_len);
+#endif
 
 int   uget_rpc_do_request (UgetRpc* urpc, UgJsonrpcObject* jobj);
 void  uget_rpc_send_command (UgetRpc* urpc, int argc, char** argv);

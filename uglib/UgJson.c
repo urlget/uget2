@@ -498,7 +498,7 @@ TopLevelSwitch:
 
 				json->state = UG_JSON_STRING;
 				json->buf.length -= 4;
-//				json->count = 0;		// json->count must reset to 0
+//				json->count = 0;        // reset json->count to 0
 				// get UTF-16 value from hex string
 				putf = json->buf.at + json->buf.length;
 				for (value = 0;  json->count > 0;  json->count--, putf++) {
