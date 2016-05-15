@@ -120,7 +120,6 @@ void  ugtk_app_final (UgtkApp* app)
 			(void*)(intptr_t) shutdown_now);
 	uget_plugin_set (UgetPluginCurlInfo,  UGET_PLUGIN_INIT, (void*) FALSE);
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) FALSE);
-	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) FALSE);
 }
 
 void  ugtk_app_save (UgtkApp* app)

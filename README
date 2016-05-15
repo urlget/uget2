@@ -1,3 +1,15 @@
+uGet 2.0.8: (2016-05-16)
+1. In speed limit mode, program adjust existing task speed when adding new task.
+2. Add new setting "Display large icon".
+3. Add configure argument "--enable-unix-socket" to use JSON-RPC over UNIX domain socket.
+4. use msys2 + mingw to build uGet for windows.
+5. curl plug-in: Don't use CURLAUTH_ANY, it causes authentication failed.
+6. Fix: User can't use command-line to assign config directory (ui-gtk-1to2).
+7. (2.1.3-2) Fix: Incorrect encoding on some characters (e.g. French characters)
+8. (2.1.3-2) Fix: Program stop download queuing in some case.
+
+* uGet for Windows upgrade GTK+ from 3.10.4 to 3.16.6
+
 uGet 2.0.7: (2016-04-09)
 1. Fix: UI freeze if user activate download in sorted list.
 2. Add Keywords entry into desktop file (Elías Alejandro Año Mendoza)

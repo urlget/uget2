@@ -52,7 +52,7 @@ extern "C" {
 #endif
 
 #ifndef PACKAGE_VERSION
-#define PACKAGE_VERSION		"2.0.7"
+#define PACKAGE_VERSION		"2.0.8"
 #endif
 
 // ----------------------------------------------------------------------------
