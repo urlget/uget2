@@ -712,16 +712,20 @@ void  ugtk_app_set_ui_setting (UgtkApp* app, UgtkSetting* setting)
 	gtk_toolbar_set_icon_size ((GtkToolbar*) app->toolbar.self, icon_size);
 	// state list
 	ugtk_node_view_use_large_icon (app->traveler.state.view,
-	                               setting->ui.large_icon);
+	                               setting->ui.large_icon,
+	                               setting->download_column.width.state);
 	// category list
 	ugtk_node_view_use_large_icon (app->traveler.category.view,
-	                               setting->ui.large_icon);
+	                               setting->ui.large_icon,
+	                               setting->download_column.width.state);
 	// download list
 	ugtk_node_view_use_large_icon (app->traveler.download.view,
-	                               setting->ui.large_icon);
+	                               setting->ui.large_icon,
+	                               setting->download_column.width.state);
 	// summary
 	ugtk_node_view_use_large_icon (app->summary.view,
-	                               setting->ui.large_icon);
+	                               setting->ui.large_icon,
+	                               setting->download_column.width.state);
 }
 
 // decide sensitive for menu, toolbar

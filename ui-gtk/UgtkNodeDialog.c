@@ -401,7 +401,8 @@ static void ugtk_node_dialog_init_list_ui (UgtkNodeDialog* ndialog,
 	model = GTK_TREE_MODEL (ndialog->node_tree);
 	gtk_tree_view_set_model (ndialog->node_view, model);
 	ugtk_node_view_use_large_icon (ndialog->node_view,
-	                               ndialog->app->setting.ui.large_icon);
+			ndialog->app->setting.ui.large_icon,
+			ndialog->app->setting.download_column.width.state);
 
 	scrolled = gtk_scrolled_window_new (NULL, NULL);
 	gtk_widget_set_size_request (scrolled, width, 200);

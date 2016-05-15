@@ -1048,7 +1048,7 @@ GtkWidget*  ugtk_node_view_new_for_state (void)
 	return (GtkWidget*) view;
 }
 
-void  ugtk_node_view_use_large_icon (GtkTreeView* view, gboolean is_large)
+void  ugtk_node_view_use_large_icon (GtkTreeView* view, gboolean is_large, int fixed_width)
 {
 	GtkTreeViewColumn*  column;
 	GtkIconSize         icon_size;
@@ -1066,6 +1066,7 @@ void  ugtk_node_view_use_large_icon (GtkTreeView* view, gboolean is_large)
 
 	column = gtk_tree_view_get_column (view, UGTK_NODE_COLUMN_STATE);
 	gtk_tree_view_column_set_min_width (column, icon_width);
+	gtk_tree_view_column_set_fixed_width (column, fixed_width);
 	list = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT(column));
 	g_object_set (list->data, "stock-size", icon_size, NULL);
 	g_list_free (list);
