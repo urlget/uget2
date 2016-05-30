@@ -173,6 +173,8 @@ void  uget_node_move (UgetNode* node, UgetNode* sibling, UgetNode* child)
 	fake_sibling = NULL;
 	for (fake_child = child->fake;  fake_child;  fake_child = fake_child->peer) {
 		node = fake_child->parent;
+		if (node == NULL)
+			continue;
 
 		if (sibling) {
 			for (fake_sibling = sibling->fake;  fake_sibling;  fake_sibling = fake_sibling->peer) {

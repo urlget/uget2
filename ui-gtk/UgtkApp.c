@@ -196,7 +196,7 @@ void  ugtk_app_get_window_setting (UgtkApp* app, UgtkSetting* setting)
 	GdkWindow*      gdk_window;
 	gint            x, y;
 
-	// get window position, size, and maximzied state
+	// get window position, size, and maximized state
 	if (gtk_widget_get_visible (GTK_WIDGET (app->window.self)) == TRUE) {
 		gdk_window = gtk_widget_get_window (GTK_WIDGET (app->window.self));
 		gdk_wstate = gdk_window_get_state (gdk_window);

@@ -47,6 +47,14 @@
 #include <config.h>
 #endif
 
+#if defined _WIN32 || defined _WIN64
+#include <windows.h> // Sleep()
+#define  ug_sleep       Sleep
+#else
+#include <unistd.h>  // sleep(), usleep()
+#define  ug_sleep(millisecond)    usleep (millisecond * 1000)
+#endif // _WIN32 || _WIN64
+
 #ifdef HAVE_GLIB
 #include <glib/gi18n.h>
 #else
@@ -728,35 +736,91 @@ int   uget_app_move_download_to (UgetApp* app, UgetNode* dnode, UgetNode* cnode)
 	return TRUE;
 }
 
-int  uget_app_delete_download (UgetApp* app, UgetNode* dnode, int delete_file)
+static int  delete_dnode_files (UgetNode* dnode, int  has_aria2_file)
 {
 	UgetNode*  fnode;   // filenode
+	UgetNode*  fnode_next;
+	int        error;
+	int        error_count = 0;
+
+	if (has_aria2_file == TRUE) {
+		// move first aria2 to tail
+		for (fnode = dnode->children;  fnode;  fnode = fnode_next) {
+			fnode_next = fnode->next;
+			if (strstr (fnode->name, ".aria2")) {
+				uget_node_move (dnode, NULL, fnode);
+				break;
+			}
+		}
+	}
+
+	for (fnode = dnode->children;  fnode;  fnode = fnode_next) {
+		fnode_next = fnode->next;
+
+		if (fnode->name == NULL) {
+			uget_node_remove (dnode, fnode);
+			continue;
+		}
+		if (ug_file_is_exist (fnode->name) == FALSE) {
+			uget_node_remove (dnode, fnode);
+			continue;
+		}
+
+		if (ug_file_is_dir (fnode->name) == FALSE)
+			error = ug_unlink (fnode->name);
+		else
+			error = ug_delete_dir (fnode->name);
+
+		if (error != 0)
+			error_count++;
+		else {
+			if (error_count == 0 || strstr (fnode->name, ".aria2") == NULL) {
+				uget_node_remove (dnode, fnode);
+				printf ("remove (%d) %s\n", error_count, fnode->name);
+			}
+		}
+	}
+
+	if (dnode->children == NULL)
+		return TRUE;
+	else
+		return FALSE;
+}
+
+static UG_THREAD_RETURN_TYPE  delete_file_thread (UgetNode* dnode)
+{
+	int  count;
+
+	for (count = 0;  count < 3;  count++) {
+		ug_sleep (2 * 1000);    // sleep 2 seconds
+		delete_dnode_files (dnode, FALSE);
+		if (dnode->children == NULL)
+			break;
+	}
+
+	uget_node_unref (dnode);
+	return UG_THREAD_RETURN_VALUE;
+}
+
+int  uget_app_delete_download (UgetApp* app, UgetNode* dnode, int delete_file)
+{
 	UgetNode*  cnode;
-	int        error = 0;
+	UgThread   thread;
 
 	cnode = dnode->parent;
 	uget_task_remove (&app->task, dnode);
 	uget_node_remove (cnode, dnode);
+	uget_node_unref_fake (dnode);
 	uget_uri_hash_remove_download (app->uri_hash, dnode);
 
-	if (delete_file) {
-		for (fnode = dnode->children;  fnode;  fnode = fnode->next) {
-			if (fnode->name == NULL)
-				continue;
-//			if (ug_file_is_exist (fnode->name) == FALSE)
-//				continue;
-			if (ug_file_is_dir (fnode->name) == FALSE)
-				error = ug_unlink (fnode->name);
-			else
-				error = ug_delete_dir (fnode->name);
-		}
-	}
-	uget_node_unref (dnode);
-
-	if (error == -1)
+	if (delete_file == TRUE && delete_dnode_files (dnode, TRUE) == FALSE) {
+		ug_thread_create (&thread, (UgThreadFunc) delete_file_thread, dnode);
+		ug_thread_unjoin (&thread);
 		return FALSE;
-	else
-		return TRUE;
+	}
+
+	uget_node_unref (dnode);
+	return TRUE;
 }
 
 int  uget_app_recycle_download (UgetApp* app, UgetNode* dnode)
