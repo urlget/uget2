@@ -804,8 +804,16 @@ static UG_THREAD_RETURN_TYPE  delete_file_thread (UgetNode* dnode)
 
 int  uget_app_delete_download (UgetApp* app, UgetNode* dnode, int delete_file)
 {
+	UgetRelation* relation;
 	UgetNode*  cnode;
 	UgThread   thread;
+
+	if (delete_file == TRUE) {
+		// Don't save aria2 ctrl file when plugin stop.
+		relation = ug_info_get (&dnode->info, UgetRelationInfo);
+		if (relation && relation->task.plugin)
+			uget_plugin_file_deleted (relation->task.plugin);
+	}
 
 	cnode = dnode->parent;
 	uget_task_remove (&app->task, dnode);

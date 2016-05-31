@@ -119,6 +119,7 @@ struct UgetPluginCurl
 	// flags
 	uint8_t       limit_by_user:1; // speed limit changed by user
 	uint8_t       limit_changed:1; // speed limit changed
+	uint8_t       file_deleted:1;  // files deleted by user
 	uint8_t       file_renamed:1;  // has file path?
 	uint8_t       a2cf_named:1;    // has aria2 ctrl file name?
 	uint8_t       synced:1;

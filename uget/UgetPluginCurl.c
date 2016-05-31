@@ -265,7 +265,11 @@ static int  plugin_ctrl (UgetPluginCurl* plugin, int code, void* data)
 		// speed control
 		return plugin_ctrl_speed (plugin, data);
 
-	case UGET_PLUGIN_CTRL_NODE_UPDATED:
+	case UGET_PLUGIN_CTRL_FILE_DELETED:
+		plugin->file_deleted = TRUE;
+		break;
+
+	default:
 		break;
 	}
 
@@ -901,7 +905,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 		}
 		// save aria2 control file every 0.5 x 4 = 2 seconds.
 		if ((counter & 3) == 3 || N_THREAD (plugin) == 0) {
-			if (plugin->aria2.path)
+			if (plugin->aria2.path && plugin->file_deleted == FALSE)
 				uget_a2cf_save (&plugin->aria2.ctrl, plugin->aria2.path);
 		}
 		// split download every 0.5 x 8 = 4 seconds.
