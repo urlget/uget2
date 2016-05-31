@@ -769,6 +769,7 @@ UgValue*  uget_aria2_clear_token (UgJsonrpcObject* jobject)
 	if (jobject->params.type == UG_VALUE_ARRAY) {
 		rpc_token = jobject->params.c.array->at;
 		if (rpc_token->type == UG_VALUE_STRING &&
+			rpc_token->c.string != NULL &&
 			strncmp (rpc_token->c.string, "token:", 6) == 0)
 		{
 			ug_free (rpc_token->c.string);
