@@ -773,12 +773,8 @@ static int  delete_dnode_files (UgetNode* dnode, int  has_aria2_file)
 
 		if (error != 0)
 			error_count++;
-		else {
-			if (error_count == 0 || strstr (fnode->name, ".aria2") == NULL) {
-				uget_node_remove (dnode, fnode);
-				printf ("remove (%d) %s\n", error_count, fnode->name);
-			}
-		}
+		else if (error_count == 0 || strstr (fnode->name, ".aria2") == NULL)
+			uget_node_remove (dnode, fnode);
 	}
 
 	if (dnode->children == NULL)
@@ -804,27 +800,22 @@ static UG_THREAD_RETURN_TYPE  delete_file_thread (UgetNode* dnode)
 
 int  uget_app_delete_download (UgetApp* app, UgetNode* dnode, int delete_file)
 {
-	UgetRelation* relation;
 	UgetNode*  cnode;
 	UgThread   thread;
-
-	if (delete_file == TRUE) {
-		// Don't save aria2 ctrl file when plugin stop.
-		relation = ug_info_get (&dnode->info, UgetRelationInfo);
-		if (relation && relation->task.plugin)
-			uget_plugin_file_deleted (relation->task.plugin);
-	}
+	int        is_active;
 
 	cnode = dnode->parent;
-	uget_task_remove (&app->task, dnode);
+	is_active = uget_task_remove (&app->task, dnode);
 	uget_node_remove (cnode, dnode);
 	uget_node_unref_fake (dnode);
 	uget_uri_hash_remove_download (app->uri_hash, dnode);
 
-	if (delete_file == TRUE && delete_dnode_files (dnode, TRUE) == FALSE) {
-		ug_thread_create (&thread, (UgThreadFunc) delete_file_thread, dnode);
-		ug_thread_unjoin (&thread);
-		return FALSE;
+	if (delete_file == TRUE) {
+		if (is_active == TRUE || delete_dnode_files (dnode, TRUE) == FALSE) {
+			ug_thread_create (&thread, (UgThreadFunc) delete_file_thread, dnode);
+			ug_thread_unjoin (&thread);
+			return FALSE;
+		}
 	}
 
 	uget_node_unref (dnode);

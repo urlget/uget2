@@ -265,10 +265,6 @@ static int  plugin_ctrl (UgetPluginCurl* plugin, int code, void* data)
 		// speed control
 		return plugin_ctrl_speed (plugin, data);
 
-	case UGET_PLUGIN_CTRL_FILE_DELETED:
-		plugin->file_deleted = TRUE;
-		break;
-
 	default:
 		break;
 	}

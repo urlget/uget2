@@ -269,6 +269,7 @@ static int  plugin_ctrl (UgetPluginMedia* plugin, int code, void* data)
 		return plugin_ctrl_speed (plugin, data);
 
 	case UGET_PLUGIN_CTRL_NODE_UPDATED:
+	default:
 		break;
 	}
 	return FALSE;

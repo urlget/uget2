@@ -368,6 +368,7 @@ static int  plugin_ctrl (UgetPluginAria2* plugin, int code, void* data)
 		return plugin_ctrl_speed (plugin, data);
 
 	case UGET_PLUGIN_CTRL_NODE_UPDATED:
+	default:
 		break;
 	}
 

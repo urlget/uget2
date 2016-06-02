@@ -56,7 +56,6 @@ typedef enum {
 	UGET_PLUGIN_CTRL_STOP,
 	UGET_PLUGIN_CTRL_SPEED,    // int*, int[0] = download, int[1] = upload
 
-	UGET_PLUGIN_CTRL_FILE_DELETED,
 	UGET_PLUGIN_CTRL_NODE_UPDATED,   // unused
 	UGET_PLUGIN_CTRL_LIMIT_CHANGED,  // unused
 } UgetPluginCtrlCode;
@@ -163,9 +162,6 @@ int   uget_plugin_ctrl (UgetPlugin* plugin, int code, void* data);
 
 #define uget_plugin_ctrl_speed(plugin, dl_ul_int_array)  \
 		uget_plugin_ctrl (plugin, UGET_PLUGIN_CTRL_SPEED, dl_ul_int_array)
-
-#define uget_plugin_file_deleted(plugin)  \
-		uget_plugin_ctrl (plugin, UGET_PLUGIN_CTRL_FILE_DELETED, NULL)
 
 // unused
 // notify plug-in when other data was changed
