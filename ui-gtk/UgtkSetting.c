@@ -557,7 +557,7 @@ int  ugtk_setting_save (UgtkSetting* setting, const char* file)
 	ug_json_file_end_write (jfile);
 	ug_json_file_free (jfile);
 
-	ug_unlink (file);
+	ug_remove (file);
 	ug_rename (path, file);
 	g_free (path);
 
@@ -574,7 +574,7 @@ int  ugtk_setting_load (UgtkSetting* setting, const char* path)
 	jfile = ug_json_file_new (4096);
 	file_ok = ug_json_file_begin_parse (jfile, path);
 	if (file_ok)
-		ug_unlink (path_temp);
+		ug_remove (path_temp);
 	else if (ug_rename (path_temp, path) != -1)
 		file_ok = ug_json_file_begin_parse (jfile, path);
 	g_free (path_temp);

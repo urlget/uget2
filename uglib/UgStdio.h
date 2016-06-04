@@ -260,16 +260,15 @@ int   ug_ftruncate (FILE* file, int64_t size);
 // ----------------------------------------------------------------------------
 // file & directory functions: these functions returns 0 if it is successful.
 
+// ug_rename() renames a file, moving it between directories if required.
+// ug_remove() deletes a name from the filesystem, it works for both files and directories.
+
 #if defined _WIN32 || defined _WIN64 || defined HAVE_GLIB
 int  ug_rename (const char *old_file_utf8, const char *new_file_utf8);
-int  ug_unlink (const char *file_utf8);
-int  ug_create_dir (const char *dir_utf8);
-int  ug_delete_dir (const char *dir_utf8);
+int  ug_remove (const char *file_utf8);
 #else
 #  define ug_rename             rename
-#  define ug_unlink             unlink
-#  define ug_create_dir(dir)    mkdir(dir,0755)
-#  define ug_delete_dir         rmdir
+#  define ug_remove             remove
 #endif
 
 #ifdef __cplusplus

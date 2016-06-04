@@ -766,11 +766,7 @@ static int  delete_dnode_files (UgetNode* dnode, int  has_aria2_file)
 			continue;
 		}
 
-		if (ug_file_is_dir (fnode->name) == FALSE)
-			error = ug_unlink (fnode->name);
-		else
-			error = ug_delete_dir (fnode->name);
-
+		error = ug_remove (fnode->name);
 		if (error != 0)
 			error_count++;
 		else if (error_count == 0 || strstr (fnode->name, ".aria2") == NULL)
