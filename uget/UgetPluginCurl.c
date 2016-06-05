@@ -643,6 +643,8 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 		                (uint64_t*) &ugcurl->beg,
 		                (uint64_t*) &ugcurl->end);
 		plugin->segment.beg = ugcurl->end;
+		// plugin_sync() will add file node for existing file
+		plugin->file_renamed = TRUE;
 		plugin->synced = FALSE;
 	}
 	else {
@@ -901,7 +903,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 		}
 		// save aria2 control file every 0.5 x 4 = 2 seconds.
 		if ((counter & 3) == 3 || N_THREAD (plugin) == 0) {
-			if (plugin->aria2.path && plugin->file_deleted == FALSE)
+			if (plugin->aria2.path)
 				uget_a2cf_save (&plugin->aria2.ctrl, plugin->aria2.path);
 		}
 		// split download every 0.5 x 8 = 4 seconds.
