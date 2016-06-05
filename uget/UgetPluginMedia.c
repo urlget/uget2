@@ -233,8 +233,8 @@ static void plugin_final (UgetPluginMedia* plugin)
 	// extent data and plug-in
 	if (plugin->ex.node)
 		uget_node_unref (plugin->ex.node);
-	if (plugin->ex.children)
-		uget_node_unref (plugin->ex.children);
+	if (plugin->ex.node_child)
+		uget_node_unref (plugin->ex.node_child);
 	if (plugin->ex.plugin)
 		uget_plugin_unref (plugin->ex.plugin);
 	// other data
@@ -357,18 +357,18 @@ static int  plugin_sync (UgetPluginMedia* plugin)
 	plugin->common->retry_limit = common->retry_limit;
 
 	// downloading file name changed
-	if (plugin->sync_fname == TRUE) {
-		plugin->sync_fname = FALSE;
+	if (plugin->file_renamed == TRUE) {
+		plugin->file_renamed = FALSE;
 		ug_mutex_lock (&plugin->mutex);
 		ug_free (common->file);
 		common->file = ug_strdup (plugin->common->file);
 		ug_mutex_unlock (&plugin->mutex);
 	}
-	// sync child node from ex.children
+	// sync child node from ex.node_child
 	if (plugin->sync_child == TRUE) {
 		plugin->sync_child = FALSE;
 		ug_mutex_lock (&plugin->mutex);
-		sync_child_node (node, plugin->ex.children,
+		sync_child_node (node, plugin->ex.node_child,
 		                 (plugin->stopped) ? FALSE : TRUE);
 		ug_mutex_unlock (&plugin->mutex);
 	}
@@ -521,7 +521,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 	plugin->elapsed = 0;
 	plugin->retry_count = 0;
 	// create children node
-	plugin->ex.children = uget_node_new (NULL);
+	plugin->ex.node_child = uget_node_new (NULL);
 
 	for (;  umitem;  umitem = umitem->next) {
 		// stop this loop when user paused this plug-in.
@@ -578,7 +578,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 				quality, type);
 		ug_str_replace_chars (common->file, "\\/:*?\"<>|", '_');
 		ug_mutex_unlock (&plugin->mutex);
-		plugin->sync_fname = TRUE;
+		plugin->file_renamed = TRUE;
 
 		// skip completed file
 		if (is_file_completed (common->file, common->folder))
@@ -618,9 +618,9 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 				uget_plugin_ctrl_speed (plugin->ex.plugin, plugin->limit);
 			}
 
-			// sync child(file) node from ex.node to ex.children
+			// sync child(file) node from ex.node to ex.node_child
 			ug_mutex_lock (&plugin->mutex);
-			plugin->sync_child = sync_child_node (plugin->ex.children,
+			plugin->sync_child = sync_child_node (plugin->ex.node_child,
 			                                      plugin->ex.node, TRUE);
 			ug_mutex_unlock (&plugin->mutex);
 
@@ -633,6 +633,11 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 
 				// handle or discard some message
 				switch (msg->type) {
+				case UGET_EVENT_NAME:
+					// tell plugin_sync() to change file name
+					plugin->file_renamed = TRUE;
+					break;
+
 				case UGET_EVENT_ERROR:
 					// stop downloading if error occurred
 					plugin->paused = TRUE;
@@ -653,7 +658,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 
 		// sync file node
 		ug_mutex_lock (&plugin->mutex);
-		plugin->sync_child = sync_child_node (plugin->ex.children,
+		plugin->sync_child = sync_child_node (plugin->ex.node_child,
 		                                      plugin->ex.node, FALSE);
 		ug_mutex_unlock (&plugin->mutex);
 

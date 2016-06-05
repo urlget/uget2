@@ -78,7 +78,7 @@ struct UgetPluginMedia
 		// plugin->ex.node is a copy of plugin->node
 		UgetNode*     node;
 		// copy child nodes from ex.node
-		UgetNode*     children;
+		UgetNode*     node_child;
 		// ex.plugin use ex.node to download
 		UgetPlugin*   plugin;
 	} ex;
@@ -106,8 +106,8 @@ struct UgetPluginMedia
 	uint8_t       stopped:1;       // all of downloading thread are stopped
 	uint8_t       synced:1;        // used by plugin_sync()
 	uint8_t       named:1;         // change node name by title
-	uint8_t       sync_fname:1;    // downloading filename changed
-	uint8_t       sync_child:1;    // ex.children->children changed
+	uint8_t       file_renamed:1;  // downloading filename changed
+	uint8_t       sync_child:1;    // ex.node_child->children changed
 };
 
 
