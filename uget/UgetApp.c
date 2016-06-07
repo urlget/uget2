@@ -1238,7 +1238,7 @@ UgetNode* uget_app_load_category (UgetApp* app, const char* filename)
 		uget_app_add_category (app, cnode, FALSE);
 		// create fake node
 		uget_node_make_fake (cnode);
-		// move all downloads from active to queuing in this categoey
+		// move all downloads from active to queuing in this category
 		uget_app_stop_category (app, cnode);
 		return cnode;
 	}
