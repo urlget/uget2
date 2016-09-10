@@ -77,6 +77,43 @@ uint64_t ug_get_time_count (void)
 // ----------------------------------------------------------------------------
 // Unicode
 
+int  ug_utf8_get_invalid (const uint8_t* input, uint8_t* ch)
+{
+	int            nb = 0, na;
+	const uint8_t *c = input;
+
+	for (c = input;  *c;  c += (nb + 1)) {
+		if (!(*c & 0x80))
+			nb = 0;
+		else if ((*c & 0xc0) == 0x80) {
+			if (ch)
+				*ch = *c;
+			return (intptr_t)c - (intptr_t)input;
+		}
+		else if ((*c & 0xe0) == 0xc0)
+			nb = 1;
+		else if ((*c & 0xf0) == 0xe0)
+			nb = 2;
+		else if ((*c & 0xf8) == 0xf0)
+			nb = 3;
+		else if ((*c & 0xfc) == 0xf8)
+			nb = 4;
+		else if ((*c & 0xfe) == 0xfc)
+			nb = 5;
+
+		na = nb;
+		while (na-- > 0) {
+			if ((*(c + nb) & 0xc0) != 0x80) {
+				if (ch)
+					*ch = *(c + nb);
+				return (intptr_t)(c + nb) - (intptr_t)input;
+			}
+		}
+	}
+	return -1;
+}
+
+// 0xC0: Start of a 2-byte sequence
 static const uint8_t  utf8Limits[] = {0xC0, 0xE0, 0xF0, 0xF8, 0xFC};
 
 uint16_t*  ug_utf8_to_utf16 (const char* string, int count, int* utf16len)
@@ -141,42 +178,6 @@ uint16_t*  ug_utf8_to_utf16 (const char* string, int count, int* utf16len)
 	return result;
 }
 
-int  ug_utf8_get_invalid (const uint8_t* input, uint8_t* ch)
-{
-	int            nb = 0, na;
-	const uint8_t *c = input;
-
-	for (c = input;  *c;  c += (nb + 1)) {
-		if (!(*c & 0x80))
-			nb = 0;
-		else if ((*c & 0xc0) == 0x80) {
-			if (ch)
-				*ch = *c;
-			return (intptr_t)c - (intptr_t)input;
-		}
-		else if ((*c & 0xe0) == 0xc0)
-			nb = 1;
-		else if ((*c & 0xf0) == 0xe0)
-			nb = 2;
-		else if ((*c & 0xf8) == 0xf0)
-			nb = 3;
-		else if ((*c & 0xfc) == 0xf8)
-			nb = 4;
-		else if ((*c & 0xfe) == 0xfc)
-			nb = 5;
-
-		na = nb;
-		while (na-- > 0) {
-			if ((*(c + nb) & 0xc0) != 0x80) {
-				if (ch)
-					*ch = *(c + nb);
-				return (intptr_t)(c + nb) - (intptr_t)input;
-			}
-		}
-	}
-	return -1;
-}
-
 uint8_t*   ug_utf16_to_utf8 (uint16_t* string, int count,
                              int* utf8len)
 {
@@ -201,8 +202,8 @@ uint8_t*   ug_utf16_to_utf8 (uint16_t* string, int count,
 			*dest++ = (uint8_t) (0x80 | ((ch >>  0) & 0x3F));
 		}
 		else {
-			*dest++ = (uint8_t) (0xC0 | ((ch >> 12) & 0x1F));
-			*dest++ = (uint8_t) (0x80 | ((ch >>  6) & 0x3F));
+			*dest++ = (uint8_t) (0xC0 | ((ch >>  6) & 0x1F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  0) & 0x3F));
 		}
 	}
 

@@ -53,9 +53,10 @@ uint64_t   ug_get_time_count (void);
 // ----------------------------------------------------------------------------
 // Unicode
 
+int        ug_utf8_get_invalid (const uint8_t* input, uint8_t* ch);
+
 uint16_t*  ug_utf8_to_utf16 (const char* string, int stringLength,
                              int* utf16len);
-int        ug_utf8_get_invalid (const uint8_t* input, uint8_t* ch);
 
 uint8_t*   ug_utf16_to_utf8 (uint16_t* string, int stringLength,
                              int* utf8len);
