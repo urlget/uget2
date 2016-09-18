@@ -77,12 +77,12 @@ uint64_t ug_get_time_count (void)
 // ----------------------------------------------------------------------------
 // Unicode
 
-int  ug_utf8_get_invalid (const uint8_t* input, uint8_t* ch)
+int  ug_utf8_get_invalid (const char* input, char* ch)
 {
 	int            nb = 0, na;
-	const uint8_t *c = input;
+	const uint8_t *c;
 
-	for (c = input;  *c;  c += (nb + 1)) {
+	for (c = (uint8_t*) input;  *c;  c += (nb + 1)) {
 		if (!(*c & 0x80))
 			nb = 0;
 		else if ((*c & 0xc0) == 0x80) {
@@ -172,14 +172,13 @@ uint16_t*  ug_utf8_to_utf16 (const char* string, int count, int* utf16len)
 		}
 	}
 
-	*dest++ = 0;
 	if (utf16len)
 		*utf16len = dest - result;
+	*dest++ = 0;
 	return result;
 }
 
-uint8_t*   ug_utf16_to_utf8 (uint16_t* string, int count,
-                             int* utf8len)
+char*   ug_utf16_to_utf8 (const uint16_t* string, int count, int* utf8len)
 {
 	uint16_t    ch;
 	uint8_t*    result;
@@ -207,10 +206,10 @@ uint8_t*   ug_utf16_to_utf8 (uint16_t* string, int count,
 		}
 	}
 
-	*dest++ = 0;
 	if (utf8len)
 		*utf8len = dest - result;
-	return result;
+	*dest++ = 0;
+	return (char*)result;
 }
 
 // ----------------------------------------------------------------------------

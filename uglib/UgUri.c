@@ -291,7 +291,7 @@ char* ug_uri_get_file (UgUri* uuri)
 		return NULL;
 	name = ug_malloc (len + 1);
 	ug_decode_uri (str, len, name);
-	if (ug_utf8_get_invalid ((uint8_t*) name, NULL) == -1)
+	if (ug_utf8_get_invalid (name, NULL) == -1)
 		return name;
 
 	ug_free (name);

@@ -461,7 +461,7 @@ void  uget_node_set_name_by_uri (UgetNode* node, UgUri* uuri)
 			length = strcspn (filename, "&");
 			node->name = ug_malloc (length + 1);
 			ug_decode_uri (filename, length, node->name);
-			if (ug_utf8_get_invalid ((uint8_t*) node->name, NULL) != -1) {
+			if (ug_utf8_get_invalid (node->name, NULL) != -1) {
 				ug_free (node->name);
 				node->name = ug_strndup (filename, length);
 			}
