@@ -212,6 +212,116 @@ char*   ug_utf16_to_utf8 (const uint16_t* string, int count, int* utf8len)
 	return (char*)result;
 }
 
+uint32_t*  ug_utf8_to_ucs4 (const char* string, int count, int* ucs4len)
+{
+	uint8_t     ch;
+	uint32_t*   result;
+	uint32_t*   dest;
+	uint32_t    value;
+	const char* end;
+
+	if (count == -1)
+		count  = strlen (string);
+	end  = string + count;
+	result = ug_malloc (sizeof (uint32_t) * (count+1) );
+	dest   = result;
+
+	while (string < end) {
+		ch = *string++;
+
+		if(ch < 0x80) { // 0-127, US-ASCII (single byte)
+			*dest++ = (uint32_t)ch;
+			continue;
+		}
+
+		if(ch < 0xC0) // The first octet for each code point should within 0-191
+			break;
+
+		for(count = 1;  count < 5;  count++)
+			if(ch < utf8Limits[count])
+				break;
+		value = ch - utf8Limits[count - 1];
+
+		do {
+			uint8_t  ch2;
+
+			if (string >= end)  //  || string[0] == 0
+				break;
+			ch2 = *string++;
+			if (ch2 == 0)
+				break;
+			if(ch2 < 0x80 || ch2 >= 0xC0)
+				break;
+			value <<= 6;
+			value |= (ch2 - 0x80);
+		} while(--count != 0);
+
+		*dest++ = value;
+	}
+
+	if (ucs4len)
+		*ucs4len = dest - result;
+	*dest++ = 0;
+	return result;
+}
+
+char*   ug_ucs4_to_utf8 (const uint32_t* string, int count, int* utf8len)
+{
+	uint32_t    ch;
+	uint8_t*    result;
+	uint8_t*    dest;
+	const uint32_t* end;
+
+	if (count == -1) {
+		for (count = 0;  string[count] != 0;  count++)
+			;
+	}
+	end  = string + count;
+	result = ug_malloc (sizeof (uint8_t) * (count+1) * 6);
+	dest   = result;
+
+	while (string < end) {
+		ch = *string++;
+		if (ch >= 1 && ch <= 0x7F)
+			*dest++ = (uint8_t) ch;
+		else if (ch > 0x3FFFFFF) {
+			*dest++ = (uint8_t) (0xFC | ((ch >> 30) & 0x01));
+			*dest++ = (uint8_t) (0x80 | ((ch >> 24) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >> 18) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >> 12) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  6) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  0) & 0x3F));
+		}
+		else if (ch > 0x10FFFF) {
+			*dest++ = (uint8_t) (0xF8 | ((ch >> 24) & 0x03));
+			*dest++ = (uint8_t) (0x80 | ((ch >> 18) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >> 12) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  6) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  0) & 0x3F));
+		}
+		else if (ch > 0xFFFF) {
+			*dest++ = (uint8_t) (0xF0 | ((ch >> 18) & 0x07));
+			*dest++ = (uint8_t) (0x80 | ((ch >> 12) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  6) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  0) & 0x3F));
+		}
+		else if (ch > 0x7FF) {
+			*dest++ = (uint8_t) (0xE0 | ((ch >> 12) & 0x0F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  6) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  0) & 0x3F));
+		}
+		else {
+			*dest++ = (uint8_t) (0xC0 | ((ch >>  6) & 0x1F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  0) & 0x3F));
+		}
+	}
+
+	if (utf8len)
+		*utf8len = dest - result;
+	*dest++ = 0;
+	return (char*)result;
+}
+
 // ----------------------------------------------------------------------------
 // Base64
 

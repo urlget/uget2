@@ -61,6 +61,12 @@ uint16_t*  ug_utf8_to_utf16 (const char* string, int stringLength,
 char*      ug_utf16_to_utf8 (const uint16_t* string, int stringLength,
                              int* utf8len);
 
+uint32_t*  ug_utf8_to_ucs4 (const char* string, int stringLength,
+                            int* ucs4len);
+
+char*      ug_ucs4_to_utf8 (const uint32_t* string, int stringLength,
+                            int* utf8len);
+
 // ----------------------------------------------------------------------------
 // Base64
 

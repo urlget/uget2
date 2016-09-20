@@ -437,11 +437,34 @@ void test_html (void)
 	puts("\n");
 }
 
+void test_unicode (void)
+{
+	const char* utf8_name = "\xE9\xBB\x83\xE6\xAD\xA3\xE9\x9B\x84";
+	char*       utf8_str;
+	uint32_t*   ucs4_str;
+	int   len;
+	int   idx;
+
+	ucs4_str = ug_utf8_to_ucs4 (utf8_name, -1, &len);
+	for (idx = 0;  idx < len;  idx++)
+		printf ("\\x%X", ucs4_str[idx]);
+	puts ("");
+
+	utf8_str = ug_ucs4_to_utf8 (ucs4_str,  -1, &len);
+	for (idx = 0;  idx < len;  idx++)
+		printf ("\\x%X", (unsigned)(uint8_t)utf8_str[idx]);
+	puts ("");
+
+	ug_free (ucs4_str);
+	ug_free (utf8_str);
+}
+
 // ----------------------------------------------------------------------------
 // main
 
 int   main (void)
 {
+	test_unicode ();
 	test_html ();
 	test_cmd_arg ();
 	test_option ();
