@@ -236,7 +236,7 @@ static void ugtk_statusbar_init_ui (struct UgtkStatusbar* sbar)
 	gtk_box_pack_end (hbox, widget, FALSE, TRUE, 2);
 //	gtk_label_set_width_chars (sbar->down_speed, 15);
 	gtk_misc_set_alignment (GTK_MISC (widget), 0, 0.5);
-	gtk_box_pack_end (hbox, gtk_label_new ("U:"), FALSE, TRUE, 2);
+	gtk_box_pack_end (hbox, gtk_label_new ("↑"), FALSE, TRUE, 2);
 
 	gtk_box_pack_end (hbox, gtk_separator_new (GTK_ORIENTATION_VERTICAL), FALSE, TRUE, 8);
 
@@ -247,7 +247,7 @@ static void ugtk_statusbar_init_ui (struct UgtkStatusbar* sbar)
 	gtk_box_pack_end (hbox, widget, FALSE, TRUE, 2);
 //	gtk_label_set_width_chars (sbar->down_speed, 15);
 	gtk_misc_set_alignment (GTK_MISC (widget), 0, 0.5);
-	gtk_box_pack_end (hbox, gtk_label_new ("D:"), FALSE, TRUE, 2);
+	gtk_box_pack_end (hbox, gtk_label_new ("↓"), FALSE, TRUE, 2);
 }
 
 // ----------------------------------------------------------------------------
