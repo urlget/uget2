@@ -527,7 +527,7 @@ void  uget_app_stop_category (UgetApp* app, UgetNode* cnode)
 	// program must store active nodes to array before calling uget_app_queue_download()
 	array = uget_app_store_nodes (app, category->active);
 
-	for (index = 0;  index < array->length;  index++) {
+	for (index = array->length-1;  index >= 0;  index--) {
 		dnode = array->at[index];
 		uget_app_queue_download (app, dnode);
 	}
@@ -962,8 +962,12 @@ int   uget_app_queue_download (UgetApp* app, UgetNode* dnode)
 	UgetNode*     sibling;
 	UgetCategory* category;
 
-	if (dnode->state & UGET_STATE_ACTIVE)
+	if (dnode->state & UGET_STATE_ACTIVE) {
 		uget_task_remove (&app->task, dnode);
+		// Because uget_task_remove() will clear UGET_STATE_ACTIVE,
+		// I must keep UGET_STATE_ACTIVE for below code
+		dnode->state |= UGET_STATE_ACTIVE;
+	}
 	else if ((dnode->state & UGET_STATE_UNRUNNABLE) == 0)
 		return FALSE;
 
