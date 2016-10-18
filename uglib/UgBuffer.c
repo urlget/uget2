@@ -74,6 +74,24 @@ void  ug_buffer_set_size (UgBuffer* buffer, int length)
 	buffer->end = buffer->beg + length;
 }
 
+char* ug_buffer_alloc (UgBuffer* buffer, int length)
+{
+	char*  result;
+	int    buffer_len;
+
+	if (buffer->end < buffer->cur + length) {
+		buffer_len = buffer->end - buffer->beg;
+		if (buffer_len < length)
+			buffer_len = length * 2;
+		else
+			buffer_len *= 2;
+		ug_buffer_set_size (buffer, buffer_len);
+	}
+	result = buffer->cur;
+	buffer->cur += length;
+	return result;
+}
+
 // UgBuffer.more() default function for external buffer.
 int   ug_buffer_restart (UgBuffer* buffer)
 {
@@ -129,3 +147,14 @@ void  ug_buffer_write_data (UgBuffer* buffer, const char* binary, int length)
 	}
 }
 
+#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)
+// C99
+// inline function in UgBuffer.h
+#else
+void  ug_buffer_write_char (UgBuffer* buffer, char ch)
+{
+	if ((buffer)->cur >= (buffer)->end)
+		(buffer)->more (buffer);
+	*(buffer)->cur++ = (char)(ch);
+}
+#endif  // __STDC_VERSION__
