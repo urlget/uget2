@@ -44,6 +44,7 @@
 #include <UgetCurl.h>
 #include <UgetRss.h>
 #include <UgetMedia.h>
+#include <UgetSequence.h>
 
 // ----------------------------------------------------------------------------
 // UgetNode
@@ -435,6 +436,42 @@ void  test_media (void)
 }
 
 // ----------------------------------------------------------------------------
+// UgetSeq
+
+void test_seq (void)
+{
+	UgetSequence  useq;
+	UgList  list;
+	UgLink* link;
+
+	ug_list_init (&list);
+
+	uget_sequence_init (&useq);
+
+	// digits
+	uget_sequence_add (&useq, 0, 5, 2);
+//	uget_sequence_add (&useq, 6, 10, 2);
+	// ASCII or Unicode
+	uget_sequence_add (&useq, 'A', 'F', 0);
+	uget_sequence_add (&useq, 0x7532, 0x7535, 0);
+
+	uget_sequence_get_list (&useq, "*-*-*", &list);
+	for (link = list.head;  link;  link = link->next)
+		puts (link->data);
+	ug_list_foreach_link (&list, (UgForeachFunc)ug_free, NULL);
+	ug_list_clear (&list, FALSE);
+
+	puts (" --- preview ---");
+	uget_sequence_get_preview (&useq, "*-*", &list);
+	for (link = list.head;  link;  link = link->next)
+		puts (link->data);
+	ug_list_foreach_link (&list, (UgForeachFunc)ug_free, NULL);
+	ug_list_clear (&list, FALSE);
+
+	uget_sequence_final (&useq);
+}
+
+// ----------------------------------------------------------------------------
 // main
 
 int main (void)
@@ -445,7 +482,8 @@ int main (void)
 //	test_uget_a2cf ();
 //	test_uget_curl ();
 //	test_uget_rss ();
-	test_media ();
+//	test_media ();
+	test_seq ();
 
 	return 0;
 }

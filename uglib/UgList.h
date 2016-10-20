@@ -103,6 +103,7 @@ void  ug_list_init  (UgList* list);
 void  ug_list_clear (UgList* list, int free_links);
 
 void  ug_list_foreach (UgList* list, UgForeachFunc func, void* data);
+void  ug_list_foreach_link (UgList* list, UgForeachFunc func, void* data);
 void  ug_list_prepend (UgList* list, UgLink* link);
 void  ug_list_append  (UgList* list, UgLink* link);
 void  ug_list_insert  (UgList* list, UgLink* sibling, UgLink* link);

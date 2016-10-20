@@ -224,6 +224,10 @@ void  test_buffer ()
 	ug_buffer_write (&buffer, "This is test string.", -1);
 	ug_buffer_write_char (&buffer, 'K');
 
+	*ug_buffer_alloc (&buffer, 1) = 'S';
+	*ug_buffer_alloc (&buffer, 1) = 'D';
+	ug_buffer_write_char (&buffer, 'K');
+
 	ug_buffer_write_char (&buffer, '\0');
 	puts ((char*)buffer.beg);
 	ug_buffer_clear (&buffer, 1);

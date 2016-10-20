@@ -118,6 +118,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../uget/UgetRss.h" />
+		<Unit filename="../../uget/UgetSequence.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetSequence.h" />
 		<Unit filename="../../uget/UgetTask.c">
 			<Option compilerVar="CC" />
 		</Unit>

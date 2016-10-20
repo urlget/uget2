@@ -112,6 +112,17 @@ void  ug_list_foreach (UgList* list, UgForeachFunc func, void* data)
 	}
 }
 
+void  ug_list_foreach_link (UgList* list, UgForeachFunc func, void* data)
+{
+	UgLink*  link;
+	UgLink*  next;
+
+	for (link = list->head;  link;  link = next) {
+		next = link->next;
+		func (link, data);
+	}
+}
+
 void  ug_list_prepend (UgList* list, UgLink* link)
 {
 	link->prev = NULL;

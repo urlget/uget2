@@ -19,6 +19,7 @@
     <ClInclude Include="..\..\uget\UgetPlugin.h" />
     <ClInclude Include="..\..\uget\UgetRpc.h" />
     <ClInclude Include="..\..\uget\UgetRss.h" />
+    <ClInclude Include="..\..\uget\UgetSequence.h" />
     <ClInclude Include="..\..\uget\UgetTask.h" />
     <ClInclude Include="..\..\uget\UgetHash.h" />
     <ClInclude Include="..\..\uget\UgetA2cf.h" />
@@ -40,6 +41,7 @@
     <ClCompile Include="..\..\uget\UgetPlugin.c" />
     <ClCompile Include="..\..\uget\UgetRpc.c" />
     <ClCompile Include="..\..\uget\UgetRss.c" />
+    <ClCompile Include="..\..\uget\UgetSequence.c" />
     <ClCompile Include="..\..\uget\UgetTask.c" />
     <ClCompile Include="..\..\uget\UgetHash.c" />
     <ClCompile Include="..\..\uget\UgetA2cf.c" />

@@ -851,7 +851,7 @@ void  ug_json_write_number (UgJson* json, const char* format, ...)
 	}
 
 	va_start (arg_list, format);
-#ifdef _MSC_VER		// for M$ C only
+#ifdef _MSC_VER		// for MS C only
 	length = _vscprintf (format, arg_list) + 1;
 #else				// for C99 standard
 	length = vsnprintf (NULL, 0, format, arg_list) + 1;

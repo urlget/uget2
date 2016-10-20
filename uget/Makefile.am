@@ -11,6 +11,7 @@ libuget_a_CPPFLAGS = -I$(top_srcdir)/uglib  -I$(top_srcdir)/uget
 libuget_a_CFLAGS   = @PTHREAD_CFLAGS@  @GLIB_CFLAGS@
 
 libuget_a_SOURCES = \
+	UgetSequence.c  \
 	UgetRss.c     \
 	UgetRpc.c     \
 	UgetOption.c  \
@@ -33,6 +34,7 @@ libuget_a_SOURCES = \
 	UgetPluginEmpty.c
 
 noinst_HEADERS = \
+	UgetSequence.h  \
 	UgetRss.h     \
 	UgetRpc.h     \
 	UgetOption.h  \
