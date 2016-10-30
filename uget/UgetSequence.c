@@ -105,6 +105,11 @@ void uget_sequence_add (UgetSequence* useq, uint32_t  beg, uint32_t  end, int  d
 	range->cur  = range->beg;
 }
 
+void uget_sequence_clear (UgetSequence* useq)
+{
+	useq->length = 0;
+}
+
 int  uget_sequence_count (UgetSequence* useq, const char* pattern)
 {
 	UgetSeqRange*   range;
@@ -137,20 +142,20 @@ int  uget_sequence_count (UgetSequence* useq, const char* pattern)
 static char* uget_sequence_generate1 (UgetSequence* useq, const char* pattern)
 {
 	UgetSeqRange*   range;
-	UgetSeqRange*   range_end;
 	char*       utf8;
 	int         length;
 	const char* pcur;
 	int         pcur_len;
 
 	range     = useq->at;
-	range_end = useq->at + useq->length;
 	useq->buf.cur = useq->buf.beg;
 
 	for (pcur = pattern;  pcur[0];  pcur++) {
 		pcur_len = strcspn (pcur, "*");
-
 		ug_buffer_write (&useq->buf, pcur, pcur_len);
+		if (pcur[pcur_len] != '*')
+			break;
+
 		if (range->digits == 0) {
 			// ASCII or Unicode
 			if (range->cur < 0x80)
@@ -173,7 +178,7 @@ static char* uget_sequence_generate1 (UgetSequence* useq, const char* pattern)
 			useq->buf.cur--;    // remove null character in tail
 		}
 
-		if (++range == range_end)
+		if (++range == useq->range_last)
 			range = useq->at;
 		pcur += pcur_len;    // to next '*'
 	}
@@ -184,13 +189,11 @@ static char* uget_sequence_generate1 (UgetSequence* useq, const char* pattern)
 
 static int  uget_sequence_generate (UgetSequence* useq, const char* pattern, UgetSeqRange* range, UgList* result)
 {
-	UgetSeqRange*   range_end;
 	UgLink*         link;
 	int             count;
 
-	range_end = useq->at + useq->length;
 	for (count = 0;  range->cur <= range->end;  range->cur++, count++) {
-		if (range+1 < range_end)
+		if (range+1 < useq->range_last)
 			count += uget_sequence_generate (useq, pattern, range+1, result);
 		else {
 			uget_sequence_generate1 (useq, pattern);
@@ -203,49 +206,66 @@ static int  uget_sequence_generate (UgetSequence* useq, const char* pattern, Uge
 	return count;
 }
 
+static UgetSeqRange*  uget_sequence_decide_range_last (UgetSequence* useq, const char* pattern)
+{
+	const char* wildcard;
+	int         count;
+
+	if (useq->length == 0)
+		return NULL;
+
+	// count wildcard character (*) to decide the last UgetSeqRange
+	for (count = 0, wildcard = pattern;  wildcard[0];  wildcard++) {
+		if (wildcard[0] == '*')
+			count++;
+	}
+	if (count < useq->length)
+		useq->range_last = useq->at + count -1;
+	else
+		useq->range_last = useq->at + useq->length -1;
+
+	return useq->range_last;
+}
+
 int  uget_sequence_get_list (UgetSequence* useq, const char* pattern, UgList* result)
 {
+	if (uget_sequence_decide_range_last(useq, pattern) == NULL)
+		return 0;
+
 	// reset range
 	ug_array_foreach (useq, (UgForeachFunc)uget_seq_range_to_beg, NULL);
-
+	// generate list
 	return uget_sequence_generate (useq, pattern, useq->at, result);
 }
 
 int  uget_sequence_get_preview (UgetSequence* useq, const char* pattern, UgList* result)
 {
-	UgetSeqRange* range1;
-	UgetSeqRange* range2;
+	UgetSeqRange* range_last;
+	UgetSeqRange* range_prev;
 	UgLink*       link;
 	int           count;
-	uint32_t      cur;
 
+	// use uget_sequence_get_list() to generate preview if possible.
 	count = uget_sequence_count (useq, pattern);
 	if (count < 6)
 		return uget_sequence_get_list (useq, pattern, result);
 
-	// reset range
+	range_last = uget_sequence_decide_range_last(useq, pattern);
+	// decide previous UgetSeqRange by the last UgetSeqRange
+	for (range_prev = range_last;  range_prev != useq->at;  range_prev--) {
+		if (range_prev->end - range_prev->beg + 1 > 1)
+			break;
+	}
+
+	// reset range to begin
 	ug_array_foreach (useq, (UgForeachFunc)uget_seq_range_to_beg, NULL);
 
-	range1 = useq->at + useq->length -1;
-	if (range1->end - range1->beg + 1 > 1)
-		range2 = range1;
-	else
-		range2 = range1 - 1;
-
-	if (range1 == range2)
-		cur = range2->beg + 1;
-	else
-		cur = range2->beg;
-
 	// create 1st string
-//	range1->cur = range1->beg;
-//	range2->cur = range2->beg;
 	uget_sequence_generate1 (useq, pattern);
 	link = ug_link_string_new (useq->buf.beg, ug_buffer_length (&useq->buf));
 	ug_list_append (result, link);
 	// create 2nd string
-//	range1->cur = range1->beg;
-	range2->cur = cur;
+	range_prev->cur++;
 	uget_sequence_generate1 (useq, pattern);
 	link = ug_link_string_new (useq->buf.beg, ug_buffer_length (&useq->buf));
 	ug_list_append (result, link);
@@ -254,23 +274,16 @@ int  uget_sequence_get_preview (UgetSequence* useq, const char* pattern, UgList*
 	link = ug_link_string_new (" ...", 4);
 	ug_list_append (result, link);
 
-	if (range1 == range2)
-		cur = range2->end - 1;
-	else
-		cur = range2->end;
-
-	// reset range
+	// reset range to end
 	ug_array_foreach (useq, (UgForeachFunc)uget_seq_range_to_end, NULL);
 
 	// create 4th string
-	range1->cur = range1->beg;
-	range2->cur = cur;
+	range_prev->cur = range_prev->end - 1;
 	uget_sequence_generate1 (useq, pattern);
 	link = ug_link_string_new (useq->buf.beg, ug_buffer_length (&useq->buf));
 	ug_list_append (result, link);
 	// create 5th string
-	range1->cur = range1->end;
-	range2->cur = range2->end;
+	range_prev->cur = range_prev->end;
 	uget_sequence_generate1 (useq, pattern);
 	link = ug_link_string_new (useq->buf.beg, ug_buffer_length (&useq->buf));
 	ug_list_append (result, link);

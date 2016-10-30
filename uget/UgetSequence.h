@@ -38,6 +38,7 @@
 #define UGET_SEQUENCE_H
 
 #include <stdint.h>
+#include <UgList.h>
 #include <UgArray.h>
 #include <UgBuffer.h>
 
@@ -51,12 +52,12 @@ typedef struct	UgetSeqRange    UgetSeqRange;
 struct UgetSeqRange
 {
 	// [beg, end]
-	// e.g. 0-9, A-Z, a-z, 甲乙丙丁
+	// e.g. 0-9, A-Z, a-z, or Unicode
 	uint32_t  beg;
 	uint32_t  end;
 	uint32_t  cur;
 
-	// if digits == 0, use ASCII or unicode to generate string.
+	// if digits == 0, use ASCII or Unicode to generate string.
 	int  digits;
 };
 
@@ -68,24 +69,27 @@ struct UgetSequence
 //	int    allocated;
 //	int    element_size;
 
-	UgBuffer  buf;
+	UgetSeqRange*  range_last;    // used by uget_sequence_get_list()
+	UgBuffer       buf;
 };
 
 void uget_sequence_init (UgetSequence* useq);
 void uget_sequence_final (UgetSequence* useq);
 
 void uget_sequence_add (UgetSequence* useq, uint32_t beg, uint32_t end, int digits);
+void uget_sequence_clear (UgetSequence* useq);
+
 int  uget_sequence_count (UgetSequence* useq, const char* pattern);
 
 // call ug_list_foreach_link (result, (UgForeachFunc)ug_free, NULL) to free result list
 int  uget_sequence_get_list (UgetSequence* useq, const char* pattern, UgList* result);
 int  uget_sequence_get_preview (UgetSequence* useq, const char* pattern, UgList* result);
 
-
-// *-*.jpg
-// 000
-// aaa
-// AAA
+// param: pattern is a string that contain wildcard character *.
+// e.g. Number-*.jpg
+//      Number-0.jpg, Number-1.jpg ...etc
+//      Number-a.jpg, Number-b.jpg ...etc
+//      Number-A.jpg, Number-B.jpg ...etc
 
 
 #ifdef __cplusplus

@@ -450,19 +450,20 @@ void test_seq (void)
 
 	// digits
 	uget_sequence_add (&useq, 0, 5, 2);
-//	uget_sequence_add (&useq, 6, 10, 2);
 	// ASCII or Unicode
-	uget_sequence_add (&useq, 'A', 'F', 0);
+	uget_sequence_add (&useq, 'a', 'b', 0);
 	uget_sequence_add (&useq, 0x7532, 0x7535, 0);
 
-	uget_sequence_get_list (&useq, "*-*-*", &list);
+	printf (" --- sequence ---  count = %d\n",
+			uget_sequence_count (&useq, "http://sample/*-*-*.mp4"));
+	uget_sequence_get_list (&useq, "http://sample/*-*-*.mp4", &list);
 	for (link = list.head;  link;  link = link->next)
 		puts (link->data);
 	ug_list_foreach_link (&list, (UgForeachFunc)ug_free, NULL);
 	ug_list_clear (&list, FALSE);
 
 	puts (" --- preview ---");
-	uget_sequence_get_preview (&useq, "*-*", &list);
+	uget_sequence_get_preview (&useq, "http://sample/*-*.mp4", &list);
 	for (link = list.head;  link;  link = link->next)
 		puts (link->data);
 	ug_list_foreach_link (&list, (UgForeachFunc)ug_free, NULL);
