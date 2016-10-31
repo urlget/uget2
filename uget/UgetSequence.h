@@ -51,10 +51,10 @@ typedef struct	UgetSeqRange    UgetSeqRange;
 
 struct UgetSeqRange
 {
-	// [beg, end]
+	// [first, last]
 	// e.g. 0-9, A-Z, a-z, or Unicode
-	uint32_t  beg;
-	uint32_t  end;
+	uint32_t  first;
+	uint32_t  last;
 	uint32_t  cur;
 
 	// if digits == 0, use ASCII or Unicode to generate string.
@@ -76,7 +76,7 @@ struct UgetSequence
 void uget_sequence_init (UgetSequence* useq);
 void uget_sequence_final (UgetSequence* useq);
 
-void uget_sequence_add (UgetSequence* useq, uint32_t beg, uint32_t end, int digits);
+void uget_sequence_add (UgetSequence* useq, uint32_t first, uint32_t last, int digits);
 void uget_sequence_clear (UgetSequence* useq);
 
 int  uget_sequence_count (UgetSequence* useq, const char* pattern);
