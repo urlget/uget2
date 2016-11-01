@@ -962,13 +962,8 @@ int   uget_app_queue_download (UgetApp* app, UgetNode* dnode)
 	UgetNode*     sibling;
 	UgetCategory* category;
 
-	if (dnode->state & UGET_STATE_ACTIVE) {
-		uget_task_remove (&app->task, dnode);
-		// Because uget_task_remove() will clear UGET_STATE_ACTIVE,
-		// I must keep UGET_STATE_ACTIVE for below code
-		dnode->state |= UGET_STATE_ACTIVE;
-	}
-	else if ((dnode->state & UGET_STATE_UNRUNNABLE) == 0)
+	if ((dnode->state & UGET_STATE_ACTIVE)     == 0 &&
+		(dnode->state & UGET_STATE_UNRUNNABLE) == 0)
 		return FALSE;
 
 	if (dnode->state & UGET_STATE_QUEUING)
@@ -978,12 +973,16 @@ int   uget_app_queue_download (UgetApp* app, UgetNode* dnode)
 		uget_node_remove (cnode, dnode);
 		uget_node_unref_fake (dnode);
 
-		category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
+		// --- decide sibling position & insert before it ---
 		// if current download is in active, insert it before queuing,
 		// otherwise insert it before finished and recycled.
-		if (dnode->state & UGET_STATE_ACTIVE)
+		category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
+		sibling = NULL;
+		if (dnode->state & UGET_STATE_ACTIVE) {
+			uget_task_remove (&app->task, dnode);
 			sibling = category->queuing->children;
-		else
+		}
+		if (sibling == NULL)
 			sibling = category->finished->children;
 		if (sibling == NULL)
 			sibling = category->recycled->children;
@@ -999,9 +998,9 @@ int   uget_app_queue_download (UgetApp* app, UgetNode* dnode)
 void  uget_app_reset_download_name (UgetApp* app, UgetNode* dnode)
 {
 	UgetCommon*  common;
-	UgUri        uuri;
-	UgetNode*    cnode = NULL;
 	UgetNode*    sibling;
+	UgetNode*    cnode = NULL;
+	UgUri        uuri;
 
 	common = ug_info_realloc (&dnode->info, UgetCommonInfo);
 	if (common->file) {
