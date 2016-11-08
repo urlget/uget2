@@ -208,7 +208,7 @@ FILE* ug_fopen (const char *filename, const char *mode)
 #endif // _WIN32 || _WIN64
 
 #ifdef __ANDROID__
-#include <sys/linux-syscalls.h>
+//#include <sys/linux-syscalls.h>
 
 int  fseek_64 (FILE *stream, int64_t offset, int origin)
 {
@@ -233,7 +233,7 @@ int64_t ftell_64 (FILE *stream)
 	int fd;
 
 	fd = fileno (stream);
-	return lseek (fd, 0L, SEEK_CUR);
+	return lseek64 (fd, 0L, SEEK_CUR);
 }
 #endif  // __ANDROID__
 
