@@ -5,9 +5,9 @@ project(uget)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DNDEBUG")
 # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DNO_RETRY_IF_CONNECT_FAILED")
 
-include_directories( ${PROJECT_SOURCE_DIR}
-                     ${PROJECT_SOURCE_DIR}/../uglib
-                     ${PROJECT_SOURCE_DIR}/../curl/include
+include_directories( ${CURL_INCLUDE_DIR}
+                     ${CMAKE_CURRENT_SOURCE_DIR}
+                     ${CMAKE_CURRENT_SOURCE_DIR}/../uglib
                    )
 
 add_library( uget

@@ -4,8 +4,8 @@ project(uglib)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DNDEBUG")
 
-include_directories( ${PROJECT_SOURCE_DIR}
-                     ${PROJECT_SOURCE_DIR}/../curl/include
+include_directories( ${CURL_INCLUDE_DIR}
+                     ${CMAKE_CURRENT_SOURCE_DIR}
                    )
 
 add_library( uglib
