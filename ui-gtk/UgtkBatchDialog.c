@@ -209,31 +209,28 @@ static void on_sequencer_response (UgtkBatchDialog* bdialog)
 	UgetNode*   dnode;
 	UgetNode*   cnode;
 	UgetCommon* common;
-	GList*  uri_list;
-	GList*  link;
+	UgList  result;
+	UgLink* link;
 
 	app = bdialog->app;
 	ugtk_batch_dialog_get_category (bdialog, &cnode);
 	ugtk_download_form_get_folders (&bdialog->download,
 	                                &app->setting);
 	// sequencer batch
-	uri_list = ugtk_sequence_get_list (&bdialog->sequencer, FALSE);
+	ug_list_init (&result);
+	ugtk_sequence_get_list (&bdialog->sequencer, &result);
 
-	for (link = uri_list;  link;  link = link->next) {
+	for (link = result.head;  link;  link = link->next) {
 		dnode = uget_node_new (NULL);
 		common = ug_info_realloc (&dnode->info, UgetCommonInfo);
 		ugtk_node_dialog_get ((UgtkNodeDialog*) bdialog, dnode);
-#if 0
-		common->uri = link->data;
-		link->data = NULL;
-#else
 		common->uri = ug_strdup (link->data);
 		g_free (link->data);
-#endif
 		uget_app_add_download ((UgetApp*) app, dnode, cnode, FALSE);
 	}
 
-	g_list_free (uri_list);
+	ug_list_foreach_link (&result, (UgForeachFunc)ug_free, NULL);
+	ug_list_clear (&result, FALSE);
 }
 
 static void on_selector_response (UgtkBatchDialog* bdialog)

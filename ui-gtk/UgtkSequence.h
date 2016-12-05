@@ -37,6 +37,7 @@
 #ifndef UGTK_SEQUENCE_H
 #define UGTK_SEQUENCE_H
 
+#include <UgetSequence.h>
 #include <gtk/gtk.h>
 
 #ifdef __cplusplus
@@ -44,26 +45,51 @@ extern "C" {
 #endif
 
 typedef struct  UgtkSequence      UgtkSequence;
+typedef struct  UgtkSeqRange      UgtkSeqRange;
 typedef	void  (*UgtkSequenceNotify) (gpointer user_data, gboolean completed);
 
-struct UgtkSequence
+enum UgtkSeqType
 {
-	GtkWidget*  self;       // GtkGrid
+	UGTK_SEQ_TYPE_NONE,
+	UGTK_SEQ_TYPE_NUMBER,
+	UGTK_SEQ_TYPE_CHARACTER
+};
 
-	GtkEntry*   entry;      // URI, wildcard
-	GtkWidget*  radio;      // GtkRadioButton
+// -----------------------------------------------------------------------------
+// UgtkSeqRange
+
+struct UgtkSeqRange
+{
+	GtkWidget*  self;
+
+	GtkWidget*  type;    // GtkComboBox - None, Number, and Character
+	GtkWidget*  label_to;
 
 	// digit mode
 	GtkWidget*  spin_from;
 	GtkWidget*  spin_to;
 	GtkWidget*  spin_digits;
-	GtkWidget*  label_to;
 	GtkWidget*  label_digits;
 
 	// character mode
-	GtkEntry*   entry_from;
-	GtkEntry*   entry_to;
+	GtkWidget*  entry_from;
+	GtkWidget*  entry_to;
 	GtkWidget*  label_case;
+};
+
+void   ugtk_seq_range_init (UgtkSeqRange* range, UgtkSequence* seq);
+void   ugtk_seq_range_set_type (UgtkSeqRange* range, enum UgtkSeqType type);
+enum UgtkSeqType  ugtk_seq_range_get_type (UgtkSeqRange* range);
+
+// -----------------------------------------------------------------------------
+// UgtkSequence
+
+struct UgtkSequence
+{
+	GtkWidget*    self;       // GtkGrid
+	GtkEntry*     entry;      // URI, wildcard
+	UgtkSeqRange  range[3];   // range x 3
+	UgetSequence  sequence;
 
 	// preview
 	struct UgtkSequencePreview
@@ -78,15 +104,14 @@ struct UgtkSequence
 	struct
 	{
 //		UgtkNotify  func1;
-		UgtkSequenceNotify func;
+		UgtkSequenceNotify  func;
 		gpointer            data;
 	} notify;
 };
 
-void   ugtk_sequence_init (UgtkSequence* seqer);
-void   ugtk_sequence_update_preview (UgtkSequence* seqer);
-GList* ugtk_sequence_get_list (UgtkSequence* seqer, gboolean preview);
-
+void   ugtk_sequence_init (UgtkSequence* seq);
+void   ugtk_sequence_show_preview (UgtkSequence* seq);
+int    ugtk_sequence_get_list (UgtkSequence* seq, UgList* result);
 
 #ifdef __cplusplus
 }
