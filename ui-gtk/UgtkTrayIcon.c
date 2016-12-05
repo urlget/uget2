@@ -234,8 +234,9 @@ void ugtk_tray_icon_set_info (UgtkTrayIcon* trayicon, guint n_active, gint64 dow
 	string = g_strdup_printf (
 			UGTK_APP_NAME " " PACKAGE_VERSION "\n"
 			"%u %s" "\n"
-			"\xE2\x86\x93 %s" "\n"    // "↓"
-			"\xE2\x86\x91 %s",        // "↑"
+			"\xE2\x86\x93 %s"     // "↓"
+			" , "
+			"\xE2\x86\x91 %s",    // "↑"
 			n_active, _("tasks"),
 			string_down_speed,
 			string_up_speed);
