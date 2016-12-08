@@ -44,13 +44,11 @@
 static void on_type_changed (GtkComboBox* widget, UgtkSeqRange* range);
 static void on_show (GtkWidget *widget, UgtkSeqRange* range);
 
-void   ugtk_seq_range_init (UgtkSeqRange* range, UgtkSequence* seq)
+void   ugtk_seq_range_init (UgtkSeqRange* range, UgtkSequence* seq, GtkSizeGroup* size_group)
 {
 	GtkBox*        box;
 	GtkAdjustment* adjustment;
-	GtkSizeGroup*  size_group;
 
-	size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 	range->self = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 3);
 	box = (GtkBox*) range->self;
 	g_signal_connect (range->self, "show",
@@ -82,7 +80,6 @@ void   ugtk_seq_range_init (UgtkSeqRange* range, UgtkSequence* seq)
 	gtk_entry_set_text (GTK_ENTRY (range->entry_from), "a");
 	gtk_entry_set_max_length (GTK_ENTRY (range->entry_from), 1);
 //	gtk_entry_set_width_chars (GTK_ENTRY (range->entry_from), 2);
-	gtk_widget_set_visible (range->entry_from, FALSE);
 	gtk_size_group_add_widget (size_group, range->entry_from);
 	gtk_box_pack_start (box, range->entry_from, FALSE, FALSE, 2);
 	g_signal_connect_swapped (GTK_EDITABLE (range->entry_from), "changed",
@@ -122,7 +119,6 @@ void   ugtk_seq_range_init (UgtkSeqRange* range, UgtkSequence* seq)
 	gtk_entry_set_text (GTK_ENTRY (range->entry_to), "z");
 	gtk_entry_set_max_length (GTK_ENTRY (range->entry_to), 1);
 //	gtk_entry_set_width_chars (GTK_ENTRY (range->entry_to), 2);
-	gtk_widget_set_visible (range->entry_to, FALSE);
 	gtk_size_group_add_widget (size_group, range->entry_to);
 	gtk_box_pack_start (box, range->entry_to, FALSE, FALSE, 2);
 	g_signal_connect_swapped (GTK_EDITABLE (range->entry_to), "changed",
@@ -130,11 +126,9 @@ void   ugtk_seq_range_init (UgtkSeqRange* range, UgtkSequence* seq)
 
 	// label - case-sensitive
 	range->label_case = gtk_label_new (_("case-sensitive"));
-	gtk_widget_set_visible (range->label_case, FALSE);
-	gtk_box_pack_start (box, range->label_case, TRUE, FALSE, 2);
+	gtk_box_pack_start (box, range->label_case, FALSE, FALSE, 2);
 
 //	gtk_widget_show_all (range->self);
-	g_object_unref (size_group);
 }
 
 void   ugtk_seq_range_set_type (UgtkSeqRange* range, enum UgtkSeqType type)
@@ -224,6 +218,10 @@ void  ugtk_sequence_init (UgtkSequence* seq)
 	GtkWidget*      label;
 	GtkWidget*      entry;
 	GtkWidget*      widget;
+	GtkSizeGroup*   size_group;
+
+	// UgetSequence: call uget_sequence_final() in on_destroy()
+	uget_sequence_init (&seq->sequence);
 
 	// top widget
 	seq->self = gtk_grid_new ();
@@ -257,17 +255,17 @@ void  ugtk_sequence_init (UgtkSequence* seq)
 
 	// ------------------------------------------------
 	// UgtkSeqRange
-	ugtk_seq_range_init (&seq->range[0], seq);
-	ugtk_seq_range_init (&seq->range[1], seq);
-	ugtk_seq_range_init (&seq->range[2], seq);
+	size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+	ugtk_seq_range_init (&seq->range[0], seq, size_group);
+	ugtk_seq_range_init (&seq->range[1], seq, size_group);
+	ugtk_seq_range_init (&seq->range[2], seq, size_group);
 	g_object_set (seq->range[0].self, "margin", 3, NULL);
 	g_object_set (seq->range[1].self, "margin", 3, NULL);
 	g_object_set (seq->range[2].self, "margin", 3, NULL);
 	gtk_grid_attach (grid, seq->range[0].self, 0, 3, 2, 1);
 	gtk_grid_attach (grid, seq->range[1].self, 0, 4, 2, 1);
 	gtk_grid_attach (grid, seq->range[2].self, 0, 5, 2, 1);
-	// UgetSequence, on_destroy()
-	uget_sequence_init (&seq->sequence);
+	g_object_unref (size_group);
 
 	// ------------------------------------------------
 	// preview

@@ -77,7 +77,7 @@ struct UgtkSeqRange
 	GtkWidget*  label_case;
 };
 
-void   ugtk_seq_range_init (UgtkSeqRange* range, UgtkSequence* seq);
+void   ugtk_seq_range_init (UgtkSeqRange* range, UgtkSequence* seq, GtkSizeGroup* size_group);
 void   ugtk_seq_range_set_type (UgtkSeqRange* range, enum UgtkSeqType type);
 enum UgtkSeqType  ugtk_seq_range_get_type (UgtkSeqRange* range);
 
@@ -87,7 +87,7 @@ enum UgtkSeqType  ugtk_seq_range_get_type (UgtkSeqRange* range);
 struct UgtkSequence
 {
 	GtkWidget*    self;       // GtkGrid
-	GtkEntry*     entry;      // URI, wildcard
+	GtkEntry*     entry;      // URI + wildcard character (*)
 	UgtkSeqRange  range[3];   // range x 3
 	UgetSequence  sequence;
 
