@@ -1,6 +1,6 @@
-name: uget  # the name of the snap
-version: "git"  # the version of the snap
-summary: easy-to-use download manager  # 79 char long summary
+name: uget
+version: git
+summary: easy-to-use download manager
 description: |
  Uget (formerly urlgfe) is a simple, lightweight and easy-to-use download
  manager. It provides the following features:
@@ -23,18 +23,24 @@ parts:
     uget:
         source: http://git.code.sf.net/p/urlget/uget2.git
         plugin: autotools
-        after: [ desktop/gtk3 ]
+        after:
+          - desktop-gtk3
         build-packages:
+          - intltool
           - libappindicator3-dev
           - libcurl4-openssl-dev
           - libgstreamer1.0-dev
           - libnotify-dev
           - libssl-dev
         stage-packages:
+          - aria2
           - libappindicator3-1
           - libcairo2
           - libcurl3
           - libgstreamer1.0-0
           - libnotify4
           - libpango-1.0-0
-          - libpangocairo-1.0-0 
+          - libpangocairo-1.0-0
+        snap:
+          - -usr/share/doc/
+          - -usr/share/man/
