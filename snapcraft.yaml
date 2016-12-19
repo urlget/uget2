@@ -1,5 +1,5 @@
 name: uget  # the name of the snap
-version: "2.1.4"  # the version of the snap
+version: "git"  # the version of the snap
 summary: easy-to-use download manager  # 79 char long summary
 description: |
  Uget (formerly urlgfe) is a simple, lightweight and easy-to-use download
@@ -21,7 +21,7 @@ apps:
         plugs: [ home, gsettings, network, network-bind, unity7, x11 ]
 parts:
     uget:
-        source: git://git.code.sf.net/p/urlget/uget2
+        source: http://git.code.sf.net/p/urlget/uget2.git
         plugin: autotools
         after: [ desktop/gtk3 ]
         build-packages:
