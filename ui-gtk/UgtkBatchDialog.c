@@ -225,7 +225,6 @@ static void on_sequencer_response (UgtkBatchDialog* bdialog)
 		common = ug_info_realloc (&dnode->info, UgetCommonInfo);
 		ugtk_node_dialog_get ((UgtkNodeDialog*) bdialog, dnode);
 		common->uri = ug_strdup (link->data);
-		g_free (link->data);
 		uget_app_add_download ((UgetApp*) app, dnode, cnode, FALSE);
 	}
 
