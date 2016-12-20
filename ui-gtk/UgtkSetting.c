@@ -448,7 +448,7 @@ void  ugtk_setting_reset (UgtkSetting* setting)
 	setting->download_column.completed_on = FALSE;
 	// default sorted column
 	setting->download_column.sort.type    = GTK_SORT_DESCENDING;
-	setting->download_column.sort.nth     = UGTK_NODE_COLUMN_ADDED_ON;
+	setting->download_column.sort.nth     = UGTK_NODE_COLUMN_STATE;
 	// "DownloadColumnWidth"
 	memset (&setting->download_column.width, 0,
 			sizeof (setting->download_column.width));
