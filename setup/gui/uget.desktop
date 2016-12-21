@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=uGet
+GenericName=uGet Download Manager
+Comment=easy-to-use download manager
+Exec=uget.uget-gtk
+Icon=${SNAP}/meta/gui/uget.png
+Terminal=false
+Type=Application
+StartupNotify=false
+Categories=Application;Network;
