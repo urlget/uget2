@@ -129,8 +129,9 @@ void  ugtk_app_save (UgtkApp* app)
 {
 	gchar*    file;
 
+	if (app->config_dir == NULL)
+		return;
 	ug_create_dir_all (app->config_dir, -1);
-
 	file = g_build_filename (app->config_dir, "Setting.json", NULL);
 	ugtk_setting_save (&app->setting, file);
 	g_free (file);
@@ -1001,7 +1002,9 @@ void  ugtk_app_delete_download (UgtkApp* app, gboolean delete_files)
 			gdk_display_get_device_manager (gdk_window_get_display (gdk_win)));
 	gdk_window_get_device_position (gdk_win, dev_pointer, NULL, NULL, &mask);
 
-	cursor = app->traveler.download.cursor.node->data;
+	cursor = app->traveler.download.cursor.node;
+	if (cursor)
+		cursor = cursor->data;
 	list = ugtk_traveler_get_selected (&app->traveler);
 	for (link = list;  link;  link = link->next) {
 		node = link->data;
@@ -1080,8 +1083,11 @@ void  ugtk_app_queue_download (UgtkApp* app, gboolean keep_active)
 	GList*     list;
 	GList*     link;
 
+	cursor = app->traveler.download.cursor.node;
+	if (cursor)
+		cursor = cursor->data;
+
 	list = ugtk_traveler_get_selected (&app->traveler);
-	cursor = app->traveler.download.cursor.node->data;
 	for (link = list;  link;  link = link->next) {
 		node = link->data;
 		node = node->data;
@@ -1109,8 +1115,11 @@ void  ugtk_app_pause_download (UgtkApp* app)
 	GList*     list;
 	GList*     link;
 
+	cursor = app->traveler.download.cursor.node;
+	if (cursor)
+		cursor = cursor->data;
+
 	list = ugtk_traveler_get_selected (&app->traveler);
-	cursor = app->traveler.download.cursor.node->data;
 	for (link = list;  link;  link = link->next) {
 		node = link->data;
 		node = node->data;
@@ -1138,8 +1147,11 @@ void  ugtk_app_switch_download_state (UgtkApp* app)
 	GList*     list;
 	GList*     link;
 
+	cursor = app->traveler.download.cursor.node;
+	if (cursor)
+		cursor = cursor->data;
+
 	list = ugtk_traveler_get_selected (&app->traveler);
-	cursor = app->traveler.download.cursor.node->data;
 	for (link = list;  link;  link = link->next) {
 		node = link->data;
 		node = node->data;
