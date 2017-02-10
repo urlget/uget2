@@ -60,8 +60,28 @@ UgJsonFile*  ug_json_file_new (int buffer_size)
 
 void  ug_json_file_free (UgJsonFile* jfile)
 {
+	if (jfile->fd != -1)
+		ug_close (jfile->fd);
 	ug_json_final (&jfile->json);
 	ug_free (jfile);
+}
+
+int   ug_json_file_sync (UgJsonFile* jfile)
+{
+	// close() doesn't call fsync()
+	// If you want to avoid delayed write, call fsync() before close()
+	return ug_sync (jfile->fd);
+}
+
+int   ug_json_file_close (UgJsonFile* jfile)
+{
+	int  result = -1;
+
+	if (jfile->fd != -1) {
+		result = ug_close (jfile->fd);
+		jfile->fd = -1;
+	}
+	return result;
 }
 
 int   ug_json_file_begin_parse (UgJsonFile* jfile, const char* path)
@@ -117,8 +137,6 @@ void  ug_json_file_end_write (UgJsonFile* jfile)
 	ug_json_end_write (&jfile->json);
 	ug_buffer_clear (&jfile->buffer, FALSE);
 	ug_write (jfile->fd, "\n\n", 2);
-	ug_close (jfile->fd);
-	jfile->fd = -1;
 }
 
 // ----------------------------------------------------------------------------

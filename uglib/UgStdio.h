@@ -179,12 +179,14 @@ int  ug_truncate (int fd, int64_t length);
 #  define  ug_close     _close
 #  define  ug_read      _read
 #  define  ug_write     _write
+#  define  ug_sync      _commit
 #  define  ug_seek      _lseeki64   // for MS VC
 #  define  ug_tell      _telli64    // for MS VC
 #else
 #  define  ug_close     close
 #  define  ug_read      read
 #  define  ug_write     write
+#  define  ug_sync      fsync
 #  if defined __ANDROID__
 #    define  ug_seek      lseek64
 #    define  ug_tell(fd)  lseek64(fd, 0L, SEEK_CUR)

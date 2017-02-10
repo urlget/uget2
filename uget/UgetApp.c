@@ -157,7 +157,7 @@ static UgArrayPtr* uget_app_store_nodes (UgetApp* app, UgetNode* parent)
 	return array;
 }
 
-static void     uget_app_clear_nodes (UgetApp* app)
+static void uget_app_clear_nodes (UgetApp* app)
 {
 	app->nodes.length = 0;
 }
@@ -1212,6 +1212,7 @@ int   uget_app_save_category (UgetApp* app, UgetNode* cnode, const char* filenam
 	ug_json_write_object_tail (&jfile->json);
 
 	ug_json_file_end_write (jfile);
+	ug_json_file_sync (jfile);    // avoid file corrupted on sudden shutdown
 	ug_json_file_free (jfile);
 	return TRUE;
 }
@@ -1287,6 +1288,7 @@ int   uget_app_save_categories (UgetApp* app, const char* folder)
 		ug_json_write_object_tail (&jfile->json);
 
 		ug_json_file_end_write (jfile);
+		ug_json_file_sync (jfile);    // avoid file corrupted on sudden shutdown
 
 #if defined _WIN32 || defined _WIN64
 		path_new = ug_strdup_printf ("%s%c%.4d.json", path_base, '\\', count);
