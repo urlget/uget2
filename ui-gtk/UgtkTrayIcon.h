@@ -53,6 +53,13 @@ typedef struct UgtkApp        UgtkApp;
 // --------------------------------
 // Tray Icon
 
+enum UgtkTrayIconState
+{
+	UGTK_TRAY_ICON_STATE_NORMAL,
+	UGTK_TRAY_ICON_STATE_RUNNING,
+	UGTK_TRAY_ICON_STATE_ERROR,
+};
+
 struct UgtkTrayIcon
 {
 #ifdef HAVE_APP_INDICATOR
@@ -62,7 +69,7 @@ struct UgtkTrayIcon
 	GtkStatusIcon* self;
 	gboolean       visible;
 	gboolean       error_occurred;
-	guint          last_status;
+	guint          state;    // UgtkTrayIconState
 
 	struct UgtkTrayIconMenu
 	{

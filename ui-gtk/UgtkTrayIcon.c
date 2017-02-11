@@ -188,24 +188,24 @@ void ugtk_tray_icon_set_info (UgtkTrayIcon* trayicon, guint n_active, gint64 dow
 	gchar*  string;
 	char*   string_down_speed;
 	char*   string_up_speed;
-	guint   current_status;
+	guint   current_state;
 
 	// change tray icon
 	if (trayicon->error_occurred) {
 		string = UGTK_TRAY_ICON_ERROR_NAME;
-		current_status = 2;
+		current_state = UGTK_TRAY_ICON_STATE_ERROR;
 	}
 	else if (n_active > 0) {
 		string = UGTK_TRAY_ICON_ACTIVE_NAME;
-		current_status = 1;
+		current_state = UGTK_TRAY_ICON_STATE_RUNNING;
 	}
 	else {
 		string = UGTK_TRAY_ICON_NAME;
-		current_status = 0;
+		current_state = UGTK_TRAY_ICON_STATE_NORMAL;
 	}
 
-	if (trayicon->last_status != current_status) {
-		trayicon->last_status  = current_status;
+	if (trayicon->state != current_state) {
+		trayicon->state  = current_state;
 #ifdef HAVE_APP_INDICATOR
 		if (trayicon->indicator) {
 			trayicon->error_occurred = FALSE;
@@ -324,6 +324,7 @@ static void	on_trayicon_activate (GtkStatusIcon* status_icon, UgtkApp* app)
 	// clear error status
 	if (app->trayicon.error_occurred) {
 		app->trayicon.error_occurred = FALSE;
+		app->trayicon.state = UGTK_TRAY_ICON_STATE_NORMAL;
 		gtk_status_icon_set_from_icon_name (status_icon, UGTK_TRAY_ICON_NAME);
 	}
 }
