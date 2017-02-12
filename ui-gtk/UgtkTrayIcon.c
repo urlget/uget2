@@ -210,7 +210,7 @@ void ugtk_tray_icon_set_info (UgtkTrayIcon* trayicon, guint n_active, gint64 dow
 		if (trayicon->indicator) {
 			trayicon->error_occurred = FALSE;
 			if (app_indicator_get_status (trayicon->indicator) != APP_INDICATOR_STATUS_PASSIVE) {
-				if (current_status == 0) {
+				if (current_state == UGTK_TRAY_ICON_STATE_NORMAL) {
 					app_indicator_set_status (trayicon->indicator,
 							APP_INDICATOR_STATUS_ACTIVE);
 				}
