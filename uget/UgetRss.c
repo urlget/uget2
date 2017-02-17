@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2016 by C.H. Huang
+ *   Copyright (C) 2012-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -462,6 +462,7 @@ int   uget_rss_save_feeds (UgetRss* urss, const char* path)
 		ug_json_write_entry (&jfile->json, urss, UgetRssEntry);
 //		ug_json_write_array_tail (&jfile->json);
 		ug_json_file_end_write (jfile);
+		ug_json_file_sync (jfile);    // avoid file corrupted on sudden shutdown
 		ug_json_file_free (jfile);
 		return TRUE;
 	}

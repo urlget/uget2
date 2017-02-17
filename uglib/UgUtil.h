@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2016 by C.H. Huang
+ *   Copyright (C) 2012-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -53,12 +53,19 @@ uint64_t   ug_get_time_count (void);
 // ----------------------------------------------------------------------------
 // Unicode
 
+int        ug_utf8_get_invalid (const char* input, char* ch);
+
 uint16_t*  ug_utf8_to_utf16 (const char* string, int stringLength,
                              int* utf16len);
-int        ug_utf8_get_invalid (const uint8_t* input, uint8_t* ch);
 
-uint8_t*   ug_utf16_to_utf8 (uint16_t* string, int stringLength,
+char*      ug_utf16_to_utf8 (const uint16_t* string, int stringLength,
                              int* utf8len);
+
+uint32_t*  ug_utf8_to_ucs4 (const char* string, int stringLength,
+                            int* ucs4len);
+
+char*      ug_ucs4_to_utf8 (const uint32_t* string, int stringLength,
+                            int* utf8len);
 
 // ----------------------------------------------------------------------------
 // Base64

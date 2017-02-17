@@ -12,7 +12,9 @@ SUBDIRS = \
 	doc     \
 	Windows
 
-EXTRA_DIST = uget-gtk.desktop
+EXTRA_DIST = \
+	uget-gtk.desktop \
+	snapcraft.yaml
 
 appsdir = $(datadir)/applications
 apps_DATA = uget-gtk.desktop

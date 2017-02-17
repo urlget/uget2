@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2016 by C.H. Huang
+ *   Copyright (C) 2012-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -55,7 +55,7 @@ char* ug_strdup_printf (const char* format, ...)
 
 	va_start (arg_list, format);
 #ifdef _MSC_VER
-	/* for M$ C only */
+	/* for MS C only */
 	string_len = _vscprintf (format, arg_list);
 #else
 	/* for C99 standard */

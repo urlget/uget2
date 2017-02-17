@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2016 by C.H. Huang
+ *   Copyright (C) 2012-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -422,7 +422,7 @@ void  ugtk_setting_reset (UgtkSetting* setting)
 	setting->download_column.completed_on = FALSE;
 	// default sorted column
 	setting->download_column.sort.type    = GTK_SORT_DESCENDING;
-	setting->download_column.sort.nth     = UGTK_NODE_COLUMN_ADDED_ON;
+	setting->download_column.sort.nth     = UGTK_NODE_COLUMN_STATE;
 	// "DownloadColumnWidth"
 	memset (&setting->download_column.width, 0,
 			sizeof (setting->download_column.width));
@@ -524,9 +524,10 @@ int  ugtk_setting_save (UgtkSetting* setting, const char* file)
 		setting->completion.action = action;
 
 	ug_json_file_end_write (jfile);
+	ug_json_file_sync (jfile);    // avoid file corrupted on sudden shutdown
 	ug_json_file_free (jfile);
 
-	ug_unlink (file);
+	ug_remove (file);
 	ug_rename (path, file);
 	g_free (path);
 
@@ -543,7 +544,7 @@ int  ugtk_setting_load (UgtkSetting* setting, const char* path)
 	jfile = ug_json_file_new (4096);
 	file_ok = ug_json_file_begin_parse (jfile, path);
 	if (file_ok)
-		ug_unlink (path_temp);
+		ug_remove (path_temp);
 	else if (ug_rename (path_temp, path) != -1)
 		file_ok = ug_json_file_begin_parse (jfile, path);
 	g_free (path_temp);

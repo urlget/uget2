@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2016 by C.H. Huang
+ *   Copyright (C) 2012-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -46,6 +46,14 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+
+#if defined _WIN32 || defined _WIN64
+#include <windows.h> // Sleep()
+#define  ug_sleep       Sleep
+#else
+#include <unistd.h>  // sleep(), usleep()
+#define  ug_sleep(millisecond)    usleep (millisecond * 1000)
+#endif // _WIN32 || _WIN64
 
 #ifdef HAVE_GLIB
 #include <glib/gi18n.h>
@@ -149,7 +157,7 @@ static UgArrayPtr* uget_app_store_nodes (UgetApp* app, UgetNode* parent)
 	return array;
 }
 
-static void     uget_app_clear_nodes (UgetApp* app)
+static void uget_app_clear_nodes (UgetApp* app)
 {
 	app->nodes.length = 0;
 }
@@ -519,7 +527,7 @@ void  uget_app_stop_category (UgetApp* app, UgetNode* cnode)
 	// program must store active nodes to array before calling uget_app_queue_download()
 	array = uget_app_store_nodes (app, category->active);
 
-	for (index = 0;  index < array->length;  index++) {
+	for (index = array->length-1;  index >= 0;  index--) {
 		dnode = array->at[index];
 		uget_app_queue_download (app, dnode);
 	}
@@ -728,35 +736,86 @@ int   uget_app_move_download_to (UgetApp* app, UgetNode* dnode, UgetNode* cnode)
 	return TRUE;
 }
 
-int  uget_app_delete_download (UgetApp* app, UgetNode* dnode, int delete_file)
+static int  delete_dnode_files (UgetNode* dnode, int  has_aria2_file)
 {
 	UgetNode*  fnode;   // filenode
-	UgetNode*  cnode;
-	int        error = 0;
+	UgetNode*  fnode_next;
+	int        error;
+	int        error_count = 0;
 
-	cnode = dnode->parent;
-	uget_task_remove (&app->task, dnode);
-	uget_node_remove (cnode, dnode);
-	uget_uri_hash_remove_download (app->uri_hash, dnode);
-
-	if (delete_file) {
-		for (fnode = dnode->children;  fnode;  fnode = fnode->next) {
-			if (fnode->name == NULL)
-				continue;
-//			if (ug_file_is_exist (fnode->name) == FALSE)
-//				continue;
-			if (ug_file_is_dir (fnode->name) == FALSE)
-				error = ug_unlink (fnode->name);
-			else
-				error = ug_delete_dir (fnode->name);
+	if (has_aria2_file == TRUE) {
+		// move first aria2 to tail
+		for (fnode = dnode->children;  fnode;  fnode = fnode_next) {
+			fnode_next = fnode->next;
+			if (strstr (fnode->name, ".aria2")) {
+				uget_node_move (dnode, NULL, fnode);
+				break;
+			}
 		}
 	}
-	uget_node_unref (dnode);
 
-	if (error == -1)
-		return FALSE;
-	else
+	for (fnode = dnode->children;  fnode;  fnode = fnode_next) {
+		fnode_next = fnode->next;
+
+		if (fnode->name == NULL) {
+			uget_node_remove (dnode, fnode);
+			continue;
+		}
+		if (ug_file_is_exist (fnode->name) == FALSE) {
+			uget_node_remove (dnode, fnode);
+			continue;
+		}
+
+		error = ug_remove (fnode->name);
+		if (error != 0)
+			error_count++;
+		else if (error_count == 0 || strstr (fnode->name, ".aria2") == NULL)
+			uget_node_remove (dnode, fnode);
+	}
+
+	if (dnode->children == NULL)
 		return TRUE;
+	else
+		return FALSE;
+}
+
+static UG_THREAD_RETURN_TYPE  delete_file_thread (UgetNode* dnode)
+{
+	int  count;
+
+	for (count = 0;  count < 3;  count++) {
+		ug_sleep (2 * 1000);    // sleep 2 seconds
+		delete_dnode_files (dnode, FALSE);
+		if (dnode->children == NULL)
+			break;
+	}
+
+	uget_node_unref (dnode);
+	return UG_THREAD_RETURN_VALUE;
+}
+
+int  uget_app_delete_download (UgetApp* app, UgetNode* dnode, int delete_file)
+{
+	UgetNode*  cnode;
+	UgThread   thread;
+	int        is_active;
+
+	cnode = dnode->parent;
+	is_active = uget_task_remove (&app->task, dnode);
+	uget_node_remove (cnode, dnode);
+	uget_node_unref_fake (dnode);
+	uget_uri_hash_remove_download (app->uri_hash, dnode);
+
+	if (delete_file == TRUE) {
+		if (is_active == TRUE || delete_dnode_files (dnode, TRUE) == FALSE) {
+			ug_thread_create (&thread, (UgThreadFunc) delete_file_thread, dnode);
+			ug_thread_unjoin (&thread);
+			return FALSE;
+		}
+	}
+
+	uget_node_unref (dnode);
+	return TRUE;
 }
 
 int  uget_app_recycle_download (UgetApp* app, UgetNode* dnode)
@@ -903,9 +962,8 @@ int   uget_app_queue_download (UgetApp* app, UgetNode* dnode)
 	UgetNode*     sibling;
 	UgetCategory* category;
 
-	if (dnode->state & UGET_STATE_ACTIVE)
-		uget_task_remove (&app->task, dnode);
-	else if ((dnode->state & UGET_STATE_UNRUNNABLE) == 0)
+	if ((dnode->state & UGET_STATE_ACTIVE)     == 0 &&
+		(dnode->state & UGET_STATE_UNRUNNABLE) == 0)
 		return FALSE;
 
 	if (dnode->state & UGET_STATE_QUEUING)
@@ -915,12 +973,16 @@ int   uget_app_queue_download (UgetApp* app, UgetNode* dnode)
 		uget_node_remove (cnode, dnode);
 		uget_node_unref_fake (dnode);
 
-		category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
+		// --- decide sibling position & insert before it ---
 		// if current download is in active, insert it before queuing,
 		// otherwise insert it before finished and recycled.
-		if (dnode->state & UGET_STATE_ACTIVE)
+		category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
+		sibling = NULL;
+		if (dnode->state & UGET_STATE_ACTIVE) {
+			uget_task_remove (&app->task, dnode);
 			sibling = category->queuing->children;
-		else
+		}
+		if (sibling == NULL)
 			sibling = category->finished->children;
 		if (sibling == NULL)
 			sibling = category->recycled->children;
@@ -936,9 +998,9 @@ int   uget_app_queue_download (UgetApp* app, UgetNode* dnode)
 void  uget_app_reset_download_name (UgetApp* app, UgetNode* dnode)
 {
 	UgetCommon*  common;
-	UgUri        uuri;
-	UgetNode*    cnode = NULL;
 	UgetNode*    sibling;
+	UgetNode*    cnode = NULL;
+	UgUri        uuri;
 
 	common = ug_info_realloc (&dnode->info, UgetCommonInfo);
 	if (common->file) {
@@ -1150,6 +1212,7 @@ int   uget_app_save_category (UgetApp* app, UgetNode* cnode, const char* filenam
 	ug_json_write_object_tail (&jfile->json);
 
 	ug_json_file_end_write (jfile);
+	ug_json_file_sync (jfile);    // avoid file corrupted on sudden shutdown
 	ug_json_file_free (jfile);
 	return TRUE;
 }
@@ -1179,7 +1242,7 @@ UgetNode* uget_app_load_category (UgetApp* app, const char* filename)
 		uget_app_add_category (app, cnode, FALSE);
 		// create fake node
 		uget_node_make_fake (cnode);
-		// move all downloads from active to queuing in this categoey
+		// move all downloads from active to queuing in this category
 		uget_app_stop_category (app, cnode);
 		return cnode;
 	}
@@ -1225,6 +1288,7 @@ int   uget_app_save_categories (UgetApp* app, const char* folder)
 		ug_json_write_object_tail (&jfile->json);
 
 		ug_json_file_end_write (jfile);
+		ug_json_file_sync (jfile);    // avoid file corrupted on sudden shutdown
 
 #if defined _WIN32 || defined _WIN64
 		path_new = ug_strdup_printf ("%s%c%.4d.json", path_base, '\\', count);

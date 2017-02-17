@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2016 by C.H. Huang
+ *   Copyright (C) 2012-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -66,6 +66,7 @@ void  ug_buffer_init (UgBuffer* buffer, int length);
 void  ug_buffer_clear (UgBuffer* buffer, int free_buffer);
 
 void  ug_buffer_set_size (UgBuffer* buffer, int length);
+char* ug_buffer_alloc (UgBuffer* buffer, int length);
 
 // UgBuffer.more() default function for external buffer.
 int   ug_buffer_restart (UgBuffer* buffer);
@@ -76,11 +77,19 @@ void  ug_buffer_fill (UgBuffer* buffer, char ch, int count);
 int   ug_buffer_write (UgBuffer* buffer, const char* string, int length);
 void  ug_buffer_write_data (UgBuffer* buffer, const char* binary, int length);
 
-#define ug_buffer_write_char(buffer, ch)     \
-		{	if ((buffer)->cur >= (buffer)->end)  \
-				(buffer)->more (buffer);         \
-			*(buffer)->cur++ = (char)(ch);       \
-		}
+#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)
+// C99
+static inline
+void  ug_buffer_write_char (UgBuffer* buffer, char ch)
+{
+	if ((buffer)->cur >= (buffer)->end)
+		(buffer)->more (buffer);
+	*(buffer)->cur++ = (char)(ch);
+}
+#else
+void  ug_buffer_write_char (UgBuffer* buffer, char ch);
+#endif  // __STDC_VERSION__
+
 
 #define ug_buffer_length(buffer)    (int)((buffer)->cur - (buffer)->beg)
 #define ug_buffer_allocated(buffer) (int)((buffer)->end - (buffer)->beg)

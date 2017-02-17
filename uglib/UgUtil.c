@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2016 by C.H. Huang
+ *   Copyright (C) 2012-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -77,6 +77,43 @@ uint64_t ug_get_time_count (void)
 // ----------------------------------------------------------------------------
 // Unicode
 
+int  ug_utf8_get_invalid (const char* input, char* ch)
+{
+	int            nb = 0, na;
+	const uint8_t *c;
+
+	for (c = (uint8_t*) input;  *c;  c += (nb + 1)) {
+		if (!(*c & 0x80))
+			nb = 0;
+		else if ((*c & 0xc0) == 0x80) {
+			if (ch)
+				*ch = *c;
+			return (intptr_t)c - (intptr_t)input;
+		}
+		else if ((*c & 0xe0) == 0xc0)
+			nb = 1;
+		else if ((*c & 0xf0) == 0xe0)
+			nb = 2;
+		else if ((*c & 0xf8) == 0xf0)
+			nb = 3;
+		else if ((*c & 0xfc) == 0xf8)
+			nb = 4;
+		else if ((*c & 0xfe) == 0xfc)
+			nb = 5;
+
+		na = nb;
+		while (na-- > 0) {
+			if ((*(c + nb) & 0xc0) != 0x80) {
+				if (ch)
+					*ch = *(c + nb);
+				return (intptr_t)(c + nb) - (intptr_t)input;
+			}
+		}
+	}
+	return -1;
+}
+
+// 0xC0: Start of a 2-byte sequence
 static const uint8_t  utf8Limits[] = {0xC0, 0xE0, 0xF0, 0xF8, 0xFC};
 
 uint16_t*  ug_utf8_to_utf16 (const char* string, int count, int* utf16len)
@@ -135,50 +172,13 @@ uint16_t*  ug_utf8_to_utf16 (const char* string, int count, int* utf16len)
 		}
 	}
 
-	*dest++ = 0;
 	if (utf16len)
 		*utf16len = dest - result;
+	*dest++ = 0;
 	return result;
 }
 
-int  ug_utf8_get_invalid (const uint8_t* input, uint8_t* ch)
-{
-	int            nb = 0, na;
-	const uint8_t *c = input;
-
-	for (c = input;  *c;  c += (nb + 1)) {
-		if (!(*c & 0x80))
-			nb = 0;
-		else if ((*c & 0xc0) == 0x80) {
-			if (ch)
-				*ch = *c;
-			return (intptr_t)c - (intptr_t)input;
-		}
-		else if ((*c & 0xe0) == 0xc0)
-			nb = 1;
-		else if ((*c & 0xf0) == 0xe0)
-			nb = 2;
-		else if ((*c & 0xf8) == 0xf0)
-			nb = 3;
-		else if ((*c & 0xfc) == 0xf8)
-			nb = 4;
-		else if ((*c & 0xfe) == 0xfc)
-			nb = 5;
-
-		na = nb;
-		while (na-- > 0) {
-			if ((*(c + nb) & 0xc0) != 0x80) {
-				if (ch)
-					*ch = *(c + nb);
-				return (intptr_t)(c + nb) - (intptr_t)input;
-			}
-		}
-	}
-	return -1;
-}
-
-uint8_t*   ug_utf16_to_utf8 (uint16_t* string, int count,
-                             int* utf8len)
+char*   ug_utf16_to_utf8 (const uint16_t* string, int count, int* utf8len)
 {
 	uint16_t    ch;
 	uint8_t*    result;
@@ -201,15 +201,125 @@ uint8_t*   ug_utf16_to_utf8 (uint16_t* string, int count,
 			*dest++ = (uint8_t) (0x80 | ((ch >>  0) & 0x3F));
 		}
 		else {
-			*dest++ = (uint8_t) (0xC0 | ((ch >> 12) & 0x1F));
-			*dest++ = (uint8_t) (0x80 | ((ch >>  6) & 0x3F));
+			*dest++ = (uint8_t) (0xC0 | ((ch >>  6) & 0x1F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  0) & 0x3F));
 		}
 	}
 
-	*dest++ = 0;
 	if (utf8len)
 		*utf8len = dest - result;
+	*dest++ = 0;
+	return (char*)result;
+}
+
+uint32_t*  ug_utf8_to_ucs4 (const char* string, int count, int* ucs4len)
+{
+	uint8_t     ch;
+	uint32_t*   result;
+	uint32_t*   dest;
+	uint32_t    value;
+	const char* end;
+
+	if (count == -1)
+		count  = strlen (string);
+	end  = string + count;
+	result = ug_malloc (sizeof (uint32_t) * (count+1) );
+	dest   = result;
+
+	while (string < end) {
+		ch = *string++;
+
+		if(ch < 0x80) { // 0-127, US-ASCII (single byte)
+			*dest++ = (uint32_t)ch;
+			continue;
+		}
+
+		if(ch < 0xC0) // The first octet for each code point should within 0-191
+			break;
+
+		for(count = 1;  count < 5;  count++)
+			if(ch < utf8Limits[count])
+				break;
+		value = ch - utf8Limits[count - 1];
+
+		do {
+			uint8_t  ch2;
+
+			if (string >= end)  //  || string[0] == 0
+				break;
+			ch2 = *string++;
+			if (ch2 == 0)
+				break;
+			if(ch2 < 0x80 || ch2 >= 0xC0)
+				break;
+			value <<= 6;
+			value |= (ch2 - 0x80);
+		} while(--count != 0);
+
+		*dest++ = value;
+	}
+
+	if (ucs4len)
+		*ucs4len = dest - result;
+	*dest++ = 0;
 	return result;
+}
+
+char*   ug_ucs4_to_utf8 (const uint32_t* string, int count, int* utf8len)
+{
+	uint32_t    ch;
+	uint8_t*    result;
+	uint8_t*    dest;
+	const uint32_t* end;
+
+	if (count == -1) {
+		for (count = 0;  string[count] != 0;  count++)
+			;
+	}
+	end  = string + count;
+	result = ug_malloc (sizeof (uint8_t) * (count+1) * 6);
+	dest   = result;
+
+	while (string < end) {
+		ch = *string++;
+		if (ch >= 1 && ch <= 0x7F)
+			*dest++ = (uint8_t) ch;
+		else if (ch > 0x3FFFFFF) {
+			*dest++ = (uint8_t) (0xFC | ((ch >> 30) & 0x01));
+			*dest++ = (uint8_t) (0x80 | ((ch >> 24) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >> 18) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >> 12) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  6) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  0) & 0x3F));
+		}
+		else if (ch > 0x10FFFF) {
+			*dest++ = (uint8_t) (0xF8 | ((ch >> 24) & 0x03));
+			*dest++ = (uint8_t) (0x80 | ((ch >> 18) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >> 12) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  6) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  0) & 0x3F));
+		}
+		else if (ch > 0xFFFF) {
+			*dest++ = (uint8_t) (0xF0 | ((ch >> 18) & 0x07));
+			*dest++ = (uint8_t) (0x80 | ((ch >> 12) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  6) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  0) & 0x3F));
+		}
+		else if (ch > 0x7FF) {
+			*dest++ = (uint8_t) (0xE0 | ((ch >> 12) & 0x0F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  6) & 0x3F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  0) & 0x3F));
+		}
+		else {
+			*dest++ = (uint8_t) (0xC0 | ((ch >>  6) & 0x1F));
+			*dest++ = (uint8_t) (0x80 | ((ch >>  0) & 0x3F));
+		}
+	}
+
+	if (utf8len)
+		*utf8len = dest - result;
+	*dest++ = 0;
+	return (char*)result;
 }
 
 // ----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2016 by C.H. Huang
+ *   Copyright (C) 2012-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -109,6 +109,17 @@ void  ug_list_foreach (UgList* list, UgForeachFunc func, void* data)
 	for (link = list->head;  link;  link = next) {
 		next = link->next;
 		func (link->data, data);
+	}
+}
+
+void  ug_list_foreach_link (UgList* list, UgForeachFunc func, void* data)
+{
+	UgLink*  link;
+	UgLink*  next;
+
+	for (link = list->head;  link;  link = next) {
+		next = link->next;
+		func (link, data);
 	}
 }
 

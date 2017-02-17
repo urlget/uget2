@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2005-2016 by C.H. Huang
+ *   Copyright (C) 2005-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -291,7 +291,7 @@ char* ug_uri_get_file (UgUri* uuri)
 		return NULL;
 	name = ug_malloc (len + 1);
 	ug_decode_uri (str, len, name);
-	if (ug_utf8_get_invalid ((uint8_t*) name, NULL) == -1)
+	if (ug_utf8_get_invalid (name, NULL) == -1)
 		return name;
 
 	ug_free (name);

@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2016 by C.H. Huang
+ *   Copyright (C) 2012-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -173,6 +173,8 @@ void  uget_node_move (UgetNode* node, UgetNode* sibling, UgetNode* child)
 	fake_sibling = NULL;
 	for (fake_child = child->fake;  fake_child;  fake_child = fake_child->peer) {
 		node = fake_child->parent;
+		if (node == NULL)
+			continue;
 
 		if (sibling) {
 			for (fake_sibling = sibling->fake;  fake_sibling;  fake_sibling = fake_sibling->peer) {
@@ -459,7 +461,7 @@ void  uget_node_set_name_by_uri (UgetNode* node, UgUri* uuri)
 			length = strcspn (filename, "&");
 			node->name = ug_malloc (length + 1);
 			ug_decode_uri (filename, length, node->name);
-			if (ug_utf8_get_invalid ((uint8_t*) node->name, NULL) != -1) {
+			if (ug_utf8_get_invalid (node->name, NULL) != -1) {
 				ug_free (node->name);
 				node->name = ug_strndup (filename, length);
 			}

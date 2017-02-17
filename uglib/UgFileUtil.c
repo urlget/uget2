@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2016 by C.H. Huang
+ *   Copyright (C) 2012-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -38,20 +38,18 @@
 #include <config.h>
 #endif
 
-#ifdef _MSC_VER
-#define _CRT_SECURE_NO_WARNINGS
-#endif
-
+#include <errno.h>
 #include <UgDefine.h>
 #include <UgUtil.h>
+#include <UgStdio.h>
+#include <UgString.h>    // ug_strdup
 #include <UgFileUtil.h>
-#include <UgStdio.h>    // ug_create_dir
-#include <UgString.h>   // ug_strdup
 
 #if defined _WIN32 || defined _WIN64
+#define _CRT_SECURE_NO_WARNINGS    // _MSC_VER
 #include <windows.h>
+#include <wchar.h>       // _wmkdir(), _wrmdir()
 #include <sys/utime.h>   // struct utimbuf
-//#include <PowrProf.h>    // SetSuspendState()
 #else
 #include <unistd.h>
 #include <utime.h>       // struct utimbuf
@@ -136,6 +134,67 @@ int  ug_modify_file_time (const char *file_utf8, time_t mod_time)
 // file and directory functions
 
 #if defined _WIN32 || defined _WIN64
+
+int  ug_unlink (const char *filename)
+{
+	wchar_t *wfilename = ug_utf8_to_utf16 (filename, -1, NULL);
+	int save_errno;
+	int retval;
+
+	if (wfilename == NULL) {
+		errno = EINVAL;
+		return -1;
+	}
+
+	retval = _wunlink (wfilename);
+	save_errno = errno;
+
+	ug_free (wfilename);
+
+	errno = save_errno;
+	return retval;
+}
+
+int  ug_create_dir (const char *dir_utf8)
+{
+	wchar_t *wfilename = ug_utf8_to_utf16 (dir_utf8, -1, NULL);
+	int save_errno;
+	int retval;
+
+	if (wfilename == NULL) {
+		errno = EINVAL;
+		return -1;
+	}
+
+	retval = _wmkdir (wfilename);
+	save_errno = errno;
+
+	ug_free (wfilename);
+
+	errno = save_errno;
+	return retval;
+}
+
+int  ug_delete_dir (const char *dir_utf8)
+{
+	wchar_t *wfilename = ug_utf8_to_utf16 (dir_utf8, -1, NULL);
+	int save_errno;
+	int retval;
+
+	if (wfilename == NULL) {
+		errno = EINVAL;
+		return -1;
+	}
+
+	retval = _wrmdir (wfilename);
+	save_errno = errno;
+
+	ug_free (wfilename);
+
+	errno = save_errno;
+	return retval;
+}
+
 int   ug_file_is_exist (const char* filename)
 {
 	int      attributes;
@@ -167,14 +226,91 @@ int   ug_file_is_dir (const char* dir)
 
 #elif defined HAVE_GLIB
 
+int  ug_unlink (const gchar *filename)
+{
+	if (g_get_filename_charsets (NULL))
+		return g_unlink (filename);
+	else {
+		gchar *cp_filename = g_filename_from_utf8 (filename, -1, NULL, NULL, NULL);
+		int save_errno;
+		int retval;
+
+		if (cp_filename == NULL) {
+			errno = EINVAL;
+			return -1;
+		}
+
+		retval = g_unlink (cp_filename);
+		save_errno = errno;
+
+		g_free (cp_filename);
+
+		errno = save_errno;
+		return retval;
+	}
+}
+
+int  ug_create_dir (const gchar *dir_utf8)
+{
+	if (g_get_filename_charsets (NULL))
+		return g_mkdir (dir_utf8, 0755);
+	else {
+		gchar *cp_filename = g_filename_from_utf8 (dir_utf8, -1, NULL, NULL, NULL);
+		int save_errno;
+		int retval;
+
+		if (cp_filename == NULL) {
+			errno = EINVAL;
+			return -1;
+		}
+
+		retval = g_mkdir (cp_filename, 0755);
+		save_errno = errno;
+
+		g_free (cp_filename);
+
+		errno = save_errno;
+		return retval;
+	}
+}
+
+int  ug_delete_dir (const gchar *dir_utf8)
+{
+	if (g_get_filename_charsets (NULL))
+		return g_rmdir (dir_utf8);
+	else {
+		gchar *cp_filename = g_filename_from_utf8 (dir_utf8, -1, NULL, NULL, NULL);
+		int save_errno;
+		int retval;
+
+		if (cp_filename == NULL) {
+			errno = EINVAL;
+			return -1;
+		}
+
+		retval = g_rmdir (cp_filename);
+		save_errno = errno;
+
+		g_free (cp_filename);
+
+		errno = save_errno;
+		return retval;
+	}
+}
+
 int   ug_file_is_exist (const char* filename)
 {
 	gchar *name;
 	int    result;
 
-	name = g_filename_from_utf8 (filename, -1, NULL, NULL, NULL);
-	result = access (name, F_OK);
-	g_free (name);
+	if (g_get_filename_charsets (NULL))
+		result = g_access (filename, F_OK);
+	else {
+		name = g_filename_from_utf8 (filename, -1, NULL, NULL, NULL);
+		result = g_access (name, F_OK);
+		g_free (name);
+	}
+
 	if (result == -1)
 		return FALSE;
 	return TRUE;
@@ -186,9 +322,14 @@ int   ug_file_is_dir (const char* dir)
 	gchar *cp_dir;
 	int    result;
 
-	cp_dir = g_filename_from_utf8 (dir, -1, NULL, NULL, NULL);
-	result = stat (cp_dir, &s) == 0;
-	g_free (cp_dir);
+	if (g_get_filename_charsets (NULL))
+		result = g_stat (dir, &s);
+	else {
+		cp_dir = g_filename_from_utf8 (dir, -1, NULL, NULL, NULL);
+		result = g_stat (cp_dir, &s) == 0;
+		g_free (cp_dir);
+	}
+
 	if (result == 0)
 		return S_ISDIR (s.st_mode);
 	return FALSE;

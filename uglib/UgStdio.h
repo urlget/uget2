@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2005-2016 by C.H. Huang
+ *   Copyright (C) 2005-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -179,12 +179,14 @@ int  ug_truncate (int fd, int64_t length);
 #  define  ug_close     _close
 #  define  ug_read      _read
 #  define  ug_write     _write
+#  define  ug_sync      _commit
 #  define  ug_seek      _lseeki64   // for MS VC
 #  define  ug_tell      _telli64    // for MS VC
 #else
 #  define  ug_close     close
 #  define  ug_read      read
 #  define  ug_write     write
+#  define  ug_sync      fsync
 #  if defined __ANDROID__
 #    define  ug_seek      lseek64
 #    define  ug_tell(fd)  lseek64(fd, 0L, SEEK_CUR)
@@ -260,16 +262,15 @@ int   ug_ftruncate (FILE* file, int64_t size);
 // ----------------------------------------------------------------------------
 // file & directory functions: these functions returns 0 if it is successful.
 
-#if defined(_WIN32) || defined (HAVE_GLIB)
+// ug_rename() renames a file, moving it between directories if required.
+// ug_remove() deletes a name from the filesystem, it works for both files and directories.
+
+#if defined _WIN32 || defined _WIN64 || defined HAVE_GLIB
 int  ug_rename (const char *old_file_utf8, const char *new_file_utf8);
-int  ug_unlink (const char *file_utf8);
-int  ug_create_dir (const char *dir_utf8);
-int  ug_delete_dir (const char *dir_utf8);
+int  ug_remove (const char *file_utf8);
 #else
 #  define ug_rename             rename
-#  define ug_unlink             unlink
-#  define ug_create_dir(dir)    mkdir(dir,0755)
-#  define ug_delete_dir         rmdir
+#  define ug_remove             remove
 #endif
 
 #ifdef __cplusplus

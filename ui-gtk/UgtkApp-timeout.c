@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2005-2016 by C.H. Huang
+ *   Copyright (C) 2005-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -266,7 +266,7 @@ static gboolean  ugtk_app_timeout_queuing (UgtkApp* app)
 		}
 	}
 
-	if (n_active > 0 || app->n_moved > 0) {
+	if (n_active > 0 || n_active != n_active_last || app->n_moved > 0) {
 		// adjust speed limit every 1 seconds
 		if (n_counts & 1)
 			uget_task_adjust_speed (&app->task);

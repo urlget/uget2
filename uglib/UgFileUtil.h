@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2016 by C.H. Huang
+ *   Copyright (C) 2012-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -90,10 +90,20 @@ int   ug_modify_file_time (const char *file_utf8, time_t mod_time);
 // ----------------------------------------------------------------------------
 // file & directory functions
 
-int   ug_file_is_exist (const char* file);
-int   ug_file_is_dir (const char* file);
-int   ug_create_dir_all (const char* dir, int len);
-//int ug_delete_dir_all (const char* dir, int len);
+#if defined _WIN32 || defined _WIN64 || defined HAVE_GLIB
+int   ug_unlink (const char *file_utf8);
+int   ug_create_dir (const char *dir_utf8);
+int   ug_delete_dir (const char *dir_utf8);
+#else
+#  define ug_unlink             unlink
+#  define ug_create_dir(dir)    mkdir(dir,0755)
+#  define ug_delete_dir         rmdir
+#endif
+
+int   ug_file_is_exist (const char* file_utf8);
+int   ug_file_is_dir (const char* file_utf8);
+int   ug_create_dir_all (const char* dir_utf8, int len);
+//int ug_delete_dir_all (const char* dir_utf8, int len);
 
 // ----------------------------------------------------------------------------
 // File I/O

@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2016 by C.H. Huang
+ *   Copyright (C) 2012-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -128,7 +128,7 @@ int   uget_task_add (UgetTask* task, UgetNode* node, const UgetPluginInfo* info)
 
 int  uget_task_remove (UgetTask* task, UgetNode* node)
 {
-	UgSLink*   prev;
+	UgSLink*      prev;
 	UgetRelation* relation;
 
 	if (ug_slinks_find ((UgSLinks*) task, node, &prev)) {

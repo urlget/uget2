@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2011-2016 by C.H. Huang
+ *   Copyright (C) 2011-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -505,7 +505,7 @@ int   uget_a2cf_lack (UgetA2cf* a2cf, uint64_t* beg, uint64_t* end)
 		if (piece) {
 			if (a2cf_piece_lack (piece, &piece_beg, &piece_end)) {
 				if (piece_end != piece->length) {
-					beg[0] = index * a2cf->piece_len;
+					beg[0] = (uint64_t)index * a2cf->piece_len;
 					end[0] = beg[0] + piece_end;
 					beg[0] = beg[0] + piece_beg;
 					return TRUE;
@@ -516,7 +516,7 @@ int   uget_a2cf_lack (UgetA2cf* a2cf, uint64_t* beg, uint64_t* end)
 				continue;
 			}
 		}
-		beg[0] = index * a2cf->piece_len + piece_beg;
+		beg[0] = (uint64_t)index * a2cf->piece_len + piece_beg;
 		if (index == a2cf->piece.index_end - 1) {
 			end[0] = a2cf->total_len;
 			return TRUE;
@@ -530,7 +530,7 @@ int   uget_a2cf_lack (UgetA2cf* a2cf, uint64_t* beg, uint64_t* end)
 	for (index += 1;  index < a2cf->piece.index_end;  index++) {
 		// test a2cf->bitfield
 		if (test_bit (a2cf->bitfield, index) == TRUE) {
-			end[0] = index * a2cf->piece_len;
+			end[0] = (uint64_t)index * a2cf->piece_len;
 			return TRUE;
 		}
 		// find end in piece
@@ -540,11 +540,11 @@ int   uget_a2cf_lack (UgetA2cf* a2cf, uint64_t* beg, uint64_t* end)
 			piece_end = piece->length;
 			a2cf_piece_lack (piece, &piece_beg, &piece_end);
 			if (piece_beg != 0) {
-				end[0] = index * a2cf->piece_len;
+				end[0] = (uint64_t)index * a2cf->piece_len;
 				return TRUE;
 			}
 			if (piece_end != piece->length) {
-				end[0] = index * a2cf->piece_len + piece_end;
+				end[0] = (uint64_t)index * a2cf->piece_len + piece_end;
 				return TRUE;
 			}
 		}

@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2016 by C.H. Huang
+ *   Copyright (C) 2012-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -205,6 +205,7 @@ static int  plugin_ctrl (UgetPluginEmpty* plugin, int code, void* data)
 		return plugin_ctrl_speed (plugin, data);
 
 	case UGET_PLUGIN_CTRL_NODE_UPDATED:
+	default:
 		break;
 	}
 	return FALSE;

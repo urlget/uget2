@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2005-2016 by C.H. Huang
+ *   Copyright (C) 2005-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -38,7 +38,7 @@
 #define  _CRT_SECURE_NO_DEPRECATE    // avoid some warning (MS VC 2005)
 #include <windows.h>
 #include <wchar.h>    // _wmkdir(), _wrmdir()
-#endif
+#endif  // _WIN32 || _WIN64
 
 #include <errno.h>
 #include <UgDefine.h>
@@ -208,7 +208,7 @@ FILE* ug_fopen (const char *filename, const char *mode)
 #endif // _WIN32 || _WIN64
 
 #ifdef __ANDROID__
-#include <sys/linux-syscalls.h>
+//#include <sys/linux-syscalls.h>
 
 int  fseek_64 (FILE *stream, int64_t offset, int origin)
 {
@@ -233,7 +233,7 @@ int64_t ftell_64 (FILE *stream)
 	int fd;
 
 	fd = fileno (stream);
-	return lseek (fd, 0L, SEEK_CUR);
+	return lseek64 (fd, 0L, SEEK_CUR);
 }
 #endif  // __ANDROID__
 
@@ -276,7 +276,7 @@ int  ug_rename (const char *old_filename, const char *new_filename)
 	return retval;
 }
 
-int  ug_unlink (const char *filename)
+int  ug_remove (const char *filename)
 {
 	wchar_t *wfilename = ug_utf8_to_utf16 (filename, -1, NULL);
 	int save_errno;
@@ -287,47 +287,7 @@ int  ug_unlink (const char *filename)
 		return -1;
 	}
 
-	retval = _wunlink (wfilename);
-	save_errno = errno;
-
-	ug_free (wfilename);
-
-	errno = save_errno;
-	return retval;
-}
-
-int  ug_create_dir (const char *dir_utf8)
-{
-	wchar_t *wfilename = ug_utf8_to_utf16 (dir_utf8, -1, NULL);
-	int save_errno;
-	int retval;
-
-	if (wfilename == NULL) {
-		errno = EINVAL;
-		return -1;
-	}
-
-	retval = _wmkdir (wfilename);
-	save_errno = errno;
-
-	ug_free (wfilename);
-
-	errno = save_errno;
-	return retval;
-}
-
-int  ug_delete_dir (const char *dir_utf8)
-{
-	wchar_t *wfilename = ug_utf8_to_utf16 (dir_utf8, -1, NULL);
-	int save_errno;
-	int retval;
-
-	if (wfilename == NULL) {
-		errno = EINVAL;
-		return -1;
-	}
-
-	retval = _wrmdir (wfilename);
+	retval = _wremove (wfilename);
 	save_errno = errno;
 
 	ug_free (wfilename);
@@ -369,10 +329,10 @@ int  ug_rename (const gchar *old_filename, const gchar *new_filename)
 	}
 }
 
-int  ug_unlink (const gchar *filename)
+int  ug_remove (const gchar *filename)
 {
 	if (g_get_filename_charsets (NULL))
-		return g_unlink (filename);
+		return g_remove (filename);
 	else {
 		gchar *cp_filename = g_filename_from_utf8 (filename, -1, NULL, NULL, NULL);
 		int save_errno;
@@ -383,7 +343,7 @@ int  ug_unlink (const gchar *filename)
 			return -1;
 		}
 
-		retval = g_unlink (cp_filename);
+		retval = g_remove (cp_filename);
 		save_errno = errno;
 
 		g_free (cp_filename);
@@ -393,53 +353,6 @@ int  ug_unlink (const gchar *filename)
 	}
 }
 
-int  ug_create_dir (const gchar *dir_utf8)
-{
-	if (g_get_filename_charsets (NULL))
-		return g_mkdir (dir_utf8, 0755);
-	else {
-		gchar *cp_filename = g_filename_from_utf8 (dir_utf8, -1, NULL, NULL, NULL);
-		int save_errno;
-		int retval;
-
-		if (cp_filename == NULL) {
-			errno = EINVAL;
-			return -1;
-		}
-
-		retval = g_mkdir (cp_filename, 0755);
-		save_errno = errno;
-
-		g_free (cp_filename);
-
-		errno = save_errno;
-		return retval;
-	}
-}
-
-int  ug_delete_dir (const gchar *dir_utf8)
-{
-	if (g_get_filename_charsets (NULL))
-		return g_rmdir (dir_utf8);
-	else {
-		gchar *cp_filename = g_filename_from_utf8 (dir_utf8, -1, NULL, NULL, NULL);
-		int save_errno;
-		int retval;
-
-		if (cp_filename == NULL) {
-			errno = EINVAL;
-			return -1;
-		}
-
-		retval = g_rmdir (cp_filename);
-		save_errno = errno;
-
-		g_free (cp_filename);
-
-		errno = save_errno;
-		return retval;
-	}
-}
 #endif // HAVE_GLIB
 
 #endif // _WIN32 || _WIN64

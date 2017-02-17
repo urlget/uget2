@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2016 by C.H. Huang
+ *   Copyright (C) 2012-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -60,6 +60,10 @@ struct UgJsonFile
 
 UgJsonFile*  ug_json_file_new (int buffer_size);
 void         ug_json_file_free (UgJsonFile* jfile);
+
+// If you want to avoid delayed write, call fsync() before close()
+int   ug_json_file_sync (UgJsonFile* jfile);
+int   ug_json_file_close (UgJsonFile* jfile);
 
 // return TRUE or FALSE
 int   ug_json_file_begin_parse (UgJsonFile* jfile, const char* filename);

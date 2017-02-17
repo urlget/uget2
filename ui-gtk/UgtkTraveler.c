@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2016 by C.H. Huang
+ *   Copyright (C) 2012-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -512,6 +512,9 @@ static void on_state_cursor_changed (GtkTreeView* view, UgtkTraveler* traveler)
 	GtkTreePath*   path;
 	GtkTreeIter    iter;
 
+	// clear download cursor
+	traveler->download.cursor.node = NULL;
+
 	traveler->state.cursor.pos_last = traveler->state.cursor.pos;
 	gtk_tree_view_get_cursor (view, &path, NULL);
 	if (path == NULL) {
@@ -548,6 +551,9 @@ static void on_category_cursor_changed (GtkTreeView* view, UgtkTraveler* travele
 	GtkTreeModel*  model;
 	GtkTreePath*   path;
 	GtkTreeIter    iter;
+
+	// clear download cursor
+	traveler->download.cursor.node = NULL;
 
 	traveler->category.cursor.pos_last = traveler->category.cursor.pos;
 	gtk_tree_view_get_cursor (view, &path, NULL);

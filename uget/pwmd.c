@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2011-2013 Ben Kibbey <bjk@luxsci.net>
+    Copyright (C) 2011-2016 Ben Kibbey <bjk@luxsci.net>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,23 +23,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include "pwmd.h"
-
-static gpg_error_t knownhost_cb(void *data, const char *host, const char *key,
-	size_t len)
-{
-    pwm_t *pwm = data;
-    gpg_error_t rc;
-    char *buf = g_strdup_printf(_("Password Manager Daemon: uget\n\nWhile attempting an SSH connection to %s there was a problem verifying it's hostkey against the known and trusted hosts file because it's hostkey was not found.\n\nWould you like to treat this connection as trusted for this and future connections by adding %s's hostkey to the known hosts file?"), host, host);
-
-    rc = pwmd_setopt(pwm, PWMD_OPTION_PINENTRY_DESC, buf);
-    g_free(buf);
-    if (rc)
-	return rc;
-
-    rc = pwmd_getpin(pwm, NULL, NULL, NULL, PWMD_PINENTRY_CONFIRM);
-    (void)pwmd_getpin(pwm, NULL, NULL, NULL, PWMD_PINENTRY_CLOSE);
-    return rc;
-}
 
 gpg_error_t ug_set_pwmd_proxy_options(struct pwmd_proxy_s *pwmd,
        UgetProxy *proxy)
@@ -68,8 +51,6 @@ gpg_error_t ug_set_pwmd_proxy_options(struct pwmd_proxy_s *pwmd,
 	   goto fail;
 
        rc = pwmd_setopt (pwm, PWMD_OPTION_SOCKET_TIMEOUT, 120);
-       if (!rc)
-	 rc = pwmd_setopt(pwm, PWMD_OPTION_KNOWNHOST_CB, knownhost_cb);
 
        if (!rc && proxy->pwmd.socket_args && *proxy->pwmd.socket_args)
 	 args = g_strsplit (proxy->pwmd.socket_args, ",", 0);

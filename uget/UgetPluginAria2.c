@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2011-2016 by C.H. Huang
+ *   Copyright (C) 2011-2017 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -368,6 +368,7 @@ static int  plugin_ctrl (UgetPluginAria2* plugin, int code, void* data)
 		return plugin_ctrl_speed (plugin, data);
 
 	case UGET_PLUGIN_CTRL_NODE_UPDATED:
+	default:
 		break;
 	}
 
