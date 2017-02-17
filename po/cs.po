@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2014-11-27 08:40+0000\n"
-"Last-Translator: Alois Nešpor <info@aloisnespor.info>\n"
+"POT-Creation-Date: 2016-06-03 03:10+0800\n"
+"PO-Revision-Date: 2016-11-09 16:16+0000\n"
+"Last-Translator: Michael Tunnell <michael@ugetdm.com>\n"
 "Language-Team: Czech (http://www.transifex.com/uget/uget/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +21,17 @@ msgstr ""
 "Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: ../../po/../uget/UgetApp.c:95
+#: ../../po/../uget/pwmd.c:32
+#, c-format
+msgid ""
+"Password Manager Daemon: uget\n"
+"\n"
+"While attempting an SSH connection to %s there was a problem verifying it's hostkey against the known and trusted hosts file because it's hostkey was not found.\n"
+"\n"
+"Would you like to treat this connection as trusted for this and future connections by adding %s's hostkey to the known hosts file?"
+msgstr ""
+
+#: ../../po/../uget/UgetApp.c:103
 msgid "All Category"
 msgstr "Všechny kategorie"
 
@@ -36,7 +46,7 @@ msgid "Transmitting..."
 msgstr "Přenášení..."
 
 #. UGET_EVENT_NORMAL_TRANSMIT,
-#: ../../po/../uget/UgetEvent.c:60 ../../po/../ui-gtk/UgtkNodeView.c:874
+#: ../../po/../uget/UgetEvent.c:60 ../../po/../ui-gtk/UgtkNodeView.c:917
 msgid "Retry"
 msgstr "Opakovat"
 
@@ -46,7 +56,7 @@ msgid "Download completed"
 msgstr "Stahování dokončeno"
 
 #. UGET_EVENT_NORMAL_COMPLETE,
-#: ../../po/../uget/UgetEvent.c:62 ../../po/../ui-gtk/UgtkNodeView.c:613
+#: ../../po/../uget/UgetEvent.c:62 ../../po/../ui-gtk/UgtkNodeView.c:644
 msgid "Finished"
 msgstr "Dokončeno"
 
@@ -57,12 +67,12 @@ msgid "Resumable"
 msgstr "Možno pokračovat"
 
 #. UGET_EVENT_NORMAL_RESUMABLE,
-#: ../../po/../uget/UgetEvent.c:65 ../../po/../uget/UgetPluginAria2.c:279
+#: ../../po/../uget/UgetEvent.c:65 ../../po/../uget/UgetPluginAria2.c:287
 msgid "Not Resumable"
 msgstr "Není možné pokračovat"
 
 #. UGET_EVENT_WARNING_CUSTOM
-#: ../../po/../uget/UgetEvent.c:73 ../../po/../uget/UgetPluginAria2.c:286
+#: ../../po/../uget/UgetEvent.c:73 ../../po/../uget/UgetPluginAria2.c:294
 msgid "Output file can't be renamed."
 msgstr "Výstupní soubor nemohl být přejmenován."
 
@@ -72,7 +82,7 @@ msgid "couldn't connect to host."
 msgstr "Není možné se připojit na hosta."
 
 #. UGET_EVENT_ERROR_CONNECT_FAILED
-#: ../../po/../uget/UgetEvent.c:82 ../../po/../uget/UgetPluginAria2.c:290
+#: ../../po/../uget/UgetEvent.c:82 ../../po/../uget/UgetPluginAria2.c:298
 msgid "Folder can't be created."
 msgstr "Složka nemohla být vytvořena"
 
@@ -126,133 +136,167 @@ msgstr "Nepodporované schéma (protokol)"
 msgid "Unsupported file."
 msgstr "Nepodporovaný soubor."
 
+#. UGET_EVENT_ERROR_UNSUPPORTED_FILE
+#: ../../po/../uget/UgetEvent.c:93
+msgid "post file not found."
+msgstr ""
+
+#. UGET_EVENT_ERROR_POST_FILE_NOT_FOUND
+#: ../../po/../uget/UgetEvent.c:94
+msgid "cookie file not found."
+msgstr ""
+
+#: ../../po/../uget/UgetMedia-youtube.c:275
+msgid "This video has been removed."
+msgstr ""
+
+#: ../../po/../uget/UgetMedia-youtube.c:288
+msgid "Error occurred during getting video info."
+msgstr ""
+
+#: ../../po/../uget/UgetMedia-youtube.c:534
+msgid "Error occurred during getting video web page."
+msgstr ""
+
+#: ../../po/../uget/UgetMedia-youtube.c:606
+msgid "No video_id found in URL of YouTube."
+msgstr ""
+
 #. 1 - 10
-#: ../../po/../uget/UgetPluginAria2.c:272
+#: ../../po/../uget/UgetPluginAria2.c:280
 msgid "aria2: an unknown error occurred."
 msgstr "aria2: vyskytla se neznámá chyba."
 
-#: ../../po/../uget/UgetPluginAria2.c:273
+#: ../../po/../uget/UgetPluginAria2.c:281
 msgid "aria2: time out occurred."
 msgstr "aria2: vypršel časový limit"
 
-#: ../../po/../uget/UgetPluginAria2.c:274
+#: ../../po/../uget/UgetPluginAria2.c:282
 msgid "aria2: resource was not found."
 msgstr "aria2: zdroj nebyl nalezen."
 
-#: ../../po/../uget/UgetPluginAria2.c:275
+#: ../../po/../uget/UgetPluginAria2.c:283
 msgid ""
 "aria2 saw the specfied number of 'resource not found' error. See --max-file-"
 "not-found option"
 msgstr "aria2 chyba v zadaném počtu 'zdroj nebyl nalezen'. Podívejte se na volbu --max-file-not-found"
 
-#: ../../po/../uget/UgetPluginAria2.c:276
+#: ../../po/../uget/UgetPluginAria2.c:284
 msgid "aria2: speed was too slow."
 msgstr "aria2: rychlost byla příliš pomalá."
 
-#: ../../po/../uget/UgetPluginAria2.c:277
+#: ../../po/../uget/UgetPluginAria2.c:285
 msgid "aria2: network problem occurred."
 msgstr "aria2: nastal problém se sítí"
 
-#: ../../po/../uget/UgetPluginAria2.c:278
+#: ../../po/../uget/UgetPluginAria2.c:286
 msgid "aria2: unfinished downloads."
 msgstr "aria2: nedokončené stahování."
 
 #. _("Not Resumable"),
-#: ../../po/../uget/UgetPluginAria2.c:280
+#: ../../po/../uget/UgetPluginAria2.c:288
 msgid "Out of resource"
 msgstr " Nedostatek zdrojů či prostředků"
 
 #. _(),
-#: ../../po/../uget/UgetPluginAria2.c:281
+#: ../../po/../uget/UgetPluginAria2.c:289
 msgid "aria2: piece length was different from one in .aria2 control file."
 msgstr "aria2: velikost jednoho dílu je rozdílná než v kontrolním souboru."
 
 #. 11 - 20
-#: ../../po/../uget/UgetPluginAria2.c:283
+#: ../../po/../uget/UgetPluginAria2.c:291
 msgid "aria2 was downloading same file."
 msgstr "aria2 stáhla stejný soubor."
 
-#: ../../po/../uget/UgetPluginAria2.c:284
+#: ../../po/../uget/UgetPluginAria2.c:292
 msgid "aria2 was downloading same info hash torrent."
 msgstr "aria2 stáhla stejný info hash torrent."
 
-#: ../../po/../uget/UgetPluginAria2.c:285
+#: ../../po/../uget/UgetPluginAria2.c:293
 msgid "aria2: file already existed. See --allow-overwrite option."
 msgstr "aria2: soubor již existuje. Podívjte se na volbu --allow-overwrite."
 
 #. _("Output file can't be renamed."),
-#: ../../po/../uget/UgetPluginAria2.c:287
+#: ../../po/../uget/UgetPluginAria2.c:295
 msgid "aria2: could not open existing file."
 msgstr "aria2: nelze otevřít existující soubor."
 
-#: ../../po/../uget/UgetPluginAria2.c:288
+#: ../../po/../uget/UgetPluginAria2.c:296
 msgid "aria2: could not create new file or truncate existing file."
 msgstr "aria2: nelze vytvořit nový soubor."
 
-#: ../../po/../uget/UgetPluginAria2.c:289
+#: ../../po/../uget/UgetPluginAria2.c:297
 msgid "aria2: file I/O error occurred."
 msgstr "aria2: nastala chyba I/O souboru."
 
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
-#: ../../po/../uget/UgetPluginAria2.c:291
+#: ../../po/../uget/UgetPluginAria2.c:299
 msgid "aria2: name resolution failed."
 msgstr "aria2: rozlišení jména selhalo."
 
-#: ../../po/../uget/UgetPluginAria2.c:292
+#: ../../po/../uget/UgetPluginAria2.c:300
 msgid "aria2: could not parse Metalink document."
 msgstr "aria2: nelze parsovat Metalink dokument."
 
 #. 21 - 30
-#: ../../po/../uget/UgetPluginAria2.c:294
+#: ../../po/../uget/UgetPluginAria2.c:302
 msgid "aria2: FTP command failed."
 msgstr "aria2: FTP příkaz selhal."
 
-#: ../../po/../uget/UgetPluginAria2.c:295
+#: ../../po/../uget/UgetPluginAria2.c:303
 msgid "aria2: HTTP response header was bad or unexpected."
 msgstr "aria2: HTTP hlavička je chybná nebo neočekávaná."
 
-#: ../../po/../uget/UgetPluginAria2.c:296
+#: ../../po/../uget/UgetPluginAria2.c:304
 msgid "Too many redirections."
 msgstr "Příliš mnoho přesměrování."
 
-#: ../../po/../uget/UgetPluginAria2.c:297
+#: ../../po/../uget/UgetPluginAria2.c:305
 msgid "aria2: HTTP authorization failed."
 msgstr "aria2: selhala HTTP autorizace."
 
-#: ../../po/../uget/UgetPluginAria2.c:298
+#: ../../po/../uget/UgetPluginAria2.c:306
 msgid "aria2: could not parse bencoded file(usually .torrent file)."
 msgstr "aria2: nelze parsovat soubor (obvykle .torrent soubor)"
 
-#: ../../po/../uget/UgetPluginAria2.c:299
+#: ../../po/../uget/UgetPluginAria2.c:307
 msgid "aria2: torrent file was corrupted or missing information."
 msgstr "aria2: soubor torrentu je poškozený nebo v něm chybí potřebné  informace."
 
-#: ../../po/../uget/UgetPluginAria2.c:300
+#: ../../po/../uget/UgetPluginAria2.c:308
 msgid "aria2: Magnet URI was bad."
 msgstr "aria2: Magnet URI je chybný."
 
-#: ../../po/../uget/UgetPluginAria2.c:301
+#: ../../po/../uget/UgetPluginAria2.c:309
 msgid ""
 "aria2: bad/unrecognized option was given or unexpected option argument was "
 "given."
 msgstr "aria2: byl zadán špatná nebo nerozpoznatelná volba, případně špatný argument volby"
 
-#: ../../po/../uget/UgetPluginAria2.c:302
+#: ../../po/../uget/UgetPluginAria2.c:310
 msgid "aria2: remote server was unable to handle the request."
 msgstr "aria2: vzdálený server neodpovídá na žádost."
 
-#: ../../po/../uget/UgetPluginAria2.c:303
+#: ../../po/../uget/UgetPluginAria2.c:311
 msgid "aria2: could not parse JSON-RPC request."
 msgstr "aria2: nelze parsovat JSON-RPC."
 
-#: ../../po/../uget/UgetPluginAria2.c:306
+#: ../../po/../uget/UgetPluginAria2.c:314
 msgid "No response. Is aria2 shutdown?"
 msgstr "Žádná odezva. Je aria2 vypnuta?"
 
 #. debug
-#: ../../po/../uget/UgetPluginAria2.c:608
+#: ../../po/../uget/UgetPluginAria2.c:641
 msgid "aria2: gid was removed."
 msgstr "aria2: gid byl odstrraněn."
+
+#: ../../po/../uget/UgetPluginMedia.c:489
+msgid "Failed to get media link."
+msgstr ""
+
+#: ../../po/../uget/UgetPluginMedia.c:505
+msgid "No matched media."
+msgstr ""
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:46
 msgid "Download Manager"
@@ -270,95 +314,95 @@ msgstr "Zakladatel uGet:"
 msgid "uGet Project Manager: "
 msgstr "Projektový manažer uGet:"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:255
-#: ../../po/../ui-gtk/UgtkTrayIcon.c:204
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:263
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:239
 msgid "tasks"
 msgstr "úkoly"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:374
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:399
 msgid "New from Clipboard"
 msgstr "Nové ze schránky"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:376 ../../po/../ui-gtk/UgtkApp.c:662
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:401 ../../po/../ui-gtk/UgtkApp.c:915
 msgid "New Download"
 msgstr "Nové stahování"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:399 ../../po/../ui-gtk/UgtkApp.c:1411
-#: ../../po/../ui-gtk/UgtkSettingDialog.c:103
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:425 ../../po/../ui-gtk/UgtkApp.c:1679
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:119
 msgid "Clipboard"
 msgstr "Schránka"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:401
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:427
 msgid "Command line"
 msgstr "Příkazová řádka"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:758
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:780
 msgid "Error Occurred"
 msgstr "Vyskytla se chyba"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:759
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:781
 msgid "Error Occurred when downloading."
 msgstr "Vyskytla se chyba během stahování."
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:760
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:782
 msgid "Download Starting"
 msgstr "Stahování začalo"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:761
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:783
 msgid "Starting download queue."
 msgstr "Začíná se stahovat fronta."
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:762
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:784
 msgid "Download Completed"
 msgstr "Stahování dokončeno"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:763
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:785
 msgid "All queuing downloads have been completed."
 msgstr "Všechna stahovaní fronty byla dokončena."
 
 #. ----------------------------------------------------
 #. frame for Status (start mode)
-#: ../../po/../ui-gtk/UgtkApp-ui.c:115
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:220
-#: ../../po/../ui-gtk/UgtkNodeView.c:997
+#: ../../po/../ui-gtk/UgtkApp-ui.c:193
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:224
+#: ../../po/../ui-gtk/UgtkNodeView.c:1040
 msgid "Status"
 msgstr "Stav"
 
 #. Summary Items - Category
 #. Download Columns - Category
-#: ../../po/../ui-gtk/UgtkApp-ui.c:117 ../../po/../ui-gtk/UgtkMenubar-ui.c:270
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:298
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:383
-#: ../../po/../ui-gtk/UgtkNodeDialog.c:392
-#: ../../po/../ui-gtk/UgtkNodeView.c:889 ../../po/../ui-gtk/UgtkNodeView.c:977
-#: ../../po/../ui-gtk/UgtkSummary.c:139
+#: ../../po/../ui-gtk/UgtkApp-ui.c:195 ../../po/../ui-gtk/UgtkMenubar-ui.c:318
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:346
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:431
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:418
+#: ../../po/../ui-gtk/UgtkNodeView.c:932
+#: ../../po/../ui-gtk/UgtkNodeView.c:1020 ../../po/../ui-gtk/UgtkSummary.c:131
 msgid "Category"
 msgstr "Kategorie"
 
-#: ../../po/../ui-gtk/UgtkApp-ui.c:184
+#: ../../po/../ui-gtk/UgtkApp-ui.c:279
 msgid "Create new download"
 msgstr "Vytvořit nové stahování"
 
 #. New Download (accelerators)
 #. gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
 #. New Download
-#: ../../po/../ui-gtk/UgtkApp-ui.c:194 ../../po/../ui-gtk/UgtkMenubar-ui.c:58
+#: ../../po/../ui-gtk/UgtkApp-ui.c:289 ../../po/../ui-gtk/UgtkMenubar-ui.c:58
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:59
 msgid "New _Download..."
 msgstr "Nové _stahování..."
 
 #. New Category
-#: ../../po/../ui-gtk/UgtkApp-ui.c:201 ../../po/../ui-gtk/UgtkMenubar-ui.c:65
+#: ../../po/../ui-gtk/UgtkApp-ui.c:300 ../../po/../ui-gtk/UgtkMenubar-ui.c:69
 msgid "New _Category..."
 msgstr "Nová _kategorie..."
 
 #. New Clipboard batch
-#: ../../po/../ui-gtk/UgtkApp-ui.c:207 ../../po/../ui-gtk/UgtkTrayIcon.c:66
+#: ../../po/../ui-gtk/UgtkApp-ui.c:310 ../../po/../ui-gtk/UgtkTrayIcon.c:70
 msgid "New Clipboard _batch..."
 msgstr "Nové _hromadné ze schránky..."
 
 #. New URL Sequence batch
-#: ../../po/../ui-gtk/UgtkApp-ui.c:214
+#: ../../po/../ui-gtk/UgtkApp-ui.c:321
 msgid "New _URL Sequence batch..."
 msgstr "Nová hromadná _URL sekvence..."
 
@@ -367,153 +411,169 @@ msgstr "Nová hromadná _URL sekvence..."
 #. gtk_menu_shell_append ((GtkMenuShell*)submenu,
 #. gtk_separator_menu_item_new() );
 #. New Torrent
-#: ../../po/../ui-gtk/UgtkApp-ui.c:224 ../../po/../ui-gtk/UgtkMenubar-ui.c:73
-#: ../../po/../ui-gtk/UgtkTrayIcon.c:75
+#: ../../po/../ui-gtk/UgtkApp-ui.c:335 ../../po/../ui-gtk/UgtkMenubar-ui.c:81
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:83
 msgid "New Torrent..."
 msgstr "Nový torrent..."
 
 #. New Metalink
-#: ../../po/../ui-gtk/UgtkApp-ui.c:231 ../../po/../ui-gtk/UgtkMenubar-ui.c:79
-#: ../../po/../ui-gtk/UgtkTrayIcon.c:82
+#: ../../po/../ui-gtk/UgtkApp-ui.c:342 ../../po/../ui-gtk/UgtkMenubar-ui.c:87
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:90
 msgid "New Metalink..."
 msgstr "Nový metalink..."
 
-#: ../../po/../ui-gtk/UgtkApp-ui.c:240
+#: ../../po/../ui-gtk/UgtkApp-ui.c:356
 msgid "Save all settings"
 msgstr "Uložit veškeré nastavení"
 
-#: ../../po/../ui-gtk/UgtkApp-ui.c:248
+#: ../../po/../ui-gtk/UgtkApp-ui.c:369
 msgid "Set selected download runnable"
 msgstr "Spustit vybrané stahování"
 
-#: ../../po/../ui-gtk/UgtkApp-ui.c:253
+#: ../../po/../ui-gtk/UgtkApp-ui.c:379
 msgid "Set selected download to pause"
 msgstr "Pozastavit vybrané stahování"
 
-#: ../../po/../ui-gtk/UgtkApp-ui.c:258
+#: ../../po/../ui-gtk/UgtkApp-ui.c:389
 msgid "Set selected download properties"
 msgstr "Nastavit vlastnosti vybraného stahování"
 
-#: ../../po/../ui-gtk/UgtkApp-ui.c:266
+#: ../../po/../ui-gtk/UgtkApp-ui.c:402
 msgid "Move selected download up"
 msgstr "Posunout vybrané stahování nahoru"
 
-#: ../../po/../ui-gtk/UgtkApp-ui.c:271
+#: ../../po/../ui-gtk/UgtkApp-ui.c:412
 msgid "Move selected download down"
 msgstr "Posunout vybrané stahování dolů"
 
-#: ../../po/../ui-gtk/UgtkApp-ui.c:276
+#: ../../po/../ui-gtk/UgtkApp-ui.c:422
 msgid "Move selected download to top"
 msgstr "Posunout vybrané stahování na vrchol"
 
-#: ../../po/../ui-gtk/UgtkApp-ui.c:281
+#: ../../po/../ui-gtk/UgtkApp-ui.c:432
 msgid "Move selected download to bottom"
 msgstr "Posunout vybrané stahování na spod"
 
-#: ../../po/../ui-gtk/UgtkApp.c:634
+#: ../../po/../ui-gtk/UgtkApp.c:883
 msgid "New Category"
 msgstr "Nová kategorie"
 
-#: ../../po/../ui-gtk/UgtkApp.c:645
+#: ../../po/../ui-gtk/UgtkApp.c:894
 msgid "Copy - "
 msgstr "Kopírovat - "
 
-#: ../../po/../ui-gtk/UgtkApp.c:783
+#: ../../po/../ui-gtk/UgtkApp.c:1049
 msgid "Category Properties"
 msgstr "Vlastnosti kategorie"
 
-#: ../../po/../ui-gtk/UgtkApp.c:797
+#: ../../po/../ui-gtk/UgtkApp.c:1063
 msgid "Download Properties"
 msgstr "Vlastnosti stahování"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1028
+#: ../../po/../ui-gtk/UgtkApp.c:1296
 msgid "New Torrent"
 msgstr "Nový torrent"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1044
+#: ../../po/../ui-gtk/UgtkApp.c:1312
 msgid "New Metalink"
 msgstr "Nový metalink"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1053
+#: ../../po/../ui-gtk/UgtkApp.c:1321
 msgid "Open Torrent file"
 msgstr "Otevřít torrent soubor"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1069
+#: ../../po/../ui-gtk/UgtkApp.c:1324
+msgid "Torrent file (*.torrent)"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkApp.c:1337
 msgid "Open Metalink file"
 msgstr "Otevřít soubor metalinku"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1109
+#: ../../po/../ui-gtk/UgtkApp.c:1377
 msgid "Failed to save category file."
 msgstr "Nepodařilo se uložit soubor kategorií."
 
-#: ../../po/../ui-gtk/UgtkApp.c:1129
+#: ../../po/../ui-gtk/UgtkApp.c:1397
 msgid "Failed to load category file."
 msgstr "Nepodařilo se otevřít soubor kategorií."
 
-#: ../../po/../ui-gtk/UgtkApp.c:1140
+#: ../../po/../ui-gtk/UgtkApp.c:1408
 msgid "Save Category file"
 msgstr "Uložit soubor kategorií"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1158
+#: ../../po/../ui-gtk/UgtkApp.c:1426
 msgid "Open Category file"
 msgstr "Otevřít soubor kategorií"
 
+#: ../../po/../ui-gtk/UgtkApp.c:1429
+msgid "JSON file (*.json)"
+msgstr ""
+
 #. add link
-#: ../../po/../ui-gtk/UgtkApp.c:1217
+#: ../../po/../ui-gtk/UgtkApp.c:1485
 msgid "Link <A>"
 msgstr "Odkaz <A>"
 
 #. add image
-#: ../../po/../ui-gtk/UgtkApp.c:1222
+#: ../../po/../ui-gtk/UgtkApp.c:1490
 msgid "Image <IMG>"
 msgstr "Obrázek <IMG>"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1267
+#: ../../po/../ui-gtk/UgtkApp.c:1535
 msgid "Text File"
 msgstr "Textový soubor"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1314
+#: ../../po/../ui-gtk/UgtkApp.c:1582
 msgid "Import URLs from HTML file"
 msgstr "Importovat URL z HTML souboru"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1329
+#: ../../po/../ui-gtk/UgtkApp.c:1585
+msgid "HTML file (*.htm, *.html)"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkApp.c:1597
 msgid "Import URLs from text file"
 msgstr "Importovat URL z textového souboru"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1344
+#: ../../po/../ui-gtk/UgtkApp.c:1600
+msgid "Plain text file"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkApp.c:1612
 msgid "Export URLs to text file"
 msgstr "Exportovat URL do textového souboru"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1363
+#: ../../po/../ui-gtk/UgtkApp.c:1631
 msgid "URL Sequence batch"
 msgstr "URL sekvence hromadně"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1390
+#: ../../po/../ui-gtk/UgtkApp.c:1658
 msgid "No URLs found in clipboard."
 msgstr "Ve schránce nebyla nalezena žádná URL adresa."
 
-#: ../../po/../ui-gtk/UgtkApp.c:1399
+#: ../../po/../ui-gtk/UgtkApp.c:1667
 msgid "All URLs had existed."
 msgstr "Všechny URL existují."
 
-#: ../../po/../ui-gtk/UgtkApp.c:1404
+#: ../../po/../ui-gtk/UgtkApp.c:1672
 msgid "Clipboard batch"
 msgstr "Schránka hromadně"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1494
+#: ../../po/../ui-gtk/UgtkApp.c:1762
 msgid "New"
 msgstr "Nový"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1613 ../../po/../ui-gtk/UgtkMenubar.c:383
-#: ../../po/../ui-gtk/UgtkMenubar.c:415 ../../po/../ui-gtk/UgtkNodeView.c:609
+#: ../../po/../ui-gtk/UgtkApp.c:1803 ../../po/../ui-gtk/UgtkMenubar.c:460
+#: ../../po/../ui-gtk/UgtkMenubar.c:492 ../../po/../ui-gtk/UgtkNodeView.c:640
 msgid "Error"
 msgstr "Chyba"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1621 ../../po/../ui-gtk/UgtkSummary.c:184
+#: ../../po/../ui-gtk/UgtkApp.c:1811 ../../po/../ui-gtk/UgtkSummary.c:176
 msgid "Message"
 msgstr "Zpráva"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1727
+#: ../../po/../ui-gtk/UgtkApp.c:1927
 #, c-format
 msgid "Selected %d items"
 msgstr "Vybráno %d položek"
@@ -543,14 +603,17 @@ msgstr "klikněte sem a zahajte průzkum"
 msgid "Category _name:"
 msgstr "_Název kategorie:"
 
+#. gtk_entry_set_width_chars (GTK_ENTRY(cform->spin_active), 5);
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:82
 msgid "Active _downloads:"
 msgstr "Aktivní _stahování:"
 
+#. gtk_entry_set_width_chars (GTK_ENTRY(cform->spin_finished), 5);
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:92
 msgid "Capacity of Finished:"
 msgstr "Kapacita dokončeného:"
 
+#. gtk_entry_set_width_chars (GTK_ENTRY(cform->spin_recycled), 5);
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:102
 msgid "Capacity of Recycled:"
 msgstr "Kapacita koše:"
@@ -597,143 +660,143 @@ msgstr "Skutečně smazat kategorii?"
 msgid "Are you sure you want to delete category?"
 msgstr "Jste si jist, že chcete smazat kategorii?"
 
-#: ../../po/../ui-gtk/UgtkConfirmDialog.c:106
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:109
 msgid "Don't ask me again"
 msgstr "Neptat se znovu"
 
 #. URL - label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:109
-#: ../../po/../ui-gtk/UgtkSequencer.c:63
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:111
+#: ../../po/../ui-gtk/UgtkSequence.c:63
 msgid "_URI:"
 msgstr "_URI:"
 
 #. Mirrors - label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:128
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:130
 msgid "Mirrors:"
 msgstr "Zrcadla:"
 
 #. File - label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:144
-#: ../../po/../ui-gtk/UgtkProxyForm.c:385
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:146
+#: ../../po/../ui-gtk/UgtkProxyForm.c:393
 msgid "File:"
 msgstr "Soubor:"
 
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:159
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:893
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:166
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:897
 msgid "Select Folder"
 msgstr "Vybrat složku"
 
 #. Folder - label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:167
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:174
 msgid "_Folder:"
 msgstr "_Složka:"
 
 #. Referrer - label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:182
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:189
 msgid "Referrer:"
 msgstr "Referrer:"
 
 #. "Max Connections:" - title label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:207
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:212
 msgid "_Max Connections:"
 msgstr "_Maximálních připojení:"
 
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:226
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:510
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:230
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:574
 msgid "_Runnable"
 msgstr "_Běžící"
 
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:228
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:232
 msgid "P_ause"
 msgstr "Pozast_aveno"
 
 #. ----------------------------------------------------
 #. frame for login
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:234
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:238
 msgid "Login"
 msgstr "Přihlášení"
 
 #. User - label
 #. user label & entry
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:248
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:252
 #: ../../po/../ui-gtk/UgtkProxyForm.c:149
 msgid "User:"
 msgstr "Uživatel:"
 
 #. Password - label
 #. password label & entry
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:264
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:268
 #: ../../po/../ui-gtk/UgtkProxyForm.c:160
 msgid "Password:"
 msgstr "Heslo:"
 
 #. label - cookie file
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:290
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:293
 msgid "Cookie file:"
 msgstr "Soubor cookie:"
 
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:302
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:949
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:310
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:953
 msgid "Select Cookie File"
 msgstr "Vyberte soubor cookie"
 
 #. label - post file
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:311
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:319
 msgid "Post file:"
 msgstr "Publikovat soubor:"
 
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:323
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:1005
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:336
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:1009
 msgid "Select Post File"
 msgstr "Vyberte publikovaný soubor"
 
 #. label - user agent
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:333
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:346
 msgid "User Agent:"
 msgstr "Uživatelský klient:"
 
-#. label - Max upload speed
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:349
-msgid "Max upload speed:"
-msgstr "Max. rychlost odesílání:"
-
-#. label - "KiB/s"
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:361
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:379
-#: ../../po/../ui-gtk/UgtkSettingForm.c:280
-#: ../../po/../ui-gtk/UgtkSettingForm.c:292
-#: ../../po/../ui-gtk/UgtkSettingForm.c:566
-#: ../../po/../ui-gtk/UgtkSettingForm.c:578
-msgid "KiB/s"
-msgstr "KiB/s"
-
-#. label - Max download speed
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:367
-msgid "Max download speed:"
-msgstr "Max. rychlost stahování:"
-
 #. Retry limit - label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:385
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:362
 msgid "Retry _limit:"
 msgstr "_Limit opakování:"
 
 #. counts - label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:400
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:377
 msgid "counts"
 msgstr "počet"
 
 #. Retry delay - label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:407
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:384
 msgid "Retry _delay:"
 msgstr "Zpož_dění opakování:"
 
 #. seconds - label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:422
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:399
 msgid "seconds"
 msgstr "sekund"
 
+#. label - Max upload speed
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:406
+msgid "Max upload speed:"
+msgstr "Max. rychlost odesílání:"
+
+#. label - "KiB/s"
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:418
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:436
+#: ../../po/../ui-gtk/UgtkSettingForm.c:311
+#: ../../po/../ui-gtk/UgtkSettingForm.c:323
+#: ../../po/../ui-gtk/UgtkSettingForm.c:612
+#: ../../po/../ui-gtk/UgtkSettingForm.c:624
+msgid "KiB/s"
+msgstr "KiB/s"
+
+#. label - Max download speed
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:424
+msgid "Max download speed:"
+msgstr "Max. rychlost stahování:"
+
 #. Retrieve timestamp
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:429
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:442
 msgid "Retrieve timestamp"
 msgstr "Načíst časové razítko"
 
@@ -742,154 +805,165 @@ msgid "_File"
 msgstr "_Soubor"
 
 #. Batch Downloads --- start ---
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:86
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:94
 msgid "_Batch Downloads"
 msgstr "_Dávková stahování"
 
 #. Batch downloads - Clipboard batch
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:92
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:100
 msgid "_Clipboard batch..."
 msgstr "Hromadně ze _schránky..."
 
 #. Batch downloads - URL Sequence batch
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:98
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:110
 msgid "_URL Sequence batch..."
 msgstr "Hromadně _URL sekvence..."
 
 #. Batch downloads - Text file import (.txt)
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:104
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:120
 msgid "_Text file import (.txt)..."
 msgstr "Importovat _textový soubor (.txt)..."
 
 #. Batch downloads - HTML file import (.html)
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:110
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:130
 msgid "_HTML file import (.html)..."
 msgstr "Importovat _HTML soubor (.html)..."
 
 #. Batch downloads - Export to Text file (.txt)
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:118
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
 msgid "_Export to Text file (.txt)..."
 msgstr "_Exportovat _textový soubor (.txt)..."
 
 #. Open Category
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:128
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:156
 msgid "_Open category..."
 msgstr "_Otevřít kategorii..."
 
 #. Save Category
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:135
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:167
 msgid "_Save category as..."
 msgstr "_Uložit kategorii jako..."
 
 #. Save All
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:178
 msgid "Save _all settings"
 msgstr "Uložit _veškeré nastavení"
 
 #. Offline mode
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:152
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:192
 msgid "Offline Mode"
 msgstr "Offline režim"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:170
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:210
 msgid "_Edit"
 msgstr "_Upravit"
 
 #. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new()
 #. );
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:175
+#. Settings shortcut
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:215
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:99
 msgid "Clipboard _Monitor"
 msgstr "_Monitor schránky"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:179
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:219
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:103
 msgid "Clipboard works quietly"
 msgstr "Schránka pracuje tiše"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:183
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:223
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:107
 msgid "Command-line works quietly"
 msgstr "Příkazový řádek pracuje tiše"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:187
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:227
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:111
 msgid "Skip existing URI"
 msgstr "Přeskočit existující URI"
 
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
+#: ../../po/../ui-gtk/UgtkSettingForm.c:223
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:115
+msgid "Apply recent download settings"
+msgstr "Použít nastavení posledního stahování"
+
 #. --- Completion Auto-Actions --- start ---
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:194
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:238
 msgid "Completion _Auto-Actions"
 msgstr "Dokončení _automatických akcí"
 
 #. Completion Auto-Actions - Disable
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:200
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:244
 msgid "_Disable"
 msgstr "_Zakázat"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:205
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:249
 msgid "Hibernate"
 msgstr "Hibernovat"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:210
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:254
 msgid "Suspend"
 msgstr "Uspat"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:215
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:259
 msgid "Shutdown"
 msgstr "Vypnout"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:220
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:264
 msgid "Reboot"
 msgstr "Restartovat"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:225
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:269
 msgid "Custom"
 msgstr "Vlastní"
 
 #. Completion Auto-Actions - Remember
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:275
 msgid "Remember setting"
 msgstr "Zapamatovat nastavení"
 
 #. Completion Auto-Actions - Help
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:235
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:610
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:279
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:682
 msgid "_Help"
 msgstr "_Nápověda"
 
 #. --- Completion Auto-Actions --- end ---
 #. menu_item = gtk_menu_item_new_with_mnemonic (_("_Settings..."));
 #. Settings
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:241
-#: ../../po/../ui-gtk/UgtkTrayIcon.c:91
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:285
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:122
 msgid "_Settings..."
 msgstr "_Nastavení..."
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:256
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:304
 msgid "_View"
 msgstr "_Zobrazit"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:260
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:308
 msgid "_Toolbar"
 msgstr "_Panel nástrojů"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:265
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:313
 msgid "Statusbar"
 msgstr "Stavový řádek"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:275
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:323
 msgid "_Summary"
 msgstr "_Shrnutí"
 
 #. Summary Items --- start ---
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:283
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:331
 msgid "Summary _Items"
 msgstr "Shrnutí _položek"
 
 #. Summary Items - Name
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:288
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:336
 msgid "_Name"
 msgstr "_Název"
 
 #. Summary Items - Folder
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:293
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:341
 msgid "_Folder"
 msgstr "_Složka"
 
@@ -900,289 +974,289 @@ msgstr "_Složka"
 #. menubar->view.summary_items.elapsed = menu_item;
 #. Summary Items - URL
 #. Download Columns - URL
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:308
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:388
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:356
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:436
 msgid "_URL"
 msgstr "_URL"
 
 #. Summary Items - Message
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:313
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:361
 msgid "_Message"
 msgstr "_Zpráva"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:328
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:376
 msgid "Download _Columns"
 msgstr "Slou_pec stahování"
 
-#. Download Columns - Completed
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:333
+#. Download Columns - Complete
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:381
 msgid "_Complete"
 msgstr "_Dokončeno"
 
 #. Download Columns - Total
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:338
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:386
 msgid "_Size"
 msgstr "_Velikost"
 
 #. Download Columns - Percent (%)
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:343
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:391
 msgid "_Percent '%'"
 msgstr "_Procent '%'"
 
 #. Download Columns - Elapsed
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:348
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:396
 msgid "_Elapsed"
 msgstr "_Čas běhu"
 
 #. Download Columns - Left
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:353
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:401
 msgid "_Left"
 msgstr "_Zbývá"
 
 #. Download Columns - Speed
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:358
-#: ../../po/../ui-gtk/UgtkNodeView.c:818
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:406
+#: ../../po/../ui-gtk/UgtkNodeView.c:861
 msgid "Speed"
 msgstr "Rychlost"
 
 #. Download Columns - Up Speed
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:363
-#: ../../po/../ui-gtk/UgtkNodeView.c:832
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:411
+#: ../../po/../ui-gtk/UgtkNodeView.c:875
 msgid "Up Speed"
 msgstr "Rychl. odes."
 
 #. Download Columns - Uploaded
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:368
-#: ../../po/../ui-gtk/UgtkNodeView.c:846
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:416
+#: ../../po/../ui-gtk/UgtkNodeView.c:889
 msgid "Uploaded"
 msgstr "Odesláno"
 
 #. Download Columns - Ratio
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:373
-#: ../../po/../ui-gtk/UgtkNodeView.c:860
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:421
+#: ../../po/../ui-gtk/UgtkNodeView.c:903
 msgid "Ratio"
 msgstr "Poměr"
 
 #. Download Columns - Retry
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:378
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:426
 msgid "_Retry"
 msgstr "_Opakování"
 
 #. Download Columns - Added On
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:393
-#: ../../po/../ui-gtk/UgtkNodeView.c:917
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:441
+#: ../../po/../ui-gtk/UgtkNodeView.c:960
 msgid "Added On"
 msgstr "Přidáno"
 
 #. Download Columns - Completed On
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:398
-#: ../../po/../ui-gtk/UgtkNodeView.c:931
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:446
+#: ../../po/../ui-gtk/UgtkNodeView.c:974
 msgid "Completed On"
 msgstr "Dokončeno"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:413
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:461
 msgid "_Category"
 msgstr "_Kategorie"
 
 #. New Category
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:418
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:466
 msgid "_New Category..."
 msgstr "_Nová kategorie..."
 
 #. Delete Category
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:424
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:476
 msgid "_Delete Category"
 msgstr "_Smazat kategorii"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:461
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:517
 msgid "_Download"
 msgstr "_Stahování"
 
 #. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE,
 #. accel_group);
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:473
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:529
 msgid "_Delete Entry"
 msgstr "_Smazat položku"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:480
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:540
 msgid "Delete Entry and _File"
 msgstr "Smazat položku a _soubor"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:495
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:555
 msgid "Open _Containing folder"
 msgstr "Otevřít _cílovou složku"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:504
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:568
 msgid "Force Start"
 msgstr "Vynutit start"
 
 #. Move to --- start ---
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:528
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:596
 msgid "_Move To"
 msgstr "_Přesunout do"
 
 #. Priority --- start ---
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:573
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:645
 msgid "Priority"
 msgstr "Priorita"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:582
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:654
 msgid "_High"
 msgstr "_Vysoká"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:587
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:659
 msgid "_Normal"
 msgstr "_Normální"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:592
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:664
 msgid "_Low"
 msgstr "_Nízká"
 
 #. Get Help Online
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:615
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:687
 msgid "Get Help Online"
 msgstr "Získat pomoc online"
 
 #. Documentation
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:622
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:698
 msgid "Documentation"
 msgstr "Dokumentace"
 
 #. Support Forum
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:629
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:709
 msgid "Support Forum"
 msgstr "Fórum s podporou"
 
 #. Submit Feedback
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:636
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:720
 msgid "Submit Feedback"
 msgstr "Odeslat zpětnou vazbu"
 
 #. Report a Bug
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:643
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:731
 msgid "Report a Bug"
 msgstr "Nahlásit chybu"
 
 #. Keyboard Shortcuts
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:650
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:742
 msgid "Keyboard Shortcuts"
 msgstr "Klávesové zkratky"
 
 #. Check for Updates
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:657
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:749
 msgid "Check for Updates"
 msgstr "Zkontrolovat aktualizace"
 
-#: ../../po/../ui-gtk/UgtkMenubar.c:144
+#: ../../po/../ui-gtk/UgtkMenubar.c:187
 msgid "Settings"
 msgstr "Nastavení"
 
-#: ../../po/../ui-gtk/UgtkMenubar.c:377
+#: ../../po/../ui-gtk/UgtkMenubar.c:454
 #, c-format
 msgid "Can't launch default application for file '%s'."
 msgstr "Není možné spustit výchozí aplikaci pro soubor %s'."
 
-#: ../../po/../ui-gtk/UgtkMenubar.c:409
+#: ../../po/../ui-gtk/UgtkMenubar.c:486
 #, c-format
 msgid "'%s' - This folder does not exist."
 msgstr "'%s' - Tato složka neexistuje."
 
 #. title
-#: ../../po/../ui-gtk/UgtkNodeDialog.c:205
-#: ../../po/../ui-gtk/UgtkNodeDialog.c:209
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:219
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:223
 msgid "URI had existed"
 msgstr "URI existuje"
 
-#: ../../po/../ui-gtk/UgtkNodeDialog.c:207
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:221
 msgid "This URI had existed, are you sure to continue?"
 msgstr "Toto URI existuje, chcete opravdu pokračovat?"
 
-#: ../../po/../ui-gtk/UgtkNodeDialog.c:343
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:359
 msgid "General"
 msgstr "Hlavní"
 
-#: ../../po/../ui-gtk/UgtkNodeDialog.c:345
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:361
 msgid "Advanced"
 msgstr "Pokročilé"
 
-#: ../../po/../ui-gtk/UgtkNodeDialog.c:354
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:370
 msgid "Category settings"
 msgstr "Nastavení kategorie"
 
-#: ../../po/../ui-gtk/UgtkNodeDialog.c:356
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:372
 msgid "Default for new download 1"
 msgstr "Výchozí pro nové stahování 1"
 
-#: ../../po/../ui-gtk/UgtkNodeDialog.c:358
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:374
 msgid "Default 2"
 msgstr "Výchozí 2"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:121 ../../po/../ui-gtk/UgtkNodeView.c:584
-#: ../../po/../ui-gtk/UgtkSummary.c:115
+#: ../../po/../ui-gtk/UgtkNodeView.c:143 ../../po/../ui-gtk/UgtkNodeView.c:608
+#: ../../po/../ui-gtk/UgtkSummary.c:107
 msgid "unnamed"
 msgstr "bezejmenný"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:610
+#: ../../po/../ui-gtk/UgtkNodeView.c:641
 msgid "Paused"
 msgstr "Pozastaveno"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:611
+#: ../../po/../ui-gtk/UgtkNodeView.c:642
 msgid "Uploading"
 msgstr "Odesílání"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:612
+#: ../../po/../ui-gtk/UgtkNodeView.c:643
 msgid "Completed"
 msgstr "Kompletní"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:614
+#: ../../po/../ui-gtk/UgtkNodeView.c:645
 msgid "Recycled"
 msgstr "V koši"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:615
+#: ../../po/../ui-gtk/UgtkNodeView.c:646
 msgid "Queuing"
 msgstr "Ve frontě"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:616
+#: ../../po/../ui-gtk/UgtkNodeView.c:647
 msgid "Active"
 msgstr "Aktivní"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:637
+#: ../../po/../ui-gtk/UgtkNodeView.c:668
 msgid "All Status"
 msgstr "Všechny stavy"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:734
-#: ../../po/../ui-gtk/UgtkSettingDialog.c:85
-#: ../../po/../ui-gtk/UgtkSummary.c:108
+#: ../../po/../ui-gtk/UgtkNodeView.c:773
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:101
+#: ../../po/../ui-gtk/UgtkSummary.c:100
 msgid "Name"
 msgstr "Název"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:747
+#: ../../po/../ui-gtk/UgtkNodeView.c:790
 msgid "Complete"
 msgstr "Kompletní"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:761
+#: ../../po/../ui-gtk/UgtkNodeView.c:804
 msgid "Size"
 msgstr "Velikost"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:776
+#: ../../po/../ui-gtk/UgtkNodeView.c:819
 msgid "%"
 msgstr "%"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:790
+#: ../../po/../ui-gtk/UgtkNodeView.c:833
 msgid "Elapsed"
 msgstr "Čas běhu"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:804
+#: ../../po/../ui-gtk/UgtkNodeView.c:847
 msgid "Left"
 msgstr "Zbývá"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:903
-#: ../../po/../ui-gtk/UgtkSettingForm.c:538
-#: ../../po/../ui-gtk/UgtkSummary.c:151
+#: ../../po/../ui-gtk/UgtkNodeView.c:946
+#: ../../po/../ui-gtk/UgtkSettingForm.c:584
+#: ../../po/../ui-gtk/UgtkSummary.c:143
 msgid "URI"
 msgstr "URI"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:954
+#: ../../po/../ui-gtk/UgtkNodeView.c:997
 msgid "Quantity"
 msgstr "Počet"
 
@@ -1209,67 +1283,67 @@ msgstr "Host:"
 msgid "Port:"
 msgstr "Port:"
 
-#: ../../po/../ui-gtk/UgtkProxyForm.c:351
+#: ../../po/../ui-gtk/UgtkProxyForm.c:359
 msgid "Socket:"
 msgstr "Socket:"
 
-#: ../../po/../ui-gtk/UgtkProxyForm.c:361
+#: ../../po/../ui-gtk/UgtkProxyForm.c:369
 msgid "Socket args:"
 msgstr "Argumenty socketu:"
 
-#: ../../po/../ui-gtk/UgtkProxyForm.c:371
+#: ../../po/../ui-gtk/UgtkProxyForm.c:379
 msgid "Element:"
 msgstr "Element:"
 
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:66
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:57
 msgid "Mon"
 msgstr "Po"
 
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:67
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:58
 msgid "Tue"
 msgstr "Út"
 
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:68
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:59
 msgid "Wed"
 msgstr "St"
 
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:69
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:60
 msgid "Thu"
 msgstr "Čt"
 
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:70
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:61
 msgid "Fri"
 msgstr "Pá"
 
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:71
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:62
 msgid "Sat"
 msgstr "So"
 
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:72
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:63
 msgid "Sun"
 msgstr "Ne"
 
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:99
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:104
 msgid "_Enable Scheduler"
 msgstr "_Aktivovat plánovač"
 
 #. Turn off - label
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:141
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:154
 msgid "Turn off"
 msgstr "Vypnout"
 
 #. Turn off - help label
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:146
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:159
 msgid "- stop all task"
 msgstr "- zastavit všechny úkoly"
 
 #. Normal - label
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:156
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:169
 msgid "Normal"
 msgstr "Normální"
 
 #. Normal - help label
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:161
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:174
 msgid "- run task normally"
 msgstr "- spustit úkoly normálně"
 
@@ -1328,284 +1402,315 @@ msgid "_Mark by filter..."
 msgstr "_Označit podle filtru..."
 
 #. e.g.
-#: ../../po/../ui-gtk/UgtkSequencer.c:74
+#: ../../po/../ui-gtk/UgtkSequence.c:74
 msgid "e.g."
 msgstr "například"
 
 #. -------------------------------------------------------
 #. radio "From"
-#: ../../po/../ui-gtk/UgtkSequencer.c:85
+#: ../../po/../ui-gtk/UgtkSequence.c:85
 msgid "_From:"
 msgstr "_Od:"
 
 #. label "To"
-#: ../../po/../ui-gtk/UgtkSequencer.c:108
+#: ../../po/../ui-gtk/UgtkSequence.c:108
 msgid "To:"
 msgstr "Do:"
 
 #. label "digits"
-#: ../../po/../ui-gtk/UgtkSequencer.c:123
+#: ../../po/../ui-gtk/UgtkSequence.c:123
 msgid "digits:"
 msgstr "číslice:"
 
-#: ../../po/../ui-gtk/UgtkSequencer.c:132
+#: ../../po/../ui-gtk/UgtkSequence.c:132
 msgid "F_rom:"
 msgstr "O_d:"
 
 #. label case-sensitive
-#: ../../po/../ui-gtk/UgtkSequencer.c:162
+#: ../../po/../ui-gtk/UgtkSequence.c:162
 msgid "case-sensitive"
 msgstr "citlivé na velikost písmen"
 
-#: ../../po/../ui-gtk/UgtkSequencer.c:188
+#: ../../po/../ui-gtk/UgtkSequence.c:188
 msgid "No wildcard(*) character in URL entry."
 msgstr "Žádné wildcard(*) znaky v URL adrese."
 
-#: ../../po/../ui-gtk/UgtkSequencer.c:192
+#: ../../po/../ui-gtk/UgtkSequence.c:192
 msgid "URL is not valid."
 msgstr "URL není platné."
 
-#: ../../po/../ui-gtk/UgtkSequencer.c:196
+#: ../../po/../ui-gtk/UgtkSequence.c:196
 msgid "No character in 'From' or 'To' entry."
 msgstr "Žádné znaky v položkách 'Od' nebo 'Do'."
 
-#: ../../po/../ui-gtk/UgtkSequencer.c:305
+#: ../../po/../ui-gtk/UgtkSequence.c:311
 msgid "Preview"
 msgstr "Náhled"
 
-#: ../../po/../ui-gtk/UgtkSettingDialog.c:97
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:113
 msgid "User Interface"
 msgstr "Uživatelské rozhraní"
 
-#: ../../po/../ui-gtk/UgtkSettingDialog.c:109
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:125
 msgid "Bandwidth"
 msgstr "Šířka pásma"
 
-#: ../../po/../ui-gtk/UgtkSettingDialog.c:115
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:131
 msgid "Scheduler"
 msgstr "Plánovač"
 
-#: ../../po/../ui-gtk/UgtkSettingDialog.c:121
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:137
 msgid "Plug-in"
 msgstr "Zásuvný modul"
 
-#: ../../po/../ui-gtk/UgtkSettingDialog.c:127
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:143
+msgid "Media website"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:149
 msgid "Others"
 msgstr "Ostatní"
 
 #. Monitor button
-#: ../../po/../ui-gtk/UgtkSettingForm.c:57
+#: ../../po/../ui-gtk/UgtkSettingForm.c:61
 msgid "_Enable clipboard monitor"
 msgstr "_Zapnout monitor schránky"
 
 #. quiet mode
-#: ../../po/../ui-gtk/UgtkSettingForm.c:62
+#: ../../po/../ui-gtk/UgtkSettingForm.c:66
 msgid "_Quiet mode"
 msgstr "_Tichý režim"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:68
-#: ../../po/../ui-gtk/UgtkSettingForm.c:446
+#: ../../po/../ui-gtk/UgtkSettingForm.c:72
+#: ../../po/../ui-gtk/UgtkSettingForm.c:488
 msgid "Default category index"
 msgstr "Výchozí index kategorií"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:80
-#: ../../po/../ui-gtk/UgtkSettingForm.c:458
+#: ../../po/../ui-gtk/UgtkSettingForm.c:84
+#: ../../po/../ui-gtk/UgtkSettingForm.c:500
 msgid "Adding to Nth category if no matched category."
 msgstr "Přidat do Nth kategorie, pokud není žádná odpovídající kategorie."
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:87
+#. media website
+#: ../../po/../ui-gtk/UgtkSettingForm.c:90
+msgid "_Monitor URL of media website"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:105
 msgid "Monitor clipboard for specified file types:"
 msgstr "Monitorovat schránku pro stanovené typy souboru:"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:102
+#: ../../po/../ui-gtk/UgtkSettingForm.c:125
 msgid "Separate the types with character '|'."
 msgstr "Rozdělte typy znakem '|'."
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:107
+#: ../../po/../ui-gtk/UgtkSettingForm.c:130
 msgid "You can use regular expressions here."
 msgstr "Můžete použít regulární výrazy."
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:151
+#: ../../po/../ui-gtk/UgtkSettingForm.c:176
 msgid "Confirmation"
 msgstr "Potvrzení"
 
 #. Confirmation check buttons
-#: ../../po/../ui-gtk/UgtkSettingForm.c:157
+#: ../../po/../ui-gtk/UgtkSettingForm.c:182
 msgid "Show confirmation dialog on exit"
 msgstr "Zobrazit potvrzovací dialog při ukončení"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:160
+#: ../../po/../ui-gtk/UgtkSettingForm.c:185
 msgid "Confirm when deleting files"
 msgstr "Potvrdit při mazání souborů"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:166
+#: ../../po/../ui-gtk/UgtkSettingForm.c:191
 msgid "System Tray"
 msgstr "Systémová lišta"
 
 #. System Tray check buttons
-#: ../../po/../ui-gtk/UgtkSettingForm.c:172
+#: ../../po/../ui-gtk/UgtkSettingForm.c:197
 msgid "Always show tray icon"
 msgstr "Vždy zobrazit ikonu v oznamovací oblasti"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:175
+#: ../../po/../ui-gtk/UgtkSettingForm.c:200
 msgid "Minimize to tray on startup"
 msgstr "Při startu minimalizovat do oznamovací oblasti"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:178
+#: ../../po/../ui-gtk/UgtkSettingForm.c:203
 msgid "Close to tray on window close"
 msgstr "Při zavření okna minimalizovat do lišty."
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:182
+#: ../../po/../ui-gtk/UgtkSettingForm.c:207
 msgid "Use Ubuntu's App Indicator"
 msgstr "Použít Ubuntu App indikátor"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:189
+#: ../../po/../ui-gtk/UgtkSettingForm.c:214
 msgid "Enable offline mode on startup"
 msgstr "Při startu aktivovat offline režim"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:192
+#: ../../po/../ui-gtk/UgtkSettingForm.c:217
 msgid "Download starting notification"
 msgstr "Signalizace startu stahování"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:195
+#: ../../po/../ui-gtk/UgtkSettingForm.c:220
 msgid "Sound when download is finished"
 msgstr "Zvuk po dokončení stahování"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recent download settings"
-msgstr "Použít nastavení posledního stahování"
+#. widget = gtk_check_button_new_with_label (_("Skip existing URI from
+#. clipboard and command-line"));
+#. uiform->skip_existing = (GtkToggleButton*) widget;
+#. gtk_box_pack_start (vbox, widget, FALSE, FALSE, 1);
+#: ../../po/../ui-gtk/UgtkSettingForm.c:229
+msgid "Display large icon"
+msgstr ""
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:264
+#: ../../po/../ui-gtk/UgtkSettingForm.c:295
 msgid "These will affect all plug-ins."
 msgstr "To bude mít vliv na všechny plug-iny."
 
 #. Global speed limit
-#: ../../po/../ui-gtk/UgtkSettingForm.c:270
+#: ../../po/../ui-gtk/UgtkSettingForm.c:301
 msgid "Global speed limit"
 msgstr "Globální limit rychlosti"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:278
-#: ../../po/../ui-gtk/UgtkSettingForm.c:564
+#: ../../po/../ui-gtk/UgtkSettingForm.c:309
+#: ../../po/../ui-gtk/UgtkSettingForm.c:610
 msgid "Max upload speed"
 msgstr "Max. rychlost odesílání"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:290
-#: ../../po/../ui-gtk/UgtkSettingForm.c:576
+#: ../../po/../ui-gtk/UgtkSettingForm.c:321
+#: ../../po/../ui-gtk/UgtkSettingForm.c:622
 msgid "Max download speed"
 msgstr "Max. rychlost stahování"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:323
+#: ../../po/../ui-gtk/UgtkSettingForm.c:354
 msgid "Completion Auto-Actions"
 msgstr "Dokončení automatických akcí"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:331
+#: ../../po/../ui-gtk/UgtkSettingForm.c:362
 msgid "Custom command:"
 msgstr "Vlastní příkaz:"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:343
+#: ../../po/../ui-gtk/UgtkSettingForm.c:374
 msgid "Custom command if error occured:"
 msgstr "Vlastní příkaz, když se vyskytne chyba:"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:388
+#: ../../po/../ui-gtk/UgtkSettingForm.c:424
 msgid "_Autosave"
 msgstr "_Automatické uložení"
 
-#. auto save spin & label (interval)
-#: ../../po/../ui-gtk/UgtkSettingForm.c:394
-msgid "minutes"
-msgstr "minut"
-
-#. auto save label
-#: ../../po/../ui-gtk/UgtkSettingForm.c:402
+#. auto save interval label
+#: ../../po/../ui-gtk/UgtkSettingForm.c:435
 msgid "_Interval:"
 msgstr "_Interval:"
 
+#. auto save interval unit label
+#: ../../po/../ui-gtk/UgtkSettingForm.c:446
+msgid "minutes"
+msgstr "minut"
+
 #. Commandline Settings
-#: ../../po/../ui-gtk/UgtkSettingForm.c:433
+#: ../../po/../ui-gtk/UgtkSettingForm.c:475
 msgid "Commandline Settings"
 msgstr "Nastavení příkazové řádky"
 
 #. --quiet
-#: ../../po/../ui-gtk/UgtkSettingForm.c:440
+#: ../../po/../ui-gtk/UgtkSettingForm.c:482
 msgid "Use '--quiet' by default"
 msgstr "Ve výchozím nastavení použít '--quiet'"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:508
+#: ../../po/../ui-gtk/UgtkSettingForm.c:554
 msgid "Plug-in matching order:"
 msgstr "Plug-in odpovídající zadání:"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:531
+#: ../../po/../ui-gtk/UgtkSettingForm.c:577
 msgid "Aria2 plug-in options"
 msgstr "Volby pluginu Aria2"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:547
+#: ../../po/../ui-gtk/UgtkSettingForm.c:593
 msgid "RPC authorization secret token"
 msgstr "RPC autorizační tajný token"
 
 #. ------------------------------------------------------------------------
 #. Speed Limits
-#: ../../po/../ui-gtk/UgtkSettingForm.c:556
+#: ../../po/../ui-gtk/UgtkSettingForm.c:602
 msgid "Global speed limit for aria2 only"
 msgstr "Globální limit rychlosti pouze pro Aria2"
 
 #. ------------------------------------------------------------------------
 #. aria2 works on local device
 #. launch
-#: ../../po/../ui-gtk/UgtkSettingForm.c:589
+#: ../../po/../ui-gtk/UgtkSettingForm.c:635
 msgid "_Launch aria2 on startup"
 msgstr "_Spustit aria2 při startu"
 
 #. shutdown
-#: ../../po/../ui-gtk/UgtkSettingForm.c:595
+#: ../../po/../ui-gtk/UgtkSettingForm.c:641
 msgid "_Shutdown aria2 on exit"
 msgstr "_Vypnout aria2 po ukončení"
 
 #. ------------------------------------------------------------------------
 #. Local options
-#: ../../po/../ui-gtk/UgtkSettingForm.c:601
+#: ../../po/../ui-gtk/UgtkSettingForm.c:647
 msgid "Launch aria2 on local device"
 msgstr "Spustit aria2 na lokálním zařízení"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:610
+#: ../../po/../ui-gtk/UgtkSettingForm.c:656
 msgid "Path"
 msgstr "Cesta"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:621
+#: ../../po/../ui-gtk/UgtkSettingForm.c:674
 msgid "Arguments"
 msgstr "Argumenty"
 
 #. Arguments - hint
-#: ../../po/../ui-gtk/UgtkSettingForm.c:626
+#: ../../po/../ui-gtk/UgtkSettingForm.c:679
 msgid "You must restart uGet after modifying it."
 msgstr "Po úpravě musíte uGet restartovat."
 
-#: ../../po/../ui-gtk/UgtkSummary.c:112
+#: ../../po/../ui-gtk/UgtkSettingForm.c:783
+msgid "Media matching mode:"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:801
+msgid "Match conditions"
+msgstr ""
+
+#. Quality
+#: ../../po/../ui-gtk/UgtkSettingForm.c:810
+msgid "Quality:"
+msgstr ""
+
+#. Type
+#: ../../po/../ui-gtk/UgtkSettingForm.c:830
+msgid "Type:"
+msgstr ""
+
+#: ../../po/../ui-gtk/UgtkSummary.c:104
 msgid "File"
 msgstr "Soubor"
 
-#: ../../po/../ui-gtk/UgtkSummary.c:127
+#: ../../po/../ui-gtk/UgtkSummary.c:119
 msgid "Folder"
 msgstr "Složka"
 
-#: ../../po/../ui-gtk/UgtkSummary.c:270
+#: ../../po/../ui-gtk/UgtkSummary.c:262
 msgid "Item"
 msgstr "Položka"
 
-#: ../../po/../ui-gtk/UgtkSummary.c:275
+#: ../../po/../ui-gtk/UgtkSummary.c:267
 msgid "Value"
 msgstr "Hodnota"
 
 #. Copy All
-#: ../../po/../ui-gtk/UgtkSummary.c:307
+#: ../../po/../ui-gtk/UgtkSummary.c:299
 msgid "Copy _All"
 msgstr "Kopírov_at vše"
 
 #. Show window
-#: ../../po/../ui-gtk/UgtkTrayIcon.c:106
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:141
 msgid "Show window"
 msgstr "Zobrazit okno"
 
 #. Offline mode
-#: ../../po/../ui-gtk/UgtkTrayIcon.c:112
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:147
 msgid "_Offline Mode"
 msgstr "_Offline režim"
