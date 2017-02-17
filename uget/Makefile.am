@@ -60,4 +60,6 @@ libuget_a_SOURCES += pwmd.c
 noinst_HEADERS += pwmd.h
 endif
 
-EXTRA_DIST = Android.mk
+EXTRA_DIST = \
+	Android.mk     \
+	CMakeLists.txt
