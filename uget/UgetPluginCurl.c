@@ -362,7 +362,7 @@ static int  plugin_sync (UgetPluginCurl* plugin)
 		progress->total = progress->complete;
 
 	if (progress->total > 0)
-		progress->percent = progress->complete * 100 / progress->total;
+		progress->percent = (int) (progress->complete * 100 / progress->total);
 	else
 		progress->percent = 0;
 

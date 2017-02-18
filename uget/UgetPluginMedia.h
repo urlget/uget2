@@ -92,7 +92,7 @@ struct UgetPluginMedia
 	char*         title;
 
 	// use these data to recount progress if plug-in download multiple files.
-	int           elapsed;
+	int64_t       elapsed;
 	int           retry_count;
 	int           item_index;      // downloading nth files
 	int           item_total;      // number of files to download
