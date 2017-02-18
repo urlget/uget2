@@ -1,3 +1,12 @@
+uGet 2.0.9: (2017-02-18)
+1. Use character ↓/↑ to replace D:/U: to display speed.
+2. avoid configure file corrupted on sudden shutdown.
+3. curl plug-in: crashes when download file > 4GB.
+4. Fix: program will move download to incorrect position if user switch to offline mode.
+5. Fix: Segmentation fault after pressing delete key on gtk window.
+6. Fix: Wayland hidden tray.
+7. update translation files.
+
 uGet 2.0.8: (2016-05-16)
 1. In speed limit mode, program adjust existing task speed when adding new task.
 2. Add new setting "Display large icon".
