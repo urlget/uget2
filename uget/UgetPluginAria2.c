@@ -455,7 +455,7 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 		temp.progress->ratio = 0.0;
 	// If total size is unknown, don't calculate percent.
 	if (temp.progress->total)
-		temp.progress->percent = (temp.progress->complete * 100) / temp.progress->total;
+		temp.progress->percent = (int) (temp.progress->complete * 100 / temp.progress->total);
 	else
 		temp.progress->percent = 0;
 	// If total size and average speed is unknown, don't calculate remain time.
@@ -765,7 +765,7 @@ static int  send_start_request (UgetPluginAria2* plugin)
 
 static int  plugin_delay (UgetPluginAria2* plugin)
 {
-	int  count;
+	unsigned int  count;
 
 	for (count = 0;  count < plugin->retry_delay;  count++) {
 		if (plugin->paused)

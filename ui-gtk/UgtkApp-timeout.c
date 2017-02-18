@@ -145,8 +145,7 @@ static gboolean  ugtk_app_decide_schedule_state (UgtkApp* app)
 		app->schedule_state  = state;
 		changed = TRUE;
 		// switch mode
-		switch (state)
-		{
+		switch (state) {
 		case UGTK_SCHEDULE_TURN_OFF:
 			for (cnode = app->real.children;  cnode;  cnode = cnode->next)
 				uget_app_stop_category ((UgetApp*)app, cnode);

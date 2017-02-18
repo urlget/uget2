@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# carlo giusepe tadei valente sasaki <carlo.gt.valente@gmail.com>, 2014
+# carlo giusepe tadei valente sasaki <carlo.gt.valente@gmail.com>, 2014,2016
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-09 16:11+0800\n"
-"PO-Revision-Date: 2014-12-21 18:08+0000\n"
+"POT-Creation-Date: 2016-06-03 03:10+0800\n"
+"PO-Revision-Date: 2016-11-09 16:16+0000\n"
 "Last-Translator: carlo giusepe tadei valente sasaki <carlo.gt.valente@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/uget/uget/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,17 @@ msgstr ""
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../../po/../uget/UgetApp.c:95
+#: ../../po/../uget/pwmd.c:32
+#, c-format
+msgid ""
+"Password Manager Daemon: uget\n"
+"\n"
+"While attempting an SSH connection to %s there was a problem verifying it's hostkey against the known and trusted hosts file because it's hostkey was not found.\n"
+"\n"
+"Would you like to treat this connection as trusted for this and future connections by adding %s's hostkey to the known hosts file?"
+msgstr "Serviço de gerenciamento de senhas: uget\n\nHouve um problema na conexão SSH com %s : sua hostkey não foi encontrada no arquivo de hospedeiros conhecidos e confiáveis.\n\nGostaria de adicionar a hostkey de %s ao arquivo de hospedeiros conhecidos e definir essa conexão como confiável agora e futuramente?"
+
+#: ../../po/../uget/UgetApp.c:103
 msgid "All Category"
 msgstr "Todas as categorias"
 
@@ -34,7 +44,7 @@ msgid "Transmitting..."
 msgstr "Transmitindo..."
 
 #. UGET_EVENT_NORMAL_TRANSMIT,
-#: ../../po/../uget/UgetEvent.c:60 ../../po/../ui-gtk/UgtkNodeView.c:874
+#: ../../po/../uget/UgetEvent.c:60 ../../po/../ui-gtk/UgtkNodeView.c:917
 msgid "Retry"
 msgstr "Tentar novamente"
 
@@ -44,7 +54,7 @@ msgid "Download completed"
 msgstr "Download concluído"
 
 #. UGET_EVENT_NORMAL_COMPLETE,
-#: ../../po/../uget/UgetEvent.c:62 ../../po/../ui-gtk/UgtkNodeView.c:613
+#: ../../po/../uget/UgetEvent.c:62 ../../po/../ui-gtk/UgtkNodeView.c:644
 msgid "Finished"
 msgstr "Finalizado"
 
@@ -55,12 +65,12 @@ msgid "Resumable"
 msgstr "Resumível"
 
 #. UGET_EVENT_NORMAL_RESUMABLE,
-#: ../../po/../uget/UgetEvent.c:65 ../../po/../uget/UgetPluginAria2.c:279
+#: ../../po/../uget/UgetEvent.c:65 ../../po/../uget/UgetPluginAria2.c:287
 msgid "Not Resumable"
 msgstr "Não resumível"
 
 #. UGET_EVENT_WARNING_CUSTOM
-#: ../../po/../uget/UgetEvent.c:73 ../../po/../uget/UgetPluginAria2.c:286
+#: ../../po/../uget/UgetEvent.c:73 ../../po/../uget/UgetPluginAria2.c:294
 msgid "Output file can't be renamed."
 msgstr "O arquivo de saída não pode ser renomeado."
 
@@ -70,7 +80,7 @@ msgid "couldn't connect to host."
 msgstr "não foi possível conectar ao host."
 
 #. UGET_EVENT_ERROR_CONNECT_FAILED
-#: ../../po/../uget/UgetEvent.c:82 ../../po/../uget/UgetPluginAria2.c:290
+#: ../../po/../uget/UgetEvent.c:82 ../../po/../uget/UgetPluginAria2.c:298
 msgid "Folder can't be created."
 msgstr "A pasta não pôde ser criada."
 
@@ -124,133 +134,167 @@ msgstr "Sem suporte ao esquema (protocolo)."
 msgid "Unsupported file."
 msgstr "Arquivo sem suporte."
 
+#. UGET_EVENT_ERROR_UNSUPPORTED_FILE
+#: ../../po/../uget/UgetEvent.c:93
+msgid "post file not found."
+msgstr "arquivo enviado não encontrado."
+
+#. UGET_EVENT_ERROR_POST_FILE_NOT_FOUND
+#: ../../po/../uget/UgetEvent.c:94
+msgid "cookie file not found."
+msgstr "arquivo de cookie não encontrado."
+
+#: ../../po/../uget/UgetMedia-youtube.c:275
+msgid "This video has been removed."
+msgstr "Esse vídeo foi removido."
+
+#: ../../po/../uget/UgetMedia-youtube.c:288
+msgid "Error occurred during getting video info."
+msgstr "Erro ao obter informações do vídeo."
+
+#: ../../po/../uget/UgetMedia-youtube.c:534
+msgid "Error occurred during getting video web page."
+msgstr "Erro ao obter a página do vídeo."
+
+#: ../../po/../uget/UgetMedia-youtube.c:606
+msgid "No video_id found in URL of YouTube."
+msgstr "Nenhuma video_id encontrada na URL do YouTube."
+
 #. 1 - 10
-#: ../../po/../uget/UgetPluginAria2.c:272
+#: ../../po/../uget/UgetPluginAria2.c:280
 msgid "aria2: an unknown error occurred."
 msgstr "aria2: ocorreu um erro desconhecido."
 
-#: ../../po/../uget/UgetPluginAria2.c:273
+#: ../../po/../uget/UgetPluginAria2.c:281
 msgid "aria2: time out occurred."
 msgstr "aria2: tempo excedido."
 
-#: ../../po/../uget/UgetPluginAria2.c:274
+#: ../../po/../uget/UgetPluginAria2.c:282
 msgid "aria2: resource was not found."
 msgstr "aria2: recurso não encontrado."
 
-#: ../../po/../uget/UgetPluginAria2.c:275
+#: ../../po/../uget/UgetPluginAria2.c:283
 msgid ""
 "aria2 saw the specfied number of 'resource not found' error. See --max-file-"
 "not-found option"
 msgstr "aria2 viu o erro de número específico de 'recurso não encontrado'. Veja --max-file-not-found option"
 
-#: ../../po/../uget/UgetPluginAria2.c:276
+#: ../../po/../uget/UgetPluginAria2.c:284
 msgid "aria2: speed was too slow."
 msgstr "aria2: velocidade muito baixa."
 
-#: ../../po/../uget/UgetPluginAria2.c:277
+#: ../../po/../uget/UgetPluginAria2.c:285
 msgid "aria2: network problem occurred."
 msgstr "aria2: ocorreu um problema na rede."
 
-#: ../../po/../uget/UgetPluginAria2.c:278
+#: ../../po/../uget/UgetPluginAria2.c:286
 msgid "aria2: unfinished downloads."
 msgstr "aria2: downloads não encerrados."
 
 #. _("Not Resumable"),
-#: ../../po/../uget/UgetPluginAria2.c:280
+#: ../../po/../uget/UgetPluginAria2.c:288
 msgid "Out of resource"
 msgstr "Sem recursos"
 
 #. _(),
-#: ../../po/../uget/UgetPluginAria2.c:281
+#: ../../po/../uget/UgetPluginAria2.c:289
 msgid "aria2: piece length was different from one in .aria2 control file."
 msgstr "aria2: comprimento da peça diferente do arquivo de controle .aria2."
 
 #. 11 - 20
-#: ../../po/../uget/UgetPluginAria2.c:283
+#: ../../po/../uget/UgetPluginAria2.c:291
 msgid "aria2 was downloading same file."
 msgstr "O aria2 estava baixando o mesmo arquivo."
 
-#: ../../po/../uget/UgetPluginAria2.c:284
+#: ../../po/../uget/UgetPluginAria2.c:292
 msgid "aria2 was downloading same info hash torrent."
 msgstr "O aria2 estava baixando o mesmo info hash de torrent."
 
-#: ../../po/../uget/UgetPluginAria2.c:285
+#: ../../po/../uget/UgetPluginAria2.c:293
 msgid "aria2: file already existed. See --allow-overwrite option."
 msgstr "aria2: o arquivo já existe. Veja a opção --allow-overwrite."
 
 #. _("Output file can't be renamed."),
-#: ../../po/../uget/UgetPluginAria2.c:287
+#: ../../po/../uget/UgetPluginAria2.c:295
 msgid "aria2: could not open existing file."
 msgstr "aria2: não foi possível abrir o arquivo existente."
 
-#: ../../po/../uget/UgetPluginAria2.c:288
+#: ../../po/../uget/UgetPluginAria2.c:296
 msgid "aria2: could not create new file or truncate existing file."
 msgstr "aria2: não foi possível criar um novo arquivo ou mesclar o arquivo existente."
 
-#: ../../po/../uget/UgetPluginAria2.c:289
+#: ../../po/../uget/UgetPluginAria2.c:297
 msgid "aria2: file I/O error occurred."
 msgstr "aria2: erro de I/O de arquivo."
 
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
-#: ../../po/../uget/UgetPluginAria2.c:291
+#: ../../po/../uget/UgetPluginAria2.c:299
 msgid "aria2: name resolution failed."
 msgstr "aria2: falha na resolução de nome."
 
-#: ../../po/../uget/UgetPluginAria2.c:292
+#: ../../po/../uget/UgetPluginAria2.c:300
 msgid "aria2: could not parse Metalink document."
 msgstr "aria2: não foi possível analisar o documento Metalink."
 
 #. 21 - 30
-#: ../../po/../uget/UgetPluginAria2.c:294
+#: ../../po/../uget/UgetPluginAria2.c:302
 msgid "aria2: FTP command failed."
 msgstr "aria2: falha no comando FTP."
 
-#: ../../po/../uget/UgetPluginAria2.c:295
+#: ../../po/../uget/UgetPluginAria2.c:303
 msgid "aria2: HTTP response header was bad or unexpected."
 msgstr "aria2: cabeçalho de resposta HTTP errado ou inesperado."
 
-#: ../../po/../uget/UgetPluginAria2.c:296
+#: ../../po/../uget/UgetPluginAria2.c:304
 msgid "Too many redirections."
 msgstr "Número excessivo de redirecionamentos."
 
-#: ../../po/../uget/UgetPluginAria2.c:297
+#: ../../po/../uget/UgetPluginAria2.c:305
 msgid "aria2: HTTP authorization failed."
 msgstr "aria2: falha na autorização de HTTP."
 
-#: ../../po/../uget/UgetPluginAria2.c:298
+#: ../../po/../uget/UgetPluginAria2.c:306
 msgid "aria2: could not parse bencoded file(usually .torrent file)."
 msgstr "aria2: não foi possível analisar o arquivo bencoded (geralmente arquivo .torrent)."
 
-#: ../../po/../uget/UgetPluginAria2.c:299
+#: ../../po/../uget/UgetPluginAria2.c:307
 msgid "aria2: torrent file was corrupted or missing information."
 msgstr "aria2: arquivo torrent corrompido ou com informação ausente."
 
-#: ../../po/../uget/UgetPluginAria2.c:300
+#: ../../po/../uget/UgetPluginAria2.c:308
 msgid "aria2: Magnet URI was bad."
 msgstr "aria2: URI Magnet errada."
 
-#: ../../po/../uget/UgetPluginAria2.c:301
+#: ../../po/../uget/UgetPluginAria2.c:309
 msgid ""
 "aria2: bad/unrecognized option was given or unexpected option argument was "
 "given."
 msgstr "aria2: foi dada uma opção errada/não reconhecida ou um argumento inesperado."
 
-#: ../../po/../uget/UgetPluginAria2.c:302
+#: ../../po/../uget/UgetPluginAria2.c:310
 msgid "aria2: remote server was unable to handle the request."
 msgstr "aria2: o servidor remoto foi incapaz de manipular a requisição."
 
-#: ../../po/../uget/UgetPluginAria2.c:303
+#: ../../po/../uget/UgetPluginAria2.c:311
 msgid "aria2: could not parse JSON-RPC request."
 msgstr "aria2: não foi possível analisar a requisição JSON-RPC."
 
-#: ../../po/../uget/UgetPluginAria2.c:306
+#: ../../po/../uget/UgetPluginAria2.c:314
 msgid "No response. Is aria2 shutdown?"
 msgstr "Sem resposta. O aria2 está desligado?"
 
 #. debug
-#: ../../po/../uget/UgetPluginAria2.c:608
+#: ../../po/../uget/UgetPluginAria2.c:641
 msgid "aria2: gid was removed."
 msgstr "aria2: o gid foi removido."
+
+#: ../../po/../uget/UgetPluginMedia.c:489
+msgid "Failed to get media link."
+msgstr "Falha ao obter o link da mídia."
+
+#: ../../po/../uget/UgetPluginMedia.c:505
+msgid "No matched media."
+msgstr "Nenhuma mídia correspondente."
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:46
 msgid "Download Manager"
@@ -268,95 +312,95 @@ msgstr "Criador do uGet:"
 msgid "uGet Project Manager: "
 msgstr "Gerente de Projeto do uGet:"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:255
-#: ../../po/../ui-gtk/UgtkTrayIcon.c:204
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:263
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:239
 msgid "tasks"
 msgstr "tarefas"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:374
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:399
 msgid "New from Clipboard"
 msgstr "Novo da área de transferência"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:376 ../../po/../ui-gtk/UgtkApp.c:662
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:401 ../../po/../ui-gtk/UgtkApp.c:915
 msgid "New Download"
 msgstr "Novo download"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:399 ../../po/../ui-gtk/UgtkApp.c:1411
-#: ../../po/../ui-gtk/UgtkSettingDialog.c:103
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:425 ../../po/../ui-gtk/UgtkApp.c:1679
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:119
 msgid "Clipboard"
 msgstr "Área de transferência"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:401
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:427
 msgid "Command line"
 msgstr "Linha de comando"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:758
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:780
 msgid "Error Occurred"
 msgstr "Ocorreu um erro"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:759
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:781
 msgid "Error Occurred when downloading."
 msgstr "Ocorreu um erro ao baixar."
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:760
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:782
 msgid "Download Starting"
 msgstr "Download começando"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:761
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:783
 msgid "Starting download queue."
 msgstr "Começando a fila de downloads."
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:762
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:784
 msgid "Download Completed"
 msgstr "Download concluído"
 
-#: ../../po/../ui-gtk/UgtkApp-timeout.c:763
+#: ../../po/../ui-gtk/UgtkApp-timeout.c:785
 msgid "All queuing downloads have been completed."
 msgstr "Todos os downloads da fila foram concluídos."
 
 #. ----------------------------------------------------
 #. frame for Status (start mode)
-#: ../../po/../ui-gtk/UgtkApp-ui.c:115
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:220
-#: ../../po/../ui-gtk/UgtkNodeView.c:997
+#: ../../po/../ui-gtk/UgtkApp-ui.c:193
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:224
+#: ../../po/../ui-gtk/UgtkNodeView.c:1040
 msgid "Status"
 msgstr "Status"
 
 #. Summary Items - Category
 #. Download Columns - Category
-#: ../../po/../ui-gtk/UgtkApp-ui.c:117 ../../po/../ui-gtk/UgtkMenubar-ui.c:270
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:298
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:383
-#: ../../po/../ui-gtk/UgtkNodeDialog.c:392
-#: ../../po/../ui-gtk/UgtkNodeView.c:889 ../../po/../ui-gtk/UgtkNodeView.c:977
-#: ../../po/../ui-gtk/UgtkSummary.c:139
+#: ../../po/../ui-gtk/UgtkApp-ui.c:195 ../../po/../ui-gtk/UgtkMenubar-ui.c:318
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:346
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:431
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:418
+#: ../../po/../ui-gtk/UgtkNodeView.c:932
+#: ../../po/../ui-gtk/UgtkNodeView.c:1020 ../../po/../ui-gtk/UgtkSummary.c:131
 msgid "Category"
 msgstr "Categoria"
 
-#: ../../po/../ui-gtk/UgtkApp-ui.c:184
+#: ../../po/../ui-gtk/UgtkApp-ui.c:279
 msgid "Create new download"
 msgstr "Cria novo download"
 
 #. New Download (accelerators)
 #. gtk_menu_shell_append ((GtkMenuShell*)menu, gtk_tearoff_menu_item_new() );
 #. New Download
-#: ../../po/../ui-gtk/UgtkApp-ui.c:194 ../../po/../ui-gtk/UgtkMenubar-ui.c:58
+#: ../../po/../ui-gtk/UgtkApp-ui.c:289 ../../po/../ui-gtk/UgtkMenubar-ui.c:58
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:59
 msgid "New _Download..."
 msgstr "Novo _download..."
 
 #. New Category
-#: ../../po/../ui-gtk/UgtkApp-ui.c:201 ../../po/../ui-gtk/UgtkMenubar-ui.c:65
+#: ../../po/../ui-gtk/UgtkApp-ui.c:300 ../../po/../ui-gtk/UgtkMenubar-ui.c:69
 msgid "New _Category..."
 msgstr "Nova _categoria..."
 
 #. New Clipboard batch
-#: ../../po/../ui-gtk/UgtkApp-ui.c:207 ../../po/../ui-gtk/UgtkTrayIcon.c:66
+#: ../../po/../ui-gtk/UgtkApp-ui.c:310 ../../po/../ui-gtk/UgtkTrayIcon.c:70
 msgid "New Clipboard _batch..."
 msgstr "Novo _lote da área de transferência..."
 
 #. New URL Sequence batch
-#: ../../po/../ui-gtk/UgtkApp-ui.c:214
+#: ../../po/../ui-gtk/UgtkApp-ui.c:321
 msgid "New _URL Sequence batch..."
 msgstr "Novo lote de sequência de _URL..."
 
@@ -365,153 +409,169 @@ msgstr "Novo lote de sequência de _URL..."
 #. gtk_menu_shell_append ((GtkMenuShell*)submenu,
 #. gtk_separator_menu_item_new() );
 #. New Torrent
-#: ../../po/../ui-gtk/UgtkApp-ui.c:224 ../../po/../ui-gtk/UgtkMenubar-ui.c:73
-#: ../../po/../ui-gtk/UgtkTrayIcon.c:75
+#: ../../po/../ui-gtk/UgtkApp-ui.c:335 ../../po/../ui-gtk/UgtkMenubar-ui.c:81
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:83
 msgid "New Torrent..."
 msgstr "Novo torrent..."
 
 #. New Metalink
-#: ../../po/../ui-gtk/UgtkApp-ui.c:231 ../../po/../ui-gtk/UgtkMenubar-ui.c:79
-#: ../../po/../ui-gtk/UgtkTrayIcon.c:82
+#: ../../po/../ui-gtk/UgtkApp-ui.c:342 ../../po/../ui-gtk/UgtkMenubar-ui.c:87
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:90
 msgid "New Metalink..."
 msgstr "Novo metalink..."
 
-#: ../../po/../ui-gtk/UgtkApp-ui.c:240
+#: ../../po/../ui-gtk/UgtkApp-ui.c:356
 msgid "Save all settings"
 msgstr "Salvar todas as configurações"
 
-#: ../../po/../ui-gtk/UgtkApp-ui.c:248
+#: ../../po/../ui-gtk/UgtkApp-ui.c:369
 msgid "Set selected download runnable"
 msgstr "Define o download selecionado como continuável"
 
-#: ../../po/../ui-gtk/UgtkApp-ui.c:253
+#: ../../po/../ui-gtk/UgtkApp-ui.c:379
 msgid "Set selected download to pause"
 msgstr "Define o download selecionado como pausado"
 
-#: ../../po/../ui-gtk/UgtkApp-ui.c:258
+#: ../../po/../ui-gtk/UgtkApp-ui.c:389
 msgid "Set selected download properties"
 msgstr "Define as propriedades do download selecionado"
 
-#: ../../po/../ui-gtk/UgtkApp-ui.c:266
+#: ../../po/../ui-gtk/UgtkApp-ui.c:402
 msgid "Move selected download up"
 msgstr "Move o download selecionado para cima"
 
-#: ../../po/../ui-gtk/UgtkApp-ui.c:271
+#: ../../po/../ui-gtk/UgtkApp-ui.c:412
 msgid "Move selected download down"
 msgstr "Move o download selecionado para baixo"
 
-#: ../../po/../ui-gtk/UgtkApp-ui.c:276
+#: ../../po/../ui-gtk/UgtkApp-ui.c:422
 msgid "Move selected download to top"
 msgstr "Move o download selecionado para o topo"
 
-#: ../../po/../ui-gtk/UgtkApp-ui.c:281
+#: ../../po/../ui-gtk/UgtkApp-ui.c:432
 msgid "Move selected download to bottom"
 msgstr "Move o download selecionado para canto inferior"
 
-#: ../../po/../ui-gtk/UgtkApp.c:634
+#: ../../po/../ui-gtk/UgtkApp.c:883
 msgid "New Category"
 msgstr "Nova categoria"
 
-#: ../../po/../ui-gtk/UgtkApp.c:645
+#: ../../po/../ui-gtk/UgtkApp.c:894
 msgid "Copy - "
 msgstr "Cópia -"
 
-#: ../../po/../ui-gtk/UgtkApp.c:783
+#: ../../po/../ui-gtk/UgtkApp.c:1049
 msgid "Category Properties"
 msgstr "Propriedades da categoria"
 
-#: ../../po/../ui-gtk/UgtkApp.c:797
+#: ../../po/../ui-gtk/UgtkApp.c:1063
 msgid "Download Properties"
 msgstr "Propriedades de download"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1028
+#: ../../po/../ui-gtk/UgtkApp.c:1296
 msgid "New Torrent"
 msgstr "Novo torrent"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1044
+#: ../../po/../ui-gtk/UgtkApp.c:1312
 msgid "New Metalink"
 msgstr "Novo metalink"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1053
+#: ../../po/../ui-gtk/UgtkApp.c:1321
 msgid "Open Torrent file"
 msgstr "Abrir arquivo torrent"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1069
+#: ../../po/../ui-gtk/UgtkApp.c:1324
+msgid "Torrent file (*.torrent)"
+msgstr "Arquivo torrent (*.torrent)"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1337
 msgid "Open Metalink file"
 msgstr "Abrir arquivo metalink"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1109
+#: ../../po/../ui-gtk/UgtkApp.c:1377
 msgid "Failed to save category file."
 msgstr "Falha ao salvar a categoria de arquivo."
 
-#: ../../po/../ui-gtk/UgtkApp.c:1129
+#: ../../po/../ui-gtk/UgtkApp.c:1397
 msgid "Failed to load category file."
 msgstr "Falha ao carregar a categoria de arquivo."
 
-#: ../../po/../ui-gtk/UgtkApp.c:1140
+#: ../../po/../ui-gtk/UgtkApp.c:1408
 msgid "Save Category file"
 msgstr "Salvar categoria de arquivo"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1158
+#: ../../po/../ui-gtk/UgtkApp.c:1426
 msgid "Open Category file"
 msgstr "Abrir categoria de arquivo"
 
+#: ../../po/../ui-gtk/UgtkApp.c:1429
+msgid "JSON file (*.json)"
+msgstr "Arquivo JSON (*.json)"
+
 #. add link
-#: ../../po/../ui-gtk/UgtkApp.c:1217
+#: ../../po/../ui-gtk/UgtkApp.c:1485
 msgid "Link <A>"
 msgstr "Link <A>"
 
 #. add image
-#: ../../po/../ui-gtk/UgtkApp.c:1222
+#: ../../po/../ui-gtk/UgtkApp.c:1490
 msgid "Image <IMG>"
 msgstr "Imagem <IMG>"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1267
+#: ../../po/../ui-gtk/UgtkApp.c:1535
 msgid "Text File"
 msgstr "Arquivo texto"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1314
+#: ../../po/../ui-gtk/UgtkApp.c:1582
 msgid "Import URLs from HTML file"
 msgstr "Importar URLs de arquivo HTML"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1329
+#: ../../po/../ui-gtk/UgtkApp.c:1585
+msgid "HTML file (*.htm, *.html)"
+msgstr "Arquivo HTML (*.htm, *.html)"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1597
 msgid "Import URLs from text file"
 msgstr "Importar URLs de arquivo texto"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1344
+#: ../../po/../ui-gtk/UgtkApp.c:1600
+msgid "Plain text file"
+msgstr "Arquivo de texto simples"
+
+#: ../../po/../ui-gtk/UgtkApp.c:1612
 msgid "Export URLs to text file"
 msgstr "Exportar URLs para arquivo de texto"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1363
+#: ../../po/../ui-gtk/UgtkApp.c:1631
 msgid "URL Sequence batch"
 msgstr "Lote de sequência de URLs"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1390
+#: ../../po/../ui-gtk/UgtkApp.c:1658
 msgid "No URLs found in clipboard."
 msgstr "Nenhuma URL encontrada na área de transferência."
 
-#: ../../po/../ui-gtk/UgtkApp.c:1399
+#: ../../po/../ui-gtk/UgtkApp.c:1667
 msgid "All URLs had existed."
 msgstr "Todas as URLs existiram."
 
-#: ../../po/../ui-gtk/UgtkApp.c:1404
+#: ../../po/../ui-gtk/UgtkApp.c:1672
 msgid "Clipboard batch"
 msgstr "Lote da área de transferência"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1494
+#: ../../po/../ui-gtk/UgtkApp.c:1762
 msgid "New"
 msgstr "Novo"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1613 ../../po/../ui-gtk/UgtkMenubar.c:383
-#: ../../po/../ui-gtk/UgtkMenubar.c:415 ../../po/../ui-gtk/UgtkNodeView.c:609
+#: ../../po/../ui-gtk/UgtkApp.c:1803 ../../po/../ui-gtk/UgtkMenubar.c:460
+#: ../../po/../ui-gtk/UgtkMenubar.c:492 ../../po/../ui-gtk/UgtkNodeView.c:640
 msgid "Error"
 msgstr "Erro"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1621 ../../po/../ui-gtk/UgtkSummary.c:184
+#: ../../po/../ui-gtk/UgtkApp.c:1811 ../../po/../ui-gtk/UgtkSummary.c:176
 msgid "Message"
 msgstr "Mensagem"
 
-#: ../../po/../ui-gtk/UgtkApp.c:1727
+#: ../../po/../ui-gtk/UgtkApp.c:1927
 #, c-format
 msgid "Selected %d items"
 msgstr "Selecionados %d itens"
@@ -541,14 +601,17 @@ msgstr "clique aqui para iniciar a pesquisa"
 msgid "Category _name:"
 msgstr "_Nome da categoria:"
 
+#. gtk_entry_set_width_chars (GTK_ENTRY(cform->spin_active), 5);
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:82
 msgid "Active _downloads:"
 msgstr "_Downloads ativos:"
 
+#. gtk_entry_set_width_chars (GTK_ENTRY(cform->spin_finished), 5);
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:92
 msgid "Capacity of Finished:"
 msgstr "Capacidade de finalizados:"
 
+#. gtk_entry_set_width_chars (GTK_ENTRY(cform->spin_recycled), 5);
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:102
 msgid "Capacity of Recycled:"
 msgstr "Capacidade de reciclados:"
@@ -595,143 +658,143 @@ msgstr "Realmente excluir a categoria?"
 msgid "Are you sure you want to delete category?"
 msgstr "Tem certeza que deseja excluir a categoria?"
 
-#: ../../po/../ui-gtk/UgtkConfirmDialog.c:106
+#: ../../po/../ui-gtk/UgtkConfirmDialog.c:109
 msgid "Don't ask me again"
 msgstr "Não me perguntar novamente"
 
 #. URL - label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:109
-#: ../../po/../ui-gtk/UgtkSequencer.c:63
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:111
+#: ../../po/../ui-gtk/UgtkSequence.c:63
 msgid "_URI:"
 msgstr "_URI:"
 
 #. Mirrors - label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:128
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:130
 msgid "Mirrors:"
 msgstr "Espelhos:"
 
 #. File - label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:144
-#: ../../po/../ui-gtk/UgtkProxyForm.c:385
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:146
+#: ../../po/../ui-gtk/UgtkProxyForm.c:393
 msgid "File:"
 msgstr "Arquivo:"
 
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:159
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:893
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:166
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:897
 msgid "Select Folder"
 msgstr "Selecione uma pasta"
 
 #. Folder - label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:167
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:174
 msgid "_Folder:"
 msgstr "_Pasta:"
 
 #. Referrer - label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:182
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:189
 msgid "Referrer:"
 msgstr "Referência:"
 
 #. "Max Connections:" - title label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:207
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:212
 msgid "_Max Connections:"
 msgstr "_Máximo de conexões:"
 
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:226
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:510
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:230
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:574
 msgid "_Runnable"
 msgstr "_Continuável"
 
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:228
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:232
 msgid "P_ause"
 msgstr "P_ausar"
 
 #. ----------------------------------------------------
 #. frame for login
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:234
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:238
 msgid "Login"
 msgstr "Login"
 
 #. User - label
 #. user label & entry
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:248
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:252
 #: ../../po/../ui-gtk/UgtkProxyForm.c:149
 msgid "User:"
 msgstr "Usuário:"
 
 #. Password - label
 #. password label & entry
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:264
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:268
 #: ../../po/../ui-gtk/UgtkProxyForm.c:160
 msgid "Password:"
 msgstr "Senha:"
 
 #. label - cookie file
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:290
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:293
 msgid "Cookie file:"
 msgstr "Arquivo de cookie:"
 
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:302
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:949
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:310
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:953
 msgid "Select Cookie File"
 msgstr "Selecione um arquivo de cookie"
 
 #. label - post file
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:311
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:319
 msgid "Post file:"
 msgstr "Arquivo de post:"
 
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:323
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:1005
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:336
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:1009
 msgid "Select Post File"
 msgstr "Selecione um arquivo de Post"
 
 #. label - user agent
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:333
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:346
 msgid "User Agent:"
 msgstr "Agente de usuário:"
 
-#. label - Max upload speed
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:349
-msgid "Max upload speed:"
-msgstr "Velocidade máxima de upload:"
-
-#. label - "KiB/s"
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:361
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:379
-#: ../../po/../ui-gtk/UgtkSettingForm.c:280
-#: ../../po/../ui-gtk/UgtkSettingForm.c:292
-#: ../../po/../ui-gtk/UgtkSettingForm.c:566
-#: ../../po/../ui-gtk/UgtkSettingForm.c:578
-msgid "KiB/s"
-msgstr "KB/s"
-
-#. label - Max download speed
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:367
-msgid "Max download speed:"
-msgstr "Velocidade máxima de download:"
-
 #. Retry limit - label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:385
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:362
 msgid "Retry _limit:"
 msgstr "_Limite de tentativas:"
 
 #. counts - label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:400
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:377
 msgid "counts"
 msgstr "vezes"
 
 #. Retry delay - label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:407
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:384
 msgid "Retry _delay:"
 msgstr "_Atraso entre tentativas:"
 
 #. seconds - label
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:422
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:399
 msgid "seconds"
 msgstr "segundos"
 
+#. label - Max upload speed
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:406
+msgid "Max upload speed:"
+msgstr "Velocidade máxima de upload:"
+
+#. label - "KiB/s"
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:418
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:436
+#: ../../po/../ui-gtk/UgtkSettingForm.c:311
+#: ../../po/../ui-gtk/UgtkSettingForm.c:323
+#: ../../po/../ui-gtk/UgtkSettingForm.c:612
+#: ../../po/../ui-gtk/UgtkSettingForm.c:624
+msgid "KiB/s"
+msgstr "KB/s"
+
+#. label - Max download speed
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:424
+msgid "Max download speed:"
+msgstr "Velocidade máxima de download:"
+
 #. Retrieve timestamp
-#: ../../po/../ui-gtk/UgtkDownloadForm.c:429
+#: ../../po/../ui-gtk/UgtkDownloadForm.c:442
 msgid "Retrieve timestamp"
 msgstr "Obter marca de tempo "
 
@@ -740,154 +803,165 @@ msgid "_File"
 msgstr "_Arquivo"
 
 #. Batch Downloads --- start ---
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:86
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:94
 msgid "_Batch Downloads"
 msgstr "Downloads em _lote"
 
 #. Batch downloads - Clipboard batch
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:92
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:100
 msgid "_Clipboard batch..."
 msgstr "Lote da área de _transferência..."
 
 #. Batch downloads - URL Sequence batch
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:98
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:110
 msgid "_URL Sequence batch..."
 msgstr "Lote de sequência de _URL..."
 
 #. Batch downloads - Text file import (.txt)
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:104
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:120
 msgid "_Text file import (.txt)..."
 msgstr "Importação de arquivo de _texto (.txt)..."
 
 #. Batch downloads - HTML file import (.html)
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:110
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:130
 msgid "_HTML file import (.html)..."
 msgstr "Importação de arquivo _HTML (.html)..."
 
 #. Batch downloads - Export to Text file (.txt)
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:118
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
 msgid "_Export to Text file (.txt)..."
 msgstr "_Exportar para arquivo de texto (.txt)..."
 
 #. Open Category
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:128
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:156
 msgid "_Open category..."
 msgstr "_Abrir categoria..."
 
 #. Save Category
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:135
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:167
 msgid "_Save category as..."
 msgstr "_Salvar categoria como..."
 
 #. Save All
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:178
 msgid "Save _all settings"
 msgstr "Salvar _todas as configurações"
 
 #. Offline mode
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:152
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:192
 msgid "Offline Mode"
 msgstr "Modo offline"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:170
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:210
 msgid "_Edit"
 msgstr "_Editar"
 
 #. menu.gtk_menu_shell_append((GtkMenuShell*)menu, gtk_tearoff_menu_item_new()
 #. );
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:175
+#. Settings shortcut
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:215
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:99
 msgid "Clipboard _Monitor"
 msgstr "_Monitor de área de transferência"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:179
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:219
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:103
 msgid "Clipboard works quietly"
 msgstr "Monitor da área de transferência trabalha silenciosamente"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:183
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:223
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:107
 msgid "Command-line works quietly"
 msgstr "Linha de comando trabalha silenciosamente"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:187
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:227
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:111
 msgid "Skip existing URI"
 msgstr "Pular URI existente"
 
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
+#: ../../po/../ui-gtk/UgtkSettingForm.c:223
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:115
+msgid "Apply recent download settings"
+msgstr "Aplica configurações de download recentes"
+
 #. --- Completion Auto-Actions --- start ---
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:194
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:238
 msgid "Completion _Auto-Actions"
 msgstr "_Ações automáticas de acabamento"
 
 #. Completion Auto-Actions - Disable
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:200
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:244
 msgid "_Disable"
 msgstr "_Desabilitar"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:205
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:249
 msgid "Hibernate"
 msgstr "Hibernar"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:210
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:254
 msgid "Suspend"
 msgstr "Suspender"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:215
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:259
 msgid "Shutdown"
 msgstr "Desligar"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:220
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:264
 msgid "Reboot"
 msgstr "Reiniciar"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:225
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:269
 msgid "Custom"
 msgstr "Personalizado"
 
 #. Completion Auto-Actions - Remember
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:275
 msgid "Remember setting"
 msgstr "Lembrar configuração"
 
 #. Completion Auto-Actions - Help
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:235
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:610
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:279
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:682
 msgid "_Help"
 msgstr "Aj_uda"
 
 #. --- Completion Auto-Actions --- end ---
 #. menu_item = gtk_menu_item_new_with_mnemonic (_("_Settings..."));
 #. Settings
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:241
-#: ../../po/../ui-gtk/UgtkTrayIcon.c:91
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:285
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:122
 msgid "_Settings..."
 msgstr "_Configurações..."
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:256
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:304
 msgid "_View"
 msgstr "_Ver"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:260
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:308
 msgid "_Toolbar"
 msgstr "_Barra de ferramentas"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:265
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:313
 msgid "Statusbar"
 msgstr "Barra de status"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:275
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:323
 msgid "_Summary"
 msgstr "_Sumário"
 
 #. Summary Items --- start ---
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:283
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:331
 msgid "Summary _Items"
 msgstr "_Itens do sumário"
 
 #. Summary Items - Name
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:288
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:336
 msgid "_Name"
 msgstr "_Nome"
 
 #. Summary Items - Folder
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:293
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:341
 msgid "_Folder"
 msgstr "_Pasta"
 
@@ -898,289 +972,289 @@ msgstr "_Pasta"
 #. menubar->view.summary_items.elapsed = menu_item;
 #. Summary Items - URL
 #. Download Columns - URL
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:308
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:388
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:356
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:436
 msgid "_URL"
 msgstr "_URL"
 
 #. Summary Items - Message
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:313
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:361
 msgid "_Message"
 msgstr "_Mensagem"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:328
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:376
 msgid "Download _Columns"
 msgstr "_Colunas de download"
 
-#. Download Columns - Completed
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:333
+#. Download Columns - Complete
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:381
 msgid "_Complete"
 msgstr "_Concluído"
 
 #. Download Columns - Total
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:338
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:386
 msgid "_Size"
 msgstr "_Tamanho"
 
 #. Download Columns - Percent (%)
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:343
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:391
 msgid "_Percent '%'"
 msgstr "_Porcentagem \"%\""
 
 #. Download Columns - Elapsed
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:348
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:396
 msgid "_Elapsed"
 msgstr "Tra_nscorrido"
 
 #. Download Columns - Left
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:353
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:401
 msgid "_Left"
 msgstr "_Restante"
 
 #. Download Columns - Speed
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:358
-#: ../../po/../ui-gtk/UgtkNodeView.c:818
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:406
+#: ../../po/../ui-gtk/UgtkNodeView.c:861
 msgid "Speed"
 msgstr "Velocidade"
 
 #. Download Columns - Up Speed
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:363
-#: ../../po/../ui-gtk/UgtkNodeView.c:832
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:411
+#: ../../po/../ui-gtk/UgtkNodeView.c:875
 msgid "Up Speed"
 msgstr "Veloc. Upload"
 
 #. Download Columns - Uploaded
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:368
-#: ../../po/../ui-gtk/UgtkNodeView.c:846
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:416
+#: ../../po/../ui-gtk/UgtkNodeView.c:889
 msgid "Uploaded"
 msgstr "Enviado"
 
 #. Download Columns - Ratio
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:373
-#: ../../po/../ui-gtk/UgtkNodeView.c:860
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:421
+#: ../../po/../ui-gtk/UgtkNodeView.c:903
 msgid "Ratio"
 msgstr "Proporção"
 
 #. Download Columns - Retry
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:378
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:426
 msgid "_Retry"
 msgstr "Tenta_r novamente"
 
 #. Download Columns - Added On
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:393
-#: ../../po/../ui-gtk/UgtkNodeView.c:917
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:441
+#: ../../po/../ui-gtk/UgtkNodeView.c:960
 msgid "Added On"
 msgstr "Adicionado em"
 
 #. Download Columns - Completed On
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:398
-#: ../../po/../ui-gtk/UgtkNodeView.c:931
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:446
+#: ../../po/../ui-gtk/UgtkNodeView.c:974
 msgid "Completed On"
 msgstr "Concluído em"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:413
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:461
 msgid "_Category"
 msgstr "_Categoria"
 
 #. New Category
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:418
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:466
 msgid "_New Category..."
 msgstr "_Nova categoria..."
 
 #. Delete Category
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:424
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:476
 msgid "_Delete Category"
 msgstr "_Excluir categoria"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:461
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:517
 msgid "_Download"
 msgstr "_Baixar"
 
 #. menu_item = gtk_image_menu_item_new_from_stock (GTK_STOCK_DELETE,
 #. accel_group);
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:473
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:529
 msgid "_Delete Entry"
 msgstr "_Deletar entrada"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:480
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:540
 msgid "Delete Entry and _File"
 msgstr "Deletar entrada e _arquivo"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:495
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:555
 msgid "Open _Containing folder"
 msgstr "Abrir pasta de _conteúdo"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:504
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:568
 msgid "Force Start"
 msgstr "Forçar início"
 
 #. Move to --- start ---
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:528
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:596
 msgid "_Move To"
 msgstr "_Mover para"
 
 #. Priority --- start ---
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:573
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:645
 msgid "Priority"
 msgstr "Prioridade"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:582
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:654
 msgid "_High"
 msgstr "_Alta"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:587
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:659
 msgid "_Normal"
 msgstr "_Normal"
 
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:592
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:664
 msgid "_Low"
 msgstr "_Baixa"
 
 #. Get Help Online
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:615
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:687
 msgid "Get Help Online"
 msgstr "Obtenha ajuda on-line"
 
 #. Documentation
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:622
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:698
 msgid "Documentation"
 msgstr "Documentação"
 
 #. Support Forum
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:629
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:709
 msgid "Support Forum"
 msgstr "Fórum de suporte"
 
 #. Submit Feedback
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:636
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:720
 msgid "Submit Feedback"
 msgstr "Enviar feedback"
 
 #. Report a Bug
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:643
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:731
 msgid "Report a Bug"
 msgstr "Relatar um erro"
 
 #. Keyboard Shortcuts
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:650
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:742
 msgid "Keyboard Shortcuts"
 msgstr "Atalhos de teclado"
 
 #. Check for Updates
-#: ../../po/../ui-gtk/UgtkMenubar-ui.c:657
+#: ../../po/../ui-gtk/UgtkMenubar-ui.c:749
 msgid "Check for Updates"
 msgstr "Verificar por atualizações"
 
-#: ../../po/../ui-gtk/UgtkMenubar.c:144
+#: ../../po/../ui-gtk/UgtkMenubar.c:187
 msgid "Settings"
 msgstr "Configurações"
 
-#: ../../po/../ui-gtk/UgtkMenubar.c:377
+#: ../../po/../ui-gtk/UgtkMenubar.c:454
 #, c-format
 msgid "Can't launch default application for file '%s'."
 msgstr "Não foi possível iniciar o aplicativo padrão para o arquivo \"%s\"."
 
-#: ../../po/../ui-gtk/UgtkMenubar.c:409
+#: ../../po/../ui-gtk/UgtkMenubar.c:486
 #, c-format
 msgid "'%s' - This folder does not exist."
 msgstr "\"%s\" - Esta pasta não existe."
 
 #. title
-#: ../../po/../ui-gtk/UgtkNodeDialog.c:205
-#: ../../po/../ui-gtk/UgtkNodeDialog.c:209
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:219
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:223
 msgid "URI had existed"
 msgstr "A URI existe"
 
-#: ../../po/../ui-gtk/UgtkNodeDialog.c:207
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:221
 msgid "This URI had existed, are you sure to continue?"
 msgstr "Essa URI já existe, tem certeza que quer continuar?"
 
-#: ../../po/../ui-gtk/UgtkNodeDialog.c:343
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:359
 msgid "General"
 msgstr "Geral"
 
-#: ../../po/../ui-gtk/UgtkNodeDialog.c:345
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:361
 msgid "Advanced"
 msgstr "Avançado"
 
-#: ../../po/../ui-gtk/UgtkNodeDialog.c:354
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:370
 msgid "Category settings"
 msgstr "Configurações da categoria"
 
-#: ../../po/../ui-gtk/UgtkNodeDialog.c:356
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:372
 msgid "Default for new download 1"
 msgstr "Padrão para novos downloads 1"
 
-#: ../../po/../ui-gtk/UgtkNodeDialog.c:358
+#: ../../po/../ui-gtk/UgtkNodeDialog.c:374
 msgid "Default 2"
 msgstr "Padrão 2"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:121 ../../po/../ui-gtk/UgtkNodeView.c:584
-#: ../../po/../ui-gtk/UgtkSummary.c:115
+#: ../../po/../ui-gtk/UgtkNodeView.c:143 ../../po/../ui-gtk/UgtkNodeView.c:608
+#: ../../po/../ui-gtk/UgtkSummary.c:107
 msgid "unnamed"
 msgstr "sem nome"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:610
+#: ../../po/../ui-gtk/UgtkNodeView.c:641
 msgid "Paused"
 msgstr "Pausado"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:611
+#: ../../po/../ui-gtk/UgtkNodeView.c:642
 msgid "Uploading"
 msgstr "Enviando"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:612
+#: ../../po/../ui-gtk/UgtkNodeView.c:643
 msgid "Completed"
 msgstr "Concluído"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:614
+#: ../../po/../ui-gtk/UgtkNodeView.c:645
 msgid "Recycled"
 msgstr "Reciclado"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:615
+#: ../../po/../ui-gtk/UgtkNodeView.c:646
 msgid "Queuing"
 msgstr "Enfileramento"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:616
+#: ../../po/../ui-gtk/UgtkNodeView.c:647
 msgid "Active"
 msgstr "Ativo"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:637
+#: ../../po/../ui-gtk/UgtkNodeView.c:668
 msgid "All Status"
 msgstr "Todos os estados"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:734
-#: ../../po/../ui-gtk/UgtkSettingDialog.c:85
-#: ../../po/../ui-gtk/UgtkSummary.c:108
+#: ../../po/../ui-gtk/UgtkNodeView.c:773
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:101
+#: ../../po/../ui-gtk/UgtkSummary.c:100
 msgid "Name"
 msgstr "Nome"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:747
+#: ../../po/../ui-gtk/UgtkNodeView.c:790
 msgid "Complete"
 msgstr "Concluído"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:761
+#: ../../po/../ui-gtk/UgtkNodeView.c:804
 msgid "Size"
 msgstr "Tamanho"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:776
+#: ../../po/../ui-gtk/UgtkNodeView.c:819
 msgid "%"
 msgstr "%"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:790
+#: ../../po/../ui-gtk/UgtkNodeView.c:833
 msgid "Elapsed"
 msgstr "Transcorrido"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:804
+#: ../../po/../ui-gtk/UgtkNodeView.c:847
 msgid "Left"
 msgstr "Restante"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:903
-#: ../../po/../ui-gtk/UgtkSettingForm.c:538
-#: ../../po/../ui-gtk/UgtkSummary.c:151
+#: ../../po/../ui-gtk/UgtkNodeView.c:946
+#: ../../po/../ui-gtk/UgtkSettingForm.c:584
+#: ../../po/../ui-gtk/UgtkSummary.c:143
 msgid "URI"
 msgstr "URI"
 
-#: ../../po/../ui-gtk/UgtkNodeView.c:954
+#: ../../po/../ui-gtk/UgtkNodeView.c:997
 msgid "Quantity"
 msgstr "Qualidade"
 
@@ -1207,67 +1281,67 @@ msgstr "Host:"
 msgid "Port:"
 msgstr "Porta:"
 
-#: ../../po/../ui-gtk/UgtkProxyForm.c:351
+#: ../../po/../ui-gtk/UgtkProxyForm.c:359
 msgid "Socket:"
 msgstr "Socket:"
 
-#: ../../po/../ui-gtk/UgtkProxyForm.c:361
+#: ../../po/../ui-gtk/UgtkProxyForm.c:369
 msgid "Socket args:"
 msgstr "Args. de socket:"
 
-#: ../../po/../ui-gtk/UgtkProxyForm.c:371
+#: ../../po/../ui-gtk/UgtkProxyForm.c:379
 msgid "Element:"
 msgstr "Elemento:"
 
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:66
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:57
 msgid "Mon"
 msgstr "Seg"
 
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:67
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:58
 msgid "Tue"
 msgstr "Ter"
 
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:68
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:59
 msgid "Wed"
 msgstr "Qua"
 
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:69
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:60
 msgid "Thu"
 msgstr "Qui"
 
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:70
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:61
 msgid "Fri"
 msgstr "Sex"
 
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:71
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:62
 msgid "Sat"
 msgstr "Sáb"
 
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:72
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:63
 msgid "Sun"
 msgstr "Dom"
 
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:99
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:104
 msgid "_Enable Scheduler"
 msgstr "_Habilitar agendador"
 
 #. Turn off - label
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:141
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:154
 msgid "Turn off"
 msgstr "Desligar"
 
 #. Turn off - help label
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:146
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:159
 msgid "- stop all task"
 msgstr "- para todas as tarefas"
 
 #. Normal - label
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:156
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:169
 msgid "Normal"
 msgstr "Normal"
 
 #. Normal - help label
-#: ../../po/../ui-gtk/UgtkScheduleForm.c:161
+#: ../../po/../ui-gtk/UgtkScheduleForm.c:174
 msgid "- run task normally"
 msgstr "- executa a tarefa normalmente"
 
@@ -1326,284 +1400,315 @@ msgid "_Mark by filter..."
 msgstr "_Marcar por filtro..."
 
 #. e.g.
-#: ../../po/../ui-gtk/UgtkSequencer.c:74
+#: ../../po/../ui-gtk/UgtkSequence.c:74
 msgid "e.g."
 msgstr "ex.:"
 
 #. -------------------------------------------------------
 #. radio "From"
-#: ../../po/../ui-gtk/UgtkSequencer.c:85
+#: ../../po/../ui-gtk/UgtkSequence.c:85
 msgid "_From:"
 msgstr "_De:"
 
 #. label "To"
-#: ../../po/../ui-gtk/UgtkSequencer.c:108
+#: ../../po/../ui-gtk/UgtkSequence.c:108
 msgid "To:"
 msgstr "Para:"
 
 #. label "digits"
-#: ../../po/../ui-gtk/UgtkSequencer.c:123
+#: ../../po/../ui-gtk/UgtkSequence.c:123
 msgid "digits:"
 msgstr "dígitos:"
 
-#: ../../po/../ui-gtk/UgtkSequencer.c:132
+#: ../../po/../ui-gtk/UgtkSequence.c:132
 msgid "F_rom:"
 msgstr "_De:"
 
 #. label case-sensitive
-#: ../../po/../ui-gtk/UgtkSequencer.c:162
+#: ../../po/../ui-gtk/UgtkSequence.c:162
 msgid "case-sensitive"
 msgstr "diferenciar maiúsculo/minúsculo"
 
-#: ../../po/../ui-gtk/UgtkSequencer.c:188
+#: ../../po/../ui-gtk/UgtkSequence.c:188
 msgid "No wildcard(*) character in URL entry."
 msgstr "Nenhum caractere coringa (*) na entrada de URL."
 
-#: ../../po/../ui-gtk/UgtkSequencer.c:192
+#: ../../po/../ui-gtk/UgtkSequence.c:192
 msgid "URL is not valid."
 msgstr "URL não válida."
 
-#: ../../po/../ui-gtk/UgtkSequencer.c:196
+#: ../../po/../ui-gtk/UgtkSequence.c:196
 msgid "No character in 'From' or 'To' entry."
 msgstr "Nenhum caractere nas entradas \"De\" ou \"Para\"."
 
-#: ../../po/../ui-gtk/UgtkSequencer.c:305
+#: ../../po/../ui-gtk/UgtkSequence.c:311
 msgid "Preview"
 msgstr "Visualizar"
 
-#: ../../po/../ui-gtk/UgtkSettingDialog.c:97
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:113
 msgid "User Interface"
 msgstr "Interface de usuário"
 
-#: ../../po/../ui-gtk/UgtkSettingDialog.c:109
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:125
 msgid "Bandwidth"
 msgstr "Largura de banda"
 
-#: ../../po/../ui-gtk/UgtkSettingDialog.c:115
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:131
 msgid "Scheduler"
 msgstr "Agendador"
 
-#: ../../po/../ui-gtk/UgtkSettingDialog.c:121
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:137
 msgid "Plug-in"
 msgstr "Plug-in"
 
-#: ../../po/../ui-gtk/UgtkSettingDialog.c:127
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:143
+msgid "Media website"
+msgstr "Site de mídias"
+
+#: ../../po/../ui-gtk/UgtkSettingDialog.c:149
 msgid "Others"
 msgstr "Outros"
 
 #. Monitor button
-#: ../../po/../ui-gtk/UgtkSettingForm.c:57
+#: ../../po/../ui-gtk/UgtkSettingForm.c:61
 msgid "_Enable clipboard monitor"
 msgstr "_Habilitar monitor da área de transferência"
 
 #. quiet mode
-#: ../../po/../ui-gtk/UgtkSettingForm.c:62
+#: ../../po/../ui-gtk/UgtkSettingForm.c:66
 msgid "_Quiet mode"
 msgstr "Modo _silencioso"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:68
-#: ../../po/../ui-gtk/UgtkSettingForm.c:446
+#: ../../po/../ui-gtk/UgtkSettingForm.c:72
+#: ../../po/../ui-gtk/UgtkSettingForm.c:488
 msgid "Default category index"
 msgstr "Índice de categoria padrão"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:80
-#: ../../po/../ui-gtk/UgtkSettingForm.c:458
+#: ../../po/../ui-gtk/UgtkSettingForm.c:84
+#: ../../po/../ui-gtk/UgtkSettingForm.c:500
 msgid "Adding to Nth category if no matched category."
 msgstr "Adicionar à N categoria se não houver categoria correspondente."
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:87
+#. media website
+#: ../../po/../ui-gtk/UgtkSettingForm.c:90
+msgid "_Monitor URL of media website"
+msgstr "_Monitorar URL do site de mídias"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:105
 msgid "Monitor clipboard for specified file types:"
 msgstr "Monitorar a área de transferência para os seguintes tipos de arquivo:"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:102
+#: ../../po/../ui-gtk/UgtkSettingForm.c:125
 msgid "Separate the types with character '|'."
 msgstr "Separe os tipos com o caractere \"|\"."
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:107
+#: ../../po/../ui-gtk/UgtkSettingForm.c:130
 msgid "You can use regular expressions here."
 msgstr "Você pode usar expressões regulares aqui."
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:151
+#: ../../po/../ui-gtk/UgtkSettingForm.c:176
 msgid "Confirmation"
 msgstr "Confirmação"
 
 #. Confirmation check buttons
-#: ../../po/../ui-gtk/UgtkSettingForm.c:157
+#: ../../po/../ui-gtk/UgtkSettingForm.c:182
 msgid "Show confirmation dialog on exit"
 msgstr "Exibir diálogo de confirmação ao sair"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:160
+#: ../../po/../ui-gtk/UgtkSettingForm.c:185
 msgid "Confirm when deleting files"
 msgstr "Confirma ao excluir arquivos"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:166
+#: ../../po/../ui-gtk/UgtkSettingForm.c:191
 msgid "System Tray"
 msgstr "Barra do sistema"
 
 #. System Tray check buttons
-#: ../../po/../ui-gtk/UgtkSettingForm.c:172
+#: ../../po/../ui-gtk/UgtkSettingForm.c:197
 msgid "Always show tray icon"
 msgstr "Sempre mostra o ícone na área de notificação"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:175
+#: ../../po/../ui-gtk/UgtkSettingForm.c:200
 msgid "Minimize to tray on startup"
 msgstr "Minimiza para a área de notificação ao inicializar"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:178
+#: ../../po/../ui-gtk/UgtkSettingForm.c:203
 msgid "Close to tray on window close"
 msgstr "Ir para a barra ao fechar a janela"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:182
+#: ../../po/../ui-gtk/UgtkSettingForm.c:207
 msgid "Use Ubuntu's App Indicator"
 msgstr "Usar "
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:189
+#: ../../po/../ui-gtk/UgtkSettingForm.c:214
 msgid "Enable offline mode on startup"
 msgstr "Habilita modo offline ao inicializar"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:192
+#: ../../po/../ui-gtk/UgtkSettingForm.c:217
 msgid "Download starting notification"
-msgstr "Baixa notificação de início"
+msgstr "Notificação de início de download"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:195
+#: ../../po/../ui-gtk/UgtkSettingForm.c:220
 msgid "Sound when download is finished"
 msgstr "Produz som quando o download tiver finalizado"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:198
-msgid "Apply recent download settings"
-msgstr "Aplica configurações de download recentes"
+#. widget = gtk_check_button_new_with_label (_("Skip existing URI from
+#. clipboard and command-line"));
+#. uiform->skip_existing = (GtkToggleButton*) widget;
+#. gtk_box_pack_start (vbox, widget, FALSE, FALSE, 1);
+#: ../../po/../ui-gtk/UgtkSettingForm.c:229
+msgid "Display large icon"
+msgstr "Exibir ícones grandes"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:264
+#: ../../po/../ui-gtk/UgtkSettingForm.c:295
 msgid "These will affect all plug-ins."
 msgstr "Isso afetará todos os plugins."
 
 #. Global speed limit
-#: ../../po/../ui-gtk/UgtkSettingForm.c:270
+#: ../../po/../ui-gtk/UgtkSettingForm.c:301
 msgid "Global speed limit"
 msgstr "Limite de velocidade global"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:278
-#: ../../po/../ui-gtk/UgtkSettingForm.c:564
+#: ../../po/../ui-gtk/UgtkSettingForm.c:309
+#: ../../po/../ui-gtk/UgtkSettingForm.c:610
 msgid "Max upload speed"
 msgstr "Velocidade máxima de upload"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:290
-#: ../../po/../ui-gtk/UgtkSettingForm.c:576
+#: ../../po/../ui-gtk/UgtkSettingForm.c:321
+#: ../../po/../ui-gtk/UgtkSettingForm.c:622
 msgid "Max download speed"
 msgstr "Velocidade máxima de download"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:323
+#: ../../po/../ui-gtk/UgtkSettingForm.c:354
 msgid "Completion Auto-Actions"
 msgstr "Ações automáticas de acabamento"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:331
+#: ../../po/../ui-gtk/UgtkSettingForm.c:362
 msgid "Custom command:"
 msgstr "Comando personalizado:"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:343
+#: ../../po/../ui-gtk/UgtkSettingForm.c:374
 msgid "Custom command if error occured:"
 msgstr "Comando personalizado caso ocorra um erro:"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:388
+#: ../../po/../ui-gtk/UgtkSettingForm.c:424
 msgid "_Autosave"
 msgstr "_Autosalvar"
 
-#. auto save spin & label (interval)
-#: ../../po/../ui-gtk/UgtkSettingForm.c:394
-msgid "minutes"
-msgstr "minutos"
-
-#. auto save label
-#: ../../po/../ui-gtk/UgtkSettingForm.c:402
+#. auto save interval label
+#: ../../po/../ui-gtk/UgtkSettingForm.c:435
 msgid "_Interval:"
 msgstr "_Intervalo:"
 
+#. auto save interval unit label
+#: ../../po/../ui-gtk/UgtkSettingForm.c:446
+msgid "minutes"
+msgstr "minutos"
+
 #. Commandline Settings
-#: ../../po/../ui-gtk/UgtkSettingForm.c:433
+#: ../../po/../ui-gtk/UgtkSettingForm.c:475
 msgid "Commandline Settings"
 msgstr "Configurações de linha de comando"
 
 #. --quiet
-#: ../../po/../ui-gtk/UgtkSettingForm.c:440
+#: ../../po/../ui-gtk/UgtkSettingForm.c:482
 msgid "Use '--quiet' by default"
 msgstr "Usa \"--quiet\" por padrão"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:508
+#: ../../po/../ui-gtk/UgtkSettingForm.c:554
 msgid "Plug-in matching order:"
 msgstr "Ordem de correspondência de plugin:"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:531
+#: ../../po/../ui-gtk/UgtkSettingForm.c:577
 msgid "Aria2 plug-in options"
 msgstr "Opções de plugins do Aria2"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:547
+#: ../../po/../ui-gtk/UgtkSettingForm.c:593
 msgid "RPC authorization secret token"
 msgstr "Token secreto de autorização RPC"
 
 #. ------------------------------------------------------------------------
 #. Speed Limits
-#: ../../po/../ui-gtk/UgtkSettingForm.c:556
+#: ../../po/../ui-gtk/UgtkSettingForm.c:602
 msgid "Global speed limit for aria2 only"
 msgstr "Limite de velocidade global apenas para o aria2"
 
 #. ------------------------------------------------------------------------
 #. aria2 works on local device
 #. launch
-#: ../../po/../ui-gtk/UgtkSettingForm.c:589
+#: ../../po/../ui-gtk/UgtkSettingForm.c:635
 msgid "_Launch aria2 on startup"
 msgstr "_Executar aria2 ao inicializar"
 
 #. shutdown
-#: ../../po/../ui-gtk/UgtkSettingForm.c:595
+#: ../../po/../ui-gtk/UgtkSettingForm.c:641
 msgid "_Shutdown aria2 on exit"
 msgstr "_Desligar aria2 ao sair"
 
 #. ------------------------------------------------------------------------
 #. Local options
-#: ../../po/../ui-gtk/UgtkSettingForm.c:601
+#: ../../po/../ui-gtk/UgtkSettingForm.c:647
 msgid "Launch aria2 on local device"
 msgstr "Executar o aria2 em dispositivo local"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:610
+#: ../../po/../ui-gtk/UgtkSettingForm.c:656
 msgid "Path"
 msgstr "Caminho"
 
-#: ../../po/../ui-gtk/UgtkSettingForm.c:621
+#: ../../po/../ui-gtk/UgtkSettingForm.c:674
 msgid "Arguments"
 msgstr "Argumentos"
 
 #. Arguments - hint
-#: ../../po/../ui-gtk/UgtkSettingForm.c:626
+#: ../../po/../ui-gtk/UgtkSettingForm.c:679
 msgid "You must restart uGet after modifying it."
 msgstr "Você deve reiniciar o uGet após modificá-lo."
 
-#: ../../po/../ui-gtk/UgtkSummary.c:112
+#: ../../po/../ui-gtk/UgtkSettingForm.c:783
+msgid "Media matching mode:"
+msgstr "Modo de correspondência de mídia:"
+
+#: ../../po/../ui-gtk/UgtkSettingForm.c:801
+msgid "Match conditions"
+msgstr "Condições para correspondência:"
+
+#. Quality
+#: ../../po/../ui-gtk/UgtkSettingForm.c:810
+msgid "Quality:"
+msgstr "Qualidade:"
+
+#. Type
+#: ../../po/../ui-gtk/UgtkSettingForm.c:830
+msgid "Type:"
+msgstr "Tipo:"
+
+#: ../../po/../ui-gtk/UgtkSummary.c:104
 msgid "File"
 msgstr "Arquivo"
 
-#: ../../po/../ui-gtk/UgtkSummary.c:127
+#: ../../po/../ui-gtk/UgtkSummary.c:119
 msgid "Folder"
 msgstr "Pasta"
 
-#: ../../po/../ui-gtk/UgtkSummary.c:270
+#: ../../po/../ui-gtk/UgtkSummary.c:262
 msgid "Item"
 msgstr "Item"
 
-#: ../../po/../ui-gtk/UgtkSummary.c:275
+#: ../../po/../ui-gtk/UgtkSummary.c:267
 msgid "Value"
 msgstr "Valor"
 
 #. Copy All
-#: ../../po/../ui-gtk/UgtkSummary.c:307
+#: ../../po/../ui-gtk/UgtkSummary.c:299
 msgid "Copy _All"
 msgstr "Copiar _todos"
 
 #. Show window
-#: ../../po/../ui-gtk/UgtkTrayIcon.c:106
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:141
 msgid "Show window"
 msgstr "Mostrar janela"
 
 #. Offline mode
-#: ../../po/../ui-gtk/UgtkTrayIcon.c:112
+#: ../../po/../ui-gtk/UgtkTrayIcon.c:147
 msgid "_Offline Mode"
 msgstr "Modo _offline"

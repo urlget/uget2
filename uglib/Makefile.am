@@ -69,4 +69,6 @@ noinst_HEADERS = \
 	UgHtmlEntry.h  \
 	UgHtmlFilter.h
 
-EXTRA_DIST = Android.mk
+EXTRA_DIST = \
+	Android.mk     \
+	CMakeLists.txt
