@@ -34,6 +34,7 @@
  *
  */
 
+#include <errno.h>
 #include <stdlib.h>   // srand()
 #include <time.h>     // time()
 #include <UgUtil.h>
@@ -312,6 +313,11 @@ int   uget_rpc_start_server (UgetRpc* urpc)
 {
 	SOCKET  fd;
 	int     result;
+	int     in_progress = FALSE;
+	int     opt_value;
+	int     opt_length;
+	fd_set  fdset;
+	struct timeval timeout;
 
 	if (urpc->server) {
 		ug_socket_server_start (urpc->server);
@@ -322,16 +328,45 @@ int   uget_rpc_start_server (UgetRpc* urpc)
 #ifdef USE_UNIX_DOMAIN_SOCKET
 	if (urpc->socket_path) {
 		fd = socket (AF_UNIX, SOCK_STREAM, 0);
+		ug_socket_set_blocking (fd, FALSE);
 		result = ug_socket_connect_unix (fd,
 		                                 urpc->socket_path,
 		                                 urpc->socket_path_len);
+		if (errno == EINPROGRESS)
+			in_progress = TRUE;
 	}
 	else
 #endif
 	{
 		fd = socket (AF_INET, SOCK_STREAM, 0);
+		ug_socket_set_blocking (fd, FALSE);
 		result = ug_socket_connect (fd, UGET_RPC_ADDR, UGET_RPC_PORT);
+#if (defined _WIN32 || defined _WIN64)
+		if (WSAGetLastError() == WSAEWOULDBLOCK)
+			in_progress = TRUE;
+#else
+		if (errno == EINPROGRESS)
+			in_progress = TRUE;
+#endif
 	}
+
+	// connect with timeout (non-blocking)
+	if (result < 0 && in_progress) {
+		FD_ZERO (&fdset);
+		FD_SET (fd, &fdset);
+		timeout.tv_sec = 1;
+		timeout.tv_usec = 0;
+		// select() return  0 if time limit expired.
+		// select() return -1 if error.
+		if (select (fd+1, NULL, &fdset, NULL, &timeout) > 0) {
+			opt_value = 1;
+			opt_length = sizeof (opt_value);
+			getsockopt (fd, SOL_SOCKET, SO_ERROR, (void*)(&opt_value), &opt_length);
+			if (opt_value == 0)
+				result = 0;    // connect OK
+		}
+	}
+
 	closesocket (fd);
 	if (result != -1) {
 		return FALSE;
