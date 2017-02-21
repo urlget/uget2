@@ -92,6 +92,9 @@ int  ug_socket_connect (SOCKET fd, const char* addr, const char* port_or_serv);
 int  ug_socket_connect_unix (SOCKET fd, const char* path, int path_len);
 #endif // ! (_WIN32 || _WIN64)
 
+// return TRUE or FALSE
+int  ug_socket_set_blocking (SOCKET fd, int is_blocking);
+
 // ------------------------------------
 // Server API
 

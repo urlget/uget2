@@ -125,6 +125,31 @@ int  ug_socket_connect_unix (SOCKET fd, const char* path, int path_len)
 
 #endif // ! (_WIN32 || _WIN64)
 
+int  ug_socket_set_blocking (SOCKET fd, int is_blocking)
+{
+#if defined _WIN32 || defined _WIN64
+	u_long  is_non_blocking = (is_blocking) ? FALSE : TRUE;
+
+	if (ioctlsocket (fd, FIONBIO, &is_non_blocking) == SOCKET_ERROR)
+		return FALSE;
+#else
+	long  arg;
+
+	if ( (arg = fcntl (fd, F_GETFL, NULL)) < 0)
+		return FALSE;
+
+	if (is_blocking)
+		arg &= (~O_NONBLOCK);
+	else
+		arg |= O_NONBLOCK;
+
+	if (fcntl (fd, F_SETFL, arg) < 0)
+		return FALSE;
+#endif
+
+	return TRUE;
+}
+
 // ------------------------------------
 // Server API
 
