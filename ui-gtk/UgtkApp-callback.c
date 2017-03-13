@@ -140,15 +140,10 @@ static void  on_category_cursor_changed (GtkTreeView* view, UgtkApp* app)
 	if (traveler->state.cursor.pos    != traveler->state.cursor.pos_last ||
 	    traveler->category.cursor.pos != traveler->category.cursor.pos_last)
 	{
-		// Is user select "All Status" or "All Category"?
-		if (traveler->state.cursor.pos && traveler->category.cursor.pos)
-			ugtk_traveler_set_sorting (traveler, FALSE, 0, 0);
-		else {
-			// set sorting column
-			ugtk_traveler_set_sorting (traveler, TRUE,
-					app->setting.download_column.sort.nth,
-					app->setting.download_column.sort.type);
-		}
+		// set sorting column
+		ugtk_traveler_set_sorting (traveler, TRUE,
+				app->setting.download_column.sort.nth,
+				app->setting.download_column.sort.type);
 	}
 
 	// show/hide download column and setup items in UgtkViewMenu

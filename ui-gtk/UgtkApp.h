@@ -74,6 +74,7 @@ struct UgtkApp
 //	UgetNode        real;    // root node for real category
 //	UgetNode        split;
 //	UgetNode        sorted;
+//	UgetNode        sorted_split;
 //	UgetNode        mix;
 //	UgetNode        mix_split;
 //	UgRegistry      infos;

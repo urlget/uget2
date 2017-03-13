@@ -57,6 +57,7 @@ typedef struct  UgetApp          UgetApp;
 	UgetNode        real;           \
 	UgetNode        split;          \
 	UgetNode        sorted;         \
+	UgetNode        sorted_split;   \
 	UgetNode        mix;            \
 	UgetNode        mix_split;      \
 	UgRegistry      infos;          \
@@ -74,11 +75,12 @@ typedef struct  UgetApp          UgetApp;
 struct UgetApp
 {
 	UGET_APP_MEMBERS;
-//	UgetNode        real;        // real root node for real nodes
-//	UgetNode        split;       // virtual root
-//	UgetNode        sorted;      // virtual root
-//	UgetNode        mix;         // virtual root
-//	UgetNode        mix_split;   // virtual root
+//	UgetNode        real;           // real root node for real nodes
+//	UgetNode        split;          // virtual root
+//	UgetNode        sorted;         // virtual root
+//	UgetNode        sorted_split;   // virtual root
+//	UgetNode        mix;            // virtual root
+//	UgetNode        mix_split;      // virtual root
 //	UgRegistry      infos;
 //	UgRegistry      plugins;
 //	UgetPluginInfo* plugin;
