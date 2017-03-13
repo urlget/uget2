@@ -112,6 +112,8 @@ void  uget_app_add_category (UgetApp* app, UgetNode* cnode, int save_file);
 int   uget_app_move_category (UgetApp* app, UgetNode* cnode, UgetNode* position);
 void  uget_app_delete_category (UgetApp* app, UgetNode* cnode);
 void  uget_app_stop_category (UgetApp* app, UgetNode* cnode);
+void  uget_app_pause_category (UgetApp* app, UgetNode* cnode);
+void  uget_app_resume_category (UgetApp* app, UgetNode* cnode);
 UgetNode* uget_app_match_category (UgetApp* app, UgUri* uuri, const char* file);
 
 // download functions: return TRUE or FALSE

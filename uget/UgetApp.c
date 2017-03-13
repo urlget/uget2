@@ -531,6 +531,7 @@ void  uget_app_delete_category (UgetApp* app, UgetNode* cnode)
 	ug_free (path_base);
 }
 
+// move downloads from active to queuing
 void  uget_app_stop_category (UgetApp* app, UgetNode* cnode)
 {
 	UgetCategory*  category;
@@ -543,6 +544,62 @@ void  uget_app_stop_category (UgetApp* app, UgetNode* cnode)
 	// Because uget_app_queue_download() will change node linking,
 	// program must store active nodes to array before calling uget_app_queue_download()
 	array = uget_app_store_nodes (app, category->active);
+
+	for (index = array->length-1;  index >= 0;  index--) {
+		dnode = array->at[index];
+		uget_app_queue_download (app, dnode);
+	}
+
+	uget_app_clear_nodes (app);    // clear stored nodes
+}
+
+// pause active and queuing downloads
+void  uget_app_pause_category (UgetApp* app, UgetNode* cnode)
+{
+	UgetCategory*  category;
+	UgetNode*      dnode;
+	UgArrayPtr*    array;
+	int            index;
+
+	category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
+
+	// Because uget_app_queue_download() will change node linking,
+	// program must store active nodes to array before calling uget_app_queue_download()
+
+	// pause all download in queuing ------------
+	array = uget_app_store_nodes (app, category->queuing);
+
+	for (index = array->length-1;  index >= 0;  index--) {
+		dnode = array->at[index];
+		uget_app_pause_download (app, dnode);
+	}
+
+	uget_app_clear_nodes (app);    // clear stored nodes
+
+	// pause all download in active -------------
+	array = uget_app_store_nodes (app, category->active);
+
+	for (index = array->length-1;  index >= 0;  index--) {
+		dnode = array->at[index];
+		uget_app_pause_download (app, dnode);
+	}
+
+	uget_app_clear_nodes (app);    // clear stored nodes
+}
+
+// set (error and paused) downloads in queuing runnable
+void  uget_app_resume_category (UgetApp* app, UgetNode* cnode)
+{
+	UgetCategory*  category;
+	UgetNode*      dnode;
+	UgArrayPtr*    array;
+	int            index;
+
+	category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
+
+	// Because uget_app_queue_download() will change node linking,
+	// program must store active nodes to array before calling uget_app_queue_download()
+	array = uget_app_store_nodes (app, category->queuing);
 
 	for (index = array->length-1;  index >= 0;  index--) {
 		dnode = array->at[index];
