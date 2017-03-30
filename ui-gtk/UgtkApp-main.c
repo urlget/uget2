@@ -277,7 +277,7 @@ int  main (int argc, char** argv)
 	rpc->backup_dir = g_build_filename (ugtk_get_config_dir (),
 	                                    UGTK_APP_DIR, "attachment", NULL);
 	ug_create_dir_all (rpc->backup_dir, -1);
-	if (uget_rpc_start_server (rpc))
+	if (uget_rpc_start_server (rpc, TRUE))
 		uget_rpc_send_command (rpc, argc-1, argv+1);
 	else {
 		uget_rpc_send_command (rpc, argc-1, argv+1);

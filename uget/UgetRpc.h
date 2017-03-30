@@ -90,7 +90,7 @@ void  uget_rpc_send_command (UgetRpc* urpc, int argc, char** argv);
 void  uget_rpc_present (UgetRpc* urpc);
 
 // return TRUE if server start
-int   uget_rpc_start_server (UgetRpc* urpc);
+int   uget_rpc_start_server (UgetRpc* urpc, int detect_server);
 void  uget_rpc_stop_server  (UgetRpc* urpc);
 
 int          uget_rpc_has_request (UgetRpc* urpc);
