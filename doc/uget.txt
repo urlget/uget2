@@ -52,6 +52,7 @@ Category-Home.json
 {
    "name": "Home",
    "info": {
+      "category": {},
       "common": {},
       "proxy": {},
       "http": {},
