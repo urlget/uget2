@@ -673,6 +673,8 @@ static void ugtk_tree_view_column_clicked (GtkTreeViewColumn* column,
 	}
 	uget_app_set_sorting ((UgetApp*) app, compare_funcs[nth_column],
 			(sorttype == GTK_SORT_DESCENDING) ? TRUE : FALSE);
+	// Any Category/Status can't move download position if they were sorted.
+	ugtk_app_decide_download_sensitive (app);
 	gtk_widget_queue_draw ((GtkWidget*) traveler->download.view);
 }
 
