@@ -758,30 +758,20 @@ void  ugtk_app_decide_download_sensitive (UgtkApp* app)
 
 	// Move Up/Down/Top/Bottom functions need reset sensitive when selection changed.
 	// These need by  on_move_download_xxx()  series.
-	// "All Category" and "All Status" can't move download position if they were sorted.
-	if (app->traveler.category.cursor.pos == 0 ||
-	    app->traveler.state.cursor.pos    == 0)
-	{
-		if (n_selected > 0) {
-			if (app->setting.download_column.sort.nth == UGTK_NODE_COLUMN_STATE)
-				sensitive = TRUE;
-			else
-				sensitive = FALSE;
-		}
+	if (n_selected > 0) {
+		// Any Category/Status can't move download position if they were sorted.
+		if (app->setting.download_column.sort.nth == UGTK_NODE_COLUMN_STATE)
+			sensitive = TRUE;
+		else
+			sensitive = FALSE;
 	}
-	// move up/down
+	// move up/down/top/bottom
 	gtk_widget_set_sensitive (app->toolbar.move_up, sensitive);
 	gtk_widget_set_sensitive (app->toolbar.move_down, sensitive);
-	gtk_widget_set_sensitive (app->menubar.download.move_up, sensitive);
-	gtk_widget_set_sensitive (app->menubar.download.move_down, sensitive);
-
-	// disable move top/bottom if user select "All Category"
-	if (app->traveler.category.cursor.pos == 0 || sensitive == FALSE)
-		sensitive = FALSE;
-	else
-		sensitive = TRUE;
 	gtk_widget_set_sensitive (app->toolbar.move_top, sensitive);
 	gtk_widget_set_sensitive (app->toolbar.move_bottom, sensitive);
+	gtk_widget_set_sensitive (app->menubar.download.move_up, sensitive);
+	gtk_widget_set_sensitive (app->menubar.download.move_down, sensitive);
 	gtk_widget_set_sensitive (app->menubar.download.move_top, sensitive);
 	gtk_widget_set_sensitive (app->menubar.download.move_bottom, sensitive);
 }

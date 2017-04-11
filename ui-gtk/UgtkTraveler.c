@@ -65,7 +65,7 @@ void  ugtk_traveler_init (UgtkTraveler* traveler, UgtkApp* app)
 	// category
 	traveler->category.self = gtk_scrolled_window_new (NULL, NULL);
 	traveler->category.view = (GtkTreeView*) ugtk_node_view_new_for_category ();
-	traveler->category.model = ugtk_node_tree_new (&app->real, TRUE);
+	traveler->category.model = ugtk_node_tree_new (&app->sorted, TRUE);
 	ugtk_node_tree_set_prefix (traveler->category.model, &app->mix, 1);
 	gtk_tree_view_set_model (traveler->category.view,
 			GTK_TREE_MODEL (traveler->category.model));
@@ -531,12 +531,6 @@ static void on_state_cursor_changed (GtkTreeView* view, UgtkTraveler* traveler)
 	gtk_tree_path_free (path);
 	traveler->state.cursor.node = iter.user_data;
 
-	// If user choose "All Status", show sorted download.
-	if (traveler->state.cursor.pos == 0 && traveler->category.cursor.pos > 0) {
-		iter.user_data = uget_node_nth_child (&traveler->app->sorted,
-				traveler->category.cursor.pos - 1);
-	}
-
 	// change download.model and refresh it's view
 	gtk_tree_view_set_model (traveler->download.view, NULL);
 	if (iter.user_data) {
@@ -679,6 +673,8 @@ static void ugtk_tree_view_column_clicked (GtkTreeViewColumn* column,
 	}
 	uget_app_set_sorting ((UgetApp*) app, compare_funcs[nth_column],
 			(sorttype == GTK_SORT_DESCENDING) ? TRUE : FALSE);
+	// Any Category/Status can't move download position if they were sorted.
+	ugtk_app_decide_download_sensitive (app);
 	gtk_widget_queue_draw ((GtkWidget*) traveler->download.view);
 }
 

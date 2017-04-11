@@ -57,6 +57,7 @@ typedef struct  UgetApp          UgetApp;
 	UgetNode        real;           \
 	UgetNode        split;          \
 	UgetNode        sorted;         \
+	UgetNode        sorted_split;   \
 	UgetNode        mix;            \
 	UgetNode        mix_split;      \
 	UgRegistry      infos;          \
@@ -74,11 +75,12 @@ typedef struct  UgetApp          UgetApp;
 struct UgetApp
 {
 	UGET_APP_MEMBERS;
-//	UgetNode        real;        // real root node for real nodes
-//	UgetNode        split;       // virtual root
-//	UgetNode        sorted;      // virtual root
-//	UgetNode        mix;         // virtual root
-//	UgetNode        mix_split;   // virtual root
+//	UgetNode        real;           // real root node for real nodes
+//	UgetNode        split;          // virtual root
+//	UgetNode        sorted;         // virtual root
+//	UgetNode        sorted_split;   // virtual root
+//	UgetNode        mix;            // virtual root
+//	UgetNode        mix_split;      // virtual root
 //	UgRegistry      infos;
 //	UgRegistry      plugins;
 //	UgetPluginInfo* plugin;
@@ -110,6 +112,8 @@ void  uget_app_add_category (UgetApp* app, UgetNode* cnode, int save_file);
 int   uget_app_move_category (UgetApp* app, UgetNode* cnode, UgetNode* position);
 void  uget_app_delete_category (UgetApp* app, UgetNode* cnode);
 void  uget_app_stop_category (UgetApp* app, UgetNode* cnode);
+void  uget_app_pause_category (UgetApp* app, UgetNode* cnode);
+void  uget_app_resume_category (UgetApp* app, UgetNode* cnode);
 UgetNode* uget_app_match_category (UgetApp* app, UgUri* uuri, const char* file);
 
 // download functions: return TRUE or FALSE

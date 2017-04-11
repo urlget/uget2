@@ -73,6 +73,10 @@ static struct UgetNodeNotification  notification_sorted =
 		{uget_node_create_sorted, NULL, NULL, NULL,
 		(UgCompareFunc) NULL, FALSE,
 		NULL};
+static struct UgetNodeNotification  notification_sorted_split =
+		{uget_node_create_split, NULL, NULL, NULL,
+		(UgCompareFunc) NULL, FALSE,
+		NULL};
 static struct UgetNodeNotification  notification_mix =
 		{uget_node_create_mix, NULL, NULL, NULL,
 		(UgCompareFunc) NULL, FALSE,
@@ -91,11 +95,13 @@ void  uget_app_init (UgetApp* app)
 	uget_node_init (&app->real, NULL);
 	uget_node_init (&app->split, &app->real);
 	uget_node_init (&app->sorted, &app->real);
+	uget_node_init (&app->sorted_split, &app->sorted);
 	uget_node_init (&app->mix, &app->real);
 	uget_node_init (&app->mix_split, &app->mix);
 	app->real.notification = &notification_real;
 	app->split.notification = &notification_split;
 	app->sorted.notification = &notification_sorted;
+	app->sorted_split.notification = &notification_sorted_split;
 	app->mix.notification = &notification_mix;
 	app->mix_split.notification = &notification_mix_split;
 	// add virtual category - "All Category"
@@ -300,6 +306,7 @@ void  uget_app_set_sorting (UgetApp* app, UgCompareFunc compare, int reversed)
 		app->mix.notification->reversed  = reversed;
 		app->mix_split.notification->reversed = reversed;
 		app->sorted.notification->reversed = reversed;
+		app->sorted_split.notification->reversed = reversed;
 		if (app->mix.notification->compare == compare && compare) {
 			// reverse first category in app->mix
 			ug_node_reverse ((UgNode*) node);
@@ -309,6 +316,9 @@ void  uget_app_set_sorting (UgetApp* app, UgCompareFunc compare, int reversed)
 			// reverse each category in app->sorted
 			for (node = app->sorted.children;  node;  node = node->next)
 				ug_node_reverse ((UgNode*) node);
+			// reverse each category in app->sorted_split
+			for (node = app->sorted_split.children;  node;  node = node->next)
+				ug_node_reverse ((UgNode*) node);
 			return;
 		}
 	}
@@ -317,6 +327,7 @@ void  uget_app_set_sorting (UgetApp* app, UgCompareFunc compare, int reversed)
 		app->mix.notification->compare  = compare;
 		app->mix_split.notification->compare = compare;
 		app->sorted.notification->compare = compare;
+		app->sorted_split.notification->compare = compare;
 		if (compare == NULL) {
 			// reorder first category in app->mix
 			for (real = app->real.last;  real;  real = real->prev)
@@ -330,6 +341,9 @@ void  uget_app_set_sorting (UgetApp* app, UgCompareFunc compare, int reversed)
 			// reorder each category in app->sorted
 			for (node = app->sorted.children;  node;  node = node->next)
 				uget_node_reorder_by_real (node, NULL);
+			// reorder each category in app->sorted_split
+			for (node = app->sorted_split.children;  node;  node = node->next)
+				uget_node_reorder_by_real (node, NULL);
 		}
 		else {
 			// sort first category in app->mix
@@ -340,6 +354,9 @@ void  uget_app_set_sorting (UgetApp* app, UgCompareFunc compare, int reversed)
 			// sort each category in app->sorted
 			for (node = app->sorted.children;  node;  node = node->next)
 				uget_node_sort (node, compare, reversed);
+			// reorder each category in app->sorted_split
+			for (node = app->sorted_split.children;  node;  node = node->next)
+				uget_node_reorder_by_real (node, NULL);
 		}
 	}
 }
@@ -514,6 +531,7 @@ void  uget_app_delete_category (UgetApp* app, UgetNode* cnode)
 	ug_free (path_base);
 }
 
+// move downloads from active to queuing
 void  uget_app_stop_category (UgetApp* app, UgetNode* cnode)
 {
 	UgetCategory*  category;
@@ -526,6 +544,62 @@ void  uget_app_stop_category (UgetApp* app, UgetNode* cnode)
 	// Because uget_app_queue_download() will change node linking,
 	// program must store active nodes to array before calling uget_app_queue_download()
 	array = uget_app_store_nodes (app, category->active);
+
+	for (index = array->length-1;  index >= 0;  index--) {
+		dnode = array->at[index];
+		uget_app_queue_download (app, dnode);
+	}
+
+	uget_app_clear_nodes (app);    // clear stored nodes
+}
+
+// pause active and queuing downloads
+void  uget_app_pause_category (UgetApp* app, UgetNode* cnode)
+{
+	UgetCategory*  category;
+	UgetNode*      dnode;
+	UgArrayPtr*    array;
+	int            index;
+
+	category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
+
+	// Because uget_app_queue_download() will change node linking,
+	// program must store active nodes to array before calling uget_app_queue_download()
+
+	// pause all download in queuing ------------
+	array = uget_app_store_nodes (app, category->queuing);
+
+	for (index = array->length-1;  index >= 0;  index--) {
+		dnode = array->at[index];
+		uget_app_pause_download (app, dnode);
+	}
+
+	uget_app_clear_nodes (app);    // clear stored nodes
+
+	// pause all download in active -------------
+	array = uget_app_store_nodes (app, category->active);
+
+	for (index = array->length-1;  index >= 0;  index--) {
+		dnode = array->at[index];
+		uget_app_pause_download (app, dnode);
+	}
+
+	uget_app_clear_nodes (app);    // clear stored nodes
+}
+
+// set (error and paused) downloads in queuing runnable
+void  uget_app_resume_category (UgetApp* app, UgetNode* cnode)
+{
+	UgetCategory*  category;
+	UgetNode*      dnode;
+	UgArrayPtr*    array;
+	int            index;
+
+	category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
+
+	// Because uget_app_queue_download() will change node linking,
+	// program must store active nodes to array before calling uget_app_queue_download()
+	array = uget_app_store_nodes (app, category->queuing);
 
 	for (index = array->length-1;  index >= 0;  index--) {
 		dnode = array->at[index];
