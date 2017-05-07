@@ -14,7 +14,7 @@ SUBDIRS = \
 
 EXTRA_DIST = \
 	uget-gtk.desktop \
-	snapcraft.yaml
+	.snapcraft.yaml
 
 appsdir = $(datadir)/applications
 apps_DATA = uget-gtk.desktop
