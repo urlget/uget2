@@ -436,7 +436,7 @@ void  uget_app_add_category (UgetApp* app, UgetNode* cnode, int save_file)
 		path = ug_strdup_printf ("%s%c%.4d.json", path_base, '/',
 		                         uget_node_child_position (&app->real, cnode));
 #endif // defined
-		uget_app_save_category ((UgetApp*) app, cnode, path);
+		uget_app_save_category ((UgetApp*) app, cnode, path, NULL);
 		ug_free (path_base);
 		ug_free (path);
 	}
@@ -1271,13 +1271,44 @@ UgetPluginInfo*  uget_app_match_plugin (UgetApp* app, UgetNode* node, const Uget
 // ----------------------------------------------------------------------------
 // save/load categories
 
-int   uget_app_save_category (UgetApp* app, UgetNode* cnode, const char* filename)
+int   uget_app_save_category (UgetApp* app, UgetNode* cnode, const char* filename, void* jsonfile)
+{
+	int  fd;
+
+//	fd = open (filename, O_CREAT | O_WRONLY | O_TRUNC,
+//			S_IREAD | S_IWRITE | S_IRGRP | S_IROTH);
+	fd = ug_open (filename, UG_O_CREAT | UG_O_WRONLY | UG_O_TRUNC | UG_O_TEXT,
+			UG_S_IREAD | UG_S_IWRITE | UG_S_IRGRP | UG_S_IROTH);
+	if (fd == -1)
+		return FALSE;
+
+	return uget_app_save_category_fd (app, cnode, fd, jsonfile);
+}
+
+UgetNode* uget_app_load_category (UgetApp* app, const char* filename, void* jsonfile)
+{
+	int  fd;
+
+//	fd = open (filename, O_RDONLY, 0);
+	fd = ug_open (filename, UG_O_RDONLY | UG_O_TEXT, 0);
+	if (fd == -1)
+		return NULL;
+
+	return uget_app_load_category_fd (app, fd, jsonfile);
+}
+
+int   uget_app_save_category_fd (UgetApp* app, UgetNode* cnode, int fd, void* jsonfile)
 {
 	UgJsonFile*  jfile;
 
-	jfile = ug_json_file_new (4096);
-	if (ug_json_file_begin_write (jfile, filename, UG_JSON_FORMAT_ALL) == FALSE) {
-		ug_json_file_free (jfile);
+	if (jsonfile == NULL)
+		jfile = ug_json_file_new (4096);
+	else
+		jfile = jsonfile;
+
+	if (ug_json_file_begin_write_fd (jfile, fd, UG_JSON_FORMAT_ALL) == FALSE) {
+		if (jsonfile == NULL)
+			ug_json_file_free (jfile);
 		return FALSE;
 	}
 
@@ -1286,20 +1317,25 @@ int   uget_app_save_category (UgetApp* app, UgetNode* cnode, const char* filenam
 	ug_json_write_object_tail (&jfile->json);
 
 	ug_json_file_end_write (jfile);
-	ug_json_file_sync (jfile);    // avoid file corrupted on sudden shutdown
-	ug_json_file_free (jfile);
+	if (jsonfile == NULL)
+		ug_json_file_free (jfile);
 	return TRUE;
 }
 
-UgetNode* uget_app_load_category (UgetApp* app, const char* filename)
+UgetNode* uget_app_load_category_fd (UgetApp* app, int fd, void* jsonfile)
 {
 	UgJsonFile*  jfile;
 	UgJsonError  error;
 	UgetNode*    cnode;
 
-	jfile = ug_json_file_new (4096);
-	if (ug_json_file_begin_parse (jfile, filename) == FALSE) {
-		ug_json_file_free (jfile);
+	if (jsonfile == NULL)
+		jfile = ug_json_file_new (4096);
+	else
+		jfile = jsonfile;
+
+	if (ug_json_file_begin_parse_fd (jfile, fd) == FALSE) {
+		if (jsonfile == NULL)
+			ug_json_file_free (jfile);
 		return FALSE;
 	}
 
@@ -1310,7 +1346,8 @@ UgetNode* uget_app_load_category (UgetApp* app, const char* filename)
 			NULL, NULL);
 
 	error = ug_json_file_end_parse (jfile);
-	ug_json_file_free (jfile);
+	if (jsonfile == NULL)
+		ug_json_file_free (jfile);
 
 	if (error == UG_JSON_ERROR_NONE) {
 		uget_app_add_category (app, cnode, FALSE);
@@ -1352,17 +1389,7 @@ int   uget_app_save_categories (UgetApp* app, const char* folder)
 		path = ug_strdup_printf ("%s%c%.4d.temp", path_base, '/',  count);
 #endif // _WIN32 || _WIN64
 
-		if (ug_json_file_begin_write (jfile, path, UG_JSON_FORMAT_ALL) == FALSE) {
-			ug_free (path);
-			break;
-		}
-
-		ug_json_write_object_head (&jfile->json);
-		ug_json_write_entry (&jfile->json, cnode, UgetNodeEntry);
-		ug_json_write_object_tail (&jfile->json);
-
-		ug_json_file_end_write (jfile);
-		ug_json_file_sync (jfile);    // avoid file corrupted on sudden shutdown
+		uget_app_save_category (app, cnode, path, jfile);
 
 #if defined _WIN32 || defined _WIN64
 		path_new = ug_strdup_printf ("%s%c%.4d.json", path_base, '\\', count);
@@ -1383,11 +1410,10 @@ int   uget_app_save_categories (UgetApp* app, const char* folder)
 
 int   uget_app_load_categories (UgetApp* app, const char* folder)
 {
-	int             count, file_ok;
+	int             count, fd;
 	char*           path;
 	char*           path_base;
 	char*           path_temp;
-	UgetNode*       cnode;
 	UgJsonFile*     jfile;
 
 	if (folder)
@@ -1408,29 +1434,18 @@ int   uget_app_load_categories (UgetApp* app, const char* folder)
 		path_temp = ug_strdup_printf ("%s%c%.4d.temp", path_base, '/',  count);
 #endif // _WIN32 || _WIN64
 
-		file_ok = ug_json_file_begin_parse (jfile, path);
-		if (file_ok)
+//		fd = open (filename, O_RDONLY, 0);
+		fd = ug_open (path, UG_O_RDONLY | UG_O_TEXT, 0);
+		if (fd != -1)
 			ug_unlink (path_temp);
 		else if (ug_rename (path_temp, path) != -1)
-			file_ok = ug_json_file_begin_parse (jfile, path);
+			fd = ug_open (path, UG_O_RDONLY | UG_O_TEXT, 0);
 		ug_free (path_temp);
 		ug_free (path);
-		if (file_ok == FALSE)
+		if (fd == -1)
 			break;
 
-		// parse and add category node
-		cnode = uget_node_new (NULL);
-		ug_json_push (&jfile->json, ug_json_parse_entry,
-				cnode, (void*)UgetNodeEntry);
-		ug_json_push (&jfile->json, ug_json_parse_object,
-				NULL, NULL);
-		ug_json_file_end_parse (jfile);
-
-		uget_app_add_category (app, cnode, FALSE);
-		// create fake node
-		uget_node_make_fake (cnode);
-		// move all downloads from active to queuing in this categoey
-		uget_app_stop_category (app, cnode);
+		uget_app_load_category_fd (app, fd, jfile);
 	}
 
 	ug_json_file_free (jfile);

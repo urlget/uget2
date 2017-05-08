@@ -149,8 +149,10 @@ UgetPluginInfo*  uget_app_match_plugin (UgetApp* app, UgetNode* node, const Uget
 // save/load categories
 
 // uget_app_save_category() return TRUE or FALSE
-int       uget_app_save_category (UgetApp* app, UgetNode* cnode, const char* filename);
-UgetNode* uget_app_load_category (UgetApp* app, const char* filename);
+int       uget_app_save_category (UgetApp* app, UgetNode* cnode, const char* filename, void* jsonfile);
+UgetNode* uget_app_load_category (UgetApp* app, const char* filename, void* jsonfile);
+int       uget_app_save_category_fd (UgetApp* app, UgetNode* cnode, int fd, void* jsonfile);
+UgetNode* uget_app_load_category_fd (UgetApp* app, int fd, void* jsonfile);
 // return number of category save/load
 int   uget_app_save_categories (UgetApp* app, const char* folder);
 int   uget_app_load_categories (UgetApp* app, const char* folder);

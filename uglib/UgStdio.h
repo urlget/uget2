@@ -218,6 +218,9 @@ FILE* ug_fopen (const char *filename_utf8, const char *mode);
 #  define ug_fopen      fopen
 #endif
 
+// FILE* fdopen(int fd, const char *mode);
+#define ug_fdopen       fdopen
+
 #if defined __ANDROID__
 int     fseek_64 (FILE *stream, int64_t offset, int origin);
 int64_t ftell_64 (FILE *stream);
@@ -257,7 +260,7 @@ int   ug_ftruncate (FILE* file, int64_t size);
 #define	ug_fgets(file,buf,len)      fgets (buf, len, file)
 #define	ug_fgetc(file)              fgetc (file)
 #define ug_fflush                   fflush
-#define ug_fget_fd                  ug_fileno
+#define ug_fdget                    ug_fileno
 
 // ----------------------------------------------------------------------------
 // file & directory functions: these functions returns 0 if it is successful.

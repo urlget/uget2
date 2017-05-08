@@ -61,13 +61,11 @@ struct UgJsonFile
 UgJsonFile*  ug_json_file_new (int buffer_size);
 void         ug_json_file_free (UgJsonFile* jfile);
 
-// If you want to avoid delayed write, call fsync() before close()
-int   ug_json_file_sync (UgJsonFile* jfile);
-int   ug_json_file_close (UgJsonFile* jfile);
-
 // return TRUE or FALSE
 int   ug_json_file_begin_parse (UgJsonFile* jfile, const char* filename);
 int   ug_json_file_begin_write (UgJsonFile* jfile, const char* filename, UgJsonFormat format);
+int   ug_json_file_begin_parse_fd (UgJsonFile* jfile, int fd);
+int   ug_json_file_begin_write_fd (UgJsonFile* jfile, int fd, UgJsonFormat format);
 
 UgJsonError  ug_json_file_end_parse (UgJsonFile* jfile);
 void         ug_json_file_end_write (UgJsonFile* jfile);
