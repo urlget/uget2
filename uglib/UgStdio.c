@@ -296,12 +296,32 @@ int  ug_remove (const char *filename)
 	return retval;
 }
 
+int  ug_unlink (const char *filename)
+{
+	wchar_t *wfilename = ug_utf8_to_utf16 (filename, -1, NULL);
+	int save_errno;
+	int retval;
+
+	if (wfilename == NULL) {
+		errno = EINVAL;
+		return -1;
+	}
+
+	retval = _wunlink (wfilename);
+	save_errno = errno;
+
+	ug_free (wfilename);
+
+	errno = save_errno;
+	return retval;
+}
+
 // ----------------------------------------------------------------------------
 // UNIX
 #else
 
 #if defined (HAVE_GLIB)
-int  ug_rename (const gchar *old_filename, const gchar *new_filename)
+int  ug_rename (const char *old_filename, const char *new_filename)
 {
 	if (g_get_filename_charsets (NULL))
 		return g_rename (old_filename, new_filename);
@@ -329,7 +349,7 @@ int  ug_rename (const gchar *old_filename, const gchar *new_filename)
 	}
 }
 
-int  ug_remove (const gchar *filename)
+int  ug_remove (const char *filename)
 {
 	if (g_get_filename_charsets (NULL))
 		return g_remove (filename);
@@ -344,6 +364,30 @@ int  ug_remove (const gchar *filename)
 		}
 
 		retval = g_remove (cp_filename);
+		save_errno = errno;
+
+		g_free (cp_filename);
+
+		errno = save_errno;
+		return retval;
+	}
+}
+
+int  ug_unlink (const gchar *filename)
+{
+	if (g_get_filename_charsets (NULL))
+		return g_unlink (filename);
+	else {
+		gchar *cp_filename = g_filename_from_utf8 (filename, -1, NULL, NULL, NULL);
+		int save_errno;
+		int retval;
+
+		if (cp_filename == NULL) {
+			errno = EINVAL;
+			return -1;
+		}
+
+		retval = g_unlink (cp_filename);
 		save_errno = errno;
 
 		g_free (cp_filename);
