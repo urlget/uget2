@@ -319,8 +319,18 @@ int  ug_create_dir_all (const char* dir, int len)
 
 	if (len == -1)
 		len = strlen (dir);
+	if (len > 1 && dir[len-1] == UG_DIR_SEPARATOR)
+		len--;
 	dir_end = dir + len;
 	element_end = dir;
+
+	// quick check
+	element_os = ug_strndup (dir, len);
+	if (ug_file_is_exist (element_os) && ug_file_is_dir(element_os)) {
+		ug_free (element_os);
+		return 0;
+	}
+	ug_free (element_os);
 
 	for (;;) {
 		// skip directory separator "\\\\" or "//"
