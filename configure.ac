@@ -24,6 +24,9 @@ AC_PROG_RANLIB
 ## --- Check function posix_fallocate()
 AC_CHECK_FUNCS([posix_fallocate])
 
+## --- Check function ftruncate()
+AC_CHECK_FUNCS([ftruncate])
+
 ## ----------------------------------------------
 ## L10N  (add intltoolize to autogen.sh)
 AC_PROG_INTLTOOL
