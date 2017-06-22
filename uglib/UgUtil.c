@@ -334,8 +334,25 @@ static char encoding_table[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                                 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
                                 'w', 'x', 'y', 'z', '0', '1', '2', '3',
                                 '4', '5', '6', '7', '8', '9', '+', '/'};
+static char *decoding_table = NULL;
 
-char* ug_base64_encode (const uint8_t* data, int input_length,
+static void ug_build_decoding_table()
+{
+	int i;
+	decoding_table = ug_malloc(256);
+
+	for (i = 0; i < 64; i++)
+		decoding_table[(unsigned char) encoding_table[i]] = i;
+}
+
+void ug_base64_cleanup()
+{
+	ug_free (decoding_table);
+	decoding_table = NULL;
+}
+
+char* ug_base64_encode (const unsigned char* data,
+                        int  input_length,
                         int* output_length)
 {
 	int   i, j;
@@ -363,10 +380,59 @@ char* ug_base64_encode (const uint8_t* data, int input_length,
 	for (i = 0; i < mod_table[input_length % 3]; i++)
 		encoded_data[length - 1 - i] = '=';
 
-	encoded_data[length] = '\0';
 	if (output_length)
 		*output_length = length;
+	encoded_data[length] = '\0';
 	return encoded_data;
+}
+
+unsigned char* ug_base64_decode (const char* data,
+                                 int  input_length,
+                                 int* output_length)
+{
+	int  i, j;
+	int  length;
+	unsigned char *decoded_data;
+
+	if (decoding_table == NULL)
+		ug_build_decoding_table ();
+
+	if (input_length % 4 != 0)
+		return NULL;
+
+	length = input_length / 4 * 3;
+	if (data[input_length - 1] == '=')
+		length--;
+	if (data[input_length - 2] == '=')
+		length--;
+
+	decoded_data = ug_malloc (length + 1);  // + '\0'
+	if (decoded_data == NULL)
+		return NULL;
+
+	for (i = 0, j = 0; i < input_length;) {
+		uint32_t sextet_a = data[i] == '=' ? 0 & i++ : decoding_table[data[i++]];
+		uint32_t sextet_b = data[i] == '=' ? 0 & i++ : decoding_table[data[i++]];
+		uint32_t sextet_c = data[i] == '=' ? 0 & i++ : decoding_table[data[i++]];
+		uint32_t sextet_d = data[i] == '=' ? 0 & i++ : decoding_table[data[i++]];
+
+		uint32_t triple = (sextet_a << 3 * 6)
+				+ (sextet_b << 2 * 6)
+				+ (sextet_c << 1 * 6)
+				+ (sextet_d << 0 * 6);
+
+		if (j < length)
+			decoded_data[j++] = (triple >> 2 * 8) & 0xFF;
+		if (j < length)
+			decoded_data[j++] = (triple >> 1 * 8) & 0xFF;
+		if (j < length)
+			decoded_data[j++] = (triple >> 0 * 8) & 0xFF;
+	}
+
+	if (output_length)
+		*output_length = length;
+	decoded_data[length] = '\0';
+	return decoded_data;
 }
 
 // ----------------------------------------------------------------------------

@@ -297,12 +297,19 @@ void  test_base64 ()
 {
 	const char* test_string = "This is a test string.";
 	char* base64;
+	char* orig;
 	int   len;
 
 	puts ("\n--- test_base64:");
 	base64 = ug_base64_encode ((uint8_t*)test_string, strlen (test_string), &len);
 	printf ("%.*s\n", len, base64);
 	puts (base64);
+
+	orig = ug_base64_decode(base64, len, NULL);
+	printf ("%.*s\n", len, orig);
+
+	ug_free (base64);
+	ug_free (orig);
 }
 
 // ----------------------------------------------------------------------------
