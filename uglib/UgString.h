@@ -70,6 +70,7 @@ char*   ug_strndup (const char* string, size_t length);
 // return length of new string.
 // param dest can be param src or NULL.
 int    ug_str_remove_crlf (const char* src, char* dest);
+int    ug_str_remove_chars (const char* src, char* dest, const char* chars);
 
 // return number of characters was replaced by to_char
 int    ug_str_replace_chars (char* str, const char* from_chars, int to_char);
