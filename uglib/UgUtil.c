@@ -391,12 +391,29 @@ unsigned char* ug_base64_decode (const char* data,
                                  int* output_length)
 {
 	int  i, j;
-	int  length;
+	int  length, pad_len;
 	unsigned char *decoded_data;
+	uint32_t sextet_a, sextet_b, sextet_c, sextet_d, triple;
 
 	if (decoding_table == NULL)
 		ug_build_decoding_table ();
 
+#if 1
+	// for removed trailing "==" or "="
+	pad_len = 4 - (input_length & 3);
+	if (pad_len > 2)
+		return NULL;
+
+	length = (input_length + pad_len) / 4 * 3;
+	if (pad_len > 0)
+		length -= pad_len;
+	else {
+		if (data[input_length - 1] == '=')
+			length--;
+		if (data[input_length - 2] == '=')
+			length--;
+	}
+#else
 	if (input_length % 4 != 0)
 		return NULL;
 
@@ -405,18 +422,25 @@ unsigned char* ug_base64_decode (const char* data,
 		length--;
 	if (data[input_length - 2] == '=')
 		length--;
+#endif
 
-	decoded_data = ug_malloc (length + 1);  // + '\0'
+	decoded_data = ug_malloc (length + 1);  // + '\0' for decoded text data
 	if (decoded_data == NULL)
 		return NULL;
 
-	for (i = 0, j = 0; i < input_length;) {
-		uint32_t sextet_a = data[i] == '=' ? 0 & i++ : decoding_table[data[i++]];
-		uint32_t sextet_b = data[i] == '=' ? 0 & i++ : decoding_table[data[i++]];
-		uint32_t sextet_c = data[i] == '=' ? 0 & i++ : decoding_table[data[i++]];
-		uint32_t sextet_d = data[i] == '=' ? 0 & i++ : decoding_table[data[i++]];
+	for (i = 0, j = 0;  i < input_length;) {
+		sextet_a = data[i] == '=' ? 0 & i++ : decoding_table[(uint8_t)data[i++]];
+		sextet_b = data[i] == '=' ? 0 & i++ : decoding_table[(uint8_t)data[i++]];
+		if (i == input_length)  // for removed trailing "=="
+			sextet_c = 0;
+		else
+			sextet_c = data[i] == '=' ? 0 & i++ : decoding_table[(uint8_t)data[i++]];
+		if (i == input_length)  // for removed trailing "="
+			sextet_d = 0;
+		else
+			sextet_d = data[i] == '=' ? 0 & i++ : decoding_table[(uint8_t)data[i++]];
 
-		uint32_t triple = (sextet_a << 3 * 6)
+		triple  = (sextet_a << 3 * 6)
 				+ (sextet_b << 2 * 6)
 				+ (sextet_c << 1 * 6)
 				+ (sextet_d << 0 * 6);
@@ -431,7 +455,7 @@ unsigned char* ug_base64_decode (const char* data,
 
 	if (output_length)
 		*output_length = length;
-	decoded_data[length] = '\0';
+	decoded_data[length] = '\0';  // + '\0' for decoded text data
 	return decoded_data;
 }
 
