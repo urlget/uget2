@@ -401,7 +401,7 @@ unsigned char* ug_base64_decode (const char* data,
 #if 1
 	// for removed trailing "==" or "="
 	pad_len = 4 - (input_length & 3);
-	if (pad_len > 2)
+	if (pad_len != 4 && pad_len > 2)
 		return NULL;
 
 	length = (input_length + pad_len) / 4 * 3;
