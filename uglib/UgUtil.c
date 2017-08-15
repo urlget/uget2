@@ -336,7 +336,7 @@ static char encoding_table[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                                 '4', '5', '6', '7', '8', '9', '+', '/'};
 static char *decoding_table = NULL;
 
-static void ug_build_decoding_table()
+static void ug_base64_build_decoding_table()
 {
 	int i;
 	decoding_table = ug_malloc(256);
@@ -396,13 +396,16 @@ unsigned char* ug_base64_decode (const char* data,
 	uint32_t sextet_a, sextet_b, sextet_c, sextet_d, triple;
 
 	if (decoding_table == NULL)
-		ug_build_decoding_table ();
+		ug_base64_build_decoding_table ();
 
 #if 1
 	// for removed trailing "==" or "="
-	pad_len = 4 - (input_length & 3);
-	if (pad_len != 4 && pad_len > 2)
-		return NULL;
+	pad_len = input_length & 3;  // pad_len = input_length % 4;
+	if (pad_len > 0) {
+		pad_len = 4 - pad_len;
+		if (pad_len > 2)
+			return NULL;
+	}
 
 	length = (input_length + pad_len) / 4 * 3;
 	if (pad_len > 0)
