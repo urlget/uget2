@@ -45,7 +45,7 @@ extern "C" {
 #endif
 
 typedef struct	UgDataEntry			UgDataEntry;
-typedef struct	UgData1Interface		UgData1Interface;
+typedef struct	UgData1Interface	UgData1Interface;
 typedef struct	UgData1				UgData1;
 typedef struct	UgDatalist			UgDatalist;
 
@@ -54,7 +54,7 @@ typedef enum	UgType				UgType;
 // UgData1Interface
 typedef void	(*UgInitFunc)		(void* instance);
 typedef void	(*UgFinalizeFunc)	(void* instance);
-typedef void	(*UgAssignFunc)		(void* instance, void* src_instance);
+typedef void	(*UgAssign1Func)	(void* instance, void* src_instance);
 typedef void	(*UgParseFunc)		(void* instance, void* user_data);
 typedef void	(*UgWriteFunc)		(void* instance, void* user_data);
 // UgParseMarkup : how to parse data in markup.
@@ -130,7 +130,7 @@ struct UgData1Interface
 	UgInitFunc			init;
 	UgFinalizeFunc		finalize;
 
-	UgAssignFunc		assign;		// overwrite dest by src
+	UgAssign1Func		assign;		// overwrite dest by src
 };
 
 void	ug_data1_interface_register	(const UgData1Interface*	iface);

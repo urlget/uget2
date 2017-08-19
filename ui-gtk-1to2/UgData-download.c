@@ -77,7 +77,7 @@ const UgData1Interface	ug_common_iface =
 
 	(UgInitFunc)     ug_common_init,
 	(UgFinalizeFunc) ug_common_final,
-	(UgAssignFunc)   NULL,
+	(UgAssign1Func)  NULL,
 };
 
 
@@ -132,7 +132,7 @@ const UgData1Interface	ug_proxy_iface =
 
 	(UgInitFunc)		NULL,
 	(UgFinalizeFunc)	ug_proxy_final,
-	(UgAssignFunc)		NULL,
+	(UgAssign1Func)		NULL,
 };
 
 
@@ -173,7 +173,7 @@ const UgData1Interface	ug_progress_iface =
 
 	(UgInitFunc)		NULL,
 	(UgFinalizeFunc)	NULL,
-	(UgAssignFunc)		NULL,
+	(UgAssign1Func)		NULL,
 };
 
 
@@ -206,7 +206,7 @@ const UgData1Interface	ug_http_iface =
 
 	(UgInitFunc)		ug_http_init,
 	(UgFinalizeFunc)	ug_http_final,
-	(UgAssignFunc)		NULL,
+	(UgAssign1Func)		NULL,
 };
 
 
@@ -249,7 +249,7 @@ const UgData1Interface  ug_ftp_iface =
 
 	(UgInitFunc)		NULL,
 	(UgFinalizeFunc)	ug_ftp_final,
-	(UgAssignFunc)		NULL,
+	(UgAssign1Func)		NULL,
 };
 
 
@@ -276,7 +276,7 @@ const UgData1Interface  ug_log_iface =
 
 	(UgInitFunc)		NULL,
 	(UgFinalizeFunc)	NULL,
-	(UgAssignFunc)		NULL,
+	(UgAssign1Func)		NULL,
 };
 
 

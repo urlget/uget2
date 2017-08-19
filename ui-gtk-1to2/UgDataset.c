@@ -66,7 +66,7 @@ const UgData1Interface	ug_dataset_iface =
 
 	(UgInitFunc)		ug_dataset_init,
 	(UgFinalizeFunc)	ug_dataset_finalize,
-	(UgAssignFunc)		ug_dataset_assign,
+	(UgAssign1Func)		ug_dataset_assign,
 };
 
 

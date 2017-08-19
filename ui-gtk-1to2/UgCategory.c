@@ -67,7 +67,7 @@ const UgData1Interface	ug_category_iface =
 
 	(UgInitFunc)     ug_category_init,
 	(UgFinalizeFunc) ug_category_finalize,
-	(UgAssignFunc)   NULL,
+	(UgAssign1Func)  NULL,
 };
 // extern
 const UgData1Interface*	ug_category_iface_pointer = &ug_category_iface;
@@ -368,7 +368,7 @@ const UgData1Interface	ug_relation_iface =
 
 	(UgInitFunc)     NULL,
 	(UgFinalizeFunc) ug_relation_final,
-	(UgAssignFunc)   NULL,
+	(UgAssign1Func)  NULL,
 };
 // extern
 const UgData1Interface*	ug_relation_iface_pointer = &ug_relation_iface;

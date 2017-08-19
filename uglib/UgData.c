@@ -100,7 +100,7 @@ void  ug_data_final (void* data)
 }
 
 // UgData* ug_data_copy (UgData* data)
-void*	ug_data_copy (void* data)
+void* ug_data_copy (void* data)
 {
 	const UgDataInfo* info;
 	UgAssignFunc  assign;
@@ -124,15 +124,17 @@ void*	ug_data_copy (void* data)
 }
 
 //void	ug_data_assign (UgData* dest, UgData* src)
-void	ug_data_assign (void* data, void* src)
+int   ug_data_assign (void* data, void* src)
 {
 	UgAssignFunc assign;
 
 	if (data) {
 		assign = ((UgData*)data)->info->assign;
 		if (assign)
-			assign (data, src);
+			return assign (data, src);
 	}
+
+	return FALSE;
 }
 
 // UgJsonParseFunc for UgData, used by UgEntry with UG_ENTRY_CUSTOM

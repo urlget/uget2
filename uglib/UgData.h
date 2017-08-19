@@ -47,7 +47,7 @@ extern "C" {
 typedef struct	UgData           UgData;
 typedef struct	UgDataInfo       UgDataInfo;
 
-typedef void  (*UgAssignFunc) (void* instance, void* src);
+typedef int   (*UgAssignFunc) (void* instance, void* src);
 
 // ----------------------------------------------------------------------------
 // UgDataInfo
@@ -93,7 +93,7 @@ void       ug_data_final (void* data);
 // UgData* ug_data_copy (UgData* data);
 //void     ug_data_assign (UgData* data, UgData* src);
 void*      ug_data_copy (void* data);
-void       ug_data_assign (void* data, void* src);
+int        ug_data_assign (void* data, void* src);
 
 // UgJsonParseFunc for UgData, used by UgEntry with UG_ENTRY_CUSTOM
 UgJsonError ug_json_parse_data (UgJson* json,
@@ -129,8 +129,8 @@ struct DataMethod
 	inline void final (void)
 		{ ug_data_final ((void*)this); }
 
-	inline void assign (DataMethod* src)
-		{ ug_data_assign ((void*)this, (void*)src); }
+	inline int  assign (DataMethod* src)
+		{ return ug_data_assign ((void*)this, (void*)src); }
 	inline DataMethod* copy (void)
 		{ return (DataMethod*) ug_data_copy ((void*)this); }
 };

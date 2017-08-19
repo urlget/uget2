@@ -96,7 +96,8 @@ struct UgetCommon
 	// debug
 	int           debug_level;
 
-	// used by ug_data_assign ()
+	// keeping flags used by ug_data_assign ()
+	// They works like read-only
 	struct {
 		uint8_t   enable:1;
 
