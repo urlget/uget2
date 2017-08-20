@@ -690,7 +690,11 @@ static int   is_file_completed (const char* file, const char* folder)
 	char* temp;
 	int   result = FALSE;
 
-	path = ug_build_filename (folder, file, NULL);
+	if (folder == NULL)
+		path = ug_strdup (file);
+	else
+		path = ug_build_filename (folder, file, NULL);
+
 	if (ug_file_is_exist (path)) {
 		temp = ug_strdup_printf ("%s.%s", path, "aria2");
 		ug_free (path);
