@@ -66,44 +66,43 @@ void  ug_json_file_free (UgJsonFile* jfile)
 	ug_free (jfile);
 }
 
-int   ug_json_file_sync (UgJsonFile* jfile)
-{
-	// close() doesn't call fsync()
-	// If you want to avoid delayed write, call fsync() before close()
-	return ug_sync (jfile->fd);
-}
-
-int   ug_json_file_close (UgJsonFile* jfile)
-{
-	int  result = -1;
-
-	if (jfile->fd != -1) {
-		result = ug_close (jfile->fd);
-		jfile->fd = -1;
-	}
-	return result;
-}
-
 int   ug_json_file_begin_parse (UgJsonFile* jfile, const char* path)
 {
-//	jfile->fd = open (path, O_RDONLY, 0);
-	jfile->fd = ug_open (path, UG_O_RDONLY | UG_O_TEXT, 0);
-	if (jfile->fd == -1)
+	int  fd;
+
+//	fd = open (path, O_RDONLY, 0);
+	fd = ug_open (path, UG_O_RDONLY | UG_O_TEXT, 0);
+	if (fd == -1)
 		return FALSE;
 
+	return ug_json_file_begin_parse_fd (jfile, fd);
+}
+
+int   ug_json_file_begin_write (UgJsonFile* jfile, const char* path, UgJsonFormat format)
+{
+	int  fd;
+
+//	fd = open (path, O_CREAT | O_WRONLY | O_TRUNC,
+//			S_IREAD | S_IWRITE | S_IRGRP | S_IROTH);
+	fd = ug_open (path, UG_O_CREAT | UG_O_WRONLY | UG_O_TRUNC | UG_O_TEXT,
+			UG_S_IREAD | UG_S_IWRITE | UG_S_IRGRP | UG_S_IROTH);
+	if (fd == -1)
+		return FALSE;
+
+	return ug_json_file_begin_write_fd (jfile, fd, format);
+}
+
+int   ug_json_file_begin_parse_fd (UgJsonFile* jfile, int fd)
+{
+	jfile->fd = fd;
 	// ready to parse
 	ug_json_begin_parse (&jfile->json);
 	return TRUE;
 }
 
-int   ug_json_file_begin_write (UgJsonFile* jfile, const char* path, UgJsonFormat format)
+int   ug_json_file_begin_write_fd (UgJsonFile* jfile, int fd, UgJsonFormat format)
 {
-//	jfile->fd = open (path, O_CREAT | O_WRONLY | O_TRUNC,
-//			S_IREAD | S_IWRITE | S_IRGRP | S_IROTH);
-	jfile->fd = ug_open (path, UG_O_CREAT | UG_O_WRONLY | UG_O_TRUNC | UG_O_TEXT,
-			UG_S_IREAD | UG_S_IWRITE | UG_S_IRGRP | UG_S_IROTH);
-	if (jfile->fd == -1)
-		return FALSE;
+	jfile->fd = fd;
 	// init UgBuffer for writer
 	ug_buffer_init_external (&jfile->buffer, jfile->bytes, jfile->n_bytes);
 	jfile->buffer.data = (void*)(uintptr_t) jfile->fd;
@@ -137,6 +136,13 @@ void  ug_json_file_end_write (UgJsonFile* jfile)
 	ug_json_end_write (&jfile->json);
 	ug_buffer_clear (&jfile->buffer, FALSE);
 	ug_write (jfile->fd, "\n\n", 2);
+
+	// close() doesn't call fsync()
+	// If you want to avoid delayed write, call fsync() before close()
+	ug_sync (jfile->fd);
+
+	ug_close (jfile->fd);
+	jfile->fd = -1;
 }
 
 // ----------------------------------------------------------------------------

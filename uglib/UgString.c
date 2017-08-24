@@ -86,11 +86,22 @@ char*  ug_strndup (const char* string, size_t length)
 // return length of new string
 int    ug_str_remove_crlf (const char* src, char* dest)
 {
-	int   length = 0;
+	return  ug_str_remove_chars (src, dest, "\r\n");
+}
+
+// return length of new string
+int    ug_str_remove_chars (const char* src, char* dest, const char* chars)
+{
+	const char* cur;
+	int         length = 0;
 
 	if (src) {
 		for (;  ;  src++) {
-			if (src[0] == '\r' || src[0] == '\n')
+			for (cur = chars;  cur[0];  cur++) {
+				if (src[0] == cur[0])
+					break;
+			}
+			if (cur[0] != 0)
 				continue;
 
 			if (dest)

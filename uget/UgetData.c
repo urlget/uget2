@@ -44,7 +44,7 @@
 // UgetCommon
 static void uget_common_init (UgetCommon* common);
 static void uget_common_final (UgetCommon* common);
-static void uget_common_assign (UgetCommon* common, UgetCommon* src);
+static int  uget_common_assign (UgetCommon* common, UgetCommon* src);
 
 static const UgEntry  UgetCommonEntry[] =
 {
@@ -119,7 +119,7 @@ static void uget_common_final (UgetCommon* common)
 	ug_free (common->password);
 }
 
-static void uget_common_assign (UgetCommon* common, UgetCommon* src)
+static int  uget_common_assign (UgetCommon* common, UgetCommon* src)
 {
 //	if (common->keeping.enable == FALSE || common->keeping.name == FALSE) {
 //		ug_free (common->name);
@@ -200,6 +200,8 @@ static void uget_common_assign (UgetCommon* common, UgetCommon* src)
 
 	if (common->keeping.enable == FALSE)
 		common->keeping = src->keeping;
+
+	return TRUE;
 }
 
 // ----------------------------------------------------------------------------
@@ -232,7 +234,7 @@ const UgDataInfo*  UgetProgressInfo = &UgetProgressInfoStatic;
 // UgetProxy
 
 static void  uget_proxy_final  (UgetProxy* proxy);
-static void  uget_proxy_assign (UgetProxy* proxy, UgetProxy* src);
+static int   uget_proxy_assign (UgetProxy* proxy, UgetProxy* src);
 
 #ifdef HAVE_LIBPWMD
 static const UgEntry  UgetProxyPwmdEntry[] =
@@ -294,7 +296,7 @@ static void  uget_proxy_final (UgetProxy* proxy)
 #endif	// HAVE_LIBPWMD
 }
 
-static void  uget_proxy_assign (UgetProxy* proxy, UgetProxy* src)
+static int   uget_proxy_assign (UgetProxy* proxy, UgetProxy* src)
 {
 	if (proxy->keeping.enable == FALSE || proxy->keeping.host == FALSE) {
 		ug_free (proxy->host);
@@ -346,6 +348,8 @@ static void  uget_proxy_assign (UgetProxy* proxy, UgetProxy* src)
 
 	if (proxy->keeping.enable == FALSE)
 		proxy->keeping = src->keeping;
+
+	return TRUE;
 }
 
 // ---------------------------------------------------------------------------
@@ -353,7 +357,7 @@ static void  uget_proxy_assign (UgetProxy* proxy, UgetProxy* src)
 
 static void  uget_http_init   (UgetHttp* http);
 static void  uget_http_final  (UgetHttp* http);
-static void  uget_http_assign (UgetHttp* http, UgetHttp* src);
+static int   uget_http_assign (UgetHttp* http, UgetHttp* src);
 
 static const UgEntry  UgetHttpEntry[] =
 {
@@ -408,7 +412,7 @@ static void  uget_http_final (UgetHttp* http)
 	ug_free (http->cookie_file);
 }
 
-static void  uget_http_assign (UgetHttp* http, UgetHttp* src)
+static int   uget_http_assign (UgetHttp* http, UgetHttp* src)
 {
 	if (http->keeping.enable == FALSE || http->keeping.user == FALSE) {
 		ug_free (http->user);
@@ -457,13 +461,15 @@ static void  uget_http_assign (UgetHttp* http, UgetHttp* src)
 
 	if (http->keeping.enable == FALSE)
 		http->keeping = src->keeping;
+
+	return TRUE;
 }
 
 // ---------------------------------------------------------------------------
 // UgetFtp
 
 static void  uget_ftp_final  (UgetFtp* ftp);
-static void  uget_ftp_assign (UgetFtp* ftp, UgetFtp* src);
+static int   uget_ftp_assign (UgetFtp* ftp, UgetFtp* src);
 
 static const UgEntry  UgetFtpEntry[] =
 {
@@ -495,7 +501,7 @@ static void  uget_ftp_final (UgetFtp* ftp)
 	ug_free (ftp->password);
 }
 
-static void  uget_ftp_assign (UgetFtp* ftp, UgetFtp* src)
+static int   uget_ftp_assign (UgetFtp* ftp, UgetFtp* src)
 {
 	if (ftp->keeping.enable == FALSE || ftp->keeping.user == FALSE) {
 		ug_free (ftp->user);
@@ -515,6 +521,8 @@ static void  uget_ftp_assign (UgetFtp* ftp, UgetFtp* src)
 
 	if (ftp->keeping.enable == FALSE)
 		ftp->keeping = src->keeping;
+
+	return TRUE;
 }
 
 // ---------------------------------------------------------------------------
@@ -629,7 +637,7 @@ static void uget_relation_init (UgetRelation* relation)
 
 static void  uget_category_init (UgetCategory* category);
 static void  uget_category_final (UgetCategory* category);
-static void  uget_category_assign (UgetCategory* category, UgetCategory* src);
+static int   uget_category_assign (UgetCategory* category, UgetCategory* src);
 static void  ug_array_str_copy (UgArrayStr* dest, UgArrayStr* src);
 
 static const UgEntry  UgetCategoryEntry[] =
@@ -681,7 +689,7 @@ static void  uget_category_final (UgetCategory* category)
 	ug_array_clear (&category->file_exts);
 }
 
-static void  uget_category_assign (UgetCategory* category, UgetCategory* src)
+static int   uget_category_assign (UgetCategory* category, UgetCategory* src)
 {
 	category->active_limit = src->active_limit;
 	category->finished_limit = src->finished_limit;
@@ -690,6 +698,8 @@ static void  uget_category_assign (UgetCategory* category, UgetCategory* src)
 	ug_array_str_copy (&category->schemes, &src->schemes);
 	ug_array_str_copy (&category->hosts, &src->hosts);
 	ug_array_str_copy (&category->file_exts, &src->file_exts);
+
+	return TRUE;
 }
 
 static void ug_array_str_copy (UgArrayStr* dest, UgArrayStr* src)

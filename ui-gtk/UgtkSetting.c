@@ -524,7 +524,6 @@ int  ugtk_setting_save (UgtkSetting* setting, const char* file)
 		setting->completion.action = action;
 
 	ug_json_file_end_write (jfile);
-	ug_json_file_sync (jfile);    // avoid file corrupted on sudden shutdown
 	ug_json_file_free (jfile);
 
 	ug_remove (file);

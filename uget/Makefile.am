@@ -43,7 +43,6 @@ noinst_HEADERS = \
 	UgetA2cf.h    \
 	UgetCurl.h    \
 	UgetAria2.h   \
-	UgetMedia.h   \
 	UgetPluginCurl.h   \
 	UgetPluginAria2.h  \
 	UgetPluginEmpty.h

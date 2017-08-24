@@ -1099,6 +1099,12 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 				if(SetEndOfFile (handle) == FALSE)
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
 				SetFilePointer (handle, 0, 0, FILE_BEGIN);
+#elif defined HAVE_FTRUNCATE
+				if (ftruncate (value, plugin->file.size) == -1)
+					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
+#elif defined __ANDROID__ && __ANDROID_API__ >= 12
+				if (ftruncate64 (value, plugin->file.size) == -1)
+					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
 #elif defined HAVE_POSIX_FALLOCATE
 				if (posix_fallocate (value, 0, plugin->file.size) != 0)
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;

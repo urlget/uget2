@@ -135,26 +135,6 @@ int  ug_modify_file_time (const char *file_utf8, time_t mod_time)
 
 #if defined _WIN32 || defined _WIN64
 
-int  ug_unlink (const char *filename)
-{
-	wchar_t *wfilename = ug_utf8_to_utf16 (filename, -1, NULL);
-	int save_errno;
-	int retval;
-
-	if (wfilename == NULL) {
-		errno = EINVAL;
-		return -1;
-	}
-
-	retval = _wunlink (wfilename);
-	save_errno = errno;
-
-	ug_free (wfilename);
-
-	errno = save_errno;
-	return retval;
-}
-
 int  ug_create_dir (const char *dir_utf8)
 {
 	wchar_t *wfilename = ug_utf8_to_utf16 (dir_utf8, -1, NULL);
@@ -225,30 +205,6 @@ int   ug_file_is_dir (const char* dir)
 }
 
 #elif defined HAVE_GLIB
-
-int  ug_unlink (const gchar *filename)
-{
-	if (g_get_filename_charsets (NULL))
-		return g_unlink (filename);
-	else {
-		gchar *cp_filename = g_filename_from_utf8 (filename, -1, NULL, NULL, NULL);
-		int save_errno;
-		int retval;
-
-		if (cp_filename == NULL) {
-			errno = EINVAL;
-			return -1;
-		}
-
-		retval = g_unlink (cp_filename);
-		save_errno = errno;
-
-		g_free (cp_filename);
-
-		errno = save_errno;
-		return retval;
-	}
-}
 
 int  ug_create_dir (const gchar *dir_utf8)
 {
@@ -363,8 +319,18 @@ int  ug_create_dir_all (const char* dir, int len)
 
 	if (len == -1)
 		len = strlen (dir);
+	if (len > 1 && dir[len-1] == UG_DIR_SEPARATOR)
+		len--;
 	dir_end = dir + len;
 	element_end = dir;
+
+	// quick check
+	element_os = ug_strndup (dir, len);
+	if (ug_file_is_exist (element_os) && ug_file_is_dir(element_os)) {
+		ug_free (element_os);
+		return 0;
+	}
+	ug_free (element_os);
 
 	for (;;) {
 		// skip directory separator "\\\\" or "//"

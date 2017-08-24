@@ -112,7 +112,7 @@ void	ug_data1_free (gpointer data)
 gpointer	ug_data1_copy (gpointer data)
 {
 	const UgData1Interface*	iface;
-	UgAssignFunc		assign;
+	UgAssign1Func		assign;
 	gpointer			new_data;
 
 	if (data) {
@@ -132,7 +132,7 @@ gpointer	ug_data1_copy (gpointer data)
 //void	ug_data1_assign (UgData*  dest, UgData*  src)
 void	ug_data1_assign (gpointer data, gpointer src)
 {
-	UgAssignFunc	assign;
+	UgAssign1Func	assign;
 
 	if (data) {
 		assign = ((UgData1*)data)->iface->assign;

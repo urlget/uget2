@@ -70,8 +70,13 @@ char*      ug_ucs4_to_utf8 (const uint32_t* string, int stringLength,
 // ----------------------------------------------------------------------------
 // Base64
 
-char*  ug_base64_encode (const uint8_t* data, int input_length,
+char*  ug_base64_encode (const unsigned char* data,
+                         int  input_length,
                          int* output_length);
+
+unsigned char* ug_base64_decode (const char* data,
+                                 int  input_length,
+                                 int* output_length);
 
 // ----------------------------------------------------------------------------
 // filename & path functions

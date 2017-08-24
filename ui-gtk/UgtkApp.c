@@ -1361,7 +1361,7 @@ static void  on_save_category_response (GtkWidget* dialog, gint response, UgtkAp
 //	file = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (dialog));
 	gtk_widget_destroy (dialog);
 	cnode = app->traveler.category.cursor.node;
-	if (uget_app_save_category ((UgetApp*) app, cnode, file) == FALSE)
+	if (uget_app_save_category ((UgetApp*) app, cnode->data, file, NULL) == FALSE)
 		ugtk_app_show_message (app, GTK_MESSAGE_ERROR, _("Failed to save category file."));
 	g_free (file);
 }
@@ -1379,7 +1379,7 @@ static void  on_load_category_response (GtkWidget* dialog, gint response, UgtkAp
 	file = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 //	file = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (dialog));
 	gtk_widget_destroy (dialog);
-	if (uget_app_load_category ((UgetApp*) app, file))
+	if (uget_app_load_category ((UgetApp*) app, file, NULL))
 		ugtk_menubar_sync_category (&app->menubar, app, TRUE);
 	else
 		ugtk_app_show_message (app, GTK_MESSAGE_ERROR, _("Failed to load category file."));

@@ -160,9 +160,9 @@ extern "C" {
 #  define UG_S_IWOTH     S_IWOTH     // Use with O_CREAT // OTHERS WRITE
 #endif
 
-#if defined _WIN32 || defined _WIN64 || defined HAVE_GLIB
 // creat(path, mode) == open (path, O_WRONLY|O_CREAT|O_TRUNC, mode)
 // Returns :  a new file descriptor, or -1 if an error occurred.
+#if defined _WIN32 || defined _WIN64 || defined HAVE_GLIB
 int  ug_open (const char* filename_utf8, int flags, int mode);
 int  ug_creat (const char* filename_utf8, int mode);
 #else
@@ -218,6 +218,9 @@ FILE* ug_fopen (const char *filename_utf8, const char *mode);
 #  define ug_fopen      fopen
 #endif
 
+// FILE* fdopen(int fd, const char *mode);
+#define ug_fdopen       fdopen
+
 #if defined __ANDROID__
 int     fseek_64 (FILE *stream, int64_t offset, int origin);
 int64_t ftell_64 (FILE *stream);
@@ -257,20 +260,23 @@ int   ug_ftruncate (FILE* file, int64_t size);
 #define	ug_fgets(file,buf,len)      fgets (buf, len, file)
 #define	ug_fgetc(file)              fgetc (file)
 #define ug_fflush                   fflush
-#define ug_fget_fd                  ug_fileno
+#define ug_fdget                    ug_fileno
 
 // ----------------------------------------------------------------------------
 // file & directory functions: these functions returns 0 if it is successful.
 
 // ug_rename() renames a file, moving it between directories if required.
 // ug_remove() deletes a name from the filesystem, it works for both files and directories.
+// ug_unlink() If this was the last link to the file and no processes have it opened, the diskspace occupied by the file is freed.
 
 #if defined _WIN32 || defined _WIN64 || defined HAVE_GLIB
 int  ug_rename (const char *old_file_utf8, const char *new_file_utf8);
 int  ug_remove (const char *file_utf8);
+int  ug_unlink (const char *file_utf8);
 #else
 #  define ug_rename             rename
 #  define ug_remove             remove
+#  define ug_unlink             unlink
 #endif
 
 #ifdef __cplusplus
