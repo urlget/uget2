@@ -26,10 +26,7 @@ add_library( uget
              UgetA2cf.c
              UgetCurl.c
              UgetAria2.c
-             UgetMedia.c
-             UgetMedia-youtube.c
              UgetPluginCurl.c
              UgetPluginAria2.c
-             UgetPluginMedia.c
            )
 

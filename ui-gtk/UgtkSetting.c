@@ -37,7 +37,6 @@
 #include <UgStdio.h>
 #include <UgString.h>
 #include <UgJsonFile.h>
-#include <UgetMedia.h>
 #include <UgtkSetting.h>
 #include <UgtkNodeView.h>
 

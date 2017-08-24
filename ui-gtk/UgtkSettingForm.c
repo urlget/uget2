@@ -35,7 +35,6 @@
  */
 
 #include <UgString.h>
-#include <UgetMedia.h>
 #include <UgtkSettingForm.h>
 
 #include <glib/gi18n.h>

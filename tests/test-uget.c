@@ -43,7 +43,6 @@
 #include <UgetA2cf.h>
 #include <UgetCurl.h>
 #include <UgetRss.h>
-#include <UgetMedia.h>
 
 // ----------------------------------------------------------------------------
 // UgetNode
