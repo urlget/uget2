@@ -4,15 +4,15 @@
 # 
 # Translators:
 # Nazir Ahmed Sabbir <na.sb1151@gmail.com>, 2015
-# Reazul Iqbal <reazuliqbal@yahoo.com>, 2015
+# Reazul Iqbal <reazuliqbal@yahoo.com>, 2015,2017
 # Towfique Anam, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-03 03:10+0800\n"
-"PO-Revision-Date: 2016-11-09 16:16+0000\n"
-"Last-Translator: Michael Tunnell <michael@ugetdm.com>\n"
+"PO-Revision-Date: 2017-07-12 20:35+0000\n"
+"Last-Translator: Reazul Iqbal <reazuliqbal@yahoo.com>\n"
 "Language-Team: Bengali (Bangladesh) (http://www.transifex.com/uget/uget/language/bn_BD/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -138,20 +138,20 @@ msgstr "অসর্মথিত ফাইল।"
 #. UGET_EVENT_ERROR_UNSUPPORTED_FILE
 #: ../../po/../uget/UgetEvent.c:93
 msgid "post file not found."
-msgstr ""
+msgstr "পোস্ট পাওয়া যায়নি।"
 
 #. UGET_EVENT_ERROR_POST_FILE_NOT_FOUND
 #: ../../po/../uget/UgetEvent.c:94
 msgid "cookie file not found."
-msgstr ""
+msgstr "কুকি ফাইল পাওয়া যায়নি।"
 
 #: ../../po/../uget/UgetMedia-youtube.c:275
 msgid "This video has been removed."
-msgstr ""
+msgstr "ভিডিওটি সরানো হয়েছে।"
 
 #: ../../po/../uget/UgetMedia-youtube.c:288
 msgid "Error occurred during getting video info."
-msgstr ""
+msgstr "ভিডিওটির তথ্য আনতে ক্রুটি হয়েছে।"
 
 #: ../../po/../uget/UgetMedia-youtube.c:534
 msgid "Error occurred during getting video web page."
