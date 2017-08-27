@@ -863,10 +863,9 @@ void  ugtk_app_create_category (UgtkApp* app)
 	ugtk_download_form_set_folders (&ndialog->download, &app->setting);
 
 	// category list
-	cnode_src = app->traveler.category.cursor.node;
+	cnode_src = app->traveler.category.cursor.node->data;
 	if (cnode_src->parent != &app->real)
 		cnode_src = app->real.children;
-//	cnode_src = cnode_src->data;
 	cnode = uget_node_new (NULL);
 	cnode->name = ug_strdup_printf ("%s%s", _("Copy - "), cnode_src->name);
 	ug_info_assign (&cnode->info, &cnode_src->info, NULL);
@@ -895,8 +894,7 @@ void  ugtk_app_create_download (UgtkApp* app, const char* sub_title, const char*
 	ugtk_download_form_set_folders (&ndialog->download, &app->setting);
 
 	// category list
-	cnode = app->traveler.category.cursor.node;
-//	cnode = cnode->data;
+	cnode = app->traveler.category.cursor.node->data;
 	if (cnode->parent != &app->real)
 		cnode = app->real.children;
 
@@ -938,7 +936,7 @@ void  ugtk_app_delete_category (UgtkApp* app)
 	UgetNode*    cnode;
 	int          pos;
 
-	cnode = app->traveler.category.cursor.node;
+	cnode = app->traveler.category.cursor.node->data;
 	pos   = app->traveler.category.cursor.pos;
 	// move cursor
 	if (pos <= 0)
@@ -1460,7 +1458,7 @@ static void  on_import_html_file_response (GtkWidget* dialog, gint response, Ugt
 	ugtk_download_form_set_folders (&bdialog->download, &app->setting);
 	ugtk_batch_dialog_use_selector (bdialog);
 	// category
-	cnode = app->traveler.category.cursor.node;
+	cnode = app->traveler.category.cursor.node->data;
 	if (cnode->parent != &app->real)
 		cnode = app->real.children;
 	ugtk_batch_dialog_set_category (bdialog, cnode);
@@ -1515,7 +1513,7 @@ static void  on_import_text_file_response (GtkWidget* dialog, gint response, Ugt
 	ugtk_batch_dialog_use_selector (bdialog);
 	ugtk_download_form_set_folders (&bdialog->download, &app->setting);
 	// category
-	cnode = app->traveler.category.cursor.node;
+	cnode = app->traveler.category.cursor.node->data;
 	if (cnode->parent != &app->real)
 		cnode = app->real.children;
 	ugtk_batch_dialog_set_category (bdialog, cnode);
@@ -1545,7 +1543,7 @@ static void  on_export_text_file_response (GtkWidget* dialog, gint response, Ugt
 	channel = g_io_channel_new_file (fname, "w", NULL);
 	g_free (fname);
 
-	node = app->traveler.category.cursor.node;
+	node = app->traveler.category.cursor.node->data;
 	for (node = node->children;  node;  node = node->next) {
 		common = ug_info_get (&node->data->info, UgetCommonInfo);
 		if (common == NULL)
@@ -1623,8 +1621,7 @@ void  ugtk_app_sequence_batch (UgtkApp* app)
 	ugtk_download_form_set_folders (&bdialog->download, &app->setting);
 
 	// category list
-	cnode = app->traveler.category.cursor.node;
-//	cnode = cnode->data;
+	cnode = app->traveler.category.cursor.node->data;
 	if (cnode->parent != &app->real)
 		cnode = app->real.children;
 	ugtk_batch_dialog_set_category (bdialog, cnode->data);
@@ -1669,8 +1666,7 @@ void  ugtk_app_clipboard_batch (UgtkApp* app)
 	g_list_free (list);
 
 	// category list
-	cnode = app->traveler.category.cursor.node;
-//	cnode = cnode->data;
+	cnode = app->traveler.category.cursor.node->data;
 	if (cnode->parent != &app->real)
 		cnode = app->real.children;
 	ugtk_batch_dialog_set_category (bdialog, cnode->data);

@@ -2,7 +2,8 @@ uGet 2.0.10: (2017-08-24)
 1. User can use sorting in any category and status.
 2. curl plug-in: It can use ftruncate() to create large file.
 3. Fix: uGet doesn't close File Descriptor when saving config file.
-4. add translation files.
+4. Fix: category functions can't work correctly. (2017-08-27)
+5. add translation files.
 
 uGet 2.0.9: (2017-02-18)
 1. Use character ↓/↑ to replace D:/U: to display speed.
