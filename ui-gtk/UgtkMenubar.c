@@ -349,7 +349,7 @@ static void on_move_category_up (GtkWidget* widget, UgtkApp* app)
 	GtkTreeIter  iter1,  iter2;
 	GtkTreePath *path1, *path2;
 
-	cnode = app->traveler.category.cursor.node;
+	cnode = app->traveler.category.cursor.node->data;
 	if (cnode == NULL || cnode->prev == NULL)
 		return;
 
@@ -380,7 +380,7 @@ static void on_move_category_down (GtkWidget* widget, UgtkApp* app)
 	GtkTreeIter  iter1,  iter2;
 	GtkTreePath *path1, *path2;
 
-	cnode = app->traveler.category.cursor.node;
+	cnode = app->traveler.category.cursor.node->data;
 	if (cnode == NULL || cnode->next == NULL)
 		return;
 
@@ -608,7 +608,7 @@ static void on_move_download (GtkWidget* widget, UgtkApp* app)
 	for (link = list;  link;  link = link->next) {
 		dnode = link->data;
 		dnode = dnode->data;
-		uget_app_move_download_to ((UgetApp*) app, dnode, cnode);
+		uget_app_move_download_to ((UgetApp*) app, dnode, cnode->data);
 	}
 	g_list_free (list);
 	// refresh
@@ -927,7 +927,7 @@ void  ugtk_menubar_sync_category (UgtkMenubar* menubar, UgtkApp* app, gboolean r
 	for (index = 0;  index < array->len;  index += 2) {
 		menu_item = g_ptr_array_index (array, index);
 		cnode     = g_ptr_array_index (array, index +1);
-		if (cnode == app->traveler.category.cursor.node)
+		if (cnode == app->traveler.category.cursor.node->data)
 			gtk_widget_set_sensitive (menu_item, FALSE);
 		else
 			gtk_widget_set_sensitive (menu_item, TRUE);

@@ -3,7 +3,8 @@ uGet 2.1.6: (2017-08-24)
 2. curl plug-in: It can use ftruncate() to create large file.
 3. media plug-in: don't use folder in path if folder == NULL.
 4. Fix: uGet doesn't close File Descriptor when saving config file.
-5. add translation files.
+5. Fix: category functions can't work correctly. (2017-08-27)
+6. add translation files.
 
 uGet 2.1.5: (2017-02-18)
 1. URL Sequence Batch can setup 3 wildcard range.
