@@ -1232,10 +1232,9 @@ void  ugtk_app_move_download_to (UgtkApp* app, UgetNode* cnode)
 	GList*    link;
 	GList*    list = NULL;
 
-	if (cnode == app->traveler.category.cursor.node)
+	if (cnode == app->traveler.category.cursor.node->data)
 		return;
 
-	cnode = cnode->data;
 	list = ugtk_traveler_get_selected (&app->traveler);
 	for (link = list;  link;  link = link->next) {
 		node = link->data;
@@ -1638,7 +1637,7 @@ void  ugtk_app_sequence_batch (UgtkApp* app)
 	cnode = app->traveler.category.cursor.node->data;
 	if (cnode->parent != &app->real)
 		cnode = app->real.children;
-	ugtk_batch_dialog_set_category (bdialog, cnode->data);
+	ugtk_batch_dialog_set_category (bdialog, cnode);
 
 	ugtk_batch_dialog_run (bdialog);
 }
@@ -1683,7 +1682,7 @@ void  ugtk_app_clipboard_batch (UgtkApp* app)
 	cnode = app->traveler.category.cursor.node->data;
 	if (cnode->parent != &app->real)
 		cnode = app->real.children;
-	ugtk_batch_dialog_set_category (bdialog, cnode->data);
+	ugtk_batch_dialog_set_category (bdialog, cnode);
 
 	ugtk_batch_dialog_run (bdialog);
 }

@@ -597,7 +597,7 @@ static void on_move_download (GtkWidget* widget, UgtkApp* app)
 		}
 	}
 
-	if (cnode == NULL || cnode == app->traveler.category.cursor.node)
+	if (cnode == NULL || cnode == app->traveler.category.cursor.node->data)
 		return;
 
 	// if current category is "All"
