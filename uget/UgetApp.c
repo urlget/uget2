@@ -786,19 +786,16 @@ int   uget_app_move_download_to (UgetApp* app, UgetNode* dnode, UgetNode* cnode)
 			sibling = category->recycled->children;
 		break;
 
-	case UGET_STATE_QUEUING:
 	default:
+	case UGET_STATE_QUEUING:
+	case UGET_STATE_FINISHED:
 		sibling = category->finished->children;
 		if (sibling == NULL)
 			sibling = category->recycled->children;
 		break;
 
-	case UGET_STATE_FINISHED:
-		sibling = category->recycled->children;
-		break;
-
 	case UGET_STATE_RECYCLED:
-		sibling = NULL;
+		sibling = category->recycled->children;
 		break;
 	}
 	if (sibling)
