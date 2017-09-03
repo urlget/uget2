@@ -94,6 +94,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../uget/UgetPlugin.h" />
+		<Unit filename="../../uget/UgetPluginAgent.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetPluginAgent.h" />
 		<Unit filename="../../uget/UgetPluginAria2.c">
 			<Option compilerVar="CC" />
 		</Unit>

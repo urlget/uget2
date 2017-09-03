@@ -29,6 +29,7 @@
     <ClInclude Include="..\..\uget\UgetPluginCurl.h" />
     <ClInclude Include="..\..\uget\UgetPluginAria2.h" />
     <ClInclude Include="..\..\uget\UgetPluginMedia.h" />
+    <ClInclude Include="..\..\uget\UgetPluginAgent.h" />
     <ClInclude Include="..\..\uget\UgetPluginEmpty.h" />
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +53,7 @@
     <ClCompile Include="..\..\uget\UgetPluginCurl.c" />
     <ClCompile Include="..\..\uget\UgetPluginAria2.c" />
     <ClCompile Include="..\..\uget\UgetPluginMedia.c" />
+    <ClCompile Include="..\..\uget\UgetPluginAgent.c" />
     <ClCompile Include="..\..\uget\UgetPluginEmpty.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
