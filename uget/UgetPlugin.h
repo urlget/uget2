@@ -52,10 +52,15 @@ typedef struct  UgetPlugin         UgetPlugin;
 typedef struct  UgetPluginInfo     UgetPluginInfo;
 
 typedef enum {
+	// input ----------------
 	UGET_PLUGIN_CTRL_START,    // UgetNode*
 	UGET_PLUGIN_CTRL_STOP,
 	UGET_PLUGIN_CTRL_SPEED,    // int*, int[0] = download, int[1] = upload
 
+	// output ---------------
+	UGET_PLUGIN_CTRL_ACTIVE,   // int*, TRUE or FALSE
+
+	// unused ---------------
 	UGET_PLUGIN_CTRL_NODE_UPDATED,   // unused
 	UGET_PLUGIN_CTRL_LIMIT_CHANGED,  // unused
 } UgetPluginCtrlCode;

@@ -367,6 +367,12 @@ static int  plugin_ctrl (UgetPluginAria2* plugin, int code, void* data)
 		// speed control
 		return plugin_ctrl_speed (plugin, data);
 
+	// output ---------------
+	case UGET_PLUGIN_CTRL_ACTIVE:
+		*(int*)data = (plugin->stopped) ? FALSE : TRUE;
+		return TRUE;
+
+	// unused ---------------
 	case UGET_PLUGIN_CTRL_NODE_UPDATED:
 	default:
 		break;
