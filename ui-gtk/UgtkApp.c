@@ -42,6 +42,7 @@
 #include <UgetPluginCurl.h>
 #include <UgetPluginAria2.h>
 #include <UgetPluginMedia.h>
+#include <UgetPluginMega.h>
 #include <UgtkApp.h>
 #include <UgtkUtil.h>
 #include <UgtkNodeDialog.h>
@@ -73,6 +74,7 @@ void  ugtk_app_init (UgtkApp* app, UgetRpc* rpc)
 	uget_plugin_set (UgetPluginCurlInfo,  UGET_PLUGIN_INIT, (void*) TRUE);
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) TRUE);
 	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) TRUE);
+	uget_plugin_set (UgetPluginMegaInfo,  UGET_PLUGIN_INIT, (void*) TRUE);
 	// apply UgtkSetting
 	ugtk_app_set_plugin_setting (app, &app->setting);
 	ugtk_app_set_window_setting (app, &app->setting);
@@ -123,6 +125,7 @@ void  ugtk_app_final (UgtkApp* app)
 	uget_plugin_set (UgetPluginCurlInfo,  UGET_PLUGIN_INIT, (void*) FALSE);
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) FALSE);
 	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) FALSE);
+	uget_plugin_set (UgetPluginMegaInfo,  UGET_PLUGIN_INIT, (void*) FALSE);
 }
 
 void  ugtk_app_save (UgtkApp* app)
@@ -523,6 +526,9 @@ void  ugtk_app_set_plugin_setting (UgtkApp* app, UgtkSetting* setting)
 	                 (void*)(intptr_t) setting->media.quality);
 	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_TYPE,
 	                 (void*)(intptr_t) setting->media.type);
+	// set agent plug-in (used by MEGA)
+	uget_plugin_agent_global_set (UGET_PLUGIN_AGENT_DEFAULT_PLUGIN,
+	                 (void*) default_plugin);
 	// set aria2 plug-in
 	if (setting->plugin_order >= UGTK_PLUGIN_ORDER_ARIA2) {
 		uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_ARIA2_URI,

@@ -69,6 +69,7 @@
 			<Add library="cairo.dll" />
 			<Add library="intl.dll" />
 			<Add library="curl.dll" />
+			<Add library="crypto.dll" />
 			<Add library="ws2_32" />
 			<Add library="winmm" />
 			<Add library="PowrProf" />

@@ -40,6 +40,7 @@
 #include <UgetPluginCurl.h>
 #include <UgetPluginAria2.h>
 #include <UgetPluginMedia.h>
+#include <UgetPluginMega.h>
 #include <UgetPluginEmpty.h>
 
 #if defined _WIN32 || defined _WIN64
@@ -65,9 +66,10 @@ void  download_node (UgetNode* node, const UgetPluginInfo* info)
 	char*         string[5];
 
 	plugin = uget_plugin_new (info);
-	integer[0] = 1000000;
-	integer[1] = 1000000;
-	uget_plugin_ctrl (plugin, UGET_PLUGIN_CTRL_SPEED, integer);
+//	integer[0] = 1000000;
+//	integer[1] = 1000000;
+//	uget_plugin_ctrl (plugin, UGET_PLUGIN_CTRL_SPEED, integer);
+
 	uget_plugin_start (plugin, node);
 	while (uget_plugin_sync (plugin)) {
 		ug_sleep (1000);
@@ -116,7 +118,8 @@ void  test_node_download (void)
 	char*        uri;
 	char*        mirrors;
 
-	uri = "https://www.youtube.com/watch?v=y2004Xaz2HU";
+	uri = "https://mega.nz/#!MSpjBRhZ!nZBsUQCAnf71842wXuals_ftSkga3fIQypzBsKEZbmk";
+//	uri = "https://www.youtube.com/watch?v=y2004Xaz2HU";
 //	uri = "http://download.tuxfamily.org/notepadplus/6.5.3/npp.6.5.3.Installer.exe";
 //	uri = "http://ftp.gimp.org/pub/gimp/v2.8/windows/gimp-2.8.10-setup.exe";
 //	mirrors = "ftp://195.220.108.108/linux/fedora/linux/updates/19/x86_64/kernel-3.11.2-201.fc19.x86_64.rpm";
@@ -131,9 +134,12 @@ void  test_node_download (void)
 	common->uri = ug_strdup (uri);
 	if (mirrors)
 		common->mirrors = ug_strdup (mirrors);
-	common->folder = ug_strdup ("D:\\Downloads");
-	common->max_connections = 2;
+//	common->folder = ug_strdup ("D:\\Downloads");
+//	common->max_connections = 2;
 	common->debug_level = 1;
+	common->retry_limit = 1;
+	common->connect_timeout = 30;
+
 	// http options
 	http = ug_info_realloc (&node->info, UgetHttpInfo);
 	if (referrer)
@@ -141,7 +147,8 @@ void  test_node_download (void)
 
 //	download_node (node, UgetPluginCurlInfo);
 //	download_node (node, UgetPluginAria2Info);
-	download_node (node, UgetPluginMediaInfo);
+//	download_node (node, UgetPluginMediaInfo);
+	download_node (node, UgetPluginMegaInfo);
 	uget_node_unref (node);
 }
 
@@ -357,6 +364,7 @@ int   main (void)
 	uget_plugin_set (UgetPluginCurlInfo, UGET_PLUGIN_INIT, (void*) TRUE);
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) TRUE);
 	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) TRUE);
+	uget_plugin_set (UgetPluginMegaInfo, UGET_PLUGIN_INIT, (void*) TRUE);
 //	test_setup_plugin_aria2 ();
 
 	test_node_download ();
@@ -368,6 +376,7 @@ int   main (void)
 	uget_plugin_set (UgetPluginCurlInfo, UGET_PLUGIN_INIT, (void*) FALSE);
 	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) FALSE);
 	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) FALSE);
+	uget_plugin_set (UgetPluginMegaInfo, UGET_PLUGIN_INIT, (void*) FALSE);
 	ug_sleep(1000);
 
 	return 0;

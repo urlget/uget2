@@ -21,8 +21,8 @@ test_json_SOURCES  = test-json.c
 test_jsonrpc_LDADD    = $(top_builddir)/uget/libuget.a $(top_builddir)/uglib/libuglib.a  $(TESTS_LIBS)
 test_jsonrpc_SOURCES  = test-jsonrpc.c
 
-# test_plugin_app_CPPFLAGS = -I$(top_srcdir)/uglib -I$(top_srcdir)/uget
-test_plugin_app_LDADD    = $(top_builddir)/uget/libuget.a $(top_builddir)/uglib/libuglib.a  $(TESTS_LIBS)
+test_plugin_app_CPPFLAGS = -I$(top_srcdir)/uglib -I$(top_srcdir)/uget  @LIBGCRYPT_CFLAGS@  @LIBCRYPTO_CFLAGS@
+test_plugin_app_LDADD    = $(top_builddir)/uget/libuget.a $(top_builddir)/uglib/libuglib.a  $(TESTS_LIBS)  @LIBGCRYPT_LIBS@  @LIBCRYPTO_LIBS@
 test_plugin_app_SOURCES  = test-plugin+app.c
 
 # test_info_CPPFLAGS   = -I$(top_srcdir)/uglib

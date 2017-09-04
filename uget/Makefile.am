@@ -32,6 +32,7 @@ libuget_a_SOURCES = \
 	UgetPluginAria2.c  \
 	UgetPluginMedia.c  \
 	UgetPluginAgent.c  \
+	UgetPluginMega.c   \
 	UgetPluginEmpty.c
 
 noinst_HEADERS = \
@@ -54,6 +55,7 @@ noinst_HEADERS = \
 	UgetPluginAria2.h  \
 	UgetPluginMedia.h  \
 	UgetPluginAgent.h  \
+	UgetPluginMega.h   \
 	UgetPluginEmpty.h
 
 if WITH_LIBPWMD

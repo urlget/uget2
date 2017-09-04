@@ -114,6 +114,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../uget/UgetPluginMedia.h" />
+		<Unit filename="../../uget/UgetPluginMega.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetPluginMega.h" />
 		<Unit filename="../../uget/UgetRpc.c">
 			<Option compilerVar="CC" />
 		</Unit>

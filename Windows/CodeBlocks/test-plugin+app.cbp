@@ -48,6 +48,7 @@
 			<Add library="glib-2.0.dll" />
 			<Add library="intl.dll" />
 			<Add library="PowrProf" />
+			<Add library="crypto.dll" />
 			<Add directory="D:/msys64/mingw32/lib" />
 		</Linker>
 		<Unit filename="../../tests/test-plugin+app.c">

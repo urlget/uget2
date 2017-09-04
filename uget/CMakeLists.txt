@@ -33,5 +33,6 @@ add_library( uget
              UgetPluginAria2.c
              UgetPluginMedia.c
              UgetPluginAgent.c
+             UgetPluginMega.c
            )
 
