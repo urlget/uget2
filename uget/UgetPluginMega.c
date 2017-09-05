@@ -34,13 +34,23 @@
  *
  */
 
+
+#ifdef	HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+// OpenSSL
+#ifdef USE_OPENSSL
+//#include <openssl/crypto.h>
 #include <openssl/opensslv.h>  // OPENSSL_VERSION_NUMBER
 #include <openssl/modes.h>     // CRYPTO_ctr128_encrypt
 #include <openssl/aes.h>       // AES_BLOCK_SIZE
-//#include <openssl/rand.h>
-//#include <openssl/hmac.h>
-//#include <openssl/buffer.h>
-//#include <openssl/crypto.h>
+// GnuTLS
+#elif defined USE_GNUTLS
+#include <gcrypt.h>
+#else
+#error mega plug-in need OpenSSL or GnuTLS to compile.
+#endif
 
 #include <curl/curl.h>
 #include <UgetCurl.h>
@@ -387,40 +397,64 @@ static int  mega_parse_url (UgetPluginMega* plugin, const char* url)
 static int  mega_parse_attributes (UgetPluginMega* plugin, char* attributes)
 {
 	UgValue* member;
-	AES_KEY  key;
 	char* iv;
 	char* attr;
-	char* temp;
+	char* buffer;
 	int   length;
 
 	ug_str_replace_chars (attributes, "-", '+');
 	ug_str_replace_chars (attributes, "_", '/');
 	ug_str_remove_chars (attributes, attributes, ",");
 	ug_str_remove_chars (attributes, attributes, "\n");
-	temp = ug_base64_decode (attributes, strlen (attributes), &length);
-	attr = ug_malloc (length);
+	buffer = ug_base64_decode (attributes, strlen (attributes), &length);
 	iv = ug_malloc0 (16);
-	AES_set_decrypt_key (plugin->key, 128, &key);
-//	AES_cbc_decrypt (temp, attr, length, &key, iv, AES_DECRYPT);
-	CRYPTO_cbc128_decrypt (temp, attr, length, &key, iv, (block128_f)AES_decrypt);
+	attr = NULL;
+
+#ifdef USE_OPENSSL
+	{
+		AES_KEY  key;
+
+		attr = ug_malloc (length);
+		AES_set_decrypt_key (plugin->key, 128, &key);
+//		AES_cbc_decrypt (temp, attr, length, &key, iv, AES_DECRYPT);
+		CRYPTO_cbc128_decrypt (buffer, attr, length, &key, iv, (block128_f)AES_decrypt);
+	}
+#endif  // USE_OPENSSL
+
+#ifdef USE_GNUTLS
+	{
+		gcry_cipher_hd_t  gchd;
+
+	    gcry_cipher_open(&gchd, GCRY_CIPHER_AES128, GCRY_CIPHER_MODE_CBC, 0);
+	    gcry_cipher_setkey(gchd, plugin->key, 16);
+	    gcry_cipher_setiv(gchd, iv, 16);
+	    gcry_cipher_decrypt(gchd, buffer, length, NULL, 0);
+	    gcry_cipher_close(gchd);
+	    attr = buffer;
+	    buffer = NULL;
+	}
+#endif // USE_GNUTLS
+
 	ug_free (iv);
-	ug_free (temp);
+	ug_free (buffer);
 
 #ifndef NDEBUG
 	printf ("%.*s\n", length, attr);
 #endif
 
 	// search JSON object
-	temp = strchr (attr, '{');
-	if (temp == NULL)
+	buffer = strchr (attr, '{');
+	if (buffer == NULL) {
+		ug_free (attr);
 		return FALSE;
-	length -= temp - attr;
+	}
+	length -= buffer - attr;
 
 	// parse JSON object
 	ug_value_clear (&plugin->value);
 	ug_json_begin_parse (&plugin->json);
 	ug_json_push (&plugin->json, ug_json_parse_value, &plugin->value, NULL);
-	ug_json_parse (&plugin->json, temp, length);
+	ug_json_parse (&plugin->json, buffer, length);
 	ug_json_end_parse (&plugin->json);
 	ug_free (attr);
 
@@ -521,17 +555,11 @@ static int  mega_request_info (UgetPluginMega* plugin, const char* id)
 	return TRUE;
 }
 
-int  mega_decrypt_file (UgetPluginMega* plugin, const char* ckey, char* iv)
+int  mega_decrypt_file (UgetPluginMega* plugin, const char* key, char* iv)
 {
 	UgetCommon* target_common;
 	char* path;
-	int   num;
-	int   bytes_read;
 	FILE *file_in, *file_out;
-	AES_KEY key;
-	unsigned char* data_in;
-	unsigned char* data_out;
-	unsigned char* ecount_buf;
 
 	target_common = plugin->target_common;
 	// decrypt output file ---
@@ -560,36 +588,74 @@ int  mega_decrypt_file (UgetPluginMega* plugin, const char* ckey, char* iv)
 	uget_plugin_post ((UgetPlugin*) plugin,
 			uget_event_new_normal (0, _("decrypting file...")));
 
-	data_in    = ug_malloc (AES_BLOCK_SIZE * 3);
-	data_out   = data_in + AES_BLOCK_SIZE;
-	ecount_buf = data_out + AES_BLOCK_SIZE;
+#ifdef USE_OPENSSL
+	{
+		AES_KEY  aeskey;
+		int      length;
+		int      num;
+		unsigned char* data_in;
+		unsigned char* data_out;
+		unsigned char* ecount_buf;
 
-	// set to zeros before the first call to ctr128_encrypt
-	memset (ecount_buf, 0, AES_BLOCK_SIZE);
-	num = 0;
+		data_in    = ug_malloc (AES_BLOCK_SIZE * 3);
+		data_out   = data_in + AES_BLOCK_SIZE;
+		ecount_buf = data_out + AES_BLOCK_SIZE;
 
-	// CTR mode doesn't need separate encrypt and decrypt method.
-	AES_set_encrypt_key (ckey, 128, &key);
+		// set to zeros before the first call to ctr128_encrypt
+		memset (ecount_buf, 0, AES_BLOCK_SIZE);
+		num = 0;
 
-	while (1) {
-		bytes_read = fread (data_in, 1, AES_BLOCK_SIZE, file_in);
+		// CTR mode doesn't need separate encrypt and decrypt method.
+		AES_set_encrypt_key (key, 128, &aeskey);
 
-#if OPENSSL_VERSION_NUMBER >= 0x10100000L
-		CRYPTO_ctr128_encrypt(data_in, data_out, bytes_read,
-				&key, iv, ecount_buf, &num, (block128_f)AES_encrypt);
-#else
-		AES_ctr128_encrypt (data_in, data_out, bytes_read,
-				&key, iv, ecount_buf, &num);
-#endif
+		while (1) {
+			length = fread (data_in, 1, AES_BLOCK_SIZE, file_in);
 
-		fwrite (data_out, 1, bytes_read, file_out);
-	    if (bytes_read < AES_BLOCK_SIZE)
-	    	break;
+	#if OPENSSL_VERSION_NUMBER >= 0x10100000L
+			CRYPTO_ctr128_encrypt(data_in, data_out, length,
+					&aeskey, iv, ecount_buf, &num, (block128_f)AES_encrypt);
+	#else
+			AES_ctr128_encrypt (data_in, data_out, bytes_read,
+					&aeskey, iv, ecount_buf, &num);
+	#endif
+
+			fwrite (data_out, 1, length, file_out);
+			if (length < AES_BLOCK_SIZE)
+				break;
+		}
+
+		ug_free (data_in);
 	}
+#endif  // USE_OPENSSL
 
-	ug_free (data_in);
-	fclose (file_in);
+#ifdef USE_GNUTLS
+	{
+		char*  buffer;
+		int    length;
+		gcry_cipher_hd_t  gchd;
+
+		// CTR mode doesn't need separate encrypt and decrypt method.
+		gcry_cipher_open(&gchd, GCRY_CIPHER_AES128, GCRY_CIPHER_MODE_CTR, 0);
+	    gcry_cipher_setkey(gchd, key, 16);
+	    gcry_cipher_setiv(gchd, iv, 16);
+	    gcry_cipher_setctr(gchd, iv, 16);  // counter vector
+
+		buffer = ug_malloc (16);
+		while (1) {
+			length = fread (buffer, 1, 16, file_in);
+		    gcry_cipher_encrypt(gchd, buffer, length, NULL, 0);
+			fwrite (buffer, 1, length, file_out);
+			if (length < 16)
+				break;
+		}
+		ug_free (buffer);
+
+		gcry_cipher_close(gchd);
+	}
+#endif  // USE_GNUTLS
+
 	fclose (file_out);
+	fclose (file_in);
 
 	// decrypt completed
 	ug_remove (path);
