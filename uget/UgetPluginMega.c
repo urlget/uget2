@@ -39,6 +39,13 @@
 #include <config.h>
 #endif
 
+// use OpenSSL by default in Windows
+#if defined _WIN32 || defined _WIN64
+#  if !(defined USE_OPENSSL || defined USE_GNUTLS)
+#    define USE_OPENSSL
+#  endif
+#endif
+
 // OpenSSL
 #ifdef USE_OPENSSL
 //#include <openssl/crypto.h>
@@ -48,6 +55,7 @@
 // GnuTLS
 #elif defined USE_GNUTLS
 #include <gcrypt.h>
+// mega plug-in must decrypt data
 #else
 #error mega plug-in need OpenSSL or GnuTLS to compile.
 #endif
@@ -97,7 +105,7 @@ static const char* hosts[]   = {"mega.co.nz", "mega.nz",
 
 static const UgetPluginInfo UgetPluginMegaInfoStatic =
 {
-	"media",
+	"mega",
 	sizeof (UgetPluginMega),
 	(const UgEntry*) NULL,
 	(UgInitFunc)   plugin_init,
@@ -406,7 +414,7 @@ static int  mega_parse_attributes (UgetPluginMega* plugin, char* attributes)
 	ug_str_replace_chars (attributes, "_", '/');
 	ug_str_remove_chars (attributes, attributes, ",");
 	ug_str_remove_chars (attributes, attributes, "\n");
-	buffer = ug_base64_decode (attributes, strlen (attributes), &length);
+	buffer = (char*)ug_base64_decode (attributes, strlen(attributes), &length);
 	iv = ug_malloc0 (16);
 	attr = NULL;
 
@@ -415,9 +423,10 @@ static int  mega_parse_attributes (UgetPluginMega* plugin, char* attributes)
 		AES_KEY  key;
 
 		attr = ug_malloc (length);
-		AES_set_decrypt_key (plugin->key, 128, &key);
+		AES_set_decrypt_key ((uint8_t*)plugin->key, 128, &key);
 //		AES_cbc_decrypt (temp, attr, length, &key, iv, AES_DECRYPT);
-		CRYPTO_cbc128_decrypt (buffer, attr, length, &key, iv, (block128_f)AES_decrypt);
+		CRYPTO_cbc128_decrypt ((uint8_t*)buffer, (uint8_t*)attr, length,
+		                       &key, (uint8_t*)iv, (block128_f)AES_decrypt);
 	}
 #endif  // USE_OPENSSL
 
@@ -592,7 +601,7 @@ int  mega_decrypt_file (UgetPluginMega* plugin, const char* key, char* iv)
 	{
 		AES_KEY  aeskey;
 		int      length;
-		int      num;
+		unsigned int   num;
 		unsigned char* data_in;
 		unsigned char* data_out;
 		unsigned char* ecount_buf;
@@ -606,7 +615,7 @@ int  mega_decrypt_file (UgetPluginMega* plugin, const char* key, char* iv)
 		num = 0;
 
 		// CTR mode doesn't need separate encrypt and decrypt method.
-		AES_set_encrypt_key (key, 128, &aeskey);
+		AES_set_encrypt_key ((uint8_t*)key, 128, &aeskey);
 
 		while (1) {
 			length = fread (data_in, 1, AES_BLOCK_SIZE, file_in);
@@ -615,8 +624,8 @@ int  mega_decrypt_file (UgetPluginMega* plugin, const char* key, char* iv)
 			CRYPTO_ctr128_encrypt(data_in, data_out, length,
 					&aeskey, iv, ecount_buf, &num, (block128_f)AES_encrypt);
 	#else
-			AES_ctr128_encrypt (data_in, data_out, bytes_read,
-					&aeskey, iv, ecount_buf, &num);
+			AES_ctr128_encrypt (data_in, data_out, length,
+					&aeskey, (uint8_t*) iv, ecount_buf, &num);
 	#endif
 
 			fwrite (data_out, 1, length, file_out);
