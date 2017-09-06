@@ -87,6 +87,7 @@ struct UgetPluginMega
 //	uint8_t       paused:1;         // paused by user
 //	uint8_t       stopped:1;        // all downloading thread are stopped
 
+	uint8_t       named:1;          // change node name
 	uint8_t       synced:1;         // used by plugin_sync()
 	uint8_t       decrypting:1;     // decrypting downloaded file
 
