@@ -199,7 +199,9 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMega* plugin)
 	target_common->uri = plugin->url;
 	plugin->url = NULL;
 	// set MEGA output file name
-	if (target_common->file != NULL) {
+	if (target_common->file == NULL)
+		plugin->named = TRUE;
+	else {
 		ug_free (plugin->file);
 		plugin->file = ug_strdup (target_common->file);
 	}
@@ -292,6 +294,13 @@ static int  plugin_sync (UgetPluginMega* plugin)
 	}
 
 	node = plugin->node;
+
+	// plug-in has got file name from server.
+	if (plugin->named) {
+		plugin->named = FALSE;
+		ug_free (node->name);
+		node->name = ug_strdup (plugin->file);
+	}
 
 	// --------------------------------
 	// sync data between plugin->node and plugin->target_node
