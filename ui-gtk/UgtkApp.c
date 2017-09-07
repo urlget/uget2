@@ -529,6 +529,7 @@ void  ugtk_app_set_plugin_setting (UgtkApp* app, UgtkSetting* setting)
 	// set agent plug-in (used by MEGA)
 	uget_plugin_agent_global_set (UGET_PLUGIN_AGENT_DEFAULT_PLUGIN,
 	                 (void*) default_plugin);
+	uget_app_add_plugin ((UgetApp*) app, UgetPluginMegaInfo);
 	// set aria2 plug-in
 	if (setting->plugin_order >= UGTK_PLUGIN_ORDER_ARIA2) {
 		uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_ARIA2_URI,
