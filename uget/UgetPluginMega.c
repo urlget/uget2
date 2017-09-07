@@ -89,7 +89,7 @@
 // MEGA site
 static int  mega_parse_url (UgetPluginMega* plugin, const char* url);
 static int  mega_request_info (UgetPluginMega* plugin, const char* id);
-static int  mega_decrypt_file (UgetPluginMega* , const char* ckey, char* iv);
+static int  mega_decrypt_file (UgetPluginMega* plugin, int preset_progress);
 
 // ----------------------------------------------------------------------------
 // UgetPluginInfo (derived from UgDataInfo)
@@ -184,6 +184,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMega* plugin)
 	UgetCommon* target_common;
 	UgetEvent*  msg_next;
 	UgetEvent*  msg;
+	char* str;
 
 	// get MEGA download URL & attributes
 	if (mega_request_info (plugin, plugin->id) == FALSE) {
@@ -210,7 +211,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMega* plugin)
 
 	// check existed file
 	if (is_downloaded (plugin, target_common) == TRUE) {
-		mega_decrypt_file (plugin, plugin->key, plugin->iv);
+		mega_decrypt_file (plugin, TRUE);
 		goto exit;
 	}
 
@@ -270,9 +271,18 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMega* plugin)
 	uget_plugin_unref ((UgetPlugin*) plugin->target_plugin);
 	plugin->target_plugin = NULL;
 
+	// change node's name
+	if (plugin->target_node->children && plugin->target_node->children->name) {
+		ug_mutex_lock (&plugin->mutex);
+		str = strstr (plugin->target_node->children->name, ".enc");
+		if (str != NULL)
+			str[0] = 0;
+		ug_mutex_unlock (&plugin->mutex);
+	}
+
 	// if downloading completed, decrypt file
 	if (plugin->paused == FALSE)
-		mega_decrypt_file (plugin, plugin->key, plugin->iv);
+		mega_decrypt_file (plugin, FALSE);
 exit:
 	plugin->stopped = TRUE;
 	uget_plugin_post ((UgetPlugin*)plugin,
@@ -295,13 +305,6 @@ static int  plugin_sync (UgetPluginMega* plugin)
 
 	node = plugin->node;
 
-	// plug-in has got file name from server.
-	if (plugin->named) {
-		plugin->named = FALSE;
-		ug_free (node->name);
-		node->name = ug_strdup (plugin->file);
-	}
-
 	// --------------------------------
 	// sync data between plugin->node and plugin->target_node
 
@@ -315,11 +318,20 @@ static int  plugin_sync (UgetPluginMega* plugin)
 	uget_plugin_agent_sync_progress ((UgetPluginAgent*) plugin,
 	                                 progress, plugin->target_progress);
 	if (plugin->decrypting == FALSE)
-		progress->complete = progress->complete * 95 / 100;
+		progress->percent = progress->percent * 96 / 100;
 
 	// sync child nodes from target_node to node
 	uget_plugin_agent_sync_children ((UgetPluginAgent*) plugin,
 	                                (plugin->stopped) ? FALSE : TRUE);
+
+	// plug-in has got file name from server.
+	if (plugin->named) {
+		plugin->named = FALSE;
+		ug_free (node->name);
+		node->name = ug_strdup (plugin->file);
+		ug_free (common->file);
+		common->file = ug_strdup (plugin->file);
+	}
 
 	// if plug-in was stopped, return FALSE.
 	return TRUE;
@@ -377,7 +389,7 @@ static int  mega_parse_url (UgetPluginMega* plugin, const char* url)
 			return FALSE;
 	}
 
-	// copy string from url
+	// copy string from URL
 	plugin->id  = ug_strndup (plugin->id, plugin->key - plugin->id - 1);
 	plugin->key = ug_strdup (plugin->key);
 	ug_str_replace_chars (plugin->key, "-", '+');
@@ -573,7 +585,7 @@ static int  mega_request_info (UgetPluginMega* plugin, const char* id)
 	return TRUE;
 }
 
-int  mega_decrypt_file (UgetPluginMega* plugin, const char* key, char* iv)
+int  mega_decrypt_file (UgetPluginMega* plugin, int preset_progress)
 {
 	UgetCommon* target_common;
 	char* path;
@@ -601,8 +613,17 @@ int  mega_decrypt_file (UgetPluginMega* plugin, const char* key, char* iv)
 		return FALSE;
 	}
 
+	// preset progress before decrypting
+	if (preset_progress == TRUE) {
+		fseek (file_in, 0L, SEEK_END);
+		plugin->target_progress->percent = 96;
+		plugin->target_progress->complete = ftell (file_in);
+		plugin->target_progress->total = plugin->target_progress->complete;
+		fseek (file_in, 0L, SEEK_SET);    // rewind(file_in);
+	}
+
+	plugin->synced = FALSE;
 	plugin->decrypting = TRUE;
-	plugin->target_progress->complete = 95;
 	uget_plugin_post ((UgetPlugin*) plugin,
 			uget_event_new_normal (0, _("decrypting file...")));
 
@@ -624,20 +645,28 @@ int  mega_decrypt_file (UgetPluginMega* plugin, const char* key, char* iv)
 		num = 0;
 
 		// CTR mode doesn't need separate encrypt and decrypt method.
-		AES_set_encrypt_key ((uint8_t*)key, 128, &aeskey);
+		AES_set_encrypt_key ((uint8_t*)plugin->key, 128, &aeskey);
 
 		while (1) {
 			length = fread (data_in, 1, AES_BLOCK_SIZE, file_in);
 
 	#if OPENSSL_VERSION_NUMBER >= 0x10100000L
 			CRYPTO_ctr128_encrypt(data_in, data_out, length,
-					&aeskey, iv, ecount_buf, &num, (block128_f)AES_encrypt);
+					&aeskey, (uint8_t*)plugin->iv, ecount_buf, &num,
+							(block128_f)AES_encrypt);
 	#else
 			AES_ctr128_encrypt (data_in, data_out, length,
-					&aeskey, (uint8_t*) iv, ecount_buf, &num);
+					&aeskey, (uint8_t*)plugin->iv, ecount_buf, &num);
 	#endif
 
 			fwrite (data_out, 1, length, file_out);
+
+			// decrypting progress
+			plugin->target_progress->complete = ftell (file_out);
+			plugin->target_progress->percent = 96 +
+					plugin->target_progress->complete * 4 / plugin->target_progress->total;
+			plugin->synced = FALSE;
+            // check EOF
 			if (length < AES_BLOCK_SIZE)
 				break;
 		}
@@ -654,15 +683,21 @@ int  mega_decrypt_file (UgetPluginMega* plugin, const char* key, char* iv)
 
 		// CTR mode doesn't need separate encrypt and decrypt method.
 		gcry_cipher_open(&gchd, GCRY_CIPHER_AES128, GCRY_CIPHER_MODE_CTR, 0);
-	    gcry_cipher_setkey(gchd, key, 16);
-	    gcry_cipher_setiv(gchd, iv, 16);
-	    gcry_cipher_setctr(gchd, iv, 16);  // counter vector
+	    gcry_cipher_setkey(gchd, plugin->key, 16);
+	    gcry_cipher_setiv(gchd, plugin->iv, 16);
+	    gcry_cipher_setctr(gchd, plugin->iv, 16);  // counter vector
 
 		buffer = ug_malloc (16);
 		while (1) {
 			length = fread (buffer, 1, 16, file_in);
 		    gcry_cipher_encrypt(gchd, buffer, length, NULL, 0);
 			fwrite (buffer, 1, length, file_out);
+			// decrypting progress
+			plugin->target_progress->complete = ftell (file_out);
+			plugin->target_progress->percent = 96 +
+					plugin->target_progress->complete * 4 / plugin->target_progress->total;
+			plugin->synced = FALSE;
+            // check EOF
 			if (length < 16)
 				break;
 		}
@@ -675,14 +710,17 @@ int  mega_decrypt_file (UgetPluginMega* plugin, const char* key, char* iv)
 	fclose (file_out);
 	fclose (file_in);
 
-	// decrypt completed
+	// decryption completed
 	ug_remove (path);
 	ug_free (path);
-	plugin->synced = FALSE;
-	plugin->target_progress->complete = 100;
+	plugin->target_progress->percent = 100;
 	plugin->node->state |= UGET_STATE_COMPLETED;
+	// post message
+	uget_plugin_post ((UgetPlugin*) plugin,
+			uget_event_new_normal (0, _("decryption completed")));
 	uget_plugin_post ((UgetPlugin*) plugin,
 			uget_event_new (UGET_EVENT_COMPLETED));
+	plugin->synced = FALSE;
 
 	return TRUE;
 }
