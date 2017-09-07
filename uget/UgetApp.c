@@ -381,6 +381,11 @@ void  uget_app_set_notification (UgetApp* app, void* data,
 	notification_sorted.updated  = updated;
 	notification_sorted.data     = data;
 
+	notification_sorted_split.inserted = inserted;
+	notification_sorted_split.removed  = removed;
+	notification_sorted_split.updated  = updated;
+	notification_sorted_split.data     = data;
+
 	notification_mix.inserted = inserted;
 	notification_mix.removed  = removed;
 	notification_mix.updated  = updated;
