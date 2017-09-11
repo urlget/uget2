@@ -925,6 +925,7 @@ int  uget_app_recycle_download (UgetApp* app, UgetNode* dnode)
 int   uget_app_activate_download (UgetApp* app, UgetNode* dnode)
 {
 	UgetLog*         log;
+	UgetCommon*      common;
 	UgetNode*        cnode;
 	UgetNode*        sibling;
 	union {
@@ -934,9 +935,12 @@ int   uget_app_activate_download (UgetApp* app, UgetNode* dnode)
 
 	if (dnode->state & UGET_STATE_ACTIVE)
 		return FALSE;
+	common = ug_info_get (&dnode->info, UgetCommonInfo);
+	if (common == NULL || common->uri == NULL)
+		return FALSE;
 	// match plug-in
 	log = ug_info_realloc (&dnode->info, UgetLogInfo);
-	temp.pinfo = uget_app_match_plugin (app, dnode, NULL);
+	temp.pinfo = uget_app_match_plugin (app, common->uri, NULL);
 	if (temp.pinfo == NULL) {
 		// no plug-in support
 		uget_app_queue_download (app, dnode);
@@ -1223,9 +1227,10 @@ void  uget_app_set_default_plugin (UgetApp* app, const UgetPluginInfo* pinfo)
 	app->plugin_default = (UgetPluginInfo*) pinfo;
 }
 
-UgetPluginInfo*  uget_app_match_plugin (UgetApp* app, UgetNode* node, const UgetPluginInfo* exclude)
+UgetPluginInfo*  uget_app_match_plugin (UgetApp* app,
+                                        const char* uri,
+                                        const UgetPluginInfo* exclude)
 {
-	UgetCommon*      common;
 	UgetPluginInfo*  info;
 	int              count;
 	UgUri            uuri;
@@ -1235,11 +1240,10 @@ UgetPluginInfo*  uget_app_match_plugin (UgetApp* app, UgetNode* node, const Uget
 		int              count;
 	} matched = {NULL, 0};
 
-	common = ug_info_get (&node->info, UgetCommonInfo);
-	if (common == NULL || common->uri == NULL)
+	if (uri == NULL)
 		return NULL;
 
-	ug_uri_init (&uuri, common->uri);
+	ug_uri_init (&uuri, uri);
 	if (app->plugin_default && app->plugin_default != exclude) {
 		matched.info  = app->plugin_default;
 		matched.count = uget_plugin_match (matched.info, &uuri);
