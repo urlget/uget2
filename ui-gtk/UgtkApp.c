@@ -1870,6 +1870,34 @@ GList* ugtk_clipboard_get_uris (struct UgtkClipboard* clipboard)
 	return list;
 }
 
+static int  ugtk_get_site_id (const char* url)
+{
+	UgUri       uuri;
+	int         length;
+	const char* string;
+
+	if (ug_uri_init (&uuri, url) == 0)
+		return -1;
+
+	if (uuri.scheme_len >=4 && strncmp (url, "https", 5) == 0) {
+		// mega.co.nz
+		// mega.nz
+		length = ug_uri_host (&uuri, &string);
+		if (length >= 10 && strncmp (string + length - 10, "mega.co.nz", 10) == 0)
+		{
+			if (uuri.path > 0 && strchr (uuri.uri + uuri.path , '!') != NULL)
+				return TRUE;
+		}
+		else if (length >= 7 && strncmp (string + length - 7, "mega.nz", 7) == 0)
+		{
+			if (uuri.path > 0 && strchr (uuri.uri + uuri.path , '!') != NULL)
+				return TRUE;
+		}
+	}
+
+	return 0;
+}
+
 GList* ugtk_clipboard_get_matched (struct UgtkClipboard* clipboard, const gchar* text)
 {
 	GList*		link;
@@ -1903,7 +1931,8 @@ GList* ugtk_clipboard_get_matched (struct UgtkClipboard* clipboard, const gchar*
 		if (text == NULL || g_regex_match (clipboard->regex, text+1, 0, NULL) == FALSE) {
 			// media website
 			if (clipboard->media_website == FALSE ||
-			    uget_media_get_site_id (link->data) == UGET_MEDIA_UNKNOWN)
+			    (ugtk_get_site_id (link->data) == -1 &&
+			     uget_media_get_site_id (link->data) == UGET_MEDIA_UNKNOWN))
 			{
 				g_free (link->data);
 				link->data = NULL;
