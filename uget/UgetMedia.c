@@ -46,32 +46,16 @@
 // ----------------------------------------------------------------------------
 // UgetMedia
 
-int  uget_media_is_youtube (UgUri* uuri);
 int  uget_media_grab_youtube (UgetMedia* umedia, UgetProxy* proxy);
 
-int  uget_media_get_site_id (const char* url)
-{
-	UgUri       uuri;
-
-	if (ug_uri_init (&uuri, url) == 0)
-		return UGET_MEDIA_UNKNOWN;
-
-	if (uuri.scheme_len >=4 && strncmp (url, "http", 4) == 0) {
-		if (uget_media_is_youtube (&uuri) == TRUE)
-			return UGET_MEDIA_YOUTUBE;
-	}
-
-	return UGET_MEDIA_UNKNOWN;
-}
-
-UgetMedia*  uget_media_new (const char* url, UgetMediaSiteId site_id)
+UgetMedia*  uget_media_new (const char* url, UgetSiteId site_id)
 {
 	UgetMedia* umedia;
 
 	umedia = ug_malloc0 (sizeof (UgetMedia));
 	umedia->url = ug_strdup (url);
-	if (site_id == UGET_MEDIA_UNKNOWN)
-		site_id = uget_media_get_site_id (url);
+	if (site_id == UGET_SITE_UNKNOWN)
+		site_id = uget_site_get_id (url);
 	umedia->site_id = site_id;
 
 	return umedia;
@@ -108,11 +92,11 @@ int  uget_media_grab_items (UgetMedia* umedia, UgetProxy* proxy)
 	int    n_items = 0;
 
 	switch (umedia->site_id) {
-	case UGET_MEDIA_YOUTUBE:
+	case UGET_SITE_YOUTUBE:
 		n_items = uget_media_grab_youtube (umedia, proxy);
 		break;
 
-	case UGET_MEDIA_UNKNOWN:
+	case UGET_SITE_UNKNOWN:
 	default:
 		break;
 	}

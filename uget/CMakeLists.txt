@@ -22,6 +22,7 @@ add_library( uget
              UgetNode-compare.c
              UgetTask.c
              UgetHash.c
+             UgetSite.c
              UgetApp.c
              UgetEvent.c
              UgetPlugin.c

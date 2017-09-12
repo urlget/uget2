@@ -40,6 +40,7 @@
 
 #include <UgList.h>
 #include <UgetData.h>
+#include <UgetSite.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -83,13 +84,6 @@ typedef enum UgetMediaType
 	UGET_MEDIA_N_TYPE,
 } UgetMediaType;
 
-typedef enum UgetMediaSiteId
-{
-	UGET_MEDIA_UNKNOWN = -1,
-
-	UGET_MEDIA_YOUTUBE,
-} UgetMediaSiteId;
-
 
 struct UgetMedia
 {
@@ -116,10 +110,7 @@ struct UgetMedia
 	void*  data4;
 };
 
-// return UgetMediaSiteId
-int  uget_media_get_site_id (const char* url);
-
-UgetMedia*  uget_media_new (const char* url, UgetMediaSiteId site_id);
+UgetMedia*  uget_media_new (const char* url, UgetSiteId site_id);
 void        uget_media_free (UgetMedia* umedia);
 void        uget_media_clear (UgetMedia* umedia, int free_items);
 

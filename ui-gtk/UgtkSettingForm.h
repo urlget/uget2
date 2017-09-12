@@ -61,7 +61,7 @@ struct UgtkClipboardForm
 	GtkSpinButton*		nth_spin;
 
 	// Monitor media website address
-	GtkToggleButton*    media_website;
+	GtkToggleButton*    website;
 };
 
 void  ugtk_clipboard_form_init (struct UgtkClipboardForm* cbform);

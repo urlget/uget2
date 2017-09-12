@@ -562,7 +562,7 @@ void  ugtk_app_set_other_setting (UgtkApp* app, UgtkSetting* setting)
 {
 	// clipboard & commandline
 	ugtk_clipboard_set_pattern (&app->clipboard, setting->clipboard.pattern);
-	app->clipboard.media_website = app->setting.clipboard.media_website;
+	app->clipboard.website = app->setting.clipboard.website;
 	// global speed limit
 	uget_task_set_speed (&app->task,
 			setting->bandwidth.normal.download * 1024,
@@ -1831,7 +1831,7 @@ void  ugtk_clipboard_init (struct UgtkClipboard* clipboard, const gchar* pattern
 	clipboard->self  = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
 	clipboard->text  = NULL;
 	clipboard->regex = g_regex_new (pattern, G_REGEX_CASELESS, 0, NULL);
-	clipboard->media_website = TRUE;
+	clipboard->website = TRUE;
 }
 
 void  ugtk_clipboard_set_pattern (struct UgtkClipboard* clipboard, const gchar* pattern)
@@ -1870,34 +1870,6 @@ GList* ugtk_clipboard_get_uris (struct UgtkClipboard* clipboard)
 	return list;
 }
 
-static int  ugtk_get_site_id (const char* url)
-{
-	UgUri       uuri;
-	int         length;
-	const char* string;
-
-	if (ug_uri_init (&uuri, url) == 0)
-		return -1;
-
-	if (uuri.scheme_len >=4 && strncmp (url, "https", 5) == 0) {
-		// mega.co.nz
-		// mega.nz
-		length = ug_uri_host (&uuri, &string);
-		if (length >= 10 && strncmp (string + length - 10, "mega.co.nz", 10) == 0)
-		{
-			if (uuri.path > 0 && strchr (uuri.uri + uuri.path , '!') != NULL)
-				return TRUE;
-		}
-		else if (length >= 7 && strncmp (string + length - 7, "mega.nz", 7) == 0)
-		{
-			if (uuri.path > 0 && strchr (uuri.uri + uuri.path , '!') != NULL)
-				return TRUE;
-		}
-	}
-
-	return 0;
-}
-
 GList* ugtk_clipboard_get_matched (struct UgtkClipboard* clipboard, const gchar* text)
 {
 	GList*		link;
@@ -1929,10 +1901,9 @@ GList* ugtk_clipboard_get_matched (struct UgtkClipboard* clipboard, const gchar*
 			text = NULL;
 		// free URIs if not matched
 		if (text == NULL || g_regex_match (clipboard->regex, text+1, 0, NULL) == FALSE) {
-			// media website
-			if (clipboard->media_website == FALSE ||
-			    (ugtk_get_site_id (link->data) == -1 &&
-			     uget_media_get_site_id (link->data) == UGET_MEDIA_UNKNOWN))
+			// storage or media website
+			if (clipboard->website == FALSE ||
+			     uget_site_get_id (link->data) == UGET_SITE_UNKNOWN)
 			{
 				g_free (link->data);
 				link->data = NULL;

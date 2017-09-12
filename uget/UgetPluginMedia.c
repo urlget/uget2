@@ -206,7 +206,7 @@ static UgetResult  global_get (int option, void* parameter)
 		break;
 
 	case UGET_PLUGIN_MATCH:
-		if (uget_media_get_site_id (parameter) == UGET_MEDIA_UNKNOWN)
+		if (uget_site_get_id (parameter) < UGET_SITE_MEDIA)
 			return UGET_RESULT_FAILED;
 		return UGET_RESULT_OK;
 

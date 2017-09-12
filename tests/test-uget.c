@@ -411,8 +411,8 @@ void  test_media (void)
 	char* uri;
 
 	uri = "https://www.youtube.com/watch?v=y2004Xaz2HU";
-	count = uget_media_get_site_id (uri);
-	umedia = uget_media_new (uri, UGET_MEDIA_YOUTUBE);
+	count = uget_site_get_id (uri);
+	umedia = uget_media_new (uri, UGET_SITE_YOUTUBE);
 	count  = uget_media_grab_items (umedia, NULL);
 	printf ("\nget %d media item\n", count);
 

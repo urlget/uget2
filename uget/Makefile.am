@@ -20,6 +20,7 @@ libuget_a_SOURCES = \
 	UgetNode-compare.c  \
 	UgetTask.c    \
 	UgetHash.c    \
+	UgetSite.c    \
 	UgetApp.c     \
 	UgetEvent.c   \
 	UgetPlugin.c  \
@@ -44,6 +45,7 @@ noinst_HEADERS = \
 	UgetNode.h    \
 	UgetTask.h    \
 	UgetHash.h    \
+	UgetSite.h    \
 	UgetApp.h     \
 	UgetEvent.h   \
 	UgetPlugin.h  \

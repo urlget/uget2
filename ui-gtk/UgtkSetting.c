@@ -245,9 +245,12 @@ static const UgEntry  UgtkClipboardSettingEntry[] =
 	{"NthCategory",  offsetof (struct UgtkClipboardSetting, nth_category),
 			UG_ENTRY_INT,    NULL,  NULL},
 
-	{"MediaWebsite", offsetof (struct UgtkClipboardSetting, media_website),
+	{"Website", offsetof (struct UgtkClipboardSetting, website),
 			UG_ENTRY_BOOL,   NULL,  NULL},
 
+	// remove this in future verison
+	{"MediaWebsite", offsetof (struct UgtkClipboardSetting, website),
+			UG_ENTRY_BOOL,   NULL,  NULL},
 	{NULL},    // null-terminated
 };
 
@@ -399,8 +402,8 @@ void  ugtk_setting_init (UgtkSetting* setting)
 	ug_array_init (&setting->scheduler.state, sizeof (int), 7*24);
 	memset (setting->scheduler.state.at, UGTK_SCHEDULE_NORMAL, 7*24);
 
-	// default settings for media website
-	setting->clipboard.media_website = TRUE;
+	// default settings for media (or storage) website
+	setting->clipboard.website = TRUE;
 	setting->media.match_mode = UGET_MEDIA_MATCH_NEAR;
 	setting->media.quality = UGET_MEDIA_QUALITY_360P;
 	setting->media.type = UGET_MEDIA_TYPE_MP4;
@@ -475,7 +478,7 @@ void  ugtk_setting_reset (UgtkSetting* setting)
 	setting->clipboard.monitor = TRUE;
 	setting->clipboard.quiet = FALSE;
 	setting->clipboard.nth_category = 0;
-	setting->clipboard.media_website = TRUE;
+	setting->clipboard.website = TRUE;
 
 	// "BandwidthSetting"
 	setting->bandwidth.normal.upload = 0;

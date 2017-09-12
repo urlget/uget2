@@ -86,10 +86,10 @@ void  ugtk_clipboard_form_init (struct UgtkClipboardForm* cbform)
 
 	gtk_box_pack_start (vbox, gtk_label_new (""), FALSE, FALSE, 2);
 
-	// media website
-	widget = gtk_check_button_new_with_mnemonic (_("_Monitor URL of media website"));
+	// media or storage website
+	widget = gtk_check_button_new_with_mnemonic (_("_Monitor URL of website"));
 	gtk_box_pack_start (vbox, widget, FALSE, FALSE, 1);
-	cbform->media_website = (GtkToggleButton*) widget;
+	cbform->website = (GtkToggleButton*) widget;
 
 	gtk_box_pack_start (vbox, gtk_label_new (""), FALSE, FALSE, 2);
 
@@ -137,7 +137,7 @@ void  ugtk_clipboard_form_set (struct UgtkClipboardForm* cbform, UgtkSetting* se
 		gtk_text_buffer_set_text (cbform->buffer, setting->clipboard.pattern, -1);
 	gtk_toggle_button_set_active (cbform->monitor, setting->clipboard.monitor);
 	gtk_toggle_button_set_active (cbform->quiet, setting->clipboard.quiet);
-	gtk_toggle_button_set_active (cbform->media_website, setting->clipboard.media_website);
+	gtk_toggle_button_set_active (cbform->website, setting->clipboard.website);
 	gtk_spin_button_set_value (cbform->nth_spin, setting->clipboard.nth_category);
 	gtk_toggle_button_toggled (cbform->monitor);
 	gtk_toggle_button_toggled (cbform->quiet);
@@ -156,7 +156,7 @@ void  ugtk_clipboard_form_get (struct UgtkClipboardForm* cbform, UgtkSetting* se
 	setting->clipboard.pattern = gtk_text_buffer_get_text (cbform->buffer, &iter1, &iter2, FALSE);
 	setting->clipboard.monitor = gtk_toggle_button_get_active (cbform->monitor);
 	setting->clipboard.quiet = gtk_toggle_button_get_active (cbform->quiet);
-	setting->clipboard.media_website = gtk_toggle_button_get_active (cbform->media_website);
+	setting->clipboard.website = gtk_toggle_button_get_active (cbform->website);
 	setting->clipboard.nth_category = gtk_spin_button_get_value_as_int (cbform->nth_spin);
 	// remove line break
 	ug_str_remove_crlf (setting->clipboard.pattern, setting->clipboard.pattern);

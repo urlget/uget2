@@ -183,7 +183,7 @@ struct UgtkSetting
 		int    monitor;
 		int    quiet;
 		int    nth_category;
-		int    media_website;
+		int    website;
 	} clipboard;
 
 	// "BandwidthSetting" - global speed limits
