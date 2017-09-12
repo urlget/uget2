@@ -371,7 +371,7 @@ void  ugtk_completion_form_init (struct UgtkCompletionForm* csform)
 
 	hbox = (GtkBox*) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 	gtk_box_pack_start (vbox, (GtkWidget*) hbox, FALSE, FALSE, 1);
-	widget = gtk_label_new (_("Custom command if error occured:"));
+	widget = gtk_label_new (_("Custom command if error occurred:"));
 	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 0);
 
 	entry = gtk_entry_new ();
