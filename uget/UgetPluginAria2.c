@@ -280,7 +280,7 @@ static const char* error_string[] =
 	N_("aria2: an unknown error occurred."),
 	N_("aria2: time out occurred."),
 	N_("aria2: resource was not found."),
-	N_("aria2 saw the specfied number of 'resource not found' error. See --max-file-not-found option"),
+	N_("aria2 saw the specified number of 'resource not found' error. See --max-file-not-found option"),
 	N_("aria2: speed was too slow."),
 	N_("aria2: network problem occurred."),
 	N_("aria2: unfinished downloads."),
