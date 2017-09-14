@@ -130,6 +130,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../uget/UgetSequence.h" />
+		<Unit filename="../../uget/UgetSite.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetSite.h" />
 		<Unit filename="../../uget/UgetTask.c">
 			<Option compilerVar="CC" />
 		</Unit>

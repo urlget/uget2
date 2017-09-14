@@ -22,6 +22,7 @@
     <ClInclude Include="..\..\uget\UgetSequence.h" />
     <ClInclude Include="..\..\uget\UgetTask.h" />
     <ClInclude Include="..\..\uget\UgetHash.h" />
+    <ClInclude Include="..\..\uget\UgetSite.h" />
     <ClInclude Include="..\..\uget\UgetA2cf.h" />
     <ClInclude Include="..\..\uget\UgetCurl.h" />
     <ClInclude Include="..\..\uget\UgetAria2.h" />
@@ -45,6 +46,7 @@
     <ClCompile Include="..\..\uget\UgetSequence.c" />
     <ClCompile Include="..\..\uget\UgetTask.c" />
     <ClCompile Include="..\..\uget\UgetHash.c" />
+    <ClCompile Include="..\..\uget\UgetSite.c" />
     <ClCompile Include="..\..\uget\UgetA2cf.c" />
     <ClCompile Include="..\..\uget\UgetCurl.c" />
     <ClCompile Include="..\..\uget\UgetAria2.c" />
