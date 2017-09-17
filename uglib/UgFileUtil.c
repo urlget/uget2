@@ -291,6 +291,8 @@ int   ug_file_is_dir (const char* dir)
 	return FALSE;
 }
 
+#elif defined USE__ANDROID__SAF
+
 #else
 
 int   ug_file_is_exist (const char* filename)

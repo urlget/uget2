@@ -162,7 +162,7 @@ extern "C" {
 
 // creat(path, mode) == open (path, O_WRONLY|O_CREAT|O_TRUNC, mode)
 // Returns :  a new file descriptor, or -1 if an error occurred.
-#if defined _WIN32 || defined _WIN64 || defined HAVE_GLIB
+#if defined _WIN32 || defined _WIN64 || defined HAVE_GLIB || defined USE__ANDROID__SAF
 int  ug_open (const char* filename_utf8, int flags, int mode);
 int  ug_creat (const char* filename_utf8, int mode);
 #else
@@ -212,7 +212,7 @@ int  ug_truncate (int fd, int64_t length);
 //#  define fseeko64 fseek
 //#endif
 
-#if defined _WIN32 || defined _WIN64 || defined HAVE_GLIB
+#if defined _WIN32 || defined _WIN64 || defined HAVE_GLIB || defined USE__ANDROID__SAF
 FILE* ug_fopen (const char *filename_utf8, const char *mode);
 #else
 #  define ug_fopen      fopen
@@ -269,7 +269,7 @@ int   ug_ftruncate (FILE* file, int64_t size);
 // ug_remove() deletes a name from the filesystem, it works for both files and directories.
 // ug_unlink() If this was the last link to the file and no processes have it opened, the diskspace occupied by the file is freed.
 
-#if defined _WIN32 || defined _WIN64 || defined HAVE_GLIB
+#if defined _WIN32 || defined _WIN64 || defined HAVE_GLIB || defined USE__ANDROID__SAF
 int  ug_rename (const char *old_file_utf8, const char *new_file_utf8);
 int  ug_remove (const char *file_utf8);
 int  ug_unlink (const char *file_utf8);

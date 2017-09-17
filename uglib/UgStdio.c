@@ -131,7 +131,7 @@ FILE* ug_fopen (const char *filename, const char *mode)
 // UNIX
 #else
 
-#if defined (HAVE_GLIB)
+#if defined HAVE_GLIB
 int  ug_open (const char* filename_utf8, int flags, int mode)
 {
 	if (g_get_filename_charsets (NULL))
@@ -320,7 +320,7 @@ int  ug_unlink (const char *filename)
 // UNIX
 #else
 
-#if defined (HAVE_GLIB)
+#if defined HAVE_GLIB
 int  ug_rename (const char *old_filename, const char *new_filename)
 {
 	if (g_get_filename_charsets (NULL))

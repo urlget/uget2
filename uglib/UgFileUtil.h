@@ -93,7 +93,7 @@ int   ug_modify_file_time (const char *file_utf8, time_t mod_time);
 int   ug_file_is_exist (const char* file_utf8);
 int   ug_file_is_dir (const char* file_utf8);
 
-#if defined _WIN32 || defined _WIN64 || defined HAVE_GLIB
+#if defined _WIN32 || defined _WIN64 || defined HAVE_GLIB || defined USE__ANDROID__SAF
 int   ug_create_dir (const char *dir_utf8);
 int   ug_delete_dir (const char *dir_utf8);
 #else
