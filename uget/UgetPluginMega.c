@@ -253,6 +253,12 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMega* plugin)
 				plugin->paused = TRUE;
 				break;
 
+			case UGET_EVENT_NORMAL:
+				// ignore "not resumable" event
+				if (msg->value.code == UGET_EVENT_NORMAL_NOT_RESUMABLE)
+					uget_event_free (msg);
+				continue;
+
 			case UGET_EVENT_STOP:
 			case UGET_EVENT_COMPLETED:
 				// discard message
