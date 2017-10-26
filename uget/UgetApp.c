@@ -859,6 +859,9 @@ static UG_THREAD_RETURN_TYPE  delete_file_thread (UgetNode* dnode)
 {
 	int  count;
 
+#ifdef USE__ANDROID__SAF
+	if (delete_dnode_files (dnode, TRUE) == FALSE)
+#endif
 	for (count = 0;  count < 3;  count++) {
 		ug_sleep (2 * 1000);    // sleep 2 seconds
 		delete_dnode_files (dnode, FALSE);
@@ -883,6 +886,9 @@ int  uget_app_delete_download (UgetApp* app, UgetNode* dnode, int delete_file)
 	uget_uri_hash_remove_download (app->uri_hash, dnode);
 
 	if (delete_file == TRUE) {
+#ifdef USE__ANDROID__SAF
+		is_active = TRUE;  // delete files in thread if program use Android SAF
+#endif
 		if (is_active == TRUE || delete_dnode_files (dnode, TRUE) == FALSE) {
 			ug_thread_create (&thread, (UgThreadFunc) delete_file_thread, dnode);
 			ug_thread_unjoin (&thread);
