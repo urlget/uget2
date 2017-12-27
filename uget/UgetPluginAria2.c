@@ -442,6 +442,9 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 	}
 	else if (plugin->synced == TRUE)
 		return TRUE;
+	// avoid crash if plug-in plug-in failed to start.
+	if (plugin->node == NULL)
+		return TRUE;
 
 	node = plugin->node;
 	// sync data between plug-in and node
