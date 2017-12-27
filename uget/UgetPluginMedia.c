@@ -231,12 +231,12 @@ static void plugin_init (UgetPluginMedia* plugin)
 static void plugin_final (UgetPluginMedia* plugin)
 {
 	// extent data and plug-in
-	if (plugin->ex.node)
-		uget_node_unref (plugin->ex.node);
-	if (plugin->ex.node_child)
-		uget_node_unref (plugin->ex.node_child);
-	if (plugin->ex.plugin)
-		uget_plugin_unref (plugin->ex.plugin);
+	if (plugin->target_node)
+		uget_node_unref (plugin->target_node);
+	if (plugin->target_node_child)
+		uget_node_unref (plugin->target_node_child);
+	if (plugin->target_plugin)
+		uget_plugin_unref (plugin->target_plugin);
 	// other data
 	ug_free (plugin->title);
 	// unassign node
@@ -331,6 +331,9 @@ static int  plugin_sync (UgetPluginMedia* plugin)
 			return FALSE;
 		plugin->synced = TRUE;
 	}
+	// avoid crash if plug-in plug-in failed to start.
+	if (plugin->node == NULL)
+		return TRUE;
 
 	node = plugin->node;
 	// change node name by title ,item_index, and item_total
@@ -351,54 +354,54 @@ static int  plugin_sync (UgetPluginMedia* plugin)
 	// sync data between plug-in and node
 	common = ug_info_realloc (&node->info, UgetCommonInfo);
 	// sum retry count
-	common->retry_count = plugin->common->retry_count + plugin->retry_count;
+	common->retry_count = plugin->target_common->retry_count + plugin->retry_count;
 	// sync changed limit from UgetNode
-	if (plugin->common->max_upload_speed != common->max_upload_speed ||
-		plugin->common->max_download_speed != common->max_download_speed)
+	if (plugin->target_common->max_upload_speed != common->max_upload_speed ||
+		plugin->target_common->max_download_speed != common->max_download_speed)
 	{
-		plugin->common->max_upload_speed = common->max_upload_speed;
-		plugin->common->max_download_speed = common->max_download_speed;
+		plugin->target_common->max_upload_speed = common->max_upload_speed;
+		plugin->target_common->max_download_speed = common->max_download_speed;
 	}
-	plugin->common->max_connections = common->max_connections;
-	plugin->common->retry_limit = common->retry_limit;
+	plugin->target_common->max_connections = common->max_connections;
+	plugin->target_common->retry_limit = common->retry_limit;
 
 	// downloading file name changed
 	if (plugin->file_renamed == TRUE) {
 		plugin->file_renamed = FALSE;
 		ug_mutex_lock (&plugin->mutex);
 		ug_free (common->file);
-		common->file = ug_strdup (plugin->common->file);
+		common->file = ug_strdup (plugin->target_common->file);
 		ug_mutex_unlock (&plugin->mutex);
 	}
-	// sync child node from ex.node_child
+	// sync child node from target_node_child
 	if (plugin->sync_child == TRUE) {
 		plugin->sync_child = FALSE;
 		ug_mutex_lock (&plugin->mutex);
-		sync_child_node (node, plugin->ex.node_child,
+		sync_child_node (node, plugin->target_node_child,
 		                 (plugin->stopped) ? FALSE : TRUE);
 		ug_mutex_unlock (&plugin->mutex);
 	}
 	// sync changed limit from UgetNode to plug-in
-	if (plugin->common->max_upload_speed != common->max_upload_speed ||
-		plugin->common->max_download_speed != common->max_download_speed)
+	if (plugin->target_common->max_upload_speed != common->max_upload_speed ||
+		plugin->target_common->max_download_speed != common->max_download_speed)
 	{
-		plugin->common->max_upload_speed = common->max_upload_speed;
-		plugin->common->max_download_speed = common->max_download_speed;
+		plugin->target_common->max_upload_speed = common->max_upload_speed;
+		plugin->target_common->max_download_speed = common->max_download_speed;
 		plugin->limit_changed = TRUE;
 	}
-	plugin->common->max_connections = common->max_connections;
-	plugin->common->retry_limit = common->retry_limit;
+	plugin->target_common->max_connections = common->max_connections;
+	plugin->target_common->retry_limit = common->retry_limit;
 
 	// update progress
 	progress = ug_info_realloc (&node->info, UgetProgressInfo);
-	progress->complete       = plugin->progress->complete;
-	progress->total          = plugin->progress->total;
-	progress->download_speed = plugin->progress->download_speed;
-	progress->upload_speed   = plugin->progress->upload_speed;
-	progress->uploaded       = plugin->progress->uploaded;
-	progress->elapsed        = plugin->progress->elapsed;
-	progress->percent        = plugin->progress->percent;
-	progress->left           = plugin->progress->left;
+	progress->complete       = plugin->target_progress->complete;
+	progress->total          = plugin->target_progress->total;
+	progress->download_speed = plugin->target_progress->download_speed;
+	progress->upload_speed   = plugin->target_progress->upload_speed;
+	progress->uploaded       = plugin->target_progress->uploaded;
+	progress->elapsed        = plugin->target_progress->elapsed;
+	progress->percent        = plugin->target_progress->percent;
+	progress->left           = plugin->target_progress->left;
 	// recount progress if plug-in download multiple files
 	if (plugin->item_total > 1) {
 		// recount percent
@@ -434,11 +437,11 @@ static int  plugin_start (UgetPluginMedia* plugin, UgetNode* node)
 	if (common == NULL || common->uri == NULL)
 		return FALSE;
 
-	plugin->ex.node = uget_node_new (NULL);
-	ug_info_assign (&plugin->ex.node->info, &node->info, NULL);
-	plugin->common = ug_info_get (&plugin->ex.node->info, UgetCommonInfo);
-	plugin->proxy  = ug_info_get (&plugin->ex.node->info, UgetProxyInfo);
-	plugin->progress = ug_info_realloc (&plugin->ex.node->info, UgetProgressInfo);
+	plugin->target_node = uget_node_new (NULL);
+	ug_info_assign (&plugin->target_node->info, &node->info, NULL);
+	plugin->target_common = ug_info_get (&plugin->target_node->info, UgetCommonInfo);
+	plugin->target_proxy  = ug_info_get (&plugin->target_node->info, UgetProxyInfo);
+	plugin->target_progress = ug_info_realloc (&plugin->target_node->info, UgetProgressInfo);
 
 	// assign node
 	uget_node_ref (node);
@@ -482,9 +485,9 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 	const char*    type = NULL;
 	const char*    quality = NULL;
 
-	common = plugin->common;
+	common = plugin->target_common;
 	umedia = uget_media_new (common->uri, 0);
-	if (uget_media_grab_items (umedia, plugin->proxy) == 0) {
+	if (uget_media_grab_items (umedia, plugin->target_proxy) == 0) {
 		if (umedia->event) {
 			uget_plugin_post ((UgetPlugin*) plugin, umedia->event);
 			umedia->event = NULL;
@@ -517,7 +520,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 			ug_list_position ((UgList*) umedia, (UgLink*) umitem);
 
 	// set HTTP referrer
-	http = ug_info_realloc (&plugin->ex.node->info, UgetHttpInfo);
+	http = ug_info_realloc (&plugin->target_node->info, UgetHttpInfo);
 	if (http->referrer == NULL)
 		http->referrer = ug_strdup_printf ("%s%s", common->uri, "# ");
 	// clear copied common URI
@@ -527,7 +530,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 	plugin->elapsed = 0;
 	plugin->retry_count = 0;
 	// create children node
-	plugin->ex.node_child = uget_node_new (NULL);
+	plugin->target_node_child = uget_node_new (NULL);
 
 	for (;  umitem;  umitem = umitem->next) {
 		// stop this loop when user paused this plug-in.
@@ -599,13 +602,13 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 		plugin->retry_count += common->retry_count;
 		common->retry_count = 0;
 		// save/reset elapsed
-		plugin->elapsed += plugin->progress->elapsed;
-		plugin->progress->elapsed = 0;
+		plugin->elapsed += plugin->target_progress->elapsed;
+		plugin->target_progress->elapsed = 0;
 
-		// create ex.plugin to download
-		plugin->ex.plugin = uget_plugin_new (global.plugin_info);
-		uget_plugin_ctrl_speed (plugin->ex.plugin, plugin->limit);
-		if (uget_plugin_start (plugin->ex.plugin, plugin->ex.node) == FALSE) {
+		// create target_plugin to download
+		plugin->target_plugin = uget_plugin_new (global.plugin_info);
+		uget_plugin_ctrl_speed (plugin->target_plugin, plugin->limit);
+		if (uget_plugin_start (plugin->target_plugin, plugin->target_node) == FALSE) {
 			msg = uget_event_new_error (UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 			                            NULL);
 			uget_plugin_post ((UgetPlugin*) plugin, msg);
@@ -614,24 +617,24 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 		do {
 			// sleep 0.5 second
 			ug_sleep (500);
-			// stop ex.plugin when user paused this plug-in.
+			// stop target_plugin when user paused this plug-in.
 			if (plugin->paused) {
-				uget_plugin_stop (plugin->ex.plugin);
+				uget_plugin_stop (plugin->target_plugin);
 				break;
 			}
 			if (plugin->limit_changed) {
 				plugin->limit_changed = FALSE;
-				uget_plugin_ctrl_speed (plugin->ex.plugin, plugin->limit);
+				uget_plugin_ctrl_speed (plugin->target_plugin, plugin->limit);
 			}
 
-			// sync child(file) node from ex.node to ex.node_child
+			// sync child(file) node from target_node to target_node_child
 			ug_mutex_lock (&plugin->mutex);
-			plugin->sync_child = sync_child_node (plugin->ex.node_child,
-			                                      plugin->ex.node, TRUE);
+			plugin->sync_child = sync_child_node (plugin->target_node_child,
+			                                      plugin->target_node, TRUE);
 			ug_mutex_unlock (&plugin->mutex);
 
-			// move event from ex.plugin to plug-in
-			msg = uget_plugin_pop ((UgetPlugin*) plugin->ex.plugin);
+			// move event from target_plugin to plug-in
+			msg = uget_plugin_pop ((UgetPlugin*) plugin->target_plugin);
 			for (;  msg;  msg = msg_next) {
 				msg_next = msg->next;
 				msg->prev = NULL;
@@ -660,17 +663,17 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 			}
 			// sync data in plugin_sync()
 			plugin->synced = FALSE;
-		} while (uget_plugin_sync (plugin->ex.plugin));
+		} while (uget_plugin_sync (plugin->target_plugin));
 
 		// sync file node
 		ug_mutex_lock (&plugin->mutex);
-		plugin->sync_child = sync_child_node (plugin->ex.node_child,
-		                                      plugin->ex.node, FALSE);
+		plugin->sync_child = sync_child_node (plugin->target_node_child,
+		                                      plugin->target_node, FALSE);
 		ug_mutex_unlock (&plugin->mutex);
 
-		// free ex.plugin
-		uget_plugin_unref ((UgetPlugin*) plugin->ex.plugin);
-		plugin->ex.plugin = NULL;
+		// free target_plugin
+		uget_plugin_unref ((UgetPlugin*) plugin->target_plugin);
+		plugin->target_plugin = NULL;
 	}
 
 	common->uri = NULL;  // Don't free common->uri again.

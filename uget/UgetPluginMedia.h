@@ -73,20 +73,17 @@ struct UgetPluginMedia
 
 	// This plug-in use other plug-in to download media files,
 	// so we need extra UgetPlugin and UgetNode.
-	struct
-	{
-		// plugin->ex.node is a copy of plugin->node
-		UgetNode*     node;
-		// copy child nodes from ex.node
-		UgetNode*     node_child;
-		// ex.plugin use ex.node to download
-		UgetPlugin*   plugin;
-	} ex;
+	// plugin->target_node is a copy of plugin->node
+	UgetNode*     target_node;
+	// copy child nodes from target_node
+	UgetNode*     target_node_child;
+	// target_plugin use target_node to download
+	UgetPlugin*   target_plugin;
 
-	// copy of UgetNode data, they store in ex.node
-	UgetProxy*    proxy;
-	UgetCommon*   common;
-	UgetProgress* progress;
+	// copy of UgetNode data, they store in target_node
+	UgetProxy*    target_proxy;
+	UgetCommon*   target_common;
+	UgetProgress* target_progress;
 
 	// plug-in use title to rename file
 	char*         title;
@@ -107,7 +104,7 @@ struct UgetPluginMedia
 	uint8_t       synced:1;        // used by plugin_sync()
 	uint8_t       named:1;         // change node name by title
 	uint8_t       file_renamed:1;  // downloading filename changed
-	uint8_t       sync_child:1;    // ex.node_child->children changed
+	uint8_t       sync_child:1;    // target_node_child->children changed
 };
 
 
