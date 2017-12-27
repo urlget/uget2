@@ -329,6 +329,7 @@ static int  plugin_sync (UgetPluginCurl* plugin)
 			return FALSE;
 		plugin->synced = TRUE;
 	}
+	// avoid crash if plug-in plug-in failed to start.
 	if (plugin->node == NULL)
 		return TRUE;
 
