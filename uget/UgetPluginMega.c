@@ -163,8 +163,12 @@ static int  plugin_start (UgetPluginMega* plugin, UgetNode* node)
 		return FALSE;
 
 	// parse MEGA URL
-	if (mega_parse_url (plugin, common->uri) == FALSE)
+	if (mega_parse_url (plugin, common->uri) == FALSE) {
+		uget_plugin_post ((UgetPlugin*) plugin,
+				uget_event_new_error (UGET_EVENT_ERROR_CUSTOM,
+				                      _("Invalid MEGA link.")));
 		return FALSE;
+	}
 
 	plugin->target_node = uget_node_new (NULL);
 	ug_info_assign (&plugin->target_node->info, &node->info, NULL);
@@ -300,6 +304,9 @@ static int  plugin_sync (UgetPluginMega* plugin)
 			return FALSE;
 		plugin->synced = TRUE;
 	}
+	// avoid crash if plug-in plug-in failed to start.
+	if (plugin->node == NULL)
+		return TRUE;
 
 	node = plugin->node;
 
