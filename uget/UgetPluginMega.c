@@ -85,6 +85,13 @@
 #define  _(x)   x
 #endif
 
+enum
+{
+	MEGA_UNKNOWN,
+	MEGA_FOLDER,
+	MEGA_FILE,
+};
+
 // ----------------------------------------------------------------------------
 // MEGA site
 static int  mega_parse_url (UgetPluginMega* plugin, const char* url);
@@ -163,10 +170,10 @@ static int  plugin_start (UgetPluginMega* plugin, UgetNode* node)
 		return FALSE;
 
 	// parse MEGA URL
-	if (mega_parse_url (plugin, common->uri) == FALSE) {
+	if (mega_parse_url (plugin, common->uri) != MEGA_FILE) {
 		uget_plugin_post ((UgetPlugin*) plugin,
 				uget_event_new_error (UGET_EVENT_ERROR_CUSTOM,
-				                      _("Invalid MEGA link.")));
+				                      _("Can't handle this MEGA URL.")));
 		return FALSE;
 	}
 
@@ -391,16 +398,20 @@ static int  mega_parse_url (UgetPluginMega* plugin, const char* url)
 
 	plugin->id = strchr (url, '!');
 	if (plugin->id != NULL) {
+		// folder
+		if (plugin->id != url && *(plugin->id-1) == 'F')
+			return MEGA_FOLDER;
+		// file
 		plugin->id++;
 		if (plugin->id[0] == 0)
-			return FALSE;
+			return MEGA_UNKNOWN;
 	}
 
 	plugin->key = strchr (plugin->id, '!');
 	if (plugin->key != NULL) {
 		plugin->key++;
 		if (plugin->key[0] == 0)
-			return FALSE;
+			return MEGA_UNKNOWN;
 	}
 
 	// copy string from URL
@@ -414,7 +425,7 @@ static int  mega_parse_url (UgetPluginMega* plugin, const char* url)
 	binary_key = ug_base64_decode (plugin->key, strlen (plugin->key), &length);
 	if (length < 32) {
 		ug_free (binary_key);
-		return FALSE;
+		return MEGA_UNKNOWN;
 	}
 
 	plugin->key = ug_realloc (plugin->key, 16);
@@ -424,7 +435,7 @@ static int  mega_parse_url (UgetPluginMega* plugin, const char* url)
 	plugin->iv = ug_malloc (16);
 	memcpy (plugin->iv, binary_key+16, 8);
 	memset (plugin->iv+8, 0, 8);
-	return TRUE;
+	return MEGA_FILE;
 }
 
 // ------------------------------------
