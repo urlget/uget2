@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Balzamon, 2016
+# Balzamon, 2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-03 03:10+0800\n"
-"PO-Revision-Date: 2016-11-09 16:16+0000\n"
+"PO-Revision-Date: 2017-10-11 14:43+0000\n"
 "Last-Translator: Balzamon\n"
 "Language-Team: Hungarian (http://www.transifex.com/uget/uget/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -141,7 +141,7 @@ msgstr ""
 #. UGET_EVENT_ERROR_POST_FILE_NOT_FOUND
 #: ../../po/../uget/UgetEvent.c:94
 msgid "cookie file not found."
-msgstr ""
+msgstr "A cookie fájl nem található."
 
 #: ../../po/../uget/UgetMedia-youtube.c:275
 msgid "This video has been removed."

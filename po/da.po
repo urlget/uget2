@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Filip Kemuel Dam Bartholdy <filip_kemuel@yahoo.dk>, 2013,2016
+# Filip Kemuel Dam Bartholdy <filip@kemuel.dk>, 2013,2016
 # scootergrisen, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-03 03:10+0800\n"
-"PO-Revision-Date: 2017-07-11 19:35+0000\n"
+"PO-Revision-Date: 2017-10-14 17:10+0000\n"
 "Last-Translator: scootergrisen\n"
 "Language-Team: Danish (http://www.transifex.com/uget/uget/language/da/)\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgid ""
 "While attempting an SSH connection to %s there was a problem verifying it's hostkey against the known and trusted hosts file because it's hostkey was not found.\n"
 "\n"
 "Would you like to treat this connection as trusted for this and future connections by adding %s's hostkey to the known hosts file?"
-msgstr "Adgangskodehåndtering-dæmon: uget\n\nVed forsøg på en SSH-forbindelse til %s var der et problem med at verificere dets værtsnøgle mod de kendte og betroede værtsfiler fordi dens værtsnøgle ikke blev fundet.\n\nVil du gerne behandle denne forbindelse som betroet for denne og fremtidige forbindelser ved at tilføje %s's værtsnøgle til de kendte værts fil?"
+msgstr "Adgangskodehåndteringsdæmon: uget\n\nVed forsøg på en SSH-forbindelse til %s var der et problem med at verificere dets værtsnøgle mod den kendte og betroede værts fil fordi dens værtsnøgle ikke blev fundet.\n\nVil du gerne behandle denne forbindelse som betroet for denne og fremtidige forbindelser ved at tilføje %ss værtsnøgle til de kendte værts fil?"
 
 #: ../../po/../uget/UgetApp.c:103
 msgid "All Category"
@@ -46,7 +46,7 @@ msgstr "Overfører..."
 #. UGET_EVENT_NORMAL_TRANSMIT,
 #: ../../po/../uget/UgetEvent.c:60 ../../po/../ui-gtk/UgtkNodeView.c:917
 msgid "Retry"
-msgstr "Prøv igen"
+msgstr "Forsøg"
 
 #. UGET_EVENT_NORMAL_RETRY,
 #: ../../po/../uget/UgetEvent.c:61
@@ -72,7 +72,7 @@ msgstr "Ikke genoptagelig"
 #. UGET_EVENT_WARNING_CUSTOM
 #: ../../po/../uget/UgetEvent.c:73 ../../po/../uget/UgetPluginAria2.c:294
 msgid "Output file can't be renamed."
-msgstr "Output-filen kan ikke omdøbes."
+msgstr "Outputfilen kan ikke omdøbes."
 
 #. UGET_EVENT_ERROR_CUSTOM
 #: ../../po/../uget/UgetEvent.c:81
@@ -87,7 +87,7 @@ msgstr "Mappe kan ikke oprettes."
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../../po/../uget/UgetEvent.c:83
 msgid "File can't be created (bad filename or file exist)."
-msgstr "Fil kan ikke oprettes (dårligt filnavn eller filen findes allerede)."
+msgstr "Fil kan ikke oprettes (ugyldigt filnavn eller filen findes allerede)."
 
 #. UGET_EVENT_ERROR_FILE_CREATE_FAILED
 #: ../../po/../uget/UgetEvent.c:84
@@ -112,12 +112,12 @@ msgstr "Ikke flere ressourcer (disken er fyldt eller er løbet tør for hukommel
 #. UGET_EVENT_ERROR_OUT_OF_RESOURCE
 #: ../../po/../uget/UgetEvent.c:88
 msgid "No output file."
-msgstr "Ingen output-fil."
+msgstr "Ingen outputfil."
 
 #. UGET_EVENT_ERROR_NO_OUTPUT_FILE
 #: ../../po/../uget/UgetEvent.c:89
 msgid "No output setting."
-msgstr "Ingen output-indstilling."
+msgstr "Ingen outputindstilling."
 
 #. UGET_EVENT_ERROR_NO_OUTPUT_SETTING
 #: ../../po/../uget/UgetEvent.c:90
@@ -137,12 +137,12 @@ msgstr "Ikke-understøttet fil."
 #. UGET_EVENT_ERROR_UNSUPPORTED_FILE
 #: ../../po/../uget/UgetEvent.c:93
 msgid "post file not found."
-msgstr "post-fil ikke fundet."
+msgstr "postfil ikke fundet."
 
 #. UGET_EVENT_ERROR_POST_FILE_NOT_FOUND
 #: ../../po/../uget/UgetEvent.c:94
 msgid "cookie file not found."
-msgstr "cookie-fil ikke fundet."
+msgstr "cookiefil ikke fundet."
 
 #: ../../po/../uget/UgetMedia-youtube.c:275
 msgid "This video has been removed."
@@ -177,7 +177,7 @@ msgstr "aria2: ressource blev ikke fundet."
 msgid ""
 "aria2 saw the specfied number of 'resource not found' error. See --max-file-"
 "not-found option"
-msgstr "aria2 så den angivne nummer af fejlen 'ressource ikke fundet'. Se tilvalget --max-file-not-found"
+msgstr "aria2 så det angivne antal af fejlen 'ressource ikke fundet'. Se tilvalget --max-file-not-found"
 
 #: ../../po/../uget/UgetPluginAria2.c:284
 msgid "aria2: speed was too slow."
@@ -199,7 +199,7 @@ msgstr "Ikke flere ressourcer"
 #. _(),
 #: ../../po/../uget/UgetPluginAria2.c:289
 msgid "aria2: piece length was different from one in .aria2 control file."
-msgstr "aria2: stykkelænge var ikke som den i .aria2-kontrolfilen."
+msgstr "aria2: stykkelængde var ikke som den i .aria2-kontrolfilen."
 
 #. 11 - 20
 #: ../../po/../uget/UgetPluginAria2.c:291
@@ -225,16 +225,16 @@ msgstr "aria2: kunne ikke oprette ny fil eller afkorte eksisterende fil."
 
 #: ../../po/../uget/UgetPluginAria2.c:297
 msgid "aria2: file I/O error occurred."
-msgstr "aria2: der opstod en fil I/O fejl."
+msgstr "aria2: der opstod fil-I/O-fejl."
 
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../../po/../uget/UgetPluginAria2.c:299
 msgid "aria2: name resolution failed."
-msgstr "aria2: løsning af navn mislykkedes."
+msgstr "aria2: navneoversættelse mislykkedes."
 
 #: ../../po/../uget/UgetPluginAria2.c:300
 msgid "aria2: could not parse Metalink document."
-msgstr "aria2: kunne ikke parse metalink-dokument."
+msgstr "aria2: kunne ikke fortolke metalink-dokument."
 
 #. 21 - 30
 #: ../../po/../uget/UgetPluginAria2.c:302
@@ -243,7 +243,7 @@ msgstr "aria2: FTP-kommando mislykkedes."
 
 #: ../../po/../uget/UgetPluginAria2.c:303
 msgid "aria2: HTTP response header was bad or unexpected."
-msgstr "aria2: HTTP-svar-header var dårlig eller uventet."
+msgstr "aria2: HTTP-svar-header var ugyldigt eller uventet."
 
 #: ../../po/../uget/UgetPluginAria2.c:304
 msgid "Too many redirections."
@@ -251,33 +251,33 @@ msgstr "For mange videresendelser."
 
 #: ../../po/../uget/UgetPluginAria2.c:305
 msgid "aria2: HTTP authorization failed."
-msgstr "aria2: HTTP-autorisation mislykkedes."
+msgstr "aria2: HTTP-godkendelse mislykkedes."
 
 #: ../../po/../uget/UgetPluginAria2.c:306
 msgid "aria2: could not parse bencoded file(usually .torrent file)."
-msgstr "aria2: kunne ikke parse bencoded fil (typisk .torrent-fil)."
+msgstr "aria2: kunne ikke fortolke kodet fil (typisk .torrentfil)."
 
 #: ../../po/../uget/UgetPluginAria2.c:307
 msgid "aria2: torrent file was corrupted or missing information."
-msgstr "aria2: torrent-fil var ødelagt eller manglede information."
+msgstr "aria2: torrentfil var ødelagt eller manglede information."
 
 #: ../../po/../uget/UgetPluginAria2.c:308
 msgid "aria2: Magnet URI was bad."
-msgstr "aria2: Magnet-URI var dårligt."
+msgstr "aria2: Magnet-URI var ugyldigt."
 
 #: ../../po/../uget/UgetPluginAria2.c:309
 msgid ""
 "aria2: bad/unrecognized option was given or unexpected option argument was "
 "given."
-msgstr "aria2: dårligt/ikke-genkendt tilvalg blev givet eller uventet tilvalgsargument blev givet."
+msgstr "aria2: ugyldigt/ikke-genkendt tilvalg blev givet eller uventet tilvalgsargument blev givet."
 
 #: ../../po/../uget/UgetPluginAria2.c:310
 msgid "aria2: remote server was unable to handle the request."
-msgstr "aria2: fjern-server var ikke tilgængelig til at håndtere anmodningen."
+msgstr "aria2: fjern-serveren kunnen ikke håndtere anmodningen."
 
 #: ../../po/../uget/UgetPluginAria2.c:311
 msgid "aria2: could not parse JSON-RPC request."
-msgstr "aria2: kunne ikke parse JSON-RPC-anmodning."
+msgstr "aria2: kunne ikke fortolke JSON-RPC-anmodning."
 
 #: ../../po/../uget/UgetPluginAria2.c:314
 msgid "No response. Is aria2 shutdown?"
@@ -319,7 +319,7 @@ msgstr "opgaver"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:399
 msgid "New from Clipboard"
-msgstr "Ny fra udkipsholder"
+msgstr "Ny fra udklipsholder"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:401 ../../po/../ui-gtk/UgtkApp.c:915
 msgid "New Download"
@@ -336,11 +336,11 @@ msgstr "Kommandolinje"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:780
 msgid "Error Occurred"
-msgstr "Der opstod en fejl"
+msgstr "Der opstod fejl"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:781
 msgid "Error Occurred when downloading."
-msgstr "Der opstod en fejl under download."
+msgstr "Der opstod fejl under download."
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:782
 msgid "Download Starting"
@@ -402,7 +402,7 @@ msgstr "Ny udklipsholder_batch..."
 #. New URL Sequence batch
 #: ../../po/../ui-gtk/UgtkApp-ui.c:321
 msgid "New _URL Sequence batch..."
-msgstr "Ny _URL-batchsekvens..."
+msgstr "Ny _URL-sekvensbatch..."
 
 #. New Torrent
 #. separator
@@ -478,15 +478,15 @@ msgstr "Nyt metalink"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1321
 msgid "Open Torrent file"
-msgstr "Åbn torrent-fil"
+msgstr "Åbn torrentfil"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1324
 msgid "Torrent file (*.torrent)"
-msgstr "Torrent-fil (*.torrent)"
+msgstr "Torrentfil (*.torrent)"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1337
 msgid "Open Metalink file"
-msgstr "Åbn metalink-fil"
+msgstr "Åbn metalinkfil"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1377
 msgid "Failed to save category file."
@@ -536,7 +536,7 @@ msgstr "Importér URL'er fra tekstfil"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1600
 msgid "Plain text file"
-msgstr "Ren tekst-fil"
+msgstr "Ren tekstfil"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1612
 msgid "Export URLs to text file"
@@ -574,16 +574,16 @@ msgstr "Besked"
 #: ../../po/../ui-gtk/UgtkApp.c:1927
 #, c-format
 msgid "Selected %d items"
-msgstr "%d punkt(er) valgt"
+msgstr "%d elementer valgt"
 
 #: ../../po/../ui-gtk/UgtkBanner.c:145 ../../po/../ui-gtk/UgtkBanner.c:165
 msgid "Attention uGetters:"
-msgstr "Hallo uGetters:"
+msgstr "Hallo uGettere:"
 
 #: ../../po/../ui-gtk/UgtkBanner.c:148
 msgid ""
 "we are running a Donation Drive for uGet's Future Development, please click "
-msgstr "vi kører en donationskampagne for uGet's fremtidige udvikling, klik venligst "
+msgstr "vi kører en donationskampagne for uGets fremtidige udvikling, klik venligst "
 
 #: ../../po/../ui-gtk/UgtkBanner.c:151
 msgid "HERE"
@@ -624,15 +624,15 @@ msgstr "URI matchende betingelser"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:118
 msgid "Matched _Hosts:"
-msgstr "Matchet _værter:"
+msgstr "Matchede _værter:"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:129
 msgid "Matched _Schemes:"
-msgstr "Matchet _skemaer:"
+msgstr "Matchede _skemaer:"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:140
 msgid "Matched _Types:"
-msgstr "Matchet _typer:"
+msgstr "Matchede _typer:"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:64
 msgid "Really Quit?"
@@ -652,7 +652,7 @@ msgstr "Er du sikker på, at du vil slette filerne?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:74
 msgid "Really delete category?"
-msgstr "Vil du virkelige slette kategorien?"
+msgstr "Vil du virkelig slette kategorien?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:75
 msgid "Are you sure you want to delete category?"
@@ -671,7 +671,7 @@ msgstr "_URI:"
 #. Mirrors - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:130
 msgid "Mirrors:"
-msgstr "Mirrors:"
+msgstr "Spejle:"
 
 #. File - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:146
@@ -731,22 +731,22 @@ msgstr "Adgangskode:"
 #. label - cookie file
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:293
 msgid "Cookie file:"
-msgstr "Cookie-fil:"
+msgstr "Cookiefil:"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:310
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:953
 msgid "Select Cookie File"
-msgstr "Vælg cookie-fil"
+msgstr "Vælg cookiefil"
 
 #. label - post file
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:319
 msgid "Post file:"
-msgstr "Post-fil:"
+msgstr "Postfil:"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:336
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:1009
 msgid "Select Post File"
-msgstr "Vælg post-fil"
+msgstr "Vælg postfil"
 
 #. label - user agent
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:346
@@ -820,12 +820,12 @@ msgstr "_URL-sekvensbatch..."
 #. Batch downloads - Text file import (.txt)
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:120
 msgid "_Text file import (.txt)..."
-msgstr "_Tekstfil import (.txt)..."
+msgstr "_Tekstfilimport (.txt)..."
 
 #. Batch downloads - HTML file import (.html)
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:130
 msgid "_HTML file import (.html)..."
-msgstr "_HTML-fil import (.html)..."
+msgstr "_HTML-filimport (.html)..."
 
 #. Batch downloads - Export to Text file (.txt)
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:142
@@ -877,7 +877,7 @@ msgstr "Kommandolinje arbejder stille"
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:227
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:111
 msgid "Skip existing URI"
-msgstr "Spring over eksisterende URI"
+msgstr "Spring eksisterende URI over"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
 #: ../../po/../ui-gtk/UgtkSettingForm.c:223
@@ -888,7 +888,7 @@ msgstr "Anvend seneste downloadindstillinger"
 #. --- Completion Auto-Actions --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:238
 msgid "Completion _Auto-Actions"
-msgstr "Fuldførsel _automatiske handlinger"
+msgstr "_Automatiske handlinger ved fuldførelse"
 
 #. Completion Auto-Actions - Disable
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:244
@@ -901,7 +901,7 @@ msgstr "Dvale"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:254
 msgid "Suspend"
-msgstr "Suspender"
+msgstr "Hvile"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:259
 msgid "Shutdown"
@@ -953,7 +953,7 @@ msgstr "_Opsummering"
 #. Summary Items --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:331
 msgid "Summary _Items"
-msgstr "Opsummerings_punkter"
+msgstr "Opsummerings_elementer"
 
 #. Summary Items - Name
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:336
@@ -1021,7 +1021,7 @@ msgstr "Hastighed"
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:411
 #: ../../po/../ui-gtk/UgtkNodeView.c:875
 msgid "Up Speed"
-msgstr "Op hastighed"
+msgstr "Ophastighed"
 
 #. Download Columns - Uploaded
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:416
@@ -1038,7 +1038,7 @@ msgstr "Forhold"
 #. Download Columns - Retry
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:426
 msgid "_Retry"
-msgstr "_Prøv igen"
+msgstr "_Forsøg"
 
 #. Download Columns - Added On
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:441
@@ -1082,7 +1082,7 @@ msgstr "Slet post og _fil"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:555
 msgid "Open _Containing folder"
-msgstr "Åbn _indenholdende mappe"
+msgstr "Åbn _indeholdende mappe"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:568
 msgid "Force Start"
@@ -1382,7 +1382,7 @@ msgstr "URL"
 
 #: ../../po/../ui-gtk/UgtkSelector.c:781
 msgid "Base hypertext reference"
-msgstr "Base hypertekst reference"
+msgstr "Base hypertekst-reference"
 
 #. select all
 #: ../../po/../ui-gtk/UgtkSelector.c:797
@@ -1422,7 +1422,7 @@ msgstr "cifre:"
 
 #: ../../po/../ui-gtk/UgtkSequence.c:132
 msgid "F_rom:"
-msgstr "_Fra:"
+msgstr "F_ra:"
 
 #. label case-sensitive
 #: ../../po/../ui-gtk/UgtkSequence.c:162
@@ -1467,7 +1467,7 @@ msgstr "Mediets websted"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:149
 msgid "Others"
-msgstr "Andre"
+msgstr "Andet"
 
 #. Monitor button
 #: ../../po/../ui-gtk/UgtkSettingForm.c:61
@@ -1492,7 +1492,7 @@ msgstr "Tilføjer til Nth kategori hvis ingen kategori matcher."
 #. media website
 #: ../../po/../ui-gtk/UgtkSettingForm.c:90
 msgid "_Monitor URL of media website"
-msgstr "_Overvåg URL af mediets websted"
+msgstr "_Overvåg mediewebstedets URL"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:105
 msgid "Monitor clipboard for specified file types:"
@@ -1538,7 +1538,7 @@ msgstr "Luk til bakke når vindue lukkes"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:207
 msgid "Use Ubuntu's App Indicator"
-msgstr "Brug Ubuntu's appindikator"
+msgstr "Brug Ubuntus appindikator"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:214
 msgid "Enable offline mode on startup"
@@ -1546,7 +1546,7 @@ msgstr "Aktivér offlinetilstand ved opstart"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:217
 msgid "Download starting notification"
-msgstr "Download startnotifikation"
+msgstr "Download startsnotifikation"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:220
 msgid "Sound when download is finished"
@@ -1567,7 +1567,7 @@ msgstr "Dette påvirker alle plugins."
 #. Global speed limit
 #: ../../po/../ui-gtk/UgtkSettingForm.c:301
 msgid "Global speed limit"
-msgstr "Global hastighedsgrænse"
+msgstr "Global hastighedsbegrænsning"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:309
 #: ../../po/../ui-gtk/UgtkSettingForm.c:610
@@ -1581,7 +1581,7 @@ msgstr "Maks. downloadhastighed"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:354
 msgid "Completion Auto-Actions"
-msgstr "Fuldførsel automatiske handlinger"
+msgstr "Automatiske handlinger ved fuldførelse"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:362
 msgid "Custom command:"
@@ -1625,13 +1625,13 @@ msgstr "Valgmuligheder for aria2-plugin"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:593
 msgid "RPC authorization secret token"
-msgstr "RPC-autorisation hemmelig token"
+msgstr "RPC-godkendelse hemmelig token"
 
 #. ------------------------------------------------------------------------
 #. Speed Limits
 #: ../../po/../ui-gtk/UgtkSettingForm.c:602
 msgid "Global speed limit for aria2 only"
-msgstr "Global hastighedsgrænse kun for aria2"
+msgstr "Global hastighedsbegrænsning kun for aria2"
 
 #. ------------------------------------------------------------------------
 #. aria2 works on local device
@@ -1670,7 +1670,7 @@ msgstr "Matchtilstand for medie:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:801
 msgid "Match conditions"
-msgstr "Match betingelser"
+msgstr "Matchbetingelser"
 
 #. Quality
 #: ../../po/../ui-gtk/UgtkSettingForm.c:810
@@ -1692,7 +1692,7 @@ msgstr "Mappe"
 
 #: ../../po/../ui-gtk/UgtkSummary.c:262
 msgid "Item"
-msgstr "Punkt"
+msgstr "Element"
 
 #: ../../po/../ui-gtk/UgtkSummary.c:267
 msgid "Value"

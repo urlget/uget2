@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Emin Tufan <etcetin@gmail.com>, 2016
+# Emin Tufan <etcetin@gmail.com>, 2016-2017
 # yakup <mutouk@yandex.ru>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-03 03:10+0800\n"
-"PO-Revision-Date: 2016-11-14 09:33+0000\n"
+"PO-Revision-Date: 2017-10-29 17:15+0000\n"
 "Last-Translator: Emin Tufan <etcetin@gmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/uget/uget/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -426,7 +426,7 @@ msgstr "Tüm ayarları kaydet"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:369
 msgid "Set selected download runnable"
-msgstr "Seçili indirmeyi çalıştır"
+msgstr "Seçili indirmeyi çalıştırılabilir olarak belirle"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:379
 msgid "Set selected download to pause"
@@ -850,7 +850,7 @@ msgstr "Tüm _ayarları kaydet"
 #. Offline mode
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:192
 msgid "Offline Mode"
-msgstr "Çevrimdışı Kip"
+msgstr "Çevrim Dışı Kip"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:210
 msgid "_Edit"
