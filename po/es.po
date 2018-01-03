@@ -5,14 +5,15 @@
 # Translators:
 # Alejo_K <claudio_alejandro@gmx.com>, 2015
 # Alejo_K <claudio_alejandro@gmx.com>, 2016
+# Juan Roberto García Sánchez <juanrobertogarciasanchez@gmail.com>, 2017
 # Vico Koby <vicokoby@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-03 03:10+0800\n"
-"PO-Revision-Date: 2016-11-09 16:16+0000\n"
-"Last-Translator: Alejo_K <claudio_alejandro@gmx.com>\n"
+"PO-Revision-Date: 2017-09-22 23:51+0000\n"
+"Last-Translator: Juan Roberto García Sánchez <juanrobertogarciasanchez@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/uget/uget/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -200,7 +201,7 @@ msgstr "Recursos insuficientes"
 #. _(),
 #: ../../po/../uget/UgetPluginAria2.c:289
 msgid "aria2: piece length was different from one in .aria2 control file."
-msgstr ""
+msgstr "aria2: la longitud de la pieza era diferente en el archivo de control de .aria2."
 
 #. 11 - 20
 #: ../../po/../uget/UgetPluginAria2.c:291
@@ -209,7 +210,7 @@ msgstr "aria2 descargó el mismo archivo."
 
 #: ../../po/../uget/UgetPluginAria2.c:292
 msgid "aria2 was downloading same info hash torrent."
-msgstr ""
+msgstr "aria2 estaba descargando la misma información hash del torrent."
 
 #: ../../po/../uget/UgetPluginAria2.c:293
 msgid "aria2: file already existed. See --allow-overwrite option."
@@ -256,7 +257,7 @@ msgstr "aria2: HTTP error de autorización."
 
 #: ../../po/../uget/UgetPluginAria2.c:306
 msgid "aria2: could not parse bencoded file(usually .torrent file)."
-msgstr ""
+msgstr "aria2: no se pudo analizar el archivo bencoded (normalmente archivo .torrent)."
 
 #: ../../po/../uget/UgetPluginAria2.c:307
 msgid "aria2: torrent file was corrupted or missing information."
@@ -295,7 +296,7 @@ msgstr "Fallo al obtener el enlace."
 
 #: ../../po/../uget/UgetPluginMedia.c:505
 msgid "No matched media."
-msgstr ""
+msgstr "No hay medios emparejados."
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:46
 msgid "Download Manager"
@@ -621,19 +622,19 @@ msgstr "Capacidad de reciclados:"
 #. URI Matching conditions
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:111
 msgid "URI Matching conditions"
-msgstr ""
+msgstr "Condiciones de emparejamiento URI"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:118
 msgid "Matched _Hosts:"
-msgstr ""
+msgstr "Hosts_Emparejados:"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:129
 msgid "Matched _Schemes:"
-msgstr ""
+msgstr "Sistemas_Emparejados:"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:140
 msgid "Matched _Types:"
-msgstr ""
+msgstr "Tipos_de_emparejamientos:"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:64
 msgid "Really Quit?"
@@ -1626,7 +1627,7 @@ msgstr "Aria2 opciones del complemento"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:593
 msgid "RPC authorization secret token"
-msgstr ""
+msgstr "Token secreto de autorización RPC"
 
 #. ------------------------------------------------------------------------
 #. Speed Limits
@@ -1667,7 +1668,7 @@ msgstr "Debe reiniciar uGet después de modificarlo."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:783
 msgid "Media matching mode:"
-msgstr ""
+msgstr "Modo de emparejamiento de los medios:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:801
 msgid "Match conditions"

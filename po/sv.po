@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Patrik Nilsson <asavartzeth@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-03 03:10+0800\n"
-"PO-Revision-Date: 2016-11-09 16:16+0000\n"
-"Last-Translator: Michael Tunnell <michael@ugetdm.com>\n"
+"PO-Revision-Date: 2017-09-16 10:31+0000\n"
+"Last-Translator: Patrik Nilsson <asavartzeth@gmail.com>\n"
 "Language-Team: Swedish (http://www.transifex.com/uget/uget/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,7 +26,7 @@ msgid ""
 "While attempting an SSH connection to %s there was a problem verifying it's hostkey against the known and trusted hosts file because it's hostkey was not found.\n"
 "\n"
 "Would you like to treat this connection as trusted for this and future connections by adding %s's hostkey to the known hosts file?"
-msgstr ""
+msgstr "Demon för lösenordshanterare: uget\n\nUnder försöket att upprätta en SSH anslutning till %s  uppstod det ett problem med verifieringen av dess värdnyckel emot den kända och betrodda värd filen, eftersom dess värdnyckel inte hittades.\n\nVill du behandla den här anslutningen som betrodda för denna och framtida anslutningar genom att lägga till %s's värdnyckel till den kända värdfilen?"
 
 #: ../../po/../uget/UgetApp.c:103
 msgid "All Category"
@@ -135,28 +136,28 @@ msgstr "Filen stöds ej."
 #. UGET_EVENT_ERROR_UNSUPPORTED_FILE
 #: ../../po/../uget/UgetEvent.c:93
 msgid "post file not found."
-msgstr ""
+msgstr "post-filen hittades inte."
 
 #. UGET_EVENT_ERROR_POST_FILE_NOT_FOUND
 #: ../../po/../uget/UgetEvent.c:94
 msgid "cookie file not found."
-msgstr ""
+msgstr "kakfilen hittades inte."
 
 #: ../../po/../uget/UgetMedia-youtube.c:275
 msgid "This video has been removed."
-msgstr ""
+msgstr "Den här videon har tagits bort."
 
 #: ../../po/../uget/UgetMedia-youtube.c:288
 msgid "Error occurred during getting video info."
-msgstr ""
+msgstr "Fel uppstod under hämtningen av video info."
 
 #: ../../po/../uget/UgetMedia-youtube.c:534
 msgid "Error occurred during getting video web page."
-msgstr ""
+msgstr "Fell uppstod under hämtningen av video webbsida."
 
 #: ../../po/../uget/UgetMedia-youtube.c:606
 msgid "No video_id found in URL of YouTube."
-msgstr ""
+msgstr "Inget video_id hittades i URL till YouTube."
 
 #. 1 - 10
 #: ../../po/../uget/UgetPluginAria2.c:280
@@ -165,7 +166,7 @@ msgstr "aria2: ett okänt fel inträffade."
 
 #: ../../po/../uget/UgetPluginAria2.c:281
 msgid "aria2: time out occurred."
-msgstr ""
+msgstr "aria2: timeout inträffade."
 
 #: ../../po/../uget/UgetPluginAria2.c:282
 msgid "aria2: resource was not found."
@@ -206,7 +207,7 @@ msgstr "aria2 hämtade samma fil."
 
 #: ../../po/../uget/UgetPluginAria2.c:292
 msgid "aria2 was downloading same info hash torrent."
-msgstr ""
+msgstr "aria2 hämtade samma info hash torrent."
 
 #: ../../po/../uget/UgetPluginAria2.c:293
 msgid "aria2: file already existed. See --allow-overwrite option."
@@ -219,20 +220,20 @@ msgstr "aria2: kunde inte öppna den befintliga filen."
 
 #: ../../po/../uget/UgetPluginAria2.c:296
 msgid "aria2: could not create new file or truncate existing file."
-msgstr ""
+msgstr "aria2: kunde inte skapa ny fil eller ändra befintlig fil."
 
 #: ../../po/../uget/UgetPluginAria2.c:297
 msgid "aria2: file I/O error occurred."
-msgstr ""
+msgstr "aria2: fil I/O fel inträffade."
 
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../../po/../uget/UgetPluginAria2.c:299
 msgid "aria2: name resolution failed."
-msgstr ""
+msgstr "aria2: namn uppslagning misslyckades."
 
 #: ../../po/../uget/UgetPluginAria2.c:300
 msgid "aria2: could not parse Metalink document."
-msgstr ""
+msgstr "aira2: kunde inte tolka Metalink dokumentet."
 
 #. 21 - 30
 #: ../../po/../uget/UgetPluginAria2.c:302
@@ -241,7 +242,7 @@ msgstr "aria2: FTP-kommandot misslyckades."
 
 #: ../../po/../uget/UgetPluginAria2.c:303
 msgid "aria2: HTTP response header was bad or unexpected."
-msgstr ""
+msgstr "aira2: HTTP-svarshuvud var felaktig eller oväntat."
 
 #: ../../po/../uget/UgetPluginAria2.c:304
 msgid "Too many redirections."
@@ -253,33 +254,33 @@ msgstr "aria2: HTTP autentisering misslyckades."
 
 #: ../../po/../uget/UgetPluginAria2.c:306
 msgid "aria2: could not parse bencoded file(usually .torrent file)."
-msgstr ""
+msgstr "aria2: kunde inte tolka bencoded fil (vanligtvis .torrent fil)."
 
 #: ../../po/../uget/UgetPluginAria2.c:307
 msgid "aria2: torrent file was corrupted or missing information."
-msgstr ""
+msgstr "aira2: torrent filen var korrupt eller saknade information."
 
 #: ../../po/../uget/UgetPluginAria2.c:308
 msgid "aria2: Magnet URI was bad."
-msgstr ""
+msgstr "aira2: Magnetlänk URI var felaktig."
 
 #: ../../po/../uget/UgetPluginAria2.c:309
 msgid ""
 "aria2: bad/unrecognized option was given or unexpected option argument was "
 "given."
-msgstr ""
+msgstr "aira2: felaktig/oigenkännligt alternativ angavs eller oväntat alternativ argument angivet."
 
 #: ../../po/../uget/UgetPluginAria2.c:310
 msgid "aria2: remote server was unable to handle the request."
-msgstr ""
+msgstr "aria2: fjärrservern kunde inte hantera förfrågan."
 
 #: ../../po/../uget/UgetPluginAria2.c:311
 msgid "aria2: could not parse JSON-RPC request."
-msgstr ""
+msgstr "aria2: kunde inte tolka JSON-RPC förfrågan."
 
 #: ../../po/../uget/UgetPluginAria2.c:314
 msgid "No response. Is aria2 shutdown?"
-msgstr ""
+msgstr "Inget svar. Är aria2 nedstängt?"
 
 #. debug
 #: ../../po/../uget/UgetPluginAria2.c:641
@@ -288,11 +289,11 @@ msgstr "aria2: gid togs bort."
 
 #: ../../po/../uget/UgetPluginMedia.c:489
 msgid "Failed to get media link."
-msgstr ""
+msgstr "Misslyckade att hämta media-länk."
 
 #: ../../po/../uget/UgetPluginMedia.c:505
 msgid "No matched media."
-msgstr ""
+msgstr "Inget matchat media."
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:46
 msgid "Download Manager"
@@ -480,7 +481,7 @@ msgstr "Öppna torrent-fil"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1324
 msgid "Torrent file (*.torrent)"
-msgstr ""
+msgstr "Torrent fil (*.torrent)"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1337
 msgid "Open Metalink file"
@@ -504,7 +505,7 @@ msgstr "Öppna kategori fil"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1429
 msgid "JSON file (*.json)"
-msgstr ""
+msgstr "JSON fil (*.json)"
 
 #. add link
 #: ../../po/../ui-gtk/UgtkApp.c:1485
@@ -526,7 +527,7 @@ msgstr "Importera URL:er från HTML-fil"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1585
 msgid "HTML file (*.htm, *.html)"
-msgstr ""
+msgstr "HTML fil (*.htm, *.html)"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1597
 msgid "Import URLs from text file"
@@ -534,7 +535,7 @@ msgstr "Importera URL:er från textfil"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1600
 msgid "Plain text file"
-msgstr ""
+msgstr "Vanlig textfil"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1612
 msgid "Export URLs to text file"
@@ -550,7 +551,7 @@ msgstr "Inga URL:er hittades i urklipp."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1667
 msgid "All URLs had existed."
-msgstr ""
+msgstr "Alla URL:er har existerat."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1672
 msgid "Clipboard batch"
@@ -618,19 +619,19 @@ msgstr "Kapacitet för borttagna:"
 #. URI Matching conditions
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:111
 msgid "URI Matching conditions"
-msgstr ""
+msgstr "URI matchande förhållanden"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:118
 msgid "Matched _Hosts:"
-msgstr ""
+msgstr "Matchade _värdar:"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:129
 msgid "Matched _Schemes:"
-msgstr ""
+msgstr "Matchade _scheman:"
 
 #: ../../po/../ui-gtk/UgtkCategoryForm.c:140
 msgid "Matched _Types:"
-msgstr ""
+msgstr "Matchade _typer:"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:64
 msgid "Really Quit?"
@@ -695,7 +696,7 @@ msgstr "Hänvisare:"
 #. "Max Connections:" - title label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:212
 msgid "_Max Connections:"
-msgstr ""
+msgstr "_Max anslutningar:"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:230
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:574
@@ -774,7 +775,7 @@ msgstr "sekunder"
 #. label - Max upload speed
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:406
 msgid "Max upload speed:"
-msgstr "Max uppladdnings hastighet:"
+msgstr "Max uppladdningshastighet:"
 
 #. label - "KiB/s"
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:418
@@ -789,7 +790,7 @@ msgstr "KiB/s"
 #. label - Max download speed
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:424
 msgid "Max download speed:"
-msgstr "Max nedladdnings hastighet:"
+msgstr "Max nedladdningshastighet:"
 
 #. Retrieve timestamp
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:442
@@ -833,22 +834,22 @@ msgstr "_Exportera till textfil (.txt)..."
 #. Open Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:156
 msgid "_Open category..."
-msgstr ""
+msgstr "_Öppna kategori..."
 
 #. Save Category
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:167
 msgid "_Save category as..."
-msgstr ""
+msgstr "_Spara kategori som..."
 
 #. Save All
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:178
 msgid "Save _all settings"
-msgstr ""
+msgstr "Spara _alla inställningar"
 
 #. Offline mode
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:192
 msgid "Offline Mode"
-msgstr ""
+msgstr "Offlineläge"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:210
 msgid "_Edit"
@@ -860,22 +861,22 @@ msgstr "_Redigera"
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:215
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:99
 msgid "Clipboard _Monitor"
-msgstr "Urklipp _övervakare"
+msgstr "Urklipps_övervakare"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:219
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:103
 msgid "Clipboard works quietly"
-msgstr ""
+msgstr "Urklipp arbetar tyst"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:223
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:107
 msgid "Command-line works quietly"
-msgstr ""
+msgstr "Kommandorad arbetar tyst"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:227
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:111
 msgid "Skip existing URI"
-msgstr ""
+msgstr "Hoppa över befintlig URI"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:231
 #: ../../po/../ui-gtk/UgtkSettingForm.c:223
@@ -886,16 +887,16 @@ msgstr "Tillämpa senaste nedladdnings inställningar"
 #. --- Completion Auto-Actions --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:238
 msgid "Completion _Auto-Actions"
-msgstr ""
+msgstr "Slutförande _auto-åtgärder"
 
 #. Completion Auto-Actions - Disable
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:244
 msgid "_Disable"
-msgstr ""
+msgstr "_Inaktivera"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:249
 msgid "Hibernate"
-msgstr ""
+msgstr "Vila"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:254
 msgid "Suspend"
@@ -911,12 +912,12 @@ msgstr "Starta om"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:269
 msgid "Custom"
-msgstr ""
+msgstr "Anpassad"
 
 #. Completion Auto-Actions - Remember
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:275
 msgid "Remember setting"
-msgstr ""
+msgstr "Kom ihåg inställning"
 
 #. Completion Auto-Actions - Help
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:279
@@ -1072,15 +1073,15 @@ msgstr "_Nedladdning"
 #. accel_group);
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:529
 msgid "_Delete Entry"
-msgstr ""
+msgstr "_Ta bort inlägg"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:540
 msgid "Delete Entry and _File"
-msgstr ""
+msgstr "Ta bort inlägg och _fil"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:555
 msgid "Open _Containing folder"
-msgstr ""
+msgstr "Öppna _innehållande mapp"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:568
 msgid "Force Start"
@@ -1161,11 +1162,11 @@ msgstr "'%s' - Den här mappen finns inte."
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:219
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:223
 msgid "URI had existed"
-msgstr ""
+msgstr "URI har existerat"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:221
 msgid "This URI had existed, are you sure to continue?"
-msgstr ""
+msgstr "Denna URI hade existerat, är du säker på att fortsätta?"
 
 #: ../../po/../ui-gtk/UgtkNodeDialog.c:359
 msgid "General"
@@ -1218,7 +1219,7 @@ msgstr "Aktiva"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:668
 msgid "All Status"
-msgstr ""
+msgstr "Alla status"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:773
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:101
@@ -1336,7 +1337,7 @@ msgstr "- stoppa alla uppgifter"
 #. Normal - label
 #: ../../po/../ui-gtk/UgtkScheduleForm.c:169
 msgid "Normal"
-msgstr "Normalt"
+msgstr "Normal"
 
 #. Normal - help label
 #: ../../po/../ui-gtk/UgtkScheduleForm.c:174
@@ -1445,11 +1446,11 @@ msgstr "Förhandsvisning"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:113
 msgid "User Interface"
-msgstr ""
+msgstr "Användargränssnitt"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:125
 msgid "Bandwidth"
-msgstr ""
+msgstr "Bandbredd"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:131
 msgid "Scheduler"
@@ -1461,7 +1462,7 @@ msgstr "Insticksmodul"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:143
 msgid "Media website"
-msgstr ""
+msgstr "Media webbplats"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:149
 msgid "Others"
@@ -1470,7 +1471,7 @@ msgstr "Övriga"
 #. Monitor button
 #: ../../po/../ui-gtk/UgtkSettingForm.c:61
 msgid "_Enable clipboard monitor"
-msgstr ""
+msgstr "_Aktivera urklippsövervakare"
 
 #. quiet mode
 #: ../../po/../ui-gtk/UgtkSettingForm.c:66
@@ -1480,21 +1481,21 @@ msgstr "_Tyst läge"
 #: ../../po/../ui-gtk/UgtkSettingForm.c:72
 #: ../../po/../ui-gtk/UgtkSettingForm.c:488
 msgid "Default category index"
-msgstr ""
+msgstr "Standard kategori index"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:84
 #: ../../po/../ui-gtk/UgtkSettingForm.c:500
 msgid "Adding to Nth category if no matched category."
-msgstr ""
+msgstr "Lägger till i Nth kategori om ingen matchade kategori."
 
 #. media website
 #: ../../po/../ui-gtk/UgtkSettingForm.c:90
 msgid "_Monitor URL of media website"
-msgstr ""
+msgstr "_Övervaka URL till media webbplats"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:105
 msgid "Monitor clipboard for specified file types:"
-msgstr ""
+msgstr "Övervaka urklipp efter specificerade filtyper:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:125
 msgid "Separate the types with character '|'."
@@ -1506,12 +1507,12 @@ msgstr "Du kan använda reguljära uttryck här."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:176
 msgid "Confirmation"
-msgstr ""
+msgstr "Bekräftelse"
 
 #. Confirmation check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:182
 msgid "Show confirmation dialog on exit"
-msgstr ""
+msgstr "Visa bekräftelsedialog vid avslut"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:185
 msgid "Confirm when deleting files"
@@ -1519,7 +1520,7 @@ msgstr "Bekräfta när du tar bort filer"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:191
 msgid "System Tray"
-msgstr ""
+msgstr "Systemfältet"
 
 #. System Tray check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:197
@@ -1532,11 +1533,11 @@ msgstr "Minimera till systemfält vid uppstart"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:203
 msgid "Close to tray on window close"
-msgstr ""
+msgstr "Stäng till systemfält vid stängning"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:207
 msgid "Use Ubuntu's App Indicator"
-msgstr ""
+msgstr "Använd Ubuntu's app indikator"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:214
 msgid "Enable offline mode on startup"
@@ -1556,42 +1557,42 @@ msgstr "Spela en ton när nedladdning är slutförd"
 #. gtk_box_pack_start (vbox, widget, FALSE, FALSE, 1);
 #: ../../po/../ui-gtk/UgtkSettingForm.c:229
 msgid "Display large icon"
-msgstr ""
+msgstr "Visa stor ikon"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:295
 msgid "These will affect all plug-ins."
-msgstr ""
+msgstr "Dessa kommer att påverka alla insticksmoduler."
 
 #. Global speed limit
 #: ../../po/../ui-gtk/UgtkSettingForm.c:301
 msgid "Global speed limit"
-msgstr ""
+msgstr "Global hastighetsbegränsning"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:309
 #: ../../po/../ui-gtk/UgtkSettingForm.c:610
 msgid "Max upload speed"
-msgstr ""
+msgstr "Max uppladdningshastighet"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:321
 #: ../../po/../ui-gtk/UgtkSettingForm.c:622
 msgid "Max download speed"
-msgstr ""
+msgstr "Max nedladdningshastighet"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:354
 msgid "Completion Auto-Actions"
-msgstr ""
+msgstr "Slutförande auto-åtgärder"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:362
 msgid "Custom command:"
-msgstr ""
+msgstr "Anpassat kommando:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:374
 msgid "Custom command if error occured:"
-msgstr ""
+msgstr "Anpassat kommando om fel inträffade:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:424
 msgid "_Autosave"
-msgstr ""
+msgstr "_Auto-spara"
 
 #. auto save interval label
 #: ../../po/../ui-gtk/UgtkSettingForm.c:435
@@ -1615,39 +1616,39 @@ msgstr "Använd '--quiet' som standard"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:554
 msgid "Plug-in matching order:"
-msgstr ""
+msgstr "Insticksmoduler i matchande ordning:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:577
 msgid "Aria2 plug-in options"
-msgstr ""
+msgstr "Alternativ för aria2 insticksmodul"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:593
 msgid "RPC authorization secret token"
-msgstr ""
+msgstr "RPC hemligt autentiserings token"
 
 #. ------------------------------------------------------------------------
 #. Speed Limits
 #: ../../po/../ui-gtk/UgtkSettingForm.c:602
 msgid "Global speed limit for aria2 only"
-msgstr ""
+msgstr "Endast global hastighetsbegränsning för aria2"
 
 #. ------------------------------------------------------------------------
 #. aria2 works on local device
 #. launch
 #: ../../po/../ui-gtk/UgtkSettingForm.c:635
 msgid "_Launch aria2 on startup"
-msgstr "_Kör aria2 vid uppstart"
+msgstr "_Starta aria2 vid uppstart"
 
 #. shutdown
 #: ../../po/../ui-gtk/UgtkSettingForm.c:641
 msgid "_Shutdown aria2 on exit"
-msgstr "_Stäng aria2 vid avslut"
+msgstr "_Stäng aria2 vid nedstängning"
 
 #. ------------------------------------------------------------------------
 #. Local options
 #: ../../po/../ui-gtk/UgtkSettingForm.c:647
 msgid "Launch aria2 on local device"
-msgstr ""
+msgstr "Starta aria2 på lokal enhet"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:656
 msgid "Path"
@@ -1660,25 +1661,25 @@ msgstr "Argument"
 #. Arguments - hint
 #: ../../po/../ui-gtk/UgtkSettingForm.c:679
 msgid "You must restart uGet after modifying it."
-msgstr ""
+msgstr "Du måste starta om uGet efter att ha modifierat det."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:783
 msgid "Media matching mode:"
-msgstr ""
+msgstr "Media matchningsläge:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:801
 msgid "Match conditions"
-msgstr ""
+msgstr "Match förhållanden:"
 
 #. Quality
 #: ../../po/../ui-gtk/UgtkSettingForm.c:810
 msgid "Quality:"
-msgstr ""
+msgstr "Kvalitet:"
 
 #. Type
 #: ../../po/../ui-gtk/UgtkSettingForm.c:830
 msgid "Type:"
-msgstr ""
+msgstr "Typ:"
 
 #: ../../po/../ui-gtk/UgtkSummary.c:104
 msgid "File"

@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-03 03:10+0800\n"
-"PO-Revision-Date: 2017-02-15 21:37+0000\n"
+"PO-Revision-Date: 2017-09-22 23:51+0000\n"
 "Last-Translator: Giuseppe Pignataro (Fasbyte01) <rogepix@gmail.com>\n"
 "Language-Team: Italian (http://www.transifex.com/uget/uget/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -138,28 +138,28 @@ msgstr "File non supportato."
 #. UGET_EVENT_ERROR_UNSUPPORTED_FILE
 #: ../../po/../uget/UgetEvent.c:93
 msgid "post file not found."
-msgstr ""
+msgstr "file post non trovato."
 
 #. UGET_EVENT_ERROR_POST_FILE_NOT_FOUND
 #: ../../po/../uget/UgetEvent.c:94
 msgid "cookie file not found."
-msgstr ""
+msgstr "file coockie non trovato"
 
 #: ../../po/../uget/UgetMedia-youtube.c:275
 msgid "This video has been removed."
-msgstr ""
+msgstr "Questo video è stato rimosso."
 
 #: ../../po/../uget/UgetMedia-youtube.c:288
 msgid "Error occurred during getting video info."
-msgstr ""
+msgstr "Errore durante il recupero delle informazioni video."
 
 #: ../../po/../uget/UgetMedia-youtube.c:534
 msgid "Error occurred during getting video web page."
-msgstr ""
+msgstr "Errore durante il recupero della pagina web del video."
 
 #: ../../po/../uget/UgetMedia-youtube.c:606
 msgid "No video_id found in URL of YouTube."
-msgstr ""
+msgstr "Nessun video_id trovato nell'URL di YouTube."
 
 #. 1 - 10
 #: ../../po/../uget/UgetPluginAria2.c:280
@@ -291,11 +291,11 @@ msgstr "aria2: gid è stato rimosso."
 
 #: ../../po/../uget/UgetPluginMedia.c:489
 msgid "Failed to get media link."
-msgstr ""
+msgstr "Impossibile aprire il link del media."
 
 #: ../../po/../uget/UgetPluginMedia.c:505
 msgid "No matched media."
-msgstr ""
+msgstr "Nessun media corrispondente."
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:46
 msgid "Download Manager"
@@ -1464,7 +1464,7 @@ msgstr "Plugin"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:143
 msgid "Media website"
-msgstr ""
+msgstr "Sito web media"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:149
 msgid "Others"
@@ -1493,7 +1493,7 @@ msgstr "Aggiunta alla n categoria se nessuna categoria corrsiponde."
 #. media website
 #: ../../po/../ui-gtk/UgtkSettingForm.c:90
 msgid "_Monitor URL of media website"
-msgstr ""
+msgstr "_Monitora URL del sito web del media"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:105
 msgid "Monitor clipboard for specified file types:"
@@ -1559,7 +1559,7 @@ msgstr "Suono a download completato"
 #. gtk_box_pack_start (vbox, widget, FALSE, FALSE, 1);
 #: ../../po/../ui-gtk/UgtkSettingForm.c:229
 msgid "Display large icon"
-msgstr ""
+msgstr "Mostra icona grande"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:295
 msgid "These will affect all plug-ins."
@@ -1667,11 +1667,11 @@ msgstr "Devi riavviare uGet dopo averlo modificato."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:783
 msgid "Media matching mode:"
-msgstr ""
+msgstr "Modalità corrispondenza media:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:801
 msgid "Match conditions"
-msgstr ""
+msgstr "Condizioni corrispondenze"
 
 #. Quality
 #: ../../po/../ui-gtk/UgtkSettingForm.c:810

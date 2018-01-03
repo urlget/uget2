@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-03 03:10+0800\n"
-"PO-Revision-Date: 2016-11-09 16:16+0000\n"
+"PO-Revision-Date: 2017-09-22 23:51+0000\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh (http://www.transifex.com/uget/uget/language/kk/)\n"
 "MIME-Version: 1.0\n"
@@ -131,7 +131,7 @@ msgstr ""
 #. UGET_EVENT_ERROR_UNSUPPORTED_SCHEME
 #: ../../po/../uget/UgetEvent.c:92
 msgid "Unsupported file."
-msgstr ""
+msgstr "Қолдауы жоқ файл."
 
 #. UGET_EVENT_ERROR_UNSUPPORTED_FILE
 #: ../../po/../uget/UgetEvent.c:93
@@ -246,7 +246,7 @@ msgstr ""
 
 #: ../../po/../uget/UgetPluginAria2.c:304
 msgid "Too many redirections."
-msgstr ""
+msgstr "Қайта бағдарлаулар саны тым көп."
 
 #: ../../po/../uget/UgetPluginAria2.c:305
 msgid "aria2: HTTP authorization failed."
@@ -305,11 +305,11 @@ msgstr "Baurzhan Muftakhidinov <baurthefirst@gmail.com>"
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:80
 msgid "uGet Founder: "
-msgstr ""
+msgstr "uGet негізін қалаған: "
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:81
 msgid "uGet Project Manager: "
-msgstr ""
+msgstr "uGet жоба басқарушысы: "
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:263
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:239
@@ -347,15 +347,15 @@ msgstr "Жүктеп алу басталды"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:783
 msgid "Starting download queue."
-msgstr ""
+msgstr "Жүктемелер кезегін бастау."
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:784
 msgid "Download Completed"
-msgstr ""
+msgstr "Жүктеме аяқталды"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:785
 msgid "All queuing downloads have been completed."
-msgstr ""
+msgstr "Кезектегі барлық жүктемелер аяқталды."
 
 #. ----------------------------------------------------
 #. frame for Status (start mode)
@@ -386,12 +386,12 @@ msgstr "Жаңа жүктемені жасау"
 #: ../../po/../ui-gtk/UgtkApp-ui.c:289 ../../po/../ui-gtk/UgtkMenubar-ui.c:58
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:59
 msgid "New _Download..."
-msgstr ""
+msgstr "Жаңа _жүктеме..."
 
 #. New Category
 #: ../../po/../ui-gtk/UgtkApp-ui.c:300 ../../po/../ui-gtk/UgtkMenubar-ui.c:69
 msgid "New _Category..."
-msgstr ""
+msgstr "Жаңа _санат..."
 
 #. New Clipboard batch
 #: ../../po/../ui-gtk/UgtkApp-ui.c:310 ../../po/../ui-gtk/UgtkTrayIcon.c:70
@@ -425,31 +425,31 @@ msgstr "Барлық баптауларды сақтау"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:369
 msgid "Set selected download runnable"
-msgstr ""
+msgstr "Таңдалған жүктемені орындалатын етіп белгілеу"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:379
 msgid "Set selected download to pause"
-msgstr ""
+msgstr "Таңдалған жүктемені аялдату"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:389
 msgid "Set selected download properties"
-msgstr ""
+msgstr "Таңдалған жүктеменің баптауларын орнату"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:402
 msgid "Move selected download up"
-msgstr ""
+msgstr "Таңдалған жүктемені жоғары жылжыту"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:412
 msgid "Move selected download down"
-msgstr ""
+msgstr "Таңдалған жүктемені төмен жылжыту"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:422
 msgid "Move selected download to top"
-msgstr ""
+msgstr "Таңдалған жүктемені басына жылжыту"
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:432
 msgid "Move selected download to bottom"
-msgstr ""
+msgstr "Таңдалған жүктемені соңына жылжыту"
 
 #: ../../po/../ui-gtk/UgtkApp.c:883
 msgid "New Category"
@@ -457,15 +457,15 @@ msgstr "Жаңа санат"
 
 #: ../../po/../ui-gtk/UgtkApp.c:894
 msgid "Copy - "
-msgstr ""
+msgstr "Көшірме - "
 
 #: ../../po/../ui-gtk/UgtkApp.c:1049
 msgid "Category Properties"
-msgstr ""
+msgstr "Санат қасиеттері"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1063
 msgid "Download Properties"
-msgstr ""
+msgstr "Жүктеме қасиеттері"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1296
 msgid "New Torrent"
@@ -473,11 +473,11 @@ msgstr "Жаңа торрент"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1312
 msgid "New Metalink"
-msgstr ""
+msgstr "Жаңа метасілтеме"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1321
 msgid "Open Torrent file"
-msgstr ""
+msgstr "Торрент файлын ашу"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1324
 msgid "Torrent file (*.torrent)"
@@ -485,27 +485,27 @@ msgstr "Torrent файлы (*.torrent)"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1337
 msgid "Open Metalink file"
-msgstr ""
+msgstr "Метасілтеме файлын ашу"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1377
 msgid "Failed to save category file."
-msgstr ""
+msgstr "Санаттар файлын сақтау сәтсіз аяқталды."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1397
 msgid "Failed to load category file."
-msgstr ""
+msgstr "Санаттар файлын жүктеу сәтсіз аяқталды."
 
 #: ../../po/../ui-gtk/UgtkApp.c:1408
 msgid "Save Category file"
-msgstr ""
+msgstr "Санаттар файлын сақтау"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1426
 msgid "Open Category file"
-msgstr ""
+msgstr "Санаттар файлын ашу"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1429
 msgid "JSON file (*.json)"
-msgstr ""
+msgstr "JSON файлы (*.json)"
 
 #. add link
 #: ../../po/../ui-gtk/UgtkApp.c:1485
@@ -527,7 +527,7 @@ msgstr ""
 
 #: ../../po/../ui-gtk/UgtkApp.c:1585
 msgid "HTML file (*.htm, *.html)"
-msgstr ""
+msgstr "HTML файлы (*.htm, *.html)"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1597
 msgid "Import URLs from text file"
@@ -639,7 +639,7 @@ msgstr ""
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:65
 msgid "Are you sure you want to quit?"
-msgstr ""
+msgstr "Шығуды қалайсыз ба?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:69
 msgid "Really delete files?"
@@ -701,7 +701,7 @@ msgstr ""
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:230
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:574
 msgid "_Runnable"
-msgstr ""
+msgstr "О_рындалатын"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:232
 msgid "P_ause"
@@ -711,7 +711,7 @@ msgstr "А_ялдату"
 #. frame for login
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:238
 msgid "Login"
-msgstr ""
+msgstr "Логин"
 
 #. User - label
 #. user label & entry
@@ -735,17 +735,17 @@ msgstr "Cookie файлы:"
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:310
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:953
 msgid "Select Cookie File"
-msgstr ""
+msgstr "Cookie файлын таңдау"
 
 #. label - post file
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:319
 msgid "Post file:"
-msgstr ""
+msgstr "Post файлы:"
 
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:336
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:1009
 msgid "Select Post File"
-msgstr ""
+msgstr "Post файлын таңдау"
 
 #. label - user agent
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:346
@@ -760,7 +760,7 @@ msgstr ""
 #. counts - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:377
 msgid "counts"
-msgstr ""
+msgstr "рет"
 
 #. Retry delay - label
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:384
@@ -785,7 +785,7 @@ msgstr ""
 #: ../../po/../ui-gtk/UgtkSettingForm.c:612
 #: ../../po/../ui-gtk/UgtkSettingForm.c:624
 msgid "KiB/s"
-msgstr ""
+msgstr "КиБ/сек"
 
 #. label - Max download speed
 #: ../../po/../ui-gtk/UgtkDownloadForm.c:424
@@ -799,7 +799,7 @@ msgstr ""
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:51
 msgid "_File"
-msgstr ""
+msgstr "_Файл"
 
 #. Batch Downloads --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:94
@@ -849,7 +849,7 @@ msgstr ""
 #. Offline mode
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:192
 msgid "Offline Mode"
-msgstr ""
+msgstr "Желіден тыс режимі"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:210
 msgid "_Edit"
@@ -904,7 +904,7 @@ msgstr "Ұйықтату"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:259
 msgid "Shutdown"
-msgstr ""
+msgstr "Сөндіру"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:264
 msgid "Reboot"
@@ -931,11 +931,11 @@ msgstr "_Көмек"
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:285
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:122
 msgid "_Settings..."
-msgstr ""
+msgstr "_Баптаулар..."
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:304
 msgid "_View"
-msgstr ""
+msgstr "Тү_рі"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:308
 msgid "_Toolbar"
@@ -943,11 +943,11 @@ msgstr "_Панель"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:313
 msgid "Statusbar"
-msgstr ""
+msgstr "Қалып-күй жолағы"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:323
 msgid "_Summary"
-msgstr ""
+msgstr "Жи_ынды мәлімет"
 
 #. Summary Items --- start ---
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:331
@@ -962,7 +962,7 @@ msgstr "_Аты"
 #. Summary Items - Folder
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:341
 msgid "_Folder"
-msgstr ""
+msgstr "_Бума"
 
 #. Summary Items - Elapsed
 #. menu_item = gtk_check_menu_item_new_with_mnemonic (_("_Elapsed"));
@@ -974,12 +974,12 @@ msgstr ""
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:356
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:436
 msgid "_URL"
-msgstr ""
+msgstr "_Сілтеме"
 
 #. Summary Items - Message
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:361
 msgid "_Message"
-msgstr ""
+msgstr "_Хабарлама"
 
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:376
 msgid "Download _Columns"
@@ -1008,7 +1008,7 @@ msgstr ""
 #. Download Columns - Left
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:401
 msgid "_Left"
-msgstr ""
+msgstr "Қа_лды"
 
 #. Download Columns - Speed
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:406
@@ -1245,7 +1245,7 @@ msgstr "Өткен"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:847
 msgid "Left"
-msgstr ""
+msgstr "Қалды"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:946
 #: ../../po/../ui-gtk/UgtkSettingForm.c:584
@@ -1454,7 +1454,7 @@ msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:131
 msgid "Scheduler"
-msgstr ""
+msgstr "Жоспарлаушы"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:137
 msgid "Plug-in"
@@ -1476,7 +1476,7 @@ msgstr ""
 #. quiet mode
 #: ../../po/../ui-gtk/UgtkSettingForm.c:66
 msgid "_Quiet mode"
-msgstr ""
+msgstr "_Тыныш режимі"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:72
 #: ../../po/../ui-gtk/UgtkSettingForm.c:488
@@ -1520,20 +1520,20 @@ msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:191
 msgid "System Tray"
-msgstr ""
+msgstr "Жүйелік трей"
 
 #. System Tray check buttons
 #: ../../po/../ui-gtk/UgtkSettingForm.c:197
 msgid "Always show tray icon"
-msgstr ""
+msgstr "Трей таңбашасын әрқашан көрсету"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:200
 msgid "Minimize to tray on startup"
-msgstr ""
+msgstr "Іске қосылғанда, трейге қайыру"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:203
 msgid "Close to tray on window close"
-msgstr ""
+msgstr "Терезе жабылғанда, трейге қайыру"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:207
 msgid "Use Ubuntu's App Indicator"
@@ -1557,7 +1557,7 @@ msgstr ""
 #. gtk_box_pack_start (vbox, widget, FALSE, FALSE, 1);
 #: ../../po/../ui-gtk/UgtkSettingForm.c:229
 msgid "Display large icon"
-msgstr ""
+msgstr "Үлкен таңбашаны көрсету"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:295
 msgid "These will affect all plug-ins."
@@ -1592,12 +1592,12 @@ msgstr ""
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:424
 msgid "_Autosave"
-msgstr ""
+msgstr "_Автосақтау"
 
 #. auto save interval label
 #: ../../po/../ui-gtk/UgtkSettingForm.c:435
 msgid "_Interval:"
-msgstr ""
+msgstr "_Аралығы:"
 
 #. auto save interval unit label
 #: ../../po/../ui-gtk/UgtkSettingForm.c:446
@@ -1607,7 +1607,7 @@ msgstr "минут"
 #. Commandline Settings
 #: ../../po/../ui-gtk/UgtkSettingForm.c:475
 msgid "Commandline Settings"
-msgstr ""
+msgstr "Командалық жол баптаулары"
 
 #. --quiet
 #: ../../po/../ui-gtk/UgtkSettingForm.c:482
@@ -1656,7 +1656,7 @@ msgstr "Орналасу"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:674
 msgid "Arguments"
-msgstr ""
+msgstr "Аргументтер"
 
 #. Arguments - hint
 #: ../../po/../ui-gtk/UgtkSettingForm.c:679
@@ -1674,16 +1674,16 @@ msgstr ""
 #. Quality
 #: ../../po/../ui-gtk/UgtkSettingForm.c:810
 msgid "Quality:"
-msgstr ""
+msgstr "Сапасы:"
 
 #. Type
 #: ../../po/../ui-gtk/UgtkSettingForm.c:830
 msgid "Type:"
-msgstr ""
+msgstr "Түрі:"
 
 #: ../../po/../ui-gtk/UgtkSummary.c:104
 msgid "File"
-msgstr ""
+msgstr "Файл"
 
 #: ../../po/../ui-gtk/UgtkSummary.c:119
 msgid "Folder"
@@ -1695,19 +1695,19 @@ msgstr "Элемент"
 
 #: ../../po/../ui-gtk/UgtkSummary.c:267
 msgid "Value"
-msgstr ""
+msgstr "Мәні"
 
 #. Copy All
 #: ../../po/../ui-gtk/UgtkSummary.c:299
 msgid "Copy _All"
-msgstr ""
+msgstr "Бар_лығын көшіріп алу"
 
 #. Show window
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:141
 msgid "Show window"
-msgstr ""
+msgstr "Терезені көрсету"
 
 #. Offline mode
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:147
 msgid "_Offline Mode"
-msgstr ""
+msgstr "Желіден т_ыс режимі"

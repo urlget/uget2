@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Dz Chen <wsxy162@gmail.com>, 2015-2016
+# Dz Chen <wsxy162@gmail.com>, 2015-2017
 # jiajinming <bfsujiajinming@hotmail.com>, 2014
 # Tommy He <lovenemesis@gmail.com>, 2014
 msgid ""
@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-03 03:10+0800\n"
-"PO-Revision-Date: 2016-11-09 16:16+0000\n"
+"PO-Revision-Date: 2017-12-22 19:28+0000\n"
 "Last-Translator: Dz Chen <wsxy162@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/uget/uget/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -419,7 +419,7 @@ msgstr "新建种子..."
 #: ../../po/../ui-gtk/UgtkApp-ui.c:342 ../../po/../ui-gtk/UgtkMenubar-ui.c:87
 #: ../../po/../ui-gtk/UgtkTrayIcon.c:90
 msgid "New Metalink..."
-msgstr "新建 Metalink..."
+msgstr "新建磁链..."
 
 #: ../../po/../ui-gtk/UgtkApp-ui.c:356
 msgid "Save all settings"
@@ -475,7 +475,7 @@ msgstr "新建种子"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1312
 msgid "New Metalink"
-msgstr "新建 Metalink"
+msgstr "新建磁链"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1321
 msgid "Open Torrent file"
@@ -487,7 +487,7 @@ msgstr "种子文件 (*.torrent)"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1337
 msgid "Open Metalink file"
-msgstr "打开 Metalink文件"
+msgstr "打开磁链文件"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1377
 msgid "Failed to save category file."
@@ -512,7 +512,7 @@ msgstr "JSON 文件 (*.json)"
 #. add link
 #: ../../po/../ui-gtk/UgtkApp.c:1485
 msgid "Link <A>"
-msgstr "链接 <A>"
+msgstr "连结 <A>"
 
 #. add image
 #: ../../po/../ui-gtk/UgtkApp.c:1490
@@ -1005,12 +1005,12 @@ msgstr "百分比 '%'"
 #. Download Columns - Elapsed
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:396
 msgid "_Elapsed"
-msgstr "已用时间(_E)"
+msgstr "已完成(_E)"
 
 #. Download Columns - Left
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:401
 msgid "_Left"
-msgstr "剩余时间(_L)"
+msgstr "剩余(_L)"
 
 #. Download Columns - Speed
 #: ../../po/../ui-gtk/UgtkMenubar-ui.c:406
@@ -1243,11 +1243,11 @@ msgstr "%"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:833
 msgid "Elapsed"
-msgstr "已用时间"
+msgstr "已完成"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:847
 msgid "Left"
-msgstr "剩余时间"
+msgstr "剩余"
 
 #: ../../po/../ui-gtk/UgtkNodeView.c:946
 #: ../../po/../ui-gtk/UgtkSettingForm.c:584

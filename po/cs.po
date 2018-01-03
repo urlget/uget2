@@ -4,6 +4,7 @@
 # 
 # Translators:
 # Alois Nešpor <info@aloisnespor.info>, 2014
+# Radoslav Klein <klein.radoslav@gmail.com>, 2017
 # ToMáš Marný, 2013
 # ToMáš_Marný, 2013
 # wastingdouglas <adminkonsoleshop@volny.cz>, 2011
@@ -12,8 +13,8 @@ msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-03 03:10+0800\n"
-"PO-Revision-Date: 2016-11-09 16:16+0000\n"
-"Last-Translator: Michael Tunnell <michael@ugetdm.com>\n"
+"PO-Revision-Date: 2017-09-22 23:51+0000\n"
+"Last-Translator: ToMáš Marný\n"
 "Language-Team: Czech (http://www.transifex.com/uget/uget/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,7 +30,7 @@ msgid ""
 "While attempting an SSH connection to %s there was a problem verifying it's hostkey against the known and trusted hosts file because it's hostkey was not found.\n"
 "\n"
 "Would you like to treat this connection as trusted for this and future connections by adding %s's hostkey to the known hosts file?"
-msgstr ""
+msgstr "Password Manager Daemon: uget\n\nPři pokusu o SSH připojení k %s došlo k problému s ověřením klíče, protože klíč nebyl nalezen ve známém a důvěryhodném seznamu známých hostitelů.\n\nChcete tohoto připojení označit jako důvěryhodné pro toto i budoucí připojení přidáním tohoto %s klíče do seznamu známých hostitelů?"
 
 #: ../../po/../uget/UgetApp.c:103
 msgid "All Category"
@@ -139,28 +140,28 @@ msgstr "Nepodporovaný soubor."
 #. UGET_EVENT_ERROR_UNSUPPORTED_FILE
 #: ../../po/../uget/UgetEvent.c:93
 msgid "post file not found."
-msgstr ""
+msgstr "post soubor nenalezen."
 
 #. UGET_EVENT_ERROR_POST_FILE_NOT_FOUND
 #: ../../po/../uget/UgetEvent.c:94
 msgid "cookie file not found."
-msgstr ""
+msgstr "cookie soubor nenalezen."
 
 #: ../../po/../uget/UgetMedia-youtube.c:275
 msgid "This video has been removed."
-msgstr ""
+msgstr "Toto video bylo odstraněno."
 
 #: ../../po/../uget/UgetMedia-youtube.c:288
 msgid "Error occurred during getting video info."
-msgstr ""
+msgstr "Při získávání informací o videu došlo k chybě."
 
 #: ../../po/../uget/UgetMedia-youtube.c:534
 msgid "Error occurred during getting video web page."
-msgstr ""
+msgstr "Při získávání webové stránky videa došlo k chybě."
 
 #: ../../po/../uget/UgetMedia-youtube.c:606
 msgid "No video_id found in URL of YouTube."
-msgstr ""
+msgstr "V URL YouTube nebylo nalezeno video_id."
 
 #. 1 - 10
 #: ../../po/../uget/UgetPluginAria2.c:280
@@ -288,15 +289,15 @@ msgstr "Žádná odezva. Je aria2 vypnuta?"
 #. debug
 #: ../../po/../uget/UgetPluginAria2.c:641
 msgid "aria2: gid was removed."
-msgstr "aria2: gid byl odstrraněn."
+msgstr "aria2: gid byl odstraněn."
 
 #: ../../po/../uget/UgetPluginMedia.c:489
 msgid "Failed to get media link."
-msgstr ""
+msgstr "Nepodařilo se získat mediální odkaz."
 
 #: ../../po/../uget/UgetPluginMedia.c:505
 msgid "No matched media."
-msgstr ""
+msgstr "Žádná odpovídající média."
 
 #: ../../po/../ui-gtk/UgtkAboutDialog.c:46
 msgid "Download Manager"
@@ -484,7 +485,7 @@ msgstr "Otevřít torrent soubor"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1324
 msgid "Torrent file (*.torrent)"
-msgstr ""
+msgstr "Torrent soubor (*.torrent)"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1337
 msgid "Open Metalink file"
@@ -508,7 +509,7 @@ msgstr "Otevřít soubor kategorií"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1429
 msgid "JSON file (*.json)"
-msgstr ""
+msgstr "JSON soubor (*.json)"
 
 #. add link
 #: ../../po/../ui-gtk/UgtkApp.c:1485
@@ -530,7 +531,7 @@ msgstr "Importovat URL z HTML souboru"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1585
 msgid "HTML file (*.htm, *.html)"
-msgstr ""
+msgstr "HTML soubor (*.htm, *.html)"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1597
 msgid "Import URLs from text file"
@@ -538,7 +539,7 @@ msgstr "Importovat URL z textového souboru"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1600
 msgid "Plain text file"
-msgstr ""
+msgstr "Prostý text"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1612
 msgid "Export URLs to text file"
@@ -638,19 +639,19 @@ msgstr "Odpovídající _typy:"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:64
 msgid "Really Quit?"
-msgstr "Opravdu skončit?"
+msgstr "Skutečně skončit?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:65
 msgid "Are you sure you want to quit?"
-msgstr "Jste si jisti, že chcete skončit?"
+msgstr "Opravdu chcete skončit?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:69
 msgid "Really delete files?"
-msgstr "Opravdu smazat soubory?"
+msgstr "Skutečně smazat soubory?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:70
 msgid "Are you sure you want to delete files?"
-msgstr "Jste si jisti, že chcete smazat soubory?"
+msgstr "Opravdu chcete soubory smazat?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:74
 msgid "Really delete category?"
@@ -658,7 +659,7 @@ msgstr "Skutečně smazat kategorii?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:75
 msgid "Are you sure you want to delete category?"
-msgstr "Jste si jist, že chcete smazat kategorii?"
+msgstr "Opravdu chcete smazat kategorii?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:109
 msgid "Don't ask me again"
@@ -1465,7 +1466,7 @@ msgstr "Zásuvný modul"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:143
 msgid "Media website"
-msgstr ""
+msgstr "Webová stránka médií"
 
 #: ../../po/../ui-gtk/UgtkSettingDialog.c:149
 msgid "Others"
@@ -1494,7 +1495,7 @@ msgstr "Přidat do Nth kategorie, pokud není žádná odpovídající kategorie
 #. media website
 #: ../../po/../ui-gtk/UgtkSettingForm.c:90
 msgid "_Monitor URL of media website"
-msgstr ""
+msgstr "_Sledovat URL adresy médií na webových stránkách "
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:105
 msgid "Monitor clipboard for specified file types:"
@@ -1536,7 +1537,7 @@ msgstr "Při startu minimalizovat do oznamovací oblasti"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:203
 msgid "Close to tray on window close"
-msgstr "Při zavření okna minimalizovat do lišty."
+msgstr "Při zavření okna minimalizovat do lišty"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:207
 msgid "Use Ubuntu's App Indicator"
@@ -1560,11 +1561,11 @@ msgstr "Zvuk po dokončení stahování"
 #. gtk_box_pack_start (vbox, widget, FALSE, FALSE, 1);
 #: ../../po/../ui-gtk/UgtkSettingForm.c:229
 msgid "Display large icon"
-msgstr ""
+msgstr "Zobrazovat velké ikony"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:295
 msgid "These will affect all plug-ins."
-msgstr "To bude mít vliv na všechny plug-iny."
+msgstr "To bude mít vliv na všechny zásuvné moduly."
 
 #. Global speed limit
 #: ../../po/../ui-gtk/UgtkSettingForm.c:301
@@ -1619,11 +1620,11 @@ msgstr "Ve výchozím nastavení použít '--quiet'"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:554
 msgid "Plug-in matching order:"
-msgstr "Plug-in odpovídající zadání:"
+msgstr "Zásuvný modul odpovídající zadání:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:577
 msgid "Aria2 plug-in options"
-msgstr "Volby pluginu Aria2"
+msgstr "Volby zásuvného modulu Aria2"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:593
 msgid "RPC authorization secret token"
@@ -1668,21 +1669,21 @@ msgstr "Po úpravě musíte uGet restartovat."
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:783
 msgid "Media matching mode:"
-msgstr ""
+msgstr "Režim přizpůsobení médií:"
 
 #: ../../po/../ui-gtk/UgtkSettingForm.c:801
 msgid "Match conditions"
-msgstr ""
+msgstr "Odpovídající podmínky"
 
 #. Quality
 #: ../../po/../ui-gtk/UgtkSettingForm.c:810
 msgid "Quality:"
-msgstr ""
+msgstr "Kvalita:"
 
 #. Type
 #: ../../po/../ui-gtk/UgtkSettingForm.c:830
 msgid "Type:"
-msgstr ""
+msgstr "Typ:"
 
 #: ../../po/../ui-gtk/UgtkSummary.c:104
 msgid "File"

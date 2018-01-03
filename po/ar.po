@@ -8,13 +8,14 @@
 # Benamara Mohamed <mohamedsdev@gmail.com>, 2015
 # Hayder Majid <cteehayder@gmail.com>, 2016
 # Ibrahim Saed <ibraheem5000@hotmail.com>, 2014
+# Omar Anwar <omaraglan91@yahoo.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-03 03:10+0800\n"
-"PO-Revision-Date: 2016-11-09 16:16+0000\n"
-"Last-Translator: Hayder Majid <cteehayder@gmail.com>\n"
+"PO-Revision-Date: 2017-09-22 23:51+0000\n"
+"Last-Translator: Omar Anwar <omaraglan91@yahoo.com>\n"
 "Language-Team: Arabic (http://www.transifex.com/uget/uget/language/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,7 +31,7 @@ msgid ""
 "While attempting an SSH connection to %s there was a problem verifying it's hostkey against the known and trusted hosts file because it's hostkey was not found.\n"
 "\n"
 "Would you like to treat this connection as trusted for this and future connections by adding %s's hostkey to the known hosts file?"
-msgstr "خادم مدير كلمات السر:uget\n\nاثناء محاولة عمل اتصال SSH مع  %s , حصل خطأ بالتحقق من مفاتيح الاستضافة الخاصة به مع ملف الاستضافات الموثوقة بسبب عدم العثور عليها في هذا الملف .\n\nهل ترغب بمعالجة هذا الخطأ في الاتصال بجعله موثوق الان و في الاتصالات المستقبلية عن طريق اضافة مفاتيح استضافة %s's الى ملف الاستضافات المعروفة ؟"
+msgstr "خادم مدير كلمات السر:uget\n\nأثناء محاولة عمل أتصال SSH مع  %s , حصل خطأ بالتحقق من مفاتيح الإستضافة الخاصة به مع ملف الإستضافات الموثوقة بسبب عدم العثور عليها في هذا الملف .\n\nهل ترغب بمعالجة هذا الخطأ في الاتصال بجعله موثوق الأن و في الإتصالات المستقبلية عن طريق إضافة مفاتيح إستضافة %s's إلي ملف الإستضافات المعروفة ؟"
 
 #: ../../po/../uget/UgetApp.c:103
 msgid "All Category"
@@ -65,12 +66,12 @@ msgstr "انتهى"
 #. resumable
 #: ../../po/../uget/UgetEvent.c:64
 msgid "Resumable"
-msgstr "قابل للاستئناف"
+msgstr "قابل للإستئناف"
 
 #. UGET_EVENT_NORMAL_RESUMABLE,
 #: ../../po/../uget/UgetEvent.c:65 ../../po/../uget/UgetPluginAria2.c:287
 msgid "Not Resumable"
-msgstr "غير قابل للاستئناف"
+msgstr "غير قابل للإستئناف"
 
 #. UGET_EVENT_WARNING_CUSTOM
 #: ../../po/../uget/UgetEvent.c:73 ../../po/../uget/UgetPluginAria2.c:294
@@ -80,7 +81,7 @@ msgstr "تعذّرت تسمية الملف المُخرج."
 #. UGET_EVENT_ERROR_CUSTOM
 #: ../../po/../uget/UgetEvent.c:81
 msgid "couldn't connect to host."
-msgstr "تعذّر الاتصال بالمضيف."
+msgstr "تعذّر الإتصال بالمضيف."
 
 #. UGET_EVENT_ERROR_CONNECT_FAILED
 #: ../../po/../uget/UgetEvent.c:82 ../../po/../uget/UgetPluginAria2.c:298
@@ -115,12 +116,12 @@ msgstr "نفذت الموارد (القرص ممتلئ أو نفذت الذاك�
 #. UGET_EVENT_ERROR_OUT_OF_RESOURCE
 #: ../../po/../uget/UgetEvent.c:88
 msgid "No output file."
-msgstr "لا ملف مخرج."
+msgstr "لا ملف مُخرج."
 
 #. UGET_EVENT_ERROR_NO_OUTPUT_FILE
 #: ../../po/../uget/UgetEvent.c:89
 msgid "No output setting."
-msgstr "لا إعدادات مخرجة."
+msgstr "لا إعدادات مُخرجة."
 
 #. UGET_EVENT_ERROR_NO_OUTPUT_SETTING
 #: ../../po/../uget/UgetEvent.c:90
@@ -130,7 +131,7 @@ msgstr "الكثير من الإعادات."
 #. UGET_EVENT_ERROR_TOO_MANY_RETRIES
 #: ../../po/../uget/UgetEvent.c:91
 msgid "Unsupported scheme (protocol)."
-msgstr "مخطّط (ميفاق) غير مدعوم."
+msgstr "مخطّط (بروتوكول) غير مدعوم."
 
 #. UGET_EVENT_ERROR_UNSUPPORTED_SCHEME
 #: ../../po/../uget/UgetEvent.c:92
@@ -140,28 +141,28 @@ msgstr "ملف غير مدعوم."
 #. UGET_EVENT_ERROR_UNSUPPORTED_FILE
 #: ../../po/../uget/UgetEvent.c:93
 msgid "post file not found."
-msgstr "الملف الملصق غير موجود"
+msgstr "الملف الملصق غير موجود."
 
 #. UGET_EVENT_ERROR_POST_FILE_NOT_FOUND
 #: ../../po/../uget/UgetEvent.c:94
 msgid "cookie file not found."
-msgstr "ملف الكوكيز غير موجود"
+msgstr "ملف الكوكيز غير موجود."
 
 #: ../../po/../uget/UgetMedia-youtube.c:275
 msgid "This video has been removed."
-msgstr "تم حذف هذا الفيديو"
+msgstr "تم حذف هذا الفيديو."
 
 #: ../../po/../uget/UgetMedia-youtube.c:288
 msgid "Error occurred during getting video info."
-msgstr "حصل خطأ اثناء الحصول على معلومات الفيديو"
+msgstr "حصل خطأ اثناء الحصول على معلومات الفيديو."
 
 #: ../../po/../uget/UgetMedia-youtube.c:534
 msgid "Error occurred during getting video web page."
-msgstr "حصل خطأ اثناء الحصول على صفحة الوب للفيديو"
+msgstr "حصل خطأ اثناء الحصول على صفحة الويب للفيديو."
 
 #: ../../po/../uget/UgetMedia-youtube.c:606
 msgid "No video_id found in URL of YouTube."
-msgstr "لا يوجد تعريف للفيديو في رابط اليوتيوب"
+msgstr "لا يوجد تعريف للفيديو في رابط اليوتيوب."
 
 #. 1 - 10
 #: ../../po/../uget/UgetPluginAria2.c:280
@@ -170,7 +171,7 @@ msgstr "aria2: حدث خطأ مجهول."
 
 #: ../../po/../uget/UgetPluginAria2.c:281
 msgid "aria2: time out occurred."
-msgstr "الوضع2: انتهت المهلة"
+msgstr "الوضع2: إنتهت المهلة."
 
 #: ../../po/../uget/UgetPluginAria2.c:282
 msgid "aria2: resource was not found."
@@ -228,12 +229,12 @@ msgstr "aria2: لا يمكن إنشاء ملف جديد أو اقتطاع ملف
 
 #: ../../po/../uget/UgetPluginAria2.c:297
 msgid "aria2: file I/O error occurred."
-msgstr "aria2: حدث خطأ دَخْل/خَرْج ملفات."
+msgstr "aria2: حدث خطأ دَخْل/خَرْج الملفات."
 
 #. UGET_EVENT_ERROR_FOLDER_CREATE_FAILED
 #: ../../po/../uget/UgetPluginAria2.c:299
 msgid "aria2: name resolution failed."
-msgstr "aria2: فشل تحليل الاسم."
+msgstr "aria2: فشل تحليل الأسم."
 
 #: ../../po/../uget/UgetPluginAria2.c:300
 msgid "aria2: could not parse Metalink document."
@@ -246,7 +247,7 @@ msgstr "aria2: فشل أمر FTP."
 
 #: ../../po/../uget/UgetPluginAria2.c:303
 msgid "aria2: HTTP response header was bad or unexpected."
-msgstr "aria2: ترويسة ردّ HTTP سيّئة أو غير متوقّعة."
+msgstr "aria2: ردّ HTTP سيّئ أو غير متوقّع."
 
 #: ../../po/../uget/UgetPluginAria2.c:304
 msgid "Too many redirections."
@@ -254,7 +255,7 @@ msgstr "إعادات توجيه كثيرة."
 
 #: ../../po/../uget/UgetPluginAria2.c:305
 msgid "aria2: HTTP authorization failed."
-msgstr "aria2: فشل استيثاق HTTP."
+msgstr "aria2: فشل إستيثاق HTTP."
 
 #: ../../po/../uget/UgetPluginAria2.c:306
 msgid "aria2: could not parse bencoded file(usually .torrent file)."
@@ -262,7 +263,7 @@ msgstr "aria2: لا يمكن تحليل ملف bencoded(عادة ملف  .torren
 
 #: ../../po/../uget/UgetPluginAria2.c:307
 msgid "aria2: torrent file was corrupted or missing information."
-msgstr "aria2: ملف السيل معطوب أو معلوماته ناقصة."
+msgstr "aria2: ملف الترونت معطوب أو معلوماته ناقصة."
 
 #: ../../po/../uget/UgetPluginAria2.c:308
 msgid "aria2: Magnet URI was bad."
