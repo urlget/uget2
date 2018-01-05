@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2013-2017 by C.H. Huang
+ *   Copyright (C) 2013-2018 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
