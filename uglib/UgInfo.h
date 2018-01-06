@@ -94,7 +94,7 @@ void        ug_json_write_info (UgJson* json, const UgInfo* info);
 struct UgInfo
 {
 	UG_ARRAY_MEMBERS (UgPair);
-//	void**  at;
+//	UgPair* at;
 //	int     length;
 //	int     allocated;
 //	int     element_size;
