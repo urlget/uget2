@@ -127,13 +127,13 @@ struct UgetNodeNotification
 	// notify fake node when real node create a new child node.
 	UgetNodeFunc    created;
 
-	// notify when node has inserted a node.
+	// notify when node has inserted a child node.
 	UgetNodeFunc    inserted;
 
-	// notify when node has removed a node.
+	// notify when node has removed a child node.
 	UgetNodeFunc    removed;
 
-	// notify when node has updated.
+	// notify when a child node has updated.
 	UgNotifyFunc    updated;
 
 //	UgNotifyFunc    destroy;
