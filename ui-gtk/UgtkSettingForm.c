@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2005-2017 by C.H. Huang
+ *   Copyright (C) 2005-2018 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -785,13 +785,13 @@ void  ugtk_media_website_form_init (struct UgtkMediaWebsiteForm* mwform)
 	widget = gtk_combo_box_text_new ();
 	mwform->match_mode = (GtkComboBoxText*) widget;
 	gtk_combo_box_text_insert_text (mwform->match_mode,
-			UGET_MEDIA_MATCH_0, "Don't match");
+			UGET_MEDIA_MATCH_0, _("Don't match"));
 	gtk_combo_box_text_insert_text (mwform->match_mode,
-			UGET_MEDIA_MATCH_1, "Match 1 condition");
+			UGET_MEDIA_MATCH_1, _("Match 1 condition"));
 	gtk_combo_box_text_insert_text (mwform->match_mode,
-			UGET_MEDIA_MATCH_2, "Match 2 condition");
+			UGET_MEDIA_MATCH_2, _("Match 2 condition"));
 	gtk_combo_box_text_insert_text (mwform->match_mode,
-			UGET_MEDIA_MATCH_NEAR, "Near quality");
+			UGET_MEDIA_MATCH_NEAR, _("Near quality"));
 	g_signal_connect (mwform->match_mode, "changed",
 			G_CALLBACK (on_match_mode_changed), mwform);
 	gtk_box_pack_start (hbox, widget, FALSE, FALSE, 4);
