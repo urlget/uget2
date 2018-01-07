@@ -70,10 +70,21 @@ const UgEntry  UgetNodeEntry[] =
 	{"name",     offsetof (UgetNode, name),  UG_ENTRY_STRING, NULL, NULL},
 	{"type",     offsetof (UgetNode, type),  UG_ENTRY_INT,    NULL, NULL},
 	{"state",    offsetof (UgetNode, state), UG_ENTRY_INT,    NULL, NULL},
+#if 0
+	{"map",      offsetof (UgetNode, map),   UG_ENTRY_CUSTOM,
+			ug_json_parse_info,   ug_json_write_info},
+#else
 	{"info",     offsetof (UgetNode, map),   UG_ENTRY_CUSTOM,
 			ug_json_parse_info,   ug_json_write_info},
+#endif
 	{"children", 0,                          UG_ENTRY_ARRAY,
 			ug_json_parse_uget_node_children, ug_json_write_uget_node_children},
+
+#if 0
+	// deprecated
+	{"info",     offsetof (UgetNode, map),   UG_ENTRY_CUSTOM,
+			ug_json_parse_info,   NULL},
+#endif
 	{NULL}    // null-terminated
 };
 
