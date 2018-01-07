@@ -120,13 +120,8 @@ typedef enum {
 	UGET_STATE_UNFINISHED = UGET_STATE_ACTIVE | UGET_STATE_UPLOADING,
 } UgetState;
 
-struct UgetNodeNotification
+struct UgetNodeNotifier
 {
-//	struct UgetNodeNotification*  child;
-
-	// notify fake node when real node create a new child node.
-	UgetNodeFunc    created;
-
 	// notify when node has inserted a child node.
 	UgetNodeFunc    inserted;
 
@@ -137,18 +132,30 @@ struct UgetNodeNotification
 	UgNotifyFunc    updated;
 
 //	UgNotifyFunc    destroy;
+};
 
-	// for sorting
+struct UgetNodeSort
+{
 	UgCompareFunc   compare;
-	int             reversed;
+	int             reverse;  // TRUE or FALSE
+};
 
-	// extra data
-	void*           data;
+struct UgetNodeControl
+{
+	struct UgetNodeControl*  children;  // control of children node
+	struct UgetNodeNotifier  notifier;
+	struct UgetNodeSort      sort;
+
+	// fake filter node from real.
+	// If real node inserted a child node, all fake nodes call this to filter.
+	UgetNodeFunc             filter;
+
+	void*                    data;      // extra data for user
 };
 
 struct UgetNode
 {
-	UG_NODE_MEMBERS (UgetNode, UgetNode, data);
+	UG_NODE_MEMBERS(UgetNode, UgetNode, data);
 //	UgetNode*     data;
 //	UgetNode*     next;
 //	UgetNode*     prev;
@@ -168,7 +175,7 @@ struct UgetNode
 	int           state;   // UgetState
 	UgInfo        info;    // fake node doesn't use this
 
-	struct UgetNodeNotification*  notification;
+	struct UgetNodeControl*  control;
 };
 
 UgetNode*  uget_node_new (UgetNode* node_real);
@@ -207,7 +214,6 @@ void  uget_node_set_name_by_uri (UgetNode* node, UgUri* uuri);
 void  uget_node_set_name_by_uri_string (UgetNode* node, const char* uri);
 
 // notify
-void  uget_node_created (UgetNode* node, UgetNode* sibling, UgetNode* child);
 void  uget_node_updated (UgetNode* node);
 
 // for UgetNode.children
@@ -239,12 +245,12 @@ int   uget_node_compare_added_time   (UgetNode* node1, UgetNode* node2);
 int   uget_node_compare_completed_time (UgetNode* node1, UgetNode* node2);
 
 // ----------------------------------------------------------------------------
-// callback functions for UgetNode.notification.created
+// callback functions for UgetNode.control.filter
 // These functions used by UgetApp
-void  uget_node_create_mix (UgetNode* node, UgetNode* sibling, UgetNode* child_real);
-void  uget_node_create_split (UgetNode* node, UgetNode* sibling, UgetNode* child_real);
-void  uget_node_create_mix_split (UgetNode* node, UgetNode* sibling, UgetNode* child_real);
-void  uget_node_create_sorted (UgetNode* node, UgetNode* sibling, UgetNode* child_real);
+void  uget_node_filter_mix (UgetNode* node, UgetNode* sibling, UgetNode* child_real);
+void  uget_node_filter_split (UgetNode* node, UgetNode* sibling, UgetNode* child_real);
+void  uget_node_filter_mix_split (UgetNode* node, UgetNode* sibling, UgetNode* child_real);
+void  uget_node_filter_sorted (UgetNode* node, UgetNode* sibling, UgetNode* child_real);
 
 
 #ifdef __cplusplus

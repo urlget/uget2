@@ -52,12 +52,17 @@
 #include <glib.h>    // g_slice_xxx
 #endif
 
+static void  uget_node_call_fake_filter (UgetNode* parent, UgetNode* sibling, UgetNode* child);
+
 // ----------------------------------------------------------------------------
 // UgetNode
 
-static struct UgetNodeNotification  notification = {
-	(UgetNodeFunc) NULL, NULL, NULL,
-	(UgNotifyFunc) NULL, NULL, 0, NULL
+static struct UgetNodeControl  control = {
+	NULL,                   // struct UgetNodeControl*  children;
+	{NULL, NULL, NULL},     // struct UgetNodeNotifier  notifier;
+	{NULL, FALSE},          // struct UgetNodeSort      sort;
+	NULL,                   // UgetNodeFunc             filter;
+	NULL                    // void*                    data;
 };
 
 const UgEntry  UgetNodeEntry[] =
@@ -90,7 +95,7 @@ void  uget_node_init  (UgetNode* node, UgetNode* node_real)
 	memset (node, 0, sizeof (UgetNode));
 
 	node->ref_count = 1;
-	node->notification = &notification;
+	node->control = &control;
 
 	if (node_real == NULL) {
 		node->data = node;    // pointer to self
@@ -194,13 +199,13 @@ void  uget_node_insert (UgetNode* node, UgetNode* sibling, UgetNode* child)
 	UgetNodeFunc inserted;
 
 	ug_node_insert ((UgNode*) node, (UgNode*) sibling, (UgNode*) child);
-	child->notification = node->notification;
+	child->control = node->control;
 
-	inserted = node->notification->inserted;
+	inserted = node->control->notifier.inserted;
 	if (inserted)
 		inserted (node, sibling, child);
 
-	uget_node_created (node, sibling, child);
+	uget_node_call_fake_filter (node, sibling, child);
 }
 
 static void  uget_node_unlink_children_real (UgetNode* node)
@@ -226,7 +231,7 @@ static void  uget_node_unlink_fake_parent (UgetNode* child)
 		sibling = child->next;
 		ug_node_remove ((UgNode*) parent, (UgNode*) child);
 		// notify
-		removed = parent->notification->removed;
+		removed = parent->control->notifier.removed;
 		if (removed)
 			removed (parent, sibling, child);
 	}
@@ -242,7 +247,7 @@ void  uget_node_remove (UgetNode* node, UgetNode* child)
 	uget_node_unlink_fake_parent (child);
 	uget_node_unlink_children_real (child);
 
-	removed = node->notification->removed;
+	removed = node->control->notifier.removed;
 	if (removed)
 		removed (node, sibling, child);
 }
@@ -252,13 +257,13 @@ void  uget_node_append (UgetNode* node, UgetNode* child)
 	UgetNodeFunc inserted;
 
 	ug_node_append ((UgNode*) node, (UgNode*) child);
-	child->notification = node->notification;
+	child->control = node->control;
 
-	inserted = node->notification->inserted;
+	inserted = node->control->notifier.inserted;
 	if (inserted)
 		inserted (node, NULL, child);
 
-	uget_node_created (node, NULL, child);
+	uget_node_call_fake_filter (node, NULL, child);
 }
 
 void  uget_node_prepend (UgetNode* node, UgetNode* child)
@@ -268,13 +273,13 @@ void  uget_node_prepend (UgetNode* node, UgetNode* child)
 
 	sibling = node->children;
 	ug_node_prepend ((UgNode*) node, (UgNode*) child);
-	child->notification = node->notification;
+	child->control = node->control;
 
-	inserted = node->notification->inserted;
+	inserted = node->control->notifier.inserted;
 	if (inserted)
 		inserted (node, sibling, child);
 
-	uget_node_created (node, sibling, child);
+	uget_node_call_fake_filter (node, sibling, child);
 }
 
 void  uget_node_sort (UgetNode* node, UgCompareFunc compare, int reversed)
@@ -307,14 +312,14 @@ void  uget_node_insert_sorted (UgetNode* node, UgetNode* child)
 {
 	UgCompareFunc  compare;
 	UgetNode*      cur;
-	int            reversed;
+	int            reverse;
 
-	compare = node->notification->compare;
-	reversed = node->notification->reversed;
+	compare = node->control->sort.compare;
+	reverse = node->control->sort.reverse;
 	if (compare == NULL)
 		return;
 
-	if (reversed == FALSE) {
+	if (reverse == FALSE) {
 		for (cur = node->children;  cur;  cur = cur->next) {
 			if (compare (cur, child) > 0) {
 				uget_node_insert (node, cur, child);
@@ -406,8 +411,22 @@ void  uget_node_make_fake (UgetNode* node)
 	if (node->fake == NULL)
 		return;
 	for (child = node->children;  child;  child = child->next) {
-		uget_node_created (node, NULL, child);
+		uget_node_call_fake_filter (node, NULL, child);
 		uget_node_make_fake (child);
+	}
+}
+
+// fake filter node from real.
+// If real node inserted a child node, all fake nodes call this to filter.
+static void  uget_node_call_fake_filter (UgetNode* parent, UgetNode* sibling, UgetNode* child)
+{
+	UgetNode*    fake;
+	UgetNodeFunc filter;
+
+	for (fake = parent->fake;  fake;  fake = fake->peer) {
+		filter = fake->control->filter;
+		if (filter)
+			filter (fake, sibling, child);
 	}
 }
 
@@ -487,23 +506,11 @@ void  uget_node_set_name_by_uri_string (UgetNode* node, const char* uri)
 // ----------------------------------------------------------------------------
 // notify
 
-void  uget_node_created (UgetNode* parent, UgetNode* sibling, UgetNode* child)
-{
-	UgetNode*    fake;
-	UgetNodeFunc created;
-
-	for (fake = parent->fake;  fake;  fake = fake->peer) {
-		created = fake->notification->created;
-		if (created)
-			created (fake, sibling, child);
-	}
-}
-
 void  uget_node_updated (UgetNode* node)
 {
 	UgNotifyFunc updated;
 
-	updated = node->notification->updated;
+	updated = node->control->notifier.updated;
 	if (updated)
 		updated (node);
 	// update fake node
@@ -542,11 +549,11 @@ void  ug_json_write_uget_node_children (UgJson* json, const UgetNode* node)
 }
 
 // ----------------------------------------------------------------------------
-// callback functions for UgetNode.notification.created
+// callback functions for UgetNode.control.filter
 // These functions used by UgetApp
 
 // sibling_real, child_real
-void  uget_node_create_split (UgetNode* node, UgetNode* sibling, UgetNode* child_real)
+void  uget_node_filter_split (UgetNode* node, UgetNode* sibling, UgetNode* child_real)
 {
 	UgetNode*  child;
 
@@ -577,7 +584,7 @@ void  uget_node_create_split (UgetNode* node, UgetNode* sibling, UgetNode* child
 		      (node->state & UGET_STATE_QUEUING) ) )
 		{
 			// insert sorted
-			if (node->notification->compare) {
+			if (node->control->sort.compare) {
 				uget_node_insert_sorted (node, uget_node_new (child_real));
 				return;
 			}
@@ -594,7 +601,7 @@ void  uget_node_create_split (UgetNode* node, UgetNode* sibling, UgetNode* child
 	}
 }
 
-void  uget_node_create_sorted (UgetNode* node, UgetNode* sibling, UgetNode* child)
+void  uget_node_filter_sorted (UgetNode* node, UgetNode* sibling, UgetNode* child)
 {
 	child = uget_node_new (child);
 
@@ -605,7 +612,7 @@ void  uget_node_create_sorted (UgetNode* node, UgetNode* sibling, UgetNode* chil
 	else if (node->parent->parent == NULL) {
 		// node is category.
 		// insert sorted
-		if (node->notification->compare) {
+		if (node->control->sort.compare) {
 			uget_node_insert_sorted (node, child);
 			return;
 		}
@@ -622,9 +629,9 @@ void  uget_node_create_sorted (UgetNode* node, UgetNode* sibling, UgetNode* chil
 	}
 }
 
-// This one is not the same with uget_node_create_sorted()
+// This one is not the same with uget_node_filter_sorted()
 // sibling_real, child_real
-void  uget_node_create_mix (UgetNode* node, UgetNode* sibling, UgetNode* child)
+void  uget_node_filter_mix (UgetNode* node, UgetNode* sibling, UgetNode* child)
 {
 	UgetNode*  fake;
 
@@ -638,7 +645,7 @@ void  uget_node_create_mix (UgetNode* node, UgetNode* sibling, UgetNode* child)
 		// node is category.
 		// insert sorted
 		node = node->parent->children;
-		if (node->notification->compare) {
+		if (node->control->sort.compare) {
 			// add all download to first category
 			uget_node_insert_sorted (node, child);
 			return;
@@ -695,7 +702,7 @@ void  uget_node_create_mix (UgetNode* node, UgetNode* sibling, UgetNode* child)
 	}
 }
 
-void  uget_node_create_mix_split (UgetNode* node, UgetNode* sibling, UgetNode* child_real)
+void  uget_node_filter_mix_split (UgetNode* node, UgetNode* sibling, UgetNode* child_real)
 {
 	UgetNode*  real;
 
@@ -703,5 +710,5 @@ void  uget_node_create_mix_split (UgetNode* node, UgetNode* sibling, UgetNode* c
 	real = node->real;
 	if (real->parent == NULL && real->children != child_real)
 		return;
-	uget_node_create_split (node, sibling, child_real);
+	uget_node_filter_split (node, sibling, child_real);
 }

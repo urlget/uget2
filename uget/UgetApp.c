@@ -61,30 +61,59 @@
 #define _(x)   x
 #endif
 
-static struct UgetNodeNotification  notification_real =
-		{NULL, NULL, NULL, NULL,
-		(UgCompareFunc) NULL, FALSE,
-		NULL};
-static struct UgetNodeNotification  notification_split =
-		{uget_node_create_split, NULL, NULL, NULL,
-		(UgCompareFunc) NULL, FALSE,
-		NULL};
-static struct UgetNodeNotification  notification_sorted =
-		{uget_node_create_sorted, NULL, NULL, NULL,
-		(UgCompareFunc) NULL, FALSE,
-		NULL};
-static struct UgetNodeNotification  notification_sorted_split =
-		{uget_node_create_split, NULL, NULL, NULL,
-		(UgCompareFunc) NULL, FALSE,
-		NULL};
-static struct UgetNodeNotification  notification_mix =
-		{uget_node_create_mix, NULL, NULL, NULL,
-		(UgCompareFunc) NULL, FALSE,
-		NULL};
-static struct UgetNodeNotification  notification_mix_split =
-		{uget_node_create_mix_split, NULL, NULL, NULL,
-		(UgCompareFunc) NULL, FALSE,
-		NULL};
+static struct UgetNodeControl  control_real =
+{
+	NULL,                   // struct UgetNodeControl*  children;
+	{NULL, NULL, NULL},     // struct UgetNodeNotifier  notifier;
+	{NULL, FALSE},          // struct UgetNodeSort      sort;
+	NULL,                   // UgetNodeFunc             filter;
+	NULL                    // void*                    data;
+};
+
+static struct UgetNodeControl  control_split =
+{
+	NULL,                   // struct UgetNodeControl*  children;
+	{NULL, NULL, NULL},     // struct UgetNodeNotifier  notifier;
+	{NULL, FALSE},          // struct UgetNodeSort      sort;
+	uget_node_filter_split, // UgetNodeFunc             filter;
+	NULL                    // void*                    data;
+};
+
+static struct UgetNodeControl  control_sorted =
+{
+	NULL,                   // struct UgetNodeControl*  children;
+	{NULL, NULL, NULL},     // struct UgetNodeNotifier  notifier;
+	{NULL, FALSE},          // struct UgetNodeSort      sort;
+	uget_node_filter_sorted,// UgetNodeFunc             filter;
+	NULL                    // void*                    data;
+};
+
+static struct UgetNodeControl  control_sorted_split =
+{
+	NULL,                   // struct UgetNodeControl*  children;
+	{NULL, NULL, NULL},     // struct UgetNodeNotifier  notifier;
+	{NULL, FALSE},          // struct UgetNodeSort      sort;
+	uget_node_filter_split, // UgetNodeFunc             filter;
+	NULL                    // void*                    data;
+};
+
+static struct UgetNodeControl  control_mix =
+{
+	NULL,                   // struct UgetNodeControl*  children;
+	{NULL, NULL, NULL},     // struct UgetNodeNotifier  notifier;
+	{NULL, FALSE},          // struct UgetNodeSort      sort;
+	uget_node_filter_mix,   // UgetNodeFunc             filter;
+	NULL                    // void*                    data;
+};
+
+static struct UgetNodeControl  control_mix_split =
+{
+	NULL,                   // struct UgetNodeControl*  children;
+	{NULL, NULL, NULL},     // struct UgetNodeNotifier  notifier;
+	{NULL, FALSE},          // struct UgetNodeSort      sort;
+	uget_node_filter_mix_split, // UgetNodeFunc             filter;
+	NULL                    // void*                    data;
+};
 
 
 void  uget_app_init (UgetApp* app)
@@ -98,12 +127,12 @@ void  uget_app_init (UgetApp* app)
 	uget_node_init (&app->sorted_split, &app->sorted);
 	uget_node_init (&app->mix, &app->real);
 	uget_node_init (&app->mix_split, &app->mix);
-	app->real.notification = &notification_real;
-	app->split.notification = &notification_split;
-	app->sorted.notification = &notification_sorted;
-	app->sorted_split.notification = &notification_sorted_split;
-	app->mix.notification = &notification_mix;
-	app->mix_split.notification = &notification_mix_split;
+	app->real.control = &control_real;
+	app->split.control = &control_split;
+	app->sorted.control = &control_sorted;
+	app->sorted_split.control = &control_sorted_split;
+	app->mix.control = &control_mix;
+	app->mix_split.control = &control_mix_split;
 	// add virtual category - "All Category"
 	node = uget_node_new (NULL);
 	node->name = ug_strdup (_("All Category"));
@@ -185,7 +214,7 @@ static int  uget_app_activate (UgetApp* app, UgetNode* cnode, UgetCategory* cate
 		uget_node_updated (dnode);
 		if (dnode->state & UGET_STATE_ACTIVE) {
 			// remove node and insert it again to sort node
-			if (app->mix.notification->compare) {
+			if (app->mix.control->sort.compare) {
 				sibling = dnode->next;
 				uget_node_remove (cnode, dnode);
 				uget_node_unref_fake (dnode);
@@ -302,12 +331,12 @@ void  uget_app_set_sorting (UgetApp* app, UgCompareFunc compare, int reversed)
 	UgetNode*  real;
 
 	node = app->mix.children;
-	if (app->mix.notification->reversed != reversed) {
-		app->mix.notification->reversed  = reversed;
-		app->mix_split.notification->reversed = reversed;
-		app->sorted.notification->reversed = reversed;
-		app->sorted_split.notification->reversed = reversed;
-		if (app->mix.notification->compare == compare && compare) {
+	if (app->mix.control->sort.reverse != reversed) {
+		app->mix.control->sort.reverse  = reversed;
+		app->mix_split.control->sort.reverse = reversed;
+		app->sorted.control->sort.reverse = reversed;
+		app->sorted_split.control->sort.reverse = reversed;
+		if (app->mix.control->sort.compare == compare && compare) {
 			// reverse first category in app->mix
 			ug_node_reverse ((UgNode*) node);
 			// reverse each category in app->mix_split
@@ -323,11 +352,11 @@ void  uget_app_set_sorting (UgetApp* app, UgCompareFunc compare, int reversed)
 		}
 	}
 
-	if (app->mix.notification->compare != compare) {
-		app->mix.notification->compare  = compare;
-		app->mix_split.notification->compare = compare;
-		app->sorted.notification->compare = compare;
-		app->sorted_split.notification->compare = compare;
+	if (app->mix.control->sort.compare != compare) {
+		app->mix.control->sort.compare  = compare;
+		app->mix_split.control->sort.compare = compare;
+		app->sorted.control->sort.compare = compare;
+		app->sorted_split.control->sort.compare = compare;
 		if (compare == NULL) {
 			// reorder first category in app->mix
 			for (real = app->real.last;  real;  real = real->prev)
@@ -366,35 +395,35 @@ void  uget_app_set_notification (UgetApp* app, void* data,
                                  UgetNodeFunc removed,
                                  UgNotifyFunc updated)
 {
-	notification_real.inserted = inserted;
-	notification_real.removed  = removed;
-	notification_real.updated  = updated;
-	notification_real.data     = data;
+	control_real.notifier.inserted = inserted;
+	control_real.notifier.removed  = removed;
+	control_real.notifier.updated  = updated;
+	control_real.data              = data;
 
-	notification_split.inserted = inserted;
-	notification_split.removed  = removed;
-	notification_split.updated  = updated;
-	notification_split.data     = data;
+	control_split.notifier.inserted = inserted;
+	control_split.notifier.removed  = removed;
+	control_split.notifier.updated  = updated;
+	control_split.data              = data;
 
-	notification_sorted.inserted = inserted;
-	notification_sorted.removed  = removed;
-	notification_sorted.updated  = updated;
-	notification_sorted.data     = data;
+	control_sorted.notifier.inserted = inserted;
+	control_sorted.notifier.removed  = removed;
+	control_sorted.notifier.updated  = updated;
+	control_sorted.data              = data;
 
-	notification_sorted_split.inserted = inserted;
-	notification_sorted_split.removed  = removed;
-	notification_sorted_split.updated  = updated;
-	notification_sorted_split.data     = data;
+	control_sorted_split.notifier.inserted = inserted;
+	control_sorted_split.notifier.removed  = removed;
+	control_sorted_split.notifier.updated  = updated;
+	control_sorted_split.data              = data;
 
-	notification_mix.inserted = inserted;
-	notification_mix.removed  = removed;
-	notification_mix.updated  = updated;
-	notification_mix.data     = data;
+	control_mix.notifier.inserted = inserted;
+	control_mix.notifier.removed  = removed;
+	control_mix.notifier.updated  = updated;
+	control_mix.data              = data;
 
-	notification_mix_split.inserted = inserted;
-	notification_mix_split.removed  = removed;
-	notification_mix_split.updated  = updated;
-	notification_mix_split.data     = data;
+	control_mix_split.notifier.inserted = inserted;
+	control_mix_split.notifier.removed  = removed;
+	control_mix_split.notifier.updated  = updated;
+	control_mix_split.data              = data;
 }
 
 void  uget_app_add_category (UgetApp* app, UgetNode* cnode, int save_file)
