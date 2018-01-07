@@ -233,6 +233,10 @@ void  ug_json_write_entry (UgJson* json, void* src, const UgEntry* entry)
 			break;
 
 		case UG_ENTRY_CUSTOM:
+			// Don't output if no UgJsonWriteFunc in entry->param2.
+			if (entry->param2 == NULL)
+				break;
+
 			if (entry->param2 == (void*) ug_json_write_value) {
 				// for UgValue only
 				if (value.pvalue->type == UG_VALUE_NONE)
