@@ -223,7 +223,7 @@ static void uget_node_set_by_dataset (UgetNode* node, UgDataset* dataset)
 		old.common->name = NULL;
 		if (node->name == NULL && old.common->file)
 			node->name = ug_strdup (old.common->file);
-		new.common = ug_info_realloc (&node->info, UgetCommonInfo);
+		new.common = ug_map_realloc (&node->map, UgetCommonInfo);
 		new.common->uri = old.common->url;
 		old.common->url = NULL;
 		new.common->mirrors = old.common->mirrors;
@@ -249,7 +249,7 @@ static void uget_node_set_by_dataset (UgetNode* node, UgDataset* dataset)
 
 	old.proxy = ug_dataset_get (dataset, UgProxyInfo, 0);
 	if (old.proxy) {
-		new.proxy = ug_info_realloc (&node->info, UgetProxyInfo);
+		new.proxy = ug_map_realloc (&node->map, UgetProxyInfo);
 		new.proxy->host = old.proxy->host;
 		old.proxy->host = NULL;
 		new.proxy->port = old.proxy->port;
@@ -262,7 +262,7 @@ static void uget_node_set_by_dataset (UgetNode* node, UgDataset* dataset)
 
 	old.http = ug_dataset_get (dataset, UgHttpInfo, 0);
 	if (old.http) {
-		new.http = ug_info_realloc (&node->info, UgetHttpInfo);
+		new.http = ug_map_realloc (&node->map, UgetHttpInfo);
 		new.http->user = old.http->user;
 		old.http->user = NULL;
 		new.http->password = old.http->password;
@@ -285,7 +285,7 @@ static void uget_node_set_by_dataset (UgetNode* node, UgDataset* dataset)
 
 	old.ftp = ug_dataset_get (dataset, UgFtpInfo, 0);
 	if (old.ftp) {
-		new.ftp = ug_info_realloc (&node->info, UgetFtpInfo);
+		new.ftp = ug_map_realloc (&node->map, UgetFtpInfo);
 		new.ftp->user = old.ftp->user;
 		old.ftp->user = NULL;
 		new.ftp->password = old.ftp->password;
@@ -295,7 +295,7 @@ static void uget_node_set_by_dataset (UgetNode* node, UgDataset* dataset)
 
 	old.progress = ug_dataset_get (dataset, UgProgressInfo, 0);
 	if (old.progress) {
-		new.progress = ug_info_realloc (&node->info, UgetProgressInfo);
+		new.progress = ug_map_realloc (&node->map, UgetProgressInfo);
 		new.progress->complete = old.progress->complete;
 		new.progress->total = old.progress->total;
 		new.progress->complete = old.progress->complete;
@@ -316,7 +316,7 @@ static UgetNode* uget_node_from_category (UgCategory* category1)
 
 	node = uget_node_new (NULL);
 	uget_node_set_by_dataset (node, category1->defaults);
-	category = ug_info_realloc (&node->info, UgetCategoryInfo);
+	category = ug_map_realloc (&node->map, UgetCategoryInfo);
 	category->active_limit   = category1->active_limit;
 	category->finished_limit = category1->finished_limit;
 	category->recycled_limit = category1->recycled_limit;

@@ -71,7 +71,7 @@ struct UgtkSettingDialog
 	struct UgtkAutoSaveForm       auto_save;
 	struct UgtkScheduleForm       scheduler;
 	struct UgtkCommandlineForm    commandline;
-	struct UgtkPluginForm         plugin;
+	struct UgtkPlUgMaprm         plugin;
 	struct UgtkMediaWebsiteForm   media_website;
 };
 

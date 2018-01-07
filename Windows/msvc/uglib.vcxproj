@@ -86,7 +86,7 @@
     <ClCompile Include="..\..\uglib\UgList.c" />
     <ClCompile Include="..\..\uglib\UgData.c" />
     <ClCompile Include="..\..\uglib\UgRegistry.c" />
-    <ClCompile Include="..\..\uglib\UgInfo.c" />
+    <ClCompile Include="..\..\uglib\UgMap.c" />
     <ClCompile Include="..\..\uglib\UgNode.c" />
     <ClCompile Include="..\..\uglib\UgSocket.c" />
     <ClCompile Include="..\..\uglib\UgStdio.c" />
@@ -116,7 +116,7 @@
     <ClInclude Include="..\..\uglib\UgList.h" />
     <ClInclude Include="..\..\uglib\UgData.h" />
     <ClInclude Include="..\..\uglib\UgRegistry.h" />
-    <ClInclude Include="..\..\uglib\UgInfo.h" />
+    <ClInclude Include="..\..\uglib\UgMap.h" />
     <ClInclude Include="..\..\uglib\UgNode.h" />
     <ClInclude Include="..\..\uglib\UgSocket.h" />
     <ClInclude Include="..\..\uglib\UgStdio.h" />

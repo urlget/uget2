@@ -397,7 +397,7 @@ static int  plugin_ctrl_speed (UgetPluginAria2* plugin, int* speed)
 		plugin->limit[1] = speed[1];
 	}
 	else {
-		common = ug_info_realloc (&plugin->node->info, UgetCommonInfo);
+		common = ug_map_realloc (&plugin->node->map, UgetCommonInfo);
 		// download
 		value = speed[0];
 		if (common->max_download_speed) {
@@ -450,7 +450,7 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 	// sync data between plug-in and node
 	// ------------------------------------------------
 	// update progress
-	temp.progress = ug_info_realloc (&node->info, UgetProgressInfo);
+	temp.progress = ug_map_realloc (&node->map, UgetProgressInfo);
 	temp.progress->complete       = plugin->completedLength;
 	temp.progress->total          = plugin->totalLength;
 	temp.progress->download_speed = plugin->downloadSpeed;
@@ -471,7 +471,7 @@ static int  plugin_sync (UgetPluginAria2* plugin)
 	if (temp.progress->download_speed > 0 && temp.progress->total > 0)
 		temp.progress->left = (temp.progress->total - temp.progress->complete) / temp.progress->download_speed;
 
-	temp.common = ug_info_realloc (&node->info, UgetCommonInfo);
+	temp.common = ug_map_realloc (&node->map, UgetCommonInfo);
 	// ------------------------------------------------
 	// sync changed limit from UgetNode
 	if (plugin->limit[1] != temp.common->max_upload_speed ||
@@ -990,7 +990,7 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 		int          ok;
 	} temp;
 
-	temp.common = ug_info_get (&node->info, UgetCommonInfo);
+	temp.common = ug_map_get (&node->map, UgetCommonInfo);
 	if (temp.common == NULL || temp.common->uri == NULL)
 		return FALSE;
 
@@ -1142,7 +1142,7 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 				temp.common->max_connections);
 	}
 
-	temp.proxy = ug_info_get (&node->info, UgetProxyInfo);
+	temp.proxy = ug_map_get (&node->map, UgetProxyInfo);
 #ifdef HAVE_LIBPWMD
 	if (temp.proxy && temp.proxy->type == UGET_PROXY_PWMD) {
 		if (uget_plugin_aria2_set_proxy_pwmd (plugin, member) == FALSE)
@@ -1177,7 +1177,7 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 		}
 	}
 
-	temp.http = ug_info_get (&node->info, UgetHttpInfo);
+	temp.http = ug_map_get (&node->map, UgetHttpInfo);
 	if (temp.http) {
 		if (plugin->uri_part.scheme_len >= 4 &&
 		    strncmp (uri, "http", 4) == 0)
@@ -1209,7 +1209,7 @@ static int  plugin_start (UgetPluginAria2* plugin, UgetNode* node)
 		}
 	}
 
-	temp.ftp = ug_info_get (&node->info, UgetFtpInfo);
+	temp.ftp = ug_map_get (&node->map, UgetFtpInfo);
 	if (temp.ftp) {
 		if (plugin->uri_part.scheme_len >= 3 && strncmp (uri, "ftp", 3) == 0) {
 			if ((temp.ftp->user     && temp.ftp->user[0]) ||
@@ -1504,7 +1504,7 @@ static gboolean	uget_plugin_aria2_set_proxy_pwmd (UgetPluginAria2 *plugin, UgVal
        UgetProxy *proxy;
 
        memset(&pwmd, 0, sizeof(pwmd));
-       proxy = ug_info_get (&plugin->node->info, UgetProxyInfo);
+       proxy = ug_map_get (&plugin->node->map, UgetProxyInfo);
        rc = ug_set_pwmd_proxy_options(&pwmd, proxy);
 
        if (rc)

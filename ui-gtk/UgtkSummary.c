@@ -92,7 +92,7 @@ void  ugtk_summary_show (UgtkSummary* summary, UgetNode* node)
 
 	iter.stamp = 0;   // used by ugtk_summary_store_realloc_next()
 	node = node->data;
-	temp.common = ug_info_get (&node->info, UgetCommonInfo);
+	temp.common = ug_map_get (&node->map, UgetCommonInfo);
 
 	// Summary Name
 	if (summary->visible.name) {
@@ -151,7 +151,7 @@ void  ugtk_summary_show (UgtkSummary* summary, UgetNode* node)
 		g_free (name);
 	}
 	// Summary Message
-	temp.log = ug_info_get (&node->info, UgetLogInfo);
+	temp.log = ug_map_get (&node->map, UgetLogInfo);
 	if (temp.log)
 		temp.event = (UgetEvent*) temp.log->messages.head;
 	if (summary->visible.message) {

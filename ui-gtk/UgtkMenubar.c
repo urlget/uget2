@@ -446,7 +446,7 @@ static void on_open_download_file (GtkWidget* widget, UgtkApp* app)
 	if (node == NULL)
 		return;
 	node = node->data;
-	common = ug_info_get (&node->info, UgetCommonInfo);
+	common = ug_map_get (&node->map, UgetCommonInfo);
 	if (common == NULL || common->folder == NULL || common->file == NULL)
 		return;
 
@@ -476,7 +476,7 @@ static void on_open_download_folder (GtkWidget* widget, UgtkApp* app)
 	if (node == NULL)
 		return;
 	node = node->data;
-	common = ug_info_get (&node->info, UgetCommonInfo);
+	common = ug_map_get (&node->map, UgetCommonInfo);
 	if (common == NULL || common->folder == NULL)
 		return;
 
@@ -640,7 +640,7 @@ static void on_set_download_prioriy (GtkWidget* widget, UgtkApp* app)
 	for (link = list;  link;  link = link->next) {
 		node = link->data;
 		node = node->data;
-		relation = ug_info_realloc (&node->info, UgetRelationInfo);
+		relation = ug_map_realloc (&node->map, UgetRelationInfo);
 		relation->task.priority = priority;
 	}
 	g_list_free (list);

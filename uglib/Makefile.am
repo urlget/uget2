@@ -24,7 +24,7 @@ libuglib_a_SOURCES = \
 	UgUri.c  \
 	UgNode.c  \
 	UgData.c  \
-	UgInfo.c  \
+	UgMap.c  \
 	UgRegistry.c  \
 	UgValue.c  \
 	UgEntry.c  \

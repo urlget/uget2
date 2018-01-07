@@ -341,7 +341,7 @@ static int  plugin_sync (UgetPluginCurl* plugin)
 
 	node = plugin->node;
 	// sync data between plug-in and node
-	common = ug_info_realloc (&node->info, UgetCommonInfo);
+	common = ug_map_realloc (&node->map, UgetCommonInfo);
 	common->retry_count = plugin->common->retry_count;
 	// sync changed limit from UgetNode
 	if (plugin->common->max_upload_speed != common->max_upload_speed ||
@@ -356,7 +356,7 @@ static int  plugin_sync (UgetPluginCurl* plugin)
 	if (common->max_connections > 0)
 		plugin->segment.n_max = common->max_connections;
 
-	progress = ug_info_realloc (&node->info, UgetProgressInfo);
+	progress = ug_map_realloc (&node->map, UgetProgressInfo);
 	progress->upload_speed   = plugin->speed.upload;
 	progress->download_speed = plugin->speed.download;
 
@@ -476,17 +476,17 @@ static int  plugin_start (UgetPluginCurl* plugin, UgetNode* node)
 		int          ok;
 	} temp;
 
-	temp.common = ug_info_get (&node->info, UgetCommonInfo);
+	temp.common = ug_map_get (&node->map, UgetCommonInfo);
 	if (temp.common == NULL || temp.common->uri == NULL)
 		return FALSE;
 	plugin->common = ug_data_copy (temp.common);
 	plugin_setup_uris (plugin);
 
-	temp.proxy = ug_info_get (&node->info, UgetProxyInfo);
+	temp.proxy = ug_map_get (&node->map, UgetProxyInfo);
 	if (temp.proxy)
 		plugin->proxy  = ug_data_copy (temp.proxy);
 
-	temp.http = ug_info_get (&node->info, UgetHttpInfo);
+	temp.http = ug_map_get (&node->map, UgetHttpInfo);
 	if (temp.http) {
 		plugin->http = ug_data_copy (temp.http);
 		// check http->post_file
@@ -509,7 +509,7 @@ static int  plugin_start (UgetPluginCurl* plugin, UgetNode* node)
 		}
 	}
 
-	temp.ftp = ug_info_get (&node->info, UgetFtpInfo);
+	temp.ftp = ug_map_get (&node->map, UgetFtpInfo);
 	if (temp.ftp)
 		plugin->ftp = ug_data_copy (temp.ftp);
 

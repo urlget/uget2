@@ -165,7 +165,7 @@ static int  plugin_start (UgetPluginMega* plugin, UgetNode* node)
 {
 	UgetCommon*  common;
 
-	common = ug_info_get (&node->info, UgetCommonInfo);
+	common = ug_map_get (&node->map, UgetCommonInfo);
 	if (common == NULL || common->uri == NULL)
 		return FALSE;
 
@@ -178,10 +178,10 @@ static int  plugin_start (UgetPluginMega* plugin, UgetNode* node)
 	}
 
 	plugin->target_node = uget_node_new (NULL);
-	ug_info_assign (&plugin->target_node->info, &node->info, NULL);
-	plugin->target_proxy  = ug_info_get (&plugin->target_node->info, UgetProxyInfo);
-	plugin->target_common = ug_info_get (&plugin->target_node->info, UgetCommonInfo);
-	plugin->target_progress = ug_info_realloc (&plugin->target_node->info, UgetProgressInfo);
+	ug_map_assign (&plugin->target_node->map, &node->map, NULL);
+	plugin->target_proxy  = ug_map_get (&plugin->target_node->map, UgetProxyInfo);
+	plugin->target_common = ug_map_get (&plugin->target_node->map, UgetCommonInfo);
+	plugin->target_progress = ug_map_realloc (&plugin->target_node->map, UgetProgressInfo);
 
 	return uget_plugin_agent_start_thread ((UgetPluginAgent*)plugin, node,
 	                                       (UgThreadFunc)plugin_thread);
@@ -321,12 +321,12 @@ static int  plugin_sync (UgetPluginMega* plugin)
 	// sync data between plugin->node and plugin->target_node
 
 	// sync common data (include speed limit) between node and target_node
-	common = ug_info_realloc (&node->info, UgetCommonInfo);
+	common = ug_map_realloc (&node->map, UgetCommonInfo);
 	uget_plugin_agent_sync_common ((UgetPluginAgent*) plugin,
 	                               common, plugin->target_common);
 
 	// sync progress data from target_node to node
-	progress = ug_info_realloc (&node->info, UgetProgressInfo);
+	progress = ug_map_realloc (&node->map, UgetProgressInfo);
 	uget_plugin_agent_sync_progress ((UgetPluginAgent*) plugin,
 	                                 progress, plugin->target_progress);
 	if (plugin->decrypting == FALSE)

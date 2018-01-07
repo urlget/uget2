@@ -212,7 +212,7 @@ int  uget_plugin_agent_ctrl_speed (UgetPluginAgent* plugin, int* speed)
 		plugin->limit[1] = speed[1];
 	}
 	else {
-		common = ug_info_realloc (&plugin->node->info, UgetCommonInfo);
+		common = ug_map_realloc (&plugin->node->map, UgetCommonInfo);
 		// download
 		value = speed[0];
 		if (common->max_download_speed) {
@@ -241,9 +241,9 @@ void  uget_plugin_agent_sync_common (UgetPluginAgent* plugin,
                                      UgetCommon* target)
 {
 	if (common == NULL)
-		common = ug_info_realloc (&plugin->node->info, UgetCommonInfo);
+		common = ug_map_realloc (&plugin->node->map, UgetCommonInfo);
 	if (target == NULL)
-		target = ug_info_realloc (&plugin->target_node->info, UgetCommonInfo);
+		target = ug_map_realloc (&plugin->target_node->map, UgetCommonInfo);
 
 	// sync speed limit from common to target
 	if (target->max_upload_speed != common->max_upload_speed ||
@@ -263,9 +263,9 @@ void  uget_plugin_agent_sync_progress (UgetPluginAgent* plugin,
                                        UgetProgress* target)
 {
 	if (progress == NULL)
-		progress = ug_info_realloc (&plugin->node->info, UgetProgressInfo);
+		progress = ug_map_realloc (&plugin->node->map, UgetProgressInfo);
 	if (target == NULL)
-		target = ug_info_realloc (&plugin->target_node->info, UgetProgressInfo);
+		target = ug_map_realloc (&plugin->target_node->map, UgetProgressInfo);
 
 	// sync progress from target to common
 	progress->complete       = target->complete;

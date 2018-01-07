@@ -36,67 +36,67 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <UgInfo.h>
+#include <UgMap.h>
 
 // ----------------------------------------------------------------------------
-// UgRegistry for UgInfo
+// UgRegistry for UgMap
 
-static UgRegistry*  ug_info_registry;
+static UgRegistry*  ug_map_registry;
 
-UgRegistry*  ug_info_get_registry (void)
+UgRegistry*  ug_map_get_registry(void)
 {
-	return ug_info_registry;
+	return ug_map_registry;
 }
 
-void  ug_info_set_registry (UgRegistry* registry)
+void  ug_map_set_registry(UgRegistry* registry)
 {
-	ug_info_registry = registry;
+	ug_map_registry = registry;
 }
 
 // ----------------------------------------------------------------------------
-// UgInfo
+// UgMap
 
-void  ug_info_init (UgInfo* info, int allocated_len, int cache_len)
+void  ug_map_init(UgMap* map, int allocated_len, int cache_len)
 {
 	int     index;
 
-	ug_array_init (info, sizeof (UgPair), allocated_len + cache_len);
-	info->length = cache_len;
-	info->cache_len = cache_len;
-	for (index = 0;  index < info->allocated;  index++) {
-		info->at[index].key  = NULL;
-		info->at[index].data = NULL;
+	ug_array_init(map, sizeof(UgPair), allocated_len + cache_len);
+	map->length = cache_len;
+	map->cache_len = cache_len;
+	for (index = 0;  index < map->allocated;  index++) {
+		map->at[index].key  = NULL;
+		map->at[index].data = NULL;
 	}
 }
 
-void  ug_info_final (UgInfo* info)
+void  ug_map_final(UgMap* map)
 {
 	UgPair* cur;
 	UgPair* end;
 
-	for (cur = info->at, end = cur + info->length;  cur < end;  cur++) {
+	for (cur = map->at, end = cur + map->length;  cur < end;  cur++) {
 		if (cur->key == NULL)
 			continue;
 		if (cur->data)
-			ug_data_free (cur->data);
+			ug_data_free(cur->data);
 	}
 
-	ug_array_clear (info);
+	ug_array_clear(map);
 }
 
-UgPair* ug_info_find (UgInfo* info, const UgDataInfo* key, int* inserted_index)
+UgPair* ug_map_find(UgMap* map, const UgDataInfo* key, int* inserted_index)
 {
 	UgPair*   low;
 	UgPair*   cur;
 	UgPair*   high;
 	const UgDataInfo* cur_key;
 
-	for (cur = info->at, low = cur + info->cache_len;  cur < low;  cur++) {
+	for (cur = map->at, low = cur + map->cache_len;  cur < low;  cur++) {
 		if (cur->key == key)
 			return cur;
 	}
 
-	high = info->at + info->length;
+	high = map->at + map->length;
 	while (low < high) {
 //		cur = low + ((high - low) / 2);
 		cur = low + ((high - low) >> 1);
@@ -113,52 +113,52 @@ UgPair* ug_info_find (UgInfo* info, const UgDataInfo* key, int* inserted_index)
 	if (inserted_index) {
 		if (cur < low)
 			cur++;
-		*inserted_index = cur - info->at;
+		*inserted_index = cur - map->at;
 	}
 	return NULL;
 }
 
-void*  ug_info_realloc (UgInfo* info, const UgDataInfo* key)
+void*  ug_map_realloc(UgMap* map, const UgDataInfo* key)
 {
 	UgPair* cur;
 	int     index;
 
-	cur = ug_info_find (info, key, &index);
+	cur = ug_map_find(map, key, &index);
 	if (cur == NULL) {
-		ug_array_alloc (info, 1);
-		memmove (info->at + index + 1, info->at + index,
-				sizeof (UgPair) * (info->length - index - 1));
-		cur = info->at + index;
+		ug_array_alloc(map, 1);
+		memmove(map->at + index + 1, map->at + index,
+				sizeof(UgPair) * (map->length - index - 1));
+		cur = map->at + index;
 		cur->key = (void*) key;
-		cur->data = ug_data_new (key);
+		cur->data = ug_data_new(key);
 	}
 	else if (cur->data == NULL)
-		cur->data = ug_data_new (key);
+		cur->data = ug_data_new(key);
 	return cur->data;
 }
 
-void  ug_info_remove (UgInfo* info, const UgDataInfo* key)
+void  ug_map_remove (UgMap* map, const UgDataInfo* key)
 {
 	UgPair* cur;
 
-	cur = ug_info_find (info, key, NULL);
+	cur = ug_map_find(map, key, NULL);
 	if (cur && cur->data) {
-		ug_data_free (cur->data);
+		ug_data_free(cur->data);
 		cur->data = NULL;
 	}
 }
 
-void* ug_info_get (UgInfo* info, const UgDataInfo* key)
+void* ug_map_get(UgMap* map, const UgDataInfo* key)
 {
 	UgPair* cur;
 
-	cur = ug_info_find (info, key, NULL);
+	cur = ug_map_find(map, key, NULL);
 	if (cur == NULL)
 		return NULL;
 	return cur->data;
 }
 
-void  ug_info_assign (UgInfo* info, UgInfo* src, const UgDataInfo* exclude_info)
+void  ug_map_assign(UgMap* map, UgMap* src, const UgDataInfo* exclude_key)
 {
 	int      index;
 	UgPair*  pair;
@@ -168,81 +168,81 @@ void  ug_info_assign (UgInfo* info, UgInfo* src, const UgDataInfo* exclude_info)
 		pair = src->at + index;
 		if (pair->key == NULL || pair->data == NULL)
 			continue;
-		if (pair->key == exclude_info)
+		if (pair->key == exclude_key)
 			continue;
-		data = ug_info_realloc (info, pair->key);
-		ug_data_assign (data, pair->data);
+		data = ug_map_realloc(map, pair->key);
+		ug_data_assign(data, pair->data);
 	}
 }
 
-// UgJsonParseFunc for key/data pairs in UgInfo
-static UgJsonError ug_json_parse_info_reg (UgJson* json,
+// UgJsonParseFunc for key/data pairs in UgMap
+static UgJsonError ug_json_parse_info_reg(UgJson* json,
                                 const char* name, const char* value,
-                                void* info, void* infoRegistry)
+                                void* map, void* infoRegistry)
 {
 	UgRegistry* registry;
 	UgPair*     cur;
 
 	if (infoRegistry)
 		registry = infoRegistry;
-	else if (ug_info_registry)
-		registry = ug_info_registry;
+	else if (ug_map_registry)
+		registry = ug_map_registry;
 	else
 		registry = NULL;
 
 	if (registry) {
 		if (registry->sorted == FALSE)
-			ug_registry_sort (registry);
-		cur = ug_registry_find (registry, name, NULL);
+			ug_registry_sort(registry);
+		cur = ug_registry_find(registry, name, NULL);
 
 		if (cur) {
-			ug_json_push (json, ug_json_parse_entry,
-					ug_info_realloc (info, cur->data),
+			ug_json_push(json, ug_json_parse_entry,
+					ug_map_realloc(map, cur->data),
 					(void*)((UgDataInfo*)cur->data)->entry);
 			return UG_JSON_ERROR_NONE;
 		}
 	}
 
 	if (json->type >= UG_JSON_OBJECT)
-		ug_json_push (json, ug_json_parse_unknown, NULL, NULL);
+		ug_json_push(json, ug_json_parse_unknown, NULL, NULL);
 	return UG_JSON_ERROR_CUSTOM;
 }
 
 // ----------------
 
-// JSON parser for UgInfo.
-UgJsonError ug_json_parse_info (UgJson* json,
-                                const char* name, const char* value,
-                                void* info, void* none)
+// JSON parser for UgMap.
+UgJsonError ug_json_parse_info(UgJson* json,
+                               const char* name, const char* value,
+                               void* map, void* none)
 {
-	// UgInfo's type is UG_JSON_OBJECT
+	// UgMap's type is UG_JSON_OBJECT
 	if (json->type != UG_JSON_OBJECT) {
 //		if (json->type == UG_JSON_ARRAY)
 //			ug_json_push (json, ug_json_parse_unknown, NULL, NULL);
 		return UG_JSON_ERROR_TYPE_NOT_MATCH;
 	}
 
-	ug_json_push (json, ug_json_parse_info_reg, info, NULL);
+	ug_json_push(json, ug_json_parse_info_reg, map, NULL);
 	return UG_JSON_ERROR_NONE;
 }
 
-// JSON writer for UgInfo.
-void  ug_json_write_info (UgJson* json, const UgInfo* info)
+// JSON writer for UgMap.
+void  ug_json_write_info(UgJson* json, const UgMap* map)
 {
 	UgPair* cur;
 	UgPair* end;
 
-	ug_json_write_object_head (json);
-	for (cur = info->at, end = cur + info->length;  cur < end;  cur++) {
+	ug_json_write_object_head(json);
+	for (cur = map->at, end = cur + map->length;  cur < end;  cur++) {
 		if (cur->data == NULL || ((UgDataInfo*)cur->key)->entry == NULL)
 			continue;
 
-		ug_json_write_string (json, ((UgDataInfo*)cur->key)->name);
-		ug_json_write_object_head (json);
-		ug_json_write_entry (json, cur->data,
+		ug_json_write_string(json, ((UgDataInfo*)cur->key)->name);
+		ug_json_write_object_head(json);
+		ug_json_write_entry(json, cur->data,
 				((UgDataInfo*)cur->key)->entry);
-		ug_json_write_object_tail (json);
+		ug_json_write_object_tail(json);
 	}
-	ug_json_write_object_tail (json);
+	ug_json_write_object_tail(json);
 }
 

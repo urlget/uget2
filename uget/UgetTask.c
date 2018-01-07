@@ -71,12 +71,12 @@ int   uget_task_add (UgetTask* task, UgetNode* node, const UgetPluginInfo* info)
 	} temp;
 
 	// UgetRelation: check exist plug-in
-	relation = ug_info_realloc (&node->info, UgetRelationInfo);
+	relation = ug_map_realloc (&node->map, UgetRelationInfo);
 	if (relation->task.plugin)
 		return FALSE;
 
 	// UgetProgress: clear progress when it completed
-	temp.progress = ug_info_get (&node->info, UgetProgressInfo);
+	temp.progress = ug_map_get (&node->map, UgetProgressInfo);
 	if (temp.progress) {
 		// reset progress if it's percent is 100%.
 		if (temp.progress->percent == 100) {
@@ -90,7 +90,7 @@ int   uget_task_add (UgetTask* task, UgetNode* node, const UgetPluginInfo* info)
 	}
 
 	// UgetCommon: clear retry_count
-	temp.common = ug_info_get (&node->info, UgetCommonInfo);
+	temp.common = ug_map_get (&node->map, UgetCommonInfo);
 	if (temp.common)
 		temp.common->retry_count = 0;
 
@@ -135,7 +135,7 @@ int  uget_task_remove (UgetTask* task, UgetNode* node)
 		ug_slinks_remove ((UgSLinks*) task, node, prev);
 		node->state &= ~UGET_STATE_ACTIVE;
 		// UgetRelation
-		relation = ug_info_get (&node->info, UgetRelationInfo);
+		relation = ug_map_get (&node->map, UgetRelationInfo);
 		if (relation) {
 //			uget_plugin_post (relation->task.plugin,
 //					uget_event_new_state (node, UGET_STATE_QUEUING));
@@ -191,7 +191,7 @@ static int  uget_task_dispatch1 (UgetTask* task, UgetNode* node, UgetPlugin* plu
 			node->state |= UGET_STATE_ERROR;  // don't break here
 		case UGET_EVENT_WARNING:
 		case UGET_EVENT_NORMAL:
-			temp.log = ug_info_realloc (&node->info, UgetLogInfo);
+			temp.log = ug_map_realloc (&node->map, UgetLogInfo);
 			ug_list_prepend (&temp.log->messages, (UgLink*) event);
 			break;
 
@@ -237,11 +237,11 @@ void  uget_task_dispatch (UgetTask* task)
 
 	for (link = task->used;  link;  link = link->next) {
 		node = link->data;
-		relation = ug_info_get (&node->info, UgetRelationInfo);
+		relation = ug_map_get (&node->map, UgetRelationInfo);
 		if (uget_task_dispatch1 (task, node, relation->task.plugin) == FALSE)
 			continue;
 		// speed
-		progress = ug_info_get (&node->info, UgetProgressInfo);
+		progress = ug_map_get (&node->map, UgetProgressInfo);
 		if (progress) {
 			task->speed.download += progress->download_speed;
 			task->speed.upload   += progress->upload_speed;
@@ -312,7 +312,7 @@ static void uget_task_adjust_speed_index (UgetTask* task, int idx, int remain)
 		// increase speed by priority
 		for (link = task->used;  link;  link = link->next) {
 			node = (UgetNode*) link->data;
-			relation = ug_info_get (&node->info, UgetRelationInfo);
+			relation = ug_map_get (&node->map, UgetRelationInfo);
 			relation->task.prev = prev;
 			prev = relation;
 			n_piece += relation->task.priority + 1;
@@ -335,7 +335,7 @@ static void uget_task_adjust_speed_index (UgetTask* task, int idx, int remain)
 		remain = remain / task->n_links;
 		for (link = task->used;  link;  link = link->next) {
 			node = (UgetNode*) link->data;
-			relation = ug_info_get (&node->info, UgetRelationInfo);
+			relation = ug_map_get (&node->map, UgetRelationInfo);
 			relation->task.limit[idx] = relation->task.speed[idx] + remain;
 			if (relation->task.limit[idx] < SPEED_MIN)
 				relation->task.limit[idx] = SPEED_MIN;
@@ -353,7 +353,7 @@ static void uget_task_disable_limit_index (UgetTask* task, int idx)
 
 	for (link = task->used;  link;  link = link->next) {
 		node = (UgetNode*) link->data;
-		relation = ug_info_get (&node->info, UgetRelationInfo);
+		relation = ug_map_get (&node->map, UgetRelationInfo);
 		relation->task.limit[idx] = 0;
 		uget_plugin_ctrl_speed (relation->task.plugin,
 		                        relation->task.limit);

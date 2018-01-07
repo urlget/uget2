@@ -39,7 +39,7 @@
 #include <UgList.h>
 #include <UgNode.h>
 #include <UgData.h>
-#include <UgInfo.h>
+#include <UgMap.h>
 #include <UgUri.h>
 #include <iostream>
 #include <type_traits>
@@ -59,7 +59,7 @@ void uglib_is_standard_layout (void)
 	     << "Ug::Array<int> : is_standard_layout = " << std::is_standard_layout<Ug::Array<int>>::value << endl
 	     << "Ug::Node : is_standard_layout = " << std::is_standard_layout<Ug::Node>::value << endl
 	     << "Ug::List : is_standard_layout = " << std::is_standard_layout<Ug::List>::value << endl
-	     << "Ug::Info : is_standard_layout = " << std::is_standard_layout<Ug::Info>::value << endl
+	     << "Ug::Map : is_standard_layout = " << std::is_standard_layout<Ug::Map>::value << endl
 	     << "Ug::Json : is_standard_layout = " << std::is_standard_layout<Ug::Json>::value << endl
 	     << "Ug::Uri : is_standard_layout = " << std::is_standard_layout<Ug::Uri>::value << endl
 	     << endl;
@@ -169,9 +169,9 @@ void test_data_cxx (void)
 
 void test_info_cxx (void)
 {
-	Ug::Info info;
+	Ug::Map map;
 
-	info.init (16, 3);
+	map.init (16, 3);
 }
 
 // ----------------------------------------------------------------------------

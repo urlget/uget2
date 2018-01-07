@@ -58,7 +58,7 @@ static void  uget_node_call_fake_filter (UgetNode* parent, UgetNode* sibling, Ug
 // UgetNode
 
 static struct UgetNodeControl  control = {
-	NULL,                   // struct UgetNodeControl*  children;
+	&control,               // struct UgetNodeControl*  children;
 	{NULL, NULL, NULL},     // struct UgetNodeNotifier  notifier;
 	{NULL, FALSE},          // struct UgetNodeSort      sort;
 	NULL,                   // UgetNodeFunc             filter;
@@ -70,7 +70,7 @@ const UgEntry  UgetNodeEntry[] =
 	{"name",     offsetof (UgetNode, name),  UG_ENTRY_STRING, NULL, NULL},
 	{"type",     offsetof (UgetNode, type),  UG_ENTRY_INT,    NULL, NULL},
 	{"state",    offsetof (UgetNode, state), UG_ENTRY_INT,    NULL, NULL},
-	{"info",     offsetof (UgetNode, info),  UG_ENTRY_CUSTOM,
+	{"info",     offsetof (UgetNode, map),   UG_ENTRY_CUSTOM,
 			ug_json_parse_info,   ug_json_write_info},
 	{"children", 0,                          UG_ENTRY_ARRAY,
 			ug_json_parse_uget_node_children, ug_json_write_uget_node_children},
@@ -99,9 +99,9 @@ void  uget_node_init  (UgetNode* node, UgetNode* node_real)
 
 	if (node_real == NULL) {
 		node->data = node;    // pointer to self
-		ug_info_init (&node->info, 8, 2);
-		node->info.at[0].key = (void*) UgetRelationInfo;
-		node->info.at[1].key = (void*) UgetProgressInfo;
+		ug_map_init (&node->map, 8, 2);
+		node->map.at[0].key = (void*) UgetRelationInfo;
+		node->map.at[1].key = (void*) UgetProgressInfo;
 	}
 	else {
 		// this is a fake node.
@@ -111,7 +111,7 @@ void  uget_node_init  (UgetNode* node, UgetNode* node_real)
 		node->real = node_real;
 		node->peer = node_real->fake;
 		node_real->fake = node;
-		ug_info_init (&node->info, 0, 0);
+		ug_map_init (&node->map, 0, 0);
 	}
 }
 
@@ -131,7 +131,7 @@ void  uget_node_unref (UgetNode* node)
 		uget_node_unref_fake (node);
 		uget_node_unref_children (node);
 //		ug_node_unlink ((UgNode*)node);
-		ug_info_final (&node->info);
+		ug_map_final (&node->map);
 		ug_free (node->name);
 
 #ifdef HAVE_GLIB
@@ -199,7 +199,7 @@ void  uget_node_insert (UgetNode* node, UgetNode* sibling, UgetNode* child)
 	UgetNodeFunc inserted;
 
 	ug_node_insert ((UgNode*) node, (UgNode*) sibling, (UgNode*) child);
-	child->control = node->control;
+	child->control = node->control->children;
 
 	inserted = node->control->notifier.inserted;
 	if (inserted)
@@ -257,7 +257,7 @@ void  uget_node_append (UgetNode* node, UgetNode* child)
 	UgetNodeFunc inserted;
 
 	ug_node_append ((UgNode*) node, (UgNode*) child);
-	child->control = node->control;
+	child->control = node->control->children;
 
 	inserted = node->control->notifier.inserted;
 	if (inserted)
@@ -273,7 +273,7 @@ void  uget_node_prepend (UgetNode* node, UgetNode* child)
 
 	sibling = node->children;
 	ug_node_prepend ((UgNode*) node, (UgNode*) child);
-	child->control = node->control;
+	child->control = node->control->children;
 
 	inserted = node->control->notifier.inserted;
 	if (inserted)

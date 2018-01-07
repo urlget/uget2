@@ -578,7 +578,7 @@ void  uget_uri_hash_add_download (void* uuhash, UgetNode* dnode)
 
 	if (uuhash == NULL)
 		return;
-	common = ug_info_get (&dnode->info, UgetCommonInfo);
+	common = ug_map_get (&dnode->map, UgetCommonInfo);
 	if (common && common->uri) {
 		counts = (uintptr_t) ug_hash_table_lookup (uuhash, common->uri);
 		ug_hash_table_insert (uuhash, ug_strdup (common->uri), (void*) (++counts));
@@ -592,7 +592,7 @@ void  uget_uri_hash_remove_download (void* uuhash, UgetNode* dnode)
 
 	if (uuhash == NULL)
 		return;
-	common = ug_info_get (&dnode->info, UgetCommonInfo);
+	common = ug_map_get (&dnode->map, UgetCommonInfo);
 	if (common && common->uri) {
 		counts = (uintptr_t) ug_hash_table_lookup (uuhash, common->uri);
 		if (counts > 1)
@@ -611,7 +611,7 @@ void  uget_uri_hash_add_category (void* uuhash, UgetNode* cnode)
 	if (uuhash == NULL)
 		return;
 	for (dnode = cnode->children;  dnode;  dnode = dnode->next) {
-		common = ug_info_get (&dnode->info, UgetCommonInfo);
+		common = ug_map_get (&dnode->map, UgetCommonInfo);
 		if (common && common->uri) {
 			counts = (uintptr_t) ug_hash_table_lookup (uuhash, common->uri);
 			ug_hash_table_insert (uuhash, ug_strdup (common->uri), (void*) (++counts));
@@ -628,7 +628,7 @@ void  uget_uri_hash_remove_category (void* uuhash, UgetNode* cnode)
 	if (uuhash == NULL)
 		return;
 	for (dnode = cnode->children;  dnode;  dnode = dnode->next) {
-		common = ug_info_get (&dnode->info, UgetCommonInfo);
+		common = ug_map_get (&dnode->map, UgetCommonInfo);
 		if (common && common->uri) {
 			counts = (uintptr_t) ug_hash_table_lookup (uuhash, common->uri);
 			if (counts > 1)

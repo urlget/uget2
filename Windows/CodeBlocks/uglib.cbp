@@ -75,10 +75,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../uglib/UgHtmlFilter.h" />
-		<Unit filename="../../uglib/UgInfo.c">
+		<Unit filename="../../uglib/UgMap.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../uglib/UgInfo.h" />
+		<Unit filename="../../uglib/UgMap.h" />
 		<Unit filename="../../uglib/UgJson-custom.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -64,7 +64,7 @@ extern const UgDataInfo*  UgetRelationInfo;
 extern const UgDataInfo*  UgetCategoryInfo;
 
 // ----------------------------------------------------------------------------
-// UgetCommon: It derived from UgData and store in UgInfo.
+// UgetCommon: It derived from UgData and store in UgMap.
 
 struct UgetCommon
 {
@@ -124,7 +124,7 @@ struct UgetCommon
 };
 
 // ----------------------------------------------------------------------------
-// UgetProgress: It derived from UgData and store in UgInfo.
+// UgetProgress: It derived from UgData and store in UgMap.
 
 struct UgetProgress
 {
@@ -145,7 +145,7 @@ struct UgetProgress
 };
 
 // ----------------------------------------------------------------------------
-// UgetProxy: It derived from UgData and store in UgInfo.
+// UgetProxy: It derived from UgData and store in UgMap.
 
 typedef enum
 {
@@ -202,7 +202,7 @@ struct UgetProxy
 };
 
 // ----------------------------------------------------------------------------
-// UgetHttp: It derived from UgData and store in UgInfo.
+// UgetHttp: It derived from UgData and store in UgMap.
 
 struct UgetHttp
 {
@@ -239,7 +239,7 @@ struct UgetHttp
 };
 
 // ----------------------------------------------------------------------------
-// UgetFtp: It derived from UgData and store in UgInfo.
+// UgetFtp: It derived from UgData and store in UgMap.
 
 struct UgetFtp
 {
@@ -275,7 +275,7 @@ struct UgetLog
 };
 
 // ----------------------------------------------------------------------------
-// UgetRelation: It derived from UgData and store in UgInfo.
+// UgetRelation: It derived from UgData and store in UgMap.
 
 typedef enum
 {
@@ -316,7 +316,7 @@ struct UgetRelation
 };
 
 // ----------------------------------------------------------------------------
-// UgetCategory: It derived from UgData and store in UgInfo.
+// UgetCategory: It derived from UgData and store in UgMap.
 
 struct UgetCategory
 {

@@ -514,9 +514,9 @@ void  ugtk_commandline_form_get (struct UgtkCommandlineForm* clform, UgtkSetting
 }
 
 // ----------------------------------------------------------------------------
-// UgtkPluginForm
+// UgtkPlUgMaprm
 //
-static void on_plugin_launch_toggled (GtkWidget* widget, struct UgtkPluginForm* psform)
+static void on_plugin_launch_toggled (GtkWidget* widget, struct UgtkPlUgMaprm* psform)
 {
 	gboolean  sensitive;
 
@@ -524,7 +524,7 @@ static void on_plugin_launch_toggled (GtkWidget* widget, struct UgtkPluginForm* 
 	gtk_widget_set_sensitive ((GtkWidget*) psform->local, sensitive);
 }
 
-static void on_order_changed (GtkComboBox* widget, struct UgtkPluginForm* psform)
+static void on_order_changed (GtkComboBox* widget, struct UgtkPlUgMaprm* psform)
 {
 	int  index;
 
@@ -535,7 +535,7 @@ static void on_order_changed (GtkComboBox* widget, struct UgtkPluginForm* psform
 		gtk_widget_set_sensitive (psform->aria2_opts, FALSE);
 }
 
-void  ugtk_plugin_form_init (struct UgtkPluginForm* psform)
+void  ugtk_plugin_form_init (struct UgtkPlUgMaprm* psform)
 {
 	PangoContext*  context;
 	PangoLayout*   layout;
@@ -695,7 +695,7 @@ void  ugtk_plugin_form_init (struct UgtkPluginForm* psform)
 	gtk_widget_show (psform->self);
 }
 
-void  ugtk_plugin_form_set (struct UgtkPluginForm* psform, UgtkSetting* setting)
+void  ugtk_plugin_form_set (struct UgtkPlUgMaprm* psform, UgtkSetting* setting)
 {
 	gtk_combo_box_set_active ((GtkComboBox*) psform->order, setting->plugin_order);
 
@@ -717,7 +717,7 @@ void  ugtk_plugin_form_set (struct UgtkPluginForm* psform, UgtkSetting* setting)
 	gtk_spin_button_set_value (psform->download, setting->aria2.limit.download);
 }
 
-void  ugtk_plugin_form_get (struct UgtkPluginForm* psform, UgtkSetting* setting)
+void  ugtk_plugin_form_get (struct UgtkPlUgMaprm* psform, UgtkSetting* setting)
 {
 	GtkTextIter  iter1;
 	GtkTextIter  iter2;
