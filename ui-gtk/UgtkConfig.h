@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2017 by C.H. Huang
+ *   Copyright (C) 2012-2018 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -52,7 +52,7 @@ extern "C" {
 #endif
 
 #ifndef PACKAGE_VERSION
-#define PACKAGE_VERSION		"2.1.6"
+#define PACKAGE_VERSION		"2.2.0"
 #endif
 
 // ----------------------------------------------------------------------------

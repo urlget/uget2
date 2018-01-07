@@ -1,3 +1,9 @@
+uGet 2.2.0: (2018-01-06)
+1. mega plug-in: create new plug-in for MEGA site.
+2. all plug-in: avoid crash if plug-in failed to start.
+3. Fix: some category/status doesn't refresh it's download list.
+4. update translation files.
+
 uGet 2.1.6: (2017-08-24)
 1. User can use sorting in any category and status.
 2. curl plug-in: It can use ftruncate() to create large file.
