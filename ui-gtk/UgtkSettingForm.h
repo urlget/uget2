@@ -158,8 +158,8 @@ void  ugtk_commandline_form_set (struct UgtkCommandlineForm* clform, UgtkSetting
 void  ugtk_commandline_form_get (struct UgtkCommandlineForm* clform, UgtkSetting* setting);
 
 // ----------------------------------------------------------------------------
-// UgtkPlUgMaprm
-struct UgtkPlUgMaprm
+// UgtkPluginForm
+struct UgtkPluginForm
 {
 	GtkWidget*  self;
 
@@ -180,9 +180,9 @@ struct UgtkPlUgMaprm
 	GtkSpinButton*      download;  // KiB/s
 };
 
-void  ugtk_plugin_form_init (struct UgtkPlUgMaprm* psform);
-void  ugtk_plugin_form_set (struct UgtkPlUgMaprm* psform, UgtkSetting* setting);
-void  ugtk_plugin_form_get (struct UgtkPlUgMaprm* psform, UgtkSetting* setting);
+void  ugtk_plugin_form_init (struct UgtkPluginForm* psform);
+void  ugtk_plugin_form_set (struct UgtkPluginForm* psform, UgtkSetting* setting);
+void  ugtk_plugin_form_get (struct UgtkPluginForm* psform, UgtkSetting* setting);
 
 // ----------------------------------------------------------------------------
 // UgtkMediaWebsiteForm

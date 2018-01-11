@@ -24,7 +24,7 @@ add_library( uglib
              UgUri.c
              UgNode.c
              UgData.c
-             UgMap.c
+             UgInfo.c
              UgRegistry.c
              UgValue.c
              UgEntry.c

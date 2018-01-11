@@ -156,7 +156,7 @@ void  ugtk_category_form_get (UgtkCategoryForm* cform, UgetNode* cnode)
 	UgetCategory*  category;
 	const gchar*   text;
 
-	category = ug_map_realloc (&cnode->map, UgetCategoryInfo);
+	category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
 	if (gtk_widget_is_sensitive (cform->name_entry) == TRUE) {
 		text = gtk_entry_get_text ((GtkEntry*) cform->name_entry);
 		ug_free (cnode->name);
@@ -192,7 +192,7 @@ void  ugtk_category_form_set  (UgtkCategoryForm*  cform, UgetNode* cnode)
 	UgetCategory*  category;
 	gchar*  str;
 
-	category = ug_map_realloc (&cnode->map, UgetCategoryInfo);
+	category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
 	if (gtk_widget_is_sensitive (cform->name_entry) == TRUE) {
 		gtk_entry_set_text ((GtkEntry*) cform->name_entry,
 				(cnode->name) ? cnode->name : "");

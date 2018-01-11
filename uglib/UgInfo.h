@@ -34,8 +34,8 @@
  *
  */
 
-#ifndef UG_MAP_H
-#define UG_MAP_H
+#ifndef UG_INFO_H
+#define UG_INFO_H
 
 #include <UgArray.h>
 #include <UgData.h>
@@ -45,35 +45,35 @@
 extern "C" {
 #endif
 
-typedef struct  UgMap      UgMap;
+typedef struct  UgInfo      UgInfo;
 
 // ----------------------------------------------------------------------------
-// UgRegistry for UgMap
+// UgRegistry for UgInfo
 
-UgRegistry*  ug_map_get_registry(void);
-void         ug_map_set_registry(UgRegistry* registry);
+UgRegistry*  ug_info_get_registry (void);
+void         ug_info_set_registry (UgRegistry* registry);
 
 // ----------------------------------------------------------------------------
-// UgMap
+// UgInfo
 
-void    ug_map_init(UgMap* map, int allocated_len, int cache_len);
-void    ug_map_final(UgMap* map);
+void    ug_info_init (UgInfo* info, int allocated_len, int cache_len);
+void    ug_info_final (UgInfo* info);
 
-void*   ug_map_realloc(UgMap* map, const UgDataInfo* key);
-void    ug_map_remove(UgMap* map, const UgDataInfo* key);
-void*   ug_map_get(UgMap* map, const UgDataInfo* key);
-UgPair* ug_map_find(UgMap* map, const UgDataInfo* key, int* inserted_index);
+void*   ug_info_realloc (UgInfo* info, const UgDataInfo* key);
+void    ug_info_remove (UgInfo* info, const UgDataInfo* key);
+void*   ug_info_get (UgInfo* info, const UgDataInfo* key);
+UgPair* ug_info_find (UgInfo* info, const UgDataInfo* key, int* inserted_index);
 
-void    ug_map_assign(UgMap* map, UgMap* src, const UgDataInfo* exclude);
+void    ug_info_assign (UgInfo* info, UgInfo* src, const UgDataInfo* exclude);
 
 // ----------------
 // JSON parser that used with UG_ENTRY_CUSTOM.
 // if (UgRegistry*)registry == NULL, use default registry.
-UgJsonError ug_json_parse_info(UgJson* json,
-                               const char* name, const char* value,
-                               void* map, void* registry);
+UgJsonError ug_json_parse_info (UgJson* json,
+                                const char* name, const char* value,
+                                void* info, void* registry);
 // JSON writer that used with UG_ENTRY_CUSTOM.
-void        ug_json_write_info(UgJson* json, const UgMap* map);
+void        ug_json_write_info (UgJson* json, const UgInfo* info);
 
 // JSON:
 //
@@ -91,9 +91,9 @@ void        ug_json_write_info(UgJson* json, const UgMap* map);
 }
 #endif
 
-struct UgMap
+struct UgInfo
 {
-	UG_ARRAY_MEMBERS(UgPair);
+	UG_ARRAY_MEMBERS (UgPair);
 //	UgPair* at;
 //	int     length;
 //	int     allocated;
@@ -103,27 +103,27 @@ struct UgMap
 
 #ifdef __cplusplus
 	// C++11 standard-layout
-	inline UgMap(void) {}
-	inline UgMap(int allocated_len, int cache_len)
-		{ ug_map_init(this, allocated_len, cache_len); }
+	inline UgInfo (void) {}
+	inline UgInfo (int allocated_len, int cache_len)
+		{ ug_info_init (this, allocated_len, cache_len); }
 
-	inline void  init(int allocated_len, int cache_len)
-		{ ug_map_init(this, allocated_len, cache_len); }
-	inline void  final(void)
-		{ ug_map_final(this); }
+	inline void  init (int allocated_len, int cache_len)
+		{ ug_info_init (this, allocated_len, cache_len); }
+	inline void  final (void)
+		{ ug_info_final (this); }
 
-	inline void  remove(const UgDataInfo* key)
-		{ ug_map_remove(this, key); }
-	inline Ug::DataMethod* realloc(const UgDataInfo* key)
-		{ return (Ug::DataMethod*)ug_map_realloc(this, key); }
+	inline void  remove (const UgDataInfo* key)
+		{ ug_info_remove (this, key); }
+	inline Ug::DataMethod* realloc (const UgDataInfo* key)
+		{ return (Ug::DataMethod*)ug_info_realloc (this, key); }
 	inline Ug::DataMethod* get (const UgDataInfo* key)
-		{ return (Ug::DataMethod*)ug_map_get(this, key); }
+		{ return (Ug::DataMethod*)ug_info_get (this, key); }
 
 	// static method
-	static inline UgRegistry* getRegistry(void)
-		{ return ug_map_get_registry(); }
-	static inline void    setRegistry(UgRegistry* registry)
-		{ ug_map_set_registry(registry); }
+	static inline UgRegistry* getRegistry (void)
+		{ return ug_info_get_registry (); }
+	static inline void    setRegistry (UgRegistry* registry)
+		{ ug_info_set_registry (registry); }
 #endif  // __cplusplus
 };
 
@@ -135,10 +135,10 @@ struct UgMap
 namespace Ug
 {
 // This one is for directly use only. You can NOT derived it.
-typedef struct UgMap    Map;
+typedef struct UgInfo    Info;
 };  // namespace Ug
 
 #endif  // __cplusplus
 
-#endif  // UG_MAP_H
+#endif  // UG_INFO_H
 

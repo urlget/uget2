@@ -106,7 +106,7 @@ static void  on_download_cursor_changed (GtkTreeView* view, UgtkApp* app)
 	if (node == NULL)
 		priority = UGET_PRIORITY_NORMAL;
 	else {
-		relation = ug_map_get (&node->map, UgetRelationInfo);
+		relation = ug_info_get (&node->info, UgetRelationInfo);
 		if (relation)
 			priority = relation->task.priority;
 		else

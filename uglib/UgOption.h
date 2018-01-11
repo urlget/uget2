@@ -40,7 +40,7 @@
 #include <stdint.h>
 #include <UgArray.h>
 #include <UgEntry.h>
-#include <UgMap.h>
+#include <UgInfo.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -75,7 +75,7 @@
 #include <stddef.h>    // offsetof ()
 #include <stdint.h>    // int16_t
 #include <UgNode.h>
-#include <UgMap.h>
+#include <UgInfo.h>
 #include <UgUri.h>
 
 #ifdef __cplusplus
@@ -173,7 +173,7 @@ struct UgetNode
 	char*         name;    // fake node doesn't use this
 	int           type;    // UgetNodeType
 	int           state;   // UgetState
-	UgMap         map;     // fake node doesn't use this
+	UgInfo        info;    // fake node doesn't use this
 
 	struct UgetNodeControl*  control;
 };

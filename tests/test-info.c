@@ -37,7 +37,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
-#include <UgMap.h>
+#include <UgInfo.h>
 #include <UgEntry.h>
 
 // ----------------------------------------------------------------------------
@@ -146,7 +146,7 @@ void  test3_init (Test3* t3)
 }
 
 // ----------------------------------------------------------------------------
-// test UgMap
+// test UgInfo
 
 UgEntry	InfoCustomEntry[] = {
 	{NULL, 0, UG_ENTRY_CUSTOM, (UgJsonParseFunc) ug_json_parse_info,
@@ -154,20 +154,20 @@ UgEntry	InfoCustomEntry[] = {
 	{NULL}
 };
 
-void  test_info (UgMap* info)
+void  test_info (UgInfo* info)
 {
 	void*  data;
 
 	puts ("\n--- test_info:");
-	data = ug_map_realloc (info, &Test2Info);
-	printf ("ug_map_realloc (Test2Info) : %d\n", ((Test2*)data)->type);
-	data = ug_map_realloc (info, &Test1Info);
-	printf ("ug_map_realloc (Test1Info) : %d\n", ((Test1*)data)->type);
-	data = ug_map_realloc (info, &Test3Info);
-	printf ("ug_map_realloc (Test3Info) : %d\n", ((Test3*)data)->type);
+	data = ug_info_realloc (info, &Test2Info);
+	printf ("ug_info_realloc (Test2Info) : %d\n", ((Test2*)data)->type);
+	data = ug_info_realloc (info, &Test1Info);
+	printf ("ug_info_realloc (Test1Info) : %d\n", ((Test1*)data)->type);
+	data = ug_info_realloc (info, &Test3Info);
+	printf ("ug_info_realloc (Test3Info) : %d\n", ((Test3*)data)->type);
 }
 
-void  parse_info (UgMap* info)
+void  parse_info (UgInfo* info)
 {
 	int     code;
 	UgJson	json;
@@ -192,8 +192,8 @@ void  parse_info (UgMap* info)
 	ug_registry_add (&registry, &Test3Info);
 	ug_registry_add (&registry, &Test1Info);
 //	ug_registry_sort (&registry);
-	// ug_json_parse_info() must use default UgMapKeys.
-	ug_map_set_registry (&registry);
+	// ug_json_parse_info() must use default UgInfoKeys.
+	ug_info_set_registry (&registry);
 
 	ug_json_init (&json);
 	ug_json_begin_parse (&json);
@@ -209,11 +209,11 @@ void  parse_info (UgMap* info)
 	ug_json_final (&json);
 	printf ("ug_json_parse response %d\n", code);
 
-	ug_map_set_registry (NULL);
+	ug_info_set_registry (NULL);
 	ug_registry_final (&registry);
 }
 
-void  dump_info (UgMap* info)
+void  dump_info (UgInfo* info)
 {
 	UgPair*	cur;
 	UgPair*	end;
@@ -242,7 +242,7 @@ static int  buffer_to_file (UgBuffer* buffer)
 	return 0;
 }
 
-void  write_info_to_file (UgMap* info, char* filename)
+void  write_info_to_file (UgInfo* info, char* filename)
 {
 	UgJson   json;
 	FILE*    file;
@@ -276,10 +276,10 @@ void  write_info_to_file (UgMap* info, char* filename)
 
 int   main (void)
 {
-	UgMap  info;
+	UgInfo  info;
 
-	puts ("\n--- test UgMap functions:");
-	ug_map_init (&info, 8, 2);
+	puts ("\n--- test UgInfo functions:");
+	ug_info_init (&info, 8, 2);
 #if 0
 	test_info (&info);
 #else
@@ -287,7 +287,7 @@ int   main (void)
 #endif
 	dump_info (&info);
 	write_info_to_file (&info, "test-info.json");
-	ug_map_final (&info);
+	ug_info_final (&info);
 
 	return 0;
 }

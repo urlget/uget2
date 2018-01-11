@@ -295,7 +295,7 @@ static int  plugin_ctrl_speed (UgetPluginMedia* plugin, int* speed)
 		plugin->limit[1] = speed[1];
 	}
 	else {
-		common = ug_map_realloc (&plugin->node->map, UgetCommonInfo);
+		common = ug_info_realloc (&plugin->node->info, UgetCommonInfo);
 		// download
 		value = speed[0];
 		if (common->max_download_speed) {
@@ -352,7 +352,7 @@ static int  plugin_sync (UgetPluginMedia* plugin)
 	}
 
 	// sync data between plug-in and node
-	common = ug_map_realloc (&node->map, UgetCommonInfo);
+	common = ug_info_realloc (&node->info, UgetCommonInfo);
 	// sum retry count
 	common->retry_count = plugin->target_common->retry_count + plugin->retry_count;
 	// sync changed limit from UgetNode
@@ -393,7 +393,7 @@ static int  plugin_sync (UgetPluginMedia* plugin)
 	plugin->target_common->retry_limit = common->retry_limit;
 
 	// update progress
-	progress = ug_map_realloc (&node->map, UgetProgressInfo);
+	progress = ug_info_realloc (&node->info, UgetProgressInfo);
 	progress->complete       = plugin->target_progress->complete;
 	progress->total          = plugin->target_progress->total;
 	progress->download_speed = plugin->target_progress->download_speed;
@@ -433,15 +433,15 @@ static int  plugin_start (UgetPluginMedia* plugin, UgetNode* node)
 	UgThread     thread;
 	UgetCommon*  common;
 
-	common = ug_map_get (&node->map, UgetCommonInfo);
+	common = ug_info_get (&node->info, UgetCommonInfo);
 	if (common == NULL || common->uri == NULL)
 		return FALSE;
 
 	plugin->target_node = uget_node_new (NULL);
-	ug_map_assign (&plugin->target_node->map, &node->map, NULL);
-	plugin->target_common = ug_map_get (&plugin->target_node->map, UgetCommonInfo);
-	plugin->target_proxy  = ug_map_get (&plugin->target_node->map, UgetProxyInfo);
-	plugin->target_progress = ug_map_realloc (&plugin->target_node->map, UgetProgressInfo);
+	ug_info_assign (&plugin->target_node->info, &node->info, NULL);
+	plugin->target_common = ug_info_get (&plugin->target_node->info, UgetCommonInfo);
+	plugin->target_proxy  = ug_info_get (&plugin->target_node->info, UgetProxyInfo);
+	plugin->target_progress = ug_info_realloc (&plugin->target_node->info, UgetProgressInfo);
 
 	// assign node
 	uget_node_ref (node);
@@ -520,7 +520,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 			ug_list_position ((UgList*) umedia, (UgLink*) umitem);
 
 	// set HTTP referrer
-	http = ug_map_realloc (&plugin->target_node->map, UgetHttpInfo);
+	http = ug_info_realloc (&plugin->target_node->info, UgetHttpInfo);
 	if (http->referrer == NULL)
 		http->referrer = ug_strdup_printf ("%s%s", common->uri, "# ");
 	// clear copied common URI
