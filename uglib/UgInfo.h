@@ -50,30 +50,30 @@ typedef struct  UgInfo      UgInfo;
 // ----------------------------------------------------------------------------
 // UgRegistry for UgInfo
 
-UgRegistry*  ug_info_get_registry (void);
-void         ug_info_set_registry (UgRegistry* registry);
+UgRegistry*  ug_info_get_registry(void);
+void         ug_info_set_registry(UgRegistry* registry);
 
 // ----------------------------------------------------------------------------
-// UgInfo
+// UgInfo - information collection for UgetNode
 
-void    ug_info_init (UgInfo* info, int allocated_len, int cache_len);
-void    ug_info_final (UgInfo* info);
+void    ug_info_init(UgInfo* info, int allocated_len, int cache_len);
+void    ug_info_final(UgInfo* info);
 
-void*   ug_info_realloc (UgInfo* info, const UgDataInfo* key);
-void    ug_info_remove (UgInfo* info, const UgDataInfo* key);
-void*   ug_info_get (UgInfo* info, const UgDataInfo* key);
-UgPair* ug_info_find (UgInfo* info, const UgDataInfo* key, int* inserted_index);
+void*   ug_info_realloc(UgInfo* info, const UgDataInfo* key);
+void    ug_info_remove(UgInfo* info, const UgDataInfo* key);
+void*   ug_info_get(UgInfo* info, const UgDataInfo* key);
+UgPair* ug_info_find(UgInfo* info, const UgDataInfo* key, int* inserted_index);
 
-void    ug_info_assign (UgInfo* info, UgInfo* src, const UgDataInfo* exclude);
+void    ug_info_assign(UgInfo* info, UgInfo* src, const UgDataInfo* exclude);
 
 // ----------------
 // JSON parser that used with UG_ENTRY_CUSTOM.
 // if (UgRegistry*)registry == NULL, use default registry.
-UgJsonError ug_json_parse_info (UgJson* json,
+UgJsonError ug_json_parse_info(UgJson* json,
                                 const char* name, const char* value,
                                 void* info, void* registry);
 // JSON writer that used with UG_ENTRY_CUSTOM.
-void        ug_json_write_info (UgJson* json, const UgInfo* info);
+void        ug_json_write_info(UgJson* json, const UgInfo* info);
 
 // JSON:
 //
@@ -93,7 +93,7 @@ void        ug_json_write_info (UgJson* json, const UgInfo* info);
 
 struct UgInfo
 {
-	UG_ARRAY_MEMBERS (UgPair);
+	UG_ARRAY_MEMBERS(UgPair);
 //	UgPair* at;
 //	int     length;
 //	int     allocated;
@@ -103,27 +103,27 @@ struct UgInfo
 
 #ifdef __cplusplus
 	// C++11 standard-layout
-	inline UgInfo (void) {}
-	inline UgInfo (int allocated_len, int cache_len)
-		{ ug_info_init (this, allocated_len, cache_len); }
+	inline UgInfo(void) {}
+	inline UgInfo(int allocated_len, int cache_len)
+		{ ug_info_init(this, allocated_len, cache_len); }
 
-	inline void  init (int allocated_len, int cache_len)
-		{ ug_info_init (this, allocated_len, cache_len); }
-	inline void  final (void)
-		{ ug_info_final (this); }
+	inline void  init(int allocated_len, int cache_len)
+		{ ug_info_init(this, allocated_len, cache_len); }
+	inline void  final(void)
+		{ ug_info_final(this); }
 
-	inline void  remove (const UgDataInfo* key)
-		{ ug_info_remove (this, key); }
-	inline Ug::DataMethod* realloc (const UgDataInfo* key)
-		{ return (Ug::DataMethod*)ug_info_realloc (this, key); }
-	inline Ug::DataMethod* get (const UgDataInfo* key)
-		{ return (Ug::DataMethod*)ug_info_get (this, key); }
+	inline void  remove(const UgDataInfo* key)
+		{ ug_info_remove(this, key); }
+	inline Ug::DataMethod* realloc(const UgDataInfo* key)
+		{ return (Ug::DataMethod*) ug_info_realloc(this, key); }
+	inline Ug::DataMethod* get(const UgDataInfo* key)
+		{ return (Ug::DataMethod*) ug_info_get(this, key); }
 
 	// static method
-	static inline UgRegistry* getRegistry (void)
-		{ return ug_info_get_registry (); }
-	static inline void    setRegistry (UgRegistry* registry)
-		{ ug_info_set_registry (registry); }
+	static inline UgRegistry* getRegistry(void)
+		{ return ug_info_get_registry(); }
+	static inline void        setRegistry(UgRegistry* registry)
+		{ ug_info_set_registry(registry); }
 #endif  // __cplusplus
 };
 
