@@ -87,7 +87,7 @@ typedef enum UgetMediaType
 
 struct UgetMedia
 {
-	UG_LIST_MEMBERS (UgetMediaItem);
+	UG_LIST_MEMBERS(UgetMediaItem);
 //	uintptr_t        size;
 //	UgetMediaItem*   head;
 //	UgetMediaItem*   tail;
@@ -110,24 +110,24 @@ struct UgetMedia
 	void*  data4;
 };
 
-UgetMedia*  uget_media_new (const char* url, UgetSiteId site_id);
-void        uget_media_free (UgetMedia* umedia);
-void        uget_media_clear (UgetMedia* umedia, int free_items);
+UgetMedia*  uget_media_new(const char* url, UgetSiteId site_id);
+void        uget_media_free(UgetMedia* umedia);
+void        uget_media_clear(UgetMedia* umedia, int free_items);
 
-int         uget_media_grab_items (UgetMedia* umedia, UgetProxy* proxy);
+int         uget_media_grab_items(UgetMedia* umedia, UgetProxy* proxy);
 
 // return begin of matched items. Don't free it
-UgetMediaItem*  uget_media_match (UgetMedia*          umedia,
-                                  UgetMediaMatchMode  mode,
-                                  UgetMediaQuality    quality,
-                                  UgetMediaType       type);
+UgetMediaItem*  uget_media_match(UgetMedia*          umedia,
+                                 UgetMediaMatchMode  mode,
+                                 UgetMediaQuality    quality,
+                                 UgetMediaType       type);
 
 // ----------------------------------------------------------------------------
 // UgetMediaItem
 
 struct UgetMediaItem
 {
-	UG_LINK_MEMBERS (UgetMediaItem, UgetMediaItem, self);
+	UG_LINK_MEMBERS(UgetMediaItem, UgetMediaItem, self);
 //	UgetMediaItem* self;
 //	UgetMediaItem* next;
 //	UgetMediaItem* prev;
@@ -135,10 +135,15 @@ struct UgetMediaItem
 	char* url;
 	int   quality;    // 480p, 720p
 	int   type;       // UgetMediaType
+
+	// for internal use only
+	void* data;
+	void* data1;
+	void* data2;
 };
 
-UgetMediaItem*  uget_media_item_new (UgetMedia* umedia);
-void            uget_media_item_free (UgetMediaItem* umitem);
+UgetMediaItem*  uget_media_item_new(UgetMedia* umedia);
+void            uget_media_item_free(UgetMediaItem* umitem);
 
 #ifdef __cplusplus
 }

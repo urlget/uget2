@@ -46,54 +46,54 @@
 // ----------------------------------------------------------------------------
 // UgetMedia
 
-int  uget_media_grab_youtube (UgetMedia* umedia, UgetProxy* proxy);
+int  uget_media_grab_youtube(UgetMedia* umedia, UgetProxy* proxy);
 
-UgetMedia*  uget_media_new (const char* url, UgetSiteId site_id)
+UgetMedia*  uget_media_new(const char* url, UgetSiteId site_id)
 {
 	UgetMedia* umedia;
 
-	umedia = ug_malloc0 (sizeof (UgetMedia));
-	umedia->url = ug_strdup (url);
+	umedia = ug_malloc0(sizeof(UgetMedia));
+	umedia->url = ug_strdup(url);
 	if (site_id == UGET_SITE_UNKNOWN)
-		site_id = uget_site_get_id (url);
+		site_id = uget_site_get_id(url);
 	umedia->site_id = site_id;
 
 	return umedia;
 }
 
-void  uget_media_free (UgetMedia* umedia)
+void  uget_media_free(UgetMedia* umedia)
 {
-	uget_media_clear (umedia, TRUE);
-	ug_free (umedia);
+	uget_media_clear(umedia, TRUE);
+	ug_free(umedia);
 }
 
-void  uget_media_clear (UgetMedia* umedia, int free_items)
+void  uget_media_clear(UgetMedia* umedia, int free_items)
 {
 	if (free_items== TRUE) {
-		ug_list_foreach ((UgList*) umedia,
+		ug_list_foreach((UgList*) umedia,
 				(UgForeachFunc) uget_media_item_free, NULL);
-		ug_list_clear ((UgList*) umedia, FALSE);
+		ug_list_clear((UgList*) umedia, FALSE);
 	}
 
-	ug_free (umedia->url);
+	ug_free(umedia->url);
 	umedia->url = NULL;
 
-	ug_free (umedia->title);
+	ug_free(umedia->title);
 	umedia->title = NULL;
 
 	if (umedia->event) {
-		uget_event_free (umedia->event);
+		uget_event_free(umedia->event);
 		umedia->event = NULL;
 	}
 }
 
-int  uget_media_grab_items (UgetMedia* umedia, UgetProxy* proxy)
+int  uget_media_grab_items(UgetMedia* umedia, UgetProxy* proxy)
 {
 	int    n_items = 0;
 
 	switch (umedia->site_id) {
 	case UGET_SITE_YOUTUBE:
-		n_items = uget_media_grab_youtube (umedia, proxy);
+		n_items = uget_media_grab_youtube(umedia, proxy);
 		break;
 
 	case UGET_SITE_UNKNOWN:
@@ -104,10 +104,10 @@ int  uget_media_grab_items (UgetMedia* umedia, UgetProxy* proxy)
 	return n_items;
 }
 
-UgetMediaItem*  uget_media_match (UgetMedia*          umedia,
-                                  UgetMediaMatchMode  mode,
-                                  UgetMediaQuality    quality,
-                                  UgetMediaType       type)
+UgetMediaItem*  uget_media_match(UgetMedia*          umedia,
+                                 UgetMediaMatchMode  mode,
+                                 UgetMediaQuality    quality,
+                                 UgetMediaType       type)
 {
 	UgetMediaItem*  cur;
 	UgetMediaItem*  prev;
@@ -130,8 +130,8 @@ UgetMediaItem*  uget_media_match (UgetMedia*          umedia,
 		    (mode == UGET_MEDIA_MATCH_2 && count_cur >= 2))
 		{
 			// move matched items to tail of list
-			ug_list_remove ((UgList*) umedia, (UgLink*) cur);
-			ug_list_append ((UgList*) umedia, (UgLink*) cur);
+			ug_list_remove((UgList*) umedia, (UgLink*) cur);
+			ug_list_append((UgList*) umedia, (UgLink*) cur);
 			if (result == NULL)
 				result = cur;
 		}
@@ -141,8 +141,8 @@ UgetMediaItem*  uget_media_match (UgetMedia*          umedia,
 				count_res = count_cur;
 				continue;
 			}
-			abs_res = ABS (quality - result->quality);
-			abs_cur = ABS (quality - cur->quality);
+			abs_res = ABS(quality - result->quality);
+			abs_cur = ABS(quality - cur->quality);
 			if (abs_res == abs_cur) {
 				if (count_res < count_cur) {
 					result = cur;
@@ -163,8 +163,8 @@ UgetMediaItem*  uget_media_match (UgetMedia*          umedia,
 
 	if (mode == UGET_MEDIA_MATCH_NEAR && result) {
 		// move matched items to tail of list
-		ug_list_remove ((UgList*) umedia, (UgLink*) result);
-		ug_list_append ((UgList*) umedia, (UgLink*) result);
+		ug_list_remove((UgList*) umedia, (UgLink*) result);
+		ug_list_append((UgList*) umedia, (UgLink*) result);
 	}
 
 	return result;
@@ -173,19 +173,21 @@ UgetMediaItem*  uget_media_match (UgetMedia*          umedia,
 // ----------------------------------------------------------------------------
 // UgetMediaItem
 
-UgetMediaItem*  uget_media_item_new (UgetMedia* umedia)
+UgetMediaItem*  uget_media_item_new(UgetMedia* umedia)
 {
 	UgetMediaItem* umitem;
 
-	umitem = ug_malloc0 (sizeof (UgetMediaItem));
+	umitem = ug_malloc0(sizeof(UgetMediaItem));
 	umitem->self = umitem;
-	ug_list_append ((UgList*) umedia, (UgLink*) umitem);
+	umitem->type    = UGET_MEDIA_TYPE_UNKNOWN;
+	umitem->quality = UGET_MEDIA_QUALITY_UNKNOWN;
+	ug_list_append((UgList*) umedia, (UgLink*) umitem);
 	return umitem;
 }
 
-void  uget_media_item_free (UgetMediaItem* umitem)
+void  uget_media_item_free(UgetMediaItem* umitem)
 {
-	ug_free (umitem->url);
-	ug_free (umitem);
+	ug_free(umitem->url);
+	ug_free(umitem);
 }
 
