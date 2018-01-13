@@ -46,15 +46,15 @@
 #define strtoull    _strtoui64
 #endif
 
-UgJsonError ug_json_parse_entry (UgJson* json,
-                                 const char* name, const char* value,
-                                 void* dest, void* entry0)
+UgJsonError ug_json_parse_entry(UgJson* json,
+                                const char* name, const char* value,
+                                void* dest, void* entry0)
 {
 	const UgEntry* entry;
 	UgJsonError    error = UG_JSON_ERROR_NONE;
 
 	for (entry = entry0;  entry->type;  entry++) {
-		if (entry->name && strcmp (entry->name, name) != 0)
+		if (entry->name && strcmp(entry->name, name) != 0)
 			continue;
 		// get destination
 		dest = ((char*) dest) + entry->offset;
@@ -72,14 +72,14 @@ UgJsonError ug_json_parse_entry (UgJson* json,
 
 		case UG_ENTRY_INT:
 			if (json->type == UG_JSON_NUMBER)
-				*(int*) dest = strtol (value, NULL, 10);
+				*(int*) dest = strtol(value, NULL, 10);
 			else
 				error = UG_JSON_ERROR_TYPE_NOT_MATCH;
 			break;
 
 		case UG_ENTRY_UINT:
 			if (json->type == UG_JSON_NUMBER)
-				*(unsigned int*) dest = (unsigned int) strtoul (value, NULL, 10);
+				*(unsigned int*) dest = (unsigned int) strtoul(value, NULL, 10);
 			else
 				error = UG_JSON_ERROR_TYPE_NOT_MATCH;
 			break;
@@ -87,7 +87,7 @@ UgJsonError ug_json_parse_entry (UgJson* json,
 		case UG_ENTRY_INT64:
 			// C99 Standard
 			if (json->type == UG_JSON_NUMBER)
-				*(int64_t*) dest = strtoll (value, NULL, 10);
+				*(int64_t*) dest = strtoll(value, NULL, 10);
 			else
 				error = UG_JSON_ERROR_TYPE_NOT_MATCH;
 			break;
@@ -95,21 +95,21 @@ UgJsonError ug_json_parse_entry (UgJson* json,
 		case UG_ENTRY_UINT64:
 			// C99 Standard
 			if (json->type == UG_JSON_NUMBER)
-				*(uint64_t*) dest = strtoull (value, NULL, 10);
+				*(uint64_t*) dest = strtoull(value, NULL, 10);
 			else
 				error = UG_JSON_ERROR_TYPE_NOT_MATCH;
 			break;
 
 		case UG_ENTRY_DOUBLE:
 			if (json->type == UG_JSON_NUMBER)
-				*(double*) dest = strtod (value, NULL);
+				*(double*) dest = strtod(value, NULL);
 			else
 				error = UG_JSON_ERROR_TYPE_NOT_MATCH;
 			break;
 
 		case UG_ENTRY_STRING:
 			if (json->type == UG_JSON_STRING)
-				*(char**) dest = ug_strdup (value);
+				*(char**) dest = ug_strdup(value);
 			else if (json->type == UG_JSON_NULL)
 				*(char**) dest = NULL;
 			else
@@ -120,18 +120,18 @@ UgJsonError ug_json_parse_entry (UgJson* json,
 			if (json->type != UG_JSON_OBJECT)
 				return UG_JSON_ERROR_TYPE_NOT_MATCH;
 			if (entry->param2)
-				((UgInitFunc) entry->param2) (dest);
-			ug_json_push (json, ug_json_parse_entry, dest, entry->param1);
+				((UgInitFunc)entry->param2)(dest);
+			ug_json_push(json, ug_json_parse_entry, dest, entry->param1);
 			return UG_JSON_ERROR_NONE;
 
 		case UG_ENTRY_ARRAY:
 			if (json->type != UG_JSON_ARRAY)
 				return UG_JSON_ERROR_TYPE_NOT_MATCH;
-			ug_json_push (json, (UgJsonParseFunc) entry->param1, dest, NULL);
+			ug_json_push(json, (UgJsonParseFunc) entry->param1, dest, NULL);
 			return UG_JSON_ERROR_NONE;
 
 		case UG_ENTRY_CUSTOM:
-			return ((UgJsonParseFunc) entry->param1) (json, name, value,
+			return ((UgJsonParseFunc)entry->param1)(json, name, value,
 					dest, (void*)entry);
 
 		default:
@@ -144,7 +144,7 @@ UgJsonError ug_json_parse_entry (UgJson* json,
 	// if entry->type != UG_ENTRY_OBJECT or UG_ENTRY_ARRAY
 	// but json->type == UG_JSON_OBJECT or UG_JSON_ARRAY
 //	if (json->type >= UG_JSON_OBJECT) {
-//		ug_json_push (json, ug_json_parse_unknown, NULL, NULL);
+//		ug_json_push(json, ug_json_parse_unknown, NULL, NULL);
 //		return UG_JSON_ERROR_TYPE_NOT_MATCH;
 //	}
 
@@ -153,7 +153,7 @@ UgJsonError ug_json_parse_entry (UgJson* json,
 
 // ----------------------------------------------------------------------------
 
-void  ug_json_write_entry (UgJson* json, void* src, const UgEntry* entry)
+void  ug_json_write_entry(UgJson* json, void* src, const UgEntry* entry)
 {
 	union {
 		void*           src;
@@ -173,63 +173,63 @@ void  ug_json_write_entry (UgJson* json, void* src, const UgEntry* entry)
 		switch (entry->type) {
 		case UG_ENTRY_BOOL:
 			if (entry->name)
-				ug_json_write_string (json, entry->name);
-			ug_json_write_bool (json, *(value.pint));
+				ug_json_write_string(json, entry->name);
+			ug_json_write_bool(json, *(value.pint));
 			break;
 
 		case UG_ENTRY_INT:
 			if (entry->name)
-				ug_json_write_string (json, entry->name);
-			ug_json_write_int (json, *(value.pint));
+				ug_json_write_string(json, entry->name);
+			ug_json_write_int(json, *(value.pint));
 			break;
 
 		case UG_ENTRY_UINT:
 			if (entry->name)
-				ug_json_write_string (json, entry->name);
-			ug_json_write_uint (json, *(value.puint));
+				ug_json_write_string(json, entry->name);
+			ug_json_write_uint(json, *(value.puint));
 			break;
 
 		case UG_ENTRY_INT64:
 			if (entry->name)
-				ug_json_write_string (json, entry->name);
-			ug_json_write_int64 (json, *(value.pint64));
+				ug_json_write_string(json, entry->name);
+			ug_json_write_int64(json, *(value.pint64));
 			break;
 
 		case UG_ENTRY_UINT64:
 			if (entry->name)
-				ug_json_write_string (json, entry->name);
-			ug_json_write_uint64 (json, *(value.puint64));
+				ug_json_write_string(json, entry->name);
+			ug_json_write_uint64(json, *(value.puint64));
 			break;
 
 		case UG_ENTRY_DOUBLE:
 			if (entry->name)
-				ug_json_write_string (json, entry->name);
-			ug_json_write_double (json, *(value.pdouble));
+				ug_json_write_string(json, entry->name);
+			ug_json_write_double(json, *(value.pdouble));
 			break;
 
 		case UG_ENTRY_STRING:
-			// for UG_ENTRY_SKIP_IF_NULL
-			if (entry->param1 && *(value.pstring) == NULL)
+			// for UG_ENTRY_NO_NULL
+			if ((entry->param2==UG_ENTRY_NO_NULL) && *(value.pstring) == NULL)
 				break;
 			if (entry->name)
-				ug_json_write_string (json, entry->name);
-			ug_json_write_string (json, *(value.pstring));
+				ug_json_write_string(json, entry->name);
+			ug_json_write_string(json, *(value.pstring));
 			break;
 
 		case UG_ENTRY_OBJECT:
 			if (entry->name)
-				ug_json_write_string (json, entry->name);
-			ug_json_write_object_head (json);
-			ug_json_write_entry (json, value.src, entry->param1);
-			ug_json_write_object_tail (json);
+				ug_json_write_string(json, entry->name);
+			ug_json_write_object_head(json);
+			ug_json_write_entry(json, value.src, entry->param1);
+			ug_json_write_object_tail(json);
 			break;
 
 		case UG_ENTRY_ARRAY:
 			if (entry->name)
-				ug_json_write_string (json, entry->name);
-			ug_json_write_array_head (json);
-			((UgJsonWriteFunc) entry->param2) (json, value.src, (void*)entry);
-			ug_json_write_array_tail (json);
+				ug_json_write_string(json, entry->name);
+			ug_json_write_array_head(json);
+			((UgJsonWriteFunc)entry->param2)(json, value.src, (void*)entry);
+			ug_json_write_array_tail(json);
 			break;
 
 		case UG_ENTRY_CUSTOM:
@@ -242,11 +242,11 @@ void  ug_json_write_entry (UgJson* json, void* src, const UgEntry* entry)
 				if (value.pvalue->type == UG_VALUE_NONE)
 					continue;
 				if (value.pvalue->name == NULL)
-					ug_json_write_string (json, entry->name);
+					ug_json_write_string(json, entry->name);
 			}
 			else if (entry->name)
-				ug_json_write_string (json, entry->name);
-			((UgJsonWriteFunc) entry->param2) (json, value.src, (void*)entry);
+				ug_json_write_string(json, entry->name);
+			((UgJsonWriteFunc) entry->param2)(json, value.src, (void*)entry);
 			break;
 
 		default:

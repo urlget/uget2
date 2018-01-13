@@ -101,50 +101,50 @@ struct UgJsonrpcObject
 	UgJsonrpcError  error;
 };
 
-UgJsonrpcObject* ug_jsonrpc_object_new (void);
-void  ug_jsonrpc_object_free (UgJsonrpcObject* jrobj);
+UgJsonrpcObject* ug_jsonrpc_object_new(void);
+void  ug_jsonrpc_object_free(UgJsonrpcObject* jrobj);
 
-void  ug_jsonrpc_object_init (UgJsonrpcObject* jrobj);
-void  ug_jsonrpc_object_clear (UgJsonrpcObject* jrobj);
+void  ug_jsonrpc_object_init(UgJsonrpcObject* jrobj);
+void  ug_jsonrpc_object_clear(UgJsonrpcObject* jrobj);
 
-void  ug_jsonrpc_object_clear_request (UgJsonrpcObject* jrobj);
-void  ug_jsonrpc_object_clear_response (UgJsonrpcObject* jrobj);
+void  ug_jsonrpc_object_clear_request(UgJsonrpcObject* jrobj);
+void  ug_jsonrpc_object_clear_response(UgJsonrpcObject* jrobj);
 
 // check request, and return error code.
-//int   ug_jsonrpc_object_check (UgJsonrpcObject* jrobj);
+//int   ug_jsonrpc_object_check(UgJsonrpcObject* jrobj);
 
 // parser: ug_json_parse_entry
 // writer: ug_json_write_entry will output all value in UgJsonrpcObject.
 // use below function to output JSON-RPC request and response object
-void  ug_json_write_rpc_object (UgJson* json, UgJsonrpcObject* jrobj);
+void  ug_json_write_rpc_object(UgJson* json, UgJsonrpcObject* jrobj);
 
 // ----------------------------------------------------------------------------
 // UgJsonrpcArray: a UgJsonrpcObject array for batch
 
-//void  ug_jsonrpc_array_init (UgJsonrpcArray* joarray, int allocated_len);
+//void  ug_jsonrpc_array_init(UgJsonrpcArray* joarray, int allocated_len);
 #define ug_jsonrpc_array_init(array, allocated_len)   \
-		ug_array_init (array, sizeof (UgJsonrpcObject*), allocated_len)
+		ug_array_init(array, sizeof(UgJsonrpcObject*), allocated_len)
 
 // param free_objects: TRUE or FALSE
-void  ug_jsonrpc_array_clear (UgJsonrpcArray* joarray, int free_objects);
+void  ug_jsonrpc_array_clear(UgJsonrpcArray* joarray, int free_objects);
 
-UgJsonrpcObject*  ug_jsonrpc_array_find (UgJsonrpcArray* joarray, UgValue* id, int* index);
-UgJsonrpcObject*  ug_jsonrpc_array_alloc (UgJsonrpcArray* joarray);
+UgJsonrpcObject*  ug_jsonrpc_array_find(UgJsonrpcArray* joarray, UgValue* id, int* index);
+UgJsonrpcObject*  ug_jsonrpc_array_alloc(UgJsonrpcArray* joarray);
 
 // ------------------------------------
-UgJsonError  ug_json_parse_rpc_array (UgJson* json,
-                                      const char* name, const char* value,
-                                      void* jrarray, void* none);
+UgJsonError  ug_json_parse_rpc_array(UgJson* json,
+                                     const char* name, const char* value,
+                                     void* jrarray, void* none);
 // param noArrayIfPossible: TRUE or FALSE
-void         ug_json_write_rpc_array (UgJson* json, UgJsonrpcArray* objects,
-                                      int  noArrayIfPossible);
+void         ug_json_write_rpc_array(UgJson* json, UgJsonrpcArray* objects,
+                                     int  noArrayIfPossible);
 
 // If program doesn't known incoming data type,
 // this function can parse UgJsonrpcArray or UgJsonrpcObject.
 // This function used by server.
-UgJsonError  ug_json_parse_rpc_unknown (UgJson* json,
-                                        const char* name, const char* value,
-                                        void* jrarray, void* jrobject);
+UgJsonError  ug_json_parse_rpc_unknown(UgJson* json,
+                                       const char* name, const char* value,
+                                       void* jrarray, void* jrobject);
 // ----------------------------------------------------------------------------
 // UgJsonrpc: JSON-RPC Client & Server
 
@@ -185,20 +185,20 @@ struct  UgJsonrpc
 	} data;
 };
 
-void  ug_jsonrpc_init (UgJsonrpc* jrpc, UgJson* json, UgBuffer* buffer);
-void  ug_jsonrpc_clear (UgJsonrpc* jrpc);
+void  ug_jsonrpc_init(UgJsonrpc* jrpc, UgJson* json, UgBuffer* buffer);
+void  ug_jsonrpc_clear(UgJsonrpc* jrpc);
 
 // ------------------------------------
 // client API : set response == NULL if this is notify request
 
 // if error occurred, return -1
-int  ug_jsonrpc_call (UgJsonrpc* jrpc,
-                      UgJsonrpcObject* request,
-                      UgJsonrpcObject* response);
+int  ug_jsonrpc_call(UgJsonrpc* jrpc,
+                     UgJsonrpcObject* request,
+                     UgJsonrpcObject* response);
 
-int  ug_jsonrpc_call_batch (UgJsonrpc* jrpc,
-                            UgJsonrpcArray* request,
-                            UgJsonrpcArray* response);
+int  ug_jsonrpc_call_batch(UgJsonrpc* jrpc,
+                           UgJsonrpcArray* request,
+                           UgJsonrpcArray* response);
 
 // ------------------------------------
 // server API
@@ -206,20 +206,20 @@ int  ug_jsonrpc_call_batch (UgJsonrpc* jrpc,
 // return  0 if remote disconnected.
 // return -1 if error occurred.
 // if ok, return UG_JSON_ARRAY or UG_JSON_OBJECT and set jr_array or jr_object.
-int  ug_jsonrpc_receive (UgJsonrpc* jrpc,
-                         UgJsonrpcObject* jr_object,
-                         UgJsonrpcArray*  jr_array);
+int  ug_jsonrpc_receive(UgJsonrpc* jrpc,
+                        UgJsonrpcObject* jr_object,
+                        UgJsonrpcArray*  jr_array);
 
-int  ug_jsonrpc_response (UgJsonrpc* jrpc,
-                          UgJsonrpcObject* jr_object);
+int  ug_jsonrpc_response(UgJsonrpc* jrpc,
+                         UgJsonrpcObject* jr_object);
 
-int  ug_jsonrpc_response_batch (UgJsonrpc* jrpc,
-                                UgJsonrpcArray* jr_array);
+int  ug_jsonrpc_response_batch(UgJsonrpc* jrpc,
+                               UgJsonrpcArray* jr_array);
 
 // This function used by UgJsonrpc server mode.
-UgJsonError  ug_json_parse_rpc_request (UgJson* json,
-                                        const char* name, const char* value,
-                                        void* jsonrpc, void* type);
+UgJsonError  ug_json_parse_rpc_request(UgJson* json,
+                                       const char* name, const char* value,
+                                       void* jsonrpc, void* type);
 
 #ifdef __cplusplus
 }

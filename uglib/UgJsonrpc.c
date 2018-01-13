@@ -47,27 +47,27 @@
 
 const UgEntry  UgJsonrpcErrorEntry[] =
 {
-	{"code",    offsetof (UgJsonrpcError, code),    UG_ENTRY_INT,
+	{"code",    offsetof(UgJsonrpcError, code),    UG_ENTRY_INT,
 			NULL, NULL},
-	{"message", offsetof (UgJsonrpcError, message), UG_ENTRY_STRING,
+	{"message", offsetof(UgJsonrpcError, message), UG_ENTRY_STRING,
 			NULL, NULL},
-	{"data",    offsetof (UgJsonrpcError, data),    UG_ENTRY_CUSTOM,
+	{"data",    offsetof(UgJsonrpcError, data),    UG_ENTRY_CUSTOM,
 			ug_json_parse_value, ug_json_write_value},
 	{NULL},
 };
 
-void  ug_jsonrpc_error_init (UgJsonrpcError* error)
+void  ug_jsonrpc_error_init(UgJsonrpcError* error)
 {
-	memset (error, 0, sizeof (UgJsonrpcError));
+	memset(error, 0, sizeof(UgJsonrpcError));
 }
 
-void  ug_jsonrpc_error_clear (UgJsonrpcError* error)
+void  ug_jsonrpc_error_clear(UgJsonrpcError* error)
 {
 	// error
-	ug_free (error->message);
+	ug_free(error->message);
 	error->message = NULL;
 	error->code = 0;
-	ug_value_clear (&error->data);
+	ug_value_clear(&error->data);
 }
 
 // ----------------------------------------------------------------------------
@@ -75,135 +75,135 @@ void  ug_jsonrpc_error_clear (UgJsonrpcError* error)
 
 const UgEntry  UgJsonrpcObjectEntry[] =
 {
-//	{"jsonrpc",  offsetof (UgJsonrpcObject, jsonrpc), UG_ENTRY_STRING,
+//	{"jsonrpc",  offsetof(UgJsonrpcObject, jsonrpc), UG_ENTRY_STRING,
 //			NULL, NULL},
-	{"id",       offsetof (UgJsonrpcObject, id),      UG_ENTRY_CUSTOM,
+	{"id",       offsetof(UgJsonrpcObject, id),      UG_ENTRY_CUSTOM,
 			ug_json_parse_value, ug_json_write_value},
-	{"method",   offsetof (UgJsonrpcObject, method),  UG_ENTRY_STRING,
-			UG_ENTRY_SKIP_IF_NULL, NULL},
-	{"params",   offsetof (UgJsonrpcObject, params),  UG_ENTRY_CUSTOM,
+	{"method",   offsetof(UgJsonrpcObject, method),  UG_ENTRY_STRING,
+			NULL, UG_ENTRY_NO_NULL},
+	{"params",   offsetof(UgJsonrpcObject, params),  UG_ENTRY_CUSTOM,
 			ug_json_parse_value, ug_json_write_value},
-	{"result",   offsetof (UgJsonrpcObject, result),  UG_ENTRY_CUSTOM,
+	{"result",   offsetof(UgJsonrpcObject, result),  UG_ENTRY_CUSTOM,
 			ug_json_parse_value, ug_json_write_value},
-	{"error",    offsetof (UgJsonrpcObject, error),   UG_ENTRY_OBJECT,
+	{"error",    offsetof(UgJsonrpcObject, error),   UG_ENTRY_OBJECT,
 			(void*)UgJsonrpcErrorEntry, NULL},
 	{NULL},
 };
 
-UgJsonrpcObject* ug_jsonrpc_object_new (void)
+UgJsonrpcObject* ug_jsonrpc_object_new(void)
 {
 	UgJsonrpcObject*  jobj;
 
-	jobj = ug_malloc0 (sizeof (UgJsonrpcObject));
+	jobj = ug_malloc0(sizeof(UgJsonrpcObject));
 	return jobj;
 }
 
-void  ug_jsonrpc_object_free (UgJsonrpcObject* jobj)
+void  ug_jsonrpc_object_free(UgJsonrpcObject* jobj)
 {
 	// check NULL for uget_aria2_unref()
 	if (jobj) {
-		ug_jsonrpc_object_clear (jobj);
-		ug_free (jobj);
+		ug_jsonrpc_object_clear(jobj);
+		ug_free(jobj);
 	}
 }
 
-void  ug_jsonrpc_object_init (UgJsonrpcObject* jobj)
+void  ug_jsonrpc_object_init(UgJsonrpcObject* jobj)
 {
-	memset (jobj, 0, sizeof (UgJsonrpcObject));
+	memset(jobj, 0, sizeof(UgJsonrpcObject));
 }
 
-void  ug_jsonrpc_object_clear (UgJsonrpcObject* jobj)
+void  ug_jsonrpc_object_clear(UgJsonrpcObject* jobj)
 {
 	if (jobj == NULL)
 		return;
 	// jsonrpc
-//	ug_free (jobj->jsonrpc);
+//	ug_free(jobj->jsonrpc);
 //	jobj->jsonrpc = NULL;
 	// id
-	ug_value_clear (&jobj->id);
+	ug_value_clear(&jobj->id);
 	// method
-	ug_free (jobj->method);
+	ug_free(jobj->method);
 	jobj->method = NULL;
 	jobj->method_static = NULL;
 	// params
-	ug_value_clear (&jobj->params);
+	ug_value_clear(&jobj->params);
 	// result
-	ug_value_clear (&jobj->result);
+	ug_value_clear(&jobj->result);
 	// error
-	ug_jsonrpc_error_clear (&jobj->error);
+	ug_jsonrpc_error_clear(&jobj->error);
 }
 
-void  ug_jsonrpc_object_clear_request (UgJsonrpcObject* jobj)
+void  ug_jsonrpc_object_clear_request(UgJsonrpcObject* jobj)
 {
-	ug_free (jobj->method);
+	ug_free(jobj->method);
 	jobj->method = NULL;
 	jobj->method_static = NULL;
-	ug_value_clear (&jobj->params);
+	ug_value_clear(&jobj->params);
 }
 
-void  ug_jsonrpc_object_clear_response (UgJsonrpcObject* jobj)
+void  ug_jsonrpc_object_clear_response(UgJsonrpcObject* jobj)
 {
-	ug_value_clear (&jobj->result);
-	ug_jsonrpc_error_clear (&jobj->error);
+	ug_value_clear(&jobj->result);
+	ug_jsonrpc_error_clear(&jobj->error);
 }
 
-void  ug_json_write_rpc_object (UgJson* json, UgJsonrpcObject* jobj)
+void  ug_json_write_rpc_object(UgJson* json, UgJsonrpcObject* jobj)
 {
-	ug_json_write_object_head (json);
+	ug_json_write_object_head(json);
 
 	// jsonrpc
-	ug_json_write_string (json, "jsonrpc");
-	ug_json_write_string (json, "2.0");
-//	ug_json_write_string (json, (jobj->jsonrpc) ? jobj->jsonrpc : "2.0");
+	ug_json_write_string(json, "jsonrpc");
+	ug_json_write_string(json, "2.0");
+//	ug_json_write_string(json, (jobj->jsonrpc) ? jobj->jsonrpc : "2.0");
 	// id
 	if (jobj->id.type != UG_VALUE_NONE) {
 		if (jobj->id.name == NULL)
-			ug_json_write_string (json, "id");
-		ug_json_write_value (json, &jobj->id);
+			ug_json_write_string(json, "id");
+		ug_json_write_value(json, &jobj->id);
 	}
 
 	if (jobj->result.type == UG_VALUE_NONE && jobj->error.code == 0) {
 		if (jobj->method || jobj->method_static) {
-			ug_json_write_string (json, "method");
-			ug_json_write_string (json,
+			ug_json_write_string(json, "method");
+			ug_json_write_string(json,
 					(jobj->method_static)? jobj->method_static : jobj->method);
 			if (jobj->params.type != UG_VALUE_NONE) {
 				if (jobj->params.name == NULL)
-					ug_json_write_string (json, "params");
-				ug_json_write_value (json, &jobj->params);
+					ug_json_write_string(json, "params");
+				ug_json_write_value(json, &jobj->params);
 			}
 		}
 	}
 	else if (jobj->result.type != UG_VALUE_NONE) {
 		if (jobj->result.name == NULL)
-			ug_json_write_string (json, "result");
-		ug_json_write_value (json, &jobj->result);
+			ug_json_write_string(json, "result");
+		ug_json_write_value(json, &jobj->result);
 	}
 	else {
-		ug_json_write_string (json, "error");
-		ug_json_write_object_head (json);
-		ug_json_write_entry (json, &jobj->error, UgJsonrpcErrorEntry);
-		ug_json_write_object_tail (json);
+		ug_json_write_string(json, "error");
+		ug_json_write_object_head(json);
+		ug_json_write_entry(json, &jobj->error, UgJsonrpcErrorEntry);
+		ug_json_write_object_tail(json);
 	}
 
-	ug_json_write_object_tail (json);
+	ug_json_write_object_tail(json);
 }
 
 // ----------------------------------------------------------------------------
 // UgJsonrpcArray: a UgJsonrpcObject array
 
-//void  ug_jsonrpc_array_init (UgJsonrpcArray* joarray, int allocated_len);
+//void  ug_jsonrpc_array_init(UgJsonrpcArray* joarray, int allocated_len);
 
-void  ug_jsonrpc_array_clear (UgJsonrpcArray* joarray, int free_objects)
+void  ug_jsonrpc_array_clear(UgJsonrpcArray* joarray, int free_objects)
 {
 	if (free_objects) {
-		ug_array_foreach_ptr (joarray,
+		ug_array_foreach_ptr(joarray,
 				(UgForeachFunc) ug_jsonrpc_object_clear, NULL);
 	}
-	ug_array_clear (joarray);
+	ug_array_clear(joarray);
 }
 
-UgJsonrpcObject*  ug_jsonrpc_array_find (UgJsonrpcArray* joarray, UgValue* id, int* index)
+UgJsonrpcObject*  ug_jsonrpc_array_find(UgJsonrpcArray* joarray, UgValue* id, int* index)
 {
 	UgJsonrpcObject** cur;
 	UgJsonrpcObject** end;
@@ -226,7 +226,7 @@ UgJsonrpcObject*  ug_jsonrpc_array_find (UgJsonrpcArray* joarray, UgValue* id, i
 	else if (id->type == UG_VALUE_STRING) {
 		for (;  cur < end;  cur++) {
 			if (cur[0]->id.type == UG_VALUE_STRING &&
-			    strcmp (cur[0]->id.c.string, id->c.string) == 0)
+			    strcmp(cur[0]->id.c.string, id->c.string) == 0)
 			{
 				result = *cur;
 				break;
@@ -239,18 +239,18 @@ UgJsonrpcObject*  ug_jsonrpc_array_find (UgJsonrpcArray* joarray, UgValue* id, i
 	return result;
 }
 
-UgJsonrpcObject*  ug_jsonrpc_array_alloc (UgJsonrpcArray* joarray)
+UgJsonrpcObject*  ug_jsonrpc_array_alloc(UgJsonrpcArray* joarray)
 {
 	UgJsonrpcObject**  jobj;
 
-	jobj = ug_array_alloc (joarray, 1);
-	*jobj = ug_jsonrpc_object_new ();
+	jobj = ug_array_alloc(joarray, 1);
+	*jobj = ug_jsonrpc_object_new();
 	return *jobj;
 }
 
-UgJsonError  ug_json_parse_rpc_array (UgJson* json,
-                                      const char* name, const char* value,
-                                      void* jrarray, void* none)
+UgJsonError  ug_json_parse_rpc_array(UgJson* json,
+                                     const char* name, const char* value,
+                                     void* jrarray, void* none)
 {
 	UgJsonrpcArray*   array;
 	UgJsonrpcObject*  object;
@@ -258,38 +258,38 @@ UgJsonError  ug_json_parse_rpc_array (UgJson* json,
 	array = (UgJsonrpcArray*) jrarray;
 	if (json->type != UG_JSON_OBJECT) {
 //		if (json->type == UG_JSON_ARRAY)
-//			ug_json_push (json, ug_json_parse_unknown, NULL, NULL);
+//			ug_json_push(json, ug_json_parse_unknown, NULL, NULL);
 		return UG_JSON_ERROR_RPC_INVALID;
 	}
 
-	object = ug_jsonrpc_array_alloc (array);
-	ug_json_push (json, ug_json_parse_entry,
-	              object, (void*)UgJsonrpcObjectEntry);
+	object = ug_jsonrpc_array_alloc(array);
+	ug_json_push(json, ug_json_parse_entry,
+	             object, (void*)UgJsonrpcObjectEntry);
 	return UG_JSON_ERROR_NONE;
 }
 
-void  ug_json_write_rpc_array (UgJson* json, UgJsonrpcArray* objects,
-                               int  noArrayIfPossible)
+void  ug_json_write_rpc_array(UgJson* json, UgJsonrpcArray* objects,
+                              int  noArrayIfPossible)
 {
 	UgJsonrpcObject**   cur;
 	UgJsonrpcObject**   end;
 
 	if (noArrayIfPossible == FALSE || objects->length > 1)
-		ug_json_write_array_head (json);
+		ug_json_write_array_head(json);
 
 	end = objects->at + objects->length;
 	cur = objects->at;
 	for (;  cur < end;  cur++)
-		ug_json_write_rpc_object (json, *cur);
+		ug_json_write_rpc_object(json, *cur);
 
 	if (noArrayIfPossible == FALSE || objects->length > 1)
-		ug_json_write_array_tail (json);
+		ug_json_write_array_tail(json);
 }
 
 // ----------------------------------------------------------------------------
 // UgJsonrpc: JSON-RPC
 
-void  ug_jsonrpc_init (UgJsonrpc* jrpc, UgJson* json, UgBuffer* buffer)
+void  ug_jsonrpc_init(UgJsonrpc* jrpc, UgJson* json, UgBuffer* buffer)
 {
 	jrpc->json = json;
 	jrpc->buffer = buffer;
@@ -297,16 +297,16 @@ void  ug_jsonrpc_init (UgJsonrpc* jrpc, UgJson* json, UgBuffer* buffer)
 	jrpc->data.id.current = 0;
 }
 
-void  ug_jsonrpc_clear (UgJsonrpc* jrpc)
+void  ug_jsonrpc_clear(UgJsonrpc* jrpc)
 {
 }
 
 // ------------------------------------
 // client API : set response == NULL if this is notify request
 
-int  ug_jsonrpc_call (UgJsonrpc* jrpc,
-                      UgJsonrpcObject* request,
-                      UgJsonrpcObject* response)
+int  ug_jsonrpc_call(UgJsonrpc* jrpc,
+                     UgJsonrpcObject* request,
+                     UgJsonrpcObject* response)
 {
 	int    n;
 
@@ -315,35 +315,35 @@ int  ug_jsonrpc_call (UgJsonrpc* jrpc,
 
 	jrpc->error = 0;
 	// write --- start ---
-	ug_json_begin_write (jrpc->json, 0, jrpc->buffer);
+	ug_json_begin_write(jrpc->json, 0, jrpc->buffer);
 	// notify does NOT have id
 	if (request->id.type != UG_VALUE_NONE)
-		ug_value_clear (&request->id);
+		ug_value_clear(&request->id);
 	if (response) {
 		request->id.type = UG_VALUE_INT;
 		request->id.c.integer = jrpc->data.id.current++;
 	}
-	ug_json_write_rpc_object (jrpc->json, request);
-	ug_json_end_write (jrpc->json);
+	ug_json_write_rpc_object(jrpc->json, request);
+	ug_json_end_write(jrpc->json);
 	// write --- end ---
 
 #ifdef DEBUG
-	printf ("\n%.*s\n", jrpc->buffer->cur - jrpc->buffer->beg, jrpc->buffer->beg);
+	printf("\n%.*s\n", jrpc->buffer->cur - jrpc->buffer->beg, jrpc->buffer->beg);
 #endif // DEBUG
 
 	// parser --- start ---
-	ug_json_begin_parse (jrpc->json);
+	ug_json_begin_parse(jrpc->json);
 	if (response == NULL) {
-		ug_json_push (jrpc->json, ug_json_parse_unknown,
-		              NULL, NULL);
+		ug_json_push(jrpc->json, ug_json_parse_unknown,
+		             NULL, NULL);
 	}
 	else {
-		ug_json_push (jrpc->json, ug_json_parse_entry,
-		              response, (void*)UgJsonrpcObjectEntry);
-		ug_json_push (jrpc->json, ug_json_parse_object, NULL, NULL);
+		ug_json_push(jrpc->json, ug_json_parse_entry,
+		             response, (void*)UgJsonrpcObjectEntry);
+		ug_json_push(jrpc->json, ug_json_parse_object, NULL, NULL);
 	}
 	// send request
-	n = jrpc->send.func (jrpc->send.data);
+	n = jrpc->send.func(jrpc->send.data);
 	if (n == -1)
 		return -1;
 
@@ -353,10 +353,10 @@ int  ug_jsonrpc_call (UgJsonrpc* jrpc,
 		return 0;
 	jrpc->data.id.previous = jrpc->data.id.current;
 
-	n = jrpc->receive.func (jrpc->receive.data);
+	n = jrpc->receive.func(jrpc->receive.data);
 	if (n == -1)
 		return -1;
-	n = ug_json_end_parse (jrpc->json);
+	n = ug_json_end_parse(jrpc->json);
 	if (n < 0 || jrpc->error == 0)
 		jrpc->error = n;
 	// parser --- end ---
@@ -364,9 +364,9 @@ int  ug_jsonrpc_call (UgJsonrpc* jrpc,
 	return 0;   // no error
 }
 
-int  ug_jsonrpc_call_batch (UgJsonrpc* jrpc,
-                            UgJsonrpcArray* request,
-                            UgJsonrpcArray* response)
+int  ug_jsonrpc_call_batch(UgJsonrpc* jrpc,
+                           UgJsonrpcArray* request,
+                           UgJsonrpcArray* response)
 {
 	UgJsonrpcObject** cur;
 	UgJsonrpcObject** end;
@@ -379,8 +379,8 @@ int  ug_jsonrpc_call_batch (UgJsonrpc* jrpc,
 	if (request->length == 0)
 		return 0;
 	// write --- start ---
-	ug_json_begin_write (jrpc->json, 0, jrpc->buffer);
-	ug_json_write_array_head (jrpc->json);
+	ug_json_begin_write(jrpc->json, 0, jrpc->buffer);
+	ug_json_write_array_head(jrpc->json);
 	cur = request->at;
 	end = request->at + request->length;
 	for (;  cur < end;  cur++) {
@@ -388,31 +388,31 @@ int  ug_jsonrpc_call_batch (UgJsonrpc* jrpc,
 			continue;
 		// notify does NOT have id
 		if (cur[0]->id.type != UG_VALUE_NONE) {
-			ug_value_clear (&cur[0]->id);
+			ug_value_clear(&cur[0]->id);
 			cur[0]->id.type = UG_VALUE_INT;
 			cur[0]->id.c.integer = jrpc->data.id.current++;
 		}
-		ug_json_write_rpc_object (jrpc->json, cur[0]);
+		ug_json_write_rpc_object(jrpc->json, cur[0]);
 	}
-	ug_json_write_array_tail (jrpc->json);
-	ug_json_end_write (jrpc->json);
+	ug_json_write_array_tail(jrpc->json);
+	ug_json_end_write(jrpc->json);
 	// write --- end ---
 
 #ifdef DEBUG
-	printf ("\n%.*s\n", jrpc->buffer->cur - jrpc->buffer->beg, jrpc->buffer->beg);
+	printf("\n%.*s\n", jrpc->buffer->cur - jrpc->buffer->beg, jrpc->buffer->beg);
 #endif
 
 	// parser --- start ---
-	ug_json_begin_parse (jrpc->json);
+	ug_json_begin_parse(jrpc->json);
 	if (response == NULL)
-		ug_json_push (jrpc->json, ug_json_parse_unknown, NULL, NULL);
+		ug_json_push(jrpc->json, ug_json_parse_unknown, NULL, NULL);
 	else {
-		ug_json_push (jrpc->json, ug_json_parse_rpc_array, response, NULL);
-		ug_json_push (jrpc->json, ug_json_parse_array, NULL, NULL);
+		ug_json_push(jrpc->json, ug_json_parse_rpc_array, response, NULL);
+		ug_json_push(jrpc->json, ug_json_parse_array, NULL, NULL);
 	}
 
 	// send request
-	n = jrpc->send.func (jrpc->send.data);
+	n = jrpc->send.func(jrpc->send.data);
 	if (n == -1)
 		return -1;
 
@@ -422,10 +422,10 @@ int  ug_jsonrpc_call_batch (UgJsonrpc* jrpc,
 		return 0;
 	jrpc->data.id.previous = jrpc->data.id.current;
 
-	n = jrpc->receive.func (jrpc->receive.data);
+	n = jrpc->receive.func(jrpc->receive.data);
 	if (n == -1)
 		return -1;
-	n = ug_json_end_parse (jrpc->json);
+	n = ug_json_end_parse(jrpc->json);
 	if (n < 0 || jrpc->error == 0)
 		jrpc->error = n;
 	// parser --- end ---
@@ -436,9 +436,9 @@ int  ug_jsonrpc_call_batch (UgJsonrpc* jrpc,
 // ------------------------------------
 // server API
 
-int  ug_jsonrpc_receive (UgJsonrpc* jrpc,
-                         UgJsonrpcObject* jr_object,
-                         UgJsonrpcArray*  jr_array)
+int  ug_jsonrpc_receive(UgJsonrpc* jrpc,
+                        UgJsonrpcObject* jr_object,
+                        UgJsonrpcArray*  jr_array)
 {
 	int    n;
 	int    type;
@@ -450,23 +450,23 @@ int  ug_jsonrpc_receive (UgJsonrpc* jrpc,
 	jrpc->data.request.array  = jr_array;
 
 	// parser --- start ---
-	ug_json_begin_parse (jrpc->json);
-	ug_json_push (jrpc->json, ug_json_parse_rpc_request,
-	              jrpc, &type);
+	ug_json_begin_parse(jrpc->json);
+	ug_json_push(jrpc->json, ug_json_parse_rpc_request,
+	             jrpc, &type);
 	// receive request
-	n = jrpc->receive.func (jrpc->receive.data);
+	n = jrpc->receive.func(jrpc->receive.data);
 	if (n <= 0) {
-		ug_json_end_parse (jrpc->json);
+		ug_json_end_parse(jrpc->json);
 		return n;
 	}
-	n = ug_json_end_parse (jrpc->json);
+	n = ug_json_end_parse(jrpc->json);
 	if (n < 0 || jrpc->error == 0)
 		jrpc->error = n;
 	// parser --- end ---
 
 	if (jrpc->error == UG_JSON_ERROR_UNCOMPLETED) {
 		// {"jsonrpc": "2.0", "error": {"code": -32700, "message": "Parse error"}, "id": null}
-		jres = ug_jsonrpc_object_new ();
+		jres = ug_jsonrpc_object_new();
 		// "id": null
 		jres->id.type = UG_VALUE_STRING;
 		jres->id.c.string = NULL;
@@ -474,15 +474,15 @@ int  ug_jsonrpc_receive (UgJsonrpc* jrpc,
 		jres->error.code = -32700;
 		jres->error.message = "Parse error";
 		// send response to client
-		ug_jsonrpc_response (jrpc, jres);
+		ug_jsonrpc_response(jrpc, jres);
 		// clear response
 		jres->error.message = NULL;
-		ug_jsonrpc_object_free (jres);
+		ug_jsonrpc_object_free(jres);
 		return -1;
 	}
 	if (type < UG_JSON_OBJECT) {
 		// {"jsonrpc": "2.0", "error": {"code": -32600, "message": "Invalid Request"}, "id": null}
-		jres = ug_jsonrpc_object_new ();
+		jres = ug_jsonrpc_object_new();
 		// "id": null
 		jres->id.type = UG_VALUE_STRING;
 		jres->id.c.string = NULL;
@@ -490,18 +490,18 @@ int  ug_jsonrpc_receive (UgJsonrpc* jrpc,
 		jres->error.code = -32600;
 		jres->error.message = "Invalid Request";
 		// send response to client
-		ug_jsonrpc_response (jrpc, jres);
+		ug_jsonrpc_response(jrpc, jres);
 		// clear response
 		jres->error.message = NULL;
-		ug_jsonrpc_object_free (jres);
+		ug_jsonrpc_object_free(jres);
 		return -1;
 	}
 
 	return type;
 }
 
-int  ug_jsonrpc_response (UgJsonrpc* jrpc,
-                          UgJsonrpcObject* response)
+int  ug_jsonrpc_response(UgJsonrpc* jrpc,
+                         UgJsonrpcObject* response)
 {
 	int    n;
 
@@ -510,20 +510,20 @@ int  ug_jsonrpc_response (UgJsonrpc* jrpc,
 
 	jrpc->error = 0;
 	// write --- start ---
-	ug_json_begin_write (jrpc->json, 0, jrpc->buffer);
-	ug_json_write_rpc_object (jrpc->json, response);
-	ug_json_end_write (jrpc->json);
+	ug_json_begin_write(jrpc->json, 0, jrpc->buffer);
+	ug_json_write_rpc_object(jrpc->json, response);
+	ug_json_end_write(jrpc->json);
 	// write --- end ---
 
 	// send responses
-	n = jrpc->send.func (jrpc->send.data);
+	n = jrpc->send.func(jrpc->send.data);
 	if (n == -1)
 		return -1;
 	return n;
 }
 
-int  ug_jsonrpc_response_batch (UgJsonrpc* jrpc,
-                                UgJsonrpcArray*  responses)
+int  ug_jsonrpc_response_batch(UgJsonrpc* jrpc,
+                               UgJsonrpcArray*  responses)
 {
 	UgJsonrpcObject** cur;
 	UgJsonrpcObject** end;
@@ -536,8 +536,8 @@ int  ug_jsonrpc_response_batch (UgJsonrpc* jrpc,
 	if (responses->length == 0)
 		return 0;
 	// write --- start ---
-	ug_json_begin_write (jrpc->json, 0, jrpc->buffer);
-	ug_json_write_array_head (jrpc->json);
+	ug_json_begin_write(jrpc->json, 0, jrpc->buffer);
+	ug_json_write_array_head(jrpc->json);
 	cur = responses->at;
 	end = responses->at + responses->length;
 	for (n = 0;  cur < end;  cur++) {
@@ -545,11 +545,11 @@ int  ug_jsonrpc_response_batch (UgJsonrpc* jrpc,
 		if (cur[0] == NULL)
 			continue;
 		// output object and increase count
-		ug_json_write_rpc_object (jrpc->json, cur[0]);
+		ug_json_write_rpc_object(jrpc->json, cur[0]);
 		n++;
 	}
-	ug_json_write_array_tail (jrpc->json);
-	ug_json_end_write (jrpc->json);
+	ug_json_write_array_tail(jrpc->json);
+	ug_json_end_write(jrpc->json);
 	// write --- end ---
 
 	// if no object outputted, don't send response
@@ -557,15 +557,15 @@ int  ug_jsonrpc_response_batch (UgJsonrpc* jrpc,
 		return 0;
 
 	// send responses
-	n = jrpc->send.func (jrpc->send.data);
+	n = jrpc->send.func(jrpc->send.data);
 	if (n == -1)
 		return -1;
 	return n;
 }
 
-UgJsonError  ug_json_parse_rpc_request (UgJson* json,
-                                        const char* name, const char* value,
-                                        void* jsonrpc, void* type)
+UgJsonError  ug_json_parse_rpc_request(UgJson* json,
+                                       const char* name, const char* value,
+                                       void* jsonrpc, void* type)
 {
 	UgJsonrpc* jrpc = jsonrpc;
 
@@ -574,18 +574,18 @@ UgJsonError  ug_json_parse_rpc_request (UgJson* json,
 		*(int*)type = UG_JSON_OBJECT;
 		if (jrpc->data.request.object == NULL)
 			break;
-		ug_json_push (json, ug_json_parse_entry,
+		ug_json_push(json, ug_json_parse_entry,
 				jrpc->data.request.object, (void*)UgJsonrpcObjectEntry);
-		return ug_json_parse_entry (json, name, value,
+		return ug_json_parse_entry(json, name, value,
 				jrpc->data.request.object, (void*)UgJsonrpcObjectEntry);
 
 	case UG_JSON_ARRAY:
 		*(int*)type = UG_JSON_ARRAY;
 		if (jrpc->data.request.array == NULL)
 			break;
-		ug_json_push (json, ug_json_parse_rpc_array,
+		ug_json_push(json, ug_json_parse_rpc_array,
 				jrpc->data.request.array, NULL);
-		return ug_json_parse_rpc_array (json, name, value,
+		return ug_json_parse_rpc_array(json, name, value,
 				jrpc->data.request.array, NULL);
 
 	default:

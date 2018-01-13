@@ -67,9 +67,9 @@ typedef enum
 	UG_ENTRY_CUSTOM,    // JSON value,  C functions were used.
 } UgEntryType;
 
-// You can set this in UgEntry.param1 when UgEntry.type is UG_ENTRY_STRING.
+// You can set this in UgEntry.param2 when UgEntry.type is UG_ENTRY_STRING.
 // ug_json_write_entry() will not output this field when value is NULL.
-#define  UG_ENTRY_SKIP_IF_NULL    ((void*)(uintptr_t) 1)
+#define  UG_ENTRY_NO_NULL         ((void*)(uintptr_t) 0x0001)
 
 // ----------------------------------------------------------------------------
 // UgEntry: It can defines a object member and it's offset of data structure.
@@ -85,8 +85,8 @@ typedef enum
 //
 //	static UgEntry FooEntry[] =
 //	{
-//		{ "user",   offsetof (Foo, user),   UG_ENTRY_STRING, NULL, NULL},
-//		{ "number", offsetof (Foo, number), UG_ENTRY_INT,    NULL, NULL},
+//		{ "user",   offsetof(Foo, user),   UG_ENTRY_STRING, NULL, NULL},
+//		{ "number", offsetof(Foo, number), UG_ENTRY_INT,    NULL, NULL},
 //		{ NULL }    // null-terminated
 //	};
 //
@@ -103,14 +103,14 @@ typedef enum
 
 // UgEntryType = UG_ENTRY_STRING
 // If you don't want to output anything when string value is NULL,
-// set UgEntry.param1 to UG_ENTRY_SKIP_IF_NULL.
+// set UgEntry.param2 to UG_ENTRY_NO_NULL.
 
 // UgEntryType = UG_ENTRY_OBJECT
 // UgEntry.param1 pointer to UgEntry
 // UgEntry.param2 pointer to UgInitFunc
 // ---------
 // if (UgInitFunc)
-//     UgInitFunc (UserData);
+//     UgInitFunc(UserData);
 
 // UgEntryType = UG_ENTRY_ARRAY
 // UgEntry.param1 = UgJsonParseFunc, how to parse JSON array elements.
@@ -137,12 +137,12 @@ struct UgEntry
 };
 
 // parse JSON value by UgEntry
-UgJsonError ug_json_parse_entry (UgJson* json,
-                                 const char* name, const char* value,
-                                 void* dest, void* entry);
+UgJsonError ug_json_parse_entry(UgJson* json,
+                                const char* name, const char* value,
+                                void* dest, void* entry);
 
 // write JSON value by UgEntry
-void  ug_json_write_entry (UgJson* json, void* src, const UgEntry* entry);
+void  ug_json_write_entry(UgJson* json, void* src, const UgEntry* entry);
 
 #ifdef __cplusplus
 }
