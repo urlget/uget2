@@ -46,6 +46,34 @@ extern "C" {
 typedef struct UgBuffer       UgBuffer;
 typedef int  (*UgBufferFunc) (UgBuffer* buffer);
 
+void  ug_buffer_init_external(UgBuffer* buffer, char* exbuf, int length);
+void  ug_buffer_init(UgBuffer* buffer, int length);
+
+// If you use ug_buffer_init_external() to init UgBuffer,
+// you may not free, resize, or allocate buffer.
+void  ug_buffer_clear(UgBuffer* buffer, int free_buffer);
+void  ug_buffer_set_size(UgBuffer* buffer, int length);
+char* ug_buffer_alloc(UgBuffer* buffer, int length);
+
+// UgBuffer.more() default function for external buffer.
+int   ug_buffer_restart(UgBuffer* buffer);
+// UgBuffer.more() default function for internal buffer.
+int   ug_buffer_expand(UgBuffer* buffer);
+
+void  ug_buffer_fill(UgBuffer* buffer, char ch, int count);
+
+// return number of bytes written
+int   ug_buffer_write(UgBuffer* buffer, const char* string, int length);
+void  ug_buffer_write_data(UgBuffer* buffer, const char* binary, int length);
+
+#define ug_buffer_length(buffer)    (int)((buffer)->cur - (buffer)->beg)
+#define ug_buffer_allocated(buffer) (int)((buffer)->end - (buffer)->beg)
+#define ug_buffer_remain(buffer)    (int)((buffer)->end - (buffer)->cur)
+
+#ifdef __cplusplus
+}
+#endif
+
 struct UgBuffer
 {
 	char*  beg;
@@ -59,45 +87,80 @@ struct UgBuffer
 	// return = 0 if no more data (read)
 	UgBufferFunc  more;  // flush/expand (write) or fill/expand (read)
 	void*         data;  // extra data for UgBuffer.more()
-};
-
-void  ug_buffer_init_external (UgBuffer* buffer, char* exbuf, int length);
-void  ug_buffer_init (UgBuffer* buffer, int length);
-void  ug_buffer_clear (UgBuffer* buffer, int free_buffer);
-
-void  ug_buffer_set_size (UgBuffer* buffer, int length);
-char* ug_buffer_alloc (UgBuffer* buffer, int length);
-
-// UgBuffer.more() default function for external buffer.
-int   ug_buffer_restart (UgBuffer* buffer);
-// UgBuffer.more() default function for internal buffer.
-int   ug_buffer_expand (UgBuffer* buffer);
-
-void  ug_buffer_fill (UgBuffer* buffer, char ch, int count);
-int   ug_buffer_write (UgBuffer* buffer, const char* string, int length);
-void  ug_buffer_write_data (UgBuffer* buffer, const char* binary, int length);
-
-#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)
-// C99
-static inline
-void  ug_buffer_write_char (UgBuffer* buffer, char ch)
-{
-	if ((buffer)->cur >= (buffer)->end)
-		(buffer)->more (buffer);
-	*(buffer)->cur++ = (char)(ch);
-}
-#else
-void  ug_buffer_write_char (UgBuffer* buffer, char ch);
-#endif  // __STDC_VERSION__
-
-
-#define ug_buffer_length(buffer)    (int)((buffer)->cur - (buffer)->beg)
-#define ug_buffer_allocated(buffer) (int)((buffer)->end - (buffer)->beg)
-#define ug_buffer_remain(buffer)    (int)((buffer)->end - (buffer)->cur)
 
 #ifdef __cplusplus
-}
+	// C++11 standard-layout
+	inline void  init(int length)
+		{ ug_buffer_init(this, length); }
+	inline void  init(char* exbuf, int length)
+		{ ug_buffer_init_external(this, exbuf, length); }
+
+	// If you use ug_buffer_init_external() to init UgBuffer,
+	// you may not free, resize, or allocate buffer.
+	inline void  clear(bool free_buffer)
+		{ ug_buffer_clear(this, free_buffer); }
+	inline void  setSize(int length)
+		{ ug_buffer_set_size(this, length); }
+	inline char* alloc(int length)
+		{ return ug_buffer_alloc(this, length); }
+
+	inline void  fill(char ch, int count)
+		{ ug_buffer_fill(this, ch, count); }
+
+	// return number of bytes written
+	inline int   write(const char* string, int length = -1)
+		{ return ug_buffer_write(this, string, length); }
+	inline void  writeData(const char* binary, int length)
+		{ ug_buffer_write_data(this, binary, length); }
+
+	// call ug_buffer_write_char()
+	inline void  write(char ch)
+	{
+//		ug_buffer_write_char(this, ch);
+		if (this->cur >= this->end)
+			this->more(this);
+		*this->cur++ = (char)(ch);
+	}
+#endif  // __cplusplus
+};
+
+// ----------------------------------------------------------------------------
+// C/C++ inline function
+
+#if (defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)) || defined(__cplusplus)
+// C99 or C++ inline function
+
+#ifdef __cplusplus  // C++
+inline
+#else               // C99
+static inline
 #endif
+void  ug_buffer_write_char(UgBuffer* buffer, char ch)
+{
+	if ((buffer)->cur >= (buffer)->end)
+		(buffer)->more(buffer);
+	*(buffer)->cur++ = (char)(ch);
+}
+
+#else
+// C function
+void  ug_buffer_write_char(UgBuffer* buffer, char ch);
+
+#endif  // __STDC_VERSION__ || __cplusplus
+
+// ----------------------------------------------------------------------------
+// C++11 standard-layout
+
+#ifdef __cplusplus
+
+namespace Ug
+{
+// This one is for directly use only. You can NOT derived it.
+typedef struct UgBuffer    Buffer;
+};  // namespace Ug
+
+#endif  // __cplusplus
+
 
 #endif  // UG_BUFFER_H
 

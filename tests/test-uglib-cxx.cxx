@@ -36,6 +36,7 @@
 
 #include <UgJson.h>
 #include <UgArray.h>
+#include <UgBuffer.h>
 #include <UgList.h>
 #include <UgNode.h>
 #include <UgData.h>
@@ -57,6 +58,7 @@ void uglib_is_standard_layout(void)
 	cout << "Ug::DataInfo : is_standard_layout = " << is_standard_layout<Ug::DataInfo>::value << endl
 	     << "Ug::Data : is_standard_layout = " << std::is_standard_layout<Ug::Data>::value << endl
 	     << "Ug::Array<int> : is_standard_layout = " << std::is_standard_layout<Ug::Array<int>>::value << endl
+	     << "Ug::Buffer : is_standard_layout = " << std::is_standard_layout<Ug::Buffer>::value << endl
 	     << "Ug::Node : is_standard_layout = " << std::is_standard_layout<Ug::Node>::value << endl
 	     << "Ug::List : is_standard_layout = " << std::is_standard_layout<Ug::List>::value << endl
 	     << "Ug::Info : is_standard_layout = " << std::is_standard_layout<Ug::Info>::value << endl
@@ -115,6 +117,25 @@ void test_array_cxx(void)
 		cout << "array.at[" << index << "] = " << array.at[index] << endl;
 
 	array.clear();
+}
+
+// ----------------------------------------------------------------------------
+// test Ug::Buffer
+
+void test_buffer_cxx(void)
+{
+	Ug::Buffer  buffer;
+
+	cout << endl << "--- Ug::Buffer testing..." << endl;
+
+	buffer.init(80);
+	buffer.write("Write string to buffer.");
+	buffer.write("Second string.\n");
+	buffer.fill('Z', 10);
+	buffer.write('\0');
+
+	cout << buffer.beg << endl;
+	buffer.clear(true);
 }
 
 // ----------------------------------------------------------------------------
@@ -208,6 +229,7 @@ int   main (void)
 
 	test_json_cxx();
 	test_array_cxx();
+	test_buffer_cxx();
 	test_node_cxx();
 	test_data_cxx();
 	test_info_cxx();

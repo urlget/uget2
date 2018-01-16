@@ -39,7 +39,7 @@
 #include <UgDefine.h>
 #include <UgBuffer.h>
 
-void  ug_buffer_init_external (UgBuffer* buffer, char* exbuf, int length)
+void  ug_buffer_init_external(UgBuffer* buffer, char* exbuf, int length)
 {
 	buffer->beg = exbuf;
 	buffer->cur = exbuf;
@@ -47,34 +47,34 @@ void  ug_buffer_init_external (UgBuffer* buffer, char* exbuf, int length)
 	buffer->more = ug_buffer_restart;
 }
 
-void  ug_buffer_init (UgBuffer* buffer, int length)
+void  ug_buffer_init(UgBuffer* buffer, int length)
 {
-	buffer->beg = ug_malloc (length);
+	buffer->beg = ug_malloc(length);
 	buffer->cur = buffer->beg;
 	buffer->end = buffer->beg + length;
 	buffer->more = ug_buffer_expand;
 }
 
-void  ug_buffer_clear (UgBuffer* buffer, int free_buffer)
+void  ug_buffer_clear(UgBuffer* buffer, int free_buffer)
 {
 	if (free_buffer)
-		ug_free (buffer->beg);
+		ug_free(buffer->beg);
 	buffer->beg = NULL;
 	buffer->cur = NULL;
 	buffer->end = NULL;
 }
 
-void  ug_buffer_set_size (UgBuffer* buffer, int length)
+void  ug_buffer_set_size(UgBuffer* buffer, int length)
 {
 	char*  oldbeg;
 
 	oldbeg = buffer->beg;
-	buffer->beg = ug_realloc (buffer->beg, length);
+	buffer->beg = ug_realloc(buffer->beg, length);
 	buffer->cur = buffer->beg + (buffer->cur - oldbeg);
 	buffer->end = buffer->beg + length;
 }
 
-char* ug_buffer_alloc (UgBuffer* buffer, int length)
+char* ug_buffer_alloc(UgBuffer* buffer, int length)
 {
 	char*  result;
 	int    buffer_len;
@@ -85,7 +85,7 @@ char* ug_buffer_alloc (UgBuffer* buffer, int length)
 			buffer_len = length * 2;
 		else
 			buffer_len *= 2;
-		ug_buffer_set_size (buffer, buffer_len);
+		ug_buffer_set_size(buffer, buffer_len);
 	}
 	result = buffer->cur;
 	buffer->cur += length;
@@ -93,68 +93,67 @@ char* ug_buffer_alloc (UgBuffer* buffer, int length)
 }
 
 // UgBuffer.more() default function for external buffer.
-int   ug_buffer_restart (UgBuffer* buffer)
+int   ug_buffer_restart(UgBuffer* buffer)
 {
 	buffer->cur = buffer->beg;
 	return 1;
 }
 
 // UgBuffer.more() default function for internal buffer.
-int   ug_buffer_expand (UgBuffer* buffer)
+int   ug_buffer_expand(UgBuffer* buffer)
 {
 	int    length;
 
 	length = (buffer->end - buffer->beg) * 2;
 	if (length < 1024)
 		length = 1024;
-	ug_buffer_set_size (buffer, length);
+	ug_buffer_set_size(buffer, length);
 	return 1;
 }
 
-void  ug_buffer_fill (UgBuffer* buffer, char ch, int count)
+void  ug_buffer_fill(UgBuffer* buffer, char ch, int count)
 {
 	while (count--) {
 		if (buffer->cur == buffer->end)
-			buffer->more (buffer);
+			buffer->more(buffer);
 		*buffer->cur++ = ch;
 	}
 }
 
-int  ug_buffer_write (UgBuffer* buffer, const char* string, int length)
+int  ug_buffer_write(UgBuffer* buffer, const char* string, int length)
 {
 	const char*  end;
 
 	if (length == -1)
-		length = strlen (string);
+		length = strlen(string);
 	end = string + length;
 	while (string < end && string[0]) {
 		if (buffer->cur == buffer->end)
-			buffer->more (buffer);
+			buffer->more(buffer);
 		*buffer->cur++ = *(uint8_t*)string++;
 	}
 	return length;
 }
 
-void  ug_buffer_write_data (UgBuffer* buffer, const char* binary, int length)
+void  ug_buffer_write_data(UgBuffer* buffer, const char* binary, int length)
 {
 	const char*  end;
 
 	end = binary + length;
 	while (binary < end) {
 		if (buffer->cur == buffer->end)
-			buffer->more (buffer);
+			buffer->more(buffer);
 		*buffer->cur++ = *binary++;
 	}
 }
 
 #if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)
-// C99
-// inline function in UgBuffer.h
+// C99 or C++ inline function in UgBuffer.h
 #else
-void  ug_buffer_write_char (UgBuffer* buffer, char ch)
+void  ug_buffer_write_char(UgBuffer* buffer, char ch)
 {
 	if ((buffer)->cur >= (buffer)->end)
-		(buffer)->more (buffer);
+		(buffer)->more(buffer);
 	*(buffer)->cur++ = (char)(ch);
 }
 #endif  // __STDC_VERSION__
