@@ -89,42 +89,6 @@ void*   ug_array_find_sorted(void* array, const void* key,
 #define ug_array_length(array) \
 		( ((UgArrayChar*)(array))->length )
 
-// inline C function
-#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)
-// C99
-static inline
-void  ug_array_erase(void* array, int index, int length)
-{
-	memmove(ug_array_addr(array, index),
-	        ug_array_addr(array, index + length),
-			ug_array_count(array, ug_array_length(array) - index - 1));
-	((UgArrayChar*)array)->length -= length;
-}
-
-static inline
-void* ug_array_insert(void* array, int index, int length)
-{
-	char* addr;
-	ug_array_alloc(array, length);
-	memmove(ug_array_addr(array, index + length),
-	        addr = ug_array_addr(array, index),
-			ug_array_count(array, ug_array_length(array) - index - 1));
-	return (void*)addr;
-}
-
-// Quick sort
-static inline
-void  ug_array_sort(void* array, UgCompareFunc compare)
-{
-	qsort( ((UgArrayChar*)array)->at, ((UgArrayChar*)array)->length,
-	       ((UgArrayChar*)array)->element_size, compare);
-}
-#else
-void    ug_array_erase(void* array, int index, int length);
-void*   ug_array_insert(void* array, int index, int length);
-void    ug_array_sort(void* array, UgCompareFunc func);  // Quick sort
-#endif  // __STDC_VERSION__
-
 // Binary search:
 // int compareFunc(const void *s1, const void *s2);
 #define	ug_array_bsearch(array, key, compareFunc)	\
@@ -174,27 +138,21 @@ void	ug_json_write_array_int64(UgJson* json, UgArrayInt64* array);
 void	ug_json_write_array_double(UgJson* json, UgArrayDouble* array);
 void	ug_json_write_array_string(UgJson* json, UgArrayStr* array);
 
-
 #ifdef __cplusplus
 }
 #endif
 
 // ----------------------------------------------------------------------------
-// C++11 standard-layout
+// C/C++ inline function
 
-#ifdef __cplusplus
+#if (defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)) || defined(__cplusplus)
+// C99 or C++ inline functions
 
-//#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)
+#ifdef __cplusplus  // C++
 inline
-void  ug_array_erase(void* array, int index, int length)
-{
-	memmove(ug_array_addr(array, index),
-	        ug_array_addr(array, index + length),
-			ug_array_count(array, ug_array_length(array) - index - 1));
-	((UgArrayChar*)array)->length -= length;
-}
-
-inline
+#else               // C99
+static inline
+#endif
 void* ug_array_insert(void* array, int index, int length)
 {
 	char* addr;
@@ -205,14 +163,42 @@ void* ug_array_insert(void* array, int index, int length)
 	return (void*)addr;
 }
 
-// Quick sort
+#ifdef __cplusplus  // C++
 inline
+#else               // C99
+static inline
+#endif
+void  ug_array_erase(void* array, int index, int length)
+{
+	memmove(ug_array_addr(array, index),
+	        ug_array_addr(array, index + length),
+			ug_array_count(array, ug_array_length(array) - index - 1));
+	((UgArrayChar*)array)->length -= length;
+}
+
+#ifdef __cplusplus  // C++
+inline
+#else               // C99
+static inline
+#endif
 void  ug_array_sort(void* array, UgCompareFunc compare)
 {
 	qsort( ((UgArrayChar*)array)->at, ((UgArrayChar*)array)->length,
 	       ((UgArrayChar*)array)->element_size, compare);
 }
-//#endif  // __STDC_VERSION__
+
+#else
+// C functions
+void*   ug_array_insert(void* array, int index, int length);
+void    ug_array_erase(void* array, int index, int length);
+void    ug_array_sort(void* array, UgCompareFunc func);  // Quick sort
+
+#endif  // __STDC_VERSION__ || __cplusplus
+
+// ----------------------------------------------------------------------------
+// C++11 standard-layout
+
+#ifdef __cplusplus
 
 namespace Ug
 {

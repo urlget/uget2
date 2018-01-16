@@ -147,19 +147,9 @@ void* ug_array_find_sorted(void* array, const void* key,
 	return NULL;
 }
 
-// inline function
 #if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)
-// C99
-// inline function in UgArray.h
+// C99 or C++ inline functions in UgArray.h
 #else
-void  ug_array_erase(void* array, int index, int length)
-{
-	memmove(ug_array_addr(array, index),
-	        ug_array_addr(array, index + length),
-			ug_array_count(array, ug_array_length(array) - index - 1));
-	((UgArrayChar*)array)->length -= length;
-}
-
 void* ug_array_insert(void* array, int index, int length)
 {
 	char* addr;
@@ -168,6 +158,14 @@ void* ug_array_insert(void* array, int index, int length)
 	        addr = ug_array_addr(array, index),
 			ug_array_count(array, ug_array_length(array) - index - 1));
 	return (void*)addr;
+}
+
+void  ug_array_erase(void* array, int index, int length)
+{
+	memmove(ug_array_addr(array, index),
+	        ug_array_addr(array, index + length),
+			ug_array_count(array, ug_array_length(array) - index - 1));
+	((UgArrayChar*)array)->length -= length;
 }
 
 void  ug_array_sort(void* array, UgCompareFunc compare)
