@@ -51,7 +51,7 @@ using namespace std;
 // ----------------------------------------------------------------------------
 // test C++ standard-layout
 
-void uglib_is_standard_layout (void)
+void uglib_is_standard_layout(void)
 {
 #if CHECK_CXX_STANDARD_LAYOUT
 	cout << "Ug::DataInfo : is_standard_layout = " << is_standard_layout<Ug::DataInfo>::value << endl
@@ -69,53 +69,76 @@ void uglib_is_standard_layout (void)
 // ----------------------------------------------------------------------------
 // test Ug::Json
 
-void test_json_cxx (void)
+void test_json_cxx(void)
 {
 	Ug::Json  js;
 
-//	js.init ();
-//	js.final ();
+//	js.init();
+//	js.final();
 }
 
 // ----------------------------------------------------------------------------
-// test Ug::Json
+// test Ug::Array
 
-void test_array_cxx (void)
+void test_array_cxx(void)
 {
 	Ug::Array<int>  array;
+	int   index;
 	int*  pint;
+	int   value = 102;
 
-	array.init (128);
-	pint = array.alloc (1);
-	*pint = 100;
-	cout << "array.at[0] = " << array.at[0] << endl;
-//	array.final ();
+	array.init(128);
+	pint = array.alloc(4);
+	pint[0] = 100;
+	pint[1] = 101;
+	pint[2] = 102;
+	pint[3] = 103;
+	pint = array.insert(2, 2);
+//	ug_array_insert(&array, 2, 2);
+	pint[0] = 104;
+	pint[1] = 105;
+
+	array.sort();
+//	ug_array_sort(&array, ug_array_compare_int);
+	pint = array.findSorted(value, &index);
+	cout << "array.findSorted(" << value << ");" << endl;
+	if (pint) {
+		cout << "found."
+		     << " value = " << pint[0] << ","
+		     << " index = " << index << endl;
+	}
+
+	cout << endl << "--- dump array ---" << endl;
+	for(index = 0;  index < array.length;  index++)
+		cout << "array.at[" << index << "] = " << array.at[index] << endl;
+
+//	array.final();
 }
 
 // ----------------------------------------------------------------------------
 // test Ug::List
 
-void test_list_cxx (void)
+void test_list_cxx(void)
 {
 	Ug::List list;
 	Ug::Link link1;
 	Ug::Link link2;
 
-	list.append (&link1);
-	list.insert (&link1, &link2);
+	list.append(&link1);
+	list.insert(&link1, &link2);
 }
 
 // ----------------------------------------------------------------------------
 // test Ug::Node
 
-void test_node_cxx (void)
+void test_node_cxx(void)
 {
 	Ug::Node root;
 	Ug::Node node1;
 	Ug::Node node2;
 
-	root.append (&node1);
-	root.insert (&node1, &node2);
+	root.append(&node1);
+	root.insert(&node1, &node2);
 }
 
 // ----------------------------------------------------------------------------
@@ -128,7 +151,7 @@ struct UgCxxData : public Ug::DataMethod
 
 	int   value;
 
-	UgCxxData (void);
+	UgCxxData(void);
 };
 
 Ug::DataInfo UgCxxInfo =
@@ -141,14 +164,14 @@ Ug::DataInfo UgCxxInfo =
 	(UgAssignFunc) NULL
 };
 
-UgCxxData::UgCxxData (void)
+UgCxxData::UgCxxData(void)
 {
 	// init method 1
 //	info = &UgCxxInfo;
 //	init ();
 
 	// init method 2
-	init (&UgCxxInfo);
+	init(&UgCxxInfo);
 
 	value = 1;
 }
@@ -167,11 +190,11 @@ void test_data_cxx (void)
 // ----------------------------------------------------------------------------
 // test Ug::Info
 
-void test_info_cxx (void)
+void test_info_cxx(void)
 {
 	Ug::Info info;
 
-	info.init (16, 3);
+	info.init(16, 3);
 }
 
 // ----------------------------------------------------------------------------
@@ -179,13 +202,13 @@ void test_info_cxx (void)
 
 int   main (void)
 {
-	uglib_is_standard_layout ();
+	uglib_is_standard_layout();
 
-	test_json_cxx ();
-	test_array_cxx ();
-	test_node_cxx ();
-	test_data_cxx ();
-	test_info_cxx ();
+	test_json_cxx();
+	test_array_cxx();
+	test_node_cxx();
+	test_data_cxx();
+	test_info_cxx();
 
 	return 0;
 }
