@@ -61,7 +61,7 @@ struct UgPair
 
 struct UgRegistry
 {
-	UG_ARRAY_MEMBERS (UgPair);
+	UG_ARRAY_MEMBERS(UgPair);
 //	UgPair**  at;
 //	int       length;
 //	int       allocated;
@@ -70,20 +70,19 @@ struct UgRegistry
 	int       sorted;
 };
 
-void	ug_registry_init (UgRegistry* reg);
-void	ug_registry_final (UgRegistry* reg);
+void	ug_registry_init(UgRegistry* reg);
+void	ug_registry_final(UgRegistry* reg);
 
-void    ug_registry_add (UgRegistry* reg, const UgDataInfo* info);
-void    ug_registry_remove (UgRegistry* reg, const UgDataInfo* info);
-UgPair* ug_registry_find (UgRegistry* reg, const char* key, int* index);
+void    ug_registry_add(UgRegistry* reg, const UgDataInfo* info);
+void    ug_registry_remove(UgRegistry* reg, const UgDataInfo* info);
+UgPair* ug_registry_find(UgRegistry* reg, const char* key, int* index);
 
-void    ug_registry_sort (UgRegistry* reg);
+void    ug_registry_sort(UgRegistry* reg);
 
 
 #ifdef __cplusplus
 }
 #endif
-
 
 // ----------------------------------------------------------------------------
 // C++11 standard-layout

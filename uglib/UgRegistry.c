@@ -37,103 +37,68 @@
 #include <string.h>
 #include <UgRegistry.h>
 
-// ----------------------------------------------------------------------------
-// UgPairs
-
-void  ug_registry_init (UgRegistry* reg)
+void  ug_registry_init(UgRegistry* reg)
 {
-	ug_array_init (reg, sizeof (UgPair), 16);
+	ug_array_init(reg, sizeof(UgPair), 16);
 	reg->sorted = FALSE;
 }
 
-void  ug_registry_final (UgRegistry* reg)
+void  ug_registry_final(UgRegistry* reg)
 {
-	ug_array_clear (reg);
+	ug_array_clear(reg);
 }
 
-void  ug_registry_add (UgRegistry* reg, const UgDataInfo* info)
+void  ug_registry_add(UgRegistry* reg, const UgDataInfo* info)
 {
 	UgPair* pair;
 	int     index;
 
 	if (reg->sorted == FALSE || reg->length == 0)
-		pair = ug_array_alloc (reg, 1);
+		pair = ug_array_alloc(reg, 1);
 	else {
-		pair = ug_registry_find (reg, info->name, &index);
-		if (pair == NULL) {
-			ug_array_alloc (reg, 1);
-			memmove (reg->at + index + 1, reg->at + index,
-					sizeof (UgPair) * (reg->length - index - 1));
-			pair = reg->at + index;
-		}
+		pair = ug_registry_find(reg, info->name, &index);
+		if (pair == NULL)
+			pair = ug_array_insert(reg, index, 1);
 	}
 	pair->key  = (void*) info->name;
 	pair->data = (void*) info;
 }
 
-void  ug_registry_remove (UgRegistry* reg, const UgDataInfo* info)
+void  ug_registry_remove(UgRegistry* reg, const UgDataInfo* info)
 {
 	UgPair* cur;
+	int     index;
 
-	cur = ug_registry_find (reg, info->name, NULL);
-	if (cur) {
-		memmove (cur, cur +1,
-				sizeof (UgPair) * (reg->length - (cur - reg->at) -1));
-	}
+	cur = ug_registry_find(reg, info->name, &index);
+	if (cur)
+		ug_array_erase(reg, index, 1);
 }
 
-UgPair* ug_registry_find (UgRegistry* reg, const char* key, int* inserted_index)
+UgPair* ug_registry_find(UgRegistry* reg, const char* key, int* inserted_index)
 {
-	UgPair* low;
 	UgPair* cur;
-	UgPair* high;
-	int     diff;
-
-	low  = reg->at;
-	high = reg->at + reg->length;
-	cur  = low;
+	UgPair* end;
 
 	if (reg->sorted == FALSE) {
-		for (; low < high; low++) {
-			if (strcmp (low->key, key) == 0) {
+		cur = reg->at;
+		end = reg->at + reg->length;
+		for (; cur < end; cur++) {
+			if (strcmp(cur->key, key) == 0) {
 				if (inserted_index)
-					inserted_index[0] = low - reg->at;
-				return low;
+					inserted_index[0] = cur - reg->at;
+				return cur;
 			}
 		}
 		return NULL;
 	}
 
-	while (low < high) {
-		cur = low + (high - low) / 2;
-
-		diff = strcmp (cur->key, key);
-		if (diff == 0) {
-			if (inserted_index)
-				inserted_index[0] = cur - reg->at;
-			return cur;
-		}
-		else if (diff > 0)
-			high = cur;
-		else if (diff < 0)
-			low = cur + 1;
-	}
-
-	if (inserted_index) {
-		if (cur < low)
-			cur++;
-		*inserted_index = cur - reg->at;
-	}
-	return NULL;
+	return ug_array_find_sorted(reg, &key,
+	                            ug_array_compare_string,
+	                            inserted_index);
 }
 
-static int  compare_key_string (UgPair* pair1, UgPair* pair2)
+void  ug_registry_sort(UgRegistry* reg)
 {
-	return strcmp (pair1->key, pair2->key);
-}
-
-void  ug_registry_sort (UgRegistry* reg)
-{
-	ug_array_sort (reg, (UgCompareFunc) compare_key_string);
+	ug_array_sort(reg, ug_array_compare_string);
 	reg->sorted = TRUE;
 }

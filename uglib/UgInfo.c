@@ -56,13 +56,13 @@ void  ug_info_set_registry(UgRegistry* registry)
 // ----------------------------------------------------------------------------
 // UgInfo
 
-void  ug_info_init(UgInfo* info, int allocated_len, int cache_len)
+void  ug_info_init(UgInfo* info, int allocated_len, int cache_length)
 {
 	int     index;
 
-	ug_array_init(info, sizeof(UgPair), allocated_len + cache_len);
-	info->length = cache_len;
-	info->cache_len = cache_len;
+	ug_array_init(info, sizeof(UgPair), allocated_len + cache_length);
+	info->length       = cache_length;
+	info->cache_length = cache_length;
 
 	// clear cache
 	for (index = 0;  index < info->length;  index++) {
@@ -86,38 +86,26 @@ void  ug_info_final(UgInfo* info)
 	ug_array_clear(info);
 }
 
-UgPair* ug_info_find(UgInfo* info, const UgDataInfo* key, int* inserted_index)
+UgPair* ug_info_find(UgInfo* info, const UgDataInfo* key, int* index)
 {
-	UgPair*   low;
+	UgPair*   end;
 	UgPair*   cur;
-	UgPair*   high;
-	const UgDataInfo* cur_key;
 
-	for (cur = info->at, low = cur + info->cache_len;  cur < low;  cur++) {
+	// find key in cache space
+	for (cur = info->at, end = cur + info->cache_length;  cur < end;  cur++) {
 		if (cur->key == key)
 			return cur;
 	}
 
-	high = info->at + info->length;
-	while (low < high) {
-//		cur = low + ((high - low) / 2);
-		cur = low + ((high - low) >> 1);
-		cur_key = cur->key;
-
-		if (cur_key == key)
-			return cur;
-		else if (cur_key > key)
-			high = cur;
-		else if (cur_key < key)
-			low = cur + 1;
-	}
-
-	if (inserted_index) {
-		if (cur < low)
-			cur++;
-		*inserted_index = cur - info->at;
-	}
-	return NULL;
+	// find key without cache space
+	info->at     += info->cache_length;
+    info->length -= info->cache_length;
+    cur = ug_array_find_sorted(info, &key, ug_array_compare_pointer, index);
+	info->at     -= info->cache_length;
+    info->length += info->cache_length;
+	if (index)
+		index[0] += info->cache_length;
+	return cur;
 }
 
 void*  ug_info_realloc(UgInfo* info, const UgDataInfo* key)
@@ -127,10 +115,7 @@ void*  ug_info_realloc(UgInfo* info, const UgDataInfo* key)
 
 	cur = ug_info_find(info, key, &index);
 	if (cur == NULL) {
-		ug_array_alloc(info, 1);
-		memmove(info->at + index + 1, info->at + index,
-				sizeof(UgPair) * (info->length - index - 1));
-		cur = info->at + index;
+		cur = ug_array_insert(info, index, 1);
 		cur->key = (void*) key;
 		cur->data = ug_data_new(key);
 	}
@@ -214,8 +199,8 @@ static UgJsonError ug_json_parse_info_reg(UgJson* json,
 
 // JSON parser for UgInfo.
 UgJsonError ug_json_parse_info(UgJson* json,
-                                const char* name, const char* value,
-                                void* info, void* none)
+                               const char* name, const char* value,
+                               void* info, void* none)
 {
 	// UgInfo's type is UG_JSON_OBJECT
 	if (json->type != UG_JSON_OBJECT) {

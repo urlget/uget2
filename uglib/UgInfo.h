@@ -70,8 +70,8 @@ void    ug_info_assign(UgInfo* info, UgInfo* src, const UgDataInfo* exclude);
 // JSON parser that used with UG_ENTRY_CUSTOM.
 // if (UgRegistry*)registry == NULL, use default registry.
 UgJsonError ug_json_parse_info(UgJson* json,
-                                const char* name, const char* value,
-                                void* info, void* registry);
+                               const char* name, const char* value,
+                               void* info, void* registry);
 // JSON writer that used with UG_ENTRY_CUSTOM.
 void        ug_json_write_info(UgJson* json, const UgInfo* info);
 
@@ -99,16 +99,16 @@ struct UgInfo
 //	int     allocated;
 //	int     element_size;
 
-	int     cache_len;
+	int     cache_length;
 
 #ifdef __cplusplus
 	// C++11 standard-layout
 	inline UgInfo(void) {}
-	inline UgInfo(int allocated_len, int cache_len)
-		{ ug_info_init(this, allocated_len, cache_len); }
+	inline UgInfo(int allocated_len, int cache_length)
+		{ ug_info_init(this, allocated_len, cache_length); }
 
-	inline void  init(int allocated_len, int cache_len)
-		{ ug_info_init(this, allocated_len, cache_len); }
+	inline void  init(int allocated_len, int cache_length)
+		{ ug_info_init(this, allocated_len, cache_length); }
 	inline void  final(void)
 		{ ug_info_final(this); }
 
