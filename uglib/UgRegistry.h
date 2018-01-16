@@ -59,17 +59,6 @@ struct UgPair
 // ----------------------------------------------------------------------------
 // UgRegistry : store info and it's name. It search info by name.
 
-struct UgRegistry
-{
-	UG_ARRAY_MEMBERS(UgPair);
-//	UgPair**  at;
-//	int       length;
-//	int       allocated;
-//	int       element_size;
-
-	int       sorted;
-};
-
 void	ug_registry_init(UgRegistry* reg);
 void	ug_registry_final(UgRegistry* reg);
 
@@ -79,10 +68,34 @@ UgPair* ug_registry_find(UgRegistry* reg, const char* key, int* index);
 
 void    ug_registry_sort(UgRegistry* reg);
 
-
 #ifdef __cplusplus
 }
 #endif
+
+struct UgRegistry
+{
+	UG_ARRAY_MEMBERS(UgPair);
+//	UgPair**  at;
+//	int       length;
+//	int       allocated;
+//	int       element_size;
+
+	int       sorted;
+
+#ifdef __cplusplus
+	inline void  init(void)
+		{ ug_registry_init(this); }
+	inline void  final(void)
+		{ ug_registry_final(this); }
+
+	inline void  add(const UgDataInfo* info)
+		{ ug_registry_add(this, info); }
+	inline void  remove(const UgDataInfo* info)
+		{ ug_registry_remove(this, info); }
+	inline UgPair* find(const char* info, int* index = NULL)
+		{ return ug_registry_find(this, info, index); }
+#endif  // __cplusplus
+};
 
 // ----------------------------------------------------------------------------
 // C++11 standard-layout

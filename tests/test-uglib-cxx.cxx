@@ -180,7 +180,7 @@ struct UgCxxData : public Ug::DataMethod
 Ug::DataInfo UgCxxInfo =
 {
 	"UgCxxData",
-	sizeof (UgCxxData),
+	sizeof(UgCxxData),
 	(UgEntry*)     NULL,
 	(UgInitFunc)   NULL,
 	(UgFinalFunc)  NULL,
@@ -221,6 +221,24 @@ void test_info_cxx(void)
 }
 
 // ----------------------------------------------------------------------------
+// test Ug::Registry
+
+void test_registry_cxx(void)
+{
+	Ug::Registry  registry;
+	Ug::Pair*     pair;
+
+	cout << endl << "--- Ug::Registry testing..." << endl;
+
+	registry.init();
+	registry.add(&UgCxxInfo);
+//	registry.remove(&UgCxxInfo);
+	pair = registry.find("UgCxxData");
+	cout << "pair->key = " << (char*)pair->key << endl;
+	registry.final();
+}
+
+// ----------------------------------------------------------------------------
 // main
 
 int   main (void)
@@ -233,6 +251,7 @@ int   main (void)
 	test_node_cxx();
 	test_data_cxx();
 	test_info_cxx();
+	test_registry_cxx();
 
 	return 0;
 }
