@@ -87,6 +87,8 @@ void test_array_cxx(void)
 	int*  pint;
 	int   value = 102;
 
+	cout << endl << "--- Ug::Array testing..." << endl;
+
 	array.init(128);
 	pint = array.alloc(4);
 	pint[0] = 100;
@@ -108,11 +110,11 @@ void test_array_cxx(void)
 		     << " index = " << index << endl;
 	}
 
-	cout << endl << "--- dump array ---" << endl;
+	cout << endl << "dump array ---" << endl;
 	for(index = 0;  index < array.length;  index++)
 		cout << "array.at[" << index << "] = " << array.at[index] << endl;
 
-//	array.final();
+	array.clear();
 }
 
 // ----------------------------------------------------------------------------

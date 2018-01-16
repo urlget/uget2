@@ -68,9 +68,9 @@ typedef UG_ARRAY(unsigned int)  UgArrayUint;
 typedef UG_ARRAY(int64_t)       UgArrayInt64;
 typedef UG_ARRAY(double)        UgArrayDouble;
 
-void	ug_array_init(void* array, int element_size, int allocated_len);
-void	ug_array_clear(void* array);
-void*	ug_array_alloc(void* array, int nElements);
+void    ug_array_init(void* array, int element_size, int allocated_len);
+void    ug_array_clear(void* array);
+void*   ug_array_alloc(void* array, int nElements);
 void    ug_array_foreach(void* array, UgForeachFunc func, void* data);
 void    ug_array_foreach_ptr(void* array, UgForeachFunc func, void* data);
 
@@ -80,29 +80,28 @@ void*   ug_array_find_sorted(void* array, const void* key,
 
 #define ug_array_foreach_str    ug_array_foreach_ptr
 
-#define ug_array_count(array, length) \
+#define ug_array_count(array, length)  \
 		( ((UgArrayChar*)(array))->element_size * (length) )
 
-#define ug_array_addr(array, index) \
+#define ug_array_addr(array, index)  \
 		( ((UgArrayChar*)(array))->at + ((UgArrayChar*)(array))->element_size * (index) )
 
-#define ug_array_length(array) \
+#define ug_array_length(array)  \
 		( ((UgArrayChar*)(array))->length )
 
 // Binary search:
 // int compareFunc(const void *s1, const void *s2);
-#define	ug_array_bsearch(array, key, compareFunc)	\
+#define	ug_array_bsearch(array, key, compareFunc)  \
 		bsearch(key, (array)->at, (array)->length, (array)->element_size, compareFunc)
 
-#define	ug_array_append(array, values, len)	\
+#define	ug_array_append(array, values, len)  \
 		memcpy(ug_array_alloc((array), len), values, ((UgArrayChar*)(array))->element_size * len)
 
-#define	ug_array_terminate0(array)	\
+#define	ug_array_terminate0(array)  \
 		memset(ug_array_alloc((array), 1), 0, ((UgArrayChar*)(array))->element_size)
 
-#define	ug_array_end0(array)	\
+#define	ug_array_end0(array)  \
 		*((char*) ug_array_alloc((array), 1)) = 0
-
 
 int  ug_array_compare_int(const void *s1, const void *s2);
 int  ug_array_compare_string(const void *s1, const void *s2);
@@ -115,7 +114,7 @@ UgJsonError ug_json_parse_array_bool(UgJson* json,
                                      void* array, void* none);
 UgJsonError ug_json_parse_array_int(UgJson* json,
                                     const char* name, const char* value,
-									void* array, void* none);
+                                    void* array, void* none);
 UgJsonError ug_json_parse_array_uint(UgJson* json,
                                      const char* name, const char* value,
                                      void* array, void* none);
@@ -131,12 +130,12 @@ UgJsonError ug_json_parse_array_string(UgJson* json,
 
 // ----------------------------------------------------------------------------
 // write JSON array elements
-void	ug_json_write_array_bool(UgJson* json, UgArrayInt* array);
-void	ug_json_write_array_int(UgJson* json, UgArrayInt* array);
-void	ug_json_write_array_uint(UgJson* json, UgArrayUint* array);
-void	ug_json_write_array_int64(UgJson* json, UgArrayInt64* array);
-void	ug_json_write_array_double(UgJson* json, UgArrayDouble* array);
-void	ug_json_write_array_string(UgJson* json, UgArrayStr* array);
+void  ug_json_write_array_bool(UgJson* json, UgArrayInt* array);
+void  ug_json_write_array_int(UgJson* json, UgArrayInt* array);
+void  ug_json_write_array_uint(UgJson* json, UgArrayUint* array);
+void  ug_json_write_array_int64(UgJson* json, UgArrayInt64* array);
+void  ug_json_write_array_double(UgJson* json, UgArrayDouble* array);
+void  ug_json_write_array_string(UgJson* json, UgArrayStr* array);
 
 #ifdef __cplusplus
 }
@@ -159,7 +158,7 @@ void* ug_array_insert(void* array, int index, int length)
 	ug_array_alloc(array, length);
 	memmove(ug_array_addr(array, index + length),
 	        addr = ug_array_addr(array, index),
-			ug_array_count(array, ug_array_length(array) - index - 1));
+	        ug_array_count(array, ug_array_length(array) - index - 1));
 	return (void*)addr;
 }
 
@@ -172,7 +171,7 @@ void  ug_array_erase(void* array, int index, int length)
 {
 	memmove(ug_array_addr(array, index),
 	        ug_array_addr(array, index + length),
-			ug_array_count(array, ug_array_length(array) - index - 1));
+	        ug_array_count(array, ug_array_length(array) - index - 1));
 	((UgArrayChar*)array)->length -= length;
 }
 
@@ -208,7 +207,7 @@ template<class Type> struct ArrayMethod
 {
 	inline void  init(int allocated_len)
 		{ ug_array_init(this, sizeof(Type), allocated_len); }
-	inline void  final(void)
+	inline void  clear(void)
 		{ ug_array_clear(this); }
 
 	inline Type* alloc(int nElements)
