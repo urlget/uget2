@@ -85,30 +85,31 @@ void test_json_cxx(void)
 void test_array_cxx(void)
 {
 	Ug::Array<int>  array;
+//	UgArrayInt      array;
 	int   index;
-	int*  pint;
+	int*  intptr;
 	int   value = 102;
 
 	cout << endl << "--- Ug::Array testing..." << endl;
 
 	array.init(128);
-	pint = array.alloc(4);
-	pint[0] = 100;
-	pint[1] = 101;
-	pint[2] = 102;
-	pint[3] = 103;
-	pint = array.insert(2, 2);
+	intptr = array.alloc(4);
+	intptr[0] = 100;
+	intptr[1] = 101;
+	intptr[2] = 102;
+	intptr[3] = 103;
+	intptr = array.insert(2, 2);
 //	ug_array_insert(&array, 2, 2);
-	pint[0] = 104;
-	pint[1] = 105;
+	intptr[0] = 104;
+	intptr[1] = 105;
 
 	array.sort();
 //	ug_array_sort(&array, ug_array_compare_int);
-	pint = array.findSorted(value, &index);
+	intptr = array.findSorted(value, &index);
 	cout << "array.findSorted(" << value << ");" << endl;
-	if (pint) {
+	if (intptr) {
 		cout << "found."
-		     << " value = " << pint[0] << ","
+		     << " value = " << intptr[0] << ","
 		     << " index = " << index << endl;
 	}
 

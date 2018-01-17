@@ -49,24 +49,7 @@ extern "C" {
 #endif
 
 // ----------------------------------------------------------------------------
-// UgArray is a template C array. It used by UgEntry with UG_ENTRY_ARRAY.
-
-#define UG_ARRAY_MEMBERS(Type)  \
-	Type*  at;                  \
-	int    length;              \
-	int    allocated;           \
-	int    element_size
-
-// implement C++ template by C macro
-#define	UG_ARRAY(Type)          struct { UG_ARRAY_MEMBERS(Type); }
-
-typedef UG_ARRAY(char)          UgArrayChar;
-typedef UG_ARRAY(char*)         UgArrayStr;
-typedef UG_ARRAY(void*)         UgArrayPtr;
-typedef UG_ARRAY(int)           UgArrayInt;
-typedef UG_ARRAY(unsigned int)  UgArrayUint;
-typedef UG_ARRAY(int64_t)       UgArrayInt64;
-typedef UG_ARRAY(double)        UgArrayDouble;
+// UgArray functions
 
 void    ug_array_init(void* array, int element_size, int allocated_len);
 void    ug_array_clear(void* array);
@@ -107,39 +90,115 @@ int  ug_array_compare_int(const void *s1, const void *s2);
 int  ug_array_compare_string(const void *s1, const void *s2);
 int  ug_array_compare_pointer(const void *s1, const void *s2);
 
-// ----------------------------------------------------------------------------
-// UgJsonParseFunc for JSON array elements
-UgJsonError ug_json_parse_array_bool(UgJson* json,
-                                     const char* name, const char* value,
-                                     void* array, void* none);
-UgJsonError ug_json_parse_array_int(UgJson* json,
-                                    const char* name, const char* value,
-                                    void* array, void* none);
-UgJsonError ug_json_parse_array_uint(UgJson* json,
-                                     const char* name, const char* value,
-                                     void* array, void* none);
-UgJsonError ug_json_parse_array_int64(UgJson* json,
-                                      const char* name, const char* value,
-                                      void* array, void* none);
-UgJsonError ug_json_parse_array_double(UgJson* json,
-                                       const char* name, const char* value,
-                                       void* array, void* none);
-UgJsonError ug_json_parse_array_string(UgJson* json,
-                                       const char* name, const char* value,
-                                       void* array, void* none);
-
-// ----------------------------------------------------------------------------
-// write JSON array elements
-void  ug_json_write_array_bool(UgJson* json, UgArrayInt* array);
-void  ug_json_write_array_int(UgJson* json, UgArrayInt* array);
-void  ug_json_write_array_uint(UgJson* json, UgArrayUint* array);
-void  ug_json_write_array_int64(UgJson* json, UgArrayInt64* array);
-void  ug_json_write_array_double(UgJson* json, UgArrayDouble* array);
-void  ug_json_write_array_string(UgJson* json, UgArrayStr* array);
-
 #ifdef __cplusplus
 }
 #endif
+
+// ----------------------------------------------------------------------------
+// UgArrayMethod : a template C++ struct is used by UgArray and it's children.
+
+#ifdef __cplusplus
+
+// These definitions are used by UgArrayMethod
+inline void* ug_array_insert(void* array, int index, int length);
+inline void  ug_array_erase(void* array, int index, int length);
+inline void  ug_array_sort(void* array, UgCompareFunc func);
+
+// This one is for derived use only, no data members here.
+// This one is NOT for directly use only, it must has UgArray data members.
+// Your derived struct/class must be C++11 standard-layout.
+template<class Type> struct UgArrayMethod
+{
+	inline void  init(int allocated_len)
+		{ ug_array_init(this, sizeof(Type), allocated_len); }
+	inline void  clear(void)
+		{ ug_array_clear(this); }
+
+	inline Type* alloc(int nElements)
+		{ return (Type*) ug_array_alloc(this, nElements); }
+	inline Type* erase(int index, int nElements)
+		{ return (Type*) ug_array_erase(this, index, nElements); }
+	inline Type* insert(int index, int nElements)
+		{ return (Type*) ug_array_insert(this, index, nElements); }
+
+	inline void  sort(UgCompareFunc func)
+		{ ug_array_sort(this, func); }
+	inline Type* findSorted(const Type* key, UgCompareFunc func, int* index)
+		{ return (Type*) ug_array_find_sorted(this, key, func, index); }
+	inline Type* findSorted(const Type& key, UgCompareFunc func, int* index)
+		{ return (Type*) ug_array_find_sorted(this, &key, func, index); }
+
+	// for specialization
+	void  sort();
+	Type* findSorted(Type  key, int* index);
+};
+
+// template specialization
+template<> inline void UgArrayMethod<int>::sort()
+{
+	ug_array_sort(this, ug_array_compare_int);
+};
+
+template<> inline int* UgArrayMethod<int>::findSorted(int key, int* index)
+{
+	int value = key;
+	return (int*) ug_array_find_sorted(this, &value, ug_array_compare_int, index);
+};
+
+template<> inline void UgArrayMethod<char*>::sort()
+{
+	ug_array_sort(this, ug_array_compare_string);
+};
+
+template<> inline char** UgArrayMethod<char*>::findSorted(char* key, int* index)
+{
+	return (char**) ug_array_find_sorted(this, &key, ug_array_compare_string, index);
+};
+
+template<> inline void UgArrayMethod<void*>::sort()
+{
+	ug_array_sort(this, ug_array_compare_pointer);
+};
+
+template<> inline void** UgArrayMethod<void*>::findSorted(void* key, int* index)
+{
+	return (void**) ug_array_find_sorted(this, &key, ug_array_compare_pointer, index);
+};
+#endif // __cplusplus
+
+// ----------------------------------------------------------------------------
+// UgArray is a template array. It used by UgEntry with UG_ENTRY_ARRAY.
+
+#define UG_ARRAY_MEMBERS(Type)  \
+	Type*  at;                  \
+	int    length;              \
+	int    allocated;           \
+	int    element_size
+
+#ifdef __cplusplus
+// C++ template works with C macro
+template<class Type>
+struct UgArray : UgArrayMethod<Type>
+{
+	UG_ARRAY_MEMBERS(Type);
+//	Type*  at;
+//	int    length;
+//	int    allocated;
+//	int    element_size;
+};
+#define	UG_ARRAY(Type)          struct UgArray<Type>
+#else
+// implement C++ template by C macro
+#define	UG_ARRAY(Type)          struct { UG_ARRAY_MEMBERS(Type); }
+#endif  // __cplusplus
+
+typedef UG_ARRAY(char)          UgArrayChar;
+typedef UG_ARRAY(char*)         UgArrayStr;
+typedef UG_ARRAY(void*)         UgArrayPtr;
+typedef UG_ARRAY(int)           UgArrayInt;
+typedef UG_ARRAY(unsigned int)  UgArrayUint;
+typedef UG_ARRAY(int64_t)       UgArrayInt64;
+typedef UG_ARRAY(double)        UgArrayDouble;
 
 // ----------------------------------------------------------------------------
 // C/C++ inline function
@@ -195,85 +254,50 @@ void    ug_array_sort(void* array, UgCompareFunc func);  // Quick sort
 #endif  // __STDC_VERSION__ || __cplusplus
 
 // ----------------------------------------------------------------------------
+// UgJsonParseFunc for JSON array elements
+UgJsonError ug_json_parse_array_bool(UgJson* json,
+                                     const char* name, const char* value,
+                                     void* array, void* none);
+UgJsonError ug_json_parse_array_int(UgJson* json,
+                                    const char* name, const char* value,
+                                    void* array, void* none);
+UgJsonError ug_json_parse_array_uint(UgJson* json,
+                                     const char* name, const char* value,
+                                     void* array, void* none);
+UgJsonError ug_json_parse_array_int64(UgJson* json,
+                                      const char* name, const char* value,
+                                      void* array, void* none);
+UgJsonError ug_json_parse_array_double(UgJson* json,
+                                       const char* name, const char* value,
+                                       void* array, void* none);
+UgJsonError ug_json_parse_array_string(UgJson* json,
+                                       const char* name, const char* value,
+                                       void* array, void* none);
+
+// ----------------------------------------------------------------------------
+// write JSON array elements
+void  ug_json_write_array_bool(UgJson* json, UgArrayInt* array);
+void  ug_json_write_array_int(UgJson* json, UgArrayInt* array);
+void  ug_json_write_array_uint(UgJson* json, UgArrayUint* array);
+void  ug_json_write_array_int64(UgJson* json, UgArrayInt64* array);
+void  ug_json_write_array_double(UgJson* json, UgArrayDouble* array);
+void  ug_json_write_array_string(UgJson* json, UgArrayStr* array);
+
+// ----------------------------------------------------------------------------
 // C++11 standard-layout
 
 #ifdef __cplusplus
 
 namespace Ug
 {
-// This one is for derived use only. No data members here.
-// Your derived struct/class must be C++11 standard-layout
-template<class Type> struct ArrayMethod
+// Your derived struct/class must be C++11 standard-layout.
+template<class Type> struct ArrayMethod : UgArrayMethod<Type> {};
+template<class Type> struct Array       : UgArray<Type>
 {
-	inline void  init(int allocated_len)
-		{ ug_array_init(this, sizeof(Type), allocated_len); }
-	inline void  clear(void)
-		{ ug_array_clear(this); }
-
-	inline Type* alloc(int nElements)
-		{ return (Type*) ug_array_alloc(this, nElements); }
-	inline Type* erase(int index, int nElements)
-		{ return (Type*) ug_array_erase(this, index, nElements); }
-	inline Type* insert(int index, int nElements)
-		{ return (Type*) ug_array_insert(this, index, nElements); }
-
-	inline void  sort(UgCompareFunc func)
-		{ ug_array_sort(this, func); }
-	inline Type* findSorted(const Type* key, UgCompareFunc func, int* index)
-		{ return (Type*) ug_array_find_sorted(this, key, func, index); }
-	inline Type* findSorted(const Type& key, UgCompareFunc func, int* index)
-		{ return (Type*) ug_array_find_sorted(this, &key, func, index); }
-
-	// for specialization
-	void  sort();
-	Type* findSorted(Type  key, int* index);
-};
-
-// template specialization
-template<> inline void ArrayMethod<int>::sort()
-{
-	ug_array_sort(this, ug_array_compare_int);
-};
-
-template<> inline int* ArrayMethod<int>::findSorted(int key, int* index)
-{
-	int value = key;
-	return (int*) ug_array_find_sorted(this, &value, ug_array_compare_int, index);
-};
-
-template<> inline void ArrayMethod<char*>::sort()
-{
-	ug_array_sort(this, ug_array_compare_string);
-};
-
-template<> inline char** ArrayMethod<char*>::findSorted(char* key, int* index)
-{
-	return (char**) ug_array_find_sorted(this, &key, ug_array_compare_string, index);
-};
-
-template<> inline void ArrayMethod<void*>::sort()
-{
-	ug_array_sort(this, ug_array_compare_pointer);
-};
-
-template<> inline void** ArrayMethod<void*>::findSorted(void* key, int* index)
-{
-	return (void**) ug_array_find_sorted(this, &key, ug_array_compare_pointer, index);
-};
-
-// This one is for directly use only. You can NOT derived it.
-template<class Type> struct Array : ArrayMethod<Type>
-{
-	UG_ARRAY_MEMBERS(Type);
-//	Type*  at;
-//	int    length;
-//	int    allocated;
-//	int    element_size;
-
-	inline Array<Type>(int allocated_len = 0)
-		{ ug_array_init(this, sizeof(Type), allocated_len); }
-	inline ~Array<Type>(void)
-		{ ug_array_clear(this); }
+//	inline Array<Type>(int allocated_len = 0)
+//		{ ug_array_init(this, sizeof(Type), allocated_len); }
+//	inline ~Array<Type>(void)
+//		{ ug_array_clear(this); }
 };
 
 };  // namespace Ug
