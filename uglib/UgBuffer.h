@@ -43,6 +43,9 @@
 extern "C" {
 #endif
 
+// ----------------------------------------------------------------------------
+// UgBuffer functions
+
 typedef struct UgBuffer       UgBuffer;
 typedef int  (*UgBufferFunc) (UgBuffer* buffer);
 
@@ -73,6 +76,14 @@ void  ug_buffer_write_data(UgBuffer* buffer, const char* binary, int length);
 #ifdef __cplusplus
 }
 #endif
+
+// This definition is used by UgBuffer::write(char ch)
+#ifdef __cplusplus
+inline void  ug_buffer_write_char(UgBuffer* buffer, char ch);
+#endif
+
+// ----------------------------------------------------------------------------
+// UgBuffer
 
 struct UgBuffer
 {
@@ -110,17 +121,10 @@ struct UgBuffer
 	// return number of bytes written
 	inline int   write(const char* string, int length = -1)
 		{ return ug_buffer_write(this, string, length); }
+	inline void  write(char ch)
+		{ ug_buffer_write_char(this, ch); }
 	inline void  writeData(const char* binary, int length)
 		{ ug_buffer_write_data(this, binary, length); }
-
-	// call ug_buffer_write_char()
-	inline void  write(char ch)
-	{
-//		ug_buffer_write_char(this, ch);
-		if (this->cur >= this->end)
-			this->more(this);
-		*this->cur++ = (char)(ch);
-	}
 #endif  // __cplusplus
 };
 
