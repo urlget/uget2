@@ -209,12 +209,13 @@ static const UgEntry  UgetFilesElementEntry[] =
 
 static void ug_json_write_files_array(UgJson* json, UgetFilesArray* array)
 {
+	UgetFilesElement* element;
 	int  index;
 
 	for (index = 0;  index < array->length;  index++) {
+		element = array->at + index;
 		ug_json_write_object_head(json);
-		ug_json_write_string(json, array->at[index].name);
-		ug_json_write_uint(json, array->at[index].attr);
+		ug_json_write_entry(json, element, UgetFilesElementEntry);
 		ug_json_write_object_tail(json);
 	}
 }

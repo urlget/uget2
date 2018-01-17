@@ -42,6 +42,7 @@
 #include <UgString.h>
 #include <UgData.h>
 #include <UgetFiles.h>
+#include <UgJson.h>
 //#include <UgetPlugin.h>
 
 #include <UgetA2cf.h>
@@ -479,6 +480,49 @@ void test_seq (void)
 // ----------------------------------------------------------------------------
 // UgetFiles
 
+void test_files_json(UgetFiles* files)
+{
+	UgJson      json;
+	UgBuffer    buffer;
+	UgJsonError	code;
+	UgetFiles*  files2;
+
+	ug_json_init(&json);
+	ug_buffer_init(&buffer, 4096);
+
+	// write
+	ug_json_begin_write(&json, UG_JSON_FORMAT_INDENT, &buffer);
+	ug_json_write_object_head(&json);
+    ug_json_write_entry(&json, files, files->info->entry);
+	ug_json_write_object_tail(&json);
+	ug_json_end_write(&json);
+	ug_buffer_write_char(&buffer, '\0');
+	puts("\n--- print files ---");
+	puts(buffer.beg);
+
+	files2 = ug_data_new(UgetFilesInfo);
+	// parse
+	ug_json_begin_parse(&json);
+	ug_json_push(&json, ug_json_parse_entry, files2, (void*)files2->info->entry);
+	ug_json_push(&json, ug_json_parse_object, NULL, NULL);
+	code = ug_json_parse(&json, buffer.beg, -1);
+	ug_json_end_parse(&json);
+
+	// write
+	buffer.cur = buffer.beg;
+	ug_json_begin_write(&json, UG_JSON_FORMAT_INDENT, &buffer);
+    ug_json_write_entry(&json, files2, files2->info->entry);
+	ug_json_end_write(&json);
+	ug_buffer_write_char(&buffer, '\0');
+	puts("\n--- print files2 ---");
+	puts(buffer.beg);
+
+	ug_data_free(files2);
+
+	ug_buffer_clear(&buffer, TRUE);
+	ug_json_final(&json);
+}
+
 void test_files(void)
 {
 	UgetFiles* files;
@@ -513,6 +557,8 @@ void test_files(void)
 	element = uget_files_realloc(src, "xxx.apk");
 	element->name = ug_strdup("xxx.apk");
 	element->attr = UGET_FILES_FILE;
+
+	test_files_json(files);
 
 	uget_files_sync(files, src);
 	diff = uget_files_compare(files, src);
