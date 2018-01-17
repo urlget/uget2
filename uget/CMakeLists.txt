@@ -18,6 +18,7 @@ add_library( uget
              UgetRpc.c
              UgetOption.c
              UgetData.c
+			 UgetFiles.c
              UgetNode.c
              UgetNode-compare.c
              UgetTask.c

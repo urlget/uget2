@@ -68,6 +68,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../uget/UgetEvent.h" />
+		<Unit filename="../../uget/UgetFiles.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../uget/UgetFiles.h" />
 		<Unit filename="../../uget/UgetHash.c">
 			<Option compilerVar="CC" />
 		</Unit>

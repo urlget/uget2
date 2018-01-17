@@ -38,6 +38,10 @@
 #include <string.h>
 #include <UgArray.h>
 #include <UgetNode.h>
+
+#include <UgString.h>
+#include <UgData.h>
+#include <UgetFiles.h>
 //#include <UgetPlugin.h>
 
 #include <UgetA2cf.h>
@@ -473,6 +477,54 @@ void test_seq (void)
 }
 
 // ----------------------------------------------------------------------------
+// UgetFiles
+
+void test_files(void)
+{
+	UgetFiles* files;
+	UgetFiles* src;
+	UgetFilesElement* element;
+	int  diff;
+
+	files = ug_data_new(UgetFilesInfo);
+	src = ug_data_new(UgetFilesInfo);
+
+	element = ug_array_alloc(&files->source, 3);
+	element[0].name = ug_strdup("0.mp4");
+	element[1].name = ug_strdup("1.mp4");
+	element[2].name = ug_strdup("2.mp4");
+	element = ug_array_alloc(&src->source, 3);
+	element[0].name = ug_strdup("0.mp4");
+	element[1].name = ug_strdup("1.mp4");
+	element[2].name = ug_strdup("2.mp4");
+
+	diff = uget_files_compare(files, src);
+	printf("\n diff=%d \n", diff);
+
+	element = ug_array_alloc(&src->source, 1);
+	element[0].name = ug_strdup("3.mp4");
+
+	diff = uget_files_compare(files, src);
+	printf("\n diff=%d \n", diff);
+
+	element = uget_files_realloc(src, "foo.mp4");
+	element->name = ug_strdup("foo.mp4");
+	element->attr = UGET_FILES_FILE;
+	element = uget_files_realloc(src, "xxx.apk");
+	element->name = ug_strdup("xxx.apk");
+	element->attr = UGET_FILES_FILE;
+
+	uget_files_sync(files, src);
+	diff = uget_files_compare(files, src);
+
+	element->attr |= UGET_FILES_DELETED;
+	uget_files_sync(files, src);
+
+	ug_data_free(files);
+	ug_data_free(src);
+}
+
+// ----------------------------------------------------------------------------
 // main
 
 int main (void)
@@ -484,7 +536,8 @@ int main (void)
 //	test_uget_curl ();
 //	test_uget_rss ();
 //	test_media ();
-	test_seq ();
+//	test_seq ();
+	test_files();
 
 	return 0;
 }

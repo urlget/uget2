@@ -16,6 +16,7 @@ libuget_a_SOURCES = \
 	UgetRpc.c     \
 	UgetOption.c  \
 	UgetData.c    \
+	UgetFiles.c   \
 	UgetNode.c    \
 	UgetNode-compare.c  \
 	UgetTask.c    \
@@ -42,6 +43,7 @@ noinst_HEADERS = \
 	UgetRpc.h     \
 	UgetOption.h  \
 	UgetData.h    \
+	UgetFiles.h   \
 	UgetNode.h    \
 	UgetTask.h    \
 	UgetHash.h    \
