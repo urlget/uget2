@@ -50,59 +50,50 @@ extern "C" {
 // parse and write JSON number as JSON string
 
 // below 4 functions can parse JSON number and JSON string.
-UgJsonError  ug_json_parse_int_string (UgJson* json,
+UgJsonError  ug_json_parse_int_string(UgJson* json,
+                                      const char* name, const char* value,
+                                      void* dest, void* data);
+UgJsonError  ug_json_parse_uint_string(UgJson* json,
                                        const char* name, const char* value,
                                        void* dest, void* data);
-UgJsonError  ug_json_parse_uint_string (UgJson* json,
+UgJsonError  ug_json_parse_int64_string(UgJson* json,
                                         const char* name, const char* value,
                                         void* dest, void* data);
-UgJsonError  ug_json_parse_int64_string (UgJson* json,
+UgJsonError  ug_json_parse_double_string(UgJson* json,
                                          const char* name, const char* value,
                                          void* dest, void* data);
-UgJsonError  ug_json_parse_double_string (UgJson* json,
-                                          const char* name, const char* value,
-                                          void* dest, void* data);
 
-void  ug_json_write_int_string (UgJson* json, int* value);
-void  ug_json_write_uint_string (UgJson* json, unsigned int* value);
-void  ug_json_write_int64_string (UgJson* json, int64_t* value);
-void  ug_json_write_double_string (UgJson* json, double* value);
+void  ug_json_write_int_string(UgJson* json, int* value);
+void  ug_json_write_uint_string(UgJson* json, unsigned int* value);
+void  ug_json_write_int64_string(UgJson* json, int64_t* value);
+void  ug_json_write_double_string(UgJson* json, double* value);
 
 // ----------------------------------------------------------------------------
 // parse string "true" and "false" to integer (boolean).
 // write integer (boolean) to string "true" and "false".
-UgJsonError  ug_json_parse_bool_string (UgJson* json,
-                                        const char* name, const char* value,
-                                        void* dest, void* data);
-void  ug_json_write_bool_string (UgJson* json, int* value);
+UgJsonError  ug_json_parse_bool_string(UgJson* json,
+                                       const char* name, const char* value,
+                                       void* dest, void* data);
+void  ug_json_write_bool_string(UgJson* json, int* value);
 
 // ----------------------------------------------------------------------------
 // UgJsonParseFunc and UgJsonWriteFunc for time_t
 
-UgJsonError ug_json_parse_time_t (UgJson* json,
-                                  const char* name, const char* value,
-                                  void* dest, void* none);
-void  ug_json_write_time_t (UgJson* json, void* src);
+UgJsonError ug_json_parse_time_t(UgJson* json,
+                                 const char* name, const char* value,
+                                 void* dest, void* none);
+void  ug_json_write_time_t(UgJson* json, void* src);
 
 // ----------------------------------------------------------------------------
 // UgJson parse by UgValue: convert UgValue to UgEntry
 // e.g.
-// ug_json_begin_parse (json);
-// ug_json_push (json, ug_json_parse_entry, entry, dest, data);
-// ug_json_parse_by_value (json, value);
-// ug_json_end_parse (json);
+// ug_json_begin_parse(json);
+// ug_json_push(json, ug_json_parse_entry, dest, entry);
+// ug_json_parse_by_value(json, value);
+// ug_json_end_parse(json);
 
-void  ug_json_parse_by_value (UgJson* json, UgValue* value);
+void  ug_json_parse_by_value(UgJson* json, UgValue* value);
 
-// ----------------------------------------------------------------------------
-// UgValue use UgValueCustom and UgEntry
-
-#ifdef HAVE_UG_VALUE_CUSTOM
-
-void  ug_value_init_custom_entry (UgValue* value, void* data,
-                                  const UgEntry* entry);
-
-#endif  // HAVE_UG_VALUE_CUSTOM
 
 #ifdef __cplusplus
 }

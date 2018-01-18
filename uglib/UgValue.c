@@ -45,60 +45,55 @@
 #define strtoull    _strtoui64
 #endif
 
-static UgValueArray*  ug_value_array_new (int preAllocate);
-static void           ug_value_array_free (UgValueArray* varray);
+static UgValueArray*  ug_value_array_new(int preAllocate);
+static void           ug_value_array_free(UgValueArray* varray);
 #define ug_value_object_new     ug_value_array_new
 #define ug_value_object_free    ug_value_array_free
 
 // ----------------------------------------------------------------------------
 // UgValue
 
-void  ug_value_init (UgValue* value)
+void  ug_value_init(UgValue* value)
 {
 	value->type = UG_VALUE_NONE;
 	value->name = NULL;
 }
 
-void  ug_value_clear (UgValue* value)
+void  ug_value_clear(UgValue* value)
 {
 	switch (value->type) {
 	case UG_VALUE_STRING:
-		ug_free (value->c.string);
+		ug_free(value->c.string);
 		break;
 
 	case UG_VALUE_OBJECT:
 	case UG_VALUE_ARRAY:
-		ug_value_array_free (value->c.array);
+		ug_value_array_free(value->c.array);
 		break;
-
-#ifdef HAVE_UG_VALUE_CUSTOM
-	case UG_VALUE_CUSTOM:
-		ug_value_custom_free (value->c.custom);
-#endif
 
 	default:
 		break;
 	}
-	ug_free (value->name);
+	ug_free(value->name);
 	value->name = NULL;
 	value->type = UG_VALUE_NONE;
 }
 
-void  ug_value_init_array (UgValue* value, int nElements)
+void  ug_value_init_array(UgValue* value, int nElements)
 {
 	value->type = UG_VALUE_ARRAY;
 	value->name = NULL;
-	value->c.array = ug_value_array_new (nElements);
+	value->c.array = ug_value_array_new(nElements);
 }
 
-void  ug_value_init_object (UgValue* value, int nMembers)
+void  ug_value_init_object(UgValue* value, int nMembers)
 {
 	value->type = UG_VALUE_OBJECT;
 	value->name = NULL;
-	value->c.array = ug_value_object_new (nMembers);
+	value->c.array = ug_value_object_new(nMembers);
 }
 
-UgValue* ug_value_alloc (UgValue* uvalue, int nValue)
+UgValue* ug_value_alloc(UgValue* uvalue, int nValue)
 {
 	int       len;
 	UgValue*  value;
@@ -114,8 +109,8 @@ UgValue* ug_value_alloc (UgValue* uvalue, int nValue)
 //		if (len < 16)
 //			len = 16;
 		varray->allocated = len + 1;
-		uvalue->c.array = ug_realloc (varray,
-				sizeof (UgValueArray) + sizeof (UgValue[1]) * len);
+		uvalue->c.array = ug_realloc(varray,
+				sizeof(UgValueArray) + sizeof(UgValue[1]) * len);
 		varray = uvalue->c.array;
 	}
 	len = varray->length;
@@ -133,7 +128,7 @@ UgValue* ug_value_alloc (UgValue* uvalue, int nValue)
 }
 
 #if 0
-UgValue* ug_value_alloc_front (UgValue* uvalue, int nValue)
+UgValue* ug_value_alloc_front(UgValue* uvalue, int nValue)
 {
 	int       len;
 	UgValue*  value;
@@ -149,13 +144,13 @@ UgValue* ug_value_alloc_front (UgValue* uvalue, int nValue)
 //		if (len < 16)
 //			len = 16;
 		varray->allocated = len + 1;
-		uvalue->c.array = ug_realloc (varray,
-				sizeof (UgValueArray) + sizeof (UgValue[1]) * len);
+		uvalue->c.array = ug_realloc(varray,
+				sizeof(UgValueArray) + sizeof(UgValue[1]) * len);
 		varray = uvalue->c.array;
 	}
 
-	memmove (varray->at + nValue, varray->at,
-			sizeof (UgValue) * varray->length);
+	memmove(varray->at + nValue, varray->at,
+			sizeof(UgValue) * varray->length);
 	varray->length += nValue;
 
 	value = varray->at;
@@ -169,71 +164,71 @@ UgValue* ug_value_alloc_front (UgValue* uvalue, int nValue)
 }
 #endif
 
-UgValue* ug_value_find_name (UgValue* value, const char* name)
+UgValue* ug_value_find_name(UgValue* value, const char* name)
 {
 	UgValue  temp;
 
 	if (value->type == UG_VALUE_OBJECT) {
 		temp.name = (char*)name;
-		return bsearch (&temp, value->c.object->at, value->c.object->length,
-				sizeof (UgValue), ug_value_compare_name);
+		return bsearch(&temp, value->c.object->at, value->c.object->length,
+				sizeof(UgValue), ug_value_compare_name);
 	}
 	return NULL;
 }
 
-void  ug_value_sort_recursive (UgValue* value, UgCompareFunc compare)
+void  ug_value_sort_recursive(UgValue* value, UgCompareFunc compare)
 {
 	UgValue* end;
 
 	if (value->type == UG_VALUE_OBJECT) {
-		ug_value_sort (value, compare);
+		ug_value_sort(value, compare);
 		end = value->c.object->at + value->c.object->length;
 		for (value = value->c.object->at;  value < end;  value++)
-			ug_value_sort_recursive (value, compare);
+			ug_value_sort_recursive(value, compare);
 	}
 }
 
-int   ug_value_compare_name (const void* value1, const void* value2)
+int   ug_value_compare_name(const void* value1, const void* value2)
 {
-	return strcmp (((UgValue*)value1)->name, ((UgValue*)value2)->name);
+	return strcmp(((UgValue*)value1)->name, ((UgValue*)value2)->name);
 }
 
-int   ug_value_compare_string (const void* value1, const void* value2)
+int   ug_value_compare_string(const void* value1, const void* value2)
 {
-	return strcmp (((UgValue*)value1)->c.string, ((UgValue*)value2)->c.string);
+	return strcmp(((UgValue*)value1)->c.string, ((UgValue*)value2)->c.string);
 }
 
-void  ug_value_set_name (UgValue* value, void* data)
+void  ug_value_set_name(UgValue* value, void* data)
 {
 	value->name = data;
 }
 
-void  ug_value_set_string (UgValue* value, void* data)
+void  ug_value_set_string(UgValue* value, void* data)
 {
 	if (value->type == UG_VALUE_STRING)
 		value->c.string = data;
 }
 
-void  ug_value_set_name_string (UgValue* value, void* data)
+void  ug_value_set_name_string(UgValue* value, void* data)
 {
 	value->name = data;
 	if (value->type == UG_VALUE_STRING)
 		value->c.string = data;
 }
 
-void  ug_value_foreach (UgValue* value, UgValueForeachFunc func, void* data)
+void  ug_value_foreach(UgValue* value, UgValueForeachFunc func, void* data)
 {
 	UgValue*  end;
 
-	func (value, data);
+	func(value, data);
 	if (value->type >= UG_VALUE_OBJECT) {
 		end = value->c.object->at + value->c.object->length;
 		for (value = value->c.object->at;  value < end;  value++)
-			ug_value_foreach (value, func, data);
+			ug_value_foreach(value, func, data);
 	}
 }
 
-int   ug_value_get_int (UgValue* uvalue)
+int   ug_value_get_int(UgValue* uvalue)
 {
 	switch (uvalue->type) {
 	default:
@@ -253,11 +248,11 @@ int   ug_value_get_int (UgValue* uvalue)
 		return (int) uvalue->c.fraction;
 
 	case UG_VALUE_STRING:
-		return strtol (uvalue->c.string, NULL, 10);
+		return strtol(uvalue->c.string, NULL, 10);
 	}
 }
 
-int64_t ug_value_get_int64 (UgValue* uvalue)
+int64_t ug_value_get_int64(UgValue* uvalue)
 {
 	switch (uvalue->type) {
 	case UG_VALUE_INT:
@@ -277,11 +272,11 @@ int64_t ug_value_get_int64 (UgValue* uvalue)
 		return (int64_t) uvalue->c.fraction;
 
 	case UG_VALUE_STRING:
-		return strtoll (uvalue->c.string, NULL, 10);
+		return strtoll(uvalue->c.string, NULL, 10);
 	}
 }
 
-uint64_t ug_value_get_uint64 (UgValue* uvalue)
+uint64_t ug_value_get_uint64(UgValue* uvalue)
 {
 	switch (uvalue->type) {
 	case UG_VALUE_INT:
@@ -301,32 +296,25 @@ uint64_t ug_value_get_uint64 (UgValue* uvalue)
 		return (uint64_t) uvalue->c.fraction;
 
 	case UG_VALUE_STRING:
-		return strtoull (uvalue->c.string, NULL, 10);
+		return strtoull(uvalue->c.string, NULL, 10);
 	}
 }
 
-static UgJsonError ug_json_parse_value_array (UgJson* json,
+static UgJsonError ug_json_parse_value_array(UgJson* json,
                                        const char* name, const char* value,
                                        void* uvalue, void* none);
 
-UgJsonError ug_json_parse_value (UgJson* json,
-                                 const char* name, const char* value,
-                                 void* data, void* none)
+UgJsonError ug_json_parse_value(UgJson* json,
+                                const char* name, const char* value,
+                                void* data, void* none)
 {
 	UgValue*  uvalue;
 
 	uvalue = data;
 	if (json->scope == UG_JSON_OBJECT)
-		uvalue->name = ug_strdup (name);
+		uvalue->name = ug_strdup(name);
 	else
 		uvalue->name = NULL;
-
-#ifdef HAVE_UG_VALUE_CUSTOM
-	if (uvalue->type == UG_VALUE_CUSTOM) {
-		return uvalue->c.custom->parse (json, name, value,
-				uvalue->c.custom->data, uvalue->c.custom->data2);
-	}
-#endif
 
 	switch (json->type) {
 	case UG_JSON_NULL:
@@ -345,12 +333,12 @@ UgJsonError ug_json_parse_value (UgJson* json,
 		break;
 
 	case UG_JSON_NUMBER:
-		if (strchr (value, '.')) {
+		if (strchr(value, '.')) {
 			uvalue->type = UG_VALUE_DOUBLE;
-			uvalue->c.fraction = strtod (value, NULL);
+			uvalue->c.fraction = strtod(value, NULL);
 		}
 		else if (value[0] == '-') {
-			uvalue->c.integer64 = (int64_t) strtoll (value, NULL, 10);
+			uvalue->c.integer64 = (int64_t) strtoll(value, NULL, 10);
 			if (uvalue->c.integer64 >= INT_MIN) {
 				uvalue->c.integer = (int) uvalue->c.integer64;
 				uvalue->type = UG_VALUE_INT;
@@ -359,7 +347,7 @@ UgJsonError ug_json_parse_value (UgJson* json,
 				uvalue->type = UG_VALUE_INT64;
 		}
 		else {
-			uvalue->c.uinteger64 = (uint64_t) strtoull (value, NULL, 10);
+			uvalue->c.uinteger64 = (uint64_t) strtoull(value, NULL, 10);
 			if (uvalue->c.uinteger64 <= INT_MAX) {
 				uvalue->c.integer = (int) uvalue->c.uinteger64;
 				uvalue->type = UG_VALUE_INT;
@@ -379,19 +367,19 @@ UgJsonError ug_json_parse_value (UgJson* json,
 
 	case UG_JSON_STRING:
 		uvalue->type = UG_VALUE_STRING;
-		uvalue->c.string = ug_strdup (value);
+		uvalue->c.string = ug_strdup(value);
 		break;
 
 	case UG_JSON_OBJECT:
 		uvalue->type = UG_VALUE_OBJECT;
-		uvalue->c.object = ug_value_object_new (8);
-		ug_json_push (json, ug_json_parse_value_array, uvalue, NULL);
+		uvalue->c.object = ug_value_object_new(8);
+		ug_json_push(json, ug_json_parse_value_array, uvalue, NULL);
 		break;
 
 	case UG_JSON_ARRAY:
 		uvalue->type = UG_VALUE_ARRAY;
-		uvalue->c.array = ug_value_array_new (8);
-		ug_json_push (json, ug_json_parse_value_array, uvalue, NULL);
+		uvalue->c.array = ug_value_array_new(8);
+		ug_json_push(json, ug_json_parse_value_array, uvalue, NULL);
 		break;
 
 	default:
@@ -402,65 +390,58 @@ UgJsonError ug_json_parse_value (UgJson* json,
 	return UG_JSON_ERROR_NONE;
 }
 
-static void  ug_json_write_value_array (UgJson* json, UgValueArray* varray);
+static void  ug_json_write_value_array(UgJson* json, UgValueArray* varray);
 
-void  ug_json_write_value (UgJson* json, UgValue* uvalue)
+void  ug_json_write_value(UgJson* json, UgValue* uvalue)
 {
 	if (uvalue->type == UG_VALUE_NONE)
 		return;
 	if (uvalue->name)
-		ug_json_write_string (json, uvalue->name);
+		ug_json_write_string(json, uvalue->name);
 
 	switch (uvalue->type) {
 	case UG_VALUE_BOOL:
-		ug_json_write_bool (json, uvalue->c.boolean);
+		ug_json_write_bool(json, uvalue->c.boolean);
 		break;
 
 	case UG_VALUE_INT:
-		ug_json_write_int (json, uvalue->c.integer);
+		ug_json_write_int(json, uvalue->c.integer);
 		break;
 
 	case UG_VALUE_UINT:
-		ug_json_write_uint (json, uvalue->c.uinteger);
+		ug_json_write_uint(json, uvalue->c.uinteger);
 		break;
 
 	case UG_VALUE_INT64:
-		ug_json_write_int64 (json, uvalue->c.integer64);
+		ug_json_write_int64(json, uvalue->c.integer64);
 		break;
 
 	case UG_VALUE_UINT64:
-		ug_json_write_uint64 (json, uvalue->c.uinteger64);
+		ug_json_write_uint64(json, uvalue->c.uinteger64);
 		break;
 
 	case UG_VALUE_DOUBLE:
-		ug_json_write_double (json, uvalue->c.fraction);
+		ug_json_write_double(json, uvalue->c.fraction);
 		break;
 
 	case UG_VALUE_STRING:
 		if (uvalue->c.string)
-			ug_json_write_string (json, uvalue->c.string);
+			ug_json_write_string(json, uvalue->c.string);
 		else
-			ug_json_write_null (json);
+			ug_json_write_null(json);
 		break;
 
 	case UG_VALUE_OBJECT:
-		ug_json_write_object_head (json);
-		ug_json_write_value_array (json, uvalue->c.array);
-		ug_json_write_object_tail (json);
+		ug_json_write_object_head(json);
+		ug_json_write_value_array(json, uvalue->c.array);
+		ug_json_write_object_tail(json);
 		break;
 
 	case UG_VALUE_ARRAY:
-		ug_json_write_array_head (json);
-		ug_json_write_value_array (json, uvalue->c.array);
-		ug_json_write_array_tail (json);
+		ug_json_write_array_head(json);
+		ug_json_write_value_array(json, uvalue->c.array);
+		ug_json_write_array_tail(json);
 		break;
-
-#ifdef HAVE_UG_VALUE_CUSTOM
-	case UG_VALUE_CUSTOM:
-		uvalue->c.custom->write (json, uvalue->c.custom->data,
-				uvalue->c.custom->data2);
-		break;
-#endif
 
 	default:
 		break;
@@ -470,17 +451,17 @@ void  ug_json_write_value (UgJson* json, UgValue* uvalue)
 // ----------------------------------------------------------------------------
 // UgValueArray = UgValueObject
 
-static UgValueArray*  ug_value_array_new (int preAllocate)
+static UgValueArray*  ug_value_array_new(int preAllocate)
 {
 	UgValueArray*  varray;
 
-	varray = ug_malloc (sizeof (UgValueArray) + sizeof (UgValue) * preAllocate);
+	varray = ug_malloc(sizeof(UgValueArray) + sizeof(UgValue) * preAllocate);
 	varray->allocated = preAllocate + 1;
 	varray->length = 0;
 	return varray;
 }
 
-static void  ug_value_array_free (UgValueArray* varray)
+static void  ug_value_array_free(UgValueArray* varray)
 {
 	UgValue*  cur;
 	UgValue*  end;
@@ -488,21 +469,21 @@ static void  ug_value_array_free (UgValueArray* varray)
 	cur = varray->at;
 	end = varray->at + varray->length;
 	for (;  cur < end;  cur++)
-		ug_value_clear (cur);
-	ug_free (varray);
+		ug_value_clear(cur);
+	ug_free(varray);
 }
 
-static UgJsonError ug_json_parse_value_array (UgJson* json,
+static UgJsonError ug_json_parse_value_array(UgJson* json,
                                        const char* name, const char* value,
                                        void* uvalue, void* none)
 {
 	UgValue*  uvalue1;
 
-	uvalue1 = ug_value_alloc (uvalue, 1);
-	return ug_json_parse_value (json, name, value, uvalue1, none);
+	uvalue1 = ug_value_alloc(uvalue, 1);
+	return ug_json_parse_value(json, name, value, uvalue1, none);
 }
 
-static void  ug_json_write_value_array (UgJson* json, UgValueArray* varray)
+static void  ug_json_write_value_array(UgJson* json, UgValueArray* varray)
 {
 	UgValue*  cur;
 	UgValue*  end;
@@ -510,31 +491,6 @@ static void  ug_json_write_value_array (UgJson* json, UgValueArray* varray)
 	cur = varray->at;
 	end = varray->at + varray->length;
 	for (; cur < end;  cur++)
-		ug_json_write_value (json, cur);
+		ug_json_write_value(json, cur);
 }
-
-// ----------------------------------------------------------------------------
-// UgValueCustom
-
-#ifdef HAVE_UG_VALUE_CUSTOM
-
-UgValueCustom*  ug_value_custom_new (void)
-{
-	UgValueCustom*   custom;
-
-	custom = ug_malloc0 (sizeof (UgValueCustom));
-	custom->free_this = TRUE;
-	return custom;
-}
-
-void  ug_value_custom_free (UgValueCustom* custom)
-{
-	if (custom->destroy.func)
-		custom->destroy.func (custom->destroy.data);
-
-	if (custom->free_this)
-		ug_free (custom);
-}
-
-#endif  // HAVE_UG_VALUE_CUSTOM
 
