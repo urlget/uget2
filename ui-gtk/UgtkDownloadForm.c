@@ -137,6 +137,8 @@ static void ugtk_download_form_init_page1 (UgtkDownloadForm* dform, UgtkProxyFor
 	// File - entry
 	widget = gtk_entry_new ();
 	gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
+	gtk_entry_set_placeholder_text (GTK_ENTRY (widget),
+			_("Leave blank to use default filename ..."));
 	g_object_set (widget, "margin", 1, "hexpand", TRUE, NULL);
 	gtk_grid_attach (top_grid, widget,  1, 2, 2, 1);
 	g_signal_connect (GTK_EDITABLE (widget), "changed",
