@@ -93,16 +93,10 @@ union  UgValueC
 // ----------------------------------------------------------------------------
 // UgValue
 
-struct UgValue
-{
-	char*        name;
-	UgValueType  type;
-	UgValueC     c;
-};
-
 void  ug_value_init(UgValue* value);
 void  ug_value_clear(UgValue* value);
 
+void  ug_value_init_type(UgValue* value, UgValueType type);
 void  ug_value_init_array(UgValue* value, int nElements);
 void  ug_value_init_object(UgValue* value, int nMembers);
 
@@ -112,19 +106,27 @@ UgValue* ug_value_alloc(UgValue* uvalue, int nValue);
 UgValue* ug_value_alloc_front(UgValue* uvalue, int nValue);
 #endif
 
+// UgValue*  ug_value_at(UgValue* value, UgValue* key, UgCompareFunc func);
+#define ug_value_at(varray, index)  \
+		(varray)->c.array->at + (index)
+
+// int  ug_value_length(UgValue* value);
+#define ug_value_length(varray)  \
+		(varray)->c.array->length
+
 // void ug_value_sort(UgValue* value, UgCompareFunc compare);
-#define ug_value_sort(varray, compareFunc)   \
-		qsort((varray)->c.array->at, (varray)->c.array->length,    \
+#define ug_value_sort(varray, compareFunc)  \
+		qsort((varray)->c.array->at, (varray)->c.array->length,  \
 		      sizeof(UgValue), compareFunc)
 
 // UgValue*  ug_value_find(UgValue* value, UgValue* key, UgCompareFunc func);
-#define ug_value_find(varray, key, compareFunc)   \
-		bsearch(key, (varray)->c.array->at, (varray)->c.array->length,    \
+#define ug_value_find(varray, key, compareFunc)  \
+		bsearch(key, (varray)->c.array->at, (varray)->c.array->length,  \
 		        sizeof(UgValue), compareFunc)
 
 // void ug_value_sort_name(UgValue* value)
-#define ug_value_sort_name(vobj)   \
-		qsort((vobj)->c.object->at, (vobj)->c.object->length,   \
+#define ug_value_sort_name(vobj)  \
+		qsort((vobj)->c.object->at, (vobj)->c.object->length,  \
 		      sizeof(UgValue), ug_value_compare_name)
 
 UgValue*  ug_value_find_name(UgValue* value, const char* name);
@@ -132,7 +134,7 @@ UgValue*  ug_value_find_name(UgValue* value, const char* name);
 // recursive functions
 void  ug_value_sort_recursive(UgValue* value, UgCompareFunc compare);
 //void  ug_value_sort_name_recursive(UgValue* value);
-#define ug_value_sort_name_recursive(vobj)   \
+#define ug_value_sort_name_recursive(vobj)  \
 		ug_value_sort_recursive(vobj, ug_value_compare_name)
 
 int   ug_value_compare_name(const void* value1, const void* value2);
@@ -156,6 +158,63 @@ UgJsonError ug_json_parse_value(UgJson* json,
                                 void* uvalue, void* none);
 void        ug_json_write_value(UgJson* json, UgValue* value);
 
+#ifdef __cplusplus
+}
+#endif
+
+struct UgValue
+{
+	char*        name;
+	UgValueType  type;
+	UgValueC     c;
+
+#ifdef __cplusplus
+	// C++11 standard-layout
+	inline UgValue(void)
+		{ ug_value_init(this); }
+	inline UgValue(UgValueType type)
+		{ ug_value_init_type(this, type); }
+	inline ~UgValue(void)
+		{ ug_value_clear(this); }
+
+	inline void init(void)
+		{ ug_value_init(this); }
+	inline void init(UgValueType type)
+		{ ug_value_init_type(this, type); }
+	inline void initObject(int nMember)
+		{ ug_value_init_object(this, nMember); }
+	inline void initArray(int nElement)
+		{ ug_value_init_array(this, nElement); }
+	inline void clear(void)
+		{ ug_value_clear(this); }
+
+	inline UgValue* alloc(int nValue)
+		{ return ug_value_alloc(this, nValue); }
+	// get nth element at object or array
+	inline UgValue* at(int index);
+	// return length of object or array
+	inline int  length(void);
+
+	// find by object's member name
+	inline UgValue* find(const char* name)
+		{ return ug_value_find_name(this, name); }
+	// find at object or array
+	inline UgValue* find(UgValue* key, UgCompareFunc func);
+
+	// sort by object's member name
+	inline void sort();
+	// sort at object or array
+	inline void sort(UgCompareFunc func);
+
+	// sort by object's member name
+	inline void sortRecursive()
+		{ ug_value_sort_recursive(this, ug_value_compare_name); }
+	// sort at object or array
+	inline void sortRecursive(UgCompareFunc func)
+		{ ug_value_sort_recursive(this, func); }
+#endif  // __cplusplus
+};
+
 // ----------------------------------------------------------------------------
 // UgValueArray = UgValueObject
 
@@ -166,10 +225,35 @@ struct UgValueArray
 	UgValue   at[1];
 };
 
+// ----------------------------------------------------------------------------
+// C++ inline functions
 
 #ifdef __cplusplus
-}
-#endif
+inline UgValue* UgValue::at(int index)
+	{ return ug_value_at(this, index); }
+inline int  UgValue::length(void)
+	{ return ug_value_length(this); }
+inline UgValue* UgValue::find(UgValue* key, UgCompareFunc func)
+	{ return (UgValue*) ug_value_find(this, key, func); }
+inline void UgValue::sort()
+	{ ug_value_sort_name(this); }
+inline void UgValue::sort(UgCompareFunc func)
+	{ ug_value_sort(this, func); }
+#endif  // __cplusplus
+
+// ----------------------------------------------------------------------------
+// C++11 standard-layout
+
+#ifdef __cplusplus
+
+namespace Ug
+{
+// This one is for directly use only. You can NOT derived it.
+typedef struct UgValueArray  ValueArray;
+typedef struct UgValue       Value;
+};  // namespace Ug
+
+#endif  // __cplusplus
 
 #endif  // UG_VALUE_H
 

@@ -37,6 +37,8 @@
 #include <UgJson.h>
 #include <UgArray.h>
 #include <UgBuffer.h>
+#include <UgString.h>
+#include <UgValue.h>
 #include <UgList.h>
 #include <UgNode.h>
 #include <UgData.h>
@@ -240,6 +242,35 @@ void test_registry_cxx(void)
 }
 
 // ----------------------------------------------------------------------------
+// test Ug::Value
+
+void test_value_cxx(void)
+{
+	Ug::Value  vObject(UG_VALUE_OBJECT);
+	Ug::Value* member;
+	int  index;
+
+	cout << endl << "--- Ug::Value testing..." << endl;
+
+	member = vObject.alloc(2);
+	member[0].name = ug_strdup("testInt");
+	member[0].type = UG_VALUE_INT;
+	member[0].c.integer = 101;
+	member[1].name = ug_strdup("aInt");
+	member[1].type = UG_VALUE_INT;
+	member[1].c.integer = 105;
+
+	// sort vObject's members by name
+	vObject.sort();
+
+	for(index = 0;  index < vObject.length();  index++) {
+		member = vObject.at(index);
+//		member = ug_value_at(&vObject, index);
+		cout << member->name << " = " << member->c.integer << endl;
+	}
+}
+
+// ----------------------------------------------------------------------------
 // main
 
 int   main (void)
@@ -253,6 +284,7 @@ int   main (void)
 	test_data_cxx();
 	test_info_cxx();
 	test_registry_cxx();
+	test_value_cxx();
 
 	return 0;
 }

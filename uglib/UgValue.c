@@ -79,17 +79,27 @@ void  ug_value_clear(UgValue* value)
 	value->type = UG_VALUE_NONE;
 }
 
+void  ug_value_init_type(UgValue* value, UgValueType type)
+{
+	if (type == UG_VALUE_OBJECT)
+		value->c.object = ug_value_object_new(8);
+	else if (type == UG_VALUE_ARRAY)
+		value->c.array = ug_value_array_new(8);
+	value->name = NULL;
+	value->type = type;
+}
+
 void  ug_value_init_array(UgValue* value, int nElements)
 {
-	value->type = UG_VALUE_ARRAY;
 	value->name = NULL;
+	value->type = UG_VALUE_ARRAY;
 	value->c.array = ug_value_array_new(nElements);
 }
 
 void  ug_value_init_object(UgValue* value, int nMembers)
 {
-	value->type = UG_VALUE_OBJECT;
 	value->name = NULL;
+	value->type = UG_VALUE_OBJECT;
 	value->c.array = ug_value_object_new(nMembers);
 }
 
