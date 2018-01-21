@@ -49,6 +49,8 @@ static void ug_json_write_files_array(UgJson* json, UgetFilesArray* array);
 static UgJsonError ug_json_parse_files_array(UgJson* json, const char* name,
                                              const char* value,
                                              void* array, void* none);
+static void uget_files_element_deleted(UgetFilesElement* element);
+
 
 static const UgEntry  UgetFilesEntry[] =
 {	{"source",   offsetof(UgetFiles, source),   UG_ENTRY_ARRAY,
@@ -78,20 +80,16 @@ static void uget_files_init(UgetFiles* files)
 
 static void uget_files_final(UgetFiles* files)
 {
-	ug_array_foreach(&files->source,
-	                 (UgForeachFunc)uget_files_element_clear, NULL);
-	ug_array_foreach(&files->output,
-	                 (UgForeachFunc)uget_files_element_clear, NULL);
+	ug_array_foreach_ptr(&files->source, (UgForeachFunc)ug_free, NULL);
+	ug_array_foreach_ptr(&files->output, (UgForeachFunc)ug_free, NULL);
 	ug_array_clear(&files->source);
 	ug_array_clear(&files->output);
 }
 
 int  uget_files_assign(UgetFiles* files, UgetFiles* src)
 {
-	ug_array_foreach(&files->source,
-	                 (UgForeachFunc)uget_files_element_clear, NULL);
-	ug_array_foreach(&files->output,
-	                 (UgForeachFunc)uget_files_element_clear, NULL);
+	ug_array_foreach_ptr(&files->source, (UgForeachFunc)ug_free, NULL);
+	ug_array_foreach_ptr(&files->output, (UgForeachFunc)ug_free, NULL);
 
 	files->source.length = 0;
 	files->output.length = 0;
@@ -100,49 +98,68 @@ int  uget_files_assign(UgetFiles* files, UgetFiles* src)
 	return TRUE;
 }
 
-int  uget_files_compare(UgetFiles* files, UgetFiles* src)
+static void uget_files_reset(UgetFiles* files, UgetFiles* src, int keep_deleted)
 {
-	UgetFilesElement* element;
-	UgetFilesElement* element_src;
-	int  index;
-	int  diff = 0;
+	// source
+	ug_array_foreach_ptr(&files->source, (UgForeachFunc)ug_free, NULL);
+	files->source.length = 0;
+	uget_files_array_copy(&files->source, &src->source);
 
-	diff = files->source.length - src->source.length;
-	if (diff != 0)
-		return diff;
-
-	for (index = 0;  index < files->output.length;  index++) {
-		element     = files->output.at + index;
-		element_src = src->output.at + index;
-
-		diff = strcmp(element->name, element_src->name);
-        if (diff != 0)
-			return diff;
+	// output
+	if (keep_deleted) {
+		ug_array_foreach_ptr(&files->output,
+				(UgForeachFunc)uget_files_element_deleted, NULL);
 	}
-	return 0;
+	else {
+		ug_array_foreach_ptr(&files->output, (UgForeachFunc)ug_free, NULL);
+		files->output.length = 0;
+	}
+	uget_files_array_copy(&files->output, &src->output);
+
+	files->source_count = src->source_count;
+	files->output_count = src->output_count;
 }
 
-// functions for UgetFiles::output
-int  uget_files_sync(UgetFiles* files, UgetFiles* src)
+int  uget_files_sync(UgetFiles* files, UgetFiles* src, int keep_deleted)
 {
 	UgetFilesElement* element;
 	UgetFilesElement* element_src;
 	int  index;
 	int  index_src;
-	int  n_changed = 0;
+	int  result;
 
+	// sync UgetFiles::source
+	if (files->source.length != src->source.length) {
+		uget_files_reset(files, src, keep_deleted);
+		return TRUE;
+	}
+	else {
+		for (index = 0;  index < src->source.length;  index++) {
+			element_src = src->source.at   + index;
+			element     = files->source.at + index;
+			if (strcmp(element->name, element_src->name) != 0) {
+				uget_files_reset(files, src, keep_deleted);
+				return TRUE;
+			}
+		}
+	}
+
+	// sync UgetFiles::output
 	for (index_src = 0;  index_src < src->output.length;  index_src++) {
 		element_src = src->output.at + index_src;
 		element = ug_array_find_sorted(&files->output, &element_src->name,
 		                               ug_array_compare_string, &index);
 		// file has been deleted
-		if (element_src->attr & UGET_FILES_DELETED) {
+		if (element_src->state & UGET_FILES_DELETED) {
 			ug_free(element_src->name);
 			ug_array_erase(&src->output, index_src, 1);
 			if (element) {
-				ug_free(element->name);
-				ug_array_erase(&files->output, index, 1);
-				n_changed++;
+				element->state = element_src->state;
+				result = TRUE;
+				if (keep_deleted == FALSE) {
+					ug_free(element->name);
+					ug_array_erase(&files->output, index, 1);
+				}
 			}
 			index_src--;  // rollback
 			continue;
@@ -152,11 +169,14 @@ int  uget_files_sync(UgetFiles* files, UgetFiles* src)
 		if (element == NULL) {
 			element = ug_array_insert(&files->output, index, 1);
 			element->name = ug_strdup(element_src->name);
-			n_changed++;
+			result = TRUE;
 		}
-		element->attr = element_src->attr;
+		element->state = element_src->state;
 	}
-	return n_changed;
+
+	files->source_count = src->source_count;
+	files->output_count = src->output_count;
+	return result;
 }
 
 UgetFilesElement*  uget_files_realloc(UgetFiles* files, const char* name)
@@ -168,21 +188,15 @@ UgetFilesElement*  uget_files_realloc(UgetFiles* files, const char* name)
 	                               ug_array_compare_string, &index);
     if (element == NULL) {
 		element = ug_array_insert(&files->output, index, 1);
-		element->name = NULL;
-		element->attr = 0;
+		element->name  = NULL;
+		element->state = 0;
+		files->output_count++;
     }
 	return element;
 }
 
 // ----------------------------------------------------------------------------
 // UgetFilesArray
-
-void uget_files_element_clear(UgetFilesElement* element)
-{
-	ug_free(element->name);
-	element->name = NULL;
-	element->attr = 0;
-}
 
 void uget_files_array_copy(UgetFilesArray* array, UgetFilesArray* src)
 {
@@ -191,9 +205,14 @@ void uget_files_array_copy(UgetFilesArray* array, UgetFilesArray* src)
 
 	element = ug_array_alloc(array, src->length);
 	for(index = 0;  index < src->length;  index++) {
-		element[index].name = ug_strdup(src->at[index].name);
-		element[index].attr = src->at[index].attr;
+		element[index].name  = ug_strdup(src->at[index].name);
+		element[index].state = src->at[index].state;
 	}
+}
+
+static void uget_files_element_deleted(UgetFilesElement* element)
+{
+	element->state |= UGET_FILES_DELETED;
 }
 
 // ----------------------------------------------------------------------------
@@ -202,7 +221,7 @@ void uget_files_array_copy(UgetFilesArray* array, UgetFilesArray* src)
 static const UgEntry  UgetFilesElementEntry[] =
 {	{"name",   offsetof(UgetFilesElement, name),   UG_ENTRY_STRING,
 			NULL, NULL},
-	{"attr",   offsetof(UgetFilesElement, attr),   UG_ENTRY_UINT,
+	{"state",  offsetof(UgetFilesElement, state),  UG_ENTRY_UINT,
 			NULL, NULL},
 	{NULL}    // null-terminated
 };

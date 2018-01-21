@@ -39,6 +39,7 @@
 
 #include <stdint.h>
 #include <UgData.h>
+#include <UgetFiles.h>
 #include <UgetPlugin.h>
 
 #ifdef __cplusplus

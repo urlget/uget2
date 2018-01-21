@@ -51,27 +51,28 @@ typedef UG_ARRAY(UgetFilesElement)  UgetFilesArray;
 
 extern const UgDataInfo*  UgetFilesInfo;
 
-enum UgetFilesAttr
+enum UgetFilesState
 {
 	UGET_FILES_FILE         = 0x0001,
 	UGET_FILES_FOLDER       = 0x0002,
 	UGET_FILES_ATTACHMENT   = 0x0004,
 
 	// source
-	UGET_FILES_IGNORE       = 0x0100,
+	UGET_FILES_IGNORE       = 0x0010,  // torrent and metalink
 
-	// output
-	UGET_FILES_COMPLETED    = 0x1000,
-	UGET_FILES_DELETED      = 0x2000,
+	UGET_FILES_DELETED      = 0x0400,  // this file was deleted
+	UGET_FILES_COMPLETED    = 0x0800,
+
+	UGET_FILES_CLEAR_MASK   = 0xF0FF,
 };
 
 struct UgetFilesElement
 {
-	char*  name;
-	int    attr;    // UgetFilesAttr
+	char*  name;    // filename, It must be first member.
+	int    state;   // UgetFilesState
 };
 
-void uget_files_element_clear(UgetFilesElement* element);
+// copy UgetFilesElement from src.
 void uget_files_array_copy(UgetFilesArray* array, UgetFilesArray* src);
 
 // ----------------------------------------------------------------------------
@@ -87,27 +88,25 @@ struct UgetFiles
 
 	// files/folders actually write into storage device (sorted)
 	UgetFilesArray  output;
+
+	int  source_count;    // +1 if source changed
+	int  output_count;    // +1 if output changed
 };
 
 int  uget_files_assign(UgetFiles* files, UgetFiles* src);
 
-// --- functions for UgetFiles::source ---
 
-// compare filenames at UgetFiles::source.
-// return 0 if two UgetFiles::source are the same.
-int  uget_files_compare(UgetFiles* files, UgetFiles* src);
-
-// --- functions for UgetFiles::output ---
-
-// sync UgetFiles::output and remove 'attr = UGET_FILES_DELETED' element.
-// return 0 if files.output keep no change.
-int  uget_files_sync(UgetFiles* files, UgetFiles* src);
+// sync UgetFiles::output and remove 'state = UGET_FILES_DELETED' element.
+// keep_deleted: keep local.output 'state = UGET_FILES_DELETED' element.
+//               remove src.output 'state = UGET_FILES_DELETED' element.
+// return FALSE if local.output keep no change.
+int  uget_files_sync(UgetFiles* local, UgetFiles* src, int keep_deleted);
 
 UgetFilesElement*  uget_files_realloc(UgetFiles* files, const char* name);
 
 // e.g. remove "foo.mp4" in UgFiles::output
 // element = uget_files_realloc(src_files, "foo.mp4.aria2");
-// element->attr |= UGET_FILES_DELETED;
+// element->state |= UGET_FILES_DELETED;
 // uget_files_sync(files, src_files);
 
 #ifdef __cplusplus

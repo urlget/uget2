@@ -528,7 +528,6 @@ void test_files(void)
 	UgetFiles* files;
 	UgetFiles* src;
 	UgetFilesElement* element;
-	int  diff;
 
 	files = ug_data_new(UgetFilesInfo);
 	src = ug_data_new(UgetFilesInfo);
@@ -542,29 +541,24 @@ void test_files(void)
 	element[1].name = ug_strdup("1.mp4");
 	element[2].name = ug_strdup("2.mp4");
 
-	diff = uget_files_compare(files, src);
-	printf("\n diff=%d \n", diff);
-
 	element = ug_array_alloc(&src->source, 1);
 	element[0].name = ug_strdup("3.mp4");
 
-	diff = uget_files_compare(files, src);
-	printf("\n diff=%d \n", diff);
-
 	element = uget_files_realloc(src, "foo.mp4");
 	element->name = ug_strdup("foo.mp4");
-	element->attr = UGET_FILES_FILE;
+	element->state = UGET_FILES_FILE;
 	element = uget_files_realloc(src, "xxx.apk");
 	element->name = ug_strdup("xxx.apk");
-	element->attr = UGET_FILES_FILE;
+	element->state = UGET_FILES_FILE;
 
 	test_files_json(files);
 
-	uget_files_sync(files, src);
-	diff = uget_files_compare(files, src);
+	uget_files_sync(files, src, FALSE);
 
-	element->attr |= UGET_FILES_DELETED;
-	uget_files_sync(files, src);
+	element->state |= UGET_FILES_DELETED;
+
+	uget_files_sync(files, src, TRUE);
+	test_files_json(files);
 
 	ug_data_free(files);
 	ug_data_free(src);
