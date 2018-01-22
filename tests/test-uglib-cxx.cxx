@@ -184,10 +184,10 @@ Ug::DataInfo UgCxxInfo =
 {
 	"UgCxxData",
 	sizeof(UgCxxData),
-	(UgEntry*)     NULL,
 	(UgInitFunc)   NULL,
 	(UgFinalFunc)  NULL,
-	(UgAssignFunc) NULL
+	(UgAssignFunc) NULL,
+	(UgEntry*)     NULL,
 };
 
 UgCxxData::UgCxxData(void)

@@ -56,11 +56,11 @@ void  ug_info_set_registry(UgRegistry* registry)
 // ----------------------------------------------------------------------------
 // UgInfo
 
-void  ug_info_init(UgInfo* info, int allocated_len, int cache_length)
+void  ug_info_init(UgInfo* info, int allocated_length, int cache_length)
 {
 	int     index;
 
-	ug_array_init(info, sizeof(UgPair), allocated_len + cache_length);
+	ug_array_init(info, sizeof(UgPair), allocated_length + cache_length);
 	info->length       = cache_length;
 	info->cache_length = cache_length;
 

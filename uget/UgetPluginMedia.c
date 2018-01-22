@@ -86,7 +86,6 @@ static const UgetPluginInfo UgetPluginMediaInfoStatic =
 {
 	"media",
 	sizeof (UgetPluginMedia),
-	(const UgEntry*) NULL,
 	(UgInitFunc)   plugin_init,
 	(UgFinalFunc)  plugin_final,
 	(UgAssignFunc) NULL,

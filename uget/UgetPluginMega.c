@@ -114,7 +114,6 @@ static const UgetPluginInfo UgetPluginMegaInfoStatic =
 {
 	"mega",
 	sizeof (UgetPluginMega),
-	(const UgEntry*) NULL,
 	(UgInitFunc)   plugin_init,
 	(UgFinalFunc)  plugin_final,
 	(UgAssignFunc) plugin_start,

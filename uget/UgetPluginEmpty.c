@@ -56,7 +56,6 @@ static const UgetPluginInfo UgetPluginEmptyInfoStatic =
 {
 	"empty",
 	sizeof (UgetPluginEmpty),
-	(const UgEntry*) NULL,
 	(UgInitFunc)   plugin_init,
 	(UgFinalFunc)  plugin_final,
 	(UgAssignFunc) NULL,

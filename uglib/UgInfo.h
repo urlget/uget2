@@ -48,15 +48,20 @@ extern "C" {
 typedef struct  UgInfo      UgInfo;
 
 // ----------------------------------------------------------------------------
-// UgRegistry for UgInfo
+// This UgRegistry used by UgInfo.
+// User can only store UgDataInfo in this UgRegistry.
+// key-data pair:
+// const char*       key;   // UgDataInfo->name
+// const UgDataInfo* data;  // UgDataInfo
 
 UgRegistry*  ug_info_get_registry(void);
 void         ug_info_set_registry(UgRegistry* registry);
 
 // ----------------------------------------------------------------------------
-// UgInfo - information collection for UgetNode
+// UgInfo - UgDataInfo and it's instance collection
+//        - It uses UgDataInfo to get/alloc it's instance.
 
-void    ug_info_init(UgInfo* info, int allocated_len, int cache_len);
+void    ug_info_init(UgInfo* info, int allocated_length, int cache_length);
 void    ug_info_final(UgInfo* info);
 
 void*   ug_info_realloc(UgInfo* info, const UgDataInfo* key);
@@ -104,11 +109,11 @@ struct UgInfo
 #ifdef __cplusplus
 	// C++11 standard-layout
 	inline UgInfo(void) {}
-	inline UgInfo(int allocated_len, int cache_length)
-		{ ug_info_init(this, allocated_len, cache_length); }
+	inline UgInfo(int allocatedLength, int cacheLength)
+		{ ug_info_init(this, allocatedLength, cacheLength); }
 
-	inline void  init(int allocated_len, int cache_length)
-		{ ug_info_init(this, allocated_len, cache_length); }
+	inline void  init(int allocatedLength, int cacheLength)
+		{ ug_info_init(this, allocatedLength, cacheLength); }
 	inline void  final(void)
 		{ ug_info_final(this); }
 

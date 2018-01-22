@@ -44,35 +44,81 @@
 extern "C" {
 #endif
 
+typedef struct	UgType           UgType;
+typedef struct  UgTypeInfo       UgTypeInfo;
 typedef struct	UgData           UgData;
 typedef struct	UgDataInfo       UgDataInfo;
 
 typedef int   (*UgAssignFunc) (void* instance, void* src);
 
 // ----------------------------------------------------------------------------
+// UgTypeInfo
+// |
+// `-- UgDataInfo
+
+#define	UG_TYPE_INFO_MEMBERS  \
+	const char*     name;     \
+	uintptr_t       size;     \
+	UgInitFunc      init;     \
+	UgFinalFunc     final
+
+struct UgTypeInfo
+{
+	UG_TYPE_INFO_MEMBERS;
+//	const char*     name;
+//	uintptr_t       size;
+//	UgInitFunc      init;
+//	UgFinalFunc     final;
+};
+
+#define	UG_TYPE_MEMBERS  \
+	const UgTypeInfo*  info
+
+struct UgType
+{
+	UG_TYPE_MEMBERS;
+//	const UgTypeInfo*  info;
+};
+
+// void*   ug_type_new(const UgTypeInfo* typeinfo);
+void*      ug_type_new(const void* typeinfo);
+void       ug_type_free(void* type);
+void       ug_type_init(void* type);
+void       ug_type_final(void* type);
+
+// ----------------------------------------------------------------------------
 // UgDataInfo
+//
+// UgTypeInfo
+// |
+// `-- UgDataInfo
 
 #define	UG_DATA_INFO_MEMBERS  \
-	const char*     name;    \
-	uintptr_t       size;    \
-	const UgEntry*  entry;   \
-	UgInitFunc      init;    \
-	UgFinalFunc     final;   \
-	UgAssignFunc    assign
+	const char*     name;     \
+	uintptr_t       size;     \
+	UgInitFunc      init;     \
+	UgFinalFunc     final;    \
+	UgAssignFunc    assign;   \
+	const UgEntry*  entry
 
 struct UgDataInfo
 {
 	UG_DATA_INFO_MEMBERS;
 //	const char*     name;
 //	uintptr_t       size;
-//	const UgEntry*	entry;
 //	UgInitFunc      init;
 //	UgFinalFunc     final;
 //	UgAssignFunc    assign;
+//	const UgEntry*	entry;
 };
 
 // ----------------------------------------------------------------------------
 // UgData
+//
+// UgType
+// |
+// `-- UgData
+
 #define	UG_DATA_MEMBERS  \
 	const UgDataInfo*  info
 
@@ -82,25 +128,27 @@ struct UgData
 //	const UgDataInfo*  info;
 };
 
-// UgData* ug_data_new (const UgDataInfo* dinfo);
-// void    ug_data_free (UgData* data);
-void*      ug_data_new (const UgDataInfo* dinfo);
-void       ug_data_free (void* data);
+#define    ug_data_new    ug_type_new
+#define    ug_data_free   ug_type_free
+// UgData* ug_data_new(const UgDataInfo* dinfo);
+// void    ug_data_free(UgData* data);
 
-void       ug_data_init (void* data);
-void       ug_data_final (void* data);
+// void    ug_data_init(void* data);
+// void    ug_data_final(void* data);
+#define    ug_data_init   ug_type_new
+#define    ug_data_final  ug_type_final
 
-// UgData* ug_data_copy (UgData* data);
-//void     ug_data_assign (UgData* data, UgData* src);
-void*      ug_data_copy (void* data);
-int        ug_data_assign (void* data, void* src);
+// UgData* ug_data_copy(UgData* data);
+// void    ug_data_assign(UgData* data, UgData* src);
+void*      ug_data_copy(void* data);
+int        ug_data_assign(void* data, void* src);
 
 // UgJsonParseFunc for UgData, used by UgEntry with UG_ENTRY_CUSTOM
-UgJsonError ug_json_parse_data (UgJson* json,
-                                const char* name, const char* value,
-                                void* data, void* none);
+UgJsonError ug_json_parse_data(UgJson* json,
+                               const char* name, const char* value,
+                               void* data, void* none);
 // write UgData, used by UgEntry with UG_ENTRY_CUSTOM
-void        ug_json_write_data (UgJson* json, const UgData* data);
+void        ug_json_write_data(UgJson* json, const UgData* data);
 
 
 #ifdef __cplusplus
@@ -114,25 +162,26 @@ void        ug_json_write_data (UgJson* json, const UgData* data);
 
 namespace Ug
 {
+typedef struct UgTypeInfo    TypeInfo;
 typedef struct UgDataInfo    DataInfo;
 
 // This one is for derived use only. No data members here.
 // Your derived struct/class must be C++11 standard-layout
 struct DataMethod
 {
-	inline void init (const UgDataInfo* info) {
+	inline void init(const UgDataInfo* info) {
 		*(UgDataInfo**)this = (UgDataInfo*)info;
-		ug_data_init ((void*)this);
+		ug_data_init((void*)this);
 	}
-	inline void init ()
-		{ ug_data_init ((void*)this); }
-	inline void final (void)
-		{ ug_data_final ((void*)this); }
+	inline void init()
+		{ ug_data_init((void*)this); }
+	inline void final(void)
+		{ ug_data_final((void*)this); }
 
-	inline int  assign (DataMethod* src)
-		{ return ug_data_assign ((void*)this, (void*)src); }
-	inline DataMethod* copy (void)
-		{ return (DataMethod*) ug_data_copy ((void*)this); }
+	inline int  assign(DataMethod* src)
+		{ return ug_data_assign((void*)this, (void*)src); }
+	inline DataMethod* copy(void)
+		{ return (DataMethod*)ug_data_copy((void*)this); }
 };
 
 // This one is for directly use only. You can NOT derived it.

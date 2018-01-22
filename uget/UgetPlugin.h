@@ -95,14 +95,13 @@ typedef UgetResult (*UgetPluginGetFunc) (int option, void* parameter);
 
 struct UgetPluginInfo
 {
-	UG_DATA_INFO_MEMBERS;
+	UG_TYPE_INFO_MEMBERS;
 //	const char*     name;
 //	uintptr_t       size;
-//	const UgEntry*  entry;
 //	UgInitFunc      init;
 //	UgFinalFunc     final;
-//	UgAssignFunc    assign;
 
+	UgAssignFunc    assign;
 	UgetPluginCtrlFunc  ctrl;
 	UgetPluginSyncFunc  sync;    // UgetTask call this to sync data
 
@@ -120,7 +119,7 @@ struct UgetPluginInfo
 };
 
 // ----------------------------------------------------------------------------
-// UgetPlugin: It derived from UgData.
+// UgetPlugin: It derived from UgType.
 //             It it base class/struct that used by plug-ins.
 
 #define UGET_PLUGIN_MEMBERS  \
@@ -131,7 +130,7 @@ struct UgetPluginInfo
 
 struct UgetPlugin
 {
-	UGET_PLUGIN_MEMBERS;               // It derived from UgData
+	UGET_PLUGIN_MEMBERS;               // It derived from UgType
 //	const UgetPluginInfo*  info;
 //	UgetEvent*    events;
 //	UgMutex       mutex;
@@ -139,56 +138,53 @@ struct UgetPlugin
 };
 
 // UgetPluginInfo global functions
-UgetPlugin*  uget_plugin_new (const UgetPluginInfo* info);
-UgetResult   uget_plugin_set (const UgetPluginInfo* info, int option, void* parameter);
-UgetResult   uget_plugin_get (const UgetPluginInfo* info, int option, void* parameter);
+UgetPlugin*  uget_plugin_new(const UgetPluginInfo* info);
+UgetResult   uget_plugin_set(const UgetPluginInfo* info, int option, void* parameter);
+UgetResult   uget_plugin_get(const UgetPluginInfo* info, int option, void* parameter);
 
 // return matched count.
 // return 3 if URI can be matched hosts, schemes, and file_exts.
-int     uget_plugin_match (const UgetPluginInfo* info, UgUri* uuri);
+int     uget_plugin_match(const UgetPluginInfo* info, UgUri* uuri);
 
 // UgetPlugin functions
-//void  uget_plugin_init (UgetPlugin* plugin);
-#define uget_plugin_init      ug_data_init
+//void  uget_plugin_init(UgetPlugin* plugin);
+#define uget_plugin_init      ug_type_init
 
-//void  uget_plugin_final (UgetPlugin* plugin);
-#define uget_plugin_final     ug_data_final
-
-//void  uget_plugin_assign (UgetPlugin* plugin, UgetPlugin* src);
-#define uget_plugin_assign    ug_data_assign
+//void  uget_plugin_final(UgetPlugin* plugin);
+#define uget_plugin_final     ug_type_final
 
 // return TRUE or FALSE.
-int   uget_plugin_ctrl (UgetPlugin* plugin, int code, void* data);
+int   uget_plugin_ctrl(UgetPlugin* plugin, int code, void* data);
 
 #define uget_plugin_start(plugin, node)   \
-		uget_plugin_ctrl (plugin, UGET_PLUGIN_CTRL_START, node)
+		uget_plugin_ctrl(plugin, UGET_PLUGIN_CTRL_START, node)
 #define uget_plugin_stop(plugin)          \
-		uget_plugin_ctrl (plugin, UGET_PLUGIN_CTRL_STOP, NULL)
+		uget_plugin_ctrl(plugin, UGET_PLUGIN_CTRL_STOP, NULL)
 
 #define uget_plugin_ctrl_speed(plugin, dl_ul_int_array)  \
-		uget_plugin_ctrl (plugin, UGET_PLUGIN_CTRL_SPEED, dl_ul_int_array)
+		uget_plugin_ctrl(plugin, UGET_PLUGIN_CTRL_SPEED, dl_ul_int_array)
 
 // unused
 // notify plug-in when other data was changed
 #define uget_plugin_data_changed(plugin)  \
-		uget_plugin_ctrl (plugin, UGET_PLUGIN_CTRL_DATA_CHANGED, NULL)
+		uget_plugin_ctrl(plugin, UGET_PLUGIN_CTRL_DATA_CHANGED, NULL)
 // unused
 // notify plug-in when speed_limit, retry_limit, max_connections...etc was changed
 #define uget_plugin_limit_changed(plugin) \
-		uget_plugin_ctrl (plugin, UGET_PLUGIN_CTRL_LIMIT_CHANGED, NULL)
+		uget_plugin_ctrl(plugin, UGET_PLUGIN_CTRL_LIMIT_CHANGED, NULL)
 
-// teturn TRUE  if plug-in running.
+// return TRUE  if plug-in running.
 // return FALSE if plug-in stopped.
-int   uget_plugin_sync (UgetPlugin* plugin);
+int   uget_plugin_sync(UgetPlugin* plugin);
 
-void  uget_plugin_ref (UgetPlugin* plugin);
-void  uget_plugin_unref (UgetPlugin* plugin);
+void  uget_plugin_ref(UgetPlugin* plugin);
+void  uget_plugin_unref(UgetPlugin* plugin);
 
-void       uget_plugin_post (UgetPlugin* plugin, UgetEvent* message);
-UgetEvent* uget_plugin_pop  (UgetPlugin* plugin);
+void       uget_plugin_post(UgetPlugin* plugin, UgetEvent* message);
+UgetEvent* uget_plugin_pop (UgetPlugin* plugin);
 
-#define uget_plugin_lock(plugin)    ug_mutex_lock (&(plugin)->mutex)
-#define uget_plugin_unlock(plugin)  ug_mutex_unlock (&(plugin)->mutex)
+#define uget_plugin_lock(plugin)    ug_mutex_lock(&(plugin)->mutex)
+#define uget_plugin_unlock(plugin)  ug_mutex_unlock(&(plugin)->mutex)
 
 #ifdef __cplusplus
 }
@@ -206,13 +202,13 @@ namespace Uget
 // Your derived struct/class must be C++11 standard-layout
 struct PluginInfoMethod
 {
-	inline UgetResult  set (int option, void* parameter)
-		{ return uget_plugin_set ((UgetPluginInfo*)this, option, parameter); }
-	inline UgetResult  get (int option, void* parameter)
-		{ return uget_plugin_get ((UgetPluginInfo*)this, option, parameter); }
+	inline UgetResult  set(int option, void* parameter)
+		{ return uget_plugin_set((UgetPluginInfo*)this, option, parameter); }
+	inline UgetResult  get(int option, void* parameter)
+		{ return uget_plugin_get((UgetPluginInfo*)this, option, parameter); }
 
-	inline int  match (UgUri* uuri)
-		{ return uget_plugin_match ((UgetPluginInfo*)this, uuri); }
+	inline int  match(UgUri* uuri)
+		{ return uget_plugin_match((UgetPluginInfo*)this, uuri); }
 };
 
 // This one is for directly use only. You can NOT derived it.
@@ -223,27 +219,24 @@ struct PluginInfo : Uget::PluginInfoMethod, UgetPluginInfo {};
 // Your derived struct/class must be C++11 standard-layout
 struct PluginMethod : Ug::DataMethod
 {
-	inline void  assign (UgetNode* baseNode)
-		{ uget_plugin_assign ((UgetPlugin*) this, baseNode); }
+	inline void  start(UgetNode* baseNode)
+		{ uget_plugin_start((UgetPlugin*) this, baseNode); }
 
-	inline void  start (UgetNode* baseNode)
-		{ uget_plugin_start ((UgetPlugin*) this, baseNode); }
+	inline void  stop(void)
+		{ uget_plugin_stop((UgetPlugin*) this); }
 
-	inline void  stop (void)
-		{ uget_plugin_stop ((UgetPlugin*) this); }
+	inline int   sync(void)
+		{ return uget_plugin_sync((UgetPlugin*) this); }
 
-	inline int   sync (void)
-		{ return uget_plugin_sync ((UgetPlugin*) this); }
+	inline void  ref(void)
+		{ uget_plugin_ref((UgetPlugin*) this); }
+	inline void  unref(void)
+		{ uget_plugin_unref((UgetPlugin*) this); }
 
-	inline void  ref (void)
-		{ uget_plugin_ref ((UgetPlugin*) this); }
-	inline void  unref (void)
-		{ uget_plugin_unref ((UgetPlugin*) this); }
-
-	inline void  post (UgetEvent* message)
-		{ uget_plugin_post ((UgetPlugin*) this, message); }
-	inline UgetEvent* pop (void)
-		{ return uget_plugin_pop ((UgetPlugin*) this); }
+	inline void  post(UgetEvent* message)
+		{ uget_plugin_post((UgetPlugin*) this, message); }
+	inline UgetEvent* pop(void)
+		{ return uget_plugin_pop((UgetPlugin*) this); }
 };
 
 // This one is for directly use only. You can NOT derived it.

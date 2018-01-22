@@ -87,10 +87,10 @@ static const UgDataInfo  UgetCommonInfoStatic =
 {
 	"common",              // name
 	sizeof(UgetCommon),    // size
-	UgetCommonEntry,
 	(UgInitFunc)   uget_common_init,
 	(UgFinalFunc)  uget_common_final,
 	(UgAssignFunc) uget_common_assign,
+	UgetCommonEntry,
 };
 // extern
 const UgDataInfo*  UgetCommonInfo = &UgetCommonInfoStatic;
@@ -222,10 +222,10 @@ static const UgDataInfo  UgetProgressInfoStatic =
 {
 	"progress",            // name
 	sizeof(UgetProgress),  // size
-	UgetProgressEntry,
 	(UgInitFunc)   NULL,
 	(UgFinalFunc)  NULL,
 	(UgAssignFunc) NULL,
+	UgetProgressEntry,
 };
 // extern
 const UgDataInfo*  UgetProgressInfo = &UgetProgressInfoStatic;
@@ -273,11 +273,10 @@ static const UgDataInfo  UgetProxyInfoStatic =
 {
 	"proxy",            // name
 	sizeof(UgetProxy),  // size
-	UgetProxyEntry,     // entry
-
 	(UgInitFunc)   NULL,
 	(UgFinalFunc)  uget_proxy_final,
 	(UgAssignFunc) uget_proxy_assign,
+	UgetProxyEntry,     // entry
 };
 // extern
 const UgDataInfo*  UgetProxyInfo = &UgetProxyInfoStatic;
@@ -386,11 +385,10 @@ static const UgDataInfo  UgetHttpInfoStatic =
 {
 	"http",             // name
 	sizeof(UgetHttp),   // size
-	UgetHttpEntry,      // entry
-
 	(UgInitFunc)   uget_http_init,
 	(UgFinalFunc)  uget_http_final,
 	(UgAssignFunc) uget_http_assign,
+	UgetHttpEntry,      // entry
 };
 // extern
 const UgDataInfo*  UgetHttpInfo = &UgetHttpInfoStatic;
@@ -486,11 +484,10 @@ static const UgDataInfo  UgetFtpInfoStatic =
 {
 	"ftp",              // name
 	sizeof(UgetFtp),    // size
-	UgetFtpEntry,       // entry
-
 	(UgInitFunc)   NULL,
 	(UgFinalFunc)  uget_ftp_final,
 	(UgAssignFunc) uget_ftp_assign,
+	UgetFtpEntry,       // entry
 };
 // extern
 const UgDataInfo*  UgetFtpInfo = &UgetFtpInfoStatic;
@@ -549,11 +546,10 @@ static const UgDataInfo  UgetLogInfoStatic =
 {
 	"log",             // name
 	sizeof(UgetLog),   // size
-	UgetLogEntry,      // entry
-
 	(UgInitFunc)   NULL,
 	(UgFinalFunc)  uget_log_final,
 	(UgAssignFunc) NULL,
+	UgetLogEntry,      // entry
 };
 // extern
 const UgDataInfo*  UgetLogInfo = &UgetLogInfoStatic;
@@ -619,10 +615,10 @@ static const UgDataInfo  UgetRelationInfoStatic =
 {
 	"relation",            // name
 	sizeof(UgetRelation),  // size
-	UgetRelationEntry,
 	(UgInitFunc)   uget_relation_init,
 	(UgFinalFunc)  NULL,
 	(UgAssignFunc) NULL,
+	UgetRelationEntry,
 };
 // extern
 const UgDataInfo*  UgetRelationInfo = &UgetRelationInfoStatic;
@@ -661,10 +657,10 @@ static const UgDataInfo  UgetCategoryInfoStatic =
 {
 	"category",            // name
 	sizeof(UgetCategory),  // size
-	UgetCategoryEntry,
 	(UgInitFunc)   uget_category_init,
 	(UgFinalFunc)  uget_category_final,
 	(UgAssignFunc) uget_category_assign,
+	UgetCategoryEntry,
 };
 // extern
 const UgDataInfo*  UgetCategoryInfo = &UgetCategoryInfoStatic;

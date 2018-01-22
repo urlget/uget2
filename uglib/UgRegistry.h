@@ -57,14 +57,17 @@ struct UgPair
 };
 
 // ----------------------------------------------------------------------------
-// UgRegistry : store info and it's name. It search info by name.
+// UgRegistry store UgTypeInfo and it's name and search UgTypeInfo by name.
+// key-data pair:
+// const char*       key;   // UgTypeInfo->name
+// const UgTypeInfo* data;  // UgTypeInfo
 
 void	ug_registry_init(UgRegistry* reg);
 void	ug_registry_final(UgRegistry* reg);
 
-void    ug_registry_add(UgRegistry* reg, const UgDataInfo* info);
-void    ug_registry_remove(UgRegistry* reg, const UgDataInfo* info);
-UgPair* ug_registry_find(UgRegistry* reg, const char* key, int* index);
+void    ug_registry_add(UgRegistry* reg, const void* type_info);
+void    ug_registry_remove(UgRegistry* reg, const void* type_info);
+UgPair* ug_registry_find(UgRegistry* reg, const char* type_name, int* index);
 
 void    ug_registry_sort(UgRegistry* reg);
 
@@ -88,12 +91,12 @@ struct UgRegistry
 	inline void  final(void)
 		{ ug_registry_final(this); }
 
-	inline void  add(const UgDataInfo* info)
-		{ ug_registry_add(this, info); }
-	inline void  remove(const UgDataInfo* info)
-		{ ug_registry_remove(this, info); }
-	inline UgPair* find(const char* info, int* index = NULL)
-		{ return ug_registry_find(this, info, index); }
+	inline void  add(const void* typeInfo)
+		{ ug_registry_add(this, typeInfo); }
+	inline void  remove(const void* typeInfo)
+		{ ug_registry_remove(this, typeInfo); }
+	inline UgPair* find(const char* typeName, int* index = NULL)
+		{ return ug_registry_find(this, typeName, index); }
 #endif  // __cplusplus
 };
 

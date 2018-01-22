@@ -48,7 +48,7 @@ void  ug_registry_final(UgRegistry* reg)
 	ug_array_clear(reg);
 }
 
-void  ug_registry_add(UgRegistry* reg, const UgDataInfo* info)
+void  ug_registry_add(UgRegistry* reg, const void* typeinfo)
 {
 	UgPair* pair;
 	int     index;
@@ -56,20 +56,20 @@ void  ug_registry_add(UgRegistry* reg, const UgDataInfo* info)
 	if (reg->sorted == FALSE || reg->length == 0)
 		pair = ug_array_alloc(reg, 1);
 	else {
-		pair = ug_registry_find(reg, info->name, &index);
+		pair = ug_registry_find(reg, ((UgTypeInfo*)typeinfo)->name, &index);
 		if (pair == NULL)
 			pair = ug_array_insert(reg, index, 1);
 	}
-	pair->key  = (void*) info->name;
-	pair->data = (void*) info;
+	pair->key  = (void*) ((UgTypeInfo*)typeinfo)->name;
+	pair->data = (void*) typeinfo;
 }
 
-void  ug_registry_remove(UgRegistry* reg, const UgDataInfo* info)
+void  ug_registry_remove(UgRegistry* reg, const void* typeinfo)
 {
 	UgPair* cur;
 	int     index;
 
-	cur = ug_registry_find(reg, info->name, &index);
+	cur = ug_registry_find(reg, ((UgTypeInfo*)typeinfo)->name, &index);
 	if (cur)
 		ug_array_erase(reg, index, 1);
 }

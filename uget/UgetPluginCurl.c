@@ -105,7 +105,6 @@ static const UgetPluginInfo UgetPluginCurlInfoStatic =
 {
 	"curl",
 	sizeof (UgetPluginCurl),
-	(const UgEntry*) NULL,
 	(UgInitFunc)   plugin_init,
 	(UgFinalFunc)  plugin_final,
 	(UgAssignFunc) NULL,

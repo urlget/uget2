@@ -118,7 +118,6 @@ static const UgetPluginInfo UgetPluginAria2InfoStatic =
 {
 	"aria2",
 	sizeof (UgetPluginAria2),
-	(const UgEntry*) NULL,
 	(UgInitFunc)   plugin_init,
 	(UgFinalFunc)  plugin_final,
 	(UgAssignFunc) NULL,

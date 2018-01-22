@@ -49,7 +49,7 @@ typedef struct	UgData1Interface	UgData1Interface;
 typedef struct	UgData1				UgData1;
 typedef struct	UgDatalist			UgDatalist;
 
-typedef enum	UgType				UgType;
+typedef enum	UgType1				UgType1;
 
 // UgData1Interface
 typedef void	(*UgInitFunc)		(void* instance);
@@ -64,7 +64,7 @@ typedef void	(*UgWriteMarkup)	(void* instance, UgMarkup* markup);
 // notify callback
 typedef void	(*UgNotifyFunc)		(void* user_data);
 
-enum	UgType
+enum	UgType1
 {
 	UG_TYPE_NONE,
 	UG_TYPE_STRING,
@@ -110,7 +110,7 @@ struct UgDataEntry
 {
 	char*			name;			// tag name
 	int				offset;
-	UgType			type;
+	UgType1			type;
 
 	const void*		parser;			// How to parse data.
 	const void*		writer;			// How to write data.

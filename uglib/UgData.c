@@ -46,61 +46,67 @@
 #include <UgData.h>
 #include <UgJson-custom.h>
 
-// UgData* ug_data_new (const UgDataInfo* iface)
-void*	ug_data_new (const UgDataInfo* info)
+// ----------------------------------------------------------------------------
+// UgTypeInfo
+// |
+// +-- UgDataInfo
+
+void* ug_type_new(const void* typeinfo)
 {
 	UgInitFunc  init;
-	UgData*     data;
+	UgType*     type;
 
 #ifdef HAVE_GLIB
-	data = g_slice_alloc0 (info->size);
+	type = g_slice_alloc0(((UgTypeInfo*)typeinfo)->size);
 #else
-	data = ug_malloc0 (info->size);
+	type = ug_malloc0(((UgTypeInfo*)typeinfo)->size);
 #endif // HAVE_GLIB
 
-	data->info = info;
-	init = info->init;
+	type->info = typeinfo;
+	init = type->info->init;
 	if (init)
-		init (data);
-	return data;
+		init(type);
+	return type;
 }
 
-// void	ug_data_free (UgData* data)
-void	ug_data_free (void* data)
+void  ug_type_free(void* type)
 {
 	UgFinalFunc  final;
 
-	final = ((UgData*)data)->info->final;
+	final = ((UgType*)type)->info->final;
 	if (final)
-		final (data);
+		final(type);
 
 #ifdef HAVE_GLIB
-	g_slice_free1 (((UgData*)data)->info->size, data);
+	g_slice_free1(((UgType*)type)->info->size, type);
 #else
-	ug_free (data);
+	ug_free(type);
 #endif // HAVE_GLIB
 }
 
-void  ug_data_init (void* data)
+void  ug_type_init(void* type)
 {
 	UgInitFunc init;
 
-	init = ((UgData*)data)->info->init;
+	init = ((UgType*)type)->info->init;
 	if (init)
-		init (data);
+		init(type);
 }
 
-void  ug_data_final (void* data)
+void  ug_type_final(void* type)
 {
 	UgFinalFunc final;
 
-	final = ((UgData*)data)->info->final;
+	final = ((UgType*)type)->info->final;
 	if (final)
-		final (data);
+		final(type);
 }
 
-// UgData* ug_data_copy (UgData* data)
-void* ug_data_copy (void* data)
+// ----------------------------------------------------------------------------
+// UgData
+
+// UgData* ug_data_copy(UgData* data)
+void* ug_data_copy(void* data)
 {
 	const UgDataInfo* info;
 	UgAssignFunc  assign;
@@ -111,59 +117,59 @@ void* ug_data_copy (void* data)
 		assign = info->assign;
 		if (assign) {
 #ifdef HAVE_GLIB
-			newone = g_slice_alloc0 (info->size);
+			newone = g_slice_alloc0(info->size);
 #else
-			newone = ug_malloc0 (info->size);
+			newone = ug_malloc0(info->size);
 #endif
 			((UgData*)newone)->info = info;
-			assign (newone, data);
+			assign(newone, data);
 			return newone;
 		}
 	}
 	return NULL;
 }
 
-//void	ug_data_assign (UgData* dest, UgData* src)
-int   ug_data_assign (void* data, void* src)
+//void	ug_data_assign(UgData* dest, UgData* src)
+int   ug_data_assign(void* data, void* src)
 {
 	UgAssignFunc assign;
 
 	if (data) {
 		assign = ((UgData*)data)->info->assign;
-		if (assign)
-			return assign (data, src);
+		if(assign)
+			return assign(data, src);
 	}
 
 	return FALSE;
 }
 
 // UgJsonParseFunc for UgData, used by UgEntry with UG_ENTRY_CUSTOM
-UgJsonError ug_json_parse_data (UgJson* json,
-                                const char* name, const char* value,
-                                void* data, void* none)
+UgJsonError ug_json_parse_data(UgJson* json,
+                               const char* name, const char* value,
+                               void* data, void* none)
 {
 	UgData*  ugdata = (UgData*)data;
 
 	// UgData's type is UG_JSON_OBJECT
 	if (json->type != UG_JSON_OBJECT) {
 //		if (json->type == UG_JSON_ARRAY)
-//			ug_json_push (json, ug_json_parse_unknown, NULL, NULL);
+//			ug_json_push(json, ug_json_parse_unknown, NULL, NULL);
 		return UG_JSON_ERROR_TYPE_NOT_MATCH;
 	}
 
 	if (ugdata->info->entry == NULL)
-		ug_json_push (json, ug_json_parse_unknown, NULL, NULL);
+		ug_json_push(json, ug_json_parse_unknown, NULL, NULL);
 	else
-		ug_json_push (json, ug_json_parse_entry, data, (void*)ugdata->info->entry);
+		ug_json_push(json, ug_json_parse_entry, data, (void*)ugdata->info->entry);
 	return UG_JSON_ERROR_NONE;
 }
 
 // write UgData, used by UgEntry with UG_ENTRY_CUSTOM
-void        ug_json_write_data (UgJson* json, const UgData* data)
+void        ug_json_write_data(UgJson* json, const UgData* data)
 {
-	ug_json_write_object_head (json);
+	ug_json_write_object_head(json);
 	if (data->info->entry)
-		ug_json_write_entry (json, (void*) data, data->info->entry);
-	ug_json_write_object_tail (json);
+		ug_json_write_entry(json, (void*) data, data->info->entry);
+	ug_json_write_object_tail(json);
 }
 

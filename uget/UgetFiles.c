@@ -64,10 +64,10 @@ static const UgDataInfo  UgetFilesInfoStatic =
 {
 	"files",               // name
 	sizeof(UgetFiles),     // size
-	UgetFilesEntry,
 	(UgInitFunc)   uget_files_init,
 	(UgFinalFunc)  uget_files_final,
 	(UgAssignFunc) uget_files_assign,
+	UgetFilesEntry,
 };
 // extern
 const UgDataInfo*  UgetFilesInfo = &UgetFilesInfoStatic;

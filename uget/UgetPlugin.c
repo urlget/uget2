@@ -41,39 +41,39 @@
 // ------------------------------------
 // UgetPluginInfo global functions
 
-UgetPlugin*  uget_plugin_new (const UgetPluginInfo* info)
+UgetPlugin*  uget_plugin_new(const UgetPluginInfo* info)
 {
 	UgetPlugin*  plugin;
 
-	plugin = ug_malloc0 (info->size);
+	plugin = ug_malloc0(info->size);
 	plugin->info = info;
-	ug_mutex_init (&plugin->mutex);
+	ug_mutex_init(&plugin->mutex);
 	plugin->ref_count = 1;
-	info->init (plugin);
+	info->init(plugin);
 	return plugin;
 }
 
-UgetResult  uget_plugin_set (const UgetPluginInfo* info, int option, void* parameter)
+UgetResult  uget_plugin_set(const UgetPluginInfo* info, int option, void* parameter)
 {
 	UgetPluginSetFunc  set;
 
 	set = info->set;
 	if (set)
-		return set (option, parameter);
+		return set(option, parameter);
 	return UGET_RESULT_UNSUPPORT;
 }
 
-UgetResult  uget_plugin_get (const UgetPluginInfo* info, int option, void* parameter)
+UgetResult  uget_plugin_get(const UgetPluginInfo* info, int option, void* parameter)
 {
 	UgetPluginGetFunc  get;
 
 	get = info->get;
 	if (get)
-		return get (option, parameter);
+		return get(option, parameter);
 	return UGET_RESULT_UNSUPPORT;
 }
 
-int  uget_plugin_match (const UgetPluginInfo* info, UgUri* uuri)
+int  uget_plugin_match(const UgetPluginInfo* info, UgUri* uuri)
 {
 	UgetResult   res;
 	const char*  str;
@@ -83,11 +83,11 @@ int  uget_plugin_match (const UgetPluginInfo* info, UgUri* uuri)
 	if (info == NULL)
 		return 0;
 
-	if (info->hosts && (len = ug_uri_part_host (uuri, &str))) {
-		if (ug_uri_match_hosts (uuri, (char**)info->hosts) >= 0) {
+	if (info->hosts && (len = ug_uri_part_host(uuri, &str))) {
+		if (ug_uri_match_hosts(uuri, (char**)info->hosts) >= 0) {
 			matched_count++;
 			// Don't match this plug-in if it is for specify host.
-			res = uget_plugin_get (info, UGET_PLUGIN_MATCH, (void*) uuri->uri);
+			res = uget_plugin_get(info, UGET_PLUGIN_MATCH, (void*) uuri->uri);
 			if (res == UGET_RESULT_FAILED)
 				matched_count = -1;
 			else if (res == UGET_RESULT_OK)
@@ -95,13 +95,13 @@ int  uget_plugin_match (const UgetPluginInfo* info, UgUri* uuri)
 		}
 	}
 
-	if (info->schemes && (len = ug_uri_part_scheme (uuri, &str))) {
-		if (ug_uri_match_schemes (uuri, (char**)info->schemes) >= 0)
+	if (info->schemes && (len = ug_uri_part_scheme(uuri, &str))) {
+		if (ug_uri_match_schemes(uuri, (char**)info->schemes) >= 0)
 			matched_count++;
 	}
 
-	if (info->file_exts && (len = ug_uri_part_file_ext (uuri, &str))) {
-		if (ug_uri_match_file_exts (uuri, (char**)info->file_exts) >= 0)
+	if (info->file_exts && (len = ug_uri_part_file_ext(uuri, &str))) {
+		if (ug_uri_match_file_exts(uuri, (char**)info->file_exts) >= 0)
 			matched_count++;
 	}
 
@@ -111,72 +111,72 @@ int  uget_plugin_match (const UgetPluginInfo* info, UgUri* uuri)
 // ------------------------------------
 // UgetPlugin functions
 
-//void  uget_plugin_init (UgetPlugin* plugin);
-//void  uget_plugin_final (UgetPlugin* plugin);
-//void  uget_plugin_assign (UgetPlugin* plugin, UgetPlugin* node);
+//void  uget_plugin_init(UgetPlugin* plugin);
+//void  uget_plugin_final(UgetPlugin* plugin);
+//void  uget_plugin_assign(UgetPlugin* plugin, UgetPlugin* node);
 
-int  uget_plugin_ctrl (UgetPlugin* plugin, int code, void* data)
+int  uget_plugin_ctrl(UgetPlugin* plugin, int code, void* data)
 {
 	UgetPluginCtrlFunc  ctrl;
 
 	ctrl = plugin->info->ctrl;
 	if (ctrl)
-		return ctrl (plugin, code, data);
+		return ctrl(plugin, code, data);
 	return FALSE;
 }
 
-int  uget_plugin_sync (UgetPlugin* plugin)
+int  uget_plugin_sync(UgetPlugin* plugin)
 {
 	UgetPluginSyncFunc  sync;
 
 	sync = plugin->info->sync;
 	if (sync)
-		return sync (plugin);
+		return sync(plugin);
 	return FALSE;
 }
 
-void  uget_plugin_ref (UgetPlugin* plugin)
+void  uget_plugin_ref(UgetPlugin* plugin)
 {
 	plugin->ref_count++;
 }
 
-void  uget_plugin_unref (UgetPlugin* plugin)
+void  uget_plugin_unref(UgetPlugin* plugin)
 {
 	UgetEvent*  curr;
 	UgetEvent*  next;
 
 	if (--plugin->ref_count == 0) {
-		uget_plugin_final (plugin);
-		ug_mutex_clear (&plugin->mutex);
+		uget_plugin_final(plugin);
+		ug_mutex_clear(&plugin->mutex);
 		// free events
 		for (curr = plugin->events;  curr;  curr = next) {
 			next = curr->next;
-			uget_event_free (curr);
+			uget_event_free(curr);
 		}
 		// free plug-in
-		ug_free (plugin);
+		ug_free(plugin);
 	}
 }
 
-void  uget_plugin_post (UgetPlugin* plugin, UgetEvent* message)
+void  uget_plugin_post(UgetPlugin* plugin, UgetEvent* message)
 {
-	ug_mutex_lock (&plugin->mutex);
+	ug_mutex_lock(&plugin->mutex);
 	if (plugin->events)
 		plugin->events->prev = message;
 	message->next = plugin->events;
 	plugin->events = message;
-	ug_mutex_unlock (&plugin->mutex);
+	ug_mutex_unlock(&plugin->mutex);
 }
 
-UgetEvent* uget_plugin_pop  (UgetPlugin* plugin)
+UgetEvent* uget_plugin_pop(UgetPlugin* plugin)
 {
 	UgetEvent*  curr;
 	UgetEvent*  next;
 
-	ug_mutex_lock (&plugin->mutex);
+	ug_mutex_lock(&plugin->mutex);
 	curr = plugin->events;
 	plugin->events = NULL;
-	ug_mutex_unlock (&plugin->mutex);
+	ug_mutex_unlock(&plugin->mutex);
 
 	// revert
 	while (curr) {

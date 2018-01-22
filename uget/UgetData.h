@@ -46,6 +46,7 @@
 extern "C" {
 #endif
 
+// group data
 typedef struct  UgetCommon      UgetCommon;
 typedef struct  UgetProgress    UgetProgress;
 typedef struct  UgetProxy       UgetProxy;
