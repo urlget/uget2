@@ -133,12 +133,12 @@ int  uget_task_remove(UgetTask* task, UgetNode* node)
 
 	if (ug_slinks_find((UgSLinks*) task, node, &prev)) {
 		ug_slinks_remove((UgSLinks*) task, node, prev);
-		node->state &= ~UGET_STATE_ACTIVE;
+		node->group &= ~UGET_GROUP_ACTIVE;
 		// UgetRelation
 		relation = ug_info_get(&node->info, UgetRelationInfo);
 		if (relation) {
 //			uget_plugin_post(relation->task.plugin,
-//					uget_event_new_state(node, UGET_STATE_QUEUING));
+//					uget_event_new_state(node, UGET_GROUP_QUEUING));
 			uget_plugin_stop(relation->task.plugin);
 			uget_plugin_unref(relation->task.plugin);
 			relation->task.plugin = NULL;
@@ -166,11 +166,11 @@ static int  uget_task_dispatch1(UgetTask* task, UgetNode* node, UgetPlugin* plug
 
 	active = uget_plugin_sync(plugin, node);
 	// plug-in was paused by user (see function uget_app_pause_download)
-	if (node->state & UGET_STATE_PAUSED)
+	if (node->group & UGET_GROUP_PAUSED)
 		active = FALSE;
 	// plug-in has stopped if uget_plugin_sync() return FALSE.
 	if (active == FALSE)
-		node->state &= ~UGET_STATE_ACTIVE;
+		node->group &= ~UGET_GROUP_ACTIVE;
 
 	event = uget_plugin_pop(plugin);
 	for (;  event;  event = next) {
@@ -188,7 +188,7 @@ static int  uget_task_dispatch1(UgetTask* task, UgetNode* node, UgetPlugin* plug
 
 		switch (event->type) {
 		case UGET_EVENT_ERROR:
-			node->state |= UGET_STATE_ERROR;  // don't break here
+			node->group |= UGET_GROUP_ERROR;  // don't break here
 		case UGET_EVENT_WARNING:
 		case UGET_EVENT_NORMAL:
 			temp.log = ug_info_realloc(&node->info, UgetLogInfo);
@@ -196,19 +196,19 @@ static int  uget_task_dispatch1(UgetTask* task, UgetNode* node, UgetPlugin* plug
 			break;
 
 		case UGET_EVENT_START:
-			node->state |= UGET_STATE_ACTIVE;
+			node->group |= UGET_GROUP_ACTIVE;
 			uget_event_free(event);
 			break;
 
 		case UGET_EVENT_STOP:
-			node->state &= ~UGET_STATE_ACTIVE;
+			node->group &= ~UGET_GROUP_ACTIVE;
 			uget_event_free(event);
 			active = FALSE;
 			break;
 
 #if 0
 		case UGET_EVENT_COMPLETED:
-			node->state |= UGET_STATE_COMPLETED;
+			node->group |= UGET_GROUP_COMPLETED;
 			uget_event_free(event);
 			break;
 #endif

@@ -212,7 +212,7 @@ static int  uget_app_activate (UgetApp* app, UgetNode* cnode, UgetCategory* cate
 	for (index = 0;  index < array->length;  index++) {
 		dnode = array->at[index];
 		uget_node_updated (dnode);
-		if (dnode->state & UGET_STATE_ACTIVE) {
+		if (dnode->group & UGET_GROUP_ACTIVE) {
 			// remove node and insert it again to sort node
 			if (app->mix.control->sort.compare) {
 				sibling = dnode->next;
@@ -227,8 +227,8 @@ static int  uget_app_activate (UgetApp* app, UgetNode* cnode, UgetCategory* cate
 		uget_task_remove (&app->task, dnode);
 		uget_node_remove (cnode, dnode);
 		uget_node_unref_fake (dnode);
-		if (dnode->state & UGET_STATE_COMPLETED) {
-			dnode->state |= UGET_STATE_FINISHED;
+		if (dnode->group & UGET_GROUP_COMPLETED) {
+			dnode->group |= UGET_GROUP_FINISHED;
 			sibling = category->finished->children;
 			// completed time
 			log = ug_info_realloc (&dnode->info, UgetLogInfo);
@@ -236,9 +236,9 @@ static int  uget_app_activate (UgetApp* app, UgetNode* cnode, UgetCategory* cate
 			app->n_completed++;
 		}
 		else {
-			dnode->state |= UGET_STATE_QUEUING;
+			dnode->group |= UGET_GROUP_QUEUING;
 			sibling = category->queuing->children;
-			if (dnode->state & UGET_STATE_ERROR)
+			if (dnode->group & UGET_GROUP_ERROR)
 				app->n_error++;
 		}
 
@@ -272,7 +272,7 @@ static void uget_app_queuing (UgetApp* app, UgetNode* cnode, UgetCategory* categ
 		dnode = array->at[index];
 		if (category->active->n_children >= category->active_limit)
 			break;
-		if (dnode->state & UGET_STATE_INACTIVE)
+		if (dnode->group & UGET_GROUP_INACTIVE)
 			continue;
 		uget_app_activate_download (app, dnode);
 		app->n_moved++;
@@ -438,20 +438,20 @@ void  uget_app_add_category (UgetApp* app, UgetNode* cnode, int save_file)
 	uget_uri_hash_add_category (app->uri_hash, cnode);
 	category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
 	for (node = cnode->fake;  node;  node = node->peer) {
-		switch (node->state) {
-		case UGET_STATE_ACTIVE:
+		switch (node->group) {
+		case UGET_GROUP_ACTIVE:
 			category->active = node;
 			break;
 
-		case UGET_STATE_QUEUING:
+		case UGET_GROUP_QUEUING:
 			category->queuing = node;
 			break;
 
-		case UGET_STATE_FINISHED:
+		case UGET_GROUP_FINISHED:
 			category->finished = node;
 			break;
 
-		case UGET_STATE_RECYCLED:
+		case UGET_GROUP_RECYCLED:
 			category->recycled = node;
 			break;
 
@@ -757,8 +757,8 @@ int  uget_app_add_download (UgetApp* app, UgetNode* dnode, UgetNode* cnode, int 
 		cnode = app->real.children;
 	if (cnode) {
 		dnode->type   = UGET_NODE_DOWNLOAD;
-		dnode->state &= UGET_STATE_CATEGORY | UGET_STATE_PAUSED;
-		dnode->state |= UGET_STATE_QUEUING;
+		dnode->group &= UGET_GROUP_MAJOR | UGET_GROUP_PAUSED;
+		dnode->group |= UGET_GROUP_QUEUING;
 		log = ug_info_realloc (&dnode->info, UgetLogInfo);
 		log->added_time = time (NULL);    // get current time
 		if (apply) {
@@ -767,8 +767,8 @@ int  uget_app_add_download (UgetApp* app, UgetNode* dnode, UgetNode* cnode, int 
 			temp.common->keeping.uri = TRUE;
 			ug_info_assign (&dnode->info, &cnode->info, UgetCategoryInfo);
 			temp.common->keeping.enable = value;
-			if (cnode->state & UGET_STATE_PAUSED)
-				dnode->state |= UGET_STATE_PAUSED;
+			if (cnode->group & UGET_GROUP_PAUSED)
+				dnode->group |= UGET_GROUP_PAUSED;
 		}
 		temp.category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
 		// try to insert download before finished and recycled
@@ -811,8 +811,8 @@ int   uget_app_move_download_to (UgetApp* app, UgetNode* dnode, UgetNode* cnode)
 		return FALSE;
 	category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
 
-	switch (dnode->state & UGET_STATE_CATEGORY) {
-	case UGET_STATE_ACTIVE:
+	switch (dnode->group & UGET_GROUP_MAJOR) {
+	case UGET_GROUP_ACTIVE:
 		sibling = category->queuing->children;
 		if (sibling == NULL)
 			sibling = category->finished->children;
@@ -821,14 +821,14 @@ int   uget_app_move_download_to (UgetApp* app, UgetNode* dnode, UgetNode* cnode)
 		break;
 
 	default:
-	case UGET_STATE_QUEUING:
-	case UGET_STATE_FINISHED:
+	case UGET_GROUP_QUEUING:
+	case UGET_GROUP_FINISHED:
 		sibling = category->finished->children;
 		if (sibling == NULL)
 			sibling = category->recycled->children;
 		break;
 
-	case UGET_STATE_RECYCLED:
+	case UGET_GROUP_RECYCLED:
 		sibling = category->recycled->children;
 		break;
 	}
@@ -939,13 +939,13 @@ int  uget_app_recycle_download (UgetApp* app, UgetNode* dnode)
 	uget_task_remove (&app->task, dnode);
 	uget_node_remove (cnode, dnode);
 
-	if (dnode->state & UGET_STATE_RECYCLED) {
+	if (dnode->group & UGET_GROUP_RECYCLED) {
 		uget_node_unref (dnode);
 		return FALSE;
 	}
 	else {
-		dnode->state &= ~UGET_STATE_CATEGORY;
-		dnode->state |=  UGET_STATE_RECYCLED;
+		dnode->group &= ~UGET_GROUP_MAJOR;
+		dnode->group |=  UGET_GROUP_RECYCLED;
 		uget_node_unref_fake (dnode);
 		category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
 		// try to insert download before recycled
@@ -968,7 +968,7 @@ int   uget_app_activate_download (UgetApp* app, UgetNode* dnode)
 		UgetPluginInfo*  pinfo;
 	} temp;
 
-	if (dnode->state & UGET_STATE_ACTIVE)
+	if (dnode->group & UGET_GROUP_ACTIVE)
 		return FALSE;
 	common = ug_info_get (&dnode->info, UgetCommonInfo);
 	if (common == NULL || common->uri == NULL)
@@ -979,7 +979,7 @@ int   uget_app_activate_download (UgetApp* app, UgetNode* dnode)
 	if (temp.pinfo == NULL) {
 		// no plug-in support
 		uget_app_queue_download (app, dnode);
-		dnode->state |= UGET_STATE_ERROR;
+		dnode->group |= UGET_GROUP_ERROR;
 		ug_list_prepend (&log->messages,
 				(UgLink*) uget_event_new_error (
 						UGET_EVENT_ERROR_UNSUPPORTED_SCHEME, NULL));
@@ -999,14 +999,14 @@ int   uget_app_activate_download (UgetApp* app, UgetNode* dnode)
 	if (uget_task_add (&app->task, dnode, temp.pinfo) == FALSE) {
 		// plug-in start failed.
 		uget_app_queue_download (app, dnode);
-		dnode->state |=  UGET_STATE_ERROR;
+		dnode->group |=  UGET_GROUP_ERROR;
 		uget_node_updated (dnode);
 		return FALSE;
 	}
 	// change node state and move node position
 	uget_node_remove (cnode, dnode);
 	uget_node_unref_fake (dnode);
-	dnode->state =  UGET_STATE_ACTIVE;
+	dnode->group =  UGET_GROUP_ACTIVE;
 	temp.category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
 	// try to insert download before queuing, finished, and recycled
 	sibling = temp.category->queuing->children;
@@ -1029,10 +1029,10 @@ int   uget_app_pause_download (UgetApp* app, UgetNode* dnode)
 	UgetNode*     cnode;
 	UgetNode*     fake;
 
-	if (dnode->state & UGET_STATE_UNRUNNABLE)
+	if (dnode->group & UGET_GROUP_UNRUNNABLE)
 		return FALSE;
 	uget_task_remove (&app->task, dnode);
-	dnode->state |= UGET_STATE_PAUSED;
+	dnode->group |= UGET_GROUP_PAUSED;
 
 	cnode = dnode->parent;
 	category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
@@ -1041,7 +1041,7 @@ int   uget_app_pause_download (UgetApp* app, UgetNode* dnode)
 			uget_node_remove (cnode, dnode);
 			uget_node_unref_fake (dnode);
 
-			dnode->state |= UGET_STATE_QUEUING;
+			dnode->group |= UGET_GROUP_QUEUING;
 			// try to insert download before queuing, finished, and recycled
 			sibling = category->queuing->children;
 			if (sibling == NULL)
@@ -1056,17 +1056,17 @@ int   uget_app_pause_download (UgetApp* app, UgetNode* dnode)
 		}
 	}
 #else
-	if (dnode->state & UGET_STATE_ACTIVE) {
+	if (dnode->group & UGET_GROUP_ACTIVE) {
 //		uget_task_remove (&app->task, dnode);
 		UgetRelation*  relation;
 		relation = ug_info_get (&dnode->info, UgetRelationInfo);
 		if (relation && relation->task.plugin)
 			uget_plugin_stop (relation->task.plugin);
-		dnode->state &= ~UGET_STATE_ACTIVE;
+		dnode->group &= ~UGET_GROUP_ACTIVE;
 	}
-	else if (dnode->state & UGET_STATE_UNRUNNABLE)
+	else if (dnode->group & UGET_GROUP_UNRUNNABLE)
 		return FALSE;
-	dnode->state |= UGET_STATE_PAUSED;
+	dnode->group |= UGET_GROUP_PAUSED;
 #endif
 	return TRUE;
 }
@@ -1077,12 +1077,12 @@ int   uget_app_queue_download (UgetApp* app, UgetNode* dnode)
 	UgetNode*     sibling;
 	UgetCategory* category;
 
-	if ((dnode->state & UGET_STATE_ACTIVE)     == 0 &&
-		(dnode->state & UGET_STATE_UNRUNNABLE) == 0)
+	if ((dnode->group & UGET_GROUP_ACTIVE)     == 0 &&
+		(dnode->group & UGET_GROUP_UNRUNNABLE) == 0)
 		return FALSE;
 
-	if (dnode->state & UGET_STATE_QUEUING)
-		dnode->state = UGET_STATE_QUEUING;
+	if (dnode->group & UGET_GROUP_QUEUING)
+		dnode->group = UGET_GROUP_QUEUING;
 	else {
 		cnode = dnode->parent;
 		uget_node_remove (cnode, dnode);
@@ -1093,7 +1093,7 @@ int   uget_app_queue_download (UgetApp* app, UgetNode* dnode)
 		// otherwise insert it before finished and recycled.
 		category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
 		sibling = NULL;
-		if (dnode->state & UGET_STATE_ACTIVE) {
+		if (dnode->group & UGET_GROUP_ACTIVE) {
 			uget_task_remove (&app->task, dnode);
 			sibling = category->queuing->children;
 		}
@@ -1104,7 +1104,7 @@ int   uget_app_queue_download (UgetApp* app, UgetNode* dnode)
 		// get real sibling
 		if (sibling)
 			sibling = sibling->real;
-		dnode->state = UGET_STATE_QUEUING;
+		dnode->group = UGET_GROUP_QUEUING;
 		uget_node_insert (cnode, sibling, dnode);
 	}
 	return TRUE;

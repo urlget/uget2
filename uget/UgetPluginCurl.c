@@ -768,7 +768,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginCurl* plugin)
 			case UGET_CURL_ERROR:
 				// if no other downloading segment, plug-in response error
 				if (N_THREAD(plugin) == 1) {
-//					plugin->node->state |= UGET_STATE_ERROR;
+//					plugin->node->group |= UGET_GROUP_ERROR;
 					if (ugcurl->event) {
 						uget_plugin_post((UgetPlugin*) plugin, ugcurl->event);
 						ugcurl->event = NULL;
@@ -1323,7 +1323,7 @@ static void complete_file(UgetPluginCurl* plugin)
 	if (plugin->common->timestamp == TRUE && plugin->file.time != -1)
 		ug_modify_file_time(plugin->file.path, plugin->file.time);
 	// completed message
-	plugin->node->state |= UGET_STATE_COMPLETED;
+	plugin->node->group |= UGET_GROUP_COMPLETED;
 	uget_plugin_post((UgetPlugin*)plugin,
 			uget_event_new(UGET_EVENT_COMPLETED));
 	uget_plugin_post((UgetPlugin*)plugin,

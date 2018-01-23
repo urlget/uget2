@@ -530,22 +530,22 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
 #ifndef NDEBUG
 			// debug
 			if (temp.common->debug_level) {
-				if ((node->state & UGET_STATE_UPLOADING) == 0)
+				if ((node->group & UGET_GROUP_UPLOADING) == 0)
 					printf("uploading...\n");
 			}
 #endif
-			node->state |= UGET_STATE_UPLOADING;
+			node->group |= UGET_GROUP_UPLOADING;
 		}
 		break;
 
 	case ARIA2_STATUS_WAITING:
 		// clear uploading state
-		node->state &= ~UGET_STATE_UPLOADING;
+		node->group &= ~UGET_GROUP_UPLOADING;
 		break;
 
 	case ARIA2_STATUS_COMPLETE:
 		// clear uploading state
-		node->state &= ~UGET_STATE_UPLOADING;
+		node->group &= ~UGET_GROUP_UPLOADING;
 		// remove completed gid
 		ug_free(plugin->gids.at[0]);
 		plugin->gids.length -= 1;
@@ -577,7 +577,7 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
 		}
 		// If no followed gid, it was completed.
 		else if (plugin->gids.length == 0) {
-			node->state |= UGET_STATE_COMPLETED;
+			node->group |= UGET_GROUP_COMPLETED;
 			event = uget_event_new(UGET_EVENT_COMPLETED);
 			uget_plugin_post((UgetPlugin*)plugin, event);
 		}
@@ -590,7 +590,7 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
 
 	case ARIA2_STATUS_ERROR:
 		// clear uploading state
-		node->state &= ~UGET_STATE_UPLOADING;
+		node->group &= ~UGET_GROUP_UPLOADING;
 #ifdef NO_RETRY_IF_CONNECT_FAILED
 		// download speed was too slow
 		if (plugin->errorCode == 5) {
@@ -611,7 +611,7 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
 #endif
 			}
 			else {
-//				plugin->node->state |= UGET_STATE_ERROR;
+//				plugin->node->group |= UGET_GROUP_ERROR;
 				event = uget_event_new_error(
 						UGET_EVENT_ERROR_TOO_MANY_RETRIES, NULL);
 				uget_plugin_post((UgetPlugin*) plugin, event);
@@ -622,7 +622,7 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
 				plugin->errorCode = 1;
 			// if this is last gid.
 			if (plugin->gids.length == 1) {
-//				plugin->node->state |= UGET_STATE_ERROR;
+//				plugin->node->group |= UGET_GROUP_ERROR;
 #ifdef HAVE_GLIB
 				event = uget_event_new_error(0,
 						gettext(error_string[plugin->errorCode]));
@@ -643,7 +643,7 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
 
 	case ARIA2_STATUS_REMOVED:
 		// clear uploading state
-		node->state &= ~UGET_STATE_UPLOADING;
+		node->group &= ~UGET_GROUP_UPLOADING;
 		// debug
 		event = uget_event_new_normal(0, _("aria2: gid was removed."));
 		uget_plugin_post((UgetPlugin*)plugin, event);
@@ -747,14 +747,14 @@ static int  send_start_request(UgetPluginAria2* plugin)
 		uget_plugin_post((UgetPlugin*) plugin,
 				uget_event_new_error(0, aria2_no_response));
 #endif
-//		plugin->node->state |= UGET_STATE_ERROR;
+//		plugin->node->group |= UGET_GROUP_ERROR;
 		return FALSE;
 	}
 	if (res->error.code) {
 		uget_plugin_post((UgetPlugin*)plugin,
 				uget_event_new_error(0, res->error.message));
 		uget_aria2_recycle(global.data, res);
-//		plugin->node->state |= UGET_STATE_ERROR;
+//		plugin->node->group |= UGET_GROUP_ERROR;
 		return FALSE;
 	}
 
@@ -847,14 +847,14 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginAria2* plugin)
 			uget_plugin_post((UgetPlugin*) plugin,
 					uget_event_new_error(0, aria2_no_response));
 #endif
-//			plugin->node->state |= UGET_STATE_ERROR;
+//			plugin->node->group |= UGET_GROUP_ERROR;
 			goto exit;
 		}
 		if (res->error.code) {
 			uget_plugin_post((UgetPlugin*)plugin,
 					uget_event_new_error(0, res->error.message));
 			uget_aria2_recycle(global.data, res);
-//			plugin->node->state |= UGET_STATE_ERROR;
+//			plugin->node->group |= UGET_GROUP_ERROR;
 			goto exit;
 		}
 

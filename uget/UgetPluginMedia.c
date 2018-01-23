@@ -677,7 +677,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin)
 	common->uri = NULL;  // Don't free common->uri again.
 
 	if (plugin->paused == FALSE && umitem == NULL) {
-		plugin->node->state |= UGET_STATE_COMPLETED;
+		plugin->node->group |= UGET_GROUP_COMPLETED;
 		uget_plugin_post((UgetPlugin*) plugin,
 				uget_event_new(UGET_EVENT_COMPLETED));
 	}
@@ -732,9 +732,9 @@ static int  sync_child_node(UgetNode* node, UgetNode* src, int src_is_active)
 		}
 		// if found node that has the same name
 		if (node_child) {
-			// clear UGET_STATE_ACTIVE if not active
+			// clear UGET_GROUP_ACTIVE if not active
 			if (src_is_active == FALSE)
-				node_child->state = 0;
+				node_child->group = 0;
 		}
 		else {
 			link_changed = TRUE;
@@ -742,7 +742,7 @@ static int  sync_child_node(UgetNode* node, UgetNode* src, int src_is_active)
 			new_child = uget_node_new(NULL);
 			new_child->name = ug_strdup(src_child->name);
 			new_child->type = src_child->type;
-			new_child->state = (src_is_active) ? UGET_STATE_ACTIVE : 0;
+			new_child->group = (src_is_active) ? UGET_GROUP_ACTIVE : 0;
 			uget_node_prepend(node, new_child);
 		}
 	}
@@ -751,7 +751,7 @@ static int  sync_child_node(UgetNode* node, UgetNode* src, int src_is_active)
 	if (src_is_active == FALSE) {
 		for (node_child = node->children;  node_child;  node_child = new_child) {
 			new_child = node_child->next;
-			if (node_child->state == UGET_STATE_ACTIVE) {
+			if (node_child->group == UGET_GROUP_ACTIVE) {
 				uget_node_remove(node, node_child);
 				uget_node_unref(node_child);
 				link_changed = TRUE;

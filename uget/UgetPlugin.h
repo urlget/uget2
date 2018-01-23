@@ -108,7 +108,7 @@ struct UgetPluginInfo
 	// ----------------------------
 	// Global data and functions
 
-	// UgetTask use below data to match UgetPlugin and UgetNode
+	// global data is used for matching UgetPlugin and UgInfo
 	const char**    hosts;
 	const char**    schemes;
 	const char**    file_exts;
@@ -122,7 +122,7 @@ struct UgetPluginInfo
 // UgetPlugin: It derived from UgType.
 //             It it base class/struct that used by plug-ins.
 
-#define UGET_PLUGIN_MEMBERS  \
+#define UGET_PLUGIN_MEMBERS       \
 	const UgetPluginInfo*  info;  \
 	UgetEvent*    events;         \
 	UgMutex       mutex;          \
@@ -137,7 +137,7 @@ struct UgetPlugin
 //	int           ref_count;
 };
 
-// UgetPluginInfo global functions
+// UgetPlugin functions
 UgetPlugin*  uget_plugin_new(const UgetPluginInfo* info);
 UgetResult   uget_plugin_set(const UgetPluginInfo* info, int option, void* parameter);
 UgetResult   uget_plugin_get(const UgetPluginInfo* info, int option, void* parameter);

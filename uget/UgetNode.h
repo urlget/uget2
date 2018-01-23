@@ -103,22 +103,22 @@ typedef enum {
 } UgetNodeType;
 
 typedef enum {
-	UGET_STATE_QUEUING    = 1 << 0,
+	UGET_GROUP_QUEUING    = 1 << 0,
 
-	UGET_STATE_PAUSED     = 1 << 1,
-	UGET_STATE_ACTIVE     = 1 << 2,
-	UGET_STATE_COMPLETED  = 1 << 3,
-	UGET_STATE_UPLOADING  = 1 << 4,
-	UGET_STATE_ERROR      = 1 << 5,
+	UGET_GROUP_PAUSED     = 1 << 1,
+	UGET_GROUP_ACTIVE     = 1 << 2,
+	UGET_GROUP_COMPLETED  = 1 << 3,
+	UGET_GROUP_UPLOADING  = 1 << 4,
+	UGET_GROUP_ERROR      = 1 << 5,
 
-	UGET_STATE_FINISHED   = 1 << 6,
-	UGET_STATE_RECYCLED   = 1 << 7,
+	UGET_GROUP_FINISHED   = 1 << 6,
+	UGET_GROUP_RECYCLED   = 1 << 7,
 
-	UGET_STATE_CATEGORY   = UGET_STATE_ACTIVE | UGET_STATE_QUEUING | UGET_STATE_FINISHED | UGET_STATE_RECYCLED,
-	UGET_STATE_INACTIVE   = UGET_STATE_PAUSED | UGET_STATE_ERROR,
-	UGET_STATE_UNRUNNABLE = UGET_STATE_PAUSED | UGET_STATE_ERROR | UGET_STATE_FINISHED | UGET_STATE_RECYCLED,
-	UGET_STATE_UNFINISHED = UGET_STATE_ACTIVE | UGET_STATE_UPLOADING,
-} UgetState;
+	UGET_GROUP_MAJOR      = UGET_GROUP_ACTIVE | UGET_GROUP_QUEUING | UGET_GROUP_FINISHED | UGET_GROUP_RECYCLED,
+	UGET_GROUP_INACTIVE   = UGET_GROUP_PAUSED | UGET_GROUP_ERROR,
+	UGET_GROUP_UNRUNNABLE = UGET_GROUP_PAUSED | UGET_GROUP_ERROR | UGET_GROUP_FINISHED | UGET_GROUP_RECYCLED,
+	UGET_GROUP_UNFINISHED = UGET_GROUP_ACTIVE | UGET_GROUP_UPLOADING,
+} UgetGroup;
 
 struct UgetNodeNotifier
 {
@@ -172,7 +172,7 @@ struct UgetNode
 
 	char*         name;    // fake node doesn't use this
 	int           type;    // UgetNodeType
-	int           state;   // UgetState
+	int           group;   // UgetGroup
 	UgInfo        info;    // fake node doesn't use this
 
 	struct UgetNodeControl*  control;
@@ -205,7 +205,7 @@ void  uget_node_make_fake (UgetNode* node);
 #define uget_node_child_position(node,child)  \
 		ug_node_child_position((UgNode*)node, (UgNode*)child)
 UgetNode* uget_node_nth_fake (UgetNode* node, int nth);
-UgetNode* uget_node_fake_from_state (UgetNode* node, int state);
+UgetNode* uget_node_fake_from_group (UgetNode* node, int group);
 int       uget_node_fake_position (UgetNode* node, UgetNode* fake);
 
 // ----------------------------------------------------------------------------

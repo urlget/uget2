@@ -203,18 +203,18 @@ static void uget_node_set_by_dataset (UgetNode* node, UgDataset* dataset)
 	old.relation = ug_dataset_get (dataset, UgRelationInfo, 0);
 	if (old.relation) {
 		if (old.relation->hints & UG_HINT_PAUSED)
-			node->state |= UGET_STATE_PAUSED;
+			node->group |= UGET_GROUP_PAUSED;
 		if (old.relation->hints & UG_HINT_ERROR)
-			node->state |= UGET_STATE_ERROR;
+			node->group |= UGET_GROUP_ERROR;
 		if (old.relation->hints & UG_HINT_COMPLETED)
-			node->state |= UGET_STATE_COMPLETED;
+			node->group |= UGET_GROUP_COMPLETED;
 
 		if (old.relation->hints & UG_HINT_FINISHED)
-			node->state |= UGET_STATE_FINISHED;
+			node->group |= UGET_GROUP_FINISHED;
 		else if (old.relation->hints & UG_HINT_RECYCLED)
-			node->state |= UGET_STATE_RECYCLED;
+			node->group |= UGET_GROUP_RECYCLED;
 		else
-			node->state |= UGET_STATE_QUEUING;
+			node->group |= UGET_GROUP_QUEUING;
 	}
 
 	old.common = ug_dataset_get (dataset, UgCommonInfo, 0);

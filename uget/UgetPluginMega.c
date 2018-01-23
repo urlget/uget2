@@ -737,7 +737,7 @@ int  mega_decrypt_file(UgetPluginMega* plugin, int preset_progress)
 	ug_remove(path);
 	ug_free(path);
 	plugin->target_progress->percent = 100;
-	plugin->node->state |= UGET_STATE_COMPLETED;
+	plugin->node->group |= UGET_GROUP_COMPLETED;
 	// post message
 	uget_plugin_post((UgetPlugin*) plugin,
 			uget_event_new_normal(0, _("decryption completed")));

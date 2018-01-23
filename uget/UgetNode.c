@@ -69,11 +69,14 @@ const UgEntry  UgetNodeEntry[] =
 {
 	{"name",     offsetof (UgetNode, name),  UG_ENTRY_STRING, NULL, NULL},
 	{"type",     offsetof (UgetNode, type),  UG_ENTRY_INT,    NULL, NULL},
-	{"state",    offsetof (UgetNode, state), UG_ENTRY_INT,    NULL, NULL},
+	{"group",    offsetof (UgetNode, group), UG_ENTRY_INT,    NULL, NULL},
 	{"info",     offsetof (UgetNode, info),  UG_ENTRY_CUSTOM,
 			ug_json_parse_info,   ug_json_write_info},
 	{"children", 0,                          UG_ENTRY_ARRAY,
 			ug_json_parse_uget_node_children, ug_json_write_uget_node_children},
+
+	// deprecated
+	{"state",    offsetof (UgetNode, group), UG_ENTRY_INT,    NULL, NULL},
 	{NULL}    // null-terminated
 };
 
@@ -105,7 +108,7 @@ void  uget_node_init  (UgetNode* node, UgetNode* node_real)
 	}
 	else {
 		// this is a fake node.
-//		node->state = 0;
+//		node->group = 0;
 		node->data = node_real->data;
 		node->type = node_real->type;
 		node->real = node_real;
@@ -443,10 +446,10 @@ UgetNode* uget_node_nth_fake (UgetNode* node, int nth)
 	return NULL;
 }
 
-UgetNode* uget_node_fake_from_state (UgetNode* node, int state)
+UgetNode* uget_node_fake_from_group (UgetNode* node, int group)
 {
 	for (node = node->fake;  node;  node = node->peer) {
-		if (node->state & state)
+		if (node->group & group)
 			return node;
 	}
 	return NULL;
@@ -561,27 +564,27 @@ void  uget_node_filter_split (UgetNode* node, UgetNode* sibling, UgetNode* child
 		// node is root. child_real is category
 		//
 		child = uget_node_new (child_real);
-		child->state = UGET_STATE_RECYCLED;
+		child->group = UGET_GROUP_RECYCLED;
 		uget_node_prepend (node, child);
 		//
 		child = uget_node_new (child_real);
-		child->state = UGET_STATE_FINISHED;
+		child->group = UGET_GROUP_FINISHED;
 		uget_node_prepend (node, child);
 		//
 		child = uget_node_new (child_real);
-		child->state = UGET_STATE_QUEUING;
+		child->group = UGET_GROUP_QUEUING;
 		uget_node_prepend (node, child);
 		//
 		child = uget_node_new (child_real);
-		child->state = UGET_STATE_ACTIVE;
+		child->group = UGET_GROUP_ACTIVE;
 		uget_node_prepend (node, child);
 	}
 	else if (node->parent->parent == NULL) {
 		// node is category. child_real is download
 		child = child_real->data;
-		if ((node->state & child->state) ||
-		    ( (child->state & UGET_STATE_CATEGORY) == 0 &&
-		      (node->state & UGET_STATE_QUEUING) ) )
+		if ((node->group & child->group) ||
+		    ( (child->group & UGET_GROUP_MAJOR) == 0 &&
+		      (node->group & UGET_GROUP_QUEUING) ) )
 		{
 			// insert sorted
 			if (node->control->sort.compare) {
@@ -651,35 +654,35 @@ void  uget_node_filter_mix (UgetNode* node, UgetNode* sibling, UgetNode* child)
 			return;
 		}
 
-		// reorder by state
+		// reorder by group
 		if ( sibling &&
-		    ((sibling->data->state & UGET_STATE_CATEGORY) !=
-		     (child->data->state   & UGET_STATE_CATEGORY)) )
+		    ((sibling->data->group & UGET_GROUP_MAJOR) !=
+		     (child->data->group   & UGET_GROUP_MAJOR)) )
 		{
 			sibling = NULL;
 		}
 		if (node->fake && sibling == NULL) {
-			switch (child->data->state & UGET_STATE_CATEGORY) {
-			case UGET_STATE_ACTIVE:
-				fake = uget_node_fake_from_state (node, UGET_STATE_QUEUING);
+			switch (child->data->group & UGET_GROUP_MAJOR) {
+			case UGET_GROUP_ACTIVE:
+				fake = uget_node_fake_from_group (node, UGET_GROUP_QUEUING);
 				if (fake == NULL || fake->children == NULL)
-					fake = uget_node_fake_from_state (node, UGET_STATE_FINISHED);
+					fake = uget_node_fake_from_group (node, UGET_GROUP_FINISHED);
 				if (fake == NULL || fake->children == NULL)
-					fake = uget_node_fake_from_state (node, UGET_STATE_RECYCLED);
+					fake = uget_node_fake_from_group (node, UGET_GROUP_RECYCLED);
 				break;
 
-			case UGET_STATE_QUEUING:
+			case UGET_GROUP_QUEUING:
 			default:
-				fake = uget_node_fake_from_state (node, UGET_STATE_FINISHED);
+				fake = uget_node_fake_from_group (node, UGET_GROUP_FINISHED);
 				if (fake == NULL || fake->children == NULL)
-					fake = uget_node_fake_from_state (node, UGET_STATE_RECYCLED);
+					fake = uget_node_fake_from_group (node, UGET_GROUP_RECYCLED);
 				break;
 
-			case UGET_STATE_FINISHED:
-				fake = uget_node_fake_from_state (node, UGET_STATE_RECYCLED);
+			case UGET_GROUP_FINISHED:
+				fake = uget_node_fake_from_group (node, UGET_GROUP_RECYCLED);
 				break;
 
-			case UGET_STATE_RECYCLED:
+			case UGET_GROUP_RECYCLED:
 				fake = NULL;
 				break;
 			}

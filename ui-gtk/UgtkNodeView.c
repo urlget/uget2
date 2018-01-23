@@ -49,26 +49,26 @@
 #if GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 10
 static const UgPair state_icon_pair[] =
 {
-	{(void*)(intptr_t) UGET_STATE_FINISHED,  "go-last"},
-	{(void*)(intptr_t) UGET_STATE_RECYCLED,  "list-remove"},
-	{(void*)(intptr_t) UGET_STATE_PAUSED,    "media-playback-pause"},
-	{(void*)(intptr_t) UGET_STATE_ERROR,     "dialog-error"},
-	{(void*)(intptr_t) UGET_STATE_UPLOADING, "go-up"},
-	{(void*)(intptr_t) UGET_STATE_COMPLETED, "gtk-yes"},
-	{(void*)(intptr_t) UGET_STATE_QUEUING,   "text-x-generic"},
-	{(void*)(intptr_t) UGET_STATE_ACTIVE,    "media-playback-start"},
+	{(void*)(intptr_t) UGET_GROUP_FINISHED,  "go-last"},
+	{(void*)(intptr_t) UGET_GROUP_RECYCLED,  "list-remove"},
+	{(void*)(intptr_t) UGET_GROUP_PAUSED,    "media-playback-pause"},
+	{(void*)(intptr_t) UGET_GROUP_ERROR,     "dialog-error"},
+	{(void*)(intptr_t) UGET_GROUP_UPLOADING, "go-up"},
+	{(void*)(intptr_t) UGET_GROUP_COMPLETED, "gtk-yes"},
+	{(void*)(intptr_t) UGET_GROUP_QUEUING,   "text-x-generic"},
+	{(void*)(intptr_t) UGET_GROUP_ACTIVE,    "media-playback-start"},
 };
 #else
 static const UgPair state_icon_pair[] =
 {
-	{(void*)(intptr_t) UGET_STATE_FINISHED,  GTK_STOCK_GOTO_LAST},
-	{(void*)(intptr_t) UGET_STATE_RECYCLED,  GTK_STOCK_DELETE},
-	{(void*)(intptr_t) UGET_STATE_PAUSED,    GTK_STOCK_MEDIA_PAUSE},
-	{(void*)(intptr_t) UGET_STATE_ERROR,     GTK_STOCK_DIALOG_ERROR},
-	{(void*)(intptr_t) UGET_STATE_UPLOADING, GTK_STOCK_GO_UP},
-	{(void*)(intptr_t) UGET_STATE_COMPLETED, GTK_STOCK_YES},
-	{(void*)(intptr_t) UGET_STATE_QUEUING,   GTK_STOCK_FILE},
-	{(void*)(intptr_t) UGET_STATE_ACTIVE,    GTK_STOCK_MEDIA_PLAY},
+	{(void*)(intptr_t) UGET_GROUP_FINISHED,  GTK_STOCK_GOTO_LAST},
+	{(void*)(intptr_t) UGET_GROUP_RECYCLED,  GTK_STOCK_DELETE},
+	{(void*)(intptr_t) UGET_GROUP_PAUSED,    GTK_STOCK_MEDIA_PAUSE},
+	{(void*)(intptr_t) UGET_GROUP_ERROR,     GTK_STOCK_DIALOG_ERROR},
+	{(void*)(intptr_t) UGET_GROUP_UPLOADING, GTK_STOCK_GO_UP},
+	{(void*)(intptr_t) UGET_GROUP_COMPLETED, GTK_STOCK_YES},
+	{(void*)(intptr_t) UGET_GROUP_QUEUING,   GTK_STOCK_FILE},
+	{(void*)(intptr_t) UGET_GROUP_ACTIVE,    GTK_STOCK_MEDIA_PLAY},
 };
 #endif
 static const int state_icon_pair_len = sizeof (state_icon_pair) / sizeof (UgPair);
@@ -98,7 +98,7 @@ static void col_set_icon (GtkTreeViewColumn *tree_column,
 	// select icon_name
 	for (index = 0;  index < state_icon_pair_len;  index++) {
 		key = (intptr_t)state_icon_pair[index].key;
-		if ((key & node->state) == key) {
+		if ((key & node->group) == key) {
 			icon_name = state_icon_pair[index].data;
 			break;
 		}
@@ -620,12 +620,12 @@ static void col_set_icon_c (GtkTreeViewColumn *tree_column,
 
 	node = iter->user_data;
 #if GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 10
-	if (node->state & UGET_STATE_PAUSED)
+	if (node->group & UGET_GROUP_PAUSED)
 		g_object_set (cell, "icon-name", "media-playback-pause", NULL);
 	else
 		g_object_set (cell, "icon-name", "gtk-dnd-multiple", NULL);
 #else
-	if (node->state & UGET_STATE_PAUSED)
+	if (node->group & UGET_GROUP_PAUSED)
 		g_object_set (cell, "stock-id", GTK_STOCK_MEDIA_PAUSE, NULL);
 	else
 		g_object_set (cell, "stock-id", GTK_STOCK_DND_MULTIPLE, NULL);
@@ -637,14 +637,14 @@ static void col_set_icon_c (GtkTreeViewColumn *tree_column,
 
 static const UgPair state_name_pair[] =
 {
-	{(void*)(intptr_t) UGET_STATE_ERROR,     N_("Error")},
-	{(void*)(intptr_t) UGET_STATE_PAUSED,    N_("Paused")},
-	{(void*)(intptr_t) UGET_STATE_UPLOADING, N_("Uploading")},
-	{(void*)(intptr_t) UGET_STATE_COMPLETED, N_("Completed")},
-	{(void*)(intptr_t) UGET_STATE_FINISHED,  N_("Finished")},
-	{(void*)(intptr_t) UGET_STATE_RECYCLED,  N_("Recycled")},
-	{(void*)(intptr_t) UGET_STATE_QUEUING,   N_("Queuing")},
-	{(void*)(intptr_t) UGET_STATE_ACTIVE,    N_("Active")},
+	{(void*)(intptr_t) UGET_GROUP_ERROR,     N_("Error")},
+	{(void*)(intptr_t) UGET_GROUP_PAUSED,    N_("Paused")},
+	{(void*)(intptr_t) UGET_GROUP_UPLOADING, N_("Uploading")},
+	{(void*)(intptr_t) UGET_GROUP_COMPLETED, N_("Completed")},
+	{(void*)(intptr_t) UGET_GROUP_FINISHED,  N_("Finished")},
+	{(void*)(intptr_t) UGET_GROUP_RECYCLED,  N_("Recycled")},
+	{(void*)(intptr_t) UGET_GROUP_QUEUING,   N_("Queuing")},
+	{(void*)(intptr_t) UGET_GROUP_ACTIVE,    N_("Active")},
 };
 static const int state_name_pair_len = sizeof (state_name_pair) / sizeof (UgPair);
 
@@ -669,7 +669,7 @@ static void col_set_name_s (GtkTreeViewColumn *tree_column,
 	if (node->real) {
 		for (index = 0;  index < state_name_pair_len;  index++) {
 			key = (intptr_t)state_name_pair[index].key;
-			if ((key & node->state) == key) {
+			if ((key & node->group) == key) {
 				name = gettext (state_name_pair[index].data);
 				break;
 			}
@@ -703,7 +703,7 @@ static void col_set_icon_s (GtkTreeViewColumn *tree_column,
 	if (node->real) {
 		for (index = 0;  index < state_icon_pair_len;  index++) {
 			key = (intptr_t)state_icon_pair[index].key;
-			if ((key & node->state) == key) {
+			if ((key & node->group) == key) {
 				icon_name = state_icon_pair[index].data;
 				break;
 			}

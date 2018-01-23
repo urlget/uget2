@@ -563,9 +563,9 @@ void  ugtk_download_form_get (UgtkDownloadForm* dform, UgetNode* node)
 	// UgetNode
 	if (gtk_widget_get_sensitive (dform->radio_pause)) {
 		if (gtk_toggle_button_get_active ((GtkToggleButton*) dform->radio_pause))
-			node->state |= UGET_STATE_PAUSED;
+			node->group |= UGET_GROUP_PAUSED;
 		else
-			node->state &= ~UGET_STATE_PAUSED;
+			node->group &= ~UGET_GROUP_PAUSED;
 	}
 }
 
@@ -688,7 +688,7 @@ void  ugtk_download_form_set (UgtkDownloadForm* dform, UgetNode* node, gboolean 
 	// ------------------------------------------
 	// UgetNode
 	if (gtk_widget_get_sensitive (dform->radio_pause)) {
-		if (node->state & UGET_STATE_PAUSED)
+		if (node->group & UGET_GROUP_PAUSED)
 			gtk_toggle_button_set_active ((GtkToggleButton*) dform->radio_pause, TRUE);
 		else
 			gtk_toggle_button_set_active ((GtkToggleButton*) dform->radio_runnable, TRUE);

@@ -1087,7 +1087,7 @@ void  ugtk_app_queue_download (UgtkApp* app, gboolean keep_active)
 		node = link->data;
 		node = node->data;
 		link->data = node;
-		if (keep_active && node->state & UGET_STATE_ACTIVE)
+		if (keep_active && node->group & UGET_GROUP_ACTIVE)
 			continue;
 		uget_app_queue_download ((UgetApp*) app, node);
 	}
@@ -1151,9 +1151,9 @@ void  ugtk_app_switch_download_state (UgtkApp* app)
 		node = link->data;
 		node = node->data;
 		link->data = node;
-		if (node->state & UGET_STATE_PAUSED)
+		if (node->group & UGET_GROUP_PAUSED)
 			uget_app_queue_download ((UgetApp*) app, node);
-		else if (node->state & UGET_STATE_ACTIVE)
+		else if (node->group & UGET_GROUP_ACTIVE)
 			uget_app_pause_download ((UgetApp*) app, node);
 	}
 	if (app->traveler.state.cursor.pos == 0) {
