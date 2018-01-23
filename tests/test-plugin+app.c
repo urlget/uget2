@@ -71,7 +71,7 @@ void  download_node (UgetNode* node, const UgetPluginInfo* info)
 //	uget_plugin_ctrl (plugin, UGET_PLUGIN_CTRL_SPEED, integer);
 
 	uget_plugin_start (plugin, node);
-	while (uget_plugin_sync (plugin)) {
+	while (uget_plugin_sync (plugin, node)) {
 		ug_sleep (1000);
 		// event
 		events = uget_plugin_pop (plugin);

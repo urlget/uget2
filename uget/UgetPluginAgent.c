@@ -59,17 +59,17 @@ static struct
 // ----------------------------------------------------------------------------
 // global functions
 
-UgetResult  uget_plugin_agent_global_init (void)
+UgetResult  uget_plugin_agent_global_init(void)
 {
 	if (global.default_plugin == NULL) {
 #if defined _WIN32 || defined _WIN64
 		WSADATA  WSAData;
-		WSAStartup (MAKEWORD (2, 2), &WSAData);
+		WSAStartup(MAKEWORD(2, 2), &WSAData);
 #endif // _WIN32 || _WIN64
 
-		if (curl_global_init (CURL_GLOBAL_ALL) != CURLE_OK) {
+		if (curl_global_init(CURL_GLOBAL_ALL) != CURLE_OK) {
 #if defined _WIN32 || defined _WIN64
-			WSACleanup ();
+			WSACleanup();
 #endif
 			return UGET_RESULT_ERROR;
 		}
@@ -79,12 +79,12 @@ UgetResult  uget_plugin_agent_global_init (void)
 	return UGET_RESULT_OK;
 }
 
-void  uget_plugin_agent_global_ref (void)
+void  uget_plugin_agent_global_ref(void)
 {
 	global.ref_count++;
 }
 
-void  uget_plugin_agent_global_unref (void)
+void  uget_plugin_agent_global_unref(void)
 {
 	if (global.default_plugin == NULL)
 		return;
@@ -92,22 +92,22 @@ void  uget_plugin_agent_global_unref (void)
 	global.ref_count--;
 	if (global.ref_count == 0) {
 		global.default_plugin = NULL;
-		curl_global_cleanup ();
+		curl_global_cleanup();
 #if defined _WIN32 || defined _WIN64
-		WSACleanup ();
+		WSACleanup();
 #endif
 	}
 }
 
-UgetResult  uget_plugin_agent_global_set (int option, void* parameter)
+UgetResult  uget_plugin_agent_global_set(int option, void* parameter)
 {
 	switch (option) {
 	case UGET_PLUGIN_INIT:
 		// do global initialize/finalize here
 		if (parameter)
-			return uget_plugin_agent_global_init ();
+			return uget_plugin_agent_global_init();
 		else
-			uget_plugin_agent_global_unref ();
+			uget_plugin_agent_global_unref();
 		break;
 
 	case UGET_PLUGIN_AGENT_DEFAULT_PLUGIN:
@@ -121,7 +121,7 @@ UgetResult  uget_plugin_agent_global_set (int option, void* parameter)
 	return UGET_RESULT_OK;
 }
 
-UgetResult  uget_plugin_agent_global_get (int option, void* parameter)
+UgetResult  uget_plugin_agent_global_get(int option, void* parameter)
 {
 	switch (option) {
 	case UGET_PLUGIN_INIT:
@@ -143,30 +143,30 @@ UgetResult  uget_plugin_agent_global_get (int option, void* parameter)
 // ----------------------------------------------------------------------------
 // instance functions
 
-void uget_plugin_agent_init  (UgetPluginAgent* plugin)
+void uget_plugin_agent_init(UgetPluginAgent* plugin)
 {
 	if (global.ref_count == 0)
-		uget_plugin_agent_global_init ();
+		uget_plugin_agent_global_init();
 	else
-		uget_plugin_agent_global_ref ();
+		uget_plugin_agent_global_ref();
 }
 
-void uget_plugin_agent_final (UgetPluginAgent* plugin)
+void uget_plugin_agent_final(UgetPluginAgent* plugin)
 {
 	// extent data and plug-in
 	if (plugin->target_node)
-		uget_node_unref (plugin->target_node);
+		uget_node_unref(plugin->target_node);
 	if (plugin->target_plugin)
-		uget_plugin_unref (plugin->target_plugin);
+		uget_plugin_unref(plugin->target_plugin);
 
 	// unlink node
 	if (plugin->node)
-		uget_node_unref (plugin->node);
+		uget_node_unref(plugin->node);
 
-	uget_plugin_agent_global_unref ();
+	uget_plugin_agent_global_unref();
 }
 
-int   uget_plugin_agent_ctrl (UgetPluginAgent* plugin, int code, void* data)
+int   uget_plugin_agent_ctrl(UgetPluginAgent* plugin, int code, void* data)
 {
 	UgAssignFunc  assign;
 
@@ -175,7 +175,7 @@ int   uget_plugin_agent_ctrl (UgetPluginAgent* plugin, int code, void* data)
 		// assign a UgetNode to UgetPlugin to start download
 		assign = plugin->info->assign;
 		if (plugin->node == NULL && assign != NULL)
-			return assign (plugin, data);
+			return assign(plugin, data);
 		break;
 
 	case UGET_PLUGIN_CTRL_STOP:
@@ -184,7 +184,7 @@ int   uget_plugin_agent_ctrl (UgetPluginAgent* plugin, int code, void* data)
 
 	case UGET_PLUGIN_CTRL_SPEED:
 		// speed control
-		return uget_plugin_agent_ctrl_speed (plugin, data);
+		return uget_plugin_agent_ctrl_speed(plugin, data);
 
 	// output ---------------
 	case UGET_PLUGIN_CTRL_ACTIVE:
@@ -198,7 +198,7 @@ int   uget_plugin_agent_ctrl (UgetPluginAgent* plugin, int code, void* data)
 	return FALSE;
 }
 
-int  uget_plugin_agent_ctrl_speed (UgetPluginAgent* plugin, int* speed)
+int  uget_plugin_agent_ctrl_speed(UgetPluginAgent* plugin, int* speed)
 {
 	UgetCommon*  common;
 	int          value;
@@ -212,7 +212,7 @@ int  uget_plugin_agent_ctrl_speed (UgetPluginAgent* plugin, int* speed)
 		plugin->limit[1] = speed[1];
 	}
 	else {
-		common = ug_info_realloc (&plugin->node->info, UgetCommonInfo);
+		common = ug_info_realloc(&plugin->node->info, UgetCommonInfo);
 		// download
 		value = speed[0];
 		if (common->max_download_speed) {
@@ -236,14 +236,14 @@ int  uget_plugin_agent_ctrl_speed (UgetPluginAgent* plugin, int* speed)
 // ----------------------------------------------------------------------------
 // sync functions
 
-void  uget_plugin_agent_sync_common (UgetPluginAgent* plugin,
-                                     UgetCommon* common,
-                                     UgetCommon* target)
+void  uget_plugin_agent_sync_common(UgetPluginAgent* plugin,
+                                    UgetCommon* common,
+                                    UgetCommon* target)
 {
 	if (common == NULL)
-		common = ug_info_realloc (&plugin->node->info, UgetCommonInfo);
+		common = ug_info_realloc(&plugin->node->info, UgetCommonInfo);
 	if (target == NULL)
-		target = ug_info_realloc (&plugin->target_node->info, UgetCommonInfo);
+		target = ug_info_realloc(&plugin->target_node->info, UgetCommonInfo);
 
 	// sync speed limit from common to target
 	if (target->max_upload_speed != common->max_upload_speed ||
@@ -258,14 +258,14 @@ void  uget_plugin_agent_sync_common (UgetPluginAgent* plugin,
 	common->retry_count = target->retry_count;
 }
 
-void  uget_plugin_agent_sync_progress (UgetPluginAgent* plugin,
-                                       UgetProgress* progress,
-                                       UgetProgress* target)
+void  uget_plugin_agent_sync_progress(UgetPluginAgent* plugin,
+                                      UgetProgress* progress,
+                                      UgetProgress* target)
 {
 	if (progress == NULL)
-		progress = ug_info_realloc (&plugin->node->info, UgetProgressInfo);
+		progress = ug_info_realloc(&plugin->node->info, UgetProgressInfo);
 	if (target == NULL)
-		target = ug_info_realloc (&plugin->target_node->info, UgetProgressInfo);
+		target = ug_info_realloc(&plugin->target_node->info, UgetProgressInfo);
 
 	// sync progress from target to common
 	progress->complete       = target->complete;
@@ -279,7 +279,7 @@ void  uget_plugin_agent_sync_progress (UgetPluginAgent* plugin,
 }
 
 // sync child nodes from target_node to node
-int   uget_plugin_agent_sync_children (UgetPluginAgent* plugin, int is_target_active)
+int   uget_plugin_agent_sync_children(UgetPluginAgent* plugin, int is_target_active)
 {
 	UgetNode*  node = plugin->node;
 	UgetNode*  src  = plugin->target_node;
@@ -289,11 +289,11 @@ int   uget_plugin_agent_sync_children (UgetPluginAgent* plugin, int is_target_ac
 	int        link_changed = FALSE;
 
 	// lock & unlock for uget_plugin_agent_sync_plugin()
-	ug_mutex_lock (&plugin->mutex);
+	ug_mutex_lock(&plugin->mutex);
 
 	for (src_child = src->children;  src_child;  src_child = src_child->next) {
 		for (node_child = node->children;  node_child;  node_child = node_child->next) {
-			if (strcmp (src_child->name, node_child->name) == 0)
+			if (strcmp(src_child->name, node_child->name) == 0)
 				break;
 		}
 		// if found node that has the same name
@@ -305,11 +305,11 @@ int   uget_plugin_agent_sync_children (UgetPluginAgent* plugin, int is_target_ac
 		else {
 			link_changed = TRUE;
 			// add new node if not found
-			new_child = uget_node_new (NULL);
-			new_child->name = ug_strdup (src_child->name);
+			new_child = uget_node_new(NULL);
+			new_child->name = ug_strdup(src_child->name);
 			new_child->type = src_child->type;
 			new_child->state = (is_target_active) ? UGET_STATE_ACTIVE : 0;
-			uget_node_prepend (node, new_child);
+			uget_node_prepend(node, new_child);
 		}
 	}
 
@@ -318,70 +318,70 @@ int   uget_plugin_agent_sync_children (UgetPluginAgent* plugin, int is_target_ac
 		for (node_child = node->children;  node_child;  node_child = new_child) {
 			new_child = node_child->next;
 			if (node_child->state == UGET_STATE_ACTIVE) {
-				uget_node_remove (node, node_child);
-				uget_node_unref (node_child);
+				uget_node_remove(node, node_child);
+				uget_node_unref(node_child);
 				link_changed = TRUE;
 			}
 		}
 	}
 
-	ug_mutex_unlock (&plugin->mutex);
+	ug_mutex_unlock(&plugin->mutex);
 	return link_changed;
 }
 
 // ----------------------------------------------------------------------------
 // other functions
 
-int   uget_plugin_agent_start_thread (UgetPluginAgent* plugin, UgetNode* node,
-                                      UgThreadFunc thread_func)
+int   uget_plugin_agent_start_thread(UgetPluginAgent* plugin, UgetNode* node,
+                                     UgThreadFunc thread_func)
 {
 	UgThread     thread;
 	int          ok;
 
 	// assign node
-	uget_node_ref (node);
+	uget_node_ref(node);
 	plugin->node = node;
 
 	// try to start thread
 	plugin->paused = FALSE;
 	plugin->stopped = FALSE;
-	uget_plugin_ref ((UgetPlugin*) plugin);
-	ok = ug_thread_create (&thread, (UgThreadFunc) thread_func, plugin);
+	uget_plugin_ref((UgetPlugin*) plugin);
+	ok = ug_thread_create(&thread, (UgThreadFunc) thread_func, plugin);
 	if (ok == UG_THREAD_OK)
-		ug_thread_unjoin (&thread);
+		ug_thread_unjoin(&thread);
 	else {
 		// failed to start thread -----------------
 		plugin->paused = TRUE;
 		plugin->stopped = TRUE;
 		// don't assign node
-		uget_node_unref (plugin->node);
+		uget_node_unref(plugin->node);
 		plugin->node = NULL;
 		// post error message and decreases the reference count
-		uget_plugin_post ((UgetPlugin*) plugin,
-				uget_event_new_error (UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
-				                      NULL));
-		uget_plugin_unref ((UgetPlugin*) plugin);
+		uget_plugin_post((UgetPlugin*) plugin,
+				uget_event_new_error(UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
+				                     NULL));
+		uget_plugin_unref((UgetPlugin*) plugin);
 		return FALSE;
 	}
 
 	return TRUE;
 }
 
-int   uget_plugin_agent_sync_plugin (UgetPluginAgent* plugin)
+int   uget_plugin_agent_sync_plugin(UgetPluginAgent* plugin, UgetNode* node)
 {
 	int  active;
 
 	// lock & unlock for uget_plugin_agent_sync_children()
-	ug_mutex_lock (&plugin->mutex);
-	active = uget_plugin_sync (plugin->target_plugin);
-	ug_mutex_unlock (&plugin->mutex);
+	ug_mutex_lock(&plugin->mutex);
+	active = uget_plugin_sync(plugin->target_plugin, node);
+	ug_mutex_unlock(&plugin->mutex);
 
 	return active;
 }
 
 // handle events from target_plugin by default action.
 // return remain events
-UgetEvent* uget_plugin_agent_handle_message (UgetPluginAgent* plugin, ...)
+UgetEvent* uget_plugin_agent_handle_message(UgetPluginAgent* plugin, ...)
 {
 	int         type;
 	va_list     arg_list;
@@ -390,18 +390,18 @@ UgetEvent* uget_plugin_agent_handle_message (UgetPluginAgent* plugin, ...)
 	UgetEvent*  msg;
 
 	// move event from target_plugin to plug-in
-	msg_head = uget_plugin_pop ((UgetPlugin*) plugin->target_plugin);
+	msg_head = uget_plugin_pop((UgetPlugin*) plugin->target_plugin);
 	for (msg = msg_head;  msg;  msg = msg_next) {
 		msg_next = msg->next;
 
 		// filter message
-		va_start (arg_list, plugin);
+		va_start(arg_list, plugin);
 		do {
-			type = va_arg (arg_list, int);
+			type = va_arg(arg_list, int);
 			if (msg->type == type || type == -1)
 				break;
 		} while (type != 0);
-		va_end (arg_list);
+		va_end(arg_list);
 		if (type == 0)
 			continue;
 
@@ -428,7 +428,7 @@ UgetEvent* uget_plugin_agent_handle_message (UgetPluginAgent* plugin, ...)
 			break;
 		}
 		// post event to plug-in
-		uget_plugin_post ((UgetPlugin*) plugin, msg);
+		uget_plugin_post((UgetPlugin*) plugin, msg);
 	}
 
 	return msg_head;

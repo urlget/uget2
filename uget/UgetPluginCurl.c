@@ -62,7 +62,7 @@
 #else
 #include <fcntl.h>   // posix_fallocate()
 #include <unistd.h>  // sleep(), usleep()
-#define  ug_sleep(millisecond)    usleep (millisecond * 1000)
+#define  ug_sleep(millisecond)    usleep(millisecond * 1000)
 #endif // _WIN32 || _WIN64
 
 #if defined(_MSC_VER)
@@ -77,7 +77,7 @@
 typedef struct UriLink      UriLink;
 
 struct UriLink {
-	UG_LINK_MEMBERS (UriLink, UriLink, self);
+	UG_LINK_MEMBERS(UriLink, UriLink, self);
 //	UriLink* self;
 //	UriLink* next;
 //	UriLink* prev;
@@ -92,19 +92,19 @@ struct UriLink {
 // ----------------------------------------------------------------------------
 // UgetPluginInfo (derived from UgDataInfo)
 
-static void plugin_init  (UgetPluginCurl* plugin);
-static void plugin_final (UgetPluginCurl* plugin);
-static int  plugin_ctrl  (UgetPluginCurl* plugin, int code, void* data);
-static int  plugin_sync  (UgetPluginCurl* plugin);
-static UgetResult  global_set (int code, void* parameter);
-static UgetResult  global_get (int code, void* parameter);
+static void plugin_init (UgetPluginCurl* plugin);
+static void plugin_final(UgetPluginCurl* plugin);
+static int  plugin_ctrl (UgetPluginCurl* plugin, int code, void* data);
+static int  plugin_sync (UgetPluginCurl* plugin, UgetNode* node);
+static UgetResult  global_set(int code, void* parameter);
+static UgetResult  global_get(int code, void* parameter);
 
 static const char* schemes[] = {"http", "https", "ftp", "ftps", NULL};
 
 static const UgetPluginInfo UgetPluginCurlInfoStatic =
 {
 	"curl",
-	sizeof (UgetPluginCurl),
+	sizeof(UgetPluginCurl),
 	(UgInitFunc)   plugin_init,
 	(UgFinalFunc)  plugin_final,
 	(UgAssignFunc) NULL,
@@ -128,17 +128,17 @@ static struct
 	int  ref_count;
 } global = {0, 0};
 
-static UgetResult  global_init (void)
+static UgetResult  global_init(void)
 {
 	if (global.initialized == FALSE) {
 #if defined _WIN32 || defined _WIN64
 		WSADATA  WSAData;
-		WSAStartup (MAKEWORD (2, 2), &WSAData);
+		WSAStartup(MAKEWORD(2, 2), &WSAData);
 #endif // _WIN32 || _WIN64
 
-		if (curl_global_init (CURL_GLOBAL_ALL) != CURLE_OK) {
+		if (curl_global_init(CURL_GLOBAL_ALL) != CURLE_OK) {
 #if defined _WIN32 || defined _WIN64
-			WSACleanup ();
+			WSACleanup();
 #endif
 			return UGET_RESULT_ERROR;
 		}
@@ -149,12 +149,12 @@ static UgetResult  global_init (void)
 	return UGET_RESULT_OK;
 }
 
-static void  global_ref (void)
+static void  global_ref(void)
 {
 	global.ref_count++;
 }
 
-static void  global_unref (void)
+static void  global_unref(void)
 {
 	if (global.initialized == FALSE)
 		return;
@@ -162,22 +162,22 @@ static void  global_unref (void)
 	global.ref_count--;
 	if (global.ref_count == 0) {
 		global.initialized  = FALSE;
-		curl_global_cleanup ();
+		curl_global_cleanup();
 #if defined _WIN32 || defined _WIN64
-		WSACleanup ();
+		WSACleanup();
 #endif
 	}
 }
 
-static UgetResult  global_set (int option, void* parameter)
+static UgetResult  global_set(int option, void* parameter)
 {
 	switch (option) {
 	case UGET_PLUGIN_INIT:
 		// do global initialize/uninitialize here
 		if (parameter)
-			return global_init ();
+			return global_init();
 		else
-			global_unref ();
+			global_unref();
 		break;
 
 	default:
@@ -187,7 +187,7 @@ static UgetResult  global_set (int option, void* parameter)
 	return UGET_RESULT_OK;
 }
 
-static UgetResult  global_get (int option, void* parameter)
+static UgetResult  global_get(int option, void* parameter)
 {
 	switch (option) {
 	case UGET_PLUGIN_INIT:
@@ -205,55 +205,55 @@ static UgetResult  global_get (int option, void* parameter)
 // ----------------------------------------------------------------------------
 // plug-in functions
 
-static void plugin_init (UgetPluginCurl* plugin)
+static void plugin_init(UgetPluginCurl* plugin)
 {
 	if (global.initialized == FALSE)
-		global_init ();
+		global_init();
 	else
-		global_ref ();
+		global_ref();
 
-	ug_list_init (&plugin->segment.list);
+	ug_list_init(&plugin->segment.list);
 	plugin->file.time = -1;
 	plugin->synced = TRUE;
 	plugin->paused = TRUE;
 	plugin->stopped = TRUE;
 }
 
-static void plugin_final (UgetPluginCurl* plugin)
+static void plugin_final(UgetPluginCurl* plugin)
 {
 	if (plugin->common)
-		ug_data_free (plugin->common);
+		ug_data_free(plugin->common);
 	if (plugin->proxy)
-		ug_data_free (plugin->proxy);
+		ug_data_free(plugin->proxy);
 	if (plugin->http)
-		ug_data_free (plugin->http);
+		ug_data_free(plugin->http);
 	if (plugin->ftp)
-		ug_data_free (plugin->ftp);
+		ug_data_free(plugin->ftp);
 	// free uri.list (UriLink), all link will be freed.
-	ug_list_foreach (&plugin->uri.list, (UgForeachFunc) ug_free, NULL);
+	ug_list_foreach(&plugin->uri.list, (UgForeachFunc) ug_free, NULL);
 
-//	curl_slist_free_all (plugin->ftp_command);
-	ug_free (plugin->file.path);
-	ug_free (plugin->aria2.path);
+//	curl_slist_free_all(plugin->ftp_command);
+	ug_free(plugin->file.path);
+	ug_free(plugin->aria2.path);
 	// unassign node
 	if (plugin->node)
-		uget_node_unref (plugin->node);
+		uget_node_unref(plugin->node);
 
-	global_unref ();
+	global_unref();
 }
 
 // ----------------------------------------------------------------------------
 // plugin_ctrl
 
-static int  plugin_ctrl_speed (UgetPluginCurl* plugin, int* speed);
-static int  plugin_start (UgetPluginCurl* plugin, UgetNode* node);
+static int  plugin_ctrl_speed(UgetPluginCurl* plugin, int* speed);
+static int  plugin_start(UgetPluginCurl* plugin, UgetNode* node);
 
-static int  plugin_ctrl (UgetPluginCurl* plugin, int code, void* data)
+static int  plugin_ctrl(UgetPluginCurl* plugin, int code, void* data)
 {
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
 		if (plugin->node == NULL)
-			return plugin_start (plugin, data);
+			return plugin_start(plugin, data);
 		break;
 
 	case UGET_PLUGIN_CTRL_STOP:
@@ -262,7 +262,7 @@ static int  plugin_ctrl (UgetPluginCurl* plugin, int code, void* data)
 
 	case UGET_PLUGIN_CTRL_SPEED:
 		// speed control
-		return plugin_ctrl_speed (plugin, data);
+		return plugin_ctrl_speed(plugin, data);
 
 	// output ---------------
 	case UGET_PLUGIN_CTRL_ACTIVE:
@@ -277,7 +277,7 @@ static int  plugin_ctrl (UgetPluginCurl* plugin, int code, void* data)
 	return FALSE;
 }
 
-static int  plugin_ctrl_speed (UgetPluginCurl* plugin, int* speed)
+static int  plugin_ctrl_speed(UgetPluginCurl* plugin, int* speed)
 {
 	UgetCommon*  common;
 	int          value;
@@ -317,14 +317,13 @@ static int  plugin_ctrl_speed (UgetPluginCurl* plugin, int* speed)
 // ----------------------------------------------------------------------------
 // plugin_sync
 
-static void plugin_clear_node  (UgetPluginCurl* plugin);
-static void plugin_remove_node (UgetPluginCurl* plugin, const char* fpath);
-static int  plugin_insert_node (UgetPluginCurl* plugin,
-                                const char* fpath, int is_attachment);
+static void plugin_clear_node (UgetPluginCurl* plugin);
+static void plugin_remove_node(UgetPluginCurl* plugin, const char* fpath);
+static int  plugin_insert_node(UgetPluginCurl* plugin,
+                               const char* fpath, int is_attachment);
 
-static int  plugin_sync (UgetPluginCurl* plugin)
+static int  plugin_sync(UgetPluginCurl* plugin, UgetNode* node)
 {
-	UgetNode*      node;
 	UgetCommon*    common;
 	UgetProgress*  progress;
 	char*          name;
@@ -337,10 +336,10 @@ static int  plugin_sync (UgetPluginCurl* plugin)
 	// avoid crash if plug-in plug-in failed to start.
 	if (plugin->node == NULL)
 		return TRUE;
-
-	node = plugin->node;
+	if (node == NULL)
+		node = plugin->node;
 	// sync data between plug-in and node
-	common = ug_info_realloc (&node->info, UgetCommonInfo);
+	common = ug_info_realloc(&node->info, UgetCommonInfo);
 	common->retry_count = plugin->common->retry_count;
 	// sync changed limit from UgetNode
 	if (plugin->common->max_upload_speed != common->max_upload_speed ||
@@ -355,7 +354,7 @@ static int  plugin_sync (UgetPluginCurl* plugin)
 	if (common->max_connections > 0)
 		plugin->segment.n_max = common->max_connections;
 
-	progress = ug_info_realloc (&node->info, UgetProgressInfo);
+	progress = ug_info_realloc(&node->info, UgetProgressInfo);
 	progress->upload_speed   = plugin->speed.upload;
 	progress->download_speed = plugin->speed.download;
 
@@ -384,86 +383,86 @@ static int  plugin_sync (UgetPluginCurl* plugin)
 	if (plugin->file_renamed && plugin->file.path) {
 		plugin->file_renamed = FALSE;
 		plugin->a2cf_named = FALSE;
-		plugin_clear_node (plugin);
-		plugin_insert_node (plugin, plugin->file.path, FALSE);
+		plugin_clear_node(plugin);
+		plugin_insert_node(plugin, plugin->file.path, FALSE);
 		// change node name
 #if defined _WIN32 || defined _WIN64
-		name = strrchr (plugin->file.path, '\\');
+		name = strrchr(plugin->file.path, '\\');
 #else
-		name = strrchr (plugin->file.path, '/');
+		name = strrchr(plugin->file.path, '/');
 #endif
 		if (name && name[1]) {
-			if (node->name == NULL || strcmp (name, node->name)) {
-				ug_free (node->name);
-				node->name = ug_strdup (name + 1);
-				uget_plugin_post ((UgetPlugin*) plugin,
-						uget_event_new (UGET_EVENT_NAME));
+			if (node->name == NULL || strcmp(name, node->name)) {
+				ug_free(node->name);
+				node->name = ug_strdup(name + 1);
+				uget_plugin_post((UgetPlugin*) plugin,
+						uget_event_new(UGET_EVENT_NAME));
 			}
-			ug_free (common->file);
-			common->file = ug_strdup (name + 1);
+			ug_free(common->file);
+			common->file = ug_strdup(name + 1);
 		}
 	}
 	if (plugin->aria2.path) {
 		if (plugin->file.size == plugin->size.download)
-			plugin_remove_node (plugin, plugin->aria2.path);
+			plugin_remove_node(plugin, plugin->aria2.path);
 		else if (plugin->a2cf_named == FALSE) {
 			plugin->a2cf_named = TRUE;
-			plugin_insert_node (plugin, plugin->aria2.path, TRUE);
+			plugin_insert_node(plugin, plugin->aria2.path, TRUE);
 		}
 	}
 	return TRUE;
 }
 
-static int  plugin_insert_node (UgetPluginCurl* plugin,
-                                const char* fpath, int is_attachment)
+static int  plugin_insert_node(UgetPluginCurl* plugin,
+                               const char* fpath, int is_attachment)
 {
 	UgetNode*  node;
 
 	for (node = plugin->node->children;  node;  node = node->next) {
-		if (strcmp (node->name, fpath) == 0)
+		if (strcmp(node->name, fpath) == 0)
 			return FALSE;
 	}
 
-	node = uget_node_new (NULL);
-	node->name = ug_strdup (fpath);
-	uget_node_prepend (plugin->node, node);
+	node = uget_node_new(NULL);
+	node->name = ug_strdup(fpath);
+	uget_node_prepend(plugin->node, node);
 	if (is_attachment)
 		node->type = UGET_NODE_ATTACHMENT;
 	return TRUE;
 }
 
-static void plugin_remove_node (UgetPluginCurl* plugin, const char* fpath)
+static void plugin_remove_node(UgetPluginCurl* plugin, const char* fpath)
 {
 	UgetNode*  node;
 
 	for (node = plugin->node->children;  node;  node = node->next) {
-		if (strcmp (node->name, fpath) == 0) {
-			uget_node_remove (plugin->node, node);
-			uget_node_unref (node);
+		if (strcmp(node->name, fpath) == 0) {
+			uget_node_remove(plugin->node, node);
+			uget_node_unref(node);
 			return;
 		}
 	}
 }
 
-static void plugin_clear_node (UgetPluginCurl* plugin)
+static void plugin_clear_node(UgetPluginCurl* plugin)
 {
 	UgetNode*  node;
 	UgetNode*  next;
 
 	for (node = plugin->node->children;  node;  node = next) {
 		next = node->next;
-		uget_node_remove (plugin->node, node);
-		uget_node_unref (node);
+		uget_node_remove(plugin->node, node);
+		uget_node_unref(node);
 	}
 }
 
 // ----------------------------------------------------------------------------
 // plugin_start
 
-static void  plugin_setup_uris (UgetPluginCurl* plugin);
-static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin);
+static void  plugin_setup_uris(UgetPluginCurl* plugin);
+static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginCurl* plugin);
 
-static int  plugin_start (UgetPluginCurl* plugin, UgetNode* node)
+static int  plugin_start(UgetPluginCurl* plugin, UgetNode* node)
 {
 	UgThread    thread;
 	int         speed[2];
@@ -475,87 +474,87 @@ static int  plugin_start (UgetPluginCurl* plugin, UgetNode* node)
 		int          ok;
 	} temp;
 
-	temp.common = ug_info_get (&node->info, UgetCommonInfo);
+	temp.common = ug_info_get(&node->info, UgetCommonInfo);
 	if (temp.common == NULL || temp.common->uri == NULL)
 		return FALSE;
-	plugin->common = ug_data_copy (temp.common);
-	plugin_setup_uris (plugin);
+	plugin->common = ug_data_copy(temp.common);
+	plugin_setup_uris(plugin);
 
-	temp.proxy = ug_info_get (&node->info, UgetProxyInfo);
+	temp.proxy = ug_info_get(&node->info, UgetProxyInfo);
 	if (temp.proxy)
-		plugin->proxy  = ug_data_copy (temp.proxy);
+		plugin->proxy  = ug_data_copy(temp.proxy);
 
-	temp.http = ug_info_get (&node->info, UgetHttpInfo);
+	temp.http = ug_info_get(&node->info, UgetHttpInfo);
 	if (temp.http) {
-		plugin->http = ug_data_copy (temp.http);
+		plugin->http = ug_data_copy(temp.http);
 		// check http->post_file
 		if (temp.http->post_file) {
-			if (ug_file_is_exist (temp.http->post_file) == FALSE) {
-				uget_plugin_post ((UgetPlugin*) plugin,
-						uget_event_new_error (UGET_EVENT_ERROR_POST_FILE_NOT_FOUND,
-						                      NULL));
+			if (ug_file_is_exist(temp.http->post_file) == FALSE) {
+				uget_plugin_post((UgetPlugin*) plugin,
+						uget_event_new_error(UGET_EVENT_ERROR_POST_FILE_NOT_FOUND,
+						                     NULL));
 				return FALSE;
 			}
 		}
 		// check http->cookie_file
 		if (temp.http->cookie_file) {
-			if (ug_file_is_exist (temp.http->cookie_file) == FALSE) {
-				uget_plugin_post ((UgetPlugin*) plugin,
-						uget_event_new_error (UGET_EVENT_ERROR_COOKIE_FILE_NOT_FOUND,
-						                      NULL));
+			if (ug_file_is_exist(temp.http->cookie_file) == FALSE) {
+				uget_plugin_post((UgetPlugin*) plugin,
+						uget_event_new_error(UGET_EVENT_ERROR_COOKIE_FILE_NOT_FOUND,
+						                     NULL));
 				return FALSE;
 			}
 		}
 	}
 
-	temp.ftp = ug_info_get (&node->info, UgetFtpInfo);
+	temp.ftp = ug_info_get(&node->info, UgetFtpInfo);
 	if (temp.ftp)
-		plugin->ftp = ug_data_copy (temp.ftp);
+		plugin->ftp = ug_data_copy(temp.ftp);
 
-	plugin->start_time = time (NULL);
+	plugin->start_time = time(NULL);
 	// assign node before speed control
-	uget_node_ref (node);
+	uget_node_ref(node);
 	plugin->node = node;
 	// speed control
 	speed[0] = plugin->limit.download;
 	speed[1] = plugin->limit.upload;
-	plugin_ctrl_speed (plugin, speed);
+	plugin_ctrl_speed(plugin, speed);
 	// Don't notify speed limit changed if user set it before plug-in start.
 	plugin->limit_changed = FALSE;
 
 	// try to start thread
 	plugin->paused = FALSE;
 	plugin->stopped = FALSE;
-	uget_plugin_ref ((UgetPlugin*) plugin);
-	temp.ok = ug_thread_create (&thread, (UgThreadFunc) plugin_thread, plugin);
+	uget_plugin_ref((UgetPlugin*) plugin);
+	temp.ok = ug_thread_create(&thread, (UgThreadFunc) plugin_thread, plugin);
 	if (temp.ok == UG_THREAD_OK)
-		ug_thread_unjoin (&thread);
+		ug_thread_unjoin(&thread);
 	else {
 		// failed to start thread -----------------
 		plugin->paused = TRUE;
 		plugin->stopped = TRUE;
 		// don't assign node
-		uget_node_unref (node);
+		uget_node_unref(node);
 		plugin->node = NULL;
 		// post error message and decreases the reference count
-		uget_plugin_post ((UgetPlugin*) plugin,
-				uget_event_new_error (UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
-				                      NULL));
-		uget_plugin_unref ((UgetPlugin*) plugin);
+		uget_plugin_post((UgetPlugin*) plugin,
+				uget_event_new_error(UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
+				                     NULL));
+		uget_plugin_unref((UgetPlugin*) plugin);
 		return FALSE;
 	}
 	return TRUE;
 }
 
-static UriLink* plugin_replace_uri (UgetPluginCurl* plugin, UriLink* old_link,
-                                    const char* uri, int uri_len)
+static UriLink* plugin_replace_uri(UgetPluginCurl* plugin, UriLink* old_link,
+                                   const char* uri, int uri_len)
 {
 	UriLink*  uri_link;
 
 	if (uri_len == -1)
-		uri_len = strlen (uri);
-	uri_link = ug_malloc (sizeof (UriLink) + uri_len);
-	strncpy (uri_link->uri, uri, uri_len);
+		uri_len = strlen(uri);
+	uri_link = ug_malloc(sizeof(UriLink) + uri_len);
+	strncpy(uri_link->uri, uri, uri_len);
 	uri_link->uri[uri_len] = 0;   // null terminated
 	uri_link->self = uri_link;
 	uri_link->next = NULL;
@@ -567,20 +566,20 @@ static UriLink* plugin_replace_uri (UgetPluginCurl* plugin, UriLink* old_link,
 
 	// add to list
 	if (old_link == NULL)
-		ug_list_append (&plugin->uri.list, (void*) uri_link);
+		ug_list_append(&plugin->uri.list, (void*) uri_link);
 	else {
-		ug_list_insert (&plugin->uri.list, (void*) old_link,
+		ug_list_insert(&plugin->uri.list, (void*) old_link,
 				(void*) uri_link);
-		ug_list_remove (&plugin->uri.list, (void*) old_link);
+		ug_list_remove(&plugin->uri.list, (void*) old_link);
 		if (plugin->uri.link == (void*) old_link)
 			plugin->uri.link  = (void*) uri_link;
-		ug_free (old_link);
+		ug_free(old_link);
 	}
 
 	return uri_link;
 }
 
-static void plugin_setup_uris (UgetPluginCurl* plugin)
+static void plugin_setup_uris(UgetPluginCurl* plugin)
 {
 	UgetCommon*  common;
 	const char*  curr;
@@ -588,9 +587,9 @@ static void plugin_setup_uris (UgetPluginCurl* plugin)
 
 	common = plugin->common;
 	// uri
-	plugin->uri.link = (void*) plugin_replace_uri (plugin, NULL,
-	                                               common->uri, -1);
-	ug_free (common->uri);
+	plugin->uri.link = (void*) plugin_replace_uri(plugin, NULL,
+	                                              common->uri, -1);
+	ug_free(common->uri);
 	common->uri = NULL;
 	// mirrors
 	for (curr = common->mirrors;  curr && curr[0];) {
@@ -598,11 +597,11 @@ static void plugin_setup_uris (UgetPluginCurl* plugin)
 		while (curr[0] == ' ')
 			curr++;
 		prev = curr;
-		curr = curr + strcspn (curr, " ");
+		curr = curr + strcspn(curr, " ");
 		// add to uri.list
-		plugin_replace_uri (plugin, NULL, prev, curr - prev);
+		plugin_replace_uri(plugin, NULL, prev, curr - prev);
 	}
-	ug_free (common->mirrors);
+	ug_free(common->mirrors);
 	common->mirrors = NULL;
 }
 
@@ -611,18 +610,18 @@ static void plugin_setup_uris (UgetPluginCurl* plugin)
 
 #define N_THREAD(plugin)   ((plugin)->segment.list.size)
 
-static void delay_ms (UgetPluginCurl* plugin, int  milliseconds);
-static int  switch_uri (UgetPluginCurl* plugin, UgetCurl* ugcurl, int is_resumable);
-static int  prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin);
-static void complete_file (UgetPluginCurl* plugin);
-static int  load_file_info (UgetPluginCurl* plugin);
-static void clear_file_info (UgetPluginCurl* plugin);
-static int  reuse_download (UgetPluginCurl* plugin, UgetCurl* ugcurl, int next_uri);
-static int  split_download (UgetPluginCurl* plugin, UgetCurl* ugcurl);
-static void adjust_speed_limit (UgetPluginCurl* plugin);
-static UgetCurl* create_segment (UgetPluginCurl* plugin);
+static void delay_ms(UgetPluginCurl* plugin, int  milliseconds);
+static int  switch_uri(UgetPluginCurl* plugin, UgetCurl* ugcurl, int is_resumable);
+static int  prepare_file(UgetCurl* ugcurl, UgetPluginCurl* plugin);
+static void complete_file(UgetPluginCurl* plugin);
+static int  load_file_info(UgetPluginCurl* plugin);
+static void clear_file_info(UgetPluginCurl* plugin);
+static int  reuse_download(UgetPluginCurl* plugin, UgetCurl* ugcurl, int next_uri);
+static int  split_download(UgetPluginCurl* plugin, UgetCurl* ugcurl);
+static void adjust_speed_limit(UgetPluginCurl* plugin);
+static UgetCurl* create_segment(UgetPluginCurl* plugin);
 
-static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
+static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginCurl* plugin)
 {
 	UgetCommon* common;
 	UgetCurl*   ugcurl;
@@ -641,33 +640,33 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 		plugin->segment.n_max = 1;
 
 	// create new segment and add it to segment.list
-	ugcurl = create_segment (plugin);
-	if (load_file_info (plugin)) {
-		uget_curl_open_file (ugcurl, plugin->file.path);
+	ugcurl = create_segment(plugin);
+	if (load_file_info(plugin)) {
+		uget_curl_open_file(ugcurl, plugin->file.path);
 		ugcurl->beg = plugin->segment.beg;
-		uget_a2cf_lack (&plugin->aria2.ctrl,
-		                (uint64_t*) &ugcurl->beg,
-		                (uint64_t*) &ugcurl->end);
+		uget_a2cf_lack(&plugin->aria2.ctrl,
+		               (uint64_t*) &ugcurl->beg,
+		               (uint64_t*) &ugcurl->end);
 		plugin->segment.beg = ugcurl->end;
 		// plugin_sync() will add file node for existing file
 		plugin->file_renamed = TRUE;
 		plugin->synced = FALSE;
 	}
 	else {
-		clear_file_info (plugin);
+		clear_file_info(plugin);
 		ugcurl->prepare.func = (UgetCurlFunc) prepare_file;
 		ugcurl->prepare.data = plugin;
 		ugcurl->header_store = TRUE;
 	}
-	ug_list_append (&plugin->segment.list, (void*) ugcurl);
+	ug_list_append(&plugin->segment.list, (void*) ugcurl);
 
 	// start curl
-	uget_curl_run (ugcurl, FALSE);
+	uget_curl_run(ugcurl, FALSE);
 
 	// main loop
 	for (counter = 0;  N_THREAD(plugin) > 0;  counter++) {
 		// sleep 0.5 second
-		ug_sleep (500);
+		ug_sleep(500);
 		// reset data, plug-in will count them (in segment loop) later
 		plugin->segment.n_active = 0;
 		size.upload = 0;
@@ -693,9 +692,9 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 					ugcurl->size[0] = 0;
 #ifndef NDEBUG
 					if (common->debug_level) {
-						printf ("\n"
-						        "previous segment overwrite at %u KiB\n",
-						        (unsigned) (ugcurl->beg / 1024));
+						printf("\n"
+						       "previous segment overwrite at %u KiB\n",
+						       (unsigned) (ugcurl->beg / 1024));
 					}
 #endif
 				}
@@ -711,9 +710,9 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 					}
 #ifndef NDEBUG
 					if (common->debug_level) {
-						printf ("\n"
-						        "split new segment at %u KiB\n",
-						        (unsigned) (ugcurl->beg / 1024));
+						printf("\n"
+						       "split new segment at %u KiB\n",
+						       (unsigned) (ugcurl->beg / 1024));
 					}
 #endif
 				}
@@ -726,7 +725,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 			}
 			// update aria2 control file progress
 			if (plugin->aria2.path)
-				uget_a2cf_fill (&plugin->aria2.ctrl, ugcurl->beg, ugcurl->pos);
+				uget_a2cf_fill(&plugin->aria2.ctrl, ugcurl->beg, ugcurl->pos);
 			// progress
 			if (ugcurl->state >= UGET_CURL_OK) {
 				// ugcurl has stopped
@@ -753,65 +752,65 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 				ugcurl->state = UGET_CURL_RESPLIT;
 				// special case for unknown file size
 				if (plugin->file.size == 0 && N_THREAD (plugin) == 1) {
-					complete_file (plugin);
+					complete_file(plugin);
 					// delete download
-					ug_list_remove (&plugin->segment.list, (void*)ugcurl);
-					uget_curl_free (ugcurl);
+					ug_list_remove(&plugin->segment.list, (void*)ugcurl);
+					uget_curl_free(ugcurl);
 				}
 				break;
 
 			case UGET_CURL_ABORT:
 				// delete download
-				ug_list_remove (&plugin->segment.list, (void*)ugcurl);
-				uget_curl_free (ugcurl);
+				ug_list_remove(&plugin->segment.list, (void*)ugcurl);
+				uget_curl_free(ugcurl);
 				break;
 
 			case UGET_CURL_ERROR:
 				// if no other downloading segment, plug-in response error
-				if (N_THREAD (plugin) == 1) {
+				if (N_THREAD(plugin) == 1) {
 //					plugin->node->state |= UGET_STATE_ERROR;
 					if (ugcurl->event) {
-						uget_plugin_post ((UgetPlugin*) plugin, ugcurl->event);
+						uget_plugin_post((UgetPlugin*) plugin, ugcurl->event);
 						ugcurl->event = NULL;
 					}
 					// delete download
-					ug_list_remove (&plugin->segment.list, (void*)ugcurl);
-					uget_curl_free (ugcurl);
+					ug_list_remove(&plugin->segment.list, (void*)ugcurl);
+					uget_curl_free(ugcurl);
 				}
 				else {
 					// try to reuse download
-					reuse_download (plugin, ugcurl, TRUE);
+					reuse_download(plugin, ugcurl, TRUE);
 				}
 				break;
 
 			case UGET_CURL_RETRY:
 				// if no other downloading segment
-				if (N_THREAD (plugin) == 1) {
+				if (N_THREAD(plugin) == 1) {
 					common->retry_count++;
 					if (common->retry_count < common->retry_limit ||
 					    common->retry_limit == 0)
 					{
 						ugcurl->beg = ugcurl->pos;
-						delay_ms (plugin, common->retry_delay * 1000);
-						uget_curl_run (ugcurl, FALSE);
+						delay_ms(plugin, common->retry_delay * 1000);
+						uget_curl_run(ugcurl, FALSE);
 					}
 					else {
 						// delete segment
-						ug_list_remove (&plugin->segment.list, (void*)ugcurl);
-						uget_curl_free (ugcurl);
+						ug_list_remove(&plugin->segment.list, (void*)ugcurl);
+						uget_curl_free(ugcurl);
 					}
 				}
 				else {
 					// try to reuse download
-					reuse_download (plugin, ugcurl, FALSE);
+					reuse_download(plugin, ugcurl, FALSE);
 				}
 				break;
 
 			case UGET_CURL_NOT_RESUMABLE:
 				// if no other downloading segment
-				if (N_THREAD (plugin) == 1) {
-					uget_plugin_post ((UgetPlugin*) plugin,
-							uget_event_new_normal (
+				if (N_THREAD(plugin) == 1) {
+					uget_plugin_post((UgetPlugin*) plugin,
+							uget_event_new_normal(
 									UGET_EVENT_NORMAL_NOT_RESUMABLE, NULL));
 					common->retry_count++;
 					if (common->retry_count < common->retry_limit ||
@@ -821,19 +820,19 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 						plugin->size.download = 0;
 						ugcurl->beg = 0;
 						ugcurl->end = plugin->file.size;
-						delay_ms (plugin, common->retry_delay * 1000);
-						switch_uri (plugin, ugcurl, TRUE);
-						uget_curl_run (ugcurl, FALSE);
+						delay_ms(plugin, common->retry_delay * 1000);
+						switch_uri(plugin, ugcurl, TRUE);
+						uget_curl_run(ugcurl, FALSE);
 					}
 					else {
 						// delete download
-						ug_list_remove (&plugin->segment.list, (void*)ugcurl);
-						uget_curl_free (ugcurl);
+						ug_list_remove(&plugin->segment.list, (void*)ugcurl);
+						uget_curl_free(ugcurl);
 					}
 				}
 				else {
 					// try to reuse download
-					reuse_download (plugin, ugcurl, TRUE);
+					reuse_download(plugin, ugcurl, TRUE);
 				}
 				break;
 			}
@@ -844,10 +843,10 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 		for (;  ugcurl;  ugcurl = ugnext) {
 			ugnext = ugcurl->next;
 			if (ugcurl->state == UGET_CURL_RESPLIT) {
-				if (split_download (plugin, ugcurl) == FALSE) {
+				if (split_download(plugin, ugcurl) == FALSE) {
 					// delete download
-					ug_list_remove (&plugin->segment.list, (void*)ugcurl);
-					uget_curl_free (ugcurl);
+					ug_list_remove(&plugin->segment.list, (void*)ugcurl);
+					uget_curl_free(ugcurl);
 				}
 			}
 		}
@@ -868,21 +867,21 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 
 #ifndef NDEBUG
 				if (common->debug_level) {
-					printf ("file size is different\n");
-					printf ("plugin->file.size = %d\n",     (int)plugin->file.size);
-					printf ("plugin->size.download = %d\n", (int)plugin->size.download);
+					printf("file size is different\n");
+					printf("plugin->file.size = %d\n",     (int)plugin->file.size);
+					printf("plugin->size.download = %d\n", (int)plugin->size.download);
 				}
 #endif  // NDEBUG
 				plugin->size.download = plugin->file.size;
 #else
 				plugin->paused = TRUE;
-				if (N_THREAD (plugin) > 0)
+				if (N_THREAD(plugin) > 0)
 					continue;    // wait other thread
 				else {
 					if (plugin->aria2.path)
-						ug_unlink (plugin->aria2.path);
-					uget_plugin_post ((UgetPlugin*) plugin,
-							uget_event_new_error (
+						ug_unlink(plugin->aria2.path);
+					uget_plugin_post((UgetPlugin*) plugin,
+							uget_event_new_error(
 									UGET_EVENT_ERROR_INCORRECT_SOURCE,
 									NULL));
 					plugin->synced = FALSE;
@@ -892,10 +891,10 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 			}
 			// download completed
 			if (plugin->file.size == plugin->size.download) {
-				if (N_THREAD (plugin) > 0)
+				if (N_THREAD(plugin) > 0)
 					continue;    // wait other thread
 				else {
-					complete_file (plugin);
+					complete_file(plugin);
 					plugin->synced = FALSE;
 					break;
 				}
@@ -905,26 +904,26 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 		// adjust speed every 0.5 x 2 = 1 second.
 		if ((counter & 1) == 1 || n_active_last != plugin->segment.n_active) {
 			n_active_last = plugin->segment.n_active;
-			adjust_speed_limit (plugin);
+			adjust_speed_limit(plugin);
 		}
 		// save aria2 control file every 0.5 x 4 = 2 seconds.
-		if ((counter & 3) == 3 || N_THREAD (plugin) == 0) {
+		if ((counter & 3) == 3 || N_THREAD(plugin) == 0) {
 			if (plugin->aria2.path)
-				uget_a2cf_save (&plugin->aria2.ctrl, plugin->aria2.path);
+				uget_a2cf_save(&plugin->aria2.ctrl, plugin->aria2.path);
 		}
 		// split download every 0.5 x 8 = 4 seconds.
 		if ((counter & 7) == 7 && plugin->file.size) {
 			// If some threads are connecting, It doesn't split new segment.
-			if (N_THREAD (plugin) <  plugin->segment.n_max &&
-			    N_THREAD (plugin) == plugin->segment.n_active)
+			if (N_THREAD(plugin) <  plugin->segment.n_max &&
+			    N_THREAD(plugin) == plugin->segment.n_active)
 			{
-				split_download (plugin, NULL);
+				split_download(plugin, NULL);
 			}
 		}
 		// retry ------------------------
 		if (common->retry_count >= common->retry_limit && common->retry_limit != 0) {
-			uget_plugin_post ((UgetPlugin*) plugin,
-					uget_event_new_error (
+			uget_plugin_post((UgetPlugin*) plugin,
+					uget_event_new_error(
 							UGET_EVENT_ERROR_TOO_MANY_RETRIES, NULL));
 			plugin->synced = FALSE;
 			plugin->paused = TRUE;
@@ -933,28 +932,28 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginCurl* plugin)
 
 	// count the latest downloaded size if download doesn't complete
 	if ((plugin->file.size != plugin->size.download) && plugin->aria2.path) {
-		plugin->size.download = uget_a2cf_completed (&plugin->aria2.ctrl);
+		plugin->size.download = uget_a2cf_completed(&plugin->aria2.ctrl);
 		plugin->synced = FALSE;
 	}
 
 	// free segment list
-	ug_list_foreach (&plugin->segment.list, (UgForeachFunc) uget_curl_free, NULL);
-	ug_list_clear (&plugin->segment.list, FALSE);
+	ug_list_foreach(&plugin->segment.list, (UgForeachFunc) uget_curl_free, NULL);
+	ug_list_clear(&plugin->segment.list, FALSE);
 	//
-	uget_a2cf_clear (&plugin->aria2.ctrl);
+	uget_a2cf_clear(&plugin->aria2.ctrl);
 	plugin->stopped = TRUE;
-	uget_plugin_unref ((UgetPlugin*) plugin);
+	uget_plugin_unref((UgetPlugin*) plugin);
 	return UG_THREAD_RETURN_VALUE;
 }
 
-static int prepare_existed (UgetCurl* ugcurl, UgetPluginCurl* plugin)
+static int prepare_existed(UgetCurl* ugcurl, UgetPluginCurl* plugin)
 {
 	double  fsize;
 	long    ftime;
 
 	// file.size
 	if (plugin->file.size) {
-		curl_easy_getinfo (ugcurl->curl,
+		curl_easy_getinfo(ugcurl->curl,
 				CURLINFO_CONTENT_LENGTH_DOWNLOAD, &fsize);
 		if (plugin->file.size != ugcurl->beg + (int64_t) fsize) {
 			// if remote file size and local file size are not the same,
@@ -962,9 +961,9 @@ static int prepare_existed (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 			if (plugin->prepared == FALSE) {
 				// plugin_thread() has initialized/created some data for this function.
 				// program must clear these data before calling prepare_file()
-				clear_file_info (plugin);
-				uget_curl_close_file (ugcurl);
-				return prepare_file (ugcurl, plugin);
+				clear_file_info(plugin);
+				uget_curl_close_file(ugcurl);
+				return prepare_file(ugcurl, plugin);
 			}
 			// don't write INCORRECT data to existed file.
 			ugcurl->event_code = UGET_EVENT_ERROR_INCORRECT_SOURCE;
@@ -974,11 +973,11 @@ static int prepare_existed (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 	}
 	// file.time
 	if (plugin->file.time == -1) {
-		curl_easy_getinfo (ugcurl->curl, CURLINFO_FILETIME, &ftime);
+		curl_easy_getinfo(ugcurl->curl, CURLINFO_FILETIME, &ftime);
 		plugin->file.time = (time_t) ftime;
 	}
 
-	if (uget_curl_open_file (ugcurl, plugin->file.path)) {
+	if (uget_curl_open_file(ugcurl, plugin->file.path)) {
 		plugin->prepared = TRUE;
 		return TRUE;
 	}
@@ -988,7 +987,7 @@ static int prepare_existed (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 	}
 }
 
-static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
+static int prepare_file(UgetCurl* ugcurl, UgetPluginCurl* plugin)
 {
 	UgetCommon*  common;
 	int    length;
@@ -1003,10 +1002,10 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 	} temp;
 
 	// file.time
-	curl_easy_getinfo (ugcurl->curl, CURLINFO_FILETIME, &temp.ftime);
+	curl_easy_getinfo(ugcurl->curl, CURLINFO_FILETIME, &temp.ftime);
 	plugin->file.time = (time_t) temp.ftime;
 	// file.size
-	curl_easy_getinfo (ugcurl->curl,
+	curl_easy_getinfo(ugcurl->curl,
 			CURLINFO_CONTENT_LENGTH_DOWNLOAD, &temp.fsize);
 	plugin->file.size = (int64_t) temp.fsize + ugcurl->beg;
 	if (plugin->file.size == -1)
@@ -1017,7 +1016,7 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 	if (common->folder == NULL || common->folder[0] == 0)
 		length = 0;
 	else {
-		length = strlen (common->folder);
+		length = strlen(common->folder);
 		value = common->folder[length - 1];
 		if (value != '\\' || value != '/')
 			length++;
@@ -1031,61 +1030,61 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 			ugcurl->header.filename = NULL;
 		}
 		else if (ugcurl->uri.part.file != -1)
-			common->file = ug_uri_get_file (&ugcurl->uri.part);
+			common->file = ug_uri_get_file(&ugcurl->uri.part);
 		// if it is still no filename, set default one
 		if (common->file == NULL)
-			common->file = ug_strdup ("index");
+			common->file = ug_strdup("index");
 		// replace invalid characters \/:*?"<>| by _ in filename.
-		ug_str_replace_chars (common->file, "\\/:*?\"<>|", '_');
+		ug_str_replace_chars(common->file, "\\/:*?\"<>|", '_');
 	}
-	length += strlen (common->file);
+	length += strlen(common->file);
 
 	// path = folder + filename
 	//                             length + digits + ".aria2" + '\0'
-	plugin->file.path = ug_malloc (length + MAX_REPEAT_DIGITS + 6 + 1);
+	plugin->file.path = ug_malloc(length + MAX_REPEAT_DIGITS + 6 + 1);
 	plugin->file.path[0] = 0;  // you need this line if common->folder is NULL.
 	if (common->folder) {
-		strcpy (plugin->file.path, common->folder);
+		strcpy(plugin->file.path, common->folder);
 		if (value != '\\' || value != '/') {
 #if defined _WIN32 || defined _WIN64
-			strcat (plugin->file.path, "\\");
+			strcat(plugin->file.path, "\\");
 #else
-			strcat (plugin->file.path, "/");
+			strcat(plugin->file.path, "/");
 #endif
 		}
 	}
-	strcat (plugin->file.path, common->file);
+	strcat(plugin->file.path, common->file);
 
 	// create folder
-	if (ug_create_dir_all (plugin->file.path, folder_len) == -1) {
+	if (ug_create_dir_all(plugin->file.path, folder_len) == -1) {
 		ugcurl->event_code = UGET_EVENT_ERROR_FOLDER_CREATE_FAILED;
 		return FALSE;
 	}
 
 	// create file
 	for (counts = 0;  counts < MAX_REPEAT_COUNTS;  counts++) {
-		value = ug_open (plugin->file.path, UG_O_CREATE | UG_O_EXCL | UG_O_WRONLY,
+		value = ug_open(plugin->file.path, UG_O_CREATE | UG_O_EXCL | UG_O_WRONLY,
 				UG_S_IREAD | UG_S_IWRITE | UG_S_IRGRP | UG_S_IROTH);
-//		value = ug_open (plugin->file.path, UG_O_CREATE | UG_O_EXCL | UG_O_RDWR,
+//		value = ug_open(plugin->file.path, UG_O_CREATE | UG_O_EXCL | UG_O_RDWR,
 //				UG_S_IREAD | UG_S_IWRITE | UG_S_IRGRP | UG_S_IROTH);
 		// check if this path can't access
-//		if (value == -1 && ug_file_is_exist (plugin->file.path) == FALSE) {
+//		if (value == -1 && ug_file_is_exist(plugin->file.path) == FALSE) {
 //			ugcurl->event_code = UGET_EVENT_ERROR_FILE_CREATE_FAILED;
 //			return FALSE;    // error
 //		}
 
 		// check exist downloaded file & it's control file
-		strcat (plugin->file.path + length, ".aria2");
+		strcat(plugin->file.path + length, ".aria2");
 		if (value == -1) {
-			if (uget_a2cf_load (&plugin->aria2.ctrl, plugin->file.path)) {
+			if (uget_a2cf_load(&plugin->aria2.ctrl, plugin->file.path)) {
 				if (plugin->aria2.ctrl.total_len == plugin->file.size) {
-					plugin->aria2.path = ug_strdup (plugin->file.path);
-					plugin->base.download = uget_a2cf_completed (&plugin->aria2.ctrl);
+					plugin->aria2.path = ug_strdup(plugin->file.path);
+					plugin->base.download = uget_a2cf_completed(&plugin->aria2.ctrl);
 					plugin->size.download = plugin->base.download;
-					*(char*) strstr (plugin->file.path + length, ".aria2") = 0;
+					*(char*) strstr(plugin->file.path + length, ".aria2") = 0;
 					break;
 				}
-				uget_a2cf_clear (&plugin->aria2.ctrl);
+				uget_a2cf_clear(&plugin->aria2.ctrl);
 			}
 		}
 		else {
@@ -1098,53 +1097,53 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 #if defined _WIN32 || defined _WIN64
 				LARGE_INTEGER size;
 				HANDLE        handle;
-				handle = (HANDLE) _get_osfhandle (value);
+				handle = (HANDLE) _get_osfhandle(value);
 				size.QuadPart = plugin->file.size;
-				if(SetFilePointerEx (handle ,size, 0, FILE_BEGIN) == FALSE)
+				if(SetFilePointerEx(handle ,size, 0, FILE_BEGIN) == FALSE)
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
-				if(SetEndOfFile (handle) == FALSE)
+				if(SetEndOfFile(handle) == FALSE)
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
-				SetFilePointer (handle, 0, 0, FILE_BEGIN);
+				SetFilePointer(handle, 0, 0, FILE_BEGIN);
 #elif defined HAVE_FTRUNCATE
-				if (ftruncate (value, plugin->file.size) == -1)
+				if (ftruncate(value, plugin->file.size) == -1)
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
 #elif defined __ANDROID__ && __ANDROID_API__ >= 12
-				if (ftruncate64 (value, plugin->file.size) == -1)
+				if (ftruncate64(value, plugin->file.size) == -1)
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
 #elif defined HAVE_POSIX_FALLOCATE
-				if (posix_fallocate (value, 0, plugin->file.size) != 0)
+				if (posix_fallocate(value, 0, plugin->file.size) != 0)
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
 #elif defined __ANDROID__ && __ANDROID_API__ >= 20
-				if (posix_fallocate64 (value, 0, plugin->file.size) != 0)
+				if (posix_fallocate64(value, 0, plugin->file.size) != 0)
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
 #else
-				if (ug_write (value, "O", 1) == -1)  // begin of file
+				if (ug_write(value, "O", 1) == -1)  // begin of file
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
-				if (ug_seek (value, plugin->file.size - 1, SEEK_SET) == -1)
+				if (ug_seek(value, plugin->file.size - 1, SEEK_SET) == -1)
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
-				if (ug_write (value, "X", 1) == -1)  // end of file
+				if (ug_write(value, "X", 1) == -1)  // end of file
 					ugcurl->event_code = UGET_EVENT_ERROR_OUT_OF_RESOURCE;
 #endif // _WIN32 || _WIN64
 				// create aria2 control file if no error
 				if (ugcurl->event_code == 0) {
-					plugin->aria2.path = ug_strdup (plugin->file.path);
-					uget_a2cf_init (&plugin->aria2.ctrl, plugin->file.size);
-					uget_a2cf_save (&plugin->aria2.ctrl, plugin->aria2.path);
+					plugin->aria2.path = ug_strdup(plugin->file.path);
+					uget_a2cf_init(&plugin->aria2.ctrl, plugin->file.size);
+					uget_a2cf_save(&plugin->aria2.ctrl, plugin->aria2.path);
 				}
 			}
-			ug_close (value);
+			ug_close(value);
 			// remove tail ".aria2" string in file path
-			*(char*) strstr (plugin->file.path + length, ".aria2") = 0;
+			*(char*) strstr(plugin->file.path + length, ".aria2") = 0;
 			// if error occurred while allocating disk space, delete created download file.
 			if (ugcurl->event_code > 0) {
-				ug_unlink (plugin->file.path);
+				ug_unlink(plugin->file.path);
 				return FALSE;
 			}
 			break;
 		}
 
 		// filename repeat
-		sprintf (plugin->file.path + length, ".%d", counts);
+		sprintf(plugin->file.path + length, ".%d", counts);
 	}
 
 	if (counts == MAX_REPEAT_COUNTS) {
@@ -1154,37 +1153,37 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 
 	// set filename if counts > 0
 	if (counts) {
-		ug_free (common->file);
-		common->file = ug_strdup (plugin->file.path + folder_len);
+		ug_free(common->file);
+		common->file = ug_strdup(plugin->file.path + folder_len);
 	}
 	plugin->file_renamed = TRUE;
 
 	// event
 	if (ugcurl->resumable) {
-		uget_plugin_post ((UgetPlugin*) plugin,
-				uget_event_new_normal (UGET_EVENT_NORMAL_RESUMABLE, NULL));
+		uget_plugin_post((UgetPlugin*) plugin,
+				uget_event_new_normal(UGET_EVENT_NORMAL_RESUMABLE, NULL));
 	}
 	else {
-		uget_plugin_post ((UgetPlugin*) plugin,
-				uget_event_new_normal (UGET_EVENT_NORMAL_NOT_RESUMABLE, NULL));
+		uget_plugin_post((UgetPlugin*) plugin,
+				uget_event_new_normal(UGET_EVENT_NORMAL_NOT_RESUMABLE, NULL));
 	}
 #ifndef NDEBUG
 	if (common->debug_level) {
-		printf ("CURL message = %s\n", ugcurl->error_string);
-		printf ("plugin->file.path = %s\n", plugin->file.path);
-		printf ("plugin->file.size = %d\n", (int)plugin->file.size);
-		printf ("plugin->file.time = %d\n", (int)plugin->file.time);
-		printf ("resumable = %d\n", ugcurl->resumable);
+		printf("CURL message = %s\n", ugcurl->error_string);
+		printf("plugin->file.path = %s\n", plugin->file.path);
+		printf("plugin->file.size = %d\n", (int)plugin->file.size);
+		printf("plugin->file.time = %d\n", (int)plugin->file.time);
+		printf("resumable = %d\n", ugcurl->resumable);
 	}
 #endif
 
 	// set flags to UriLink
 	if (ugcurl->header.uri) {
 		// HTTP redirection
-		temp.ulink = plugin_replace_uri (plugin, ugcurl->uri.link,
-		                                 ugcurl->header.uri, -1);
+		temp.ulink = plugin_replace_uri(plugin, ugcurl->uri.link,
+		                                ugcurl->header.uri, -1);
 		ugcurl->uri.link = temp.ulink;
-		ug_free (ugcurl->header.uri);
+		ug_free(ugcurl->header.uri);
 		ugcurl->header.uri = NULL;
 	}
 	else
@@ -1200,12 +1199,12 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 	plugin->prepared = TRUE;
 	// file and it's offset
 	temp.val64 = 0;
-	uget_a2cf_lack (&plugin->aria2.ctrl,
-	                (uint64_t*) &temp.val64,
-	                (uint64_t*) &ugcurl->end);
+	uget_a2cf_lack(&plugin->aria2.ctrl,
+	               (uint64_t*) &temp.val64,
+	               (uint64_t*) &ugcurl->end);
 	plugin->segment.beg = ugcurl->end;
 	if (ugcurl->beg == temp.val64) {
-		if (uget_curl_open_file (ugcurl, plugin->file.path) == FALSE) {
+		if (uget_curl_open_file(ugcurl, plugin->file.path) == FALSE) {
 			ugcurl->event_code = UGET_EVENT_ERROR_FILE_OPEN_FAILED;
 			return FALSE;
 		}
@@ -1214,15 +1213,15 @@ static int prepare_file (UgetCurl* ugcurl, UgetPluginCurl* plugin)
 	else {
 		ugcurl->beg = temp.val64;
 		ugcurl->pos = temp.val64;
-		curl_easy_setopt (ugcurl->curl, CURLOPT_RESUME_FROM_LARGE,
+		curl_easy_setopt(ugcurl->curl, CURLOPT_RESUME_FROM_LARGE,
 				(curl_off_t) temp.val64);
-		if (uget_curl_open_file (ugcurl, plugin->file.path))
+		if (uget_curl_open_file(ugcurl, plugin->file.path))
 			ugcurl->restart = TRUE;
 		return FALSE;
 	}
 }
 
-static int  load_file_info (UgetPluginCurl* plugin)
+static int  load_file_info(UgetPluginCurl* plugin)
 {
 	UgetCommon*  common;
 	char*        path;
@@ -1236,62 +1235,62 @@ static int  load_file_info (UgetPluginCurl* plugin)
 	if (common->folder == NULL || common->folder[0] == 0)
 		length = 0;
 	else {
-		length = strlen (common->folder);
+		length = strlen(common->folder);
 		value = common->folder[length - 1];
 		if (value != '\\' || value != '/')
 			length++;
 	}
 	// filename
-	length += strlen (common->file);
+	length += strlen(common->file);
 	// path
-	path = ug_malloc (length + 6 + 1);  // length + ".aria2" + '\0'
+	path = ug_malloc(length + 6 + 1);  // length + ".aria2" + '\0'
 	path[0] = 0;  // you need this line if common->folder is NULL.
 	if (common->folder) {
-		strcpy (path, common->folder);
+		strcpy(path, common->folder);
 		if (value != '\\' || value != '/') {
 #if defined _WIN32 || defined _WIN64
-			strcat (path, "\\");
+			strcat(path, "\\");
 #else
-			strcat (path, "/");
+			strcat(path, "/");
 #endif
 		}
 	}
-	strcat (path, common->file);
-	if (ug_file_is_exist (path) == FALSE) {
-		ug_free (path);
+	strcat(path, common->file);
+	if (ug_file_is_exist(path) == FALSE) {
+		ug_free(path);
 		return FALSE;
 	}
-	strcat (path, ".aria2");
+	strcat(path, ".aria2");
 	// aria2 control file
-	if (uget_a2cf_load (&plugin->aria2.ctrl, path)) {
+	if (uget_a2cf_load(&plugin->aria2.ctrl, path)) {
 		plugin->file.size = plugin->aria2.ctrl.total_len;
-		plugin->file.path = ug_strndup (path, length);
+		plugin->file.path = ug_strndup(path, length);
 		plugin->aria2.path = path;
-		plugin->base.download = uget_a2cf_completed (&plugin->aria2.ctrl);
+		plugin->base.download = uget_a2cf_completed(&plugin->aria2.ctrl);
 		plugin->size.download = plugin->base.download;
 		return TRUE;
 	}
 	else {
-		uget_a2cf_clear (&plugin->aria2.ctrl);
-		ug_free (path);
+		uget_a2cf_clear(&plugin->aria2.ctrl);
+		ug_free(path);
 		return FALSE;
 	}
 }
 
-static void  clear_file_info (UgetPluginCurl* plugin)
+static void  clear_file_info(UgetPluginCurl* plugin)
 {
-	uget_a2cf_clear (&plugin->aria2.ctrl);
-	ug_free (plugin->aria2.path);
+	uget_a2cf_clear(&plugin->aria2.ctrl);
+	ug_free(plugin->aria2.path);
 	plugin->aria2.path = NULL;
 
-	ug_free (plugin->file.path);
+	ug_free(plugin->file.path);
 	plugin->file.path = NULL;
 	plugin->file.size = 0;
 	plugin->base.download = 0;
 	plugin->size.download = 0;
 }
 
-static int  switch_uri (UgetPluginCurl* plugin, UgetCurl* ugcurl, int is_resumable)
+static int  switch_uri(UgetPluginCurl* plugin, UgetCurl* ugcurl, int is_resumable)
 {
 	UriLink*  uri_link;
 
@@ -1300,7 +1299,7 @@ static int  switch_uri (UgetPluginCurl* plugin, UgetCurl* ugcurl, int is_resumab
 		uri_link = (UriLink*) plugin->uri.list.head;
 
 	// set URI and decide it's scheme
-	uget_curl_set_url (ugcurl, uri_link->uri);
+	uget_curl_set_url(ugcurl, uri_link->uri);
 	uri_link->scheme_type = ugcurl->scheme_type;
 	// sync URI flags to UgetCurl
 	ugcurl->uri.link = uri_link;
@@ -1313,43 +1312,43 @@ static int  switch_uri (UgetPluginCurl* plugin, UgetCurl* ugcurl, int is_resumab
 	return TRUE;
 }
 
-static void complete_file (UgetPluginCurl* plugin)
+static void complete_file(UgetPluginCurl* plugin)
 {
 	if (plugin->aria2.path) {
-		ug_unlink (plugin->aria2.path);
-		ug_free (plugin->aria2.path);
+		ug_unlink(plugin->aria2.path);
+		ug_free(plugin->aria2.path);
 		plugin->aria2.path = NULL;
 	}
 	// modify file time
 	if (plugin->common->timestamp == TRUE && plugin->file.time != -1)
-		ug_modify_file_time (plugin->file.path, plugin->file.time);
+		ug_modify_file_time(plugin->file.path, plugin->file.time);
 	// completed message
 	plugin->node->state |= UGET_STATE_COMPLETED;
-	uget_plugin_post ((UgetPlugin*)plugin,
-			uget_event_new (UGET_EVENT_COMPLETED));
-	uget_plugin_post ((UgetPlugin*)plugin,
-			uget_event_new (UGET_EVENT_STOP));
+	uget_plugin_post((UgetPlugin*)plugin,
+			uget_event_new(UGET_EVENT_COMPLETED));
+	uget_plugin_post((UgetPlugin*)plugin,
+			uget_event_new(UGET_EVENT_STOP));
 }
 
-static int  reuse_download (UgetPluginCurl* plugin, UgetCurl* ugcurl, int next_uri)
+static int  reuse_download(UgetPluginCurl* plugin, UgetCurl* ugcurl, int next_uri)
 {
 	if (ugcurl->beg == ugcurl->pos) {
 		// delete segment if no downloaded data
-		ug_list_remove (&plugin->segment.list, (void*)ugcurl);
-		uget_curl_free (ugcurl);
+		ug_list_remove(&plugin->segment.list, (void*)ugcurl);
+		uget_curl_free(ugcurl);
 		return FALSE;
 	}
 	else {
 		// reuse this segment
 		if (next_uri == TRUE)
-			switch_uri (plugin, ugcurl, TRUE);
+			switch_uri(plugin, ugcurl, TRUE);
 		ugcurl->beg = ugcurl->pos;
-		uget_curl_run (ugcurl, FALSE);
+		uget_curl_run(ugcurl, FALSE);
 		return TRUE;
 	}
 }
 
-static int  split_download (UgetPluginCurl* plugin, UgetCurl* ugcurl)
+static int  split_download(UgetPluginCurl* plugin, UgetCurl* ugcurl)
 {
 	UgetCurl*  temp;
 	UgetCurl*  sibling = NULL;
@@ -1361,13 +1360,13 @@ static int  split_download (UgetPluginCurl* plugin, UgetCurl* ugcurl)
 
 	// try to find unused space
 	cur = plugin->segment.beg;
-	if (uget_a2cf_lack (&plugin->aria2.ctrl, &cur, &end)) {
+	if (uget_a2cf_lack(&plugin->aria2.ctrl, &cur, &end)) {
 		plugin->segment.beg = end;
 #ifndef NDEBUG
 		if (plugin->common->debug_level) {
-			printf ("\n" "lack %u-%u KiB\n",
-					(unsigned) cur / 1024,
-					(unsigned) end / 1024);
+			printf("\n" "lack %u-%u KiB\n",
+			       (unsigned) cur / 1024,
+			       (unsigned) end / 1024);
 		}
 #endif
 	}
@@ -1396,9 +1395,9 @@ static int  split_download (UgetPluginCurl* plugin, UgetCurl* ugcurl)
 
 #ifndef NDEBUG
 		if (plugin->common->debug_level) {
-			printf ("\n" "split %u-%u KiB\n",
-					(unsigned) cur / 1024,
-					(unsigned) end / 1024);
+			printf("\n" "split %u-%u KiB\n",
+			       (unsigned) cur / 1024,
+			       (unsigned) end / 1024);
 		}
 #endif
 	}
@@ -1406,54 +1405,54 @@ static int  split_download (UgetPluginCurl* plugin, UgetCurl* ugcurl)
 	// reuse or create UgetCurl
 	// if this UgetCurl has been inserted in segment.list, remove it.
 	if (ugcurl)
-		ug_list_remove (&plugin->segment.list, (UgLink*) ugcurl);
+		ug_list_remove(&plugin->segment.list, (UgLink*) ugcurl);
 	else
-		ugcurl = create_segment (plugin);
+		ugcurl = create_segment(plugin);
 
 	// add to segment.list
 	if (sibling == NULL)
-		ug_list_append (&plugin->segment.list, (void*) ugcurl);
+		ug_list_append(&plugin->segment.list, (void*) ugcurl);
 	else {
 		ugcurl->split = TRUE;
-		ug_list_insert (&plugin->segment.list,
+		ug_list_insert(&plugin->segment.list,
 				(void*) sibling->next, (void*) ugcurl);
 	}
 
 	ugcurl->beg = cur;
 	ugcurl->end = end;
-	uget_curl_run (ugcurl, FALSE);
+	uget_curl_run(ugcurl, FALSE);
 	return TRUE;
 }
 
-static void delay_ms (UgetPluginCurl* plugin, int  milliseconds)
+static void delay_ms(UgetPluginCurl* plugin, int  milliseconds)
 {
 	while (plugin->paused == FALSE) {
 		if (milliseconds >  500) {
 			milliseconds -= 500;
-			ug_sleep (500);
+			ug_sleep(500);
 			continue;
 		}
-		ug_sleep (milliseconds);
+		ug_sleep(milliseconds);
 		return;
 	}
 }
 
-static UgetCurl* create_segment (UgetPluginCurl* plugin)
+static UgetCurl* create_segment(UgetPluginCurl* plugin)
 {
 	UgetCurl*  ugcurl;
 
-	ugcurl = uget_curl_new ();
-	uget_curl_set_common (ugcurl, plugin->common);
-	uget_curl_set_proxy (ugcurl, plugin->proxy);
-	uget_curl_set_http (ugcurl, plugin->http);
-	uget_curl_set_ftp (ugcurl, plugin->ftp);
+	ugcurl = uget_curl_new();
+	uget_curl_set_common(ugcurl, plugin->common);
+	uget_curl_set_proxy(ugcurl, plugin->proxy);
+	uget_curl_set_http(ugcurl, plugin->http);
+	uget_curl_set_ftp(ugcurl, plugin->ftp);
 	// set speed limit
 	if (plugin->limit.download)
 		ugcurl->limit[0] = plugin->limit.download / (plugin->segment.list.size + 1);
 	if (plugin->limit.upload)
 		ugcurl->limit[1] = plugin->limit.upload / (plugin->segment.list.size + 1);
 	// select URL
-	switch_uri (plugin, ugcurl, FALSE);
+	switch_uri(plugin, ugcurl, FALSE);
 	// set output function
 	ugcurl->prepare.func = (UgetCurlFunc) prepare_existed;
 	ugcurl->prepare.data = plugin;
@@ -1461,7 +1460,7 @@ static UgetCurl* create_segment (UgetPluginCurl* plugin)
 }
 
 // speed control
-static void  adjust_speed_limit_index (UgetPluginCurl* plugin, int idx, int64_t remain)
+static void  adjust_speed_limit_index(UgetPluginCurl* plugin, int idx, int64_t remain)
 {
 	UgetCurl*  ucurl;
 
@@ -1478,7 +1477,7 @@ static void  adjust_speed_limit_index (UgetPluginCurl* plugin, int idx, int64_t 
 	}
 }
 
-static void  disable_speed_limit (UgetPluginCurl* plugin, int idx)
+static void  disable_speed_limit(UgetPluginCurl* plugin, int idx)
 {
 	UgetCurl*  ugcurl;
 
@@ -1489,21 +1488,21 @@ static void  disable_speed_limit (UgetPluginCurl* plugin, int idx)
 	}
 }
 
-static void  adjust_speed_limit (UgetPluginCurl* plugin)
+static void  adjust_speed_limit(UgetPluginCurl* plugin)
 {
 	if (plugin->segment.n_active == 0)
 		return;
 
 	// download
 	if (plugin->limit.download > 0)
-		adjust_speed_limit_index (plugin, 0, plugin->limit.download - plugin->speed.download);
+		adjust_speed_limit_index(plugin, 0, plugin->limit.download - plugin->speed.download);
 	else if (plugin->limit_changed)
-		disable_speed_limit (plugin, 0);
+		disable_speed_limit(plugin, 0);
 	// upload
 	if (plugin->limit.upload > 0)
-		adjust_speed_limit_index (plugin, 1, plugin->limit.upload - plugin->speed.upload);
+		adjust_speed_limit_index(plugin, 1, plugin->limit.upload - plugin->speed.upload);
 	else if (plugin->limit_changed)
-		disable_speed_limit (plugin, 1);
+		disable_speed_limit(plugin, 1);
 
 	plugin->limit_changed = FALSE;
 }

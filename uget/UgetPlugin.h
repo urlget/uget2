@@ -85,7 +85,7 @@ typedef enum {
 	UGET_RESULT_UNSUPPORT,
 } UgetResult;
 
-typedef int        (*UgetPluginSyncFunc)(UgetPlugin* plugin);
+typedef int        (*UgetPluginSyncFunc)(UgetPlugin* plugin, UgetNode* node);
 typedef int        (*UgetPluginCtrlFunc)(UgetPlugin* plugin, int, void* data);
 typedef UgetResult (*UgetPluginSetFunc) (int option, void* parameter);
 typedef UgetResult (*UgetPluginGetFunc) (int option, void* parameter);
@@ -175,7 +175,7 @@ int   uget_plugin_ctrl(UgetPlugin* plugin, int code, void* data);
 
 // return TRUE  if plug-in running.
 // return FALSE if plug-in stopped.
-int   uget_plugin_sync(UgetPlugin* plugin);
+int   uget_plugin_sync(UgetPlugin* plugin, UgetNode* node);
 
 void  uget_plugin_ref(UgetPlugin* plugin);
 void  uget_plugin_unref(UgetPlugin* plugin);
@@ -225,8 +225,8 @@ struct PluginMethod : Ug::DataMethod
 	inline void  stop(void)
 		{ uget_plugin_stop((UgetPlugin*) this); }
 
-	inline int   sync(void)
-		{ return uget_plugin_sync((UgetPlugin*) this); }
+	inline int   sync(UgetNode* node)
+		{ return uget_plugin_sync((UgetPlugin*) this, node); }
 
 	inline void  ref(void)
 		{ uget_plugin_ref((UgetPlugin*) this); }

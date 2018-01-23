@@ -59,17 +59,17 @@ typedef int (*UgetWatchFunc) (void* instance, UgetEvent* msg,
 // ----------------------------------------------------------------------------
 // UgetTask : match UgetNode and UgetPlugin
 
-void  uget_task_init (UgetTask* task);
-void  uget_task_final (UgetTask* task);
+void  uget_task_init(UgetTask* task);
+void  uget_task_final(UgetTask* task);
 
-int   uget_task_add (UgetTask* task, UgetNode* node, const UgetPluginInfo* pinfo);
-int   uget_task_remove (UgetTask* task, UgetNode* node);
-void  uget_task_remove_all (UgetTask* task);
-void  uget_task_dispatch (UgetTask* task);
-void  uget_task_add_watch (UgetTask* task, UgetWatchFunc func, void* data);
+int   uget_task_add(UgetTask* task, UgetNode* node, const UgetPluginInfo* pinfo);
+int   uget_task_remove(UgetTask* task, UgetNode* node);
+void  uget_task_remove_all(UgetTask* task);
+void  uget_task_dispatch(UgetTask* task);
+void  uget_task_add_watch(UgetTask* task, UgetWatchFunc func, void* data);
 
-void  uget_task_set_speed (UgetTask* task, int dl_speed, int ul_speed);
-void  uget_task_adjust_speed (UgetTask* task);
+void  uget_task_set_speed(UgetTask* task, int dl_speed, int ul_speed);
+void  uget_task_adjust_speed(UgetTask* task);
 
 #ifdef __cplusplus
 }
@@ -98,17 +98,17 @@ struct UgetTask
 
 #ifdef __cplusplus
 	// C++11 standard-layout
-	inline void init (void)
-		{ uget_task_init ((UgetTask*) this); }
-	inline void final (void)
-		{ uget_task_final ((UgetTask*) this); }
+	inline void init(void)
+		{ uget_task_init((UgetTask*) this); }
+	inline void final(void)
+		{ uget_task_final((UgetTask*) this); }
 
-	inline int  add (UgetNode* node, UgetPluginInfo* info)
-		{ return uget_task_add ((UgetTask*) this, node, info); }
-	inline void remove (UgetNode* node)
-		{ uget_task_remove ((UgetTask*) this, node); }
-	inline void dispatch (void)
-		{ uget_task_dispatch ((UgetTask*) this); }
+	inline int  add(UgetNode* node, UgetPluginInfo* info)
+		{ return uget_task_add((UgetTask*) this, node, info); }
+	inline void remove(UgetNode* node)
+		{ uget_task_remove((UgetTask*) this, node); }
+	inline void dispatch(void)
+		{ uget_task_dispatch((UgetTask*) this); }
 
 #endif  // __cplusplus
 };

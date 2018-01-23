@@ -57,7 +57,7 @@
 #define  ug_sleep                 Sleep
 #else
 #include <unistd.h>               // usleep()
-#define  ug_sleep(millisecond)    usleep (millisecond * 1000)
+#define  ug_sleep(millisecond)    usleep(millisecond * 1000)
 #endif // _WIN32 || _WIN64
 
 #ifdef HAVE_GLIB
@@ -71,12 +71,12 @@
 // ----------------------------------------------------------------------------
 // UgetPluginInfo (derived from UgDataInfo)
 
-static void plugin_init  (UgetPluginMedia* plugin);
-static void plugin_final (UgetPluginMedia* plugin);
-static int  plugin_ctrl  (UgetPluginMedia* plugin, int code, void* data);
-static int  plugin_sync  (UgetPluginMedia* plugin);
-static UgetResult  global_set (int code, void* parameter);
-static UgetResult  global_get (int code, void* parameter);
+static void plugin_init (UgetPluginMedia* plugin);
+static void plugin_final(UgetPluginMedia* plugin);
+static int  plugin_ctrl (UgetPluginMedia* plugin, int code, void* data);
+static int  plugin_sync (UgetPluginMedia* plugin, UgetNode* node);
+static UgetResult  global_set(int code, void* parameter);
+static UgetResult  global_get(int code, void* parameter);
 
 static const char* schemes[] = {"http", "https", NULL};
 static const char* hosts[]   = {"youtube.com", "youtu.be",
@@ -85,7 +85,7 @@ static const char* hosts[]   = {"youtube.com", "youtu.be",
 static const UgetPluginInfo UgetPluginMediaInfoStatic =
 {
 	"media",
-	sizeof (UgetPluginMedia),
+	sizeof(UgetPluginMedia),
 	(UgInitFunc)   plugin_init,
 	(UgFinalFunc)  plugin_final,
 	(UgAssignFunc) NULL,
@@ -112,17 +112,17 @@ static struct
 	int   ref_count;
 } global = {NULL, 0, 0, 0, 0};
 
-static UgetResult  global_init (void)
+static UgetResult  global_init(void)
 {
 	if (global.plugin_info == NULL) {
 #if defined _WIN32 || defined _WIN64
 		WSADATA  WSAData;
-		WSAStartup (MAKEWORD (2, 2), &WSAData);
+		WSAStartup(MAKEWORD(2, 2), &WSAData);
 #endif // _WIN32 || _WIN64
 
-		if (curl_global_init (CURL_GLOBAL_ALL) != CURLE_OK) {
+		if (curl_global_init(CURL_GLOBAL_ALL) != CURLE_OK) {
 #if defined _WIN32 || defined _WIN64
-			WSACleanup ();
+			WSACleanup();
 #endif
 			return UGET_RESULT_ERROR;
 		}
@@ -137,12 +137,12 @@ static UgetResult  global_init (void)
 	return UGET_RESULT_OK;
 }
 
-static void  global_ref (void)
+static void  global_ref(void)
 {
 	global.ref_count++;
 }
 
-static void  global_unref (void)
+static void  global_unref(void)
 {
 	if (global.plugin_info == NULL)
 		return;
@@ -150,22 +150,22 @@ static void  global_unref (void)
 	global.ref_count--;
 	if (global.ref_count == 0) {
 		global.plugin_info = NULL;
-		curl_global_cleanup ();
+		curl_global_cleanup();
 #if defined _WIN32 || defined _WIN64
-		WSACleanup ();
+		WSACleanup();
 #endif
 	}
 }
 
-static UgetResult  global_set (int option, void* parameter)
+static UgetResult  global_set(int option, void* parameter)
 {
 	switch (option) {
 	case UGET_PLUGIN_INIT:
 		// do global initialize/uninitialize here
 		if (parameter)
-			return global_init ();
+			return global_init();
 		else
-			global_unref ();
+			global_unref();
 		break;
 
 	case UGET_PLUGIN_MEDIA_DEFAULT_PLUGIN:
@@ -191,7 +191,7 @@ static UgetResult  global_set (int option, void* parameter)
 	return UGET_RESULT_OK;
 }
 
-static UgetResult  global_get (int option, void* parameter)
+static UgetResult  global_get(int option, void* parameter)
 {
 	switch (option) {
 	case UGET_PLUGIN_INIT:
@@ -205,7 +205,7 @@ static UgetResult  global_get (int option, void* parameter)
 		break;
 
 	case UGET_PLUGIN_MATCH:
-		if (uget_site_get_id (parameter) < UGET_SITE_MEDIA)
+		if (uget_site_get_id(parameter) < UGET_SITE_MEDIA)
 			return UGET_RESULT_FAILED;
 		return UGET_RESULT_OK;
 
@@ -219,44 +219,44 @@ static UgetResult  global_get (int option, void* parameter)
 // ----------------------------------------------------------------------------
 // control functions
 
-static void plugin_init (UgetPluginMedia* plugin)
+static void plugin_init(UgetPluginMedia* plugin)
 {
 	if (global.plugin_info == NULL)
-		global_init ();
+		global_init();
 	else
-		global_ref ();
+		global_ref();
 }
 
-static void plugin_final (UgetPluginMedia* plugin)
+static void plugin_final(UgetPluginMedia* plugin)
 {
 	// extent data and plug-in
 	if (plugin->target_node)
-		uget_node_unref (plugin->target_node);
+		uget_node_unref(plugin->target_node);
 	if (plugin->target_node_child)
-		uget_node_unref (plugin->target_node_child);
+		uget_node_unref(plugin->target_node_child);
 	if (plugin->target_plugin)
-		uget_plugin_unref (plugin->target_plugin);
+		uget_plugin_unref(plugin->target_plugin);
 	// other data
-	ug_free (plugin->title);
+	ug_free(plugin->title);
 	// unassign node
 	if (plugin->node)
-		uget_node_unref (plugin->node);
+		uget_node_unref(plugin->node);
 
-	global_unref ();
+	global_unref();
 }
 
 // ----------------------------------------------------------------------------
 // plugin_ctrl
 
-static int  plugin_ctrl_speed (UgetPluginMedia* plugin, int* speed);
-static int  plugin_start (UgetPluginMedia* plugin, UgetNode* node);
+static int  plugin_ctrl_speed(UgetPluginMedia* plugin, int* speed);
+static int  plugin_start(UgetPluginMedia* plugin, UgetNode* node);
 
-static int  plugin_ctrl (UgetPluginMedia* plugin, int code, void* data)
+static int  plugin_ctrl(UgetPluginMedia* plugin, int code, void* data)
 {
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
 		if (plugin->node == NULL)
-			return plugin_start (plugin, data);
+			return plugin_start(plugin, data);
 		break;
 
 	case UGET_PLUGIN_CTRL_STOP:
@@ -265,7 +265,7 @@ static int  plugin_ctrl (UgetPluginMedia* plugin, int code, void* data)
 
 	case UGET_PLUGIN_CTRL_SPEED:
 		// speed control
-		return plugin_ctrl_speed (plugin, data);
+		return plugin_ctrl_speed(plugin, data);
 
 	// output ---------------
 	case UGET_PLUGIN_CTRL_ACTIVE:
@@ -280,7 +280,7 @@ static int  plugin_ctrl (UgetPluginMedia* plugin, int code, void* data)
 	return FALSE;
 }
 
-static int  plugin_ctrl_speed (UgetPluginMedia* plugin, int* speed)
+static int  plugin_ctrl_speed(UgetPluginMedia* plugin, int* speed)
 {
 	UgetCommon*  common;
 	int          value;
@@ -294,7 +294,7 @@ static int  plugin_ctrl_speed (UgetPluginMedia* plugin, int* speed)
 		plugin->limit[1] = speed[1];
 	}
 	else {
-		common = ug_info_realloc (&plugin->node->info, UgetCommonInfo);
+		common = ug_info_realloc(&plugin->node->info, UgetCommonInfo);
 		// download
 		value = speed[0];
 		if (common->max_download_speed) {
@@ -317,11 +317,10 @@ static int  plugin_ctrl_speed (UgetPluginMedia* plugin, int* speed)
 
 // ----------------------------------------------------------------------------
 // plugin_sync
-static int  sync_child_node (UgetNode* node, UgetNode* src, int src_is_active);
+static int  sync_child_node(UgetNode* node, UgetNode* src, int src_is_active);
 
-static int  plugin_sync (UgetPluginMedia* plugin)
+static int  plugin_sync(UgetPluginMedia* plugin, UgetNode* node)
 {
-	UgetNode*      node;
 	UgetCommon*    common;
 	UgetProgress*  progress;
 
@@ -333,25 +332,25 @@ static int  plugin_sync (UgetPluginMedia* plugin)
 	// avoid crash if plug-in plug-in failed to start.
 	if (plugin->node == NULL)
 		return TRUE;
-
-	node = plugin->node;
+	if (node == NULL)
+		node = plugin->node;
 	// change node name by title ,item_index, and item_total
 	if (plugin->named == FALSE && plugin->title) {
 		plugin->named = TRUE;
-		ug_free (node->name);
+		ug_free(node->name);
 		// decide to show "(current/total) title" or "title"
 		if (plugin->item_total > 1) {
-			node->name = ug_strdup_printf ("(%d/%d) %s",
+			node->name = ug_strdup_printf("(%d/%d) %s",
 					plugin->item_index + 1,
 					plugin->item_total,
 					plugin->title);
 		}
 		else
-			node->name = ug_strdup (plugin->title);
+			node->name = ug_strdup(plugin->title);
 	}
 
 	// sync data between plug-in and node
-	common = ug_info_realloc (&node->info, UgetCommonInfo);
+	common = ug_info_realloc(&node->info, UgetCommonInfo);
 	// sum retry count
 	common->retry_count = plugin->target_common->retry_count + plugin->retry_count;
 	// sync changed limit from UgetNode
@@ -367,18 +366,18 @@ static int  plugin_sync (UgetPluginMedia* plugin)
 	// downloading file name changed
 	if (plugin->file_renamed == TRUE) {
 		plugin->file_renamed = FALSE;
-		ug_mutex_lock (&plugin->mutex);
-		ug_free (common->file);
-		common->file = ug_strdup (plugin->target_common->file);
-		ug_mutex_unlock (&plugin->mutex);
+		ug_mutex_lock(&plugin->mutex);
+		ug_free(common->file);
+		common->file = ug_strdup(plugin->target_common->file);
+		ug_mutex_unlock(&plugin->mutex);
 	}
 	// sync child node from target_node_child
 	if (plugin->sync_child == TRUE) {
 		plugin->sync_child = FALSE;
-		ug_mutex_lock (&plugin->mutex);
-		sync_child_node (node, plugin->target_node_child,
-		                 (plugin->stopped) ? FALSE : TRUE);
-		ug_mutex_unlock (&plugin->mutex);
+		ug_mutex_lock(&plugin->mutex);
+		sync_child_node(node, plugin->target_node_child,
+		                (plugin->stopped) ? FALSE : TRUE);
+		ug_mutex_unlock(&plugin->mutex);
 	}
 	// sync changed limit from UgetNode to plug-in
 	if (plugin->target_common->max_upload_speed != common->max_upload_speed ||
@@ -392,7 +391,7 @@ static int  plugin_sync (UgetPluginMedia* plugin)
 	plugin->target_common->retry_limit = common->retry_limit;
 
 	// update progress
-	progress = ug_info_realloc (&node->info, UgetProgressInfo);
+	progress = ug_info_realloc(&node->info, UgetProgressInfo);
 	progress->complete       = plugin->target_progress->complete;
 	progress->total          = plugin->target_progress->total;
 	progress->download_speed = plugin->target_progress->download_speed;
@@ -424,56 +423,56 @@ static int  plugin_sync (UgetPluginMedia* plugin)
 
 // ----------------------------------------------------------------------------
 
-static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin);
+static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin);
 
-static int  plugin_start (UgetPluginMedia* plugin, UgetNode* node)
+static int  plugin_start(UgetPluginMedia* plugin, UgetNode* node)
 {
 	int          ok;
 	UgThread     thread;
 	UgetCommon*  common;
 
-	common = ug_info_get (&node->info, UgetCommonInfo);
+	common = ug_info_get(&node->info, UgetCommonInfo);
 	if (common == NULL || common->uri == NULL)
 		return FALSE;
 
-	plugin->target_node = uget_node_new (NULL);
-	ug_info_assign (&plugin->target_node->info, &node->info, NULL);
-	plugin->target_common = ug_info_get (&plugin->target_node->info, UgetCommonInfo);
-	plugin->target_proxy  = ug_info_get (&plugin->target_node->info, UgetProxyInfo);
-	plugin->target_progress = ug_info_realloc (&plugin->target_node->info, UgetProgressInfo);
+	plugin->target_node = uget_node_new(NULL);
+	ug_info_assign(&plugin->target_node->info, &node->info, NULL);
+	plugin->target_common = ug_info_get(&plugin->target_node->info, UgetCommonInfo);
+	plugin->target_proxy  = ug_info_get(&plugin->target_node->info, UgetProxyInfo);
+	plugin->target_progress = ug_info_realloc(&plugin->target_node->info, UgetProgressInfo);
 
 	// assign node
-	uget_node_ref (node);
+	uget_node_ref(node);
 	plugin->node = node;
 
 	// try to start thread
 	plugin->paused = FALSE;
 	plugin->stopped = FALSE;
-	uget_plugin_ref ((UgetPlugin*) plugin);
-	ok = ug_thread_create (&thread, (UgThreadFunc) plugin_thread, plugin);
+	uget_plugin_ref((UgetPlugin*) plugin);
+	ok = ug_thread_create(&thread, (UgThreadFunc) plugin_thread, plugin);
 	if (ok == UG_THREAD_OK)
-		ug_thread_unjoin (&thread);
+		ug_thread_unjoin(&thread);
 	else {
 		// failed to start thread -----------------
 		plugin->paused = TRUE;
 		plugin->stopped = TRUE;
 		// don't assign node
-		uget_node_unref (plugin->node);
+		uget_node_unref(plugin->node);
 		plugin->node = NULL;
 		// post error message and decreases the reference count
-		uget_plugin_post ((UgetPlugin*) plugin,
-				uget_event_new_error (UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
-				                      NULL));
-		uget_plugin_unref ((UgetPlugin*) plugin);
+		uget_plugin_post((UgetPlugin*) plugin,
+				uget_event_new_error(UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
+				                     NULL));
+		uget_plugin_unref((UgetPlugin*) plugin);
 		return FALSE;
 	}
 
 	return TRUE;
 }
 
-static int   is_file_completed (const char* file, const char* folder);
+static int   is_file_completed(const char* file, const char* folder);
 
-static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
+static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin)
 {
 	UgetMedia*     umedia;
 	UgetMediaItem* umitem;
@@ -485,16 +484,16 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 	const char*    quality = NULL;
 
 	common = plugin->target_common;
-	umedia = uget_media_new (common->uri, 0);
-	if (uget_media_grab_items (umedia, plugin->target_proxy) == 0) {
+	umedia = uget_media_new(common->uri, 0);
+	if (uget_media_grab_items(umedia, plugin->target_proxy) == 0) {
 		if (umedia->event) {
-			uget_plugin_post ((UgetPlugin*) plugin, umedia->event);
+			uget_plugin_post((UgetPlugin*) plugin, umedia->event);
 			umedia->event = NULL;
 		}
 		else {
-			uget_plugin_post ((UgetPlugin*) plugin,
-					uget_event_new_error (UGET_EVENT_ERROR_CUSTOM,
-					                      _("Failed to get media link.")));
+			uget_plugin_post((UgetPlugin*) plugin,
+					uget_event_new_error(UGET_EVENT_ERROR_CUSTOM,
+					                     _("Failed to get media link.")));
 		}
 		goto exit;
 	}
@@ -505,31 +504,31 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 		plugin->synced = FALSE;
 	}
 
-	umitem = uget_media_match (umedia, global.match_mode,
-	                           global.quality, global.type);
+	umitem = uget_media_match(umedia, global.match_mode,
+	                          global.quality, global.type);
 	if (umitem == NULL) {
-		uget_plugin_post ((UgetPlugin*) plugin,
-				uget_event_new_error (UGET_EVENT_ERROR_CUSTOM,
-				                      _("No matched media.")));
+		uget_plugin_post((UgetPlugin*) plugin,
+				uget_event_new_error(UGET_EVENT_ERROR_CUSTOM,
+				                     _("No matched media.")));
 		goto exit;
 	}
 	// set item_index and item_total
 	plugin->item_index = 0;
 	plugin->item_total = umedia->size -
-			ug_list_position ((UgList*) umedia, (UgLink*) umitem);
+			ug_list_position((UgList*) umedia, (UgLink*) umitem);
 
 	// set HTTP referrer
-	http = ug_info_realloc (&plugin->target_node->info, UgetHttpInfo);
+	http = ug_info_realloc(&plugin->target_node->info, UgetHttpInfo);
 	if (http->referrer == NULL)
-		http->referrer = ug_strdup_printf ("%s%s", common->uri, "# ");
+		http->referrer = ug_strdup_printf("%s%s", common->uri, "# ");
 	// clear copied common URI
-	ug_free (common->uri);
+	ug_free(common->uri);
 	common->uri = NULL;
 	// reset grand total data
 	plugin->elapsed = 0;
 	plugin->retry_count = 0;
 	// create children node
-	plugin->target_node_child = uget_node_new (NULL);
+	plugin->target_node_child = uget_node_new(NULL);
 
 	for (;  umitem;  umitem = umitem->next) {
 		// stop this loop when user paused this plug-in.
@@ -579,17 +578,17 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 		}
 
 		// generate file name by title, quality, and type.
-		ug_mutex_lock (&plugin->mutex);
-		ug_free (common->file);
-		common->file = ug_strdup_printf ("%s_%s.%s",
+		ug_mutex_lock(&plugin->mutex);
+		ug_free(common->file);
+		common->file = ug_strdup_printf("%s_%s.%s",
 				(plugin->title) ? plugin->title : "unknown",
 				quality, type);
-		ug_str_replace_chars (common->file, "\\/:*?\"<>|", '_');
-		ug_mutex_unlock (&plugin->mutex);
+		ug_str_replace_chars(common->file, "\\/:*?\"<>|", '_');
+		ug_mutex_unlock(&plugin->mutex);
 		plugin->file_renamed = TRUE;
 
 		// skip completed file
-		if (is_file_completed (common->file, common->folder))
+		if (is_file_completed(common->file, common->folder))
 			continue;
 
 		// use media link to replace common->uri
@@ -605,35 +604,35 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 		plugin->target_progress->elapsed = 0;
 
 		// create target_plugin to download
-		plugin->target_plugin = uget_plugin_new (global.plugin_info);
-		uget_plugin_ctrl_speed (plugin->target_plugin, plugin->limit);
-		if (uget_plugin_start (plugin->target_plugin, plugin->target_node) == FALSE) {
-			msg = uget_event_new_error (UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
-			                            NULL);
-			uget_plugin_post ((UgetPlugin*) plugin, msg);
+		plugin->target_plugin = uget_plugin_new(global.plugin_info);
+		uget_plugin_ctrl_speed(plugin->target_plugin, plugin->limit);
+		if (uget_plugin_start(plugin->target_plugin, plugin->target_node) == FALSE) {
+			msg = uget_event_new_error(UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
+			                           NULL);
+			uget_plugin_post((UgetPlugin*) plugin, msg);
 		}
 
 		do {
 			// sleep 0.5 second
-			ug_sleep (500);
+			ug_sleep(500);
 			// stop target_plugin when user paused this plug-in.
 			if (plugin->paused) {
-				uget_plugin_stop (plugin->target_plugin);
+				uget_plugin_stop(plugin->target_plugin);
 				break;
 			}
 			if (plugin->limit_changed) {
 				plugin->limit_changed = FALSE;
-				uget_plugin_ctrl_speed (plugin->target_plugin, plugin->limit);
+				uget_plugin_ctrl_speed(plugin->target_plugin, plugin->limit);
 			}
 
 			// sync child(file) node from target_node to target_node_child
-			ug_mutex_lock (&plugin->mutex);
-			plugin->sync_child = sync_child_node (plugin->target_node_child,
-			                                      plugin->target_node, TRUE);
-			ug_mutex_unlock (&plugin->mutex);
+			ug_mutex_lock(&plugin->mutex);
+			plugin->sync_child = sync_child_node(plugin->target_node_child,
+			                                     plugin->target_node, TRUE);
+			ug_mutex_unlock(&plugin->mutex);
 
 			// move event from target_plugin to plug-in
-			msg = uget_plugin_pop ((UgetPlugin*) plugin->target_plugin);
+			msg = uget_plugin_pop((UgetPlugin*) plugin->target_plugin);
 			for (;  msg;  msg = msg_next) {
 				msg_next = msg->next;
 				msg->prev = NULL;
@@ -654,24 +653,24 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 				case UGET_EVENT_STOP:
 				case UGET_EVENT_COMPLETED:
 					// discard message
-					uget_event_free (msg);
+					uget_event_free(msg);
 					continue;
 				}
 				// post event to plug-in
-				uget_plugin_post ((UgetPlugin*) plugin, msg);
+				uget_plugin_post((UgetPlugin*) plugin, msg);
 			}
 			// sync data in plugin_sync()
 			plugin->synced = FALSE;
-		} while (uget_plugin_sync (plugin->target_plugin));
+		} while (uget_plugin_sync(plugin->target_plugin, plugin->target_node));
 
 		// sync file node
-		ug_mutex_lock (&plugin->mutex);
-		plugin->sync_child = sync_child_node (plugin->target_node_child,
-		                                      plugin->target_node, FALSE);
-		ug_mutex_unlock (&plugin->mutex);
+		ug_mutex_lock(&plugin->mutex);
+		plugin->sync_child = sync_child_node(plugin->target_node_child,
+		                                     plugin->target_node, FALSE);
+		ug_mutex_unlock(&plugin->mutex);
 
 		// free target_plugin
-		uget_plugin_unref ((UgetPlugin*) plugin->target_plugin);
+		uget_plugin_unref((UgetPlugin*) plugin->target_plugin);
 		plugin->target_plugin = NULL;
 	}
 
@@ -679,47 +678,47 @@ static UG_THREAD_RETURN_TYPE  plugin_thread (UgetPluginMedia* plugin)
 
 	if (plugin->paused == FALSE && umitem == NULL) {
 		plugin->node->state |= UGET_STATE_COMPLETED;
-		uget_plugin_post ((UgetPlugin*) plugin,
-				uget_event_new (UGET_EVENT_COMPLETED));
+		uget_plugin_post((UgetPlugin*) plugin,
+				uget_event_new(UGET_EVENT_COMPLETED));
 	}
-	uget_plugin_post ((UgetPlugin*)plugin,
-			uget_event_new (UGET_EVENT_STOP));
+	uget_plugin_post((UgetPlugin*)plugin,
+			uget_event_new(UGET_EVENT_STOP));
 
 exit:
 	plugin->stopped = TRUE;
-	uget_media_free (umedia);
-	uget_plugin_unref ((UgetPlugin*) plugin);
+	uget_media_free(umedia);
+	uget_plugin_unref((UgetPlugin*) plugin);
 	return UG_THREAD_RETURN_VALUE;
 }
 
-static int   is_file_completed (const char* file, const char* folder)
+static int   is_file_completed(const char* file, const char* folder)
 {
 	char* path;
 	char* temp;
 	int   result = FALSE;
 
 	if (folder == NULL)
-		path = ug_strdup (file);
+		path = ug_strdup(file);
 	else
-		path = ug_build_filename (folder, file, NULL);
+		path = ug_build_filename(folder, file, NULL);
 
-	if (ug_file_is_exist (path)) {
-		temp = ug_strdup_printf ("%s.%s", path, "aria2");
-		ug_free (path);
+	if (ug_file_is_exist(path)) {
+		temp = ug_strdup_printf("%s.%s", path, "aria2");
+		ug_free(path);
 		path = temp;
-		if (ug_file_is_exist (path) == FALSE)
+		if (ug_file_is_exist(path) == FALSE)
 			result = TRUE;
 	}
 
 	// debug
 //	if (result)
-//		printf ("%s is completed\n", path);
+//		printf("%s is completed\n", path);
 
-	ug_free (path);
+	ug_free(path);
 	return result;
 }
 
-static int  sync_child_node (UgetNode* node, UgetNode* src, int src_is_active)
+static int  sync_child_node(UgetNode* node, UgetNode* src, int src_is_active)
 {
 	UgetNode*  node_child;
 	UgetNode*  src_child;
@@ -728,7 +727,7 @@ static int  sync_child_node (UgetNode* node, UgetNode* src, int src_is_active)
 
 	for (src_child = src->children;  src_child;  src_child = src_child->next) {
 		for (node_child = node->children;  node_child;  node_child = node_child->next) {
-			if (strcmp (src_child->name, node_child->name) == 0)
+			if (strcmp(src_child->name, node_child->name) == 0)
 				break;
 		}
 		// if found node that has the same name
@@ -740,11 +739,11 @@ static int  sync_child_node (UgetNode* node, UgetNode* src, int src_is_active)
 		else {
 			link_changed = TRUE;
 			// add new node if not found
-			new_child = uget_node_new (NULL);
-			new_child->name = ug_strdup (src_child->name);
+			new_child = uget_node_new(NULL);
+			new_child->name = ug_strdup(src_child->name);
 			new_child->type = src_child->type;
 			new_child->state = (src_is_active) ? UGET_STATE_ACTIVE : 0;
-			uget_node_prepend (node, new_child);
+			uget_node_prepend(node, new_child);
 		}
 	}
 
@@ -753,8 +752,8 @@ static int  sync_child_node (UgetNode* node, UgetNode* src, int src_is_active)
 		for (node_child = node->children;  node_child;  node_child = new_child) {
 			new_child = node_child->next;
 			if (node_child->state == UGET_STATE_ACTIVE) {
-				uget_node_remove (node, node_child);
-				uget_node_unref (node_child);
+				uget_node_remove(node, node_child);
+				uget_node_unref(node_child);
 				link_changed = TRUE;
 			}
 		}

@@ -42,12 +42,12 @@
 // ----------------------------------------------------------------------------
 // UgetPluginInfo (derived from UgDataInfo)
 
-static void plugin_init  (UgetPluginEmpty* plugin);
-static void plugin_final (UgetPluginEmpty* plugin);
-static int  plugin_ctrl  (UgetPluginEmpty* plugin, int code, void* data);
-static int  plugin_sync  (UgetPluginEmpty* plugin);
-static UgetResult  global_set (int code, void* parameter);
-static UgetResult  global_get (int code, void* parameter);
+static void plugin_init (UgetPluginEmpty* plugin);
+static void plugin_final(UgetPluginEmpty* plugin);
+static int  plugin_ctrl (UgetPluginEmpty* plugin, int code, void* data);
+static int  plugin_sync (UgetPluginEmpty* plugin, UgetNode* node);
+static UgetResult  global_set(int code, void* parameter);
+static UgetResult  global_get(int code, void* parameter);
 
 static const char* schemes[] = {"http", "ftp", NULL};
 static const char* types[]   = {"torrent", NULL};
@@ -55,7 +55,7 @@ static const char* types[]   = {"torrent", NULL};
 static const UgetPluginInfo UgetPluginEmptyInfoStatic =
 {
 	"empty",
-	sizeof (UgetPluginEmpty),
+	sizeof(UgetPluginEmpty),
 	(UgInitFunc)   plugin_init,
 	(UgFinalFunc)  plugin_final,
 	(UgAssignFunc) NULL,
@@ -79,7 +79,7 @@ static struct
 	int  ref_count;
 } global = {0, 0};
 
-static UgetResult  global_init (void)
+static UgetResult  global_init(void)
 {
 	if (global.initialized == FALSE) {
 		//
@@ -88,18 +88,18 @@ static UgetResult  global_init (void)
 		//     return UGET_RESULT_ERROR;
 		//
 		global.initialized = TRUE;
-		puts ("UgetPluginEmpty global initialize");
+		puts("UgetPluginEmpty global initialize");
 	}
 	global.ref_count++;
 	return UGET_RESULT_OK;
 }
 
-static void  global_ref (void)
+static void  global_ref(void)
 {
 	global.ref_count++;
 }
 
-static void  global_unref (void)
+static void  global_unref(void)
 {
 	if (global.initialized == FALSE)
 		return;
@@ -110,19 +110,19 @@ static void  global_unref (void)
 		//
 		// your global finalized code
 		//
-		puts ("UgetPluginEmpty global finalize");
+		puts("UgetPluginEmpty global finalize");
 	}
 }
 
-static UgetResult  global_set (int option, void* parameter)
+static UgetResult  global_set(int option, void* parameter)
 {
 	switch (option) {
 	case UGET_PLUGIN_INIT:
 		// do global initialize/uninitialize here
 		if (parameter)
-			return global_init ();
+			return global_init();
 		else
-			global_unref ();
+			global_unref();
 		break;
 
 	default:
@@ -132,7 +132,7 @@ static UgetResult  global_set (int option, void* parameter)
 	return UGET_RESULT_OK;
 }
 
-static UgetResult  global_get (int option, void* parameter)
+static UgetResult  global_get(int option, void* parameter)
 {
 	switch (option) {
 	case UGET_PLUGIN_INIT:
@@ -155,19 +155,19 @@ static UgetResult  global_get (int option, void* parameter)
 // ----------------------------------------------------------------------------
 // control functions
 
-static void plugin_init (UgetPluginEmpty* plugin)
+static void plugin_init(UgetPluginEmpty* plugin)
 {
 	if (global.initialized == FALSE)
-		global_init ();
+		global_init();
 	else
-		global_ref ();
+		global_ref();
 
 	//
 	// your initialized code.
 	//
 }
 
-static void plugin_final (UgetPluginEmpty* plugin)
+static void plugin_final(UgetPluginEmpty* plugin)
 {
 	//
 	// your finalized code.
@@ -175,33 +175,33 @@ static void plugin_final (UgetPluginEmpty* plugin)
 
 	// unassign node
 	if (plugin->node)
-		uget_node_unref (plugin->node);
+		uget_node_unref(plugin->node);
 
-	global_unref ();
+	global_unref();
 }
 
 // ----------------------------------------------------------------------------
 // plugin_ctrl
 
-static int  plugin_ctrl_speed (UgetPluginEmpty* plugin, int* speed);
-static int  plugin_start (UgetPluginEmpty* plugin, UgetNode* node);
-static void plugin_stop (UgetPluginEmpty* plugin);
+static int  plugin_ctrl_speed(UgetPluginEmpty* plugin, int* speed);
+static int  plugin_start(UgetPluginEmpty* plugin, UgetNode* node);
+static void plugin_stop(UgetPluginEmpty* plugin);
 
-static int  plugin_ctrl (UgetPluginEmpty* plugin, int code, void* data)
+static int  plugin_ctrl(UgetPluginEmpty* plugin, int code, void* data)
 {
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
 		if (plugin->node == NULL)
-			return plugin_start (plugin, data);
+			return plugin_start(plugin, data);
 		break;
 
 	case UGET_PLUGIN_CTRL_STOP:
-		plugin_stop (plugin);
+		plugin_stop(plugin);
 		return TRUE;
 
 	case UGET_PLUGIN_CTRL_SPEED:
 		// speed control
-		return plugin_ctrl_speed (plugin, data);
+		return plugin_ctrl_speed(plugin, data);
 
 	// output ---------------
 	case UGET_PLUGIN_CTRL_ACTIVE:
@@ -216,7 +216,7 @@ static int  plugin_ctrl (UgetPluginEmpty* plugin, int code, void* data)
 	return FALSE;
 }
 
-static int  plugin_ctrl_speed (UgetPluginEmpty* plugin, int* speed)
+static int  plugin_ctrl_speed(UgetPluginEmpty* plugin, int* speed)
 {
 	UgetCommon*  common;
 	int          value;
@@ -230,7 +230,7 @@ static int  plugin_ctrl_speed (UgetPluginEmpty* plugin, int* speed)
 		plugin->limit[1] = speed[1];
 	}
 	else {
-		common = ug_info_realloc (&plugin->node->info, UgetCommonInfo);
+		common = ug_info_realloc(&plugin->node->info, UgetCommonInfo);
 		// download
 		value = speed[0];
 		if (common->max_download_speed) {
@@ -254,7 +254,7 @@ static int  plugin_ctrl_speed (UgetPluginEmpty* plugin, int* speed)
 // ----------------------------------------------------------------------------
 // plugin_sync
 
-static int  plugin_sync (UgetPluginEmpty* plugin)
+static int  plugin_sync(UgetPluginEmpty* plugin, UgetNode* node)
 {
 	// if plug-in was stopped, return FALSE.
 	return FALSE;
@@ -262,21 +262,21 @@ static int  plugin_sync (UgetPluginEmpty* plugin)
 
 // ----------------------------------------------------------------------------
 
-static int  plugin_start (UgetPluginEmpty* plugin, UgetNode* node)
+static int  plugin_start(UgetPluginEmpty* plugin, UgetNode* node)
 {
 	UgetCommon*  common;
 
-	common = ug_info_get (&node->info, UgetCommonInfo);
+	common = ug_info_get(&node->info, UgetCommonInfo);
 	if (common == NULL || common->uri == NULL)
 		return FALSE;
 
 	// assign node
-	uget_node_ref (node);
+	uget_node_ref(node);
 	plugin->node = node;
 
 	return TRUE;
 }
 
-static void plugin_stop (UgetPluginEmpty* plugin)
+static void plugin_stop(UgetPluginEmpty* plugin)
 {
 }

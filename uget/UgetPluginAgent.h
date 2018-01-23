@@ -141,7 +141,7 @@ int   uget_plugin_agent_start_thread (UgetPluginAgent* plugin, UgetNode* node,
 
 // sync data between target_plugin and target_node
 // if target_plugin is active, return TRUE
-int   uget_plugin_agent_sync_plugin (UgetPluginAgent* plugin);
+int   uget_plugin_agent_sync_plugin (UgetPluginAgent* plugin, UgetNode* node);
 
 // handle events from target_plugin by default action.
 // return remain events

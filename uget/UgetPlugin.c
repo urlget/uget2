@@ -125,13 +125,13 @@ int  uget_plugin_ctrl(UgetPlugin* plugin, int code, void* data)
 	return FALSE;
 }
 
-int  uget_plugin_sync(UgetPlugin* plugin)
+int  uget_plugin_sync(UgetPlugin* plugin, UgetNode* node)
 {
 	UgetPluginSyncFunc  sync;
 
 	sync = plugin->info->sync;
 	if (sync)
-		return sync(plugin);
+		return sync(plugin, node);
 	return FALSE;
 }
 
