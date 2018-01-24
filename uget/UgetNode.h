@@ -155,8 +155,8 @@ struct UgetNodeControl
 
 struct UgetNode
 {
-	UG_NODE_MEMBERS(UgetNode, UgetNode, data);
-//	UgetNode*     data;
+	UG_NODE_MEMBERS(UgetNode, UgetNode, base);
+//	UgetNode*     base;    // the realest UgetNode (real->real->real-> ...)
 //	UgetNode*     next;
 //	UgetNode*     prev;
 //	UgetNode*     parent;

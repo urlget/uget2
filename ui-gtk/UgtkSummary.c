@@ -91,7 +91,6 @@ void  ugtk_summary_show (UgtkSummary* summary, UgetNode* node)
 	}
 
 	iter.stamp = 0;   // used by ugtk_summary_store_realloc_next()
-	node = node->data;
 	temp.common = ug_info_get (node->info, UgetCommonInfo);
 
 	// Summary Name

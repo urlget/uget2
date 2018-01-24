@@ -99,7 +99,7 @@ static void  on_download_cursor_changed (GtkTreeView* view, UgtkApp* app)
 
 	node = app->traveler.download.cursor.node;
 	if (node)
-		node = node->data;
+		node = node->base;
 	ugtk_summary_show (&app->summary, node);
 
 	// UgtkMenubar.download.priority

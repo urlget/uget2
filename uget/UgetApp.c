@@ -187,7 +187,7 @@ static UgArrayPtr* uget_app_store_nodes (UgetApp* app, UgetNode* parent)
 //	array->length = 0;
 	ug_array_alloc (array, parent->n_children);
 	for (index = 0, dnode = parent->children;  dnode;  dnode = dnode->next)
-		array->at[index++] = dnode->data;
+		array->at[index++] = dnode->base;
 
 	return array;
 }
@@ -949,7 +949,7 @@ int  uget_app_recycle_download (UgetApp* app, UgetNode* dnode)
 		// try to insert download before recycled
 		sibling = category->recycled->children;
 		if (sibling)
-			sibling = sibling->data;
+			sibling = sibling->base;
 		uget_node_insert (cnode, sibling, dnode);
 		return TRUE;
 	}

@@ -349,7 +349,7 @@ static void on_move_category_up (GtkWidget* widget, UgtkApp* app)
 	GtkTreeIter  iter1,  iter2;
 	GtkTreePath *path1, *path2;
 
-	cnode = app->traveler.category.cursor.node->data;
+	cnode = app->traveler.category.cursor.node->base;
 	if (cnode == NULL || cnode->prev == NULL)
 		return;
 
@@ -380,7 +380,7 @@ static void on_move_category_down (GtkWidget* widget, UgtkApp* app)
 	GtkTreeIter  iter1,  iter2;
 	GtkTreePath *path1, *path2;
 
-	cnode = app->traveler.category.cursor.node->data;
+	cnode = app->traveler.category.cursor.node->base;
 	if (cnode == NULL || cnode->next == NULL)
 		return;
 
@@ -445,7 +445,6 @@ static void on_open_download_file (GtkWidget* widget, UgtkApp* app)
 	node = app->traveler.download.cursor.node;
 	if (node == NULL)
 		return;
-	node = node->data;
 	common = ug_info_get (node->info, UgetCommonInfo);
 	if (common == NULL || common->folder == NULL || common->file == NULL)
 		return;
@@ -475,7 +474,6 @@ static void on_open_download_folder (GtkWidget* widget, UgtkApp* app)
 	node = app->traveler.download.cursor.node;
 	if (node == NULL)
 		return;
-	node = node->data;
 	common = ug_info_get (node->info, UgetCommonInfo);
 	if (common == NULL || common->folder == NULL)
 		return;
@@ -555,12 +553,12 @@ static void on_set_download_force_start (GtkWidget* widget, UgtkApp* app)
 	GList*     link;
 
 	list = ugtk_traveler_get_selected (&app->traveler);
-	cursor = app->traveler.download.cursor.node->data;
+	cursor = app->traveler.download.cursor.node->base;
 	for (link = list;  link;  link = link->next) {
 		node = link->data;
-		node = node->data;
+		node = node->base;
 		link->data = node;
-		uget_app_activate_download ((UgetApp*) app, node->data);
+		uget_app_activate_download ((UgetApp*) app, node->base);
 	}
 	if (app->traveler.state.cursor.pos == 0) {
 		ugtk_traveler_set_cursor (&app->traveler, cursor);
@@ -597,7 +595,7 @@ static void on_move_download (GtkWidget* widget, UgtkApp* app)
 		}
 	}
 
-	if (cnode == NULL || cnode == app->traveler.category.cursor.node->data)
+	if (cnode == NULL || cnode == app->traveler.category.cursor.node->base)
 		return;
 
 	// if current category is "All"
@@ -607,8 +605,8 @@ static void on_move_download (GtkWidget* widget, UgtkApp* app)
 	list = ugtk_traveler_get_selected (&app->traveler);
 	for (link = list;  link;  link = link->next) {
 		dnode = link->data;
-		dnode = dnode->data;
-		uget_app_move_download_to ((UgetApp*) app, dnode, cnode->data);
+		dnode = dnode->base;
+		uget_app_move_download_to ((UgetApp*) app, dnode, cnode->base);
 	}
 	g_list_free (list);
 	// refresh
@@ -639,7 +637,7 @@ static void on_set_download_prioriy (GtkWidget* widget, UgtkApp* app)
 	list = ugtk_traveler_get_selected (&app->traveler);
 	for (link = list;  link;  link = link->next) {
 		node = link->data;
-		node = node->data;
+		node = node->base;
 		relation = ug_info_realloc (node->info, UgetRelationInfo);
 		relation->task.priority = priority;
 	}
@@ -927,7 +925,7 @@ void  ugtk_menubar_sync_category (UgtkMenubar* menubar, UgtkApp* app, gboolean r
 	for (index = 0;  index < array->len;  index += 2) {
 		menu_item = g_ptr_array_index (array, index);
 		cnode     = g_ptr_array_index (array, index +1);
-		if (cnode == app->traveler.category.cursor.node->data)
+		if (cnode == app->traveler.category.cursor.node->base)
 			gtk_widget_set_sensitive (menu_item, FALSE);
 		else
 			gtk_widget_set_sensitive (menu_item, TRUE);

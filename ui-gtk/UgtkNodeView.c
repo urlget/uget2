@@ -89,7 +89,7 @@ static void col_set_icon (GtkTreeViewColumn *tree_column,
 	if (node == NULL)
 		return;
 
-	node = node->data;
+	node = node->base;
 #if GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 10
 	icon_name = "text-x-generic";
 #else
@@ -139,7 +139,7 @@ static void col_set_name (GtkTreeViewColumn *tree_column,
 //		}
 //	}
 
-	node = node->data;
+	node = node->base;
 	name = _("unnamed");
 
 	if (node->name)
@@ -171,7 +171,7 @@ static void col_set_complete (GtkTreeViewColumn *tree_column,
 	// avoid crash in GTK3
 	if (node == NULL)
 		return;
-	node = node->data;
+	node = node->base;
 
 	progress = ug_info_get (node->info, UgetProgressInfo);
 	if (progress && progress->total)
@@ -198,7 +198,7 @@ static void col_set_total (GtkTreeViewColumn *tree_column,
 	// avoid crash in GTK3
 	if (node == NULL)
 		return;
-	node = node->data;
+	node = node->base;
 
 	progress = ug_info_get (node->info, UgetProgressInfo);
 	if (progress && progress->total)
@@ -225,7 +225,7 @@ static void col_set_percent (GtkTreeViewColumn *tree_column,
 	// avoid crash in GTK3
 	if (node == NULL)
 		return;
-	node = node->data;
+	node = node->base;
 
 	progress = ug_info_get (node->info, UgetProgressInfo);
 	if (progress && progress->total) {
@@ -258,7 +258,7 @@ static void col_set_elapsed (GtkTreeViewColumn *tree_column,
 	// avoid crash in GTK3
 	if (node == NULL)
 		return;
-	node = node->data;
+	node = node->base;
 
 	progress = ug_info_get (node->info, UgetProgressInfo);
 	if (progress)
@@ -287,7 +287,7 @@ static void col_set_left (GtkTreeViewColumn *tree_column,
 	// avoid crash in GTK3
 	if (node == NULL)
 		return;
-	node = node->data;
+	node = node->base;
 
 	progress = ug_info_get (node->info, UgetProgressInfo);
 	relation = ug_info_get (node->info, UgetRelationInfo);
@@ -317,7 +317,7 @@ static void col_set_speed (GtkTreeViewColumn *tree_column,
 	// avoid crash in GTK3
 	if (node == NULL)
 		return;
-	node = node->data;
+	node = node->base;
 
 	progress = ug_info_get (node->info, UgetProgressInfo);
 	relation = ug_info_get (node->info, UgetRelationInfo);
@@ -347,7 +347,7 @@ static void col_set_upload_speed (GtkTreeViewColumn *tree_column,
 	// avoid crash in GTK3
 	if (node == NULL)
 		return;
-	node = node->data;
+	node = node->base;
 
 	progress = ug_info_get (node->info, UgetProgressInfo);
 	relation = ug_info_get (node->info, UgetRelationInfo);
@@ -376,7 +376,7 @@ static void col_set_uploaded (GtkTreeViewColumn *tree_column,
 	// avoid crash in GTK3
 	if (node == NULL)
 		return;
-	node = node->data;
+	node = node->base;
 
 	progress = ug_info_get (node->info, UgetProgressInfo);
 	if (progress && progress->uploaded)
@@ -403,7 +403,7 @@ static void col_set_ratio (GtkTreeViewColumn *tree_column,
 	// avoid crash in GTK3
 	if (node == NULL)
 		return;
-	node = node->data;
+	node = node->base;
 
 	progress = ug_info_get (node->info, UgetProgressInfo);
 	if (progress && progress->ratio)
@@ -430,7 +430,7 @@ static void col_set_retry (GtkTreeViewColumn *tree_column,
 	// avoid crash in GTK3
 	if (node == NULL)
 		return;
-	node = node->data;
+	node = node->base;
 
 	common = ug_info_get (node->info, UgetCommonInfo);
 	if (common == NULL || common->retry_count == 0)
@@ -460,7 +460,7 @@ static void col_set_category (GtkTreeViewColumn *tree_column,
 	// avoid crash in GTK3
 	if (node == NULL)
 		return;
-	node = node->data;
+	node = node->base;
 
 	if (node->parent)
 		string = node->parent->name;
@@ -485,7 +485,7 @@ static void col_set_uri (GtkTreeViewColumn *tree_column,
 	// avoid crash in GTK3
 	if (node == NULL)
 		return;
-	node = node->data;
+	node = node->base;
 
 	common = ug_info_get (node->info, UgetCommonInfo);
 	if (common)
@@ -511,7 +511,7 @@ static void col_set_added_on (GtkTreeViewColumn *tree_column,
 	// avoid crash in GTK3
 	if (node == NULL)
 		return;
-	node = node->data;
+	node = node->base;
 
 	ulog = ug_info_get (node->info, UgetLogInfo);
 	if (ulog && ulog->added_time)
@@ -538,7 +538,7 @@ static void col_set_completed_on (GtkTreeViewColumn *tree_column,
 	// avoid crash in GTK3
 	if (node == NULL)
 		return;
-	node = node->data;
+	node = node->base;
 
 	ulog = ug_info_get (node->info, UgetLogInfo);
 	if (ulog && ulog->completed_time)
@@ -601,7 +601,7 @@ static void col_set_name_c (GtkTreeViewColumn *tree_column,
 //		}
 //	}
 
-	node = node->data;
+	node = node->base;
 	if (node->name)
 		name = node->name;
 	else

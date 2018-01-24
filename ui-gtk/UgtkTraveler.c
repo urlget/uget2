@@ -234,14 +234,14 @@ GList*  ugtk_traveler_reserve_selection (UgtkTraveler* traveler)
 
 	list = ugtk_traveler_get_selected (traveler);
 	for (link = list;  link;  link = link->next) {
-		link->data = ((UgetNode*)link->data)->data;
+		link->data = ((UgetNode*)link->data)->base;
 		uget_node_ref (link->data);
 	}
 
 	traveler->reserved.list = list;
 	traveler->reserved.node = traveler->download.cursor.node;
 	if (traveler->reserved.node) {
-		traveler->reserved.node = traveler->reserved.node->data;
+		traveler->reserved.node = traveler->reserved.node->base;
 		uget_node_ref (traveler->reserved.node);
 	}
 	return list;

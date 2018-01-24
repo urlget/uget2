@@ -100,7 +100,7 @@ void  uget_node_init  (UgetNode* node, UgetNode* node_real)
 	node->control = &control;
 
 	if (node_real == NULL) {
-		node->data = node;    // pointer to self
+		node->base = node;    // pointer to self
 		node->info = ug_info_new(8, 2);
 		node->info->at[0].key = (void*) UgetRelationInfo;
 		node->info->at[1].key = (void*) UgetProgressInfo;
@@ -108,7 +108,7 @@ void  uget_node_init  (UgetNode* node, UgetNode* node_real)
 	else {
 		// this is a fake node.
 //		node->group = 0;
-		node->data = node_real->data;
+		node->base = node_real->base;
 		node->real = node_real;
 		node->peer = node_real->fake;
 		node_real->fake = node;
@@ -580,7 +580,7 @@ void  uget_node_filter_split (UgetNode* node, UgetNode* sibling, UgetNode* child
 	}
 	else if (node->parent->parent == NULL) {
 		// node is category. child_real is download
-		child = child_real->data;
+		child = child_real->base;
 		if ((node->group & child->group) ||
 		    ( (child->group & UGET_GROUP_MAJOR) == 0 &&
 		      (node->group & UGET_GROUP_QUEUING) ) )
@@ -655,13 +655,13 @@ void  uget_node_filter_mix (UgetNode* node, UgetNode* sibling, UgetNode* child)
 
 		// reorder by group
 		if ( sibling &&
-		    ((sibling->data->group & UGET_GROUP_MAJOR) !=
-		     (child->data->group   & UGET_GROUP_MAJOR)) )
+		    ((sibling->base->group & UGET_GROUP_MAJOR) !=
+		     (child->base->group   & UGET_GROUP_MAJOR)) )
 		{
 			sibling = NULL;
 		}
 		if (node->fake && sibling == NULL) {
-			switch (child->data->group & UGET_GROUP_MAJOR) {
+			switch (child->base->group & UGET_GROUP_MAJOR) {
 			case UGET_GROUP_ACTIVE:
 				fake = uget_node_fake_from_group (node, UGET_GROUP_QUEUING);
 				if (fake == NULL || fake->children == NULL)
