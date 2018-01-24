@@ -889,7 +889,7 @@ void  ugtk_app_create_category (UgtkApp* app)
 		cnode_src = app->real.children;
 	cnode = uget_node_new (NULL);
 	cnode->name = ug_strdup_printf ("%s%s", _("Copy - "), cnode_src->name);
-	ug_info_assign (&cnode->info, &cnode_src->info, NULL);
+	ug_info_assign (cnode->info, cnode_src->info, NULL);
 
 	ugtk_node_dialog_set (ndialog, cnode);
 	ugtk_node_dialog_run (ndialog, UGTK_NODE_DIALOG_NEW_CATEGORY, cnode);
@@ -1565,7 +1565,7 @@ static void  on_export_text_file_response (GtkWidget* dialog, gint response, Ugt
 
 	node = app->traveler.category.cursor.node->data;
 	for (node = node->children;  node;  node = node->next) {
-		common = ug_info_get (&node->data->info, UgetCommonInfo);
+		common = ug_info_get (node->data->info, UgetCommonInfo);
 		if (common == NULL)
 			continue;
 		if (common->uri) {
@@ -1764,9 +1764,9 @@ void  ugtk_app_add_default_category (UgtkApp* app)
 
 	cnode = uget_node_new (NULL);
 	cnode->name = ug_strdup_printf ("%s %d", _("New"), counts++);
-	common = ug_info_realloc (&cnode->info, UgetCommonInfo);
+	common = ug_info_realloc (cnode->info, UgetCommonInfo);
 	common->folder = ug_strdup (g_get_home_dir ());
-	category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
+	category = ug_info_realloc (cnode->info, UgetCategoryInfo);
 	*(char**)ug_array_alloc (&category->schemes, 1) = ug_strdup ("ftps");
 	*(char**)ug_array_alloc (&category->schemes, 1) = ug_strdup ("magnet");
 	*(char**)ug_array_alloc (&category->hosts, 1) = ug_strdup (".edu");

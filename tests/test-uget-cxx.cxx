@@ -67,9 +67,10 @@ void test_uget_node_cxx (void)
 	Uget::Common* common;
 
 	cout << " --- test_uget_node_cxx()" << endl;
-	common = (Uget::Common*) node.info.realloc (UgetCommonInfo);
+	uget_node_init(&node, NULL);
+	common = (Uget::Common*) node.info->realloc (UgetCommonInfo);
 	common->retry_limit = 10;
-	node.info.remove (UgetCommonInfo);
+	node.info->remove (UgetCommonInfo);
 }
 
 // ----------------------------------------------------------------------------

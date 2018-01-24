@@ -61,6 +61,10 @@ void         ug_info_set_registry(UgRegistry* registry);
 // UgInfo - UgDataInfo and it's instance collection
 //        - It uses UgDataInfo to get/alloc it's instance.
 
+UgInfo* ug_info_new(int allocated_length, int cache_length);
+void    ug_info_ref(UgInfo* info);
+void    ug_info_unref(UgInfo* info);
+
 void    ug_info_init(UgInfo* info, int allocated_length, int cache_length);
 void    ug_info_final(UgInfo* info);
 
@@ -74,11 +78,11 @@ void    ug_info_assign(UgInfo* info, UgInfo* src, const UgDataInfo* exclude);
 // ----------------
 // JSON parser that used with UG_ENTRY_CUSTOM.
 // if (UgRegistry*)registry == NULL, use default registry.
-UgJsonError ug_json_parse_info(UgJson* json,
+UgJsonError ug_json_parse_info_ptr(UgJson* json,
                                const char* name, const char* value,
-                               void* info, void* registry);
+                               void** info, void* registry);
 // JSON writer that used with UG_ENTRY_CUSTOM.
-void        ug_json_write_info(UgJson* json, const UgInfo* info);
+void        ug_json_write_info_ptr(UgJson* json, UgInfo** info);
 
 // JSON:
 //
@@ -105,12 +109,16 @@ struct UgInfo
 //	int     element_size;
 
 	int     cache_length;
+	int     ref_count;
 
 #ifdef __cplusplus
 	// C++11 standard-layout
 	inline UgInfo(void) {}
 	inline UgInfo(int allocatedLength, int cacheLength)
 		{ ug_info_init(this, allocatedLength, cacheLength); }
+
+	static inline UgInfo* create(int allocatedLength, int cacheLength)
+		{ return ug_info_new(allocatedLength, cacheLength); }
 
 	inline void  init(int allocatedLength, int cacheLength)
 		{ ug_info_init(this, allocatedLength, cacheLength); }

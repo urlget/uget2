@@ -172,8 +172,8 @@ struct UgetNode
 
 	char*         name;    // fake node doesn't use this
 	int           group;   // UgetGroup
-	UgInfo        info;    // fake node doesn't use this
 
+	UgInfo*       info;
 	struct UgetNodeControl*  control;
 };
 

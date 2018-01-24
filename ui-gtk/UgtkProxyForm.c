@@ -188,7 +188,7 @@ void  ugtk_proxy_form_get (UgtkProxyForm* pform, UgetNode* node)
 	const gchar* text;
 
 	index = gtk_combo_box_get_active ((GtkComboBox*) pform->type);
-	proxy = ug_info_realloc (&node->info, UgetProxyInfo);
+	proxy = ug_info_realloc (node->info, UgetProxyInfo);
 	proxy->type = index;
 	// user
 	text = gtk_entry_get_text ((GtkEntry*)pform->user);
@@ -225,7 +225,7 @@ void  ugtk_proxy_form_set (UgtkProxyForm* pform, UgetNode* node, gboolean keep_c
 {
 	UgetProxy*  proxy;
 
-	proxy = ug_info_get (&node->info, UgetProxyInfo);
+	proxy = ug_info_get (node->info, UgetProxyInfo);
 	// if no proxy data
 	if (proxy == NULL) {
 		pform->changed.enable = FALSE;	// disable changed flags

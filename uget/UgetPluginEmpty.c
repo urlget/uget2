@@ -230,7 +230,7 @@ static int  plugin_ctrl_speed(UgetPluginEmpty* plugin, int* speed)
 		plugin->limit[1] = speed[1];
 	}
 	else {
-		common = ug_info_realloc(&plugin->node->info, UgetCommonInfo);
+		common = ug_info_realloc(plugin->node->info, UgetCommonInfo);
 		// download
 		value = speed[0];
 		if (common->max_download_speed) {
@@ -266,7 +266,7 @@ static int  plugin_start(UgetPluginEmpty* plugin, UgetNode* node)
 {
 	UgetCommon*  common;
 
-	common = ug_info_get(&node->info, UgetCommonInfo);
+	common = ug_info_get(node->info, UgetCommonInfo);
 	if (common == NULL || common->uri == NULL)
 		return FALSE;
 

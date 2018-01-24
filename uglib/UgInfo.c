@@ -56,6 +56,36 @@ void  ug_info_set_registry(UgRegistry* registry)
 // ----------------------------------------------------------------------------
 // UgInfo
 
+UgInfo* ug_info_new(int allocated_length, int cache_length)
+{
+	UgInfo*  info;
+
+#ifdef HAVE_GLIB
+	info = g_slice_alloc(sizeof(UgInfo));
+#else
+	info = ug_malloc(sizeof(UgInfo));
+#endif // HAVE_GLIB
+	ug_info_init(info, allocated_length, cache_length);
+	return info;
+}
+
+void    ug_info_ref(UgInfo* info)
+{
+	info->ref_count++;
+}
+
+void    ug_info_unref(UgInfo* info)
+{
+	if (--info->ref_count == 0) {
+		ug_info_final(info);
+#ifdef HAVE_GLIB
+		g_slice_free1(sizeof(UgInfo), info);
+#else
+		ug_free(info);
+#endif // HAVE_GLIB
+	}
+}
+
 void  ug_info_init(UgInfo* info, int allocated_length, int cache_length)
 {
 	int     index;
@@ -63,6 +93,7 @@ void  ug_info_init(UgInfo* info, int allocated_length, int cache_length)
 	ug_array_init(info, sizeof(UgPair), allocated_length + cache_length);
 	info->length       = cache_length;
 	info->cache_length = cache_length;
+	info->ref_count    = 1;
 
 	// clear cache
 	for (index = 0;  index < info->length;  index++) {
@@ -198,9 +229,9 @@ static UgJsonError ug_json_parse_info_reg(UgJson* json,
 // ----------------
 
 // JSON parser for UgInfo.
-UgJsonError ug_json_parse_info(UgJson* json,
+UgJsonError ug_json_parse_info_ptr(UgJson* json,
                                const char* name, const char* value,
-                               void* info, void* none)
+                               void** info, void* none)
 {
 	// UgInfo's type is UG_JSON_OBJECT
 	if (json->type != UG_JSON_OBJECT) {
@@ -209,13 +240,14 @@ UgJsonError ug_json_parse_info(UgJson* json,
 		return UG_JSON_ERROR_TYPE_NOT_MATCH;
 	}
 
-	ug_json_push(json, ug_json_parse_info_reg, info, NULL);
+	ug_json_push(json, ug_json_parse_info_reg, *info, NULL);
 	return UG_JSON_ERROR_NONE;
 }
 
 // JSON writer for UgInfo.
-void  ug_json_write_info(UgJson* json, const UgInfo* info)
+void  ug_json_write_info_ptr(UgJson* json, UgInfo** pinfo)
 {
+	UgInfo* info = *pinfo;
 	UgPair* cur;
 	UgPair* end;
 

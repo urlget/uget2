@@ -70,7 +70,7 @@ const UgEntry  UgetNodeEntry[] =
 	{"name",     offsetof (UgetNode, name),  UG_ENTRY_STRING, NULL, NULL},
 	{"group",    offsetof (UgetNode, group), UG_ENTRY_INT,    NULL, NULL},
 	{"info",     offsetof (UgetNode, info),  UG_ENTRY_CUSTOM,
-			ug_json_parse_info,   ug_json_write_info},
+			ug_json_parse_info_ptr,   ug_json_write_info_ptr},
 	{"children", 0,                          UG_ENTRY_ARRAY,
 			ug_json_parse_uget_node_children, ug_json_write_uget_node_children},
 
@@ -101,9 +101,9 @@ void  uget_node_init  (UgetNode* node, UgetNode* node_real)
 
 	if (node_real == NULL) {
 		node->data = node;    // pointer to self
-		ug_info_init (&node->info, 8, 2);
-		node->info.at[0].key = (void*) UgetRelationInfo;
-		node->info.at[1].key = (void*) UgetProgressInfo;
+		node->info = ug_info_new(8, 2);
+		node->info->at[0].key = (void*) UgetRelationInfo;
+		node->info->at[1].key = (void*) UgetProgressInfo;
 	}
 	else {
 		// this is a fake node.
@@ -112,7 +112,8 @@ void  uget_node_init  (UgetNode* node, UgetNode* node_real)
 		node->real = node_real;
 		node->peer = node_real->fake;
 		node_real->fake = node;
-		ug_info_init (&node->info, 0, 0);
+		node->info = node_real->info;
+		ug_info_ref(node->info);
 	}
 }
 
@@ -132,7 +133,7 @@ void  uget_node_unref (UgetNode* node)
 		uget_node_unref_fake (node);
 		uget_node_unref_children (node);
 //		ug_node_unlink ((UgNode*)node);
-		ug_info_final (&node->info);
+		ug_info_unref(node->info);
 		ug_free (node->name);
 
 #ifdef HAVE_GLIB

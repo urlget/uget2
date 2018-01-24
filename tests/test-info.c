@@ -63,10 +63,10 @@ const UgDataInfo  Test1Info =
 {
 	"Test1",
 	sizeof(Test1),
-	Test1Entry,		// UgEntry
 	(UgInitFunc)   test1_init,
 	(UgFinalFunc)  NULL,
-	(UgAssignFunc) NULL
+	(UgAssignFunc) NULL,
+	Test1Entry,		// UgEntry
 };
 
 void  test1_init(Test1* t1)
@@ -98,10 +98,10 @@ const UgDataInfo  Test2Info =
 {
 	"Test2",
 	sizeof(Test2),
-	Test2Entry,		// UgEntry
 	(UgInitFunc)   test2_init,
 	(UgFinalFunc)  NULL,
-	(UgAssignFunc) NULL
+	(UgAssignFunc) NULL,
+	Test2Entry,		// UgEntry
 };
 
 void  test2_init(Test2* t2)
@@ -133,10 +133,10 @@ const UgDataInfo  Test3Info =
 {
 	"Test3",
 	sizeof(Test3),
-	Test3Entry,		// UgEntry
 	(UgInitFunc)   test3_init,
 	(UgFinalFunc)  NULL,
-	(UgAssignFunc) NULL
+	(UgAssignFunc) NULL,
+	Test3Entry,		// UgEntry
 };
 
 void  test3_init(Test3* t3)
@@ -149,8 +149,8 @@ void  test3_init(Test3* t3)
 // test UgInfo
 
 UgEntry	InfoCustomEntry[] = {
-	{NULL, 0, UG_ENTRY_CUSTOM, (UgJsonParseFunc) ug_json_parse_info,
-	                           (UgJsonWriteFunc) ug_json_write_info},
+	{NULL, 0, UG_ENTRY_CUSTOM, (UgJsonParseFunc) ug_json_parse_info_ptr,
+	                           (UgJsonWriteFunc) ug_json_write_info_ptr},
 	{NULL}
 };
 
@@ -199,10 +199,10 @@ void  parse_info(UgInfo* info)
 	ug_json_begin_parse(&json);
 #if 1
 	// method 1: use UgEntry to parse start of object
-	ug_json_push(&json, ug_json_parse_entry, info, InfoCustomEntry);
+	ug_json_push(&json, ug_json_parse_entry, &info, InfoCustomEntry);
 #else
 	// method 2: push ug_json_parse_info() to parse start of object
-	ug_json_push(&json, ug_json_parse_info, info, &registry);
+	ug_json_push(&json, ug_json_parse_info_ptr, &info, &registry);
 #endif
 	code = ug_json_parse(&json, json_string, -1);
 	ug_json_end_parse(&json);

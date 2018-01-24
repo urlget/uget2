@@ -305,7 +305,7 @@ void  test_base64 ()
 	printf ("%.*s\n", len, base64);
 	puts (base64);
 
-	orig = ug_base64_decode(base64, len, NULL);
+	orig = (char*) ug_base64_decode(base64, len, NULL);
 	printf ("%.*s\n", len, orig);
 
 	ug_free (base64);

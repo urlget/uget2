@@ -457,7 +457,7 @@ void  ugtk_download_form_get (UgtkDownloadForm* dform, UgetNode* node)
 
 	// ------------------------------------------
 	// UgetCommon
-	common = ug_info_realloc (&node->info, UgetCommonInfo);
+	common = ug_info_realloc (node->info, UgetCommonInfo);
 	// folder
 	text = gtk_entry_get_text ((GtkEntry*)dform->folder_entry);
 	ug_free (common->folder);
@@ -537,7 +537,7 @@ void  ugtk_download_form_get (UgtkDownloadForm* dform, UgetNode* node)
 
 	// ------------------------------------------
 	// UgetHttp
-	http = ug_info_realloc (&node->info, UgetHttpInfo);
+	http = ug_info_realloc (node->info, UgetHttpInfo);
 	// referrer
 	text = gtk_entry_get_text ((GtkEntry*) dform->referrer_entry);
 	ug_free (http->referrer);
@@ -574,8 +574,8 @@ void  ugtk_download_form_set (UgtkDownloadForm* dform, UgetNode* node, gboolean 
 	UgetCommon*   common;
 	UgetHttp*     http;
 
-	common = ug_info_realloc (&node->info, UgetCommonInfo);
-	http   = ug_info_get (&node->info, UgetHttpInfo);
+	common = ug_info_realloc (node->info, UgetCommonInfo);
+	http   = ug_info_get (node->info, UgetHttpInfo);
 
 	// disable changed flags
 	dform->changed.enable = FALSE;
