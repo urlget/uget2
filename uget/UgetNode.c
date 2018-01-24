@@ -68,7 +68,6 @@ static struct UgetNodeControl  control = {
 const UgEntry  UgetNodeEntry[] =
 {
 	{"name",     offsetof (UgetNode, name),  UG_ENTRY_STRING, NULL, NULL},
-	{"type",     offsetof (UgetNode, type),  UG_ENTRY_INT,    NULL, NULL},
 	{"group",    offsetof (UgetNode, group), UG_ENTRY_INT,    NULL, NULL},
 	{"info",     offsetof (UgetNode, info),  UG_ENTRY_CUSTOM,
 			ug_json_parse_info,   ug_json_write_info},
@@ -110,7 +109,6 @@ void  uget_node_init  (UgetNode* node, UgetNode* node_real)
 		// this is a fake node.
 //		node->group = 0;
 		node->data = node_real->data;
-		node->type = node_real->type;
 		node->real = node_real;
 		node->peer = node_real->fake;
 		node_real->fake = node;

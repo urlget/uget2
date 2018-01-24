@@ -741,7 +741,6 @@ static int  sync_child_node(UgetNode* node, UgetNode* src, int src_is_active)
 			// add new node if not found
 			new_child = uget_node_new(NULL);
 			new_child->name = ug_strdup(src_child->name);
-			new_child->type = src_child->type;
 			new_child->group = (src_is_active) ? UGET_GROUP_ACTIVE : 0;
 			uget_node_prepend(node, new_child);
 		}

@@ -67,18 +67,14 @@ void init_node (UgetNode* parent)
 	UgetNode*  newtwo;
 
 	newone = uget_node_new (NULL);
-	newone->type = 1;
 	uget_node_append (parent, newone);
 	newtwo = uget_node_new (NULL);
-	newtwo->type = 2;
 	uget_node_append (parent, newtwo);
 
 	parent = newtwo;
 	newone = uget_node_new (NULL);
-	newone->type = 3;
 	uget_node_append (parent, newone);
 	newtwo = uget_node_new (NULL);
-	newtwo->type = 4;
 	uget_node_append (parent, newtwo);
 }
 

@@ -171,7 +171,6 @@ struct UgetNode
 	int           ref_count;
 
 	char*         name;    // fake node doesn't use this
-	int           type;    // UgetNodeType
 	int           group;   // UgetGroup
 	UgInfo        info;    // fake node doesn't use this
 

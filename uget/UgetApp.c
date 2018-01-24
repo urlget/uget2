@@ -433,7 +433,6 @@ void  uget_app_add_category (UgetApp* app, UgetNode* cnode, int save_file)
 	char*          path_base;
 	char*          path;
 
-	cnode->type = UGET_NODE_CATEGORY;
 	uget_node_append (&app->real, cnode);
 	uget_uri_hash_add_category (app->uri_hash, cnode);
 	category = ug_info_realloc (&cnode->info, UgetCategoryInfo);
@@ -756,7 +755,6 @@ int  uget_app_add_download (UgetApp* app, UgetNode* dnode, UgetNode* cnode, int 
 	if (cnode == NULL)
 		cnode = app->real.children;
 	if (cnode) {
-		dnode->type   = UGET_NODE_DOWNLOAD;
 		dnode->group &= UGET_GROUP_MAJOR | UGET_GROUP_PAUSED;
 		dnode->group |= UGET_GROUP_QUEUING;
 		log = ug_info_realloc (&dnode->info, UgetLogInfo);

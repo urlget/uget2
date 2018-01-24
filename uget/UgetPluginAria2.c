@@ -566,8 +566,6 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
 				else
 					temp.common->uri = ug_strdup(plugin->files.at[0].path);
 				uget_node_set_name_by_uri_string(node, temp.common->uri);
-				// set node type
-				node->children->type = UGET_NODE_ATTACHMENT;
 #ifndef NDEBUG
 				// debug
 				if (temp.common->debug_level)
@@ -701,14 +699,11 @@ static int  plugin_insert_node(UgetPluginAria2* plugin,
 	strcat(ctrl_file, ".aria2");
 	node = uget_node_new(NULL);
 	node->name = ctrl_file;
-	node->type = UGET_NODE_ATTACHMENT;
 	uget_node_prepend(plugin->node, node);
 	// download file
 	node = uget_node_new(NULL);
 	node->name = ug_strdup(fpath);
 	uget_node_prepend(plugin->node, node);
-	if (is_attachment)
-		node->type = UGET_NODE_ATTACHMENT;
 
 	return TRUE;
 }

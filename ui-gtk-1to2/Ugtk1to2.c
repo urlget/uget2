@@ -320,7 +320,6 @@ static UgetNode* uget_node_from_category (UgCategory* category1)
 	category->active_limit   = category1->active_limit;
 	category->finished_limit = category1->finished_limit;
 	category->recycled_limit = category1->recycled_limit;
-	node->type = UGET_NODE_CATEGORY;
 	node->name = category1->name;
 	category1->name = NULL;
 	// other
@@ -333,7 +332,6 @@ static UgetNode* uget_node_from_category (UgCategory* category1)
 	//
 	for (link = category1->indices;  link;  link = link->next) {
 		dnode = uget_node_new (NULL);
-		dnode->type = UGET_NODE_DOWNLOAD;
 		uget_node_set_by_dataset (dnode, (UgDataset*) link->data);
 		uget_node_append (node, dnode);
 	}

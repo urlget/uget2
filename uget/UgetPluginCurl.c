@@ -426,8 +426,6 @@ static int  plugin_insert_node(UgetPluginCurl* plugin,
 	node = uget_node_new(NULL);
 	node->name = ug_strdup(fpath);
 	uget_node_prepend(plugin->node, node);
-	if (is_attachment)
-		node->type = UGET_NODE_ATTACHMENT;
 	return TRUE;
 }
 
