@@ -63,11 +63,11 @@ typedef enum UgetMediaQuality
 {
 	UGET_MEDIA_QUALITY_UNKNOWN = -1,
 
-	UGET_MEDIA_QUALITY_240P,    // Youtube small
-	UGET_MEDIA_QUALITY_360P,    // Youtube medium
-	UGET_MEDIA_QUALITY_480P,    // Youtube large
-	UGET_MEDIA_QUALITY_720P,    // Youtube hd720
-	UGET_MEDIA_QUALITY_1080P,   // Youtube hd1080
+	UGET_MEDIA_QUALITY_240P,    // YouTube small
+	UGET_MEDIA_QUALITY_360P,    // YouTube medium
+	UGET_MEDIA_QUALITY_480P,    // YouTube large
+	UGET_MEDIA_QUALITY_720P,    // YouTube hd720
+	UGET_MEDIA_QUALITY_1080P,   // YouTube hd1080
 
 	UGET_MEDIA_N_QUALITY,
 } UgetMediaQuality;
@@ -133,13 +133,23 @@ struct UgetMediaItem
 //	UgetMediaItem* prev;
 
 	char* url;
-	int   quality;    // 480p, 720p
+	int   quality;    // video - 480p, 720p
+	int   bitrate;    // audio
 	int   type;       // UgetMediaType
 
 	// for internal use only
-	void* data;
-	void* data1;
-	void* data2;
+	int   order;
+	union {
+		int   integer;
+		char* string;
+		void* pointer;
+	} data;
+
+	union {
+		int   integer;
+		char* string;
+		void* pointer;
+	} data1;
 };
 
 UgetMediaItem*  uget_media_item_new(UgetMedia* umedia);

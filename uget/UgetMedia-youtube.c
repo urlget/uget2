@@ -108,6 +108,7 @@ static void  uget_youtube_free(UgetYouTube* uyoutube)
 static void  uget_youtube_parse_map(UgetYouTube* uyoutube, UgetMedia* umedia, const char* field)
 {
 	UgetMediaItem*  umitem = NULL;
+	char*  temp;
 
 	while (ug_uri_query_part(&uyoutube->query, field)) {
 		// debug
@@ -122,6 +123,12 @@ static void  uget_youtube_parse_map(UgetYouTube* uyoutube, UgetMedia* umedia, co
 			ug_decode_uri(uyoutube->query.value, uyoutube->query.value_len,
 			              uyoutube->query.value);
 			umitem->url = ug_strdup(uyoutube->query.value);
+		}
+		else if (strncmp("sig", field, uyoutube->query.field_len) == 0) {
+			// signature.
+			// If it exist, append "&signature=xxxx" to umitem->url
+			umitem->data.string = ug_strndup(uyoutube->query.value,
+			                                 uyoutube->query.value_len);
 		}
 		else if (strncmp("type", field, uyoutube->query.field_len) == 0) {
 			ug_decode_uri(uyoutube->query.value, uyoutube->query.value_len,
@@ -154,6 +161,16 @@ static void  uget_youtube_parse_map(UgetYouTube* uyoutube, UgetMedia* umedia, co
 		}
 
 		if (uyoutube->query.value_next) {
+			// append "&signature=xxxx" to url
+			if (umitem->data.string) {
+				temp = ug_strdup_printf("%s" "&signature=%s",
+						umitem->url, umitem->data.string);
+				ug_free(umitem->url);
+				ug_free(umitem->data.string);
+				umitem->url = temp;
+				umitem->data.string = NULL;
+			}
+			umitem->order = 1;
 			field = uyoutube->query.value_next;
 			umitem = NULL;
 		}
@@ -165,6 +182,7 @@ static void  uget_youtube_parse_map(UgetYouTube* uyoutube, UgetMedia* umedia, co
 static void  uget_youtube_parse_adaptive_fmts(UgetYouTube* uyoutube, UgetMedia* umedia, const char* field)
 {
 	UgetMediaItem*  umitem = NULL;
+	char*  temp;
 
 	while (ug_uri_query_part(&uyoutube->query, field)) {
 		// debug
@@ -183,8 +201,8 @@ static void  uget_youtube_parse_adaptive_fmts(UgetYouTube* uyoutube, UgetMedia* 
 		else if (strncmp("sig", field, uyoutube->query.field_len) == 0) {
 			// signature.
 			// If it exist, append "&signature=xxxx" to umitem->url
-			umitem->data = ug_strndup(uyoutube->query.value,
-			                          uyoutube->query.value_len);
+			umitem->data.string = ug_strndup(uyoutube->query.value,
+			                                 uyoutube->query.value_len);
 		}
 		else if (strncmp("type", field, uyoutube->query.field_len) == 0) {
 			ug_decode_uri(uyoutube->query.value, uyoutube->query.value_len,
@@ -218,14 +236,11 @@ static void  uget_youtube_parse_adaptive_fmts(UgetYouTube* uyoutube, UgetMedia* 
 
 		if (uyoutube->query.value_next) {
 			// append "&signature=xxxx" to url
-			if (umitem->data) {
-				umitem->data1 = ug_strdup_printf("%s" "&signature=%s",
-						umitem->url, (char*)umitem->data);
-				ug_free(umitem->url);
-				ug_free(umitem->data);
-				umitem->url = umitem->data1;
-				umitem->data  = NULL;
-				umitem->data1 = NULL;
+			if (umitem->data.string) {
+				temp = ug_strdup_printf("%s" "&signature=%s",
+						umitem->url, umitem->data.string);
+				umitem->url = temp;
+				umitem->data.string = NULL;
 			}
 			field = uyoutube->query.value_next;
 			umitem = NULL;
@@ -663,6 +678,40 @@ int  uget_media_is_youtube(UgUri* uuri)
 int  uget_media_grab_youtube_method_1(UgetMedia* umedia, UgetProxy* proxy);
 int  uget_media_grab_youtube_method_2(UgetMedia* umedia, UgetProxy* proxy);
 
+static void  erase_duplicate(UgetMedia* umedia)
+{
+	UgList          list;
+	UgetMediaItem*  cur;
+	UgetMediaItem*  cur_next;
+	UgetMediaItem*  matched;
+	UgetMediaItem*  matched_next;
+
+	ug_list_init(&list);
+	// grab media from YouTube's 'url_encoded_fmt_stream_map'
+	for (cur = umedia->head;  cur;  cur = cur_next) {
+		cur_next = cur->next;
+		if (cur->order == 1) {
+			// move items to list
+			ug_list_remove((UgList*) umedia, (UgLink*) cur);
+			ug_list_append(&list, (UgLink*) cur);
+		}
+	}
+	// preserve media from YouTube's 'url_encoded_fmt_stream_map'
+	for (cur = (UgetMediaItem*)list.head;  cur;  cur = cur_next) {
+		cur_next = cur->next;
+		matched = uget_media_match(umedia, UGET_MEDIA_MATCH_2,
+		                           cur->quality, cur->type);
+		for (;  matched;  matched = matched_next) {
+			matched_next = matched->next;
+			ug_list_remove((UgList*) umedia, (UgLink*) matched);
+			uget_media_item_free(matched);
+		}
+		ug_list_remove(&list, (UgLink*) cur);
+		ug_list_prepend((UgList*) umedia, (UgLink*) cur);
+	}
+	ug_list_clear(&list, FALSE);
+}
+
 int  uget_media_grab_youtube(UgetMedia* umedia, UgetProxy* proxy)
 {
 	int    n;
@@ -717,6 +766,7 @@ int  uget_media_grab_youtube(UgetMedia* umedia, UgetProxy* proxy)
 	}
 
 	uget_youtube_free(uyoutube);
+	erase_duplicate(umedia);
 	umedia->data = NULL;
 
 	return n;
