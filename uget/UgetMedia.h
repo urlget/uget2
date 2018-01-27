@@ -81,6 +81,15 @@ typedef enum UgetMediaType
 	UGET_MEDIA_TYPE_3GPP,
 	UGET_MEDIA_TYPE_FLV,
 
+	// YouTube MIME type:
+	// audio/mp4;+codecs="mp4a.40.2"
+	// audio/webm;+codecs="vorbis"
+	// audio/webm;+codecs="opus"
+	UGET_MEDIA_AUDIO_MP4,
+	UGET_MEDIA_AUDIO_WEBM,
+//	UGET_MEDIA_AUDIO_WEBM_VORBIS,  // YouTube - audio/webm;+codecs="vorbis"
+//	UGET_MEDIA_AUDIO_WEBM_OPUS,    // YouTube - audio/webm;+codecs="opus"
+
 	UGET_MEDIA_N_TYPE,
 } UgetMediaType;
 

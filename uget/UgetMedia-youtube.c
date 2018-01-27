@@ -215,6 +215,10 @@ static void  uget_youtube_parse_adaptive_fmts(UgetYouTube* uyoutube, UgetMedia* 
 				umitem->type = UGET_MEDIA_TYPE_FLV;
 			else if (strncmp("video/3gpp", uyoutube->query.value, 10) == 0)
 				umitem->type = UGET_MEDIA_TYPE_3GPP;
+			else if (strncmp("audio/mp4", uyoutube->query.value, 9) == 0)
+				umitem->type = UGET_MEDIA_AUDIO_MP4;
+			else if (strncmp("audio/webm", uyoutube->query.value, 10) == 0)
+				umitem->type = UGET_MEDIA_AUDIO_WEBM;
 			else
 				umitem->type = UGET_MEDIA_TYPE_UNKNOWN;
 		}
@@ -232,6 +236,10 @@ static void  uget_youtube_parse_adaptive_fmts(UgetYouTube* uyoutube, UgetMedia* 
 				umitem->quality = UGET_MEDIA_QUALITY_1080P;
 			else
 				umitem->quality = UGET_MEDIA_QUALITY_UNKNOWN;
+		}
+		else if (strncmp(field, "bitrate", uyoutube->query.field_len) == 0) {
+//			ug_decode_uri(uyoutube->query.value, uyoutube->query.value_len, uyoutube->query.value);
+			umitem->bitrate = strtol(uyoutube->query.value, NULL, 10);
 		}
 
 		if (uyoutube->query.value_next) {
