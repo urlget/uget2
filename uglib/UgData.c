@@ -109,11 +109,13 @@ void  ug_type_final(void* type)
 void* ug_data_copy(void* data)
 {
 	const UgDataInfo* info;
+	UgInitFunc    init;
 	UgAssignFunc  assign;
 	void*         newone;
 
 	if (data) {
 		info = ((UgData*)data)->info;
+		init   = info->init;
 		assign = info->assign;
 		if (assign) {
 #ifdef HAVE_GLIB
@@ -122,6 +124,8 @@ void* ug_data_copy(void* data)
 			newone = ug_malloc0(info->size);
 #endif
 			((UgData*)newone)->info = info;
+			if (init)
+				init(newone);
 			assign(newone, data);
 			return newone;
 		}
