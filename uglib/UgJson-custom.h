@@ -69,6 +69,22 @@ void  ug_json_write_int64_string(UgJson* json, int64_t* value);
 void  ug_json_write_double_string(UgJson* json, double* value);
 
 // ----------------------------------------------------------------------------
+// parse and write JSON number for C types - uint8_t, int16_t, and int32_t
+
+UgJsonError  ug_json_parse_uint8(UgJson* json,
+                                 const char* name, const char* value,
+                                 void* dest, void* data);
+UgJsonError  ug_json_parse_int16(UgJson* json,
+                                 const char* name, const char* value,
+                                 void* dest, void* data);
+UgJsonError  ug_json_parse_int32(UgJson* json,
+                                 const char* name, const char* value,
+                                 void* dest, void* data);
+void         ug_json_write_uint8(UgJson* json, uint8_t* value);
+void         ug_json_write_int16(UgJson* json, int16_t* value);
+void         ug_json_write_int32(UgJson* json, int32_t* value);
+
+// ----------------------------------------------------------------------------
 // parse string "true" and "false" to integer (boolean).
 // write integer (boolean) to string "true" and "false".
 UgJsonError  ug_json_parse_bool_string(UgJson* json,

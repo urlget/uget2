@@ -168,6 +168,69 @@ void    ug_json_write_double_string(UgJson* json, double* value)
 }
 
 // ----------------------------------------------------------------------------
+// parse and write JSON number for C types - uint8_t, int16_t, and int32_t
+
+UgJsonError  ug_json_parse_uint8(UgJson* json,
+                                 const char* name, const char* value,
+                                 void* dest, void* data)
+{
+//	if (json->type >= UG_JSON_OBJECT) {
+//		ug_json_push(json, ug_json_parse_unknown, NULL, NULL);
+//		return UG_JSON_ERROR_TYPE_NOT_MATCH;
+//	}
+
+	if (json->type != UG_JSON_NUMBER)
+		return UG_JSON_ERROR_TYPE_NOT_MATCH;
+	*(uint8_t*) dest = strtol(value, NULL, 10);
+	return UG_JSON_ERROR_NONE;
+}
+
+UgJsonError  ug_json_parse_int16(UgJson* json,
+                                 const char* name, const char* value,
+                                 void* dest, void* data)
+{
+//	if (json->type >= UG_JSON_OBJECT) {
+//		ug_json_push(json, ug_json_parse_unknown, NULL, NULL);
+//		return UG_JSON_ERROR_TYPE_NOT_MATCH;
+//	}
+
+	if (json->type != UG_JSON_NUMBER)
+		return UG_JSON_ERROR_TYPE_NOT_MATCH;
+	*(int16_t*) dest = strtol(value, NULL, 10);
+	return UG_JSON_ERROR_NONE;
+}
+
+UgJsonError  ug_json_parse_int32(UgJson* json,
+                                 const char* name, const char* value,
+                                 void* dest, void* data)
+{
+//	if (json->type >= UG_JSON_OBJECT) {
+//		ug_json_push(json, ug_json_parse_unknown, NULL, NULL);
+//		return UG_JSON_ERROR_TYPE_NOT_MATCH;
+//	}
+
+	if (json->type != UG_JSON_NUMBER)
+		return UG_JSON_ERROR_TYPE_NOT_MATCH;
+	*(int32_t*) dest = strtol(value, NULL, 10);
+	return UG_JSON_ERROR_NONE;
+}
+
+void  ug_json_write_uint8(UgJson* json, uint8_t* value)
+{
+	ug_json_write_int(json, *(uint8_t*)value);
+}
+
+void  ug_json_write_int16(UgJson* json, int16_t* value)
+{
+	ug_json_write_int(json, *(int16_t*)value);
+}
+
+void  ug_json_write_int32(UgJson* json, int32_t* value)
+{
+	ug_json_write_int(json, *(int32_t*)value);
+}
+
+// ----------------------------------------------------------------------------
 // parse string "true" and "false" to integer (boolean).
 // write integer (boolean) to string "true" and "false".
 
