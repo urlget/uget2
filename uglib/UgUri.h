@@ -140,16 +140,16 @@ struct UgUriQuery {
 	char*  value_next;
 };
 
-// param query_field can be NULL
+// e.g.
+// while (ug_uri_query_part(&uuquery, field) > 0) {
+//     // your code here
+//     field = uuquery->field_next;
+// }
+//
+// return 0: if param 'query_field' is NULL.
 // return 0: no field (end of query)
 // return 1: field only
 // return 2: field & value
-//
-// while (ug_uri_query_part (&uuquery, field) > 0) {
-//	// your code here
-//	field = uuquery->next;
-// }
-//
 int  ug_uri_query_part (UgUriQuery* uuquery, const char* query_field);
 
 // ------------------------------------
