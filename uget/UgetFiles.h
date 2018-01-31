@@ -45,69 +45,92 @@
 extern "C" {
 #endif
 
-typedef struct  UgetFiles           UgetFiles;
-typedef struct  UgetFilesElement    UgetFilesElement;
-typedef UG_ARRAY(UgetFilesElement)  UgetFilesArray;
+typedef struct  UgetFiles      UgetFiles;
+typedef struct  UgetFile       UgetFile;
+typedef UG_ARRAY(UgetFile)     UgetFileCollection;
+extern  const   UgDataInfo*    UgetFilesInfo;
 
-extern const UgDataInfo*  UgetFilesInfo;
-
-enum UgetFilesState
+enum UgetFileType
 {
-	UGET_FILES_FILE         = 0x0001,
-	UGET_FILES_FOLDER       = 0x0002,
-	UGET_FILES_ATTACHMENT   = 0x0004,
+	UGET_FILE_REGULAR,
+	UGET_FILE_FOLDER,
+	UGET_FILE_ATTACHMENT,  // torrent, metalink, or HTTP POST file
+	UGET_FILE_TEMPORARY,   // temporary file.
 
-	// source
-	UGET_FILES_IGNORE       = 0x0010,  // torrent and metalink
-
-	UGET_FILES_DELETED      = 0x0400,  // this file was deleted
-	UGET_FILES_COMPLETED    = 0x0800,
-
-	UGET_FILES_CLEAR_MASK   = 0xF0FF,
+	UGET_FILE_ALL,
 };
 
-struct UgetFilesElement
+enum UgetFileState
 {
-	char*  name;    // filename, It must be first member.
-	int    state;   // UgetFilesState
-};
+	// state for torrent or metalink
+//	UGET_FILE_STATE_IGNORE       = 0x0001,
+//	UGET_FILE_STATE_SOURCE       = 0x0002,
 
-// copy UgetFilesElement from src.
-void uget_files_array_copy(UgetFilesArray* array, UgetFilesArray* src);
+	// state for output (actually write into storage device)
+	UGET_FILE_STATE_DELETED      = 0x0004,  // this file was deleted/renamed
+	UGET_FILE_STATE_COMPLETED    = 0x0008,
+
+	UGET_FILE_STATE_ALL          = 0x00FF,
+};
 
 // ----------------------------------------------------------------------------
-// UgetFiles: store all filename include source and downloaded filenames.
+// UgetFile: Element
 
+struct UgetFile
+{
+	char*   path;    // relative file path, It must be first member.
+
+	int16_t type;    // UgetFileType
+	int16_t state;   // UgetFileState
+
+	// save original index in torrent and metalink file.
+//	int32_t order;
+
+	// progress
+	int64_t total;
+	int64_t complete;
+};
+
+// ----------------------------------------------------------------------------
+// UgetFiles: UgetFile collection
+
+// UgetFiles is derived from UgArray
 struct UgetFiles
 {
 	UG_DATA_MEMBERS;           // It derived from UgData
 //	const UgDataInfo*  info;
 
-	// files/folders from torrent/metalink (unsorted)
-	UgetFilesArray  source;
+	UgetFileCollection collection;
 
-	// files/folders actually write into storage device (sorted)
-	UgetFilesArray  output;
-
-	int  source_count;    // +1 if source changed
-	int  output_count;    // +1 if output changed
+	int   sync_count;
 };
 
-int  uget_files_assign(UgetFiles* files, UgetFiles* src);
+int   uget_files_assign(UgetFiles* files, UgetFiles* src);
 
+void  uget_files_clear(UgetFiles* files);
 
-// sync UgetFiles::output and remove 'state = UGET_FILES_DELETED' element.
-// keep_deleted: keep local.output 'state = UGET_FILES_DELETED' element.
-//               remove src.output 'state = UGET_FILES_DELETED' element.
-// return FALSE if local.output keep no change.
-int  uget_files_sync(UgetFiles* local, UgetFiles* src, int keep_deleted);
+// sync elements from 'src' to 'files.
+// 1. all elements in 'src' will insert/replace into 'files'.
+// 2. remove deleted (state == UGET_FILE_STATE_DELETED) elements in 'src'.
+// return TRUE if 'files' have added or removed elements.
+int   uget_files_sync(UgetFiles* files, UgetFiles* src);
 
-UgetFilesElement*  uget_files_realloc(UgetFiles* files, const char* name);
+// realloc struct UgetFile by 'path' in array.
+UgetFile* uget_files_realloc(UgetFiles* files, const char* path);
 
-// e.g. remove "foo.mp4" in UgFiles::output
-// element = uget_files_realloc(src_files, "foo.mp4.aria2");
-// element->state |= UGET_FILES_DELETED;
-// uget_files_sync(files, src_files);
+UgetFile* uget_files_replace(UgetFiles*  files,
+                             const char* path,
+                             int type, int state);
+
+// apply state to element if type is matched.
+void  uget_files_apply(UgetFiles* files, int type, int state);
+// erase element by state if type is matched.
+void  uget_files_erase(UgetFiles* files, int type, int state);
+
+#define uget_files_apply_deleted(files)  \
+		uget_files_apply(files, UGET_FILE_ALL, UGET_FILE_STATE_DELETED)
+#define uget_files_erase_deleted(files)  \
+		uget_files_erase(files, UGET_FILE_ALL, UGET_FILE_STATE_DELETED)
 
 #ifdef __cplusplus
 }

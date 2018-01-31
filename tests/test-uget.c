@@ -478,10 +478,10 @@ void test_seq (void)
 
 void test_files_json(UgetFiles* files)
 {
-	UgJson      json;
-	UgBuffer    buffer;
-	UgJsonError	code;
-	UgetFiles*  files2;
+	UgJson       json;
+	UgBuffer     buffer;
+	UgJsonError  code;
+	UgetFiles*   files2;
 
 	ug_json_init(&json);
 	ug_buffer_init(&buffer, 4096);
@@ -503,6 +503,7 @@ void test_files_json(UgetFiles* files)
 	ug_json_push(&json, ug_json_parse_object, NULL, NULL);
 	code = ug_json_parse(&json, buffer.beg, -1);
 	ug_json_end_parse(&json);
+	printf("\n" "parse return %d\n", code);
 
 	// write
 	buffer.cur = buffer.beg;
@@ -523,37 +524,32 @@ void test_files(void)
 {
 	UgetFiles* files;
 	UgetFiles* src;
-	UgetFilesElement* element;
+	UgetFile*  element;
 
 	files = ug_data_new(UgetFilesInfo);
-	src = ug_data_new(UgetFilesInfo);
+	src   = ug_data_new(UgetFilesInfo);
 
-	element = ug_array_alloc(&files->source, 3);
-	element[0].name = ug_strdup("0.mp4");
-	element[1].name = ug_strdup("1.mp4");
-	element[2].name = ug_strdup("2.mp4");
-	element = ug_array_alloc(&src->source, 3);
-	element[0].name = ug_strdup("0.mp4");
-	element[1].name = ug_strdup("1.mp4");
-	element[2].name = ug_strdup("2.mp4");
-
-	element = ug_array_alloc(&src->source, 1);
-	element[0].name = ug_strdup("3.mp4");
-
-	element = uget_files_realloc(src, "foo.mp4");
-	element->name = ug_strdup("foo.mp4");
-	element->state = UGET_FILES_FILE;
-	element = uget_files_realloc(src, "xxx.apk");
-	element->name = ug_strdup("xxx.apk");
-	element->state = UGET_FILES_FILE;
+	element = uget_files_realloc(files, "0.mp4");
+	element = uget_files_realloc(files, "1.mp4");
+	element = uget_files_realloc(files, "2.mp4");
 
 	test_files_json(files);
 
-	uget_files_sync(files, src, FALSE);
+	element = uget_files_realloc(src, "0.mp4");
+	element = uget_files_realloc(src, "1.mp4");
+	element = uget_files_realloc(src, "2.mp4");
+	element = uget_files_realloc(src, "3.mp4");
 
-	element->state |= UGET_FILES_DELETED;
+	element = uget_files_realloc(src, "foo.mp4");
+	element = uget_files_realloc(src, "xxx.apk");
 
-	uget_files_sync(files, src, TRUE);
+	uget_files_sync(files, src);
+	test_files_json(files);
+
+	element->state |= UGET_FILE_STATE_DELETED;
+	src->sync_count++;
+
+	uget_files_sync(files, src);
 	test_files_json(files);
 
 	ug_data_free(files);
