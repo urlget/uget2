@@ -46,7 +46,6 @@
 extern "C" {
 #endif
 
-typedef struct Aria2File                 Aria2File;
 typedef struct UgetPluginAria2           UgetPluginAria2;
 typedef struct UgetPluginAria2Setting    UgetPluginAria2Setting;
 
@@ -71,18 +70,6 @@ typedef enum {
 } UgetPluginAria2Error;
 
 // ----------------------------------------------------------------------------
-// UgetPluginAria2File
-
-struct Aria2File
-{
-	char*    path;
-	int64_t  completedLength;
-	int64_t  length;
-};
-
-typedef UG_ARRAY(Aria2File)    Aria2FileArray;
-
-// ----------------------------------------------------------------------------
 // UgetPluginAria2: It derived from UgetPlugin.
 
 struct UgetPluginAria2
@@ -104,9 +91,8 @@ struct UgetPluginAria2
 	unsigned int      retry_delay;
 	// all gids and it's files
 	UgArrayStr        gids;
-	Aria2FileArray    files;
+	UgetFiles*        files;
 	int               files_per_gid;
-	int               files_per_gid_prev;
 
 	// aria2.tellStatus
 	int        status;

@@ -156,6 +156,7 @@ void  uget_task_remove_all(UgetTask* task)
 
 static int  uget_task_dispatch1(UgetTask* task, UgetNode* node, UgetPlugin* plugin)
 {
+	UgetFiles*  files;
 	UgetEvent*  event;
 	UgetEvent*  next;
 	int         active;
@@ -165,6 +166,10 @@ static int  uget_task_dispatch1(UgetTask* task, UgetNode* node, UgetPlugin* plug
 	} temp;
 
 	active = uget_plugin_sync(plugin, node);
+	// update UgetFiles
+	files = ug_info_get(node->info, UgetFilesInfo);
+	if (files)
+		uget_files_erase_deleted(files);
 	// plug-in was paused by user (see function uget_app_pause_download)
 	if (node->group & UGET_GROUP_PAUSED)
 		active = FALSE;
@@ -206,12 +211,10 @@ static int  uget_task_dispatch1(UgetTask* task, UgetNode* node, UgetPlugin* plug
 			active = FALSE;
 			break;
 
-#if 0
 		case UGET_EVENT_COMPLETED:
 			node->group |= UGET_GROUP_COMPLETED;
 			uget_event_free(event);
 			break;
-#endif
 
 //		case UGET_EVENT_INFO:
 //		case UGET_EVENT_REMOVE:

@@ -278,56 +278,6 @@ void  uget_plugin_agent_sync_progress(UgetPluginAgent* plugin,
 	progress->left           = target->left;
 }
 
-// sync child nodes from target_node to node
-int   uget_plugin_agent_sync_children(UgetPluginAgent* plugin, int is_target_active)
-{
-	UgetNode*  node = plugin->node;
-	UgetNode*  src  = plugin->target_node;
-	UgetNode*  node_child;
-	UgetNode*  src_child;
-	UgetNode*  new_child;
-	int        link_changed = FALSE;
-
-	// lock & unlock for uget_plugin_agent_sync_plugin()
-	ug_mutex_lock(&plugin->mutex);
-
-	for (src_child = src->children;  src_child;  src_child = src_child->next) {
-		for (node_child = node->children;  node_child;  node_child = node_child->next) {
-			if (strcmp(src_child->name, node_child->name) == 0)
-				break;
-		}
-		// if found node that has the same name
-		if (node_child) {
-			// clear UGET_GROUP_ACTIVE if not active
-			if (is_target_active == FALSE)
-				node_child->group = 0;
-		}
-		else {
-			link_changed = TRUE;
-			// add new node if not found
-			new_child = uget_node_new(NULL);
-			new_child->name = ug_strdup(src_child->name);
-			new_child->group = (is_target_active) ? UGET_GROUP_ACTIVE : 0;
-			uget_node_prepend(node, new_child);
-		}
-	}
-
-	// delete unused/removed file node
-	if (is_target_active == FALSE) {
-		for (node_child = node->children;  node_child;  node_child = new_child) {
-			new_child = node_child->next;
-			if (node_child->group == UGET_GROUP_ACTIVE) {
-				uget_node_remove(node, node_child);
-				uget_node_unref(node_child);
-				link_changed = TRUE;
-			}
-		}
-	}
-
-	ug_mutex_unlock(&plugin->mutex);
-	return link_changed;
-}
-
 // ----------------------------------------------------------------------------
 // other functions
 
@@ -370,7 +320,9 @@ int   uget_plugin_agent_sync_plugin(UgetPluginAgent* plugin, UgetNode* node)
 {
 	int  active;
 
-	// lock & unlock for uget_plugin_agent_sync_children()
+	if (node == NULL)
+		node = plugin->target_node;
+	// lock & unlock for uget_files_sync()
 	ug_mutex_lock(&plugin->mutex);
 	active = uget_plugin_sync(plugin->target_plugin, node);
 	ug_mutex_unlock(&plugin->mutex);

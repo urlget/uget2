@@ -223,6 +223,8 @@ static void plugin_final(UgetPluginCurl* plugin)
 {
 	if (plugin->common)
 		ug_data_free(plugin->common);
+	if (plugin->files)
+		ug_data_free(plugin->files);
 	if (plugin->proxy)
 		ug_data_free(plugin->proxy);
 	if (plugin->http)
@@ -233,6 +235,7 @@ static void plugin_final(UgetPluginCurl* plugin)
 	ug_list_foreach(&plugin->uri.list, (UgForeachFunc) ug_free, NULL);
 
 //	curl_slist_free_all(plugin->ftp_command);
+	ug_free(plugin->folder.path);
 	ug_free(plugin->file.path);
 	ug_free(plugin->aria2.path);
 	// unassign node
@@ -317,14 +320,10 @@ static int  plugin_ctrl_speed(UgetPluginCurl* plugin, int* speed)
 // ----------------------------------------------------------------------------
 // plugin_sync
 
-static void plugin_clear_node (UgetPluginCurl* plugin);
-static void plugin_remove_node(UgetPluginCurl* plugin, const char* fpath);
-static int  plugin_insert_node(UgetPluginCurl* plugin,
-                               const char* fpath, int is_attachment);
-
 static int  plugin_sync(UgetPluginCurl* plugin, UgetNode* node)
 {
 	UgetCommon*    common;
+	UgetFiles*     files;
 	UgetProgress*  progress;
 	char*          name;
 
@@ -379,12 +378,14 @@ static int  plugin_sync(UgetPluginCurl* plugin, UgetNode* node)
 	// consume time
 	progress->elapsed = time(NULL) - plugin->start_time;
 
-	// add UgetNode for file & attachment
+	// update UgetFiles
+	files = ug_info_realloc(node->info, UgetFilesInfo);
+	uget_plugin_lock(plugin);
+	uget_files_sync(files, plugin->files);
+	uget_plugin_unlock(plugin);
+	// set node name
 	if (plugin->file_renamed && plugin->file.path) {
 		plugin->file_renamed = FALSE;
-		plugin->a2cf_named = FALSE;
-		plugin_clear_node(plugin);
-		plugin_insert_node(plugin, plugin->file.path, FALSE);
 		// change node name
 #if defined _WIN32 || defined _WIN64
 		name = strrchr(plugin->file.path, '\\');
@@ -402,62 +403,16 @@ static int  plugin_sync(UgetPluginCurl* plugin, UgetNode* node)
 			common->file = ug_strdup(name + 1);
 		}
 	}
-	if (plugin->aria2.path) {
-		if (plugin->file.size == plugin->size.download)
-			plugin_remove_node(plugin, plugin->aria2.path);
-		else if (plugin->a2cf_named == FALSE) {
-			plugin->a2cf_named = TRUE;
-			plugin_insert_node(plugin, plugin->aria2.path, TRUE);
-		}
-	}
+
 	return TRUE;
-}
-
-static int  plugin_insert_node(UgetPluginCurl* plugin,
-                               const char* fpath, int is_attachment)
-{
-	UgetNode*  node;
-
-	for (node = plugin->node->children;  node;  node = node->next) {
-		if (strcmp(node->name, fpath) == 0)
-			return FALSE;
-	}
-
-	node = uget_node_new(NULL);
-	node->name = ug_strdup(fpath);
-	uget_node_prepend(plugin->node, node);
-	return TRUE;
-}
-
-static void plugin_remove_node(UgetPluginCurl* plugin, const char* fpath)
-{
-	UgetNode*  node;
-
-	for (node = plugin->node->children;  node;  node = node->next) {
-		if (strcmp(node->name, fpath) == 0) {
-			uget_node_remove(plugin->node, node);
-			uget_node_unref(node);
-			return;
-		}
-	}
-}
-
-static void plugin_clear_node(UgetPluginCurl* plugin)
-{
-	UgetNode*  node;
-	UgetNode*  next;
-
-	for (node = plugin->node->children;  node;  node = next) {
-		next = node->next;
-		uget_node_remove(plugin->node, node);
-		uget_node_unref(node);
-	}
 }
 
 // ----------------------------------------------------------------------------
 // plugin_start
 
-static void  plugin_setup_uris(UgetPluginCurl* plugin);
+static void  plugin_decide_uris(UgetPluginCurl* plugin);
+static void  plugin_decide_folder(UgetPluginCurl* plugin);
+static void  plugin_decide_files(UgetPluginCurl* plugin);
 static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginCurl* plugin);
 
 static int  plugin_start(UgetPluginCurl* plugin, UgetNode* node)
@@ -466,9 +421,10 @@ static int  plugin_start(UgetPluginCurl* plugin, UgetNode* node)
 	int         speed[2];
 	union {
 		UgetCommon*  common;
+		UgetFiles*   files;
 		UgetProxy*   proxy;
 		UgetHttp*    http;
-		UgetHttp*    ftp;
+		UgetFtp*     ftp;
 		int          ok;
 	} temp;
 
@@ -476,7 +432,14 @@ static int  plugin_start(UgetPluginCurl* plugin, UgetNode* node)
 	if (temp.common == NULL || temp.common->uri == NULL)
 		return FALSE;
 	plugin->common = ug_data_copy(temp.common);
-	plugin_setup_uris(plugin);
+	plugin_decide_uris(plugin);
+	plugin_decide_folder(plugin);
+
+	temp.files = ug_info_get(node->info, UgetFilesInfo);
+	if (temp.files)
+		plugin->files = ug_data_copy(temp.files);
+	else
+		plugin->files = ug_data_new(UgetFilesInfo);
 
 	temp.proxy = ug_info_get(node->info, UgetProxyInfo);
 	if (temp.proxy)
@@ -577,7 +540,7 @@ static UriLink* plugin_replace_uri(UgetPluginCurl* plugin, UriLink* old_link,
 	return uri_link;
 }
 
-static void plugin_setup_uris(UgetPluginCurl* plugin)
+static void plugin_decide_uris(UgetPluginCurl* plugin)
 {
 	UgetCommon*  common;
 	const char*  curr;
@@ -601,6 +564,48 @@ static void plugin_setup_uris(UgetPluginCurl* plugin)
 	}
 	ug_free(common->mirrors);
 	common->mirrors = NULL;
+}
+
+static void  plugin_decide_folder(UgetPluginCurl* plugin)
+{
+	UgetCommon* common;
+	int         length;
+	int         value;
+
+	// folder
+	common = plugin->common;
+	if (common->folder == NULL || common->folder[0] == 0)
+		length = 0;
+	else {
+		length = strlen(common->folder);
+		value  = common->folder[length - 1];
+		plugin->folder.path = ug_malloc(length + 2); // + '/' + '\x0'
+		plugin->folder.path[0] = 0;
+		strcpy(plugin->folder.path, common->folder);
+		if (value != '\\' || value != '/') {
+#if defined _WIN32 || defined _WIN64
+			strcat(plugin->folder.path, "\\");
+#else
+			strcat(plugin->folder.path, "/");
+#endif
+			length++;
+		}
+	}
+	plugin->folder.length = length;
+}
+
+static void  plugin_decide_files(UgetPluginCurl* plugin)
+{
+	// update UgetFiles
+	uget_plugin_lock(plugin);
+	// insert/replace file into files
+	uget_files_replace(plugin->files,
+	                   plugin->aria2.path,
+	                   UGET_FILE_TEMPORARY, 0);
+	uget_files_replace(plugin->files,
+	                   plugin->file.path,
+	                   UGET_FILE_REGULAR, 0);
+	uget_plugin_unlock(plugin);
 }
 
 // ----------------------------------------------------------------------------
@@ -766,7 +771,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginCurl* plugin)
 			case UGET_CURL_ERROR:
 				// if no other downloading segment, plug-in response error
 				if (N_THREAD(plugin) == 1) {
-//					plugin->node->group |= UGET_GROUP_ERROR;
+					// post error message
 					if (ugcurl->event) {
 						uget_plugin_post((UgetPlugin*) plugin, ugcurl->event);
 						ugcurl->event = NULL;
@@ -991,7 +996,6 @@ static int prepare_file(UgetCurl* ugcurl, UgetPluginCurl* plugin)
 	int    length;
 	int    counts;
 	int    value;
-	int    folder_len;
 	union {
 		long     ftime;
 		double   fsize;
@@ -1010,17 +1014,7 @@ static int prepare_file(UgetCurl* ugcurl, UgetPluginCurl* plugin)
 		plugin->file.size = 0;
 
 	common = plugin->common;
-	// folder
-	if (common->folder == NULL || common->folder[0] == 0)
-		length = 0;
-	else {
-		length = strlen(common->folder);
-		value = common->folder[length - 1];
-		if (value != '\\' || value != '/')
-			length++;
-	}
-	folder_len = length;
-
+	length = plugin->folder.length;
 	// decide filename
 	if (common->file == NULL) {
 		if (ugcurl->header.filename) {
@@ -1041,20 +1035,12 @@ static int prepare_file(UgetCurl* ugcurl, UgetPluginCurl* plugin)
 	//                             length + digits + ".aria2" + '\0'
 	plugin->file.path = ug_malloc(length + MAX_REPEAT_DIGITS + 6 + 1);
 	plugin->file.path[0] = 0;  // you need this line if common->folder is NULL.
-	if (common->folder) {
-		strcpy(plugin->file.path, common->folder);
-		if (value != '\\' || value != '/') {
-#if defined _WIN32 || defined _WIN64
-			strcat(plugin->file.path, "\\");
-#else
-			strcat(plugin->file.path, "/");
-#endif
-		}
-	}
+	if (plugin->folder.path)
+		strcpy(plugin->file.path, plugin->folder.path);
 	strcat(plugin->file.path, common->file);
 
 	// create folder
-	if (ug_create_dir_all(plugin->file.path, folder_len) == -1) {
+	if (ug_create_dir_all(plugin->file.path, plugin->folder.length) == -1) {
 		ugcurl->event_code = UGET_EVENT_ERROR_FOLDER_CREATE_FAILED;
 		return FALSE;
 	}
@@ -1152,9 +1138,11 @@ static int prepare_file(UgetCurl* ugcurl, UgetPluginCurl* plugin)
 	// set filename if counts > 0
 	if (counts) {
 		ug_free(common->file);
-		common->file = ug_strdup(plugin->file.path + folder_len);
+		common->file = ug_strdup(plugin->file.path + plugin->folder.length);
 	}
 	plugin->file_renamed = TRUE;
+	// update UgetFiles
+	plugin_decide_files(plugin);
 
 	// event
 	if (ugcurl->resumable) {
@@ -1223,36 +1211,19 @@ static int  load_file_info(UgetPluginCurl* plugin)
 {
 	UgetCommon*  common;
 	char*        path;
-	int          value;
 	int          length;
 
 	common = plugin->common;
 	if (common == NULL || common->file == NULL)
 		return FALSE;
-	// folder
-	if (common->folder == NULL || common->folder[0] == 0)
-		length = 0;
-	else {
-		length = strlen(common->folder);
-		value = common->folder[length - 1];
-		if (value != '\\' || value != '/')
-			length++;
-	}
-	// filename
+	// folder + filename
+	length = plugin->folder.length;
 	length += strlen(common->file);
 	// path
 	path = ug_malloc(length + 6 + 1);  // length + ".aria2" + '\0'
 	path[0] = 0;  // you need this line if common->folder is NULL.
-	if (common->folder) {
-		strcpy(path, common->folder);
-		if (value != '\\' || value != '/') {
-#if defined _WIN32 || defined _WIN64
-			strcat(path, "\\");
-#else
-			strcat(path, "/");
-#endif
-		}
-	}
+	if (plugin->folder.path)
+		strcpy(path, plugin->folder.path);
 	strcat(path, common->file);
 	if (ug_file_is_exist(path) == FALSE) {
 		ug_free(path);
@@ -1266,6 +1237,8 @@ static int  load_file_info(UgetPluginCurl* plugin)
 		plugin->aria2.path = path;
 		plugin->base.download = uget_a2cf_completed(&plugin->aria2.ctrl);
 		plugin->size.download = plugin->base.download;
+		// update UgetFiles
+		plugin_decide_files(plugin);
 		return TRUE;
 	}
 	else {
@@ -1277,6 +1250,11 @@ static int  load_file_info(UgetPluginCurl* plugin)
 
 static void  clear_file_info(UgetPluginCurl* plugin)
 {
+	// update UgetFiles
+	uget_plugin_lock(plugin);
+	uget_files_apply_deleted(plugin->files);
+	uget_plugin_unlock(plugin);
+
 	uget_a2cf_clear(&plugin->aria2.ctrl);
 	ug_free(plugin->aria2.path);
 	plugin->aria2.path = NULL;
@@ -1313,6 +1291,16 @@ static int  switch_uri(UgetPluginCurl* plugin, UgetCurl* ugcurl, int is_resumabl
 static void complete_file(UgetPluginCurl* plugin)
 {
 	if (plugin->aria2.path) {
+		// update UgetFiles
+		uget_plugin_lock(plugin);
+		uget_files_replace(plugin->files,
+		                   plugin->file.path,
+		                   UGET_FILE_REGULAR, UGET_FILE_STATE_COMPLETED);
+		uget_files_replace(plugin->files,
+		                   plugin->aria2.path,
+		                   UGET_FILE_ATTACHMENT, UGET_FILE_STATE_DELETED);
+		uget_plugin_unlock(plugin);
+		// delete aria2 control file
 		ug_unlink(plugin->aria2.path);
 		ug_free(plugin->aria2.path);
 		plugin->aria2.path = NULL;
@@ -1321,7 +1309,6 @@ static void complete_file(UgetPluginCurl* plugin)
 	if (plugin->common->timestamp == TRUE && plugin->file.time != -1)
 		ug_modify_file_time(plugin->file.path, plugin->file.time);
 	// completed message
-	plugin->node->group |= UGET_GROUP_COMPLETED;
 	uget_plugin_post((UgetPlugin*)plugin,
 			uget_event_new(UGET_EVENT_COMPLETED));
 	uget_plugin_post((UgetPlugin*)plugin,

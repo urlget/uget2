@@ -74,8 +74,6 @@ static void              recycle_speed_request(UgJsonrpcObject* object);
 static UgJsonrpcObject*  alloc_status_request(UgValue** gid);
 static void              recycle_status_request(UgJsonrpcObject* object);
 
-static void  aria2_file_clear(Aria2File* afile);
-static void* aria2_file_array_find(Aria2FileArray* afiles, const char* path);
 static void* ug_file_to_base64(const char* file, int* length);
 static int   decide_file_type(UgetPluginAria2* plugin);
 static void  add_uri_mirrors(UgValue* varray, const char* mirrors);
@@ -320,7 +318,6 @@ static void  plugin_init(UgetPluginAria2* plugin)
 		global_ref();
 
 	ug_array_init(&plugin->gids, sizeof(char*), 16);
-	ug_array_init(&plugin->files, sizeof(Aria2File), 8);
 	plugin->stopped = TRUE;
 	plugin->paused = TRUE;
 	plugin->synced = TRUE;
@@ -330,8 +327,9 @@ static void  plugin_final(UgetPluginAria2* plugin)
 {
 	ug_array_foreach_str(&plugin->gids, (UgForeachFunc) ug_free, NULL);
 	ug_array_clear(&plugin->gids);
-	ug_array_foreach(&plugin->files, (UgForeachFunc) aria2_file_clear, NULL);
-	ug_array_clear(&plugin->files);
+	// clear UgetFiles
+	if (plugin->files)
+		ug_data_free(plugin->files);
 	// clear and recycle start_request object
 	if (plugin->start_request) {
 		ug_value_foreach(&plugin->start_request->params, ug_value_set_name, NULL);
@@ -420,14 +418,12 @@ static int  plugin_ctrl_speed(UgetPluginAria2* plugin, int* speed)
 // ----------------------------------------------------------------------------
 // plugin_sync
 
-static int  plugin_insert_node(UgetPluginAria2* plugin,
-                               const char* fpath, int is_attachment);
-
 // return FALSE if plug-in was stopped.
 static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
 {
-	int        index;
-	UgetEvent* event;
+	int          index;
+	UgetEvent*   event;
+	UgetFiles*   files;
 	struct {
 		UgetCommon*      common;
 		UgetProgress*    progress;
@@ -478,35 +474,19 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
 		plugin->limit_by_user = TRUE;
 	}
 
-	// add nodes by files
-	if (plugin->files_per_gid_prev != plugin->files_per_gid) {
-#ifndef NDEBUG
-		// debug
-		if (temp.common->debug_level) {
-			printf("n_files: old %d - new %d\n",
-			       plugin->files_per_gid_prev,
-			       plugin->files_per_gid);
-		}
-#endif
-		// add child node if aria2 add/create more files
-		index = plugin->files_per_gid_prev;
-		for (;  index < plugin->files.length;  index++) {
-			if (plugin_insert_node(plugin, plugin->files.at[index].path, FALSE)) {
-#ifndef NDEBUG
-				// debug
-				if (temp.common->debug_level)
-					printf("new child node name = %s\n", plugin->files.at[index].path);
-#endif
-			}
-		}
-		plugin->files_per_gid_prev  = plugin->files_per_gid;
-	}
+	// update UgetFiles
+	files = ug_info_realloc(node->info, UgetFilesInfo);
+	uget_plugin_lock(plugin);
+	uget_files_sync(files, plugin->files);
+	uget_plugin_unlock(plugin);
 
 	// change node name.
 	if (plugin->node_named == FALSE && plugin->files_per_gid > 0) {
 		plugin->node_named  = TRUE;
 		if (plugin->uri_type == URI_NET && temp.common->file == NULL) {
-			ug_uri_init(&plugin->uri_part, node->children->name);
+			uget_plugin_lock(plugin);
+			ug_uri_init(&plugin->uri_part, files->collection.at[0].path);
+			uget_plugin_unlock(plugin);
 			index = plugin->uri_part.file;
 			if (index != -1) {
 				ug_free(node->name);
@@ -552,7 +532,7 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
 		memmove(plugin->gids.at, plugin->gids.at + 1,
 		        sizeof(char*) *  plugin->gids.length);
 		// If there is only one followed gid and file, change uri.
-		if (plugin->gids.length == 1 && plugin->files.length == 1) {
+		if (plugin->gids.length == 1 && plugin->files->collection.length == 1) {
 			// If URI scheme is not "magnet" and aria2 runs in local device
 			if (global.data->uri_remote == FALSE &&
 				plugin->uri_type != URI_MAGNET)
@@ -564,7 +544,7 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
 				if (node->children && node->children->name)
 					temp.common->uri = ug_strdup(node->children->name);
 				else
-					temp.common->uri = ug_strdup(plugin->files.at[0].path);
+					temp.common->uri = ug_strdup(plugin->files->collection.at[0].path);
 				uget_node_set_name_by_uri_string(node, temp.common->uri);
 #ifndef NDEBUG
 				// debug
@@ -575,15 +555,15 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
 		}
 		// If no followed gid, it was completed.
 		else if (plugin->gids.length == 0) {
-			node->group |= UGET_GROUP_COMPLETED;
+//			node->group |= UGET_GROUP_COMPLETED;
 			event = uget_event_new(UGET_EVENT_COMPLETED);
 			uget_plugin_post((UgetPlugin*)plugin, event);
 		}
-		// clear plugin->files
-		ug_array_foreach(&plugin->files, (UgForeachFunc)aria2_file_clear, NULL);
-		plugin->files.length = 0;
+		// clear files
+		uget_plugin_lock(plugin);
+		uget_files_clear(plugin->files);
+		uget_plugin_unlock(plugin);
 		plugin->files_per_gid = 0;
-		plugin->files_per_gid_prev = 0;
 		break;
 
 	case ARIA2_STATUS_ERROR:
@@ -670,41 +650,6 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
 	// if plug-in was stopped, don't sync data with thread
 	if (plugin->stopped == FALSE)
 		plugin->synced = TRUE;
-	return TRUE;
-}
-
-// ------------------------------------
-
-static int  plugin_insert_node(UgetPluginAria2* plugin,
-                               const char* fpath, int is_attachment)
-{
-	UgetNode*  node;
-	char*      ctrl_file;
-
-	// aria2 magnet metadata file
-//	if (plugin->uri_type == URI_MAGNET) {
-//		if (strncmp("[METADATA]", fpath, 10) == 0)
-//			fpath += 10;
-//	}
-
-	for (node = plugin->node->children;  node;  node = node->next) {
-		if (strcmp(node->name, fpath) == 0)
-			return FALSE;
-	}
-
-	// aria2 control file must add first
-	ctrl_file = ug_malloc(strlen(fpath) + 6 + 1);  // + ".aria2" + '\0'
-	ctrl_file[0] = 0;
-	strcat(ctrl_file, fpath);
-	strcat(ctrl_file, ".aria2");
-	node = uget_node_new(NULL);
-	node->name = ctrl_file;
-	uget_node_prepend(plugin->node, node);
-	// download file
-	node = uget_node_new(NULL);
-	node->name = ug_strdup(fpath);
-	uget_node_prepend(plugin->node, node);
-
 	return TRUE;
 }
 
@@ -895,29 +840,36 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginAria2* plugin)
 		if (value)
 			add_gids_by_value_array(&plugin->gids, value->c.array);
 		value = ug_value_find_name(&res->result, "files");
-		if (value && value->c.array->length != plugin->files_per_gid) {
-			UgValueArray*  files;
-			Aria2File*     afile;
+		if (value && ug_value_length(value) != plugin->files_per_gid) {
+			UgValueArray*  array;
+			UgetFile*      ufile;
+			char*          string;
 
-			files = value->c.array;
-			for (count = 0;  count < files->length;  count++) {
-				value = files->at + count;
+			array = value->c.array;
+			plugin->files_per_gid = ug_value_length(value);
+			for (count = 0;  count < array->length;  count++) {
+				value = array->at + count;
 				ug_value_sort_name(value);
 				member = ug_value_find_name(value, "path");
-				if (member == NULL || member->c.string[0] == '\0')
+				if (member == NULL || member->c.string[0] == '\0') {
+					plugin->files_per_gid--;
 					continue;
-				if (aria2_file_array_find(&plugin->files, member->c.string))
-					continue;
-				plugin->files_per_gid++;
-				afile = ug_array_alloc(&plugin->files, 1);
+				}
+				uget_plugin_lock(plugin);
+				// add .aria2 control file first
+				if (plugin->files_per_gid == 1) {
+					string = ug_strdup_printf("%s.aria2", member->c.string);
+					ufile = uget_files_realloc(plugin->files, string);
+					ufile->type = UGET_FILE_TEMPORARY;
+					ug_free(string);
+				}
+				// add downloading file
+				ufile = uget_files_realloc(plugin->files, member->c.string);
 				member = ug_value_find_name(value, "completedLength");
-				afile->completedLength = ug_value_get_int64(member);
+				ufile->complete = ug_value_get_int64(member);
 				member = ug_value_find_name(value, "length");
-				afile->length = ug_value_get_int64(member);
-				member = ug_value_find_name(value, "path");
-				afile->path = member->c.string;
-				member->c.string = NULL;
-				member->type = UG_VALUE_NONE;
+				ufile->total = ug_value_get_int64(member);
+				uget_plugin_unlock(plugin);
 			}
 		}
 		// parse status response --- end ---
@@ -977,6 +929,7 @@ static int  plugin_start(UgetPluginAria2* plugin, UgetNode* node)
 	char*     password = NULL;
 	union {
 		UgetCommon*  common;
+		UgetFiles*   files;
 		UgetProxy*   proxy;
 		UgetHttp*    http;
 		UgetHttp*    ftp;
@@ -1135,6 +1088,12 @@ static int  plugin_start(UgetPluginAria2* plugin, UgetNode* node)
 				temp.common->max_connections);
 	}
 
+	temp.files = ug_info_get(node->info, UgetFilesInfo);
+	if (temp.files)
+		plugin->files = ug_data_copy(temp.files);
+	else
+		plugin->files = ug_data_new(UgetFilesInfo);
+
 	temp.proxy = ug_info_get(node->info, UgetProxyInfo);
 #ifdef HAVE_LIBPWMD
 	if (temp.proxy && temp.proxy->type == UGET_PROXY_PWMD) {
@@ -1234,7 +1193,6 @@ static int  plugin_start(UgetPluginAria2* plugin, UgetNode* node)
 	}
 
 	plugin->files_per_gid = 0;
-	plugin->files_per_gid_prev = 0;
 	plugin->synced = TRUE;
 	plugin->start_time = time(NULL);
 	plugin->start_request = request;
@@ -1361,27 +1319,6 @@ static void  recycle_status_request(UgJsonrpcObject* object)
 
 // ----------------------------------------------------------------------------
 // static utility functions
-
-static void  aria2_file_clear(Aria2File* afile)
-{
-	afile->completedLength = 0;
-	afile->length = 0;
-	ug_free(afile->path);
-}
-
-static void* aria2_file_array_find(Aria2FileArray* afiles, const char* path)
-{
-	Aria2File*  beg;
-	Aria2File*  end;
-
-	beg = afiles->at;
-	end = beg + afiles->length;
-	for (;  beg < end;  beg++) {
-		if (strcmp(beg->path, path) == 0)
-			return beg;
-	}
-	return NULL;
-}
 
 static void*  ug_file_to_base64(const char* file, int* length)
 {

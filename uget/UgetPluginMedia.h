@@ -81,6 +81,7 @@ struct UgetPluginMedia
 	UgetPlugin*   target_plugin;
 
 	// copy of UgetNode data, they store in target_node
+	UgetFiles*    target_files;
 	UgetProxy*    target_proxy;
 	UgetCommon*   target_common;
 	UgetProgress* target_progress;
@@ -104,7 +105,6 @@ struct UgetPluginMedia
 	uint8_t       synced:1;        // used by plugin_sync()
 	uint8_t       named:1;         // change node name by title
 	uint8_t       file_renamed:1;  // downloading filename changed
-	uint8_t       sync_child:1;    // target_node_child->children changed
 };
 
 

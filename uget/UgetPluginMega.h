@@ -92,6 +92,7 @@ struct UgetPluginMega
 	uint8_t       decrypting:1;     // decrypting downloaded file
 
 	// copy of UgetNode data, they store in target_node
+	UgetFiles*    target_files;
 	UgetProxy*    target_proxy;
 	UgetCommon*   target_common;
 	UgetProgress* target_progress;

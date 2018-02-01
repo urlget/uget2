@@ -147,6 +147,7 @@ void  uget_app_init (UgetApp* app)
 	// info registry
 	ug_registry_init (&app->infos);
 	ug_registry_add (&app->infos, UgetCommonInfo);
+	ug_registry_add (&app->infos, UgetFilesInfo);
 	ug_registry_add (&app->infos, UgetProgressInfo);
 	ug_registry_add (&app->infos, UgetProxyInfo);
 	ug_registry_add (&app->infos, UgetHttpInfo);
@@ -839,7 +840,8 @@ int   uget_app_move_download_to (UgetApp* app, UgetNode* dnode, UgetNode* cnode)
 	return TRUE;
 }
 
-static int  delete_dnode_files (UgetNode* dnode, int  has_aria2_file)
+// used by uget_app_delete_download()
+static int  delete_files_dnode (UgetNode* dnode, int  has_aria2_file)
 {
 	UgetNode*  fnode;   // filenode
 	UgetNode*  fnode_next;
@@ -882,17 +884,48 @@ static int  delete_dnode_files (UgetNode* dnode, int  has_aria2_file)
 		return FALSE;
 }
 
-static UG_THREAD_RETURN_TYPE  delete_file_thread (UgetNode* dnode)
+// used by uget_app_delete_download()
+static void  delete_file1(UgetFile* file, int* error_count)
+{
+	if (!(file->state & UGET_FILE_STATE_DELETED)) {
+		if (ug_file_is_exist(file->path) == FALSE)
+			file->state |= UGET_FILE_STATE_DELETED;
+		else if (ug_remove(file->path) != 0)
+			error_count[0]++;
+		else if (file->type != UGET_FILE_TEMPORARY)
+			file->state |= UGET_FILE_STATE_DELETED;
+	}
+}
+
+// used by uget_app_delete_download()
+static int  delete_files(UgetNode* dnode, int has_temp_file)
+{
+	UgetFiles* files;
+	int  error_count;
+
+	files = ug_info_get(dnode->info, UgetFilesInfo);
+	if (files) {
+		error_count = 0;
+		ug_array_foreach(&files->collection,
+		                 (UgForeachFunc)delete_file1,
+		                 &error_count);
+		return (error_count == 0) ? TRUE : FALSE;
+	}
+	else
+		return delete_files_dnode(dnode, has_temp_file);
+}
+
+// used by uget_app_delete_download()
+static UG_THREAD_RETURN_TYPE  delete_files_thread (UgetNode* dnode)
 {
 	int  count;
 
 #ifdef USE__ANDROID__SAF
-	if (delete_dnode_files (dnode, TRUE) == FALSE)
+	if (delete_files (dnode, TRUE) == FALSE)
 #endif
 	for (count = 0;  count < 3;  count++) {
 		ug_sleep (2 * 1000);    // sleep 2 seconds
-		delete_dnode_files (dnode, FALSE);
-		if (dnode->children == NULL)
+		if (delete_files (dnode, FALSE))
 			break;
 	}
 
@@ -916,8 +949,8 @@ int  uget_app_delete_download (UgetApp* app, UgetNode* dnode, int delete_file)
 #ifdef USE__ANDROID__SAF
 		is_active = TRUE;  // delete files in thread if program use Android SAF
 #endif
-		if (is_active == TRUE || delete_dnode_files (dnode, TRUE) == FALSE) {
-			ug_thread_create (&thread, (UgThreadFunc) delete_file_thread, dnode);
+		if (is_active == TRUE || delete_files (dnode, TRUE) == FALSE) {
+			ug_thread_create (&thread, (UgThreadFunc) delete_files_thread, dnode);
 			ug_thread_unjoin (&thread);
 			return FALSE;
 		}

@@ -68,12 +68,19 @@ struct UgetPluginCurl
 
 	// copy of UgetNode data
 	UgetCommon*   common;
+	UgetFiles*    files;
 	UgetProxy*    proxy;
 	UgetHttp*     http;
 	UgetFtp*      ftp;
 
 	// run-time info
 //	struct curl_slist*  ftp_command;
+
+	struct {
+		char*     path;        // folder
+		int       length;
+	} folder;
+
 	struct {
 		char*     path;        // folder + filename
 		time_t    time;        // date and time
@@ -82,7 +89,7 @@ struct UgetPluginCurl
 
 	// aria2 control file
 	struct {
-		char*     path;
+		char*     path;        // folder + filename + ".aria2"
 		UgetA2cf  ctrl;
 	} aria2;
 
@@ -120,7 +127,6 @@ struct UgetPluginCurl
 	uint8_t       limit_by_user:1; // speed limit changed by user
 	uint8_t       limit_changed:1; // speed limit changed
 	uint8_t       file_renamed:1;  // has file path?
-	uint8_t       a2cf_named:1;    // has aria2 ctrl file name?
 	uint8_t       synced:1;
 	uint8_t       paused:1;        // paused by user or program
 	uint8_t       stopped:1;       // all of downloading thread are stopped

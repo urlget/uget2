@@ -317,10 +317,10 @@ static int  plugin_ctrl_speed(UgetPluginMedia* plugin, int* speed)
 
 // ----------------------------------------------------------------------------
 // plugin_sync
-static int  sync_child_node(UgetNode* node, UgetNode* src, int src_is_active);
 
 static int  plugin_sync(UgetPluginMedia* plugin, UgetNode* node)
 {
+	UgetFiles*     files;
 	UgetCommon*    common;
 	UgetProgress*  progress;
 
@@ -371,14 +371,11 @@ static int  plugin_sync(UgetPluginMedia* plugin, UgetNode* node)
 		common->file = ug_strdup(plugin->target_common->file);
 		ug_mutex_unlock(&plugin->mutex);
 	}
-	// sync child node from target_node_child
-	if (plugin->sync_child == TRUE) {
-		plugin->sync_child = FALSE;
-		ug_mutex_lock(&plugin->mutex);
-		sync_child_node(node, plugin->target_node_child,
-		                (plugin->stopped) ? FALSE : TRUE);
-		ug_mutex_unlock(&plugin->mutex);
-	}
+	// update UgetFiles
+	files = ug_info_realloc(node->info, UgetFilesInfo);
+	uget_plugin_lock(plugin);
+    uget_files_sync(files, plugin->target_files);
+    uget_plugin_unlock(plugin);
 	// sync changed limit from UgetNode to plug-in
 	if (plugin->target_common->max_upload_speed != common->max_upload_speed ||
 		plugin->target_common->max_download_speed != common->max_download_speed)
@@ -437,6 +434,7 @@ static int  plugin_start(UgetPluginMedia* plugin, UgetNode* node)
 
 	plugin->target_node = uget_node_new(NULL);
 	ug_info_assign(plugin->target_node->info, node->info, NULL);
+	plugin->target_files  = ug_info_realloc(plugin->target_node->info, UgetFilesInfo);
 	plugin->target_common = ug_info_get(plugin->target_node->info, UgetCommonInfo);
 	plugin->target_proxy  = ug_info_get(plugin->target_node->info, UgetProxyInfo);
 	plugin->target_progress = ug_info_realloc(plugin->target_node->info, UgetProgressInfo);
@@ -482,6 +480,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin)
 	UgetEvent*     msg;
 	const char*    type = NULL;
 	const char*    quality = NULL;
+	int            sync_result;
 
 	common = plugin->target_common;
 	umedia = uget_media_new(common->uri, 0);
@@ -625,12 +624,6 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin)
 				uget_plugin_ctrl_speed(plugin->target_plugin, plugin->limit);
 			}
 
-			// sync child(file) node from target_node to target_node_child
-			ug_mutex_lock(&plugin->mutex);
-			plugin->sync_child = sync_child_node(plugin->target_node_child,
-			                                     plugin->target_node, TRUE);
-			ug_mutex_unlock(&plugin->mutex);
-
 			// move event from target_plugin to plug-in
 			msg = uget_plugin_pop((UgetPlugin*) plugin->target_plugin);
 			for (;  msg;  msg = msg_next) {
@@ -661,13 +654,11 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin)
 			}
 			// sync data in plugin_sync()
 			plugin->synced = FALSE;
-		} while (uget_plugin_sync(plugin->target_plugin, plugin->target_node));
-
-		// sync file node
-		ug_mutex_lock(&plugin->mutex);
-		plugin->sync_child = sync_child_node(plugin->target_node_child,
-		                                     plugin->target_node, FALSE);
-		ug_mutex_unlock(&plugin->mutex);
+			uget_plugin_lock(plugin);
+			sync_result = uget_plugin_sync(plugin->target_plugin,
+			                               plugin->target_node);
+			uget_plugin_unlock(plugin);
+		} while (sync_result);
 
 		// free target_plugin
 		uget_plugin_unref((UgetPlugin*) plugin->target_plugin);
@@ -716,47 +707,4 @@ static int   is_file_completed(const char* file, const char* folder)
 
 	ug_free(path);
 	return result;
-}
-
-static int  sync_child_node(UgetNode* node, UgetNode* src, int src_is_active)
-{
-	UgetNode*  node_child;
-	UgetNode*  src_child;
-	UgetNode*  new_child;
-	int        link_changed = FALSE;
-
-	for (src_child = src->children;  src_child;  src_child = src_child->next) {
-		for (node_child = node->children;  node_child;  node_child = node_child->next) {
-			if (strcmp(src_child->name, node_child->name) == 0)
-				break;
-		}
-		// if found node that has the same name
-		if (node_child) {
-			// clear UGET_GROUP_ACTIVE if not active
-			if (src_is_active == FALSE)
-				node_child->group = 0;
-		}
-		else {
-			link_changed = TRUE;
-			// add new node if not found
-			new_child = uget_node_new(NULL);
-			new_child->name = ug_strdup(src_child->name);
-			new_child->group = (src_is_active) ? UGET_GROUP_ACTIVE : 0;
-			uget_node_prepend(node, new_child);
-		}
-	}
-
-	// delete unused/removed file node
-	if (src_is_active == FALSE) {
-		for (node_child = node->children;  node_child;  node_child = new_child) {
-			new_child = node_child->next;
-			if (node_child->group == UGET_GROUP_ACTIVE) {
-				uget_node_remove(node, node_child);
-				uget_node_unref(node_child);
-				link_changed = TRUE;
-			}
-		}
-	}
-
-	return link_changed;
 }

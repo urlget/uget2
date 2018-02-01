@@ -178,6 +178,7 @@ static int  plugin_start(UgetPluginMega* plugin, UgetNode* node)
 
 	plugin->target_node = uget_node_new(NULL);
 	ug_info_assign(plugin->target_node->info, node->info, NULL);
+	plugin->target_files  = ug_info_realloc(plugin->target_node->info, UgetFilesInfo);
 	plugin->target_proxy  = ug_info_get(plugin->target_node->info, UgetProxyInfo);
 	plugin->target_common = ug_info_get(plugin->target_node->info, UgetCommonInfo);
 	plugin->target_progress = ug_info_realloc(plugin->target_node->info, UgetProgressInfo);
@@ -300,6 +301,7 @@ exit:
 
 static int  plugin_sync(UgetPluginMega* plugin, UgetNode* node)
 {
+	UgetFiles*     files;
 	UgetCommon*    common;
 	UgetProgress*  progress;
 	char*  str;
@@ -330,9 +332,11 @@ static int  plugin_sync(UgetPluginMega* plugin, UgetNode* node)
 	if (plugin->decrypting == FALSE)
 		progress->percent = progress->percent * 96 / 100;
 
-	// sync child nodes from target_node to node
-	uget_plugin_agent_sync_children((UgetPluginAgent*) plugin,
-	                                (plugin->stopped) ? FALSE : TRUE);
+	// update UgetFiles
+	files = ug_info_realloc(node->info, UgetFilesInfo);
+	uget_plugin_lock(plugin);
+	uget_files_sync(files, plugin->target_files);
+	uget_plugin_unlock(plugin);
 
 	// change child node's name if decrypting completed.
 	if (plugin->stopped && plugin->decrypting) {
@@ -610,28 +614,33 @@ static int  mega_request_info(UgetPluginMega* plugin, const char* id)
 
 int  mega_decrypt_file(UgetPluginMega* plugin, int preset_progress)
 {
+	UgetFile*   file;
 	UgetCommon* target_common;
-	char* path;
+	char *path_in, *path_out;
 	FILE *file_in, *file_out;
 
 	target_common = plugin->target_common;
+	// decrypt input/output file ---
+	if (target_common->folder == NULL) {
+		path_out = ug_strdup(plugin->file);
+		path_in  = ug_strdup(target_common->file);
+	}
+	else {
+		path_out = ug_build_filename(target_common->folder, plugin->file, NULL);
+		path_in  = ug_build_filename(target_common->folder, target_common->file, NULL);
+	}
 	// decrypt output file ---
-	if (target_common->folder == NULL)
-		path = ug_strdup(plugin->file);
-	else
-		path = ug_build_filename(target_common->folder, plugin->file, NULL);
-	file_out = ug_fopen(path, "wb");
-	ug_free(path);
-	if (file_out == NULL)
+	file_out = ug_fopen(path_out, "wb");
+	if (file_out == NULL) {
+		ug_free(path_out);
+		ug_free(path_in);
 		return FALSE;
+	}
 	// decrypt input file ---
-	if (target_common->folder == NULL)
-		path = ug_strdup(target_common->file);
-	else
-		path = ug_build_filename(target_common->folder, target_common->file, NULL);
-	file_in  = ug_fopen(path, "rb");
+	file_in  = ug_fopen(path_in,  "rb");
 	if (file_in == NULL) {
-		ug_free(path);
+		ug_free(path_out);
+		ug_free(path_in);
 		fclose(file_out);
 		return FALSE;
 	}
@@ -730,14 +739,25 @@ int  mega_decrypt_file(UgetPluginMega* plugin, int preset_progress)
 	}
 #endif  // USE_GNUTLS
 
+	// decryption completed
 	fclose(file_out);
 	fclose(file_in);
+	ug_remove(path_in);
 
-	// decryption completed
-	ug_remove(path);
-	ug_free(path);
+	// update UgetFiles
+	uget_plugin_lock(plugin);
+	file = uget_files_realloc(plugin->target_files, path_in);
+	file->state |= UGET_FILE_STATE_DELETED;
+	file = uget_files_replace(plugin->target_files, path_out,
+	                          UGET_FILE_REGULAR, UGET_FILE_STATE_COMPLETED);
+	uget_plugin_unlock(plugin);
+
+	// free path and update progress
+	ug_free(path_in);
+	ug_free(path_out);
 	plugin->target_progress->percent = 100;
-	plugin->node->group |= UGET_GROUP_COMPLETED;
+//	plugin->node->group |= UGET_GROUP_COMPLETED;
+
 	// post message
 	uget_plugin_post((UgetPlugin*) plugin,
 			uget_event_new_normal(0, _("decryption completed")));
