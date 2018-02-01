@@ -154,13 +154,15 @@ void  ugtk_category_form_init (UgtkCategoryForm* cform)
 void  ugtk_category_form_get (UgtkCategoryForm* cform, UgetNode* cnode)
 {
 	UgetCategory*  category;
+	UgetCommon*    common;
 	const gchar*   text;
 
-	category = ug_info_realloc (cnode->info, UgetCategoryInfo);
+	category = ug_info_realloc(cnode->info, UgetCategoryInfo);
+	common   = ug_info_realloc(cnode->info, UgetCommonInfo);
 	if (gtk_widget_is_sensitive (cform->name_entry) == TRUE) {
 		text = gtk_entry_get_text ((GtkEntry*) cform->name_entry);
-		ug_free (cnode->name);
-		cnode->name = (*text) ? ug_strdup (text) : NULL;
+		ug_free(common->name);
+		common->name = (*text) ? ug_strdup(text) : NULL;
 	}
 	category->active_limit = gtk_spin_button_get_value_as_int (
 			(GtkSpinButton*) cform->spin_active);
@@ -189,13 +191,21 @@ void  ugtk_category_form_get (UgtkCategoryForm* cform, UgetNode* cnode)
 
 void  ugtk_category_form_set  (UgtkCategoryForm*  cform, UgetNode* cnode)
 {
+	UgetCommon*    common;
 	UgetCategory*  category;
 	gchar*  str;
 
-	category = ug_info_realloc (cnode->info, UgetCategoryInfo);
+	category = ug_info_realloc(cnode->info, UgetCategoryInfo);
+	common   = ug_info_get(cnode->info, UgetCommonInfo);
 	if (gtk_widget_is_sensitive (cform->name_entry) == TRUE) {
-		gtk_entry_set_text ((GtkEntry*) cform->name_entry,
-				(cnode->name) ? cnode->name : "");
+		if (common && common->name) {
+			gtk_entry_set_text ((GtkEntry*) cform->name_entry,
+					(common->name) ? common->name : "");
+		}
+		else {
+			gtk_entry_set_text ((GtkEntry*) cform->name_entry,
+					(cnode->name) ? cnode->name : "");
+		}
 	}
 	gtk_spin_button_set_value ((GtkSpinButton*) cform->spin_active,
 			(gdouble) category->active_limit);

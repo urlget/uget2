@@ -219,11 +219,11 @@ static void uget_node_set_by_dataset (UgetNode* node, UgDataset* dataset)
 
 	old.common = ug_dataset_get (dataset, UgCommonInfo, 0);
 	if (old.common) {
-		node->name = old.common->name;
-		old.common->name = NULL;
-		if (node->name == NULL && old.common->file)
-			node->name = ug_strdup (old.common->file);
 		new.common = ug_info_realloc (node->info, UgetCommonInfo);
+		new.common->name = old.common->name;
+		old.common->name = NULL;
+		if (new.common->name == NULL && old.common->file)
+			new.common->name = ug_strdup (old.common->file);
 		new.common->uri = old.common->url;
 		old.common->url = NULL;
 		new.common->mirrors = old.common->mirrors;
@@ -312,6 +312,7 @@ static UgetNode* uget_node_from_category (UgCategory* category1)
 	GList*        link;
 	UgetNode*     node;
 	UgetNode*     dnode;
+	UgetCommon*   common;
 	UgetCategory* category;
 
 	node = uget_node_new (NULL);
@@ -320,7 +321,8 @@ static UgetNode* uget_node_from_category (UgCategory* category1)
 	category->active_limit   = category1->active_limit;
 	category->finished_limit = category1->finished_limit;
 	category->recycled_limit = category1->recycled_limit;
-	node->name = category1->name;
+	common = ug_info_realloc(node->info, UgetCommonInfo);
+	common->name = category1->name;
 	category1->name = NULL;
 	// other
 	*(char**)ug_array_alloc (&category->schemes, 1) = ug_strdup ("http");

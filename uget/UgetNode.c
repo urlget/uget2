@@ -67,8 +67,10 @@ static struct UgetNodeControl  control = {
 
 const UgEntry  UgetNodeEntry[] =
 {
-	{"name",     offsetof (UgetNode, name),  UG_ENTRY_STRING, NULL, NULL},
-	{"group",    offsetof (UgetNode, group), UG_ENTRY_INT,    NULL, NULL},
+	{"name",     offsetof (UgetNode, name),  UG_ENTRY_STRING,
+			NULL, UG_ENTRY_NO_NULL},
+	{"group",    offsetof (UgetNode, group), UG_ENTRY_INT,
+			NULL, NULL},
 	{"info",     offsetof (UgetNode, info),  UG_ENTRY_CUSTOM,
 			ug_json_parse_info_ptr,   ug_json_write_info_ptr},
 	{"children", 0,                          UG_ENTRY_ARRAY,
@@ -134,7 +136,7 @@ void  uget_node_unref (UgetNode* node)
 		uget_node_unref_children (node);
 //		ug_node_unlink ((UgNode*)node);
 		ug_info_unref(node->info);
-		ug_free (node->name);
+		ug_free(node->name);
 
 #ifdef HAVE_GLIB
 		g_slice_free1 (sizeof (UgetNode), node);
@@ -463,46 +465,6 @@ int  uget_node_fake_position (UgetNode* node, UgetNode* fake)
 			return position;
 	}
 	return -1;
-}
-
-// ----------------------------------------------------------------------------
-
-void  uget_node_set_name_by_uri (UgetNode* node, UgUri* uuri)
-{
-	const char* filename;
-	int         length;
-
-	ug_free (node->name);
-
-	if (uuri->scheme_len == 6 && strncmp (uuri->uri, "magnet", 6) == 0) {
-		length = 0;
-		filename = strstr (uuri->uri + uuri->file, "dn=");
-		if (filename) {
-			filename = filename + 3;
-			length = strcspn (filename, "&");
-			node->name = ug_malloc (length + 1);
-			ug_decode_uri (filename, length, node->name);
-			if (ug_utf8_get_invalid (node->name, NULL) != -1) {
-				ug_free (node->name);
-				node->name = ug_strndup (filename, length);
-			}
-		}
-	}
-	else {
-		length = ug_uri_file (uuri, &filename);
-		if (length == 0)
-			node->name = ug_strdup (uuri->uri);
-		else
-			node->name = ug_uri_get_file (uuri);
-	}
-}
-
-void  uget_node_set_name_by_uri_string (UgetNode* node, const char* uri)
-{
-	UgUri  uuri;
-
-	ug_uri_init (&uuri, uri);
-	uget_node_set_name_by_uri (node, &uuri);
 }
 
 // ----------------------------------------------------------------------------

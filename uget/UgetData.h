@@ -38,6 +38,7 @@
 #define UGET_DATA_H
 
 #include <stdint.h>
+#include <UgUri.h>
 #include <UgData.h>
 #include <UgetFiles.h>
 #include <UgetPlugin.h>
@@ -73,7 +74,7 @@ struct UgetCommon
 	UG_DATA_MEMBERS;           // It derived from UgData
 //	const UgDataInfo*  info;
 
-//	char*   name;
+	char*   name;
 	char*   uri;
 	char*   mirrors;
 	char*   file;
@@ -103,7 +104,7 @@ struct UgetCommon
 	struct {
 		uint8_t   enable:1;
 
-//		uint8_t   name:1;
+		uint8_t   name:1;
 		uint8_t   uri:1;
 		uint8_t   mirrors:1;
 		uint8_t   file:1;
@@ -124,6 +125,10 @@ struct UgetCommon
 		uint8_t   debug_level:1;
 	} keeping;
 };
+
+// helper functions for UgetCommon::name
+char* uget_name_from_uri(UgUri* uri);
+char* uget_name_from_uri_str(const char* uri);
 
 // ----------------------------------------------------------------------------
 // UgetProgress: It derived from UgData and store in UgInfo.

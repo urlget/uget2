@@ -118,7 +118,8 @@ static struct UgetNodeControl  control_mix_split =
 
 void  uget_app_init (UgetApp* app)
 {
-	UgetNode*  node;
+	UgetCommon* common;
+	UgetNode*   node;
 
 	// real and virtual root nodes
 	uget_node_init (&app->real, NULL);
@@ -135,7 +136,8 @@ void  uget_app_init (UgetApp* app)
 	app->mix_split.control = &control_mix_split;
 	// add virtual category - "All Category"
 	node = uget_node_new (NULL);
-	node->name = ug_strdup (_("All Category"));
+	common = ug_info_realloc(node->info, UgetCommonInfo);
+	common->name = ug_strdup (_("All Category"));
 	uget_node_append (&app->mix, node);
 
 	uget_task_init (&app->task);
@@ -743,11 +745,11 @@ int  uget_app_add_download (UgetApp* app, UgetNode* dnode, UgetNode* cnode, int 
 	if (temp.common->uri) {
 		ug_uri_init (&uuri, temp.common->uri);
 		// assign node name if it's name is NULL
-		if (dnode->name == NULL) {
+		if (temp.common->name == NULL) {
 			if (temp.common->file)
-				dnode->name = ug_strdup (temp.common->file);
+				temp.common->name = ug_strdup(temp.common->file);
 			else
-				uget_node_set_name_by_uri (dnode, &uuri);
+				temp.common->name = uget_name_from_uri(&uuri);
 		}
 		if (cnode == NULL)
 			cnode = uget_app_match_category (app, &uuri, temp.common->file);
@@ -1146,21 +1148,19 @@ void  uget_app_reset_download_name (UgetApp* app, UgetNode* dnode)
 	UgetCommon*  common;
 	UgetNode*    sibling;
 	UgetNode*    cnode = NULL;
-	UgUri        uuri;
 
-	common = ug_info_realloc (dnode->info, UgetCommonInfo);
+	common = ug_info_realloc(dnode->info, UgetCommonInfo);
 	if (common->file) {
-		if (dnode->name && strcmp (common->file, dnode->name) == 0)
+		if (common->name && strcmp(common->file, common->name) == 0)
 			return;
-		ug_free (dnode->name);
-		dnode->name = ug_strdup (common->file);
+		ug_free(common->name);
+		common->name = ug_strdup(common->file);
 		cnode = dnode->parent;
 	}
 	else if (common->uri) {
-		if (dnode->name && strcmp (common->uri, dnode->name) == 0)
+		if (common->name && strcmp(common->uri, common->name) == 0)
 			return;
-		ug_uri_init (&uuri, common->uri);
-		uget_node_set_name_by_uri (dnode, &uuri);
+		common->name = uget_name_from_uri_str(common->uri);
 		cnode = dnode->parent;
 	}
 
@@ -1168,9 +1168,9 @@ void  uget_app_reset_download_name (UgetApp* app, UgetNode* dnode)
 	if (cnode) {
 //		cnode   = dnode->parent;
 		sibling = dnode->next;
-		uget_node_remove (cnode, dnode);
-		uget_node_unref_fake (dnode);
-		uget_node_insert (cnode, sibling, dnode);
+		uget_node_remove(cnode, dnode);
+		uget_node_unref_fake(dnode);
+		uget_node_insert(cnode, sibling, dnode);
 	}
 }
 

@@ -887,6 +887,7 @@ void ugtk_menubar_init_callback (UgtkMenubar* menubar, UgtkApp* app)
 void  ugtk_menubar_sync_category (UgtkMenubar* menubar, UgtkApp* app, gboolean reset)
 {
 	UgetNode*     cnode;
+	UgetCommon*   common;
 	GtkWidget*    menu_item;
 	GtkWidget*    image;
 	GPtrArray*    array;
@@ -905,7 +906,13 @@ void  ugtk_menubar_sync_category (UgtkMenubar* menubar, UgtkApp* app, gboolean r
 		// add new item
 		for (cnode = app->real.children;  cnode;  cnode = cnode->next) {
 			// create menu item
-			menu_item = gtk_image_menu_item_new_with_label (cnode->name);
+			common = ug_info_get(cnode->info, UgetCommonInfo);
+			if (common && common->name)
+				menu_item = gtk_image_menu_item_new_with_label (common->name);
+			else if (cnode->name)
+				menu_item = gtk_image_menu_item_new_with_label (cnode->name);
+			else
+				menu_item = gtk_image_menu_item_new_with_label ("");
 			image = gtk_image_new_from_stock (GTK_STOCK_DND_MULTIPLE,
 			                                  GTK_ICON_SIZE_MENU);
 			gtk_image_menu_item_set_image ((GtkImageMenuItem*) menu_item,

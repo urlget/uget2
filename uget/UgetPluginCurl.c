@@ -393,9 +393,9 @@ static int  plugin_sync(UgetPluginCurl* plugin, UgetNode* node)
 		name = strrchr(plugin->file.path, '/');
 #endif
 		if (name && name[1]) {
-			if (node->name == NULL || strcmp(name, node->name)) {
-				ug_free(node->name);
-				node->name = ug_strdup(name + 1);
+			if (common->name == NULL || strcmp(name, common->name)) {
+				ug_free(common->name);
+				common->name = ug_strdup(name + 1);
 				uget_plugin_post((UgetPlugin*) plugin,
 						uget_event_new(UGET_EVENT_NAME));
 			}

@@ -57,6 +57,7 @@
 void  download_node (UgetNode* node, const UgetPluginInfo* info)
 {
 	UgetCommon*   common;
+	UgetFiles*    files;
 	UgetPlugin*   plugin;
 	UgetEvent*    events;
 	UgetEvent*    cur;
@@ -98,13 +99,15 @@ void  download_node (UgetNode* node, const UgetPluginInfo* info)
 	// these data may changed, print them.
 	common = ug_info_get (node->info, UgetCommonInfo);
 	printf ("\n"
-			"node->name : %s\n"
+			"common->name : %s\n"
 			"common->uri : %s\n"
 			"common->file : %s\n",
-			node->name, common->uri, common->file);
+			common->name, common->uri, common->file);
 	// print children
-	for (node = node->children;  node;  node = node->next)
-		printf ("child node name : %s\n", node->name);
+	files = ug_info_realloc(node->info, UgetFilesInfo);
+	for (integer[0]=0; integer[0] < files->collection.length; integer[0]++) {
+		printf ("file name : %s\n", files->collection.at[integer[0]].path);
+	}
 
 	uget_plugin_unref (plugin);
 }
@@ -247,12 +250,12 @@ void  setup_app (UgetApp* app)
 	UgetCommon*    common;
 
 	cnode = uget_node_new (NULL);
-	cnode->name = ug_strdup ("Home Category");
 	category = ug_info_realloc (cnode->info, UgetCategoryInfo);
 	*(char**)ug_array_alloc (&category->schemes, 1) = ug_strdup ("http");
 	*(char**)ug_array_alloc (&category->schemes, 1) = ug_strdup ("https");
 	*(char**)ug_array_alloc (&category->schemes, 1) = ug_strdup ("ftp");
 	common = ug_info_realloc (cnode->info, UgetCommonInfo);
+	common->name = ug_strdup ("Home Category");
 	common->max_connections = 2;
 	uget_app_add_category (app, cnode, TRUE);
 
@@ -269,8 +272,8 @@ void  start_app (UgetApp* app)
 	char*          string[2];
 
 	dnode = uget_node_new (NULL);
-	dnode->name = ug_strdup ("Download");
 	common = ug_info_realloc (dnode->info, UgetCommonInfo);
+	common->name = ug_strdup ("Download");
 	common->uri = ug_strdup ("http://www.utorrent.com/scripts/dl.php?track=stable&build=29812&client=utorrent");
 	common->folder = ug_strdup ("D:\\Downloads");
 	common->debug_level = 1;

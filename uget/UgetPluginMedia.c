@@ -334,25 +334,26 @@ static int  plugin_sync(UgetPluginMedia* plugin, UgetNode* node)
 		return TRUE;
 	if (node == NULL)
 		node = plugin->node;
-	// change node name by title ,item_index, and item_total
+	// sync data between plug-in and node
+	common = ug_info_realloc(node->info, UgetCommonInfo);
+	// sum retry count
+	common->retry_count = plugin->target_common->retry_count + plugin->retry_count;
+
+	// change name by title ,item_index, and item_total
 	if (plugin->named == FALSE && plugin->title) {
 		plugin->named = TRUE;
-		ug_free(node->name);
+		ug_free(common->name);
 		// decide to show "(current/total) title" or "title"
 		if (plugin->item_total > 1) {
-			node->name = ug_strdup_printf("(%d/%d) %s",
+			common->name = ug_strdup_printf("(%d/%d) %s",
 					plugin->item_index + 1,
 					plugin->item_total,
 					plugin->title);
 		}
 		else
-			node->name = ug_strdup(plugin->title);
+			common->name = ug_strdup(plugin->title);
 	}
 
-	// sync data between plug-in and node
-	common = ug_info_realloc(node->info, UgetCommonInfo);
-	// sum retry count
-	common->retry_count = plugin->target_common->retry_count + plugin->retry_count;
 	// sync changed limit from UgetNode
 	if (plugin->target_common->max_upload_speed != common->max_upload_speed ||
 		plugin->target_common->max_download_speed != common->max_download_speed)

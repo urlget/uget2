@@ -304,7 +304,6 @@ static int  plugin_sync(UgetPluginMega* plugin, UgetNode* node)
 	UgetFiles*     files;
 	UgetCommon*    common;
 	UgetProgress*  progress;
-	char*  str;
 
 	if (plugin->stopped) {
 		if (plugin->synced)
@@ -316,9 +315,6 @@ static int  plugin_sync(UgetPluginMega* plugin, UgetNode* node)
 		return TRUE;
 	if (node == NULL)
 		node = plugin->node;
-
-	// --------------------------------
-	// sync data between plugin->node and plugin->target_node
 
 	// sync common data (include speed limit) between node and target_node
 	common = ug_info_realloc(node->info, UgetCommonInfo);
@@ -338,20 +334,11 @@ static int  plugin_sync(UgetPluginMega* plugin, UgetNode* node)
 	uget_files_sync(files, plugin->target_files);
 	uget_plugin_unlock(plugin);
 
-	// change child node's name if decrypting completed.
-	if (plugin->stopped && plugin->decrypting) {
-		if (plugin->node->children && plugin->node->children->name) {
-			str = strstr(plugin->node->children->name, ".enc");
-			if (str != NULL)
-				str[0] = 0;
-		}
-	}
-
 	// plug-in has got file name from server.
 	if (plugin->named) {
 		plugin->named = FALSE;
-		ug_free(node->name);
-		node->name = ug_strdup(plugin->file);
+		ug_free(common->name);
+		common->name = ug_strdup(plugin->file);
 		ug_free(common->file);
 		common->file = ug_strdup(plugin->file);
 	}

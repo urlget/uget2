@@ -95,7 +95,11 @@ void  ugtk_summary_show (UgtkSummary* summary, UgetNode* node)
 
 	// Summary Name
 	if (summary->visible.name) {
-		if (node->name) {
+		if (temp.common && temp.common->name) {
+			name = g_strconcat (_("Name"), ":", NULL);
+			value = temp.common->name;
+		}
+		else if (node->name) {
 			name = g_strconcat (_("Name"), ":", NULL);
 			value = node->name;
 		}

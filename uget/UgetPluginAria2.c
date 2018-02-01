@@ -489,14 +489,14 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
 			uget_plugin_unlock(plugin);
 			index = plugin->uri_part.file;
 			if (index != -1) {
-				ug_free(node->name);
-				node->name = ug_uri_get_file(&plugin->uri_part);
+				ug_free(temp.common->name);
+				temp.common->name = ug_uri_get_file(&plugin->uri_part);
 				event = uget_event_new(UGET_EVENT_NAME);
 				uget_plugin_post((UgetPlugin*) plugin, event);
 #ifndef NDEBUG
 				// debug
 				if (temp.common->debug_level)
-					printf("base node name = %s\n", node->name);
+					printf("base name = %s\n", temp.common->name);
 #endif
 			}
 		}
@@ -526,26 +526,30 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
 	case ARIA2_STATUS_COMPLETE:
 		// clear uploading state
 		node->group &= ~UGET_GROUP_UPLOADING;
+#if 0
 		// remove completed gid
 		ug_free(plugin->gids.at[0]);
+		ug_array_erase(&plugin->gids, 0, 1);
+#else
+		// remove completed gid
 		plugin->gids.length -= 1;
+		ug_free(plugin->gids.at[0]);
 		memmove(plugin->gids.at, plugin->gids.at + 1,
 		        sizeof(char*) *  plugin->gids.length);
+#endif
 		// If there is only one followed gid and file, change uri.
-		if (plugin->gids.length == 1 && plugin->files->collection.length == 1) {
+		if (plugin->gids.length == 1 && plugin->files_per_gid == 1) {
 			// If URI scheme is not "magnet" and aria2 runs in local device
 			if (global.data->uri_remote == FALSE &&
 				plugin->uri_type != URI_MAGNET)
 			{
 				// change URI
 				ug_free(temp.common->uri);
+				ug_free(temp.common->name);
 				ug_free(temp.common->file);
+				temp.common->uri  = ug_strdup(plugin->files->collection.at[0].path);
+				temp.common->name = uget_name_from_uri_str(temp.common->uri);
 				temp.common->file = NULL;
-				if (node->children && node->children->name)
-					temp.common->uri = ug_strdup(node->children->name);
-				else
-					temp.common->uri = ug_strdup(plugin->files->collection.at[0].path);
-				uget_node_set_name_by_uri_string(node, temp.common->uri);
 #ifndef NDEBUG
 				// debug
 				if (temp.common->debug_level)

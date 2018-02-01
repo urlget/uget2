@@ -37,6 +37,7 @@
 #include <stdlib.h>
 #include <UgString.h>
 #include <UgJson.h>
+#include <UgUtil.h>
 #include <UgetData.h>
 #include <UgJson-custom.h>
 
@@ -48,8 +49,8 @@ static int  uget_common_assign(UgetCommon* common, UgetCommon* src);
 
 static const UgEntry  UgetCommonEntry[] =
 {
-//	{"name",     offsetof(UgetCommon, name),     UG_ENTRY_STRING,
-//			NULL, UG_ENTRY_NO_NULL},
+	{"name",     offsetof(UgetCommon, name),     UG_ENTRY_STRING,
+			NULL, UG_ENTRY_NO_NULL},
 	{"uri",      offsetof(UgetCommon, uri),      UG_ENTRY_STRING,
 			NULL, UG_ENTRY_NO_NULL},
 	{"mirrors",  offsetof(UgetCommon, mirrors),  UG_ENTRY_STRING,
@@ -110,7 +111,7 @@ static void uget_common_init(UgetCommon* common)
 
 static void uget_common_final(UgetCommon* common)
 {
-//	ug_free(common->name);
+	ug_free(common->name);
 	ug_free(common->uri);
 	ug_free(common->mirrors);
 	ug_free(common->file);
@@ -121,10 +122,10 @@ static void uget_common_final(UgetCommon* common)
 
 static int  uget_common_assign(UgetCommon* common, UgetCommon* src)
 {
-//	if (common->keeping.enable == FALSE || common->keeping.name == FALSE) {
-//		ug_free(common->name);
-//		common->name = (src->name) ? ug_strdup(src->name) : NULL;
-//	}
+	if (common->keeping.enable == FALSE || common->keeping.name == FALSE) {
+		ug_free(common->name);
+		common->name = (src->name) ? ug_strdup(src->name) : NULL;
+	}
 	if (common->keeping.enable == FALSE || common->keeping.uri == FALSE) {
 		ug_free(common->uri);
 		common->uri = (src->uri) ? ug_strdup(src->uri) : NULL;
@@ -202,6 +203,43 @@ static int  uget_common_assign(UgetCommon* common, UgetCommon* src)
 		common->keeping = src->keeping;
 
 	return TRUE;
+}
+
+// helper functions
+char* uget_name_from_uri_str(const char* uri)
+{
+	UgUri  uuri;
+
+	ug_uri_init(&uuri, uri);
+	return uget_name_from_uri(&uuri);
+}
+
+char*  uget_name_from_uri(UgUri* uuri)
+{
+	const char* filename;
+	char*       name = NULL;
+	int         length;
+
+	if (uuri->scheme_len == 6 && strncmp(uuri->uri, "magnet", 6) == 0) {
+		length = 0;
+		filename = strstr(uuri->uri + uuri->file, "dn=");
+		if (filename) {
+			filename = filename + 3;
+			length = strcspn(filename, "&");
+			name = ug_malloc(length + 1);
+			ug_decode_uri(filename, length, name);
+			if (ug_utf8_get_invalid(name, NULL) != -1)
+				name = ug_strndup(filename, length);
+		}
+	}
+	if (name == NULL) {
+		length = ug_uri_file(uuri, &filename);
+		if (length == 0)
+			name = ug_strdup(uuri->uri);
+		else
+			name = ug_uri_get_file(uuri);
+	}
+	return name;
 }
 
 // ----------------------------------------------------------------------------
