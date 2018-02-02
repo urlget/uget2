@@ -92,15 +92,6 @@ typedef void (*UgetNodeFunc)(UgetNode* node, UgetNode* sibling, UgetNode* child)
 
 extern const UgEntry  UgetNodeEntry[];
 
-typedef enum {
-	UGET_NODE_ROOT,
-	UGET_NODE_CATEGORY,
-	UGET_NODE_DOWNLOAD,
-	UGET_NODE_FILE,
-	UGET_NODE_FOLDER,
-	UGET_NODE_ATTACHMENT,
-	UGET_NODE_REMOTE_FILE,
-} UgetNodeType;
 
 typedef enum {
 	UGET_GROUP_QUEUING    = 1 << 0,
