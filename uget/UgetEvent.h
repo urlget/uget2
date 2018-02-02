@@ -63,6 +63,7 @@ typedef enum {
 	UGET_EVENT_START,
 	UGET_EVENT_COMPLETED,  // Download completed
 	UGET_EVENT_UPLOADING,  // Uploading
+	UGET_EVENT_STOP_UPLOADING,
 
 	// events for uget_task_dispatch()
 	UGET_EVENT_NAME,       // UgetNode's name changed

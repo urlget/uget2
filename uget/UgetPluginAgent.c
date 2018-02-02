@@ -373,10 +373,6 @@ UgetEvent* uget_plugin_agent_handle_message(UgetPluginAgent* plugin, ...)
 			// stop downloading if error occurred
 			plugin->paused = TRUE;
 			break;
-
-		case UGET_EVENT_COMPLETED:
-			plugin->node->group |= UGET_GROUP_COMPLETED;
-			break;
 		}
 		// post event to plug-in
 		uget_plugin_post((UgetPlugin*) plugin, msg);

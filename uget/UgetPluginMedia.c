@@ -669,7 +669,6 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin)
 	common->uri = NULL;  // Don't free common->uri again.
 
 	if (plugin->paused == FALSE && umitem == NULL) {
-		plugin->node->group |= UGET_GROUP_COMPLETED;
 		uget_plugin_post((UgetPlugin*) plugin,
 				uget_event_new(UGET_EVENT_COMPLETED));
 	}

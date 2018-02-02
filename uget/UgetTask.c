@@ -216,6 +216,16 @@ static int  uget_task_dispatch1(UgetTask* task, UgetNode* node, UgetPlugin* plug
 			uget_event_free(event);
 			break;
 
+		case UGET_EVENT_UPLOADING:
+			node->group |= UGET_GROUP_UPLOADING;
+			uget_event_free(event);
+			break;
+
+		case UGET_EVENT_STOP_UPLOADING:
+			node->group &= ~UGET_GROUP_UPLOADING;
+			uget_event_free(event);
+			break;
+
 //		case UGET_EVENT_INFO:
 //		case UGET_EVENT_REMOVE:
 //		case UGET_EVENT_INSERT:
