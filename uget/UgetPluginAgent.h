@@ -58,8 +58,8 @@ typedef enum {
 
 #define UGET_PLUGIN_AGENT_MEMBERS  \
 	UGET_PLUGIN_MEMBERS;           \
-	UgetNode*     node;            \
-	UgetNode*     target_node;     \
+	UgInfo*       node_info;       \
+	UgInfo*       target_info;     \
 	UgetPlugin*   target_plugin;   \
 	int           limit[2];        \
 	uint8_t       limit_changed:1; \
@@ -77,14 +77,14 @@ struct UgetPluginAgent
 //	int           ref_count;
 
 	// ------ UgetPluginAgent members ------
-	// pointer to UgetNode that store in UgetApp
-//	UgetNode*     node;
+	// pointer to UgInfo that store in UgetApp
+//	UgInfo*       node_info;
 
 	// This plug-in use other plug-in to download files,
-	// so we need extra UgetPlugin and UgetNode.
+	// so we need extra UgetPlugin and UgInfo.
 	//
-	// plugin->target_node is a copy of plugin->node
-//	UgetNode*     target_node;
+	// plugin->target_info is a copy of plugin->node_info
+//	UgInfo*       target_info;
 	// target_plugin use target_node to download
 //	UgetPlugin*   target_plugin;
 
@@ -136,12 +136,13 @@ int   uget_plugin_agent_sync_children (UgetPluginAgent* plugin,
                                        int  is_target_active);
 
 // thread functions -------------------
-int   uget_plugin_agent_start_thread (UgetPluginAgent* plugin, UgetNode* node,
+int   uget_plugin_agent_start_thread (UgetPluginAgent* plugin,
+                                      UgInfo*      node_info,
                                       UgThreadFunc thread_func);
 
 // sync data between target_plugin and target_node
 // if target_plugin is active, return TRUE
-int   uget_plugin_agent_sync_plugin (UgetPluginAgent* plugin, UgetNode* node);
+int   uget_plugin_agent_sync_plugin (UgetPluginAgent* plugin, UgInfo* node_info);
 
 // handle events from target_plugin by default action.
 // return remain events

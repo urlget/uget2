@@ -105,7 +105,7 @@ typedef enum Aria2Status {
 static void plugin_init (UgetPluginAria2* plugin);
 static void plugin_final(UgetPluginAria2* plugin);
 static int  plugin_ctrl (UgetPluginAria2* plugin, int code, void* data);
-static int  plugin_sync (UgetPluginAria2* plugin, UgetNode* node);
+static int  plugin_sync (UgetPluginAria2* plugin, UgInfo* node_info);
 static UgetResult  global_set(int code, void* parameter);
 static UgetResult  global_get(int code, void* parameter);
 
@@ -336,8 +336,8 @@ static void  plugin_final(UgetPluginAria2* plugin)
 		uget_aria2_recycle(global.data, plugin->start_request);
 	}
 	// unassign node
-	if (plugin->node)
-		uget_node_unref(plugin->node);
+	if (plugin->node_info)
+		ug_info_unref(plugin->node_info);
 
 	global_unref();
 }
@@ -346,13 +346,13 @@ static void  plugin_final(UgetPluginAria2* plugin)
 // plugin_ctrl
 
 static int  plugin_ctrl_speed(UgetPluginAria2* plugin, int* speed);
-static int  plugin_start(UgetPluginAria2* plugin, UgetNode* node);
+static int  plugin_start(UgetPluginAria2* plugin, UgInfo* node_info);
 
 static int  plugin_ctrl(UgetPluginAria2* plugin, int code, void* data)
 {
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
-		if (plugin->node == NULL)
+		if (plugin->node_info == NULL)
 			return plugin_start(plugin, data);
 		break;
 
@@ -389,12 +389,12 @@ static int  plugin_ctrl_speed(UgetPluginAria2* plugin, int* speed)
 			return TRUE;
 	plugin->limit_by_user = FALSE;
 	// decide speed limit by user specified data.
-	if (plugin->node == NULL) {
+	if (plugin->node_info == NULL) {
 		plugin->limit[0] = speed[0];
 		plugin->limit[1] = speed[1];
 	}
 	else {
-		common = ug_info_realloc(plugin->node->info, UgetCommonInfo);
+		common = ug_info_realloc(plugin->node_info, UgetCommonInfo);
 		// download
 		value = speed[0];
 		if (common->max_download_speed) {
@@ -419,7 +419,7 @@ static int  plugin_ctrl_speed(UgetPluginAria2* plugin, int* speed)
 // plugin_sync
 
 // return FALSE if plug-in was stopped.
-static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
+static int  plugin_sync(UgetPluginAria2* plugin, UgInfo* node_info)
 {
 	int          index;
 	UgetEvent*   event;
@@ -436,15 +436,15 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
 	}
 	else if (plugin->synced == TRUE)
 		return TRUE;
-	// avoid crash if plug-in plug-in failed to start.
-	if (plugin->node == NULL)
+	// avoid crash if plug-in failed to start.
+	if (plugin->node_info == NULL)
 		return TRUE;
-	if (node == NULL)
-		node = plugin->node;
+	if (node_info == NULL)
+		node_info = plugin->node_info;
 	// sync data between plug-in and node
 	// ------------------------------------------------
 	// update progress
-	temp.progress = ug_info_realloc(node->info, UgetProgressInfo);
+	temp.progress = ug_info_realloc(node_info, UgetProgressInfo);
 	temp.progress->complete       = plugin->completedLength;
 	temp.progress->total          = plugin->totalLength;
 	temp.progress->download_speed = plugin->downloadSpeed;
@@ -465,7 +465,7 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
 	if (temp.progress->download_speed > 0 && temp.progress->total > 0)
 		temp.progress->left = (temp.progress->total - temp.progress->complete) / temp.progress->download_speed;
 
-	temp.common = ug_info_realloc(node->info, UgetCommonInfo);
+	temp.common = ug_info_realloc(node_info, UgetCommonInfo);
 	// ------------------------------------------------
 	// sync changed limit from UgetNode
 	if (plugin->limit[1] != temp.common->max_upload_speed ||
@@ -475,13 +475,15 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgetNode* node)
 	}
 
 	// update UgetFiles
-	files = ug_info_realloc(node->info, UgetFilesInfo);
+	files = ug_info_realloc(node_info, UgetFilesInfo);
 	uget_plugin_lock(plugin);
 	uget_files_sync(files, plugin->files);
 	uget_plugin_unlock(plugin);
 
 	// change node name.
-	if (plugin->node_named == FALSE && plugin->files_per_gid > 0) {
+	if (files->collection.length > 0 &&
+	    plugin->node_named == FALSE && plugin->files_per_gid > 0)
+	{
 		plugin->node_named  = TRUE;
 		if (plugin->uri_type == URI_NET && temp.common->file == NULL) {
 			uget_plugin_lock(plugin);
@@ -912,7 +914,7 @@ exit:
 // ----------------------------------------------------------------------------
 // plugin_start
 
-static int  plugin_start(UgetPluginAria2* plugin, UgetNode* node)
+static int  plugin_start(UgetPluginAria2* plugin, UgInfo* node_info)
 {
 	UgJsonrpcObject*  request;
 	UgValue*  value;
@@ -931,7 +933,7 @@ static int  plugin_start(UgetPluginAria2* plugin, UgetNode* node)
 		int          ok;
 	} temp;
 
-	temp.common = ug_info_get(node->info, UgetCommonInfo);
+	temp.common = ug_info_get(node_info, UgetCommonInfo);
 	if (temp.common == NULL || temp.common->uri == NULL)
 		return FALSE;
 
@@ -1083,13 +1085,13 @@ static int  plugin_start(UgetPluginAria2* plugin, UgetNode* node)
 				temp.common->max_connections);
 	}
 
-	temp.files = ug_info_get(node->info, UgetFilesInfo);
+	temp.files = ug_info_get(node_info, UgetFilesInfo);
 	if (temp.files)
 		plugin->files = ug_data_copy(temp.files);
 	else
 		plugin->files = ug_data_new(UgetFilesInfo);
 
-	temp.proxy = ug_info_get(node->info, UgetProxyInfo);
+	temp.proxy = ug_info_get(node_info, UgetProxyInfo);
 #ifdef HAVE_LIBPWMD
 	if (temp.proxy && temp.proxy->type == UGET_PROXY_PWMD) {
 		if (uget_plugin_aria2_set_proxy_pwmd(plugin, member) == FALSE)
@@ -1124,7 +1126,7 @@ static int  plugin_start(UgetPluginAria2* plugin, UgetNode* node)
 		}
 	}
 
-	temp.http = ug_info_get(node->info, UgetHttpInfo);
+	temp.http = ug_info_get(node_info, UgetHttpInfo);
 	if (temp.http) {
 		if (plugin->uri_part.scheme_len >= 4 &&
 		    strncmp(uri, "http", 4) == 0)
@@ -1156,7 +1158,7 @@ static int  plugin_start(UgetPluginAria2* plugin, UgetNode* node)
 		}
 	}
 
-	temp.ftp = ug_info_get(node->info, UgetFtpInfo);
+	temp.ftp = ug_info_get(node_info, UgetFtpInfo);
 	if (temp.ftp) {
 		if (plugin->uri_part.scheme_len >= 3 && strncmp(uri, "ftp", 3) == 0) {
 			if ((temp.ftp->user     && temp.ftp->user[0]) ||
@@ -1193,8 +1195,8 @@ static int  plugin_start(UgetPluginAria2* plugin, UgetNode* node)
 	plugin->start_request = request;
 
 	// assign node
-	uget_node_ref(node);
-	plugin->node = node;
+	ug_info_ref(node_info);
+	plugin->node_info = node_info;
 	// speed control
 	plugin_ctrl_speed(plugin, plugin->limit);
 
@@ -1209,9 +1211,9 @@ static int  plugin_start(UgetPluginAria2* plugin, UgetNode* node)
 		// failed to start thread -----------------
 		plugin->paused = TRUE;
 		plugin->stopped = TRUE;
-		// don't assign node
-		uget_node_unref(plugin->node);
-		plugin->node = NULL;
+		// remove node_info
+		ug_info_unref(plugin->node_info);
+		plugin->node_info = NULL;
 		// post error message and decreases the reference count
 		uget_plugin_post((UgetPlugin*) plugin,
 				uget_event_new_error(UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
@@ -1429,7 +1431,7 @@ static gboolean	uget_plugin_aria2_set_proxy_pwmd(UgetPluginAria2 *plugin, UgValu
        UgetProxy *proxy;
 
        memset(&pwmd, 0, sizeof(pwmd));
-       proxy = ug_info_get(&plugin->node->info, UgetProxyInfo);
+       proxy = ug_info_get(&plugin->node_info, UgetProxyInfo);
        rc = ug_set_pwmd_proxy_options(&pwmd, proxy);
 
        if (rc)

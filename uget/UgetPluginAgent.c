@@ -154,14 +154,14 @@ void uget_plugin_agent_init(UgetPluginAgent* plugin)
 void uget_plugin_agent_final(UgetPluginAgent* plugin)
 {
 	// extent data and plug-in
-	if (plugin->target_node)
-		uget_node_unref(plugin->target_node);
+	if (plugin->target_info)
+		ug_info_unref(plugin->target_info);
 	if (plugin->target_plugin)
 		uget_plugin_unref(plugin->target_plugin);
 
 	// unlink node
-	if (plugin->node)
-		uget_node_unref(plugin->node);
+	if (plugin->node_info)
+		ug_info_unref(plugin->node_info);
 
 	uget_plugin_agent_global_unref();
 }
@@ -172,9 +172,9 @@ int   uget_plugin_agent_ctrl(UgetPluginAgent* plugin, int code, void* data)
 
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
-		// assign a UgetNode to UgetPlugin to start download
+		// assign a UgInfo to UgetPlugin to start download
 		assign = plugin->info->assign;
-		if (plugin->node == NULL && assign != NULL)
+		if (plugin->node_info == NULL && assign != NULL)
 			return assign(plugin, data);
 		break;
 
@@ -207,12 +207,12 @@ int  uget_plugin_agent_ctrl_speed(UgetPluginAgent* plugin, int* speed)
 	if (plugin->limit[0] == speed[0] && plugin->limit[1] == speed[1])
 		return TRUE;
 	// decide speed limit by user specified data.
-	if (plugin->node == NULL) {
+	if (plugin->node_info == NULL) {
 		plugin->limit[0] = speed[0];
 		plugin->limit[1] = speed[1];
 	}
 	else {
-		common = ug_info_realloc(plugin->node->info, UgetCommonInfo);
+		common = ug_info_realloc(plugin->node_info, UgetCommonInfo);
 		// download
 		value = speed[0];
 		if (common->max_download_speed) {
@@ -241,9 +241,9 @@ void  uget_plugin_agent_sync_common(UgetPluginAgent* plugin,
                                     UgetCommon* target)
 {
 	if (common == NULL)
-		common = ug_info_realloc(plugin->node->info, UgetCommonInfo);
+		common = ug_info_realloc(plugin->node_info, UgetCommonInfo);
 	if (target == NULL)
-		target = ug_info_realloc(plugin->target_node->info, UgetCommonInfo);
+		target = ug_info_realloc(plugin->target_info, UgetCommonInfo);
 
 	// sync speed limit from common to target
 	if (target->max_upload_speed != common->max_upload_speed ||
@@ -263,9 +263,9 @@ void  uget_plugin_agent_sync_progress(UgetPluginAgent* plugin,
                                       UgetProgress* target)
 {
 	if (progress == NULL)
-		progress = ug_info_realloc(plugin->node->info, UgetProgressInfo);
+		progress = ug_info_realloc(plugin->node_info, UgetProgressInfo);
 	if (target == NULL)
-		target = ug_info_realloc(plugin->target_node->info, UgetProgressInfo);
+		target = ug_info_realloc(plugin->target_info, UgetProgressInfo);
 
 	// sync progress from target to common
 	progress->complete       = target->complete;
@@ -281,15 +281,16 @@ void  uget_plugin_agent_sync_progress(UgetPluginAgent* plugin,
 // ----------------------------------------------------------------------------
 // other functions
 
-int   uget_plugin_agent_start_thread(UgetPluginAgent* plugin, UgetNode* node,
+int   uget_plugin_agent_start_thread(UgetPluginAgent* plugin,
+                                     UgInfo*      node_info,
                                      UgThreadFunc thread_func)
 {
 	UgThread     thread;
 	int          ok;
 
 	// assign node
-	uget_node_ref(node);
-	plugin->node = node;
+	ug_info_ref(node_info);
+	plugin->node_info = node_info;
 
 	// try to start thread
 	plugin->paused = FALSE;
@@ -302,9 +303,9 @@ int   uget_plugin_agent_start_thread(UgetPluginAgent* plugin, UgetNode* node,
 		// failed to start thread -----------------
 		plugin->paused = TRUE;
 		plugin->stopped = TRUE;
-		// don't assign node
-		uget_node_unref(plugin->node);
-		plugin->node = NULL;
+		// remove node_info
+		ug_info_unref(plugin->node_info);
+		plugin->node_info = NULL;
 		// post error message and decreases the reference count
 		uget_plugin_post((UgetPlugin*) plugin,
 				uget_event_new_error(UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
@@ -316,15 +317,15 @@ int   uget_plugin_agent_start_thread(UgetPluginAgent* plugin, UgetNode* node,
 	return TRUE;
 }
 
-int   uget_plugin_agent_sync_plugin(UgetPluginAgent* plugin, UgetNode* node)
+int   uget_plugin_agent_sync_plugin(UgetPluginAgent* plugin, UgInfo* node_info)
 {
 	int  active;
 
-	if (node == NULL)
-		node = plugin->target_node;
+	if (node_info == NULL)
+		node_info = plugin->target_info;
 	// lock & unlock for uget_files_sync()
 	ug_mutex_lock(&plugin->mutex);
-	active = uget_plugin_sync(plugin->target_plugin, node);
+	active = uget_plugin_sync(plugin->target_plugin, node_info);
 	ug_mutex_unlock(&plugin->mutex);
 
 	return active;

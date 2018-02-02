@@ -112,7 +112,7 @@ int   uget_task_add(UgetTask* task, UgetNode* node, const UgetPluginInfo* info)
 		task->limit.download = temp_int_array[0];
 		task->limit.upload   = temp_int_array[1];
 	}
-	if (uget_plugin_start(relation->task.plugin, node) == FALSE) {
+	if (uget_plugin_start(relation->task.plugin, node->info) == FALSE) {
 		// dispatch error message from plug-in
 		uget_task_dispatch1(task, node, relation->task.plugin);
 		// release plug-in
@@ -165,7 +165,7 @@ static int  uget_task_dispatch1(UgetTask* task, UgetNode* node, UgetPlugin* plug
 		UgetLog*      log;
 	} temp;
 
-	active = uget_plugin_sync(plugin, node);
+	active = uget_plugin_sync(plugin, node->info);
 	// update UgetFiles
 	files = ug_info_get(node->info, UgetFilesInfo);
 	if (files)

@@ -103,8 +103,8 @@ static int  mega_decrypt_file(UgetPluginMega* plugin, int preset_progress);
 
 static void plugin_init (UgetPluginMega* plugin);
 static void plugin_final(UgetPluginMega* plugin);
-static int  plugin_start(UgetPluginMega* plugin, UgetNode* node);
-static int  plugin_sync (UgetPluginMega* plugin, UgetNode* node);
+static int  plugin_start(UgetPluginMega* plugin, UgInfo* node_info);
+static int  plugin_sync (UgetPluginMega* plugin, UgInfo* node_info);
 
 static const char* schemes[] = {"https", NULL};
 static const char* hosts[]   = {"mega.co.nz", "mega.nz",
@@ -160,11 +160,11 @@ static void plugin_final(UgetPluginMega* plugin)
 
 static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMega* plugin);
 
-static int  plugin_start(UgetPluginMega* plugin, UgetNode* node)
+static int  plugin_start(UgetPluginMega* plugin, UgInfo* node_info)
 {
 	UgetCommon*  common;
 
-	common = ug_info_get(node->info, UgetCommonInfo);
+	common = ug_info_get(node_info, UgetCommonInfo);
 	if (common == NULL || common->uri == NULL)
 		return FALSE;
 
@@ -176,14 +176,14 @@ static int  plugin_start(UgetPluginMega* plugin, UgetNode* node)
 		return FALSE;
 	}
 
-	plugin->target_node = uget_node_new(NULL);
-	ug_info_assign(plugin->target_node->info, node->info, NULL);
-	plugin->target_files  = ug_info_realloc(plugin->target_node->info, UgetFilesInfo);
-	plugin->target_proxy  = ug_info_get(plugin->target_node->info, UgetProxyInfo);
-	plugin->target_common = ug_info_get(plugin->target_node->info, UgetCommonInfo);
-	plugin->target_progress = ug_info_realloc(plugin->target_node->info, UgetProgressInfo);
+	plugin->target_info = ug_info_new(8, 2);
+	ug_info_assign(plugin->target_info, node_info, NULL);
+	plugin->target_files  = ug_info_realloc(plugin->target_info, UgetFilesInfo);
+	plugin->target_proxy  = ug_info_get(plugin->target_info, UgetProxyInfo);
+	plugin->target_common = ug_info_get(plugin->target_info, UgetCommonInfo);
+	plugin->target_progress = ug_info_realloc(plugin->target_info, UgetProgressInfo);
 
-	return uget_plugin_agent_start_thread((UgetPluginAgent*)plugin, node,
+	return uget_plugin_agent_start_thread((UgetPluginAgent*)plugin, node_info,
 	                                      (UgThreadFunc)plugin_thread);
 }
 
@@ -230,7 +230,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMega* plugin)
 	// create target_plugin to download
 	plugin->target_plugin = uget_plugin_new(plugin_info);
 	uget_plugin_ctrl_speed(plugin->target_plugin, plugin->limit);
-	if (uget_plugin_start(plugin->target_plugin, plugin->target_node) == FALSE) {
+	if (uget_plugin_start(plugin->target_plugin, plugin->target_info) == FALSE) {
 		msg = uget_event_new_error(UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 		                           NULL);
 		uget_plugin_post((UgetPlugin*) plugin, msg);
@@ -299,7 +299,7 @@ exit:
 	return UG_THREAD_RETURN_VALUE;
 }
 
-static int  plugin_sync(UgetPluginMega* plugin, UgetNode* node)
+static int  plugin_sync(UgetPluginMega* plugin, UgInfo* node_info)
 {
 	UgetFiles*     files;
 	UgetCommon*    common;
@@ -310,26 +310,26 @@ static int  plugin_sync(UgetPluginMega* plugin, UgetNode* node)
 			return FALSE;
 		plugin->synced = TRUE;
 	}
-	// avoid crash if plug-in plug-in failed to start.
-	if (plugin->node == NULL)
+	// avoid crash if plug-in failed to start.
+	if (plugin->node_info == NULL)
 		return TRUE;
-	if (node == NULL)
-		node = plugin->node;
+	if (node_info == NULL)
+		node_info = plugin->node_info;
 
 	// sync common data (include speed limit) between node and target_node
-	common = ug_info_realloc(node->info, UgetCommonInfo);
+	common = ug_info_realloc(node_info, UgetCommonInfo);
 	uget_plugin_agent_sync_common((UgetPluginAgent*) plugin,
 	                              common, plugin->target_common);
 
 	// sync progress data from target_node to node
-	progress = ug_info_realloc(node->info, UgetProgressInfo);
+	progress = ug_info_realloc(node_info, UgetProgressInfo);
 	uget_plugin_agent_sync_progress((UgetPluginAgent*) plugin,
 	                                progress, plugin->target_progress);
 	if (plugin->decrypting == FALSE)
 		progress->percent = progress->percent * 96 / 100;
 
 	// update UgetFiles
-	files = ug_info_realloc(node->info, UgetFilesInfo);
+	files = ug_info_realloc(node_info, UgetFilesInfo);
 	uget_plugin_lock(plugin);
 	uget_files_sync(files, plugin->target_files);
 	uget_plugin_unlock(plugin);

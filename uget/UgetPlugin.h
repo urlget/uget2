@@ -40,8 +40,8 @@
 #include <stdint.h>
 #include <UgUri.h>
 #include <UgData.h>
+#include <UgInfo.h>
 #include <UgThread.h>
-#include <UgetNode.h>
 #include <UgetEvent.h>
 
 #ifdef __cplusplus
@@ -53,7 +53,7 @@ typedef struct  UgetPluginInfo     UgetPluginInfo;
 
 typedef enum {
 	// input ----------------
-	UGET_PLUGIN_CTRL_START,    // UgetNode*
+	UGET_PLUGIN_CTRL_START,    // UgInfo*
 	UGET_PLUGIN_CTRL_STOP,
 	UGET_PLUGIN_CTRL_SPEED,    // int*, int[0] = download, int[1] = upload
 
@@ -85,7 +85,7 @@ typedef enum {
 	UGET_RESULT_UNSUPPORT,
 } UgetResult;
 
-typedef int        (*UgetPluginSyncFunc)(UgetPlugin* plugin, UgetNode* node);
+typedef int        (*UgetPluginSyncFunc)(UgetPlugin* plugin, UgInfo* info);
 typedef int        (*UgetPluginCtrlFunc)(UgetPlugin* plugin, int, void* data);
 typedef UgetResult (*UgetPluginSetFunc) (int option, void* parameter);
 typedef UgetResult (*UgetPluginGetFunc) (int option, void* parameter);
@@ -156,8 +156,8 @@ int     uget_plugin_match(const UgetPluginInfo* info, UgUri* uuri);
 // return TRUE or FALSE.
 int   uget_plugin_ctrl(UgetPlugin* plugin, int code, void* data);
 
-#define uget_plugin_start(plugin, node)   \
-		uget_plugin_ctrl(plugin, UGET_PLUGIN_CTRL_START, node)
+#define uget_plugin_start(plugin, info)   \
+		uget_plugin_ctrl(plugin, UGET_PLUGIN_CTRL_START, info)
 #define uget_plugin_stop(plugin)          \
 		uget_plugin_ctrl(plugin, UGET_PLUGIN_CTRL_STOP, NULL)
 
@@ -175,7 +175,7 @@ int   uget_plugin_ctrl(UgetPlugin* plugin, int code, void* data);
 
 // return TRUE  if plug-in running.
 // return FALSE if plug-in stopped.
-int   uget_plugin_sync(UgetPlugin* plugin, UgetNode* node);
+int   uget_plugin_sync(UgetPlugin* plugin, UgInfo* info);
 
 void  uget_plugin_ref(UgetPlugin* plugin);
 void  uget_plugin_unref(UgetPlugin* plugin);
@@ -219,14 +219,14 @@ struct PluginInfo : Uget::PluginInfoMethod, UgetPluginInfo {};
 // Your derived struct/class must be C++11 standard-layout
 struct PluginMethod : Ug::DataMethod
 {
-	inline void  start(UgetNode* baseNode)
-		{ uget_plugin_start((UgetPlugin*) this, baseNode); }
+	inline void  start(UgInfo* info)
+		{ uget_plugin_start((UgetPlugin*) this, info); }
 
 	inline void  stop(void)
 		{ uget_plugin_stop((UgetPlugin*) this); }
 
-	inline int   sync(UgetNode* node)
-		{ return uget_plugin_sync((UgetPlugin*) this, node); }
+	inline int   sync(UgInfo* info)
+		{ return uget_plugin_sync((UgetPlugin*) this, info); }
 
 	inline void  ref(void)
 		{ uget_plugin_ref((UgetPlugin*) this); }

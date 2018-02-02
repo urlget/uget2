@@ -63,8 +63,8 @@ struct UgetPluginCurl
 //	UgMutex       mutex;
 //	int           ref_count;
 
-	// pointer to UgetNode that store in UgetApp
-	UgetNode*     node;
+	// pointer to UgInfo that store in UgetApp
+	UgInfo*       node_info;
 
 	// copy of UgetNode data
 	UgetCommon*   common;

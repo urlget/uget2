@@ -80,8 +80,8 @@ struct UgetPluginAria2
 //	UgMutex       mutex;
 //	int           ref_count;
 
-	// pointer to UgetNode that store in UgetApp
-	UgetNode*     node;
+	// pointer to UgInfo that store in UgetApp
+	UgInfo*       node_info;
 
 	// aria2.addUri, aria2.addTorrent, aria2.addMetalink
 	UgJsonrpcObject*  start_request;

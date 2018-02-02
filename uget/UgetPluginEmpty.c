@@ -45,7 +45,7 @@
 static void plugin_init (UgetPluginEmpty* plugin);
 static void plugin_final(UgetPluginEmpty* plugin);
 static int  plugin_ctrl (UgetPluginEmpty* plugin, int code, void* data);
-static int  plugin_sync (UgetPluginEmpty* plugin, UgetNode* node);
+static int  plugin_sync (UgetPluginEmpty* plugin, UgInfo* node_info);
 static UgetResult  global_set(int code, void* parameter);
 static UgetResult  global_get(int code, void* parameter);
 
@@ -174,8 +174,8 @@ static void plugin_final(UgetPluginEmpty* plugin)
 	//
 
 	// unassign node
-	if (plugin->node)
-		uget_node_unref(plugin->node);
+	if (plugin->node_info)
+		ug_info_unref(plugin->node_info);
 
 	global_unref();
 }
@@ -184,14 +184,14 @@ static void plugin_final(UgetPluginEmpty* plugin)
 // plugin_ctrl
 
 static int  plugin_ctrl_speed(UgetPluginEmpty* plugin, int* speed);
-static int  plugin_start(UgetPluginEmpty* plugin, UgetNode* node);
+static int  plugin_start(UgetPluginEmpty* plugin, UgInfo* node_info);
 static void plugin_stop(UgetPluginEmpty* plugin);
 
 static int  plugin_ctrl(UgetPluginEmpty* plugin, int code, void* data)
 {
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
-		if (plugin->node == NULL)
+		if (plugin->node_info == NULL)
 			return plugin_start(plugin, data);
 		break;
 
@@ -225,12 +225,12 @@ static int  plugin_ctrl_speed(UgetPluginEmpty* plugin, int* speed)
 	if (plugin->limit[0] == speed[0] && plugin->limit[1] == speed[1])
 		return TRUE;
 	// decide speed limit by user specified data.
-	if (plugin->node == NULL) {
+	if (plugin->node_info == NULL) {
 		plugin->limit[0] = speed[0];
 		plugin->limit[1] = speed[1];
 	}
 	else {
-		common = ug_info_realloc(plugin->node->info, UgetCommonInfo);
+		common = ug_info_realloc(plugin->node_info, UgetCommonInfo);
 		// download
 		value = speed[0];
 		if (common->max_download_speed) {
@@ -254,7 +254,7 @@ static int  plugin_ctrl_speed(UgetPluginEmpty* plugin, int* speed)
 // ----------------------------------------------------------------------------
 // plugin_sync
 
-static int  plugin_sync(UgetPluginEmpty* plugin, UgetNode* node)
+static int  plugin_sync(UgetPluginEmpty* plugin, UgInfo* node_info)
 {
 	// if plug-in was stopped, return FALSE.
 	return FALSE;
@@ -262,17 +262,17 @@ static int  plugin_sync(UgetPluginEmpty* plugin, UgetNode* node)
 
 // ----------------------------------------------------------------------------
 
-static int  plugin_start(UgetPluginEmpty* plugin, UgetNode* node)
+static int  plugin_start(UgetPluginEmpty* plugin, UgInfo* node_info)
 {
 	UgetCommon*  common;
 
-	common = ug_info_get(node->info, UgetCommonInfo);
+	common = ug_info_get(node_info, UgetCommonInfo);
 	if (common == NULL || common->uri == NULL)
 		return FALSE;
 
 	// assign node
-	uget_node_ref(node);
-	plugin->node = node;
+	ug_info_ref(node_info);
+	plugin->node_info = node_info;
 
 	return TRUE;
 }

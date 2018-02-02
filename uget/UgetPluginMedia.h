@@ -68,15 +68,13 @@ struct UgetPluginMedia
 //	UgMutex       mutex;
 //	int           ref_count;
 
-	// pointer to UgetNode that store in UgetApp
-	UgetNode*     node;
+	// pointer to UgInfo that store in UgetApp
+	UgInfo*       node_info;
 
 	// This plug-in use other plug-in to download media files,
-	// so we need extra UgetPlugin and UgetNode.
-	// plugin->target_node is a copy of plugin->node
-	UgetNode*     target_node;
-	// copy child nodes from target_node
-	UgetNode*     target_node_child;
+	// so we need extra UgetPlugin and UgInfo.
+	// plugin->target_indo is a copy of plugin->node_info
+	UgInfo*       target_info;
 	// target_plugin use target_node to download
 	UgetPlugin*   target_plugin;
 

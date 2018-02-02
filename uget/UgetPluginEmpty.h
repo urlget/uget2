@@ -63,7 +63,7 @@ struct UgetPluginEmpty
 //	UgMutex       mutex;
 //	int           ref_count;
 
-	UgetNode*     node;
+	UgInfo*       node_info;
 
 	// speed limit control
 	// limit[0] = download speed limit
