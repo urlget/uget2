@@ -168,15 +168,9 @@ void uget_plugin_agent_final(UgetPluginAgent* plugin)
 
 int   uget_plugin_agent_ctrl(UgetPluginAgent* plugin, int code, void* data)
 {
-	UgAssignFunc  assign;
-
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
-		// assign a UgInfo to UgetPlugin to start download
-		assign = plugin->info->assign;
-		if (plugin->node_info == NULL && assign != NULL)
-			return assign(plugin, data);
-		break;
+		return FALSE;
 
 	case UGET_PLUGIN_CTRL_STOP:
 		plugin->paused = TRUE;
@@ -186,12 +180,11 @@ int   uget_plugin_agent_ctrl(UgetPluginAgent* plugin, int code, void* data)
 		// speed control
 		return uget_plugin_agent_ctrl_speed(plugin, data);
 
-	// output ---------------
-	case UGET_PLUGIN_CTRL_ACTIVE:
+	// state ----------------
+	case UGET_PLUGIN_GET_STATE:
 		*(int*)data = (plugin->stopped) ? FALSE : TRUE;
 		return TRUE;
 
-	// unused ---------------
 	default:
 		break;
 	}
@@ -282,15 +275,10 @@ void  uget_plugin_agent_sync_progress(UgetPluginAgent* plugin,
 // other functions
 
 int   uget_plugin_agent_start_thread(UgetPluginAgent* plugin,
-                                     UgInfo*      node_info,
                                      UgThreadFunc thread_func)
 {
 	UgThread     thread;
 	int          ok;
-
-	// assign node
-	ug_info_ref(node_info);
-	plugin->node_info = node_info;
 
 	// try to start thread
 	plugin->paused = FALSE;
@@ -315,20 +303,6 @@ int   uget_plugin_agent_start_thread(UgetPluginAgent* plugin,
 	}
 
 	return TRUE;
-}
-
-int   uget_plugin_agent_sync_plugin(UgetPluginAgent* plugin, UgInfo* node_info)
-{
-	int  active;
-
-	if (node_info == NULL)
-		node_info = plugin->target_info;
-	// lock & unlock for uget_files_sync()
-	ug_mutex_lock(&plugin->mutex);
-	active = uget_plugin_sync(plugin->target_plugin, node_info);
-	ug_mutex_unlock(&plugin->mutex);
-
-	return active;
 }
 
 // handle events from target_plugin by default action.

@@ -103,8 +103,10 @@ static int  mega_decrypt_file(UgetPluginMega* plugin, int preset_progress);
 
 static void plugin_init (UgetPluginMega* plugin);
 static void plugin_final(UgetPluginMega* plugin);
-static int  plugin_start(UgetPluginMega* plugin, UgInfo* node_info);
-static int  plugin_sync (UgetPluginMega* plugin, UgInfo* node_info);
+static int  plugin_start(UgetPluginMega* plugin);
+static int  plugin_accept(UgetPluginMega* plugin, UgInfo* node_info);
+static int  plugin_sync  (UgetPluginMega* plugin, UgInfo* node_info);
+static int  plugin_ctrl  (UgetPluginMega* plugin, int code, void* data);
 
 static const char* schemes[] = {"https", NULL};
 static const char* hosts[]   = {"mega.co.nz", "mega.nz",
@@ -116,14 +118,14 @@ static const UgetPluginInfo UgetPluginMegaInfoStatic =
 	sizeof(UgetPluginMega),
 	(UgInitFunc)   plugin_init,
 	(UgFinalFunc)  plugin_final,
-	(UgAssignFunc) plugin_start,
-	(UgetPluginCtrlFunc) uget_plugin_agent_ctrl,
+	(UgetPluginSyncFunc) plugin_accept,
 	(UgetPluginSyncFunc) plugin_sync,
+	(UgetPluginCtrlFunc) plugin_ctrl,
 	hosts,
 	schemes,
 	NULL,
-	(UgetPluginSetFunc) uget_plugin_agent_global_set,
-	(UgetPluginGetFunc) uget_plugin_agent_global_get
+	(UgetPluginGlobalFunc) uget_plugin_agent_global_set,
+	(UgetPluginGlobalFunc) uget_plugin_agent_global_get
 };
 // extern
 const UgetPluginInfo* UgetPluginMegaInfo = &UgetPluginMegaInfoStatic;
@@ -160,7 +162,7 @@ static void plugin_final(UgetPluginMega* plugin)
 
 static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMega* plugin);
 
-static int  plugin_start(UgetPluginMega* plugin, UgInfo* node_info)
+static int  plugin_accept(UgetPluginMega* plugin, UgInfo* node_info)
 {
 	UgetCommon*  common;
 
@@ -183,8 +185,35 @@ static int  plugin_start(UgetPluginMega* plugin, UgInfo* node_info)
 	plugin->target_common = ug_info_get(plugin->target_info, UgetCommonInfo);
 	plugin->target_progress = ug_info_realloc(plugin->target_info, UgetProgressInfo);
 
-	return uget_plugin_agent_start_thread((UgetPluginAgent*)plugin, node_info,
+	// assign UgInfo
+	ug_info_ref(node_info);
+	plugin->node_info = node_info;
+
+	return TRUE;
+}
+
+static int  plugin_start(UgetPluginMega* plugin)
+{
+	return uget_plugin_agent_start_thread((UgetPluginAgent*)plugin,
 	                                      (UgThreadFunc)plugin_thread);
+}
+
+int   plugin_ctrl(UgetPluginMega* plugin, int code, void* data)
+{
+	if (uget_plugin_agent_ctrl((UgetPluginAgent*)plugin, code, data))
+		return TRUE;
+
+	switch (code) {
+	case UGET_PLUGIN_CTRL_START:
+		// assign a UgInfo to UgetPlugin to start download
+		if (plugin->node_info)
+			return plugin_start(plugin);
+		break;
+
+	default:
+		break;
+	}
+	return FALSE;
 }
 
 static int  is_downloaded(UgetPluginMega* plugin, UgetCommon* target_common);
@@ -229,8 +258,9 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMega* plugin)
 
 	// create target_plugin to download
 	plugin->target_plugin = uget_plugin_new(plugin_info);
+	uget_plugin_accept(plugin->target_plugin, plugin->target_info);
 	uget_plugin_ctrl_speed(plugin->target_plugin, plugin->limit);
-	if (uget_plugin_start(plugin->target_plugin, plugin->target_info) == FALSE) {
+	if (uget_plugin_start(plugin->target_plugin) == FALSE) {
 		msg = uget_event_new_error(UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 		                           NULL);
 		uget_plugin_post((UgetPlugin*) plugin, msg);
@@ -281,10 +311,14 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMega* plugin)
 		}
 		// sync data in plugin_sync()
 		plugin->synced = FALSE;
-	} while (uget_plugin_agent_sync_plugin((UgetPluginAgent*) plugin, NULL));
+		uget_plugin_lock(plugin);
+		uget_plugin_sync(plugin->target_plugin,
+		                 plugin->target_info);
+		uget_plugin_unlock(plugin);
+	} while (uget_plugin_get_state(plugin->target_plugin));
 
 	// free target_plugin
-	uget_plugin_unref((UgetPlugin*) plugin->target_plugin);
+	uget_plugin_unref(plugin->target_plugin);
 	plugin->target_plugin = NULL;
 
 	// if downloading completed, decrypt file
@@ -293,8 +327,8 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMega* plugin)
 exit:
 	plugin->synced = FALSE;
 	plugin->stopped = TRUE;
-	uget_plugin_post((UgetPlugin*)plugin,
-			uget_event_new(UGET_EVENT_STOP));
+	uget_plugin_post((UgetPlugin*) plugin,
+	                 uget_event_new(UGET_EVENT_STOP));
 	uget_plugin_unref((UgetPlugin*) plugin);
 	return UG_THREAD_RETURN_VALUE;
 }
@@ -312,7 +346,7 @@ static int  plugin_sync(UgetPluginMega* plugin, UgInfo* node_info)
 	}
 	// avoid crash if plug-in failed to start.
 	if (plugin->node_info == NULL)
-		return TRUE;
+		return FALSE;
 	if (node_info == NULL)
 		node_info = plugin->node_info;
 

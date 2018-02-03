@@ -105,7 +105,8 @@ typedef enum Aria2Status {
 static void plugin_init (UgetPluginAria2* plugin);
 static void plugin_final(UgetPluginAria2* plugin);
 static int  plugin_ctrl (UgetPluginAria2* plugin, int code, void* data);
-static int  plugin_sync (UgetPluginAria2* plugin, UgInfo* node_info);
+static int  plugin_accept(UgetPluginAria2* plugin, UgInfo* node_info);
+static int  plugin_sync  (UgetPluginAria2* plugin, UgInfo* node_info);
 static UgetResult  global_set(int code, void* parameter);
 static UgetResult  global_get(int code, void* parameter);
 
@@ -118,14 +119,14 @@ static const UgetPluginInfo UgetPluginAria2InfoStatic =
 	sizeof(UgetPluginAria2),
 	(UgInitFunc)   plugin_init,
 	(UgFinalFunc)  plugin_final,
-	(UgAssignFunc) NULL,
-	(UgetPluginCtrlFunc) plugin_ctrl,
+	(UgetPluginSyncFunc) plugin_accept,
 	(UgetPluginSyncFunc) plugin_sync,
+	(UgetPluginCtrlFunc) plugin_ctrl,
 	NULL,
 	schemes,
 	types,
-	(UgetPluginSetFunc) global_set,
-	(UgetPluginGetFunc) global_get
+	(UgetPluginGlobalFunc) global_set,
+	(UgetPluginGlobalFunc) global_get
 };
 // extern
 const UgetPluginInfo* UgetPluginAria2Info = &UgetPluginAria2InfoStatic;
@@ -335,7 +336,7 @@ static void  plugin_final(UgetPluginAria2* plugin)
 		ug_value_foreach(&plugin->start_request->params, ug_value_set_name, NULL);
 		uget_aria2_recycle(global.data, plugin->start_request);
 	}
-	// unassign node
+	// clear UgInfo
 	if (plugin->node_info)
 		ug_info_unref(plugin->node_info);
 
@@ -346,14 +347,14 @@ static void  plugin_final(UgetPluginAria2* plugin)
 // plugin_ctrl
 
 static int  plugin_ctrl_speed(UgetPluginAria2* plugin, int* speed);
-static int  plugin_start(UgetPluginAria2* plugin, UgInfo* node_info);
+static int  plugin_start(UgetPluginAria2* plugin);
 
 static int  plugin_ctrl(UgetPluginAria2* plugin, int code, void* data)
 {
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
-		if (plugin->node_info == NULL)
-			return plugin_start(plugin, data);
+		if (plugin->node_info)
+			return plugin_start(plugin);
 		break;
 
 	case UGET_PLUGIN_CTRL_STOP:
@@ -364,13 +365,11 @@ static int  plugin_ctrl(UgetPluginAria2* plugin, int code, void* data)
 		// speed control
 		return plugin_ctrl_speed(plugin, data);
 
-	// output ---------------
-	case UGET_PLUGIN_CTRL_ACTIVE:
+	// state ----------------
+	case UGET_PLUGIN_GET_STATE:
 		*(int*)data = (plugin->stopped) ? FALSE : TRUE;
 		return TRUE;
 
-	// unused ---------------
-	case UGET_PLUGIN_CTRL_NODE_UPDATED:
 	default:
 		break;
 	}
@@ -438,7 +437,7 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgInfo* node_info)
 		return TRUE;
 	// avoid crash if plug-in failed to start.
 	if (plugin->node_info == NULL)
-		return TRUE;
+		return FALSE;
 	if (node_info == NULL)
 		node_info = plugin->node_info;
 	// sync data between plug-in and node
@@ -912,14 +911,13 @@ exit:
 }
 
 // ----------------------------------------------------------------------------
-// plugin_start
+// plugin_accept/plugin_start
 
-static int  plugin_start(UgetPluginAria2* plugin, UgInfo* node_info)
+static int  plugin_accept(UgetPluginAria2* plugin, UgInfo* node_info)
 {
 	UgJsonrpcObject*  request;
 	UgValue*  value;
 	UgValue*  member;
-	UgThread  thread;
 	char*     uri;
 	char*     data     = NULL;
 	char*     user     = NULL;
@@ -930,7 +928,6 @@ static int  plugin_start(UgetPluginAria2* plugin, UgInfo* node_info)
 		UgetProxy*   proxy;
 		UgetHttp*    http;
 		UgetHttp*    ftp;
-		int          ok;
 	} temp;
 
 	temp.common = ug_info_get(node_info, UgetCommonInfo);
@@ -1194,9 +1191,18 @@ static int  plugin_start(UgetPluginAria2* plugin, UgInfo* node_info)
 	plugin->start_time = time(NULL);
 	plugin->start_request = request;
 
-	// assign node
+	// assign UgInfo
 	ug_info_ref(node_info);
 	plugin->node_info = node_info;
+
+	return TRUE;
+}
+
+static int  plugin_start(UgetPluginAria2* plugin)
+{
+	UgThread  thread;
+	int       ok;
+
 	// speed control
 	plugin_ctrl_speed(plugin, plugin->limit);
 
@@ -1204,8 +1210,8 @@ static int  plugin_start(UgetPluginAria2* plugin, UgInfo* node_info)
 	plugin->paused = FALSE;
 	plugin->stopped = FALSE;
 	uget_plugin_ref((UgetPlugin*) plugin);
-	temp.ok = ug_thread_create(&thread, (UgThreadFunc) plugin_thread, plugin);
-	if (temp.ok == UG_THREAD_OK)
+	ok = ug_thread_create(&thread, (UgThreadFunc) plugin_thread, plugin);
+	if (ok == UG_THREAD_OK)
 		ug_thread_unjoin(&thread);
 	else {
 		// failed to start thread -----------------

@@ -119,30 +119,21 @@ int   uget_plugin_agent_ctrl (UgetPluginAgent* plugin, int code, void* data);
 int   uget_plugin_agent_ctrl_speed (UgetPluginAgent* plugin, int* speed);
 
 // sync functions ---------------------
-// sync common data (include speed limit) between node and target_node
+// sync common data (include speed limit) between node_info and target_info
 // parameter common and target can be NULL.
 void  uget_plugin_agent_sync_common (UgetPluginAgent* plugin,
                                      UgetCommon* common,
                                      UgetCommon* target);
 
-// sync progress data from target_node to node
+// sync progress data from target_info to node_info
 // parameter progress and target can be NULL.
 void  uget_plugin_agent_sync_progress (UgetPluginAgent* plugin,
                                        UgetProgress* progress,
                                        UgetProgress* target);
 
-// sync child nodes from target_node to node
-int   uget_plugin_agent_sync_children (UgetPluginAgent* plugin,
-                                       int  is_target_active);
-
 // thread functions -------------------
 int   uget_plugin_agent_start_thread (UgetPluginAgent* plugin,
-                                      UgInfo*      node_info,
                                       UgThreadFunc thread_func);
-
-// sync data between target_plugin and target_node
-// if target_plugin is active, return TRUE
-int   uget_plugin_agent_sync_plugin (UgetPluginAgent* plugin, UgInfo* node_info);
 
 // handle events from target_plugin by default action.
 // return remain events

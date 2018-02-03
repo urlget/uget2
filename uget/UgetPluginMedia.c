@@ -74,7 +74,8 @@
 static void plugin_init (UgetPluginMedia* plugin);
 static void plugin_final(UgetPluginMedia* plugin);
 static int  plugin_ctrl (UgetPluginMedia* plugin, int code, void* data);
-static int  plugin_sync (UgetPluginMedia* plugin, UgInfo* node_info);
+static int  plugin_accept(UgetPluginMedia* plugin, UgInfo* node_info);
+static int  plugin_sync  (UgetPluginMedia* plugin, UgInfo* node_info);
 static UgetResult  global_set(int code, void* parameter);
 static UgetResult  global_get(int code, void* parameter);
 
@@ -88,14 +89,14 @@ static const UgetPluginInfo UgetPluginMediaInfoStatic =
 	sizeof(UgetPluginMedia),
 	(UgInitFunc)   plugin_init,
 	(UgFinalFunc)  plugin_final,
-	(UgAssignFunc) NULL,
-	(UgetPluginCtrlFunc) plugin_ctrl,
+	(UgetPluginSyncFunc) plugin_accept,
 	(UgetPluginSyncFunc) plugin_sync,
+	(UgetPluginCtrlFunc) plugin_ctrl,
 	hosts,
 	schemes,
 	NULL,
-	(UgetPluginSetFunc) global_set,
-	(UgetPluginGetFunc) global_get
+	(UgetPluginGlobalFunc) global_set,
+	(UgetPluginGlobalFunc) global_get
 };
 // extern
 const UgetPluginInfo* UgetPluginMediaInfo = &UgetPluginMediaInfoStatic;
@@ -236,7 +237,7 @@ static void plugin_final(UgetPluginMedia* plugin)
 		uget_plugin_unref(plugin->target_plugin);
 	// other data
 	ug_free(plugin->title);
-	// unassign node
+	// clear UgInfo
 	if (plugin->node_info)
 		ug_info_unref(plugin->node_info);
 
@@ -247,14 +248,14 @@ static void plugin_final(UgetPluginMedia* plugin)
 // plugin_ctrl
 
 static int  plugin_ctrl_speed(UgetPluginMedia* plugin, int* speed);
-static int  plugin_start(UgetPluginMedia* plugin, UgInfo* node_info);
+static int  plugin_start(UgetPluginMedia* plugin);
 
 static int  plugin_ctrl(UgetPluginMedia* plugin, int code, void* data)
 {
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
-		if (plugin->node_info == NULL)
-			return plugin_start(plugin, data);
+		if (plugin->node_info)
+			return plugin_start(plugin);
 		break;
 
 	case UGET_PLUGIN_CTRL_STOP:
@@ -265,13 +266,11 @@ static int  plugin_ctrl(UgetPluginMedia* plugin, int code, void* data)
 		// speed control
 		return plugin_ctrl_speed(plugin, data);
 
-	// output ---------------
-	case UGET_PLUGIN_CTRL_ACTIVE:
+	// state ----------------
+	case UGET_PLUGIN_GET_STATE:
 		*(int*)data = (plugin->stopped) ? FALSE : TRUE;
 		return TRUE;
 
-	// unused ---------------
-	case UGET_PLUGIN_CTRL_NODE_UPDATED:
 	default:
 		break;
 	}
@@ -329,7 +328,7 @@ static int  plugin_sync(UgetPluginMedia* plugin, UgInfo* node_info)
 	}
 	// avoid crash if plug-in failed to start.
 	if (plugin->node_info == NULL)
-		return TRUE;
+		return FALSE;
 	if (node_info == NULL)
 		node_info = plugin->node_info;
 	// sync data between plug-in and node
@@ -421,10 +420,8 @@ static int  plugin_sync(UgetPluginMedia* plugin, UgInfo* node_info)
 
 static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin);
 
-static int  plugin_start(UgetPluginMedia* plugin, UgInfo* node_info)
+static int  plugin_accept(UgetPluginMedia* plugin, UgInfo* node_info)
 {
-	int          ok;
-	UgThread     thread;
 	UgetCommon*  common;
 
 	common = ug_info_get(node_info, UgetCommonInfo);
@@ -438,9 +435,17 @@ static int  plugin_start(UgetPluginMedia* plugin, UgInfo* node_info)
 	plugin->target_proxy  = ug_info_get(plugin->target_info, UgetProxyInfo);
 	plugin->target_progress = ug_info_realloc(plugin->target_info, UgetProgressInfo);
 
-	// assign node
+	// assign UgInfo
 	ug_info_ref(node_info);
 	plugin->node_info = node_info;
+
+	return TRUE;
+}
+
+static int  plugin_start(UgetPluginMedia* plugin)
+{
+	int          ok;
+	UgThread     thread;
 
 	// try to start thread
 	plugin->paused = FALSE;
@@ -479,7 +484,6 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin)
 	UgetEvent*     msg;
 	const char*    type = NULL;
 	const char*    quality = NULL;
-	int            sync_result;
 
 	common = plugin->target_common;
 	umedia = uget_media_new(common->uri, 0);
@@ -601,8 +605,9 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin)
 
 		// create target_plugin to download
 		plugin->target_plugin = uget_plugin_new(global.plugin_info);
+		uget_plugin_accept(plugin->target_plugin, plugin->target_info);
 		uget_plugin_ctrl_speed(plugin->target_plugin, plugin->limit);
-		if (uget_plugin_start(plugin->target_plugin, plugin->target_info) == FALSE) {
+		if (uget_plugin_start(plugin->target_plugin) == FALSE) {
 			msg = uget_event_new_error(UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
 			                           NULL);
 			uget_plugin_post((UgetPlugin*) plugin, msg);
@@ -652,13 +657,13 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin)
 			// sync data in plugin_sync()
 			plugin->synced = FALSE;
 			uget_plugin_lock(plugin);
-			sync_result = uget_plugin_sync(plugin->target_plugin,
-			                               plugin->target_info);
+			uget_plugin_sync(plugin->target_plugin,
+			                 plugin->target_info);
 			uget_plugin_unlock(plugin);
-		} while (sync_result);
+		} while (uget_plugin_get_state(plugin->target_plugin));
 
 		// free target_plugin
-		uget_plugin_unref((UgetPlugin*) plugin->target_plugin);
+		uget_plugin_unref(plugin->target_plugin);
 		plugin->target_plugin = NULL;
 	}
 
@@ -666,7 +671,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin)
 
 	if (plugin->paused == FALSE && umitem == NULL) {
 		uget_plugin_post((UgetPlugin*) plugin,
-				uget_event_new(UGET_EVENT_COMPLETED));
+		                 uget_event_new(UGET_EVENT_COMPLETED));
 	}
 	uget_plugin_post((UgetPlugin*)plugin,
 			uget_event_new(UGET_EVENT_STOP));

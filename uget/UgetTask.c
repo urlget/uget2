@@ -96,6 +96,7 @@ int   uget_task_add(UgetTask* task, UgetNode* node, const UgetPluginInfo* info)
 
 	// create plug-in and control it
 	relation->task.plugin = uget_plugin_new(info);
+	uget_plugin_accept(relation->task.plugin, node->info);
 	if (task->limit.download || task->limit.upload) {
 		// backup current speed limit
 		temp_int_array[0] = task->limit.download;
@@ -112,7 +113,7 @@ int   uget_task_add(UgetTask* task, UgetNode* node, const UgetPluginInfo* info)
 		task->limit.download = temp_int_array[0];
 		task->limit.upload   = temp_int_array[1];
 	}
-	if (uget_plugin_start(relation->task.plugin, node->info) == FALSE) {
+	if (uget_plugin_start(relation->task.plugin) == FALSE) {
 		// dispatch error message from plug-in
 		uget_task_dispatch1(task, node, relation->task.plugin);
 		// release plug-in

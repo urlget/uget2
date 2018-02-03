@@ -54,7 +54,7 @@
 // ----------------------------------------------------------------------------
 // test_node
 
-void  download_node (UgetNode* node, const UgetPluginInfo* info)
+void  download_node(UgetNode* node, const UgetPluginInfo* pinfo)
 {
 	UgetCommon*   common;
 	UgetFiles*    files;
@@ -66,50 +66,56 @@ void  download_node (UgetNode* node, const UgetPluginInfo* info)
 	int           integer[2];
 	char*         string[5];
 
-	plugin = uget_plugin_new (info);
+	plugin = uget_plugin_new(pinfo);
 //	integer[0] = 1000000;
 //	integer[1] = 1000000;
-//	uget_plugin_ctrl (plugin, UGET_PLUGIN_CTRL_SPEED, integer);
+//	uget_plugin_ctrl(plugin, UGET_PLUGIN_CTRL_SPEED, integer);
 
-	uget_plugin_start (plugin, node->info);
-	while (uget_plugin_sync (plugin, node->info)) {
-		ug_sleep (1000);
+	uget_plugin_accept(plugin, node->info);
+	if (uget_plugin_start(plugin) == FALSE) {
+		uget_plugin_unref(plugin);
+		puts("plug-in failed to start.");
+		return;
+	}
+
+	while (uget_plugin_sync(plugin, node->info)) {
+		ug_sleep(1000);
 		// event
-		events = uget_plugin_pop (plugin);
+		events = uget_plugin_pop(plugin);
 		for (cur = events;  cur;  cur = next) {
 			next = cur->next;
 			printf ("\n" "Event type: %d - %s\n", cur->type, cur->string);
-			uget_event_free (cur);
+			uget_event_free(cur);
 		}
 		// progress
-		progress = ug_info_get (node->info, UgetProgressInfo);
+		progress = ug_info_get(node->info, UgetProgressInfo);
 		if (progress == NULL)
 			continue;
-		string[0] = ug_str_from_int_unit (progress->complete, NULL);
-		string[1] = ug_str_from_int_unit (progress->total, NULL);
-		string[2] = ug_str_from_int_unit (progress->uploaded, NULL);
-		string[3] = ug_str_from_int_unit (progress->download_speed, "/s");
-		string[4] = ug_str_from_int_unit (progress->upload_speed, "/s");
-		printf ("\r" "DL: %s / %s, %d%%, %s | UL: %s, %s" "      ",
-				string[0], string[1], progress->percent,
-				string[3], string[2], string[4]);
+		string[0] = ug_str_from_int_unit(progress->complete, NULL);
+		string[1] = ug_str_from_int_unit(progress->total, NULL);
+		string[2] = ug_str_from_int_unit(progress->uploaded, NULL);
+		string[3] = ug_str_from_int_unit(progress->download_speed, "/s");
+		string[4] = ug_str_from_int_unit(progress->upload_speed, "/s");
+		printf("\r" "DL: %s / %s, %d%%, %s | UL: %s, %s" "      ",
+		       string[0], string[1], progress->percent,
+		       string[3], string[2], string[4]);
 		for (integer[0] = 0;  integer[0] < 5;  integer[0]++)
-			ug_free (string[integer[0]]);
+			ug_free(string[integer[0]]);
 	}
 	// these data may changed, print them.
-	common = ug_info_get (node->info, UgetCommonInfo);
-	printf ("\n"
-			"common->name : %s\n"
-			"common->uri : %s\n"
-			"common->file : %s\n",
-			common->name, common->uri, common->file);
+	common = ug_info_get(node->info, UgetCommonInfo);
+	printf("\n"
+	       "common->name : %s\n"
+	       "common->uri : %s\n"
+	       "common->file : %s\n",
+	       common->name, common->uri, common->file);
 	// print children
 	files = ug_info_realloc(node->info, UgetFilesInfo);
 	for (integer[0]=0; integer[0] < files->collection.length; integer[0]++) {
-		printf ("file name : %s\n", files->collection.at[integer[0]].path);
+		printf("file name : %s\n", files->collection.at[integer[0]].path);
 	}
 
-	uget_plugin_unref (plugin);
+	uget_plugin_unref(plugin);
 }
 
 void  test_node_download (void)

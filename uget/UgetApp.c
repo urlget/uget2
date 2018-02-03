@@ -744,7 +744,7 @@ int  uget_app_add_download (UgetApp* app, UgetNode* dnode, UgetNode* cnode, int 
 	// decode name, filename, and category
 	if (temp.common->uri) {
 		ug_uri_init (&uuri, temp.common->uri);
-		// assign node name if it's name is NULL
+		// set UgetCommon::name if it's name is NULL
 		if (temp.common->name == NULL) {
 			if (temp.common->file)
 				temp.common->name = ug_strdup(temp.common->file);
@@ -1260,7 +1260,7 @@ void  uget_app_add_plugin (UgetApp* app, const UgetPluginInfo* pinfo)
 	if (pair == NULL || pair->data == NULL)
 		uget_plugin_set (pinfo, UGET_PLUGIN_INIT, (void*) TRUE);
 	if (pair == NULL)
-		ug_registry_add (&app->plugins, (const UgDataInfo*)pinfo);
+		ug_registry_add (&app->plugins, (const UgTypeInfo*)pinfo);
 }
 
 void  uget_app_remove_plugin (UgetApp* app, const UgetPluginInfo* pinfo)

@@ -45,7 +45,8 @@
 static void plugin_init (UgetPluginEmpty* plugin);
 static void plugin_final(UgetPluginEmpty* plugin);
 static int  plugin_ctrl (UgetPluginEmpty* plugin, int code, void* data);
-static int  plugin_sync (UgetPluginEmpty* plugin, UgInfo* node_info);
+static int  plugin_accept(UgetPluginEmpty* plugin, UgInfo* node_info);
+static int  plugin_sync  (UgetPluginEmpty* plugin, UgInfo* node_info);
 static UgetResult  global_set(int code, void* parameter);
 static UgetResult  global_get(int code, void* parameter);
 
@@ -58,14 +59,14 @@ static const UgetPluginInfo UgetPluginEmptyInfoStatic =
 	sizeof(UgetPluginEmpty),
 	(UgInitFunc)   plugin_init,
 	(UgFinalFunc)  plugin_final,
-	(UgAssignFunc) NULL,
-	(UgetPluginCtrlFunc) plugin_ctrl,
+	(UgetPluginSyncFunc) plugin_accept,
 	(UgetPluginSyncFunc) plugin_sync,
+	(UgetPluginCtrlFunc) plugin_ctrl,
 	NULL,
 	schemes,
 	types,
-	(UgetPluginSetFunc) global_set,
-	(UgetPluginGetFunc) global_get
+	(UgetPluginGlobalFunc) global_set,
+	(UgetPluginGlobalFunc) global_get
 };
 // extern
 const UgetPluginInfo* UgetPluginEmptyInfo = &UgetPluginEmptyInfoStatic;
@@ -173,7 +174,7 @@ static void plugin_final(UgetPluginEmpty* plugin)
 	// your finalized code.
 	//
 
-	// unassign node
+	// clear UgInfo
 	if (plugin->node_info)
 		ug_info_unref(plugin->node_info);
 
@@ -184,15 +185,15 @@ static void plugin_final(UgetPluginEmpty* plugin)
 // plugin_ctrl
 
 static int  plugin_ctrl_speed(UgetPluginEmpty* plugin, int* speed);
-static int  plugin_start(UgetPluginEmpty* plugin, UgInfo* node_info);
+static int  plugin_start(UgetPluginEmpty* plugin);
 static void plugin_stop(UgetPluginEmpty* plugin);
 
 static int  plugin_ctrl(UgetPluginEmpty* plugin, int code, void* data)
 {
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
-		if (plugin->node_info == NULL)
-			return plugin_start(plugin, data);
+		if (plugin->node_info)
+			return plugin_start(plugin);
 		break;
 
 	case UGET_PLUGIN_CTRL_STOP:
@@ -203,13 +204,11 @@ static int  plugin_ctrl(UgetPluginEmpty* plugin, int code, void* data)
 		// speed control
 		return plugin_ctrl_speed(plugin, data);
 
-	// output ---------------
-	case UGET_PLUGIN_CTRL_ACTIVE:
+	// state ----------------
+	case UGET_PLUGIN_GET_STATE:
 		*(int*)data = FALSE;
 		return TRUE;
 
-	// unused ---------------
-	case UGET_PLUGIN_CTRL_NODE_UPDATED:
 	default:
 		break;
 	}
@@ -252,17 +251,11 @@ static int  plugin_ctrl_speed(UgetPluginEmpty* plugin, int* speed)
 }
 
 // ----------------------------------------------------------------------------
-// plugin_sync
+// plugin_accept/plugin_sync
 
-static int  plugin_sync(UgetPluginEmpty* plugin, UgInfo* node_info)
-{
-	// if plug-in was stopped, return FALSE.
-	return FALSE;
-}
-
-// ----------------------------------------------------------------------------
-
-static int  plugin_start(UgetPluginEmpty* plugin, UgInfo* node_info)
+// return TRUE  if UgInfo was accepted by plug-in.
+// return FALSE if UgInfo is lack of necessary data.
+static int  plugin_accept(UgetPluginEmpty* plugin, UgInfo* node_info)
 {
 	UgetCommon*  common;
 
@@ -270,10 +263,23 @@ static int  plugin_start(UgetPluginEmpty* plugin, UgInfo* node_info)
 	if (common == NULL || common->uri == NULL)
 		return FALSE;
 
-	// assign node
+	// assign UgInfo
 	ug_info_ref(node_info);
 	plugin->node_info = node_info;
+	return TRUE;
+}
 
+// return TRUE  if plug-in is running or some data need to sync.
+// return FALSE if plug-in was stopped and no data need to sync.
+static int  plugin_sync(UgetPluginEmpty* plugin, UgInfo* node_info)
+{
+	return FALSE;
+}
+
+// ----------------------------------------------------------------------------
+
+static int  plugin_start(UgetPluginEmpty* plugin)
+{
 	return TRUE;
 }
 

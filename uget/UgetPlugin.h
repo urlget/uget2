@@ -57,12 +57,9 @@ typedef enum {
 	UGET_PLUGIN_CTRL_STOP,
 	UGET_PLUGIN_CTRL_SPEED,    // int*, int[0] = download, int[1] = upload
 
-	// output ---------------
-	UGET_PLUGIN_CTRL_ACTIVE,   // int*, TRUE or FALSE
-
-	// unused ---------------
-	UGET_PLUGIN_CTRL_NODE_UPDATED,   // unused
-	UGET_PLUGIN_CTRL_LIMIT_CHANGED,  // unused
+	// state ----------------
+	UGET_PLUGIN_SET_STATE,     // int*, TRUE or FALSE  (unused)
+	UGET_PLUGIN_GET_STATE,     // int*, TRUE or FALSE
 } UgetPluginCtrlCode;
 
 // global
@@ -85,10 +82,12 @@ typedef enum {
 	UGET_RESULT_UNSUPPORT,
 } UgetResult;
 
+// accept/sync return TRUE or FALSE
 typedef int        (*UgetPluginSyncFunc)(UgetPlugin* plugin, UgInfo* info);
+// start/stop...etc return TRUE or FALSE.
 typedef int        (*UgetPluginCtrlFunc)(UgetPlugin* plugin, int, void* data);
-typedef UgetResult (*UgetPluginSetFunc) (int option, void* parameter);
-typedef UgetResult (*UgetPluginGetFunc) (int option, void* parameter);
+// global_set/global_get
+typedef UgetResult (*UgetPluginGlobalFunc)(int option, void* parameter);
 
 // ----------------------------------------------------------------------------
 // UgetPluginInfo
@@ -101,9 +100,9 @@ struct UgetPluginInfo
 //	UgInitFunc      init;
 //	UgFinalFunc     final;
 
-	UgAssignFunc    assign;
+	UgetPluginSyncFunc  accept;  // pass data to plug-in.
+	UgetPluginSyncFunc  sync;    // call this to sync/exchange data.
 	UgetPluginCtrlFunc  ctrl;
-	UgetPluginSyncFunc  sync;    // UgetTask call this to sync data
 
 	// ----------------------------
 	// Global data and functions
@@ -114,13 +113,51 @@ struct UgetPluginInfo
 	const char**    file_exts;
 
 	// global set/get function for plug-in special setting.
-	UgetPluginSetFunc  set;
-	UgetPluginGetFunc  get;
+	UgetPluginGlobalFunc  set;
+	UgetPluginGlobalFunc  get;
 };
 
+UgetResult  uget_plugin_set(const UgetPluginInfo* info, int option, void* parameter);
+UgetResult  uget_plugin_get(const UgetPluginInfo* info, int option, void* parameter);
+
+// return matched count.
+// return 3 if URI can be matched hosts, schemes, and file_exts.
+int     uget_plugin_match(const UgetPluginInfo* info, UgUri* uuri);
+
 // ----------------------------------------------------------------------------
-// UgetPlugin: It derived from UgType.
-//             It it base class/struct that used by plug-ins.
+// UgetPlugin: It is base class/struct that used by plug-ins.
+//             It derived from UgType.
+
+/*
+                 accept(info)                 accept(info)
+  ,----------. -------------> ,-----------. -------------> ,-----------.
+  |          |                |           |                |           |
+  | User App |                | plug-in 1 |                | plug-in 2 |
+  |          |                |           |                |           |
+  `----------' <------------> `-----------' <------------> `-----------'
+               sync(info)                   sync(info)
+
+	// start plug-in
+	uget_plugin_accept(plugin, info);
+	if (uget_plugin_start(plugin) == FALSE) {
+		uget_plugin_unref(plugin);
+		return;
+	}
+
+	// Loop sample 1: use uget_plugin_sync()
+	while (uget_plugin_sync(plugin, info)) {
+		// sleep();
+		// do something here
+	}
+
+	// Loop sample 2: use uget_plugin_get_state()
+	while (uget_plugin_get_state(plugin)) {
+		// sleep();
+		// do something here
+		// You can call or not to call uget_plugin_sync() at last.
+		// uget_plugin_sync(plugin, info);
+	}
+ */
 
 #define UGET_PLUGIN_MEMBERS       \
 	const UgetPluginInfo*  info;  \
@@ -138,47 +175,32 @@ struct UgetPlugin
 };
 
 // UgetPlugin functions
-UgetPlugin*  uget_plugin_new(const UgetPluginInfo* info);
-UgetResult   uget_plugin_set(const UgetPluginInfo* info, int option, void* parameter);
-UgetResult   uget_plugin_get(const UgetPluginInfo* info, int option, void* parameter);
+UgetPlugin* uget_plugin_new(const UgetPluginInfo* info);
 
-// return matched count.
-// return 3 if URI can be matched hosts, schemes, and file_exts.
-int     uget_plugin_match(const UgetPluginInfo* info, UgUri* uuri);
+void    uget_plugin_ref(UgetPlugin* plugin);
+void    uget_plugin_unref(UgetPlugin* plugin);
 
-// UgetPlugin functions
-//void  uget_plugin_init(UgetPlugin* plugin);
-#define uget_plugin_init      ug_type_init
+// return TRUE  if UgInfo was accepted by plug-in.
+// return FALSE if UgInfo is lack of necessary data.
+int     uget_plugin_accept(UgetPlugin* plugin, UgInfo* info);
 
-//void  uget_plugin_final(UgetPlugin* plugin);
-#define uget_plugin_final     ug_type_final
+// return TRUE  if plug-in is running or some data need to sync.
+// return FALSE if plug-in was stopped and no data need to sync.
+int     uget_plugin_sync(UgetPlugin* plugin, UgInfo* info);
 
 // return TRUE or FALSE.
-int   uget_plugin_ctrl(UgetPlugin* plugin, int code, void* data);
+int     uget_plugin_ctrl(UgetPlugin* plugin, int code, void* data);
 
-#define uget_plugin_start(plugin, info)   \
-		uget_plugin_ctrl(plugin, UGET_PLUGIN_CTRL_START, info)
-#define uget_plugin_stop(plugin)          \
+#define uget_plugin_start(plugin)  \
+		uget_plugin_ctrl(plugin, UGET_PLUGIN_CTRL_START, NULL)
+#define uget_plugin_stop(plugin)   \
 		uget_plugin_ctrl(plugin, UGET_PLUGIN_CTRL_STOP, NULL)
 
 #define uget_plugin_ctrl_speed(plugin, dl_ul_int_array)  \
 		uget_plugin_ctrl(plugin, UGET_PLUGIN_CTRL_SPEED, dl_ul_int_array)
 
-// unused
-// notify plug-in when other data was changed
-#define uget_plugin_data_changed(plugin)  \
-		uget_plugin_ctrl(plugin, UGET_PLUGIN_CTRL_DATA_CHANGED, NULL)
-// unused
-// notify plug-in when speed_limit, retry_limit, max_connections...etc was changed
-#define uget_plugin_limit_changed(plugin) \
-		uget_plugin_ctrl(plugin, UGET_PLUGIN_CTRL_LIMIT_CHANGED, NULL)
-
-// return TRUE  if plug-in running.
-// return FALSE if plug-in stopped.
-int   uget_plugin_sync(UgetPlugin* plugin, UgInfo* info);
-
-void  uget_plugin_ref(UgetPlugin* plugin);
-void  uget_plugin_unref(UgetPlugin* plugin);
+// return > 0 if plug-in is running.
+int     uget_plugin_get_state(UgetPlugin* plugin);
 
 void       uget_plugin_post(UgetPlugin* plugin, UgetEvent* message);
 UgetEvent* uget_plugin_pop (UgetPlugin* plugin);
@@ -219,19 +241,29 @@ struct PluginInfo : Uget::PluginInfoMethod, UgetPluginInfo {};
 // Your derived struct/class must be C++11 standard-layout
 struct PluginMethod : Ug::DataMethod
 {
-	inline void  start(UgInfo* info)
-		{ uget_plugin_start((UgetPlugin*) this, info); }
-
-	inline void  stop(void)
-		{ uget_plugin_stop((UgetPlugin*) this); }
-
-	inline int   sync(UgInfo* info)
-		{ return uget_plugin_sync((UgetPlugin*) this, info); }
+	// static method
+	static inline UgetPlugin* create(UgetPluginInfo* pinfo)
+		{ return uget_plugin_new(pinfo); }
 
 	inline void  ref(void)
 		{ uget_plugin_ref((UgetPlugin*) this); }
 	inline void  unref(void)
 		{ uget_plugin_unref((UgetPlugin*) this); }
+
+	inline int   accept(UgInfo* info)
+		{ return uget_plugin_accept((UgetPlugin*) this, info); }
+
+	inline int   sync(UgInfo* info)
+		{ return uget_plugin_sync((UgetPlugin*) this, info); }
+
+	inline void  start(UgInfo* info)
+		{ uget_plugin_start((UgetPlugin*) this); }
+
+	inline void  stop(void)
+		{ uget_plugin_stop((UgetPlugin*) this); }
+
+	inline int   getState(void)
+		{ return uget_plugin_get_state((UgetPlugin*) this); }
 
 	inline void  post(UgetEvent* message)
 		{ uget_plugin_post((UgetPlugin*) this, message); }

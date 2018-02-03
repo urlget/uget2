@@ -55,7 +55,7 @@ UgetPlugin*  uget_plugin_new(const UgetPluginInfo* info)
 
 UgetResult  uget_plugin_set(const UgetPluginInfo* info, int option, void* parameter)
 {
-	UgetPluginSetFunc  set;
+	UgetPluginGlobalFunc  set;
 
 	set = info->set;
 	if (set)
@@ -65,7 +65,7 @@ UgetResult  uget_plugin_set(const UgetPluginInfo* info, int option, void* parame
 
 UgetResult  uget_plugin_get(const UgetPluginInfo* info, int option, void* parameter)
 {
-	UgetPluginGetFunc  get;
+	UgetPluginGlobalFunc  get;
 
 	get = info->get;
 	if (get)
@@ -112,28 +112,10 @@ int  uget_plugin_match(const UgetPluginInfo* info, UgUri* uuri)
 // UgetPlugin functions
 
 //void  uget_plugin_init(UgetPlugin* plugin);
+#define uget_plugin_init      ug_type_init
+
 //void  uget_plugin_final(UgetPlugin* plugin);
-//void  uget_plugin_assign(UgetPlugin* plugin, UgetPlugin* node);
-
-int  uget_plugin_ctrl(UgetPlugin* plugin, int code, void* data)
-{
-	UgetPluginCtrlFunc  ctrl;
-
-	ctrl = plugin->info->ctrl;
-	if (ctrl)
-		return ctrl(plugin, code, data);
-	return FALSE;
-}
-
-int  uget_plugin_sync(UgetPlugin* plugin, UgInfo* info)
-{
-	UgetPluginSyncFunc  sync;
-
-	sync = plugin->info->sync;
-	if (sync)
-		return sync(plugin, info);
-	return FALSE;
-}
+#define uget_plugin_final     ug_type_final
 
 void  uget_plugin_ref(UgetPlugin* plugin)
 {
@@ -156,6 +138,44 @@ void  uget_plugin_unref(UgetPlugin* plugin)
 		// free plug-in
 		ug_free(plugin);
 	}
+}
+
+int  uget_plugin_accept(UgetPlugin* plugin, UgInfo* info)
+{
+	UgetPluginSyncFunc  accept;
+
+	accept = plugin->info->accept;
+	if (accept)
+		return accept(plugin, info);
+	return FALSE;
+}
+
+int  uget_plugin_sync(UgetPlugin* plugin, UgInfo* info)
+{
+	UgetPluginSyncFunc  sync;
+
+	sync = plugin->info->sync;
+	if (sync)
+		return sync(plugin, info);
+	return FALSE;
+}
+
+int  uget_plugin_ctrl(UgetPlugin* plugin, int code, void* data)
+{
+	UgetPluginCtrlFunc  ctrl;
+
+	ctrl = plugin->info->ctrl;
+	if (ctrl)
+		return ctrl(plugin, code, data);
+	return FALSE;
+}
+
+int  uget_plugin_get_state(UgetPlugin* plugin)
+{
+	int  is_active;
+
+	uget_plugin_ctrl(plugin, UGET_PLUGIN_GET_STATE, &is_active);
+	return is_active;
 }
 
 void  uget_plugin_post(UgetPlugin* plugin, UgetEvent* message)

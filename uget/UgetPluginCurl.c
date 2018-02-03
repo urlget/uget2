@@ -95,7 +95,8 @@ struct UriLink {
 static void plugin_init (UgetPluginCurl* plugin);
 static void plugin_final(UgetPluginCurl* plugin);
 static int  plugin_ctrl (UgetPluginCurl* plugin, int code, void* data);
-static int  plugin_sync (UgetPluginCurl* plugin, UgInfo* node_info);
+static int  plugin_accept(UgetPluginCurl* plugin, UgInfo* node_info);
+static int  plugin_sync  (UgetPluginCurl* plugin, UgInfo* node_info);
 static UgetResult  global_set(int code, void* parameter);
 static UgetResult  global_get(int code, void* parameter);
 
@@ -107,14 +108,14 @@ static const UgetPluginInfo UgetPluginCurlInfoStatic =
 	sizeof(UgetPluginCurl),
 	(UgInitFunc)   plugin_init,
 	(UgFinalFunc)  plugin_final,
-	(UgAssignFunc) NULL,
-	(UgetPluginCtrlFunc) plugin_ctrl,
+	(UgetPluginSyncFunc) plugin_accept,
 	(UgetPluginSyncFunc) plugin_sync,
+	(UgetPluginCtrlFunc) plugin_ctrl,
 	NULL,
 	schemes,
 	NULL,
-	(UgetPluginSetFunc) global_set,
-	(UgetPluginGetFunc) global_get
+	(UgetPluginGlobalFunc) global_set,
+	(UgetPluginGlobalFunc) global_get
 };
 // extern
 const UgetPluginInfo* UgetPluginCurlInfo = &UgetPluginCurlInfoStatic;
@@ -238,7 +239,7 @@ static void plugin_final(UgetPluginCurl* plugin)
 	ug_free(plugin->folder.path);
 	ug_free(plugin->file.path);
 	ug_free(plugin->aria2.path);
-	// unassign node
+	// clear UgInfo
 	if (plugin->node_info)
 		ug_info_unref(plugin->node_info);
 
@@ -249,14 +250,14 @@ static void plugin_final(UgetPluginCurl* plugin)
 // plugin_ctrl
 
 static int  plugin_ctrl_speed(UgetPluginCurl* plugin, int* speed);
-static int  plugin_start(UgetPluginCurl* plugin, UgInfo* node_info);
+static int  plugin_start(UgetPluginCurl* plugin);
 
 static int  plugin_ctrl(UgetPluginCurl* plugin, int code, void* data)
 {
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
-		if (plugin->node_info == NULL)
-			return plugin_start(plugin, data);
+		if (plugin->node_info)
+			return plugin_start(plugin);
 		break;
 
 	case UGET_PLUGIN_CTRL_STOP:
@@ -267,12 +268,11 @@ static int  plugin_ctrl(UgetPluginCurl* plugin, int code, void* data)
 		// speed control
 		return plugin_ctrl_speed(plugin, data);
 
-	// output ---------------
-	case UGET_PLUGIN_CTRL_ACTIVE:
+	// state ----------------
+	case UGET_PLUGIN_GET_STATE:
 		*(int*)data = (plugin->stopped) ? FALSE : TRUE;
 		return TRUE;
 
-	// unused ---------------
 	default:
 		break;
 	}
@@ -334,7 +334,7 @@ static int  plugin_sync(UgetPluginCurl* plugin, UgInfo* node_info)
 	}
 	// avoid crash if plug-in failed to start.
 	if (plugin->node_info == NULL)
-		return TRUE;
+		return FALSE;
 	if (node_info == NULL)
 		node_info = plugin->node_info;
 	// sync data between plug-in and node
@@ -408,24 +408,21 @@ static int  plugin_sync(UgetPluginCurl* plugin, UgInfo* node_info)
 }
 
 // ----------------------------------------------------------------------------
-// plugin_start
+// plugin_accept/plugin_start
 
 static void  plugin_decide_uris(UgetPluginCurl* plugin);
 static void  plugin_decide_folder(UgetPluginCurl* plugin);
 static void  plugin_decide_files(UgetPluginCurl* plugin);
 static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginCurl* plugin);
 
-static int  plugin_start(UgetPluginCurl* plugin, UgInfo* node_info)
+static int  plugin_accept(UgetPluginCurl* plugin, UgInfo* node_info)
 {
-	UgThread    thread;
-	int         speed[2];
 	union {
 		UgetCommon*  common;
 		UgetFiles*   files;
 		UgetProxy*   proxy;
 		UgetHttp*    http;
 		UgetFtp*     ftp;
-		int          ok;
 	} temp;
 
 	temp.common = ug_info_get(node_info, UgetCommonInfo);
@@ -472,10 +469,20 @@ static int  plugin_start(UgetPluginCurl* plugin, UgInfo* node_info)
 	if (temp.ftp)
 		plugin->ftp = ug_data_copy(temp.ftp);
 
-	plugin->start_time = time(NULL);
-	// assign node before speed control
+	// assign UgInfo
 	ug_info_ref(node_info);
 	plugin->node_info = node_info;
+
+	return TRUE;
+}
+
+static int  plugin_start(UgetPluginCurl* plugin)
+{
+	UgThread    thread;
+	int         speed[2];
+	int         ok;
+
+	plugin->start_time = time(NULL);
 	// speed control
 	speed[0] = plugin->limit.download;
 	speed[1] = plugin->limit.upload;
@@ -487,15 +494,15 @@ static int  plugin_start(UgetPluginCurl* plugin, UgInfo* node_info)
 	plugin->paused = FALSE;
 	plugin->stopped = FALSE;
 	uget_plugin_ref((UgetPlugin*) plugin);
-	temp.ok = ug_thread_create(&thread, (UgThreadFunc) plugin_thread, plugin);
-	if (temp.ok == UG_THREAD_OK)
+	ok = ug_thread_create(&thread, (UgThreadFunc) plugin_thread, plugin);
+	if (ok == UG_THREAD_OK)
 		ug_thread_unjoin(&thread);
 	else {
 		// failed to start thread -----------------
 		plugin->paused = TRUE;
 		plugin->stopped = TRUE;
 		// remove node
-		ug_info_unref(node_info);
+		ug_info_unref(plugin->node_info);
 		plugin->node_info = NULL;
 		// post error message and decreases the reference count
 		uget_plugin_post((UgetPlugin*) plugin,
