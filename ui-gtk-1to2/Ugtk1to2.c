@@ -219,7 +219,7 @@ static void uget_node_set_by_dataset (UgetNode* node, UgDataset* dataset)
 
 	old.common = ug_dataset_get (dataset, UgCommonInfo, 0);
 	if (old.common) {
-		new.common = ug_info_realloc (node->info, UgetCommonInfo);
+		new.common = ug_data_realloc (node->data, UgetCommonInfo);
 		new.common->name = old.common->name;
 		old.common->name = NULL;
 		if (new.common->name == NULL && old.common->file)
@@ -249,7 +249,7 @@ static void uget_node_set_by_dataset (UgetNode* node, UgDataset* dataset)
 
 	old.proxy = ug_dataset_get (dataset, UgProxyInfo, 0);
 	if (old.proxy) {
-		new.proxy = ug_info_realloc (node->info, UgetProxyInfo);
+		new.proxy = ug_data_realloc (node->data, UgetProxyInfo);
 		new.proxy->host = old.proxy->host;
 		old.proxy->host = NULL;
 		new.proxy->port = old.proxy->port;
@@ -262,7 +262,7 @@ static void uget_node_set_by_dataset (UgetNode* node, UgDataset* dataset)
 
 	old.http = ug_dataset_get (dataset, UgHttpInfo, 0);
 	if (old.http) {
-		new.http = ug_info_realloc (node->info, UgetHttpInfo);
+		new.http = ug_data_realloc (node->data, UgetHttpInfo);
 		new.http->user = old.http->user;
 		old.http->user = NULL;
 		new.http->password = old.http->password;
@@ -285,7 +285,7 @@ static void uget_node_set_by_dataset (UgetNode* node, UgDataset* dataset)
 
 	old.ftp = ug_dataset_get (dataset, UgFtpInfo, 0);
 	if (old.ftp) {
-		new.ftp = ug_info_realloc (node->info, UgetFtpInfo);
+		new.ftp = ug_data_realloc (node->data, UgetFtpInfo);
 		new.ftp->user = old.ftp->user;
 		old.ftp->user = NULL;
 		new.ftp->password = old.ftp->password;
@@ -295,7 +295,7 @@ static void uget_node_set_by_dataset (UgetNode* node, UgDataset* dataset)
 
 	old.progress = ug_dataset_get (dataset, UgProgressInfo, 0);
 	if (old.progress) {
-		new.progress = ug_info_realloc (node->info, UgetProgressInfo);
+		new.progress = ug_data_realloc (node->data, UgetProgressInfo);
 		new.progress->complete = old.progress->complete;
 		new.progress->total = old.progress->total;
 		new.progress->complete = old.progress->complete;
@@ -317,11 +317,11 @@ static UgetNode* uget_node_from_category (UgCategory* category1)
 
 	node = uget_node_new (NULL);
 	uget_node_set_by_dataset (node, category1->defaults);
-	category = ug_info_realloc (node->info, UgetCategoryInfo);
+	category = ug_data_realloc (node->data, UgetCategoryInfo);
 	category->active_limit   = category1->active_limit;
 	category->finished_limit = category1->finished_limit;
 	category->recycled_limit = category1->recycled_limit;
-	common = ug_info_realloc(node->info, UgetCommonInfo);
+	common = ug_data_realloc(node->data, UgetCommonInfo);
 	common->name = category1->name;
 	category1->name = NULL;
 	// other

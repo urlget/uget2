@@ -36,151 +36,151 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <UgInfo.h>
+#include <UgData.h>
 
 // ----------------------------------------------------------------------------
-// UgRegistry for UgInfo
+// UgRegistry for UgData
 
-static UgRegistry*  ug_info_registry;
+static UgRegistry*  ug_data_registry;
 
-UgRegistry*  ug_info_get_registry(void)
+UgRegistry*  ug_data_get_registry(void)
 {
-	return ug_info_registry;
+	return ug_data_registry;
 }
 
-void  ug_info_set_registry(UgRegistry* registry)
+void  ug_data_set_registry(UgRegistry* registry)
 {
-	ug_info_registry = registry;
+	ug_data_registry = registry;
 }
 
 // ----------------------------------------------------------------------------
-// UgInfo
+// UgData
 
-UgInfo* ug_info_new(int allocated_length, int cache_length)
+UgData* ug_data_new(int allocated_length, int cache_length)
 {
-	UgInfo*  info;
+	UgData*  data;
 
 #ifdef HAVE_GLIB
-	info = g_slice_alloc(sizeof(UgInfo));
+	data = g_slice_alloc(sizeof(UgData));
 #else
-	info = ug_malloc(sizeof(UgInfo));
+	data = ug_malloc(sizeof(UgData));
 #endif // HAVE_GLIB
-	ug_info_init(info, allocated_length, cache_length);
-	return info;
+	ug_data_init(data, allocated_length, cache_length);
+	return data;
 }
 
-void    ug_info_ref(UgInfo* info)
+void    ug_data_ref(UgData* data)
 {
-	info->ref_count++;
+	data->ref_count++;
 }
 
-void    ug_info_unref(UgInfo* info)
+void    ug_data_unref(UgData* data)
 {
-	if (--info->ref_count == 0) {
-		ug_info_final(info);
+	if (--data->ref_count == 0) {
+		ug_data_final(data);
 #ifdef HAVE_GLIB
-		g_slice_free1(sizeof(UgInfo), info);
+		g_slice_free1(sizeof(UgData), data);
 #else
-		ug_free(info);
+		ug_free(data);
 #endif // HAVE_GLIB
 	}
 }
 
-void  ug_info_init(UgInfo* info, int allocated_length, int cache_length)
+void  ug_data_init(UgData* data, int allocated_length, int cache_length)
 {
 	int     index;
 
-	ug_array_init(info, sizeof(UgPair), allocated_length + cache_length);
-	info->length       = cache_length;
-	info->cache_length = cache_length;
-	info->ref_count    = 1;
+	ug_array_init(data, sizeof(UgPair), allocated_length + cache_length);
+	data->length       = cache_length;
+	data->cache_length = cache_length;
+	data->ref_count    = 1;
 
 	// clear cache
-	for (index = 0;  index < info->length;  index++) {
-		info->at[index].key  = NULL;
-		info->at[index].data = NULL;
+	for (index = 0;  index < data->length;  index++) {
+		data->at[index].key  = NULL;
+		data->at[index].data = NULL;
 	}
 }
 
-void  ug_info_final(UgInfo* info)
+void  ug_data_final(UgData* data)
 {
 	UgPair* cur;
 	UgPair* end;
 
-	for (cur = info->at, end = cur + info->length;  cur < end;  cur++) {
+	for (cur = data->at, end = cur + data->length;  cur < end;  cur++) {
 		if (cur->key == NULL)
 			continue;
 		if (cur->data)
-			ug_data_free(cur->data);
+			ug_group_data_free(cur->data);
 	}
 
-	ug_array_clear(info);
+	ug_array_clear(data);
 }
 
-UgPair* ug_info_find(UgInfo* info, const UgDataInfo* key, int* index)
+UgPair* ug_data_find(UgData* data, const UgGroupDataInfo* key, int* index)
 {
 	UgPair*   end;
 	UgPair*   cur;
 
 	// find key in cache space
-	for (cur = info->at, end = cur + info->cache_length;  cur < end;  cur++) {
+	for (cur = data->at, end = cur + data->cache_length;  cur < end;  cur++) {
 		if (cur->key == key)
 			return cur;
 	}
 
 	// find key without cache space
-	info->at     += info->cache_length;
-    info->length -= info->cache_length;
-    cur = ug_array_find_sorted(info, &key, ug_array_compare_pointer, index);
-	info->at     -= info->cache_length;
-    info->length += info->cache_length;
+	data->at     += data->cache_length;
+    data->length -= data->cache_length;
+    cur = ug_array_find_sorted(data, &key, ug_array_compare_pointer, index);
+	data->at     -= data->cache_length;
+    data->length += data->cache_length;
 	if (index)
-		index[0] += info->cache_length;
+		index[0] += data->cache_length;
 	return cur;
 }
 
-void*  ug_info_realloc(UgInfo* info, const UgDataInfo* key)
+void*  ug_data_realloc(UgData* data, const UgGroupDataInfo* key)
 {
 	UgPair* cur;
 	int     index;
 
-	cur = ug_info_find(info, key, &index);
+	cur = ug_data_find(data, key, &index);
 	if (cur == NULL) {
-		cur = ug_array_insert(info, index, 1);
+		cur = ug_array_insert(data, index, 1);
 		cur->key = (void*) key;
-		cur->data = ug_data_new(key);
+		cur->data = ug_group_data_new(key);
 	}
 	else if (cur->data == NULL)
-		cur->data = ug_data_new(key);
+		cur->data = ug_group_data_new(key);
 	return cur->data;
 }
 
-void  ug_info_remove(UgInfo* info, const UgDataInfo* key)
+void  ug_data_remove(UgData* data, const UgGroupDataInfo* key)
 {
 	UgPair* cur;
 
-	cur = ug_info_find(info, key, NULL);
+	cur = ug_data_find(data, key, NULL);
 	if (cur && cur->data) {
-		ug_data_free(cur->data);
+		ug_group_data_free(cur->data);
 		cur->data = NULL;
 	}
 }
 
-void* ug_info_get(UgInfo* info, const UgDataInfo* key)
+void* ug_data_get(UgData* data, const UgGroupDataInfo* key)
 {
 	UgPair* cur;
 
-	cur = ug_info_find(info, key, NULL);
+	cur = ug_data_find(data, key, NULL);
 	if (cur == NULL)
 		return NULL;
 	return cur->data;
 }
 
-void  ug_info_assign(UgInfo* info, UgInfo* src, const UgDataInfo* exclude_info)
+void  ug_data_assign(UgData* data, UgData* src, const UgGroupDataInfo* exclude_info)
 {
-	int      index;
-	UgPair*  pair;
-	UgData*  data;
+	int           index;
+	UgPair*       pair;
+	UgGroupData*  group_data;
 
 	for (index = 0;  index < src->length;  index++) {
 		pair = src->at + index;
@@ -188,23 +188,23 @@ void  ug_info_assign(UgInfo* info, UgInfo* src, const UgDataInfo* exclude_info)
 			continue;
 		if (pair->key == exclude_info)
 			continue;
-		data = ug_info_realloc(info, pair->key);
-		ug_data_assign(data, pair->data);
+		group_data = ug_data_realloc(data, pair->key);
+		ug_group_data_assign(group_data, pair->data);
 	}
 }
 
-// UgJsonParseFunc for key/data pairs in UgInfo
-static UgJsonError ug_json_parse_info_reg(UgJson* json,
+// UgJsonParseFunc for key/data pairs in UgData
+static UgJsonError ug_json_parse_data_reg(UgJson* json,
                                 const char* name, const char* value,
-                                void* info, void* infoRegistry)
+                                void* data, void* dataRegistry)
 {
 	UgRegistry* registry;
 	UgPair*     cur;
 
-	if (infoRegistry)
-		registry = infoRegistry;
-	else if (ug_info_registry)
-		registry = ug_info_registry;
+	if (dataRegistry)
+		registry = dataRegistry;
+	else if (ug_data_registry)
+		registry = ug_data_registry;
 	else
 		registry = NULL;
 
@@ -215,8 +215,8 @@ static UgJsonError ug_json_parse_info_reg(UgJson* json,
 
 		if (cur) {
 			ug_json_push(json, ug_json_parse_entry,
-					ug_info_realloc(info, cur->data),
-					(void*)((UgDataInfo*)cur->data)->entry);
+					ug_data_realloc(data, cur->data),
+					(void*)((UgGroupDataInfo*)cur->data)->entry);
 			return UG_JSON_ERROR_NONE;
 		}
 	}
@@ -228,38 +228,38 @@ static UgJsonError ug_json_parse_info_reg(UgJson* json,
 
 // ----------------
 
-// JSON parser for UgInfo.
-UgJsonError ug_json_parse_info_ptr(UgJson* json,
+// JSON parser for UgData.
+UgJsonError ug_json_parse_data_ptr(UgJson* json,
                                const char* name, const char* value,
-                               void** info, void* none)
+                               void** data, void* none)
 {
-	// UgInfo's type is UG_JSON_OBJECT
+	// UgData's type is UG_JSON_OBJECT
 	if (json->type != UG_JSON_OBJECT) {
 //		if (json->type == UG_JSON_ARRAY)
 //			ug_json_push(json, ug_json_parse_unknown, NULL, NULL);
 		return UG_JSON_ERROR_TYPE_NOT_MATCH;
 	}
 
-	ug_json_push(json, ug_json_parse_info_reg, *info, NULL);
+	ug_json_push(json, ug_json_parse_data_reg, *data, NULL);
 	return UG_JSON_ERROR_NONE;
 }
 
-// JSON writer for UgInfo.
-void  ug_json_write_info_ptr(UgJson* json, UgInfo** pinfo)
+// JSON writer for UgData.
+void  ug_json_write_data_ptr(UgJson* json, UgData** pdata)
 {
-	UgInfo* info = *pinfo;
+	UgData* data = *pdata;
 	UgPair* cur;
 	UgPair* end;
 
 	ug_json_write_object_head(json);
-	for (cur = info->at, end = cur + info->length;  cur < end;  cur++) {
-		if (cur->data == NULL || ((UgDataInfo*)cur->key)->entry == NULL)
+	for (cur = data->at, end = cur + data->length;  cur < end;  cur++) {
+		if (cur->data == NULL || ((UgGroupDataInfo*)cur->key)->entry == NULL)
 			continue;
 
-		ug_json_write_string(json, ((UgDataInfo*)cur->key)->name);
+		ug_json_write_string(json, ((UgGroupDataInfo*)cur->key)->name);
 		ug_json_write_object_head(json);
 		ug_json_write_entry(json, cur->data,
-				((UgDataInfo*)cur->key)->entry);
+				((UgGroupDataInfo*)cur->key)->entry);
 		ug_json_write_object_tail(json);
 	}
 	ug_json_write_object_tail(json);

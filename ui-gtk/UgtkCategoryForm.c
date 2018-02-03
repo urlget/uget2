@@ -157,8 +157,8 @@ void  ugtk_category_form_get (UgtkCategoryForm* cform, UgetNode* cnode)
 	UgetCommon*    common;
 	const gchar*   text;
 
-	category = ug_info_realloc(cnode->info, UgetCategoryInfo);
-	common   = ug_info_realloc(cnode->info, UgetCommonInfo);
+	category = ug_data_realloc(cnode->data, UgetCategoryInfo);
+	common   = ug_data_realloc(cnode->data, UgetCommonInfo);
 	if (gtk_widget_is_sensitive (cform->name_entry) == TRUE) {
 		text = gtk_entry_get_text ((GtkEntry*) cform->name_entry);
 		ug_free(common->name);
@@ -195,8 +195,8 @@ void  ugtk_category_form_set  (UgtkCategoryForm*  cform, UgetNode* cnode)
 	UgetCategory*  category;
 	gchar*  str;
 
-	category = ug_info_realloc(cnode->info, UgetCategoryInfo);
-	common   = ug_info_get(cnode->info, UgetCommonInfo);
+	category = ug_data_realloc(cnode->data, UgetCategoryInfo);
+	common   = ug_data_get(cnode->data, UgetCommonInfo);
 	if (gtk_widget_is_sensitive (cform->name_entry) == TRUE) {
 		if (common && common->name) {
 			gtk_entry_set_text ((GtkEntry*) cform->name_entry,

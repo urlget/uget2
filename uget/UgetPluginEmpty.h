@@ -43,14 +43,14 @@
 extern "C" {
 #endif
 
-typedef struct	UgetPluginEmpty          UgetPluginEmpty;
+typedef struct	UgetPluginEmpty   UgetPluginEmpty;
+
+extern const    UgetPluginInfo*   UgetPluginEmptyInfo;
 
 typedef enum {
 	UGET_PLUGIN_EMPTY_BEGIN = UGET_PLUGIN_OPTION_DERIVED,    // begin
 	// your setting ID...
 } UgetPluginEmptyCode;
-
-extern const UgetPluginInfo*  UgetPluginEmptyInfo;
 
 // ----------------------------------------------------------------------------
 // UgetPluginEmpty: an empty plug-in. It derived from UgetPlugin.
@@ -58,12 +58,15 @@ extern const UgetPluginInfo*  UgetPluginEmptyInfo;
 struct UgetPluginEmpty
 {
 	UGET_PLUGIN_MEMBERS;               // It derived from UgetPlugin
-//	const UgetPluginInfo*  info;
-//	UgetEvent*    messages;
-//	UgMutex       mutex;
-//	int           ref_count;
+/*
+	// ------ UgetPlugin members ------
+	const UgetPluginInfo*  info;
+	UgetEvent*    messages;
+	UgMutex       mutex;
+	int           ref_count;
+ */
 
-	UgInfo*       node_info;
+	UgData*       data;
 
 	// speed limit control
 	// limit[0] = download speed limit

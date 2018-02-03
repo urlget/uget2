@@ -39,10 +39,10 @@
 #include <UgArray.h>
 #include <UgetNode.h>
 
-#include <UgString.h>
-#include <UgData.h>
-#include <UgetFiles.h>
 #include <UgJson.h>
+#include <UgString.h>
+#include <UgGroupData.h>
+#include <UgetFiles.h>
 //#include <UgetPlugin.h>
 
 #include <UgetA2cf.h>
@@ -496,7 +496,7 @@ void test_files_json(UgetFiles* files)
 	puts("\n--- print files ---");
 	puts(buffer.beg);
 
-	files2 = ug_data_new(UgetFilesInfo);
+	files2 = ug_group_data_new(UgetFilesInfo);
 	// parse
 	ug_json_begin_parse(&json);
 	ug_json_push(&json, ug_json_parse_entry, files2, (void*)files2->info->entry);
@@ -514,7 +514,7 @@ void test_files_json(UgetFiles* files)
 	puts("\n--- print files2 ---");
 	puts(buffer.beg);
 
-	ug_data_free(files2);
+	ug_group_data_free(files2);
 
 	ug_buffer_clear(&buffer, TRUE);
 	ug_json_final(&json);
@@ -526,8 +526,8 @@ void test_files(void)
 	UgetFiles* src;
 	UgetFile*  element;
 
-	files = ug_data_new(UgetFilesInfo);
-	src   = ug_data_new(UgetFilesInfo);
+	files = ug_group_data_new(UgetFilesInfo);
+	src   = ug_group_data_new(UgetFilesInfo);
 
 	element = uget_files_realloc(files, "0.mp4");
 	element = uget_files_realloc(files, "1.mp4");
@@ -552,8 +552,8 @@ void test_files(void)
 	uget_files_sync(files, src);
 	test_files_json(files);
 
-	ug_data_free(files);
-	ug_data_free(src);
+	ug_group_data_free(files);
+	ug_group_data_free(src);
 }
 
 // ----------------------------------------------------------------------------

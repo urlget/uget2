@@ -34,8 +34,8 @@
  *
  */
 
-#ifndef UG_DATA_H
-#define UG_DATA_H
+#ifndef UG_GROUP_DATA_H
+#define UG_GROUP_DATA_H
 
 #include <stdint.h>     // uintptr_t
 #include <UgEntry.h>
@@ -46,15 +46,15 @@ extern "C" {
 
 typedef struct	UgType           UgType;
 typedef struct  UgTypeInfo       UgTypeInfo;
-typedef struct	UgData           UgData;
-typedef struct	UgDataInfo       UgDataInfo;
+typedef struct	UgGroupData      UgGroupData;
+typedef struct	UgGroupDataInfo  UgGroupDataInfo;
 
 typedef int   (*UgAssignFunc) (void* instance, void* src);
 
 // ----------------------------------------------------------------------------
 // UgTypeInfo
 // |
-// `-- UgDataInfo
+// `-- UgGroupDataInfo
 
 #define	UG_TYPE_INFO_MEMBERS  \
 	const char*     name;     \
@@ -87,13 +87,13 @@ void       ug_type_init(void* type);
 void       ug_type_final(void* type);
 
 // ----------------------------------------------------------------------------
-// UgDataInfo
+// UgGroupDataInfo
 //
 // UgTypeInfo
 // |
-// `-- UgDataInfo
+// `-- UgGroupDataInfo
 
-#define	UG_DATA_INFO_MEMBERS  \
+#define	UG_GROUP_DATA_INFO_MEMBERS  \
 	const char*     name;     \
 	uintptr_t       size;     \
 	UgInitFunc      init;     \
@@ -101,9 +101,9 @@ void       ug_type_final(void* type);
 	UgAssignFunc    assign;   \
 	const UgEntry*  entry
 
-struct UgDataInfo
+struct UgGroupDataInfo
 {
-	UG_DATA_INFO_MEMBERS;
+	UG_GROUP_DATA_INFO_MEMBERS;
 //	const char*     name;
 //	uintptr_t       size;
 //	UgInitFunc      init;
@@ -113,42 +113,44 @@ struct UgDataInfo
 };
 
 // ----------------------------------------------------------------------------
-// UgData
+// UgGroupData
 //
 // UgType
 // |
-// `-- UgData
+// `-- UgGroupData
 
-#define	UG_DATA_MEMBERS  \
-	const UgDataInfo*  info
+#define	UG_GROUP_DATA_MEMBERS  \
+	const UgGroupDataInfo*  info
 
-struct UgData
+struct UgGroupData
 {
-	UG_DATA_MEMBERS;
-//	const UgDataInfo*  info;
+	UG_GROUP_DATA_MEMBERS;
+//	const UgGroupDataInfo*  info;
 };
 
-#define    ug_data_new    ug_type_new
-#define    ug_data_free   ug_type_free
-// UgData* ug_data_new(const UgDataInfo* dinfo);
-// void    ug_data_free(UgData* data);
+// UgGroupData* ug_group_data_new(const UgGroupDataInfo* dinfo);
+#define    ug_group_data_new    ug_type_new
 
-// void    ug_data_init(void* data);
-// void    ug_data_final(void* data);
-#define    ug_data_init   ug_type_new
-#define    ug_data_final  ug_type_final
+#define    ug_group_data_free   ug_type_free
+// void    ug_group_data_free(UgGroupData* data);
 
-// UgData* ug_data_copy(UgData* data);
-// void    ug_data_assign(UgData* data, UgData* src);
-void*      ug_data_copy(void* data);
-int        ug_data_assign(void* data, void* src);
+// void    ug_group_data_init(void* data);
+// void    ug_group_data_final(void* data);
+#define    ug_group_data_init   ug_type_new
+#define    ug_group_data_final  ug_type_final
 
-// UgJsonParseFunc for UgData, used by UgEntry with UG_ENTRY_CUSTOM
-UgJsonError ug_json_parse_data(UgJson* json,
+// UgGroupData* ug_group_data_copy(UgGroupData* data);
+void*      ug_group_data_copy(void* data);
+
+// void    ug_group_data_assign(UgGroupData* data, UgGroupData* src);
+int        ug_group_data_assign(void* data, void* src);
+
+// UgJsonParseFunc for UgGroupData, used by UgEntry with UG_ENTRY_CUSTOM
+UgJsonError ug_json_parse_group_data(UgJson* json,
                                const char* name, const char* value,
-                               void* data, void* none);
-// write UgData, used by UgEntry with UG_ENTRY_CUSTOM
-void        ug_json_write_data(UgJson* json, const UgData* data);
+                               void* group_data, void* none);
+// write UgGroupData, used by UgEntry with UG_ENTRY_CUSTOM
+void        ug_json_write_group_data(UgJson* json, const UgGroupData* data);
 
 
 #ifdef __cplusplus
@@ -162,35 +164,35 @@ void        ug_json_write_data(UgJson* json, const UgData* data);
 
 namespace Ug
 {
-typedef struct UgTypeInfo    TypeInfo;
-typedef struct UgDataInfo    DataInfo;
+typedef struct UgTypeInfo         TypeInfo;
+typedef struct UgGroupDataInfo    GroupDataInfo;
 
 // This one is for derived use only. No data members here.
 // Your derived struct/class must be C++11 standard-layout
-struct DataMethod
+struct GroupDataMethod
 {
-	inline void init(const UgDataInfo* info) {
-		*(UgDataInfo**)this = (UgDataInfo*)info;
-		ug_data_init((void*)this);
+	inline void init(const UgGroupDataInfo* info) {
+		*(UgGroupDataInfo**)this = (UgGroupDataInfo*)info;
+		ug_group_data_init((void*)this);
 	}
 	inline void init()
-		{ ug_data_init((void*)this); }
+		{ ug_group_data_init((void*)this); }
 	inline void final(void)
-		{ ug_data_final((void*)this); }
+		{ ug_group_data_final((void*)this); }
 
-	inline int  assign(DataMethod* src)
-		{ return ug_data_assign((void*)this, (void*)src); }
-	inline DataMethod* copy(void)
-		{ return (DataMethod*)ug_data_copy((void*)this); }
+	inline int  assign(GroupDataMethod* src)
+		{ return ug_group_data_assign((void*)this, (void*)src); }
+	inline GroupDataMethod* copy(void)
+		{ return (GroupDataMethod*)ug_group_data_copy((void*)this); }
 };
 
 // This one is for directly use only. You can NOT derived it.
-struct Data : DataMethod, UgData {};
+struct GroupData : GroupDataMethod, UgGroupData {};
 
 };  // namespace Ug
 
 #endif  // __cplusplus
 
 
-#endif  // UG_DATA_H
+#endif  // UG_GROUP_DATA_H
 

@@ -47,51 +47,57 @@
 extern "C" {
 #endif
 
-typedef struct	UgetPluginMega          UgetPluginMega;
+typedef struct	UgetPluginMega   UgetPluginMega;
 
-extern const UgetPluginInfo*  UgetPluginMegaInfo;
+extern const    UgetPluginInfo*  UgetPluginMegaInfo;
 
 // ----------------------------------------------------------------------------
 // UgetPluginMega: It derived from UgetPluginAgent.
-//
-// UgetPlugin -> UgetPluginAgent -> UgetPluginMega
+/*
+   UgetPlugin
+   |
+   `--- UgetPluginAgent
+        |
+        `--- UgetPluginMega
+ */
 
 struct UgetPluginMega
 {
 	UGET_PLUGIN_AGENT_MEMBERS;
-
+/*
 	// ------ UgetPlugin members ------
-//	const UgetPluginInfo*  info;
-//	UgetEvent*    messages;
-//	UgMutex       mutex;
-//	int           ref_count;
+	const UgetPluginInfo*  info;
+	UgetEvent*    messages;
+	UgMutex       mutex;
+	int           ref_count;
 
 	// ------ UgetPluginAgent members ------
-	// pointer to UgetNode that store in UgetApp
-//	UgetNode*     node;
+	// pointer to UgData that store in UgetApp
+	UgData*       data;
 
 	// This plug-in use other plug-in to download files,
-	// so we need extra UgetPlugin and UgetNode.
+	// so we need extra UgetPlugin and UgData.
 	//
-	// plugin->target_node is a copy of plugin->node
-//	UgetNode*     target_node;
-	// target_plugin use target_node to download
-//	UgetPlugin*   target_plugin;
+	// plugin->target_data is a copy of plugin->data
+	UgData*       target_data;
+	// target_plugin use target_data to download
+	UgetPlugin*   target_plugin;
 
 	// control flags
 	// speed limit control
 	// limit[0] = download speed limit
 	// limit[1] = upload speed limit
-//	int           limit[2];
-//	uint8_t       limit_changed:1;  // speed limit changed by user
-//	uint8_t       paused:1;         // paused by user
-//	uint8_t       stopped:1;        // all downloading thread are stopped
+	int           limit[2];
+	uint8_t       limit_changed:1;  // speed limit changed by user
+	uint8_t       paused:1;         // paused by user
+	uint8_t       stopped:1;        // all downloading thread are stopped
+ */
 
-	uint8_t       named:1;          // change node name
+	uint8_t       named:1;          // change UgetCommon::name
 	uint8_t       synced:1;         // used by plugin_sync()
 	uint8_t       decrypting:1;     // decrypting downloaded file
 
-	// copy of UgetNode data, they store in target_node
+	// These UgGroupData store in target_data
 	UgetFiles*    target_files;
 	UgetProxy*    target_proxy;
 	UgetCommon*   target_common;
@@ -110,7 +116,6 @@ struct UgetPluginMega
 	UgJson   json;
 	UgValue  value;
 };
-
 
 
 #ifdef __cplusplus

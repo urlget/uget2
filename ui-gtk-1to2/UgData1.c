@@ -78,9 +78,9 @@ const UgData1Interface*	ug_data1_interface_find (const gchar* name)
 
 
 // -----------------------------------------------------------------------------
-// UgData : UgData is a base structure.
+// UgData1 : UgData1 is a base structure.
 
-// UgData*	ug_data1_new	(const UgData1Interface* iface)
+// UgData1*	ug_data1_new (const UgData1Interface* iface)
 gpointer	ug_data1_new (const UgData1Interface* iface)
 {
 	UgInitFunc	init;
@@ -96,7 +96,7 @@ gpointer	ug_data1_new (const UgData1Interface* iface)
 	return data;
 }
 
-// void	ug_data1_free (UgData*  data)
+// void	ug_data1_free (UgData1* data)
 void	ug_data1_free (gpointer data)
 {
 	UgFinalizeFunc	finalize;
@@ -108,7 +108,7 @@ void	ug_data1_free (gpointer data)
 	g_slice_free1 (((UgData1*)data)->iface->instance_size, data);
 }
 
-// UgData*	ug_data1_copy (UgData*  data)
+// UgData1*	ug_data1_copy (UgData1* data)
 gpointer	ug_data1_copy (gpointer data)
 {
 	const UgData1Interface*	iface;
@@ -129,7 +129,7 @@ gpointer	ug_data1_copy (gpointer data)
 	return NULL;
 }
 
-//void	ug_data1_assign (UgData*  dest, UgData*  src)
+//void	ug_data1_assign (UgData1* dest, UgData1* src)
 void	ug_data1_assign (gpointer data, gpointer src)
 {
 	UgAssign1Func	assign;
@@ -142,7 +142,7 @@ void	ug_data1_assign (gpointer data, gpointer src)
 }
 
 // ------------------------------------
-// UgData-base XML input and output
+// UgData1-base XML input and output
 static void ug_data1_parser_start_element (GMarkupParseContext*	context,
                                           const gchar*		element_name,
                                           const gchar**		attr_names,
@@ -150,7 +150,7 @@ static void ug_data1_parser_start_element (GMarkupParseContext*	context,
                                           UgData1*			data,
                                           GError**			error);
 
-// UgData*  user_data
+// UgData1*  user_data
 GMarkupParser	ug_data1_parser =
 {
 	(gpointer) ug_data1_parser_start_element,
@@ -253,7 +253,7 @@ void	ug_data1_write_markup (UgData1* data, UgMarkup* markup)
 	}
 }
 
-// UgData*  user_data
+// UgData1*  user_data
 static void ug_data1_parser_start_element (GMarkupParseContext*	context,
                                           const gchar*		element_name,
                                           const gchar**		attr_names,

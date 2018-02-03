@@ -71,13 +71,15 @@ const UgEntry  UgetNodeEntry[] =
 			NULL, UG_ENTRY_NO_NULL},
 	{"group",    offsetof (UgetNode, group), UG_ENTRY_INT,
 			NULL, NULL},
-	{"info",     offsetof (UgetNode, info),  UG_ENTRY_CUSTOM,
-			ug_json_parse_info_ptr,   ug_json_write_info_ptr},
+	{"data",     offsetof (UgetNode, data),  UG_ENTRY_CUSTOM,
+			ug_json_parse_data_ptr,   ug_json_write_data_ptr},
 	{"children", 0,                          UG_ENTRY_ARRAY,
 			ug_json_parse_uget_node_children, ug_json_write_uget_node_children},
 
 	// deprecated
 	{"state",    offsetof (UgetNode, group), UG_ENTRY_INT,    NULL, NULL},
+	{"info",     offsetof (UgetNode, data),  UG_ENTRY_CUSTOM,
+			ug_json_parse_data_ptr,   NULL},
 	{NULL}    // null-terminated
 };
 
@@ -103,9 +105,9 @@ void  uget_node_init  (UgetNode* node, UgetNode* node_real)
 
 	if (node_real == NULL) {
 		node->base = node;    // pointer to self
-		node->info = ug_info_new(8, 2);
-		node->info->at[0].key = (void*) UgetRelationInfo;
-		node->info->at[1].key = (void*) UgetProgressInfo;
+		node->data = ug_data_new(8, 2);
+		node->data->at[0].key = (void*) UgetRelationInfo;
+		node->data->at[1].key = (void*) UgetProgressInfo;
 	}
 	else {
 		// this is a fake node.
@@ -114,8 +116,8 @@ void  uget_node_init  (UgetNode* node, UgetNode* node_real)
 		node->real = node_real;
 		node->peer = node_real->fake;
 		node_real->fake = node;
-		node->info = node_real->info;
-		ug_info_ref(node->info);
+		node->data = node_real->data;
+		ug_data_ref(node->data);
 	}
 }
 
@@ -135,7 +137,7 @@ void  uget_node_unref (UgetNode* node)
 		uget_node_unref_fake (node);
 		uget_node_unref_children (node);
 //		ug_node_unlink ((UgNode*)node);
-		ug_info_unref(node->info);
+		ug_data_unref(node->data);
 		ug_free(node->name);
 
 #ifdef HAVE_GLIB

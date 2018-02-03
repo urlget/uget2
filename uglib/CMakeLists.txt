@@ -23,8 +23,8 @@ add_library( uglib
              UgOption.c
              UgUri.c
              UgNode.c
+             UgGroupData.c
              UgData.c
-             UgInfo.c
              UgRegistry.c
              UgValue.c
              UgEntry.c

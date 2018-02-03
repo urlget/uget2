@@ -44,7 +44,9 @@
 extern "C" {
 #endif
 
-typedef struct	UgetPluginMedia          UgetPluginMedia;
+typedef struct	UgetPluginMedia   UgetPluginMedia;
+
+extern const    UgetPluginInfo*   UgetPluginMediaInfo;
 
 typedef enum {
 	UGET_PLUGIN_MEDIA_BEGIN = UGET_PLUGIN_OPTION_DERIVED,    // begin
@@ -55,30 +57,31 @@ typedef enum {
 	UGET_PLUGIN_MEDIA_TYPE,             // set parameter = (UgetMediaType)
 } UgetPluginMediaCode;
 
-extern const UgetPluginInfo*  UgetPluginMediaInfo;
-
 // ----------------------------------------------------------------------------
 // UgetPluginMedia: It derived from UgetPlugin.
 
 struct UgetPluginMedia
 {
 	UGET_PLUGIN_MEMBERS;               // It derived from UgetPlugin
-//	const UgetPluginInfo*  info;
-//	UgetEvent*    messages;
-//	UgMutex       mutex;
-//	int           ref_count;
+/*
+	// ------ UgetPlugin members ------
+	const UgetPluginInfo*  info;
+	UgetEvent*    messages;
+	UgMutex       mutex;
+	int           ref_count;
+ */
 
-	// pointer to UgInfo that store in UgetApp
-	UgInfo*       node_info;
+	// pointer to UgData that store in UgetApp
+	UgData*       data;
 
 	// This plug-in use other plug-in to download media files,
-	// so we need extra UgetPlugin and UgInfo.
-	// plugin->target_indo is a copy of plugin->node_info
-	UgInfo*       target_info;
-	// target_plugin use target_node to download
+	// so we need extra UgetPlugin and UgData.
+	// plugin->target_data is a copy of plugin->data
+	UgData*       target_data;
+	// target_plugin use target_data to download
 	UgetPlugin*   target_plugin;
 
-	// copy of UgetNode data, they store in target_node
+	// These UgGroupData store in plugin->target_data
 	UgetFiles*    target_files;
 	UgetProxy*    target_proxy;
 	UgetCommon*   target_common;
@@ -101,7 +104,7 @@ struct UgetPluginMedia
 	uint8_t       paused:1;        // paused by user or program
 	uint8_t       stopped:1;       // all of downloading thread are stopped
 	uint8_t       synced:1;        // used by plugin_sync()
-	uint8_t       named:1;         // change node name by title
+	uint8_t       named:1;         // change UgetCommon::name by title
 	uint8_t       file_renamed:1;  // downloading filename changed
 };
 

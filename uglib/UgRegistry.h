@@ -37,7 +37,7 @@
 #ifndef UG_REGISTRY_H
 #define UG_REGISTRY_H
 
-#include <UgData.h>
+#include <UgGroupData.h>
 #include <UgArray.h>
 
 #ifdef __cplusplus

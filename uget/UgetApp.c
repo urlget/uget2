@@ -136,7 +136,7 @@ void  uget_app_init (UgetApp* app)
 	app->mix_split.control = &control_mix_split;
 	// add virtual category - "All Category"
 	node = uget_node_new (NULL);
-	common = ug_info_realloc(node->info, UgetCommonInfo);
+	common = ug_data_realloc(node->data, UgetCommonInfo);
 	common->name = ug_strdup (_("All Category"));
 	uget_node_append (&app->mix, node);
 
@@ -158,7 +158,7 @@ void  uget_app_init (UgetApp* app)
 	ug_registry_add (&app->infos, UgetRelationInfo);
 	ug_registry_add (&app->infos, UgetCategoryInfo);
 	ug_registry_sort (&app->infos);
-	ug_info_set_registry (&app->infos);
+	ug_data_set_registry (&app->infos);
 }
 
 void  uget_app_final (UgetApp* app)
@@ -234,7 +234,7 @@ static int  uget_app_activate (UgetApp* app, UgetNode* cnode, UgetCategory* cate
 			dnode->group |= UGET_GROUP_FINISHED;
 			sibling = category->finished->children;
 			// completed time
-			log = ug_info_realloc (dnode->info, UgetLogInfo);
+			log = ug_data_realloc (dnode->data, UgetLogInfo);
 			log->completed_time = time(NULL);    // get current time
 			app->n_completed++;
 		}
@@ -296,7 +296,7 @@ int  uget_app_grow (UgetApp* app, int no_queuing)
 	uget_task_dispatch (&app->task);
 	// active, queuing, finished, recycled
 	for (cnode = app->real.children;  cnode;  cnode = cnode->next) {
-		category = ug_info_realloc (cnode->info, UgetCategoryInfo);
+		category = ug_data_realloc (cnode->data, UgetCategoryInfo);
 		if (category == NULL)
 			continue;
 		uget_app_activate (app, cnode, category);
@@ -438,7 +438,7 @@ void  uget_app_add_category (UgetApp* app, UgetNode* cnode, int save_file)
 
 	uget_node_append (&app->real, cnode);
 	uget_uri_hash_add_category (app->uri_hash, cnode);
-	category = ug_info_realloc (cnode->info, UgetCategoryInfo);
+	category = ug_data_realloc (cnode->data, UgetCategoryInfo);
 	for (node = cnode->fake;  node;  node = node->peer) {
 		switch (node->group) {
 		case UGET_GROUP_ACTIVE:
@@ -575,7 +575,7 @@ void  uget_app_stop_category (UgetApp* app, UgetNode* cnode)
 	UgArrayPtr*    array;
 	int            index;
 
-	category = ug_info_realloc (cnode->info, UgetCategoryInfo);
+	category = ug_data_realloc (cnode->data, UgetCategoryInfo);
 
 	// Because uget_app_queue_download() will change node linking,
 	// program must store active nodes to array before calling uget_app_queue_download()
@@ -597,7 +597,7 @@ void  uget_app_pause_category (UgetApp* app, UgetNode* cnode)
 	UgArrayPtr*    array;
 	int            index;
 
-	category = ug_info_realloc (cnode->info, UgetCategoryInfo);
+	category = ug_data_realloc (cnode->data, UgetCategoryInfo);
 
 	// Because uget_app_queue_download() will change node linking,
 	// program must store active nodes to array before calling uget_app_queue_download()
@@ -631,7 +631,7 @@ void  uget_app_resume_category (UgetApp* app, UgetNode* cnode)
 	UgArrayPtr*    array;
 	int            index;
 
-	category = ug_info_realloc (cnode->info, UgetCategoryInfo);
+	category = ug_data_realloc (cnode->data, UgetCategoryInfo);
 
 	// Because uget_app_queue_download() will change node linking,
 	// program must store active nodes to array before calling uget_app_queue_download()
@@ -683,7 +683,7 @@ UgetNode* uget_app_match_category (UgetApp* app, UgUri* uuri, const char* file)
 	matched.count = 0;
 
 	for (cnode = app->real.children;  cnode;  cnode = cnode->next) {
-		category = ug_info_realloc (cnode->info, UgetCategoryInfo);
+		category = ug_data_realloc (cnode->data, UgetCategoryInfo);
 		if (category == NULL)
 			continue;
 		// null-terminated
@@ -721,7 +721,7 @@ int  uget_app_add_download_uri (UgetApp* app, const char* uri, UgetNode* cnode, 
 	UgetCommon* common;
 
 	dnode = uget_node_new (NULL);
-	common = ug_info_realloc (dnode->info, UgetCommonInfo);
+	common = ug_data_realloc (dnode->data, UgetCommonInfo);
 	common->uri = ug_strdup (uri);
 	return uget_app_add_download (app, dnode, cnode, apply);
 }
@@ -737,7 +737,7 @@ int  uget_app_add_download (UgetApp* app, UgetNode* dnode, UgetNode* cnode, int 
 		UgetCategory* category;
 	} temp;
 
-	temp.common = ug_info_realloc (dnode->info, UgetCommonInfo);
+	temp.common = ug_data_realloc (dnode->data, UgetCommonInfo);
 	// replace invalid characters \/:*?"<>| by _ in filename.
 	if (temp.common->file)
 		ug_str_replace_chars (temp.common->file, "\\/:*?\"<>|", '_');
@@ -760,18 +760,18 @@ int  uget_app_add_download (UgetApp* app, UgetNode* dnode, UgetNode* cnode, int 
 	if (cnode) {
 		dnode->group &= UGET_GROUP_MAJOR | UGET_GROUP_PAUSED;
 		dnode->group |= UGET_GROUP_QUEUING;
-		log = ug_info_realloc (dnode->info, UgetLogInfo);
+		log = ug_data_realloc (dnode->data, UgetLogInfo);
 		log->added_time = time (NULL);    // get current time
 		if (apply) {
 			value = temp.common->keeping.enable;
 			temp.common->keeping.enable = TRUE;
 			temp.common->keeping.uri = TRUE;
-			ug_info_assign (dnode->info, cnode->info, UgetCategoryInfo);
+			ug_data_assign (dnode->data, cnode->data, UgetCategoryInfo);
 			temp.common->keeping.enable = value;
 			if (cnode->group & UGET_GROUP_PAUSED)
 				dnode->group |= UGET_GROUP_PAUSED;
 		}
-		temp.category = ug_info_realloc (cnode->info, UgetCategoryInfo);
+		temp.category = ug_data_realloc (cnode->data, UgetCategoryInfo);
 		// try to insert download before finished and recycled
 		sibling = temp.category->finished->children;
 		if (sibling == NULL)
@@ -810,7 +810,7 @@ int   uget_app_move_download_to (UgetApp* app, UgetNode* dnode, UgetNode* cnode)
 
 	if (dnode->parent == cnode)
 		return FALSE;
-	category = ug_info_realloc (cnode->info, UgetCategoryInfo);
+	category = ug_data_realloc (cnode->data, UgetCategoryInfo);
 
 	switch (dnode->group & UGET_GROUP_MAJOR) {
 	case UGET_GROUP_ACTIVE:
@@ -905,7 +905,7 @@ static int  delete_files(UgetNode* dnode, int has_temp_file)
 	UgetFiles* files;
 	int  error_count;
 
-	files = ug_info_get(dnode->info, UgetFilesInfo);
+	files = ug_data_get(dnode->data, UgetFilesInfo);
 	if (files) {
 		error_count = 0;
 		ug_array_foreach(&files->collection,
@@ -980,7 +980,7 @@ int  uget_app_recycle_download (UgetApp* app, UgetNode* dnode)
 		dnode->group &= ~UGET_GROUP_MAJOR;
 		dnode->group |=  UGET_GROUP_RECYCLED;
 		uget_node_unref_fake (dnode);
-		category = ug_info_realloc (cnode->info, UgetCategoryInfo);
+		category = ug_data_realloc (cnode->data, UgetCategoryInfo);
 		// try to insert download before recycled
 		sibling = category->recycled->children;
 		if (sibling)
@@ -1003,11 +1003,11 @@ int   uget_app_activate_download (UgetApp* app, UgetNode* dnode)
 
 	if (dnode->group & UGET_GROUP_ACTIVE)
 		return FALSE;
-	common = ug_info_get (dnode->info, UgetCommonInfo);
+	common = ug_data_get (dnode->data, UgetCommonInfo);
 	if (common == NULL || common->uri == NULL)
 		return FALSE;
 	// match plug-in
-	log = ug_info_realloc (dnode->info, UgetLogInfo);
+	log = ug_data_realloc (dnode->data, UgetLogInfo);
 	temp.pinfo = uget_app_match_plugin (app, common->uri, NULL);
 	if (temp.pinfo == NULL) {
 		// no plug-in support
@@ -1040,7 +1040,7 @@ int   uget_app_activate_download (UgetApp* app, UgetNode* dnode)
 	uget_node_remove (cnode, dnode);
 	uget_node_unref_fake (dnode);
 	dnode->group =  UGET_GROUP_ACTIVE;
-	temp.category = ug_info_realloc (cnode->info, UgetCategoryInfo);
+	temp.category = ug_data_realloc (cnode->data, UgetCategoryInfo);
 	// try to insert download before queuing, finished, and recycled
 	sibling = temp.category->queuing->children;
 	if (sibling == NULL)
@@ -1068,7 +1068,7 @@ int   uget_app_pause_download (UgetApp* app, UgetNode* dnode)
 	dnode->group |= UGET_GROUP_PAUSED;
 
 	cnode = dnode->parent;
-	category = ug_info_realloc (cnode->info, UgetCategoryInfo);
+	category = ug_data_realloc (cnode->data, UgetCategoryInfo);
 	for (fake = dnode->fake;  fake;  fake = fake->peer) {
 		if (fake->parent == category->active) {
 			uget_node_remove (cnode, dnode);
@@ -1092,7 +1092,7 @@ int   uget_app_pause_download (UgetApp* app, UgetNode* dnode)
 	if (dnode->group & UGET_GROUP_ACTIVE) {
 //		uget_task_remove (&app->task, dnode);
 		UgetRelation*  relation;
-		relation = ug_info_get (dnode->info, UgetRelationInfo);
+		relation = ug_data_get (dnode->data, UgetRelationInfo);
 		if (relation && relation->task.plugin)
 			uget_plugin_stop (relation->task.plugin);
 		dnode->group &= ~UGET_GROUP_ACTIVE;
@@ -1124,7 +1124,7 @@ int   uget_app_queue_download (UgetApp* app, UgetNode* dnode)
 		// --- decide sibling position & insert before it ---
 		// if current download is in active, insert it before queuing,
 		// otherwise insert it before finished and recycled.
-		category = ug_info_realloc (cnode->info, UgetCategoryInfo);
+		category = ug_data_realloc (cnode->data, UgetCategoryInfo);
 		sibling = NULL;
 		if (dnode->group & UGET_GROUP_ACTIVE) {
 			uget_task_remove (&app->task, dnode);
@@ -1149,7 +1149,7 @@ void  uget_app_reset_download_name (UgetApp* app, UgetNode* dnode)
 	UgetNode*    sibling;
 	UgetNode*    cnode = NULL;
 
-	common = ug_info_realloc(dnode->info, UgetCommonInfo);
+	common = ug_data_realloc(dnode->data, UgetCommonInfo);
 	if (common->file) {
 		if (common->name && strcmp(common->file, common->name) == 0)
 			return;
@@ -1198,7 +1198,7 @@ void  uget_app_clear_attachment (UgetApp* app)
 	hash = uget_uri_hash_new ();
 	// add attachment
 	for (dnode = app->mix.children->children;  dnode;  dnode = dnode->next) {
-		if ((http = ug_info_get (dnode->info, UgetHttpInfo)) == NULL)
+		if ((http = ug_data_get (dnode->data, UgetHttpInfo)) == NULL)
 			continue;
 		if (http->cookie_file)
 			uget_uri_hash_add (hash, http->cookie_file);
@@ -1537,7 +1537,7 @@ void  uget_node_set_keeping (UgetNode* node, int enable)
 		UgetFtp*     ftp;
 	} temp;
 
-	temp.common = ug_info_realloc (node->info, UgetCommonInfo);
+	temp.common = ug_data_realloc (node->data, UgetCommonInfo);
 	if (temp.common) {
 		temp.common->keeping.enable = enable;
 		if (enable) {
@@ -1575,7 +1575,7 @@ void  uget_node_set_keeping (UgetNode* node, int enable)
 		}
 	}
 
-	temp.proxy = ug_info_get (node->info, UgetProxyInfo);
+	temp.proxy = ug_data_get (node->data, UgetProxyInfo);
 	if (temp.proxy) {
 		temp.proxy->keeping.enable = enable;
 		if (enable) {
@@ -1592,7 +1592,7 @@ void  uget_node_set_keeping (UgetNode* node, int enable)
 		}
 	}
 
-	temp.http = ug_info_get (node->info, UgetHttpInfo);
+	temp.http = ug_data_get (node->data, UgetHttpInfo);
 	if (temp.http) {
 		temp.http->keeping.enable = enable;
 		if (enable) {
@@ -1617,7 +1617,7 @@ void  uget_node_set_keeping (UgetNode* node, int enable)
 		}
 	}
 
-	temp.ftp = ug_info_get (node->info, UgetFtpInfo);
+	temp.ftp = ug_data_get (node->data, UgetFtpInfo);
 	if (temp.ftp) {
 		temp.ftp->keeping.enable = enable;
 		if (enable) {

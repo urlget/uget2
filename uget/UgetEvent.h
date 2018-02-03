@@ -40,7 +40,7 @@
 #include <time.h>
 #include <stdint.h>
 #include <UgList.h>
-#include <UgData.h>
+#include <UgGroupData.h>
 #include <UgEntry.h>
 #include <UgetNode.h>
 
@@ -67,14 +67,6 @@ typedef enum {
 
 	// events for uget_task_dispatch()
 	UGET_EVENT_NAME,       // UgetNode's name changed
-
-/*
-	// events for uget_plugin_sync()
-	UGET_EVENT_INSERT,
-	UGET_EVENT_REMOVE,
-	UGET_EVENT_RENAME,
-	UGET_EVENT_INFO,
- */
 } UgetEventType;
 
 typedef enum
@@ -138,10 +130,8 @@ struct UgetEvent
 
 	// extra data
 	union {
-		const UgDataInfo*  info;  // UGET_EVENT_INFO
-		UgetNode*  node;          // UGET_EVENT_INSERT or UGET_EVENT_REMOVE
 		void*      data;
-		int        code;          // UGET_EVENT_ERROR, UGET_EVENT_WARNING, UGET_EVENT_NORMAL
+		int        code;     // UGET_EVENT_ERROR, UGET_EVENT_WARNING, UGET_EVENT_NORMAL
 	} value;
 //	} value[3];
 };
@@ -152,16 +142,10 @@ void       uget_event_free (UgetEvent* event);
 #define    uget_event_new_error(code, string)  uget_event_new (UGET_EVENT_ERROR, code, string)
 #define    uget_event_new_normal(code, string)  uget_event_new (UGET_EVENT_NORMAL, code, string)
 #define    uget_event_new_warning(code, string)  uget_event_new (UGET_EVENT_WARNING, code, string)
-//UgetEvent* uget_event_new_error (int code, const char* string);
-//UgetEvent* uget_event_new_normal (int code, const char* string);
-//UgetEvent* uget_event_new_warning (int code, const char* string);
-
 /*
-// events for uget_plugin_sync()
-UgetEvent* uget_event_new_info (UgetNode* node, const UgDataInfo* info, void* data);
-UgetEvent* uget_event_new_inserted (UgetNode* node, UgetNode* child);
-UgetEvent* uget_event_new_removed (UgetNode* node, UgetNode* child);
-UgetEvent* uget_event_new_renamed (UgetNode* node, const char* name);
+UgetEvent* uget_event_new_error (int code, const char* string);
+UgetEvent* uget_event_new_normal (int code, const char* string);
+UgetEvent* uget_event_new_warning (int code, const char* string);
  */
 
 #ifdef __cplusplus

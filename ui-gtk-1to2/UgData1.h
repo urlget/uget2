@@ -148,19 +148,19 @@ struct UgData1
 };
 
 // ------------------------------------
-// UgData*	ug_data1_new	(const UgData1Interface* iface);
-// void		ug_data1_free	(UgData*	data);
+// UgData1*	ug_data1_new	(const UgData1Interface* iface);
+// void		ug_data1_free	(UgData1*	data);
 gpointer	ug_data1_new	(const UgData1Interface* iface);
 void		ug_data1_free	(gpointer	data);
 
-// UgData*	ug_data1_copy	(UgData*	data);
-//void		ug_data1_assign	(UgData*	data, UgData*	src);
+// UgData1*	ug_data1_copy	(UgData1*	data);
+//void		ug_data1_assign	(UgData1*	data, UgData1*	src);
 gpointer	ug_data1_copy	(gpointer	data);
 void		ug_data1_assign	(gpointer	data, gpointer	src);	// overwrite (or merge)
 
 // ------------------------------------
 // XML parse and write
-extern	GMarkupParser		ug_data1_parser;		// UgData*   user_data
+extern	GMarkupParser		ug_data1_parser;		// UgData1*   user_data
 void	ug_data1_write_markup (UgData1* data, UgMarkup* markup);
 
 

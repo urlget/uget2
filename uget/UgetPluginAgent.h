@@ -58,8 +58,8 @@ typedef enum {
 
 #define UGET_PLUGIN_AGENT_MEMBERS  \
 	UGET_PLUGIN_MEMBERS;           \
-	UgInfo*       node_info;       \
-	UgInfo*       target_info;     \
+	UgData*       data;            \
+	UgData*       target_data;     \
 	UgetPlugin*   target_plugin;   \
 	int           limit[2];        \
 	uint8_t       limit_changed:1; \
@@ -69,33 +69,34 @@ typedef enum {
 struct UgetPluginAgent
 {
 	UGET_PLUGIN_AGENT_MEMBERS;
-
+/*
 	// ------ UgetPlugin members ------
-//	const UgetPluginInfo*  info;
-//	UgetEvent*    messages;
-//	UgMutex       mutex;
-//	int           ref_count;
+	const UgetPluginInfo*  info;
+	UgetEvent*    messages;
+	UgMutex       mutex;
+	int           ref_count;
 
 	// ------ UgetPluginAgent members ------
-	// pointer to UgInfo that store in UgetApp
-//	UgInfo*       node_info;
+	// pointer to UgData that store in UgetApp
+	UgData*       data;
 
 	// This plug-in use other plug-in to download files,
-	// so we need extra UgetPlugin and UgInfo.
+	// so we need extra UgetPlugin and UgData.
 	//
-	// plugin->target_info is a copy of plugin->node_info
-//	UgInfo*       target_info;
-	// target_plugin use target_node to download
-//	UgetPlugin*   target_plugin;
+	// plugin->target_data is a copy of plugin->data
+	UgData*       target_data;
+	// target_plugin use target_data to download
+	UgetPlugin*   target_plugin;
 
 	// control flags
 	// speed limit control
 	// limit[0] = download speed limit
 	// limit[1] = upload speed limit
-//	int           limit[2];
-//	uint8_t       limit_changed:1;  // speed limit changed by user
-//	uint8_t       paused:1;         // paused by user
-//	uint8_t       stopped:1;        // all downloading thread are stopped
+	int           limit[2];
+	uint8_t       limit_changed:1;  // speed limit changed by user
+	uint8_t       paused:1;         // paused by user
+	uint8_t       stopped:1;        // all downloading thread are stopped
+ */
 };
 
 
@@ -119,13 +120,13 @@ int   uget_plugin_agent_ctrl (UgetPluginAgent* plugin, int code, void* data);
 int   uget_plugin_agent_ctrl_speed (UgetPluginAgent* plugin, int* speed);
 
 // sync functions ---------------------
-// sync common data (include speed limit) between node_info and target_info
+// sync common data (include speed limit) between plugin->data and plugin->target_data
 // parameter common and target can be NULL.
 void  uget_plugin_agent_sync_common (UgetPluginAgent* plugin,
                                      UgetCommon* common,
                                      UgetCommon* target);
 
-// sync progress data from target_info to node_info
+// sync progress data from plugin->target_data to plugin->data
 // parameter progress and target can be NULL.
 void  uget_plugin_agent_sync_progress (UgetPluginAgent* plugin,
                                        UgetProgress* progress,

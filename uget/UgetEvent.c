@@ -162,16 +162,7 @@ UgetEvent* uget_event_new (UgetEventType type, ...)
 #endif // HAVE_GLIB
 		}
 		break;
-/*
-	case UGET_EVENT_INSERT:
-	case UGET_EVENT_REMOVE:
-		event->value.child = va_arg (arg_list, UgetNode*);
-		break;
 
-	case UGET_EVENT_INFO:
-		event->value.info = va_arg (arg_list, const UgDataInfo*);
-		break;
-*/
 	default:
 		break;
 	}

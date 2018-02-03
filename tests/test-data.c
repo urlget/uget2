@@ -37,7 +37,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
-#include <UgInfo.h>
+#include <UgData.h>
 #include <UgEntry.h>
 
 // ----------------------------------------------------------------------------
@@ -45,8 +45,8 @@
 
 typedef struct
 {
-	UG_DATA_MEMBERS;
-//	const UgDataInfo*   info;
+	UG_GROUP_DATA_MEMBERS;
+//	const UgGroupDataInfo*   info;
 
 	int     type;
 } Test1;
@@ -59,7 +59,7 @@ const UgEntry  Test1Entry[] =
 
 void  test1_init(Test1* t1);
 
-const UgDataInfo  Test1Info =
+const UgGroupDataInfo  Test1Info =
 {
 	"Test1",
 	sizeof(Test1),
@@ -80,8 +80,8 @@ void  test1_init(Test1* t1)
 
 typedef struct
 {
-	UG_DATA_MEMBERS;
-//	const UgDataInfo*   info;
+	UG_GROUP_DATA_MEMBERS;
+//	const UgGroupDataInfo*   info;
 
 	int     type;
 } Test2;
@@ -94,7 +94,7 @@ const UgEntry  Test2Entry[] =
 
 void  test2_init(Test2* t2);
 
-const UgDataInfo  Test2Info =
+const UgGroupDataInfo  Test2Info =
 {
 	"Test2",
 	sizeof(Test2),
@@ -115,8 +115,8 @@ void  test2_init(Test2* t2)
 
 typedef struct
 {
-	UG_DATA_MEMBERS;
-//	const UgDataInfo*   info;
+	UG_GROUP_DATA_MEMBERS;
+//	const UgGroupDataInfo*   info;
 
 	int     type;
 } Test3;
@@ -129,7 +129,7 @@ const UgEntry  Test3Entry[] =
 
 void  test3_init(Test3* t3);
 
-const UgDataInfo  Test3Info =
+const UgGroupDataInfo  Test3Info =
 {
 	"Test3",
 	sizeof(Test3),
@@ -146,28 +146,28 @@ void  test3_init(Test3* t3)
 }
 
 // ----------------------------------------------------------------------------
-// test UgInfo
+// test UgData
 
 UgEntry	InfoCustomEntry[] = {
-	{NULL, 0, UG_ENTRY_CUSTOM, (UgJsonParseFunc) ug_json_parse_info_ptr,
-	                           (UgJsonWriteFunc) ug_json_write_info_ptr},
+	{NULL, 0, UG_ENTRY_CUSTOM, (UgJsonParseFunc) ug_json_parse_data_ptr,
+	                           (UgJsonWriteFunc) ug_json_write_data_ptr},
 	{NULL}
 };
 
-void  test_info(UgInfo* info)
+void  test_data(UgData* data)
 {
-	void*  data;
+	void*  group_data;
 
-	puts("\n--- test_info:");
-	data = ug_info_realloc(info, &Test2Info);
-	printf("ug_info_realloc (Test2Info) : %d\n", ((Test2*)data)->type);
-	data = ug_info_realloc(info, &Test1Info);
-	printf("ug_info_realloc (Test1Info) : %d\n", ((Test1*)data)->type);
-	data = ug_info_realloc(info, &Test3Info);
-	printf("ug_info_realloc (Test3Info) : %d\n", ((Test3*)data)->type);
+	puts("\n--- test_data:");
+	group_data = ug_data_realloc(data, &Test2Info);
+	printf("ug_data_realloc (Test2Info) : %d\n", ((Test2*)group_data)->type);
+	group_data = ug_data_realloc(data, &Test1Info);
+	printf("ug_data_realloc (Test1Info) : %d\n", ((Test1*)group_data)->type);
+	group_data = ug_data_realloc(data, &Test3Info);
+	printf("ug_data_realloc (Test3Info) : %d\n", ((Test3*)group_data)->type);
 }
 
-void  parse_info(UgInfo* info)
+void  parse_data(UgData* data)
 {
 	int     code;
 	UgJson	json;
@@ -186,45 +186,45 @@ void  parse_info(UgInfo* info)
 		"}"
 	};
 
-	// UgRegistry is used by ug_json_parse_info() and ug_json_parse_info_entry()
+	// UgRegistry is used by ug_json_parse_data() and ug_json_parse_data_entry()
 	ug_registry_init(&registry);
 	ug_registry_add(&registry, &Test2Info);
 	ug_registry_add(&registry, &Test3Info);
 	ug_registry_add(&registry, &Test1Info);
 //	ug_registry_sort(&registry);
-	// ug_json_parse_info() must use default UgInfoKeys.
-	ug_info_set_registry(&registry);
+	// ug_json_parse_data() must use default UgDataKeys.
+	ug_data_set_registry(&registry);
 
 	ug_json_init(&json);
 	ug_json_begin_parse(&json);
 #if 1
 	// method 1: use UgEntry to parse start of object
-	ug_json_push(&json, ug_json_parse_entry, &info, InfoCustomEntry);
+	ug_json_push(&json, ug_json_parse_entry, &data, InfoCustomEntry);
 #else
-	// method 2: push ug_json_parse_info() to parse start of object
-	ug_json_push(&json, ug_json_parse_info_ptr, &info, &registry);
+	// method 2: push ug_json_parse_data() to parse start of object
+	ug_json_push(&json, ug_json_parse_data_ptr, &data, &registry);
 #endif
 	code = ug_json_parse(&json, json_string, -1);
 	ug_json_end_parse(&json);
 	ug_json_final(&json);
 	printf("ug_json_parse response %d\n", code);
 
-	ug_info_set_registry(NULL);
+	ug_data_set_registry(NULL);
 	ug_registry_final(&registry);
 }
 
-void  dump_info(UgInfo* info)
+void  dump_data(UgData* data)
 {
 	UgPair*	cur;
 	UgPair*	end;
 
-	for (cur = info->at, end = info->at + info->length;  cur < end;  cur++) {
+	for (cur = data->at, end = data->at + data->length;  cur < end;  cur++) {
 		if (cur->key == NULL) {
 			puts("NULL");
 			continue;
 		}
 
-		printf("%s", ((UgDataInfo*)cur->key)->name);
+		printf("%s", ((UgGroupDataInfo*)cur->key)->name);
 		if (cur->data)
 			printf(" : %d", ((Test1*)cur->data)->type);
 		puts("");
@@ -242,7 +242,7 @@ static int  buffer_to_file(UgBuffer* buffer)
 	return 0;
 }
 
-void  write_info_to_file(UgInfo* info, char* filename)
+void  write_data_to_file(UgData* data, char* filename)
 {
 	UgJson   json;
 	FILE*    file;
@@ -257,11 +257,11 @@ void  write_info_to_file(UgInfo* info, char* filename)
 	ug_json_begin_write(&json, UG_JSON_FORMAT_INDENT, &buffer);
 #if 1
 	// method 1: use UgEntry to write start of object
-	ug_json_write_entry(&json, info, InfoCustomEntry);
+	ug_json_write_entry(&json, data, InfoCustomEntry);
 #else
 	// method 2: call ug_json_write_object_head() to write start of object
 	ug_json_write_object_head(&json);
-	ug_json_write_info(&json, info);
+	ug_json_write_data(&json, data);
 	ug_json_write_object_tail(&json);
 #endif
 	ug_json_end_write(&json);
@@ -276,18 +276,18 @@ void  write_info_to_file(UgInfo* info, char* filename)
 
 int   main(void)
 {
-	UgInfo  info;
+	UgData  data;
 
-	puts("\n--- test UgInfo functions:");
-	ug_info_init(&info, 8, 2);
+	puts("\n--- test UgData functions:");
+	ug_data_init(&data, 8, 2);
 #if 0
-	test_info(&info);
+	test_data(&data);
 #else
-	parse_info(&info);
+	parse_data(&data);
 #endif
-	dump_info(&info);
-	write_info_to_file(&info, "test-info.json");
-	ug_info_final(&info);
+	dump_data(&data);
+	write_data_to_file(&data, "test-data.json");
+	ug_data_final(&data);
 
 	return 0;
 }

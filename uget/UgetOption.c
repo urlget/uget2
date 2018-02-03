@@ -99,7 +99,7 @@ int   uget_option_value_has_ctrl (UgetOptionValue* value)
 		return FALSE;
 }
 
-int  uget_option_value_to_info (UgetOptionValue* ivalue, UgInfo* info)
+int  uget_option_value_to_data (UgetOptionValue* ivalue, UgData* data)
 {
 	union {
 		UgetCommon*  common;
@@ -108,37 +108,37 @@ int  uget_option_value_to_info (UgetOptionValue* ivalue, UgInfo* info)
 		UgetFtp*     ftp;
 	} temp;
 
-	if (mem_is_zero ((char*) &ivalue->common, sizeof (ivalue->common)) == FALSE) {
-		temp.common = ug_info_realloc (info, UgetCommonInfo);
+	if (mem_is_zero((char*) &ivalue->common, sizeof(ivalue->common)) == FALSE) {
+		temp.common = ug_data_realloc(data, UgetCommonInfo);
 		temp.common->keeping.enable = TRUE;
 		if (ivalue->common.folder) {
-			ug_free (temp.common->folder);
+			ug_free(temp.common->folder);
 			temp.common->folder = ivalue->common.folder;
 			temp.common->keeping.folder = TRUE;
 			ivalue->common.folder = NULL;
 		}
 		if (ivalue->common.file) {
-			ug_free (temp.common->file);
+			ug_free(temp.common->file);
 			temp.common->file = ivalue->common.file;
 			temp.common->keeping.file = TRUE;
 			ivalue->common.file = NULL;
 		}
 		if (ivalue->common.user) {
-			ug_free (temp.common->user);
+			ug_free(temp.common->user);
 			temp.common->user = ivalue->common.user;
 			temp.common->keeping.user = TRUE;
 			ivalue->common.user = NULL;
 		}
 		if (ivalue->common.password) {
-			ug_free (temp.common->password);
+			ug_free(temp.common->password);
 			temp.common->password = ivalue->common.password;
 			temp.common->keeping.password = TRUE;
 			ivalue->common.password = NULL;
 		}
 	}
 
-	if (mem_is_zero ((char*) &ivalue->proxy, sizeof (ivalue->proxy)) == FALSE) {
-		temp.proxy = ug_info_realloc (info, UgetProxyInfo);
+	if (mem_is_zero((char*) &ivalue->proxy, sizeof(ivalue->proxy)) == FALSE) {
+		temp.proxy = ug_data_realloc(data, UgetProxyInfo);
 		temp.proxy->keeping.enable = TRUE;
 		if (ivalue->proxy.type) {
 			temp.proxy->type = ivalue->proxy.type;
@@ -146,7 +146,7 @@ int  uget_option_value_to_info (UgetOptionValue* ivalue, UgInfo* info)
 			ivalue->proxy.type = 0;
 		}
 		if (ivalue->proxy.host) {
-			ug_free (temp.proxy->host);
+			ug_free(temp.proxy->host);
 			temp.proxy->host = ivalue->proxy.host;
 			temp.proxy->keeping.host = TRUE;
 			ivalue->proxy.host = NULL;
@@ -157,83 +157,83 @@ int  uget_option_value_to_info (UgetOptionValue* ivalue, UgInfo* info)
 			ivalue->proxy.port = 0;
 		}
 		if (ivalue->proxy.user) {
-			ug_free (temp.proxy->user);
+			ug_free(temp.proxy->user);
 			temp.proxy->user = ivalue->proxy.user;
 			temp.proxy->keeping.user = TRUE;
 			ivalue->proxy.user = NULL;
 		}
 		if (ivalue->proxy.password) {
-			ug_free (temp.proxy->password);
+			ug_free(temp.proxy->password);
 			temp.proxy->password = ivalue->proxy.password;
 			temp.proxy->keeping.password = TRUE;
 			ivalue->proxy.password = NULL;
 		}
 	}
 
-	if (mem_is_zero ((char*) &ivalue->http, sizeof (ivalue->http)) == FALSE) {
-		temp.http = ug_info_realloc (info, UgetHttpInfo);
+	if (mem_is_zero((char*) &ivalue->http, sizeof(ivalue->http)) == FALSE) {
+		temp.http = ug_data_realloc(data, UgetHttpInfo);
 		temp.http->keeping.enable = TRUE;
 		if (ivalue->http.user) {
-			ug_free (temp.http->user);
+			ug_free(temp.http->user);
 			temp.http->user = ivalue->http.user;
 			temp.http->keeping.user = TRUE;
 			ivalue->http.user = NULL;
 		}
 		if (ivalue->http.password) {
-			ug_free (temp.http->password);
+			ug_free(temp.http->password);
 			temp.http->password = ivalue->http.password;
 			temp.http->keeping.password = TRUE;
 			ivalue->http.password = NULL;
 		}
 		if (ivalue->http.referrer) {
-			ug_free (temp.http->referrer);
+			ug_free(temp.http->referrer);
 			temp.http->referrer = ivalue->http.referrer;
 			temp.http->keeping.referrer = TRUE;
 			ivalue->http.referrer = NULL;
 		}
 		if (ivalue->http.user_agent) {
-			ug_free (temp.http->user_agent);
+			ug_free(temp.http->user_agent);
 			temp.http->user_agent = ivalue->http.user_agent;
 			temp.http->keeping.user_agent = TRUE;
 			ivalue->http.user_agent = NULL;
 		}
 		if (ivalue->http.cookie_data) {
-			ug_free (temp.http->cookie_data);
+			ug_free(temp.http->cookie_data);
 			temp.http->cookie_data = ivalue->http.cookie_data;
 			temp.http->keeping.cookie_data = TRUE;
 			ivalue->http.cookie_data = NULL;
 		}
 		if (ivalue->http.cookie_file) {
-			ug_free (temp.http->cookie_file);
+			ug_free(temp.http->cookie_file);
 			temp.http->cookie_file = ivalue->http.cookie_file;
 			temp.http->keeping.cookie_file = TRUE;
 			ivalue->http.cookie_file = NULL;
 		}
 		if (ivalue->http.post_data) {
-			ug_free (temp.http->post_data);
+			ug_free(temp.http->post_data);
 			temp.http->post_data = ivalue->http.post_data;
 			temp.http->keeping.post_data = TRUE;
 			ivalue->http.post_data = NULL;
 		}
 		if (ivalue->http.post_file) {
-			ug_free (temp.http->post_file);
+			ug_free(temp.http->post_file);
 			temp.http->post_file = ivalue->http.post_file;
 			temp.http->keeping.post_file = TRUE;
 			ivalue->http.post_file = NULL;
 		}
 	}
 
-	if (mem_is_zero ((char*) &ivalue->ftp, sizeof (ivalue->ftp)) == FALSE) {
-		temp.ftp = ug_info_realloc (info, UgetFtpInfo);
+	if (mem_is_zero((char*) &ivalue->ftp, sizeof(ivalue->ftp)) == FALSE) {
+		temp.ftp = ug_data_realloc(data, UgetFtpInfo);
 		temp.ftp->keeping.enable = TRUE;
 		if (ivalue->ftp.user) {
-			ug_free (temp.ftp->user);
+			ug_free(temp.ftp->user);
 			temp.ftp->user = ivalue->ftp.user;
 			temp.ftp->keeping.user = TRUE;
 			ivalue->ftp.user = NULL;
 		}
 		if (ivalue->ftp.password) {
-			ug_free (temp.ftp->password);
+			ug_free(temp.ftp->password);
 			temp.ftp->password = ivalue->ftp.password;
 			temp.ftp->keeping.password = TRUE;
 			ivalue->ftp.password = NULL;

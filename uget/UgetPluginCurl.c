@@ -90,13 +90,13 @@ struct UriLink {
 };
 
 // ----------------------------------------------------------------------------
-// UgetPluginInfo (derived from UgDataInfo)
+// UgetPluginInfo (derived from UgGroupDataInfo)
 
 static void plugin_init (UgetPluginCurl* plugin);
 static void plugin_final(UgetPluginCurl* plugin);
 static int  plugin_ctrl (UgetPluginCurl* plugin, int code, void* data);
-static int  plugin_accept(UgetPluginCurl* plugin, UgInfo* node_info);
-static int  plugin_sync  (UgetPluginCurl* plugin, UgInfo* node_info);
+static int  plugin_accept(UgetPluginCurl* plugin, UgData* data);
+static int  plugin_sync  (UgetPluginCurl* plugin, UgData* data);
 static UgetResult  global_set(int code, void* parameter);
 static UgetResult  global_get(int code, void* parameter);
 
@@ -223,15 +223,15 @@ static void plugin_init(UgetPluginCurl* plugin)
 static void plugin_final(UgetPluginCurl* plugin)
 {
 	if (plugin->common)
-		ug_data_free(plugin->common);
+		ug_group_data_free(plugin->common);
 	if (plugin->files)
-		ug_data_free(plugin->files);
+		ug_group_data_free(plugin->files);
 	if (plugin->proxy)
-		ug_data_free(plugin->proxy);
+		ug_group_data_free(plugin->proxy);
 	if (plugin->http)
-		ug_data_free(plugin->http);
+		ug_group_data_free(plugin->http);
 	if (plugin->ftp)
-		ug_data_free(plugin->ftp);
+		ug_group_data_free(plugin->ftp);
 	// free uri.list (UriLink), all link will be freed.
 	ug_list_foreach(&plugin->uri.list, (UgForeachFunc) ug_free, NULL);
 
@@ -239,9 +239,9 @@ static void plugin_final(UgetPluginCurl* plugin)
 	ug_free(plugin->folder.path);
 	ug_free(plugin->file.path);
 	ug_free(plugin->aria2.path);
-	// clear UgInfo
-	if (plugin->node_info)
-		ug_info_unref(plugin->node_info);
+	// clear UgData
+	if (plugin->data)
+		ug_data_unref(plugin->data);
 
 	global_unref();
 }
@@ -256,7 +256,7 @@ static int  plugin_ctrl(UgetPluginCurl* plugin, int code, void* data)
 {
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
-		if (plugin->node_info)
+		if (plugin->data)
 			return plugin_start(plugin);
 		break;
 
@@ -291,7 +291,7 @@ static int  plugin_ctrl_speed(UgetPluginCurl* plugin, int* speed)
 			return TRUE;
 	plugin->limit_by_user = FALSE;
 	// decide speed limit by user specified data.
-	if (plugin->node_info == NULL) {
+	if (plugin->data == NULL) {
 		plugin->limit.download = speed[0];
 		plugin->limit.upload = speed[1];
 	}
@@ -320,7 +320,7 @@ static int  plugin_ctrl_speed(UgetPluginCurl* plugin, int* speed)
 // ----------------------------------------------------------------------------
 // plugin_sync
 
-static int  plugin_sync(UgetPluginCurl* plugin, UgInfo* node_info)
+static int  plugin_sync(UgetPluginCurl* plugin, UgData* data)
 {
 	UgetCommon*    common;
 	UgetFiles*     files;
@@ -333,14 +333,14 @@ static int  plugin_sync(UgetPluginCurl* plugin, UgInfo* node_info)
 		plugin->synced = TRUE;
 	}
 	// avoid crash if plug-in failed to start.
-	if (plugin->node_info == NULL)
+	if (plugin->data == NULL)
 		return FALSE;
-	if (node_info == NULL)
-		node_info = plugin->node_info;
-	// sync data between plug-in and node
-	common = ug_info_realloc(node_info, UgetCommonInfo);
+	if (data == NULL)
+		data = plugin->data;
+	// sync data between plug-in and foreign UgData
+	common = ug_data_realloc(data, UgetCommonInfo);
 	common->retry_count = plugin->common->retry_count;
-	// sync changed limit from node_info
+	// sync changed limit from data
 	if (plugin->common->max_upload_speed != common->max_upload_speed ||
 		plugin->common->max_download_speed != common->max_download_speed)
 	{
@@ -353,7 +353,7 @@ static int  plugin_sync(UgetPluginCurl* plugin, UgInfo* node_info)
 	if (common->max_connections > 0)
 		plugin->segment.n_max = common->max_connections;
 
-	progress = ug_info_realloc(node_info, UgetProgressInfo);
+	progress = ug_data_realloc(data, UgetProgressInfo);
 	progress->upload_speed   = plugin->speed.upload;
 	progress->download_speed = plugin->speed.download;
 
@@ -379,14 +379,14 @@ static int  plugin_sync(UgetPluginCurl* plugin, UgInfo* node_info)
 	progress->elapsed = time(NULL) - plugin->start_time;
 
 	// update UgetFiles
-	files = ug_info_realloc(node_info, UgetFilesInfo);
+	files = ug_data_realloc(data, UgetFilesInfo);
 	uget_plugin_lock(plugin);
 	uget_files_sync(files, plugin->files);
 	uget_plugin_unlock(plugin);
-	// set node name
+	// set name
 	if (plugin->file_renamed && plugin->file.path) {
 		plugin->file_renamed = FALSE;
-		// change node name
+		// change name
 #if defined _WIN32 || defined _WIN64
 		name = strrchr(plugin->file.path, '\\');
 #else
@@ -415,7 +415,7 @@ static void  plugin_decide_folder(UgetPluginCurl* plugin);
 static void  plugin_decide_files(UgetPluginCurl* plugin);
 static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginCurl* plugin);
 
-static int  plugin_accept(UgetPluginCurl* plugin, UgInfo* node_info)
+static int  plugin_accept(UgetPluginCurl* plugin, UgData* data)
 {
 	union {
 		UgetCommon*  common;
@@ -425,26 +425,26 @@ static int  plugin_accept(UgetPluginCurl* plugin, UgInfo* node_info)
 		UgetFtp*     ftp;
 	} temp;
 
-	temp.common = ug_info_get(node_info, UgetCommonInfo);
+	temp.common = ug_data_get(data, UgetCommonInfo);
 	if (temp.common == NULL || temp.common->uri == NULL)
 		return FALSE;
-	plugin->common = ug_data_copy(temp.common);
+	plugin->common = ug_group_data_copy(temp.common);
 	plugin_decide_uris(plugin);
 	plugin_decide_folder(plugin);
 
-	temp.files = ug_info_get(node_info, UgetFilesInfo);
+	temp.files = ug_data_get(data, UgetFilesInfo);
 	if (temp.files)
-		plugin->files = ug_data_copy(temp.files);
+		plugin->files = ug_group_data_copy(temp.files);
 	else
-		plugin->files = ug_data_new(UgetFilesInfo);
+		plugin->files = ug_group_data_new(UgetFilesInfo);
 
-	temp.proxy = ug_info_get(node_info, UgetProxyInfo);
+	temp.proxy = ug_data_get(data, UgetProxyInfo);
 	if (temp.proxy)
-		plugin->proxy  = ug_data_copy(temp.proxy);
+		plugin->proxy  = ug_group_data_copy(temp.proxy);
 
-	temp.http = ug_info_get(node_info, UgetHttpInfo);
+	temp.http = ug_data_get(data, UgetHttpInfo);
 	if (temp.http) {
-		plugin->http = ug_data_copy(temp.http);
+		plugin->http = ug_group_data_copy(temp.http);
 		// check http->post_file
 		if (temp.http->post_file) {
 			if (ug_file_is_exist(temp.http->post_file) == FALSE) {
@@ -465,13 +465,13 @@ static int  plugin_accept(UgetPluginCurl* plugin, UgInfo* node_info)
 		}
 	}
 
-	temp.ftp = ug_info_get(node_info, UgetFtpInfo);
+	temp.ftp = ug_data_get(data, UgetFtpInfo);
 	if (temp.ftp)
-		plugin->ftp = ug_data_copy(temp.ftp);
+		plugin->ftp = ug_group_data_copy(temp.ftp);
 
-	// assign UgInfo
-	ug_info_ref(node_info);
-	plugin->node_info = node_info;
+	// assign UgData
+	ug_data_ref(data);
+	plugin->data = data;
 
 	return TRUE;
 }
@@ -501,9 +501,9 @@ static int  plugin_start(UgetPluginCurl* plugin)
 		// failed to start thread -----------------
 		plugin->paused = TRUE;
 		plugin->stopped = TRUE;
-		// remove node
-		ug_info_unref(plugin->node_info);
-		plugin->node_info = NULL;
+		// remove plugin->data
+		ug_data_unref(plugin->data);
+		plugin->data = NULL;
 		// post error message and decreases the reference count
 		uget_plugin_post((UgetPlugin*) plugin,
 				uget_event_new_error(UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
@@ -658,7 +658,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginCurl* plugin)
 		               (uint64_t*) &ugcurl->beg,
 		               (uint64_t*) &ugcurl->end);
 		plugin->segment.beg = ugcurl->end;
-		// plugin_sync() will add file node for existing file
+		// plugin_sync() will set foreign UgetCommon::name
 		plugin->file_renamed = TRUE;
 		plugin->synced = FALSE;
 	}

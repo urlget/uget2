@@ -41,8 +41,8 @@
 #include <UgValue.h>
 #include <UgList.h>
 #include <UgNode.h>
+#include <UgGroupData.h>
 #include <UgData.h>
-#include <UgInfo.h>
 #include <UgUri.h>
 #include <iostream>
 #include <type_traits>
@@ -57,13 +57,13 @@ using namespace std;
 void uglib_is_standard_layout(void)
 {
 #if CHECK_CXX_STANDARD_LAYOUT
-	cout << "Ug::DataInfo : is_standard_layout = " << is_standard_layout<Ug::DataInfo>::value << endl
-	     << "Ug::Data : is_standard_layout = " << std::is_standard_layout<Ug::Data>::value << endl
+	cout << "Ug::GroupDataInfo : is_standard_layout = " << is_standard_layout<Ug::GroupDataInfo>::value << endl
+	     << "Ug::GroupData : is_standard_layout = " << std::is_standard_layout<Ug::GroupData>::value << endl
 	     << "Ug::Array<int> : is_standard_layout = " << std::is_standard_layout<Ug::Array<int>>::value << endl
 	     << "Ug::Buffer : is_standard_layout = " << std::is_standard_layout<Ug::Buffer>::value << endl
 	     << "Ug::Node : is_standard_layout = " << std::is_standard_layout<Ug::Node>::value << endl
 	     << "Ug::List : is_standard_layout = " << std::is_standard_layout<Ug::List>::value << endl
-	     << "Ug::Info : is_standard_layout = " << std::is_standard_layout<Ug::Info>::value << endl
+	     << "Ug::Data : is_standard_layout = " << std::is_standard_layout<Ug::Data>::value << endl
 	     << "Ug::Json : is_standard_layout = " << std::is_standard_layout<Ug::Json>::value << endl
 	     << "Ug::Uri : is_standard_layout = " << std::is_standard_layout<Ug::Uri>::value << endl
 	     << endl;
@@ -168,19 +168,19 @@ void test_node_cxx(void)
 }
 
 // ----------------------------------------------------------------------------
-// test Ug::DataMethod
+// test Ug::GroupDataMethod
 
-struct UgCxxData : public Ug::DataMethod
+struct UgCxxData : public Ug::GroupDataMethod
 {
-	UG_DATA_MEMBERS;
-//	const UgDataInfo*	info;
+	UG_GROUP_DATA_MEMBERS;
+//	const UgGroupDataInfo*	info;
 
 	int   value;
 
 	UgCxxData(void);
 };
 
-Ug::DataInfo UgCxxInfo =
+Ug::GroupDataInfo UgCxxInfo =
 {
 	"UgCxxData",
 	sizeof(UgCxxData),
@@ -202,7 +202,7 @@ UgCxxData::UgCxxData(void)
 	value = 1;
 }
 
-void test_data_cxx (void)
+void test_group_data_cxx (void)
 {
 	UgCxxData  cxxdata;
 
@@ -214,13 +214,13 @@ void test_data_cxx (void)
 }
 
 // ----------------------------------------------------------------------------
-// test Ug::Info
+// test Ug::Data
 
-void test_info_cxx(void)
+void test_data_cxx(void)
 {
-	Ug::Info info;
+	Ug::Data data;
 
-	info.init(16, 3);
+	data.init(16, 3);
 }
 
 // ----------------------------------------------------------------------------
@@ -281,8 +281,8 @@ int   main (void)
 	test_array_cxx();
 	test_buffer_cxx();
 	test_node_cxx();
+	test_group_data_cxx();
 	test_data_cxx();
-	test_info_cxx();
 	test_registry_cxx();
 	test_value_cxx();
 

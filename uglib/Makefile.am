@@ -23,8 +23,8 @@ libuglib_a_SOURCES = \
 	UgOption.c  \
 	UgUri.c  \
 	UgNode.c  \
+	UgGroupData.c  \
 	UgData.c  \
-	UgInfo.c  \
 	UgRegistry.c  \
 	UgValue.c  \
 	UgEntry.c  \
@@ -53,8 +53,8 @@ noinst_HEADERS = \
 	UgOption.h  \
 	UgUri.h  \
 	UgNode.h  \
+	UgGroupData.h  \
 	UgData.h  \
-	UgInfo.h  \
 	UgRegistry.h  \
 	UgValue.h  \
 	UgEntry.h  \

@@ -141,14 +141,14 @@ static void col_set_name (GtkTreeViewColumn *tree_column,
 
 	node = node->base;
 	name = _("unnamed");
-	common = ug_info_get(node->info, UgetCommonInfo);
+	common = ug_data_get(node->data, UgetCommonInfo);
 
 	if (common && common->name)
 		name = common->name;
 	else if (node->name)
 		name = node->name;
 	else {
-		common = ug_info_get (node->info, UgetCommonInfo);
+		common = ug_data_get (node->data, UgetCommonInfo);
 		if (common) {
 			if (common->file)
 				name = common->file;
@@ -176,7 +176,7 @@ static void col_set_complete (GtkTreeViewColumn *tree_column,
 		return;
 	node = node->base;
 
-	progress = ug_info_get (node->info, UgetProgressInfo);
+	progress = ug_data_get (node->data, UgetProgressInfo);
 	if (progress && progress->total)
 		string = ug_str_from_int_unit (progress->complete, NULL);
 	else
@@ -203,7 +203,7 @@ static void col_set_total (GtkTreeViewColumn *tree_column,
 		return;
 	node = node->base;
 
-	progress = ug_info_get (node->info, UgetProgressInfo);
+	progress = ug_data_get (node->data, UgetProgressInfo);
 	if (progress && progress->total)
 		string = ug_str_from_int_unit (progress->total, NULL);
 	else
@@ -230,7 +230,7 @@ static void col_set_percent (GtkTreeViewColumn *tree_column,
 		return;
 	node = node->base;
 
-	progress = ug_info_get (node->info, UgetProgressInfo);
+	progress = ug_data_get (node->data, UgetProgressInfo);
 	if (progress && progress->total) {
 		string = ug_strdup_printf ("%d%c", progress->percent, '%');
 		g_object_set (cell, "visible", TRUE, NULL);
@@ -263,7 +263,7 @@ static void col_set_elapsed (GtkTreeViewColumn *tree_column,
 		return;
 	node = node->base;
 
-	progress = ug_info_get (node->info, UgetProgressInfo);
+	progress = ug_data_get (node->data, UgetProgressInfo);
 	if (progress)
 		string = ug_str_from_seconds ((int) progress->elapsed, TRUE);
 	else
@@ -292,8 +292,8 @@ static void col_set_left (GtkTreeViewColumn *tree_column,
 		return;
 	node = node->base;
 
-	progress = ug_info_get (node->info, UgetProgressInfo);
-	relation = ug_info_get (node->info, UgetRelationInfo);
+	progress = ug_data_get (node->data, UgetProgressInfo);
+	relation = ug_data_get (node->data, UgetRelationInfo);
 
 	if (progress && relation && relation->task.plugin)
 		string = ug_str_from_seconds ((int) progress->left, TRUE);
@@ -322,8 +322,8 @@ static void col_set_speed (GtkTreeViewColumn *tree_column,
 		return;
 	node = node->base;
 
-	progress = ug_info_get (node->info, UgetProgressInfo);
-	relation = ug_info_get (node->info, UgetRelationInfo);
+	progress = ug_data_get (node->data, UgetProgressInfo);
+	relation = ug_data_get (node->data, UgetRelationInfo);
 
 	if (progress && relation && relation->task.plugin)
 		string = ug_str_from_int_unit (progress->download_speed, "/s");
@@ -352,8 +352,8 @@ static void col_set_upload_speed (GtkTreeViewColumn *tree_column,
 		return;
 	node = node->base;
 
-	progress = ug_info_get (node->info, UgetProgressInfo);
-	relation = ug_info_get (node->info, UgetRelationInfo);
+	progress = ug_data_get (node->data, UgetProgressInfo);
+	relation = ug_data_get (node->data, UgetRelationInfo);
 
 	if (progress && relation && relation->task.plugin && progress->upload_speed)
 		string = ug_str_from_int_unit (progress->upload_speed, "/s");
@@ -381,7 +381,7 @@ static void col_set_uploaded (GtkTreeViewColumn *tree_column,
 		return;
 	node = node->base;
 
-	progress = ug_info_get (node->info, UgetProgressInfo);
+	progress = ug_data_get (node->data, UgetProgressInfo);
 	if (progress && progress->uploaded)
 		string = ug_str_from_int_unit (progress->uploaded, NULL);
 	else
@@ -408,7 +408,7 @@ static void col_set_ratio (GtkTreeViewColumn *tree_column,
 		return;
 	node = node->base;
 
-	progress = ug_info_get (node->info, UgetProgressInfo);
+	progress = ug_data_get (node->data, UgetProgressInfo);
 	if (progress && progress->ratio)
 		string = ug_strdup_printf ("%.2f", progress->ratio);
 	else
@@ -435,7 +435,7 @@ static void col_set_retry (GtkTreeViewColumn *tree_column,
 		return;
 	node = node->base;
 
-	common = ug_info_get (node->info, UgetCommonInfo);
+	common = ug_data_get (node->data, UgetCommonInfo);
 	if (common == NULL || common->retry_count == 0)
 		string = NULL;
 	else if (common->retry_count < 100)
@@ -490,7 +490,7 @@ static void col_set_uri (GtkTreeViewColumn *tree_column,
 		return;
 	node = node->base;
 
-	common = ug_info_get (node->info, UgetCommonInfo);
+	common = ug_data_get (node->data, UgetCommonInfo);
 	if (common)
 		string = common->uri;
 	else
@@ -516,7 +516,7 @@ static void col_set_added_on (GtkTreeViewColumn *tree_column,
 		return;
 	node = node->base;
 
-	ulog = ug_info_get (node->info, UgetLogInfo);
+	ulog = ug_data_get (node->data, UgetLogInfo);
 	if (ulog && ulog->added_time)
 		string = ug_str_from_time (ulog->added_time, FALSE);
 	else
@@ -543,7 +543,7 @@ static void col_set_completed_on (GtkTreeViewColumn *tree_column,
 		return;
 	node = node->base;
 
-	ulog = ug_info_get (node->info, UgetLogInfo);
+	ulog = ug_data_get (node->data, UgetLogInfo);
 	if (ulog && ulog->completed_time)
 		string = ug_str_from_time (ulog->completed_time, FALSE);
 	else
@@ -606,7 +606,7 @@ static void col_set_name_c (GtkTreeViewColumn *tree_column,
 //	}
 
 	node = node->base;
-	common = ug_info_get(node->info, UgetCommonInfo);
+	common = ug_data_get(node->data, UgetCommonInfo);
 	if (common && common->name)
 		name = common->name;
 	else if (node->name)

@@ -38,17 +38,18 @@
 #define UGET_FILES_H
 
 #include <stdint.h>
-#include <UgData.h>
+#include <UgGroupData.h>
 #include <UgArray.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct  UgetFiles      UgetFiles;
 typedef struct  UgetFile       UgetFile;
+typedef struct  UgetFiles      UgetFiles;
 typedef UG_ARRAY(UgetFile)     UgetFileCollection;
-extern  const   UgDataInfo*    UgetFilesInfo;
+
+extern const UgGroupDataInfo*  UgetFilesInfo;
 
 enum UgetFileType
 {
@@ -97,8 +98,8 @@ struct UgetFile
 // UgetFiles is derived from UgArray
 struct UgetFiles
 {
-	UG_DATA_MEMBERS;           // It derived from UgData
-//	const UgDataInfo*  info;
+	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
+//	const UgGroupDataInfo*  info;
 
 	UgetFileCollection collection;
 
@@ -145,7 +146,7 @@ namespace Uget
 {
 
 // These are for directly use only. You can NOT derived it.
-struct Files : Ug::DataMethod, UgetFiles {};
+struct Files : Ug::GroupDataMethod, UgetFiles {};
 
 };  // namespace Uget
 

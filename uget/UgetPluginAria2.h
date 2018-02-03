@@ -75,13 +75,16 @@ typedef enum {
 struct UgetPluginAria2
 {
 	UGET_PLUGIN_MEMBERS;               // It derived from UgetPlugin
-//	const UgetPluginInfo*  info;
-//	UgetEvent*    messages;
-//	UgMutex       mutex;
-//	int           ref_count;
+/*
+	// ------ UgetPlugin members ------
+	const UgetPluginInfo*  info;
+	UgetEvent*    messages;
+	UgMutex       mutex;
+	int           ref_count;
+ */
 
-	// pointer to UgInfo that store in UgetApp
-	UgInfo*       node_info;
+	// pointer to UgData that store in UgetApp
+	UgData*       data;
 
 	// aria2.addUri, aria2.addTorrent, aria2.addMetalink
 	UgJsonrpcObject*  start_request;
@@ -115,7 +118,7 @@ struct UgetPluginAria2
 	uint8_t    paused:1;    // paused by user or program
 	uint8_t    stopped:1;   // download is stopped
 	uint8_t    restart:1;   // for retry
-	uint8_t    node_named:1;
+	uint8_t    named:1;
 };
 
 // ----------------------------------------------------------------------------

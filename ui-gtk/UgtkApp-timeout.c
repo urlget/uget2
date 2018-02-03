@@ -342,7 +342,7 @@ static void  ugtk_app_add_uris_quietly (UgtkApp* app,       GList* list,
 		}
 		if (cnode == NULL && infonode) {
 			// match category by filename
-			common = ug_info_realloc (infonode->info, UgetCommonInfo);
+			common = ug_data_realloc (infonode->data, UgetCommonInfo);
 			if (common && common->file) {
 				ug_uri_init (&uuri, common->file);
 				cnode = uget_app_match_category ((UgetApp*) app, &uuri, NULL);
@@ -368,8 +368,8 @@ static void  ugtk_app_add_uris_quietly (UgtkApp* app,       GList* list,
 		}
 		else {
 			dnode = uget_node_new (NULL);
-			ug_info_assign (dnode->info, infonode->info, NULL);
-			common = ug_info_realloc (dnode->info, UgetCommonInfo);
+			ug_data_assign (dnode->data, infonode->data, NULL);
+			common = ug_data_realloc (dnode->data, UgetCommonInfo);
 			common->uri = link->data;
 			uget_app_add_download ((UgetApp*) app, dnode, cnode, TRUE);
 		}
@@ -438,7 +438,7 @@ static void  ugtk_app_add_uris_selected (UgtkApp* app,       GList* list,
 		if (infonode == NULL)
 			cnode = uget_app_match_category ((UgetApp*) app, &uuri, NULL);
 		else {
-			common = ug_info_realloc (infonode->info, UgetCommonInfo);
+			common = ug_data_realloc (infonode->data, UgetCommonInfo);
 			cnode = uget_app_match_category ((UgetApp*) app, &uuri, common->file);
 		}
 	}
@@ -507,7 +507,7 @@ static gboolean  ugtk_app_timeout_rpc (UgtkApp* app)
 {
 	UgetRpcReq*  req;
 	UgetRpcCmd*  cmd;
-	UgetNode*    infonode;
+	UgetNode*    datanode;
 
 	for (;;) {
 		if (uget_rpc_has_request(app->rpc) == FALSE)
@@ -557,17 +557,17 @@ static gboolean  ugtk_app_timeout_rpc (UgtkApp* app)
 				break;
 
 			// add downloads
-			infonode = uget_node_new (NULL);
-			uget_option_value_to_info (&cmd->value, infonode->info);
+			datanode = uget_node_new (NULL);
+			uget_option_value_to_data (&cmd->value, datanode->data);
 			if (cmd->value.quiet) {
 				ugtk_app_add_uris_quietly (app, (GList*) cmd->uris.head,
-						infonode, cmd->value.category_index);
+						datanode, cmd->value.category_index);
 			}
 			else {
 				ugtk_app_add_uris_selected (app, (GList*) cmd->uris.head,
-						infonode, cmd->value.category_index);
+						datanode, cmd->value.category_index);
 			}
-			uget_node_unref (infonode);
+			uget_node_unref (datanode);
 			break;
 
 		default:

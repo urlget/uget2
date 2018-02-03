@@ -6,19 +6,19 @@
 -------------------------------------------------------------------------------
  UgetNode Tree chart:
 
- Root -+- Category1 -+- Download1 (URI) -+- File
-       |             |                   |
-       |             |                   `- cookie or post file (attachment)
+ Root -+- Category1 -+- Download1 (URI)
        |             |
-       |             +- Download2 (URI) -+- File1
-       |             |  (torrent path)   |
-       |             |                   +- File2
-       |             |                   |
-       |             |                   `- torrent file (attachment)
        |             |
-       |             +- Download3 (URI) -+- File
-       |                (metalink path)  |
-       |                                 `- metalink file (attachment)
+       |             |
+       |             +- Download2 (URI)
+       |             |  (torrent path)
+       |             |
+       |             |
+       |             |
+       |             |
+       |             `- Download3 (URI)
+       |                (metalink path)
+       |
        `-- Category2
 
 -------------------------------------------------------------------------------

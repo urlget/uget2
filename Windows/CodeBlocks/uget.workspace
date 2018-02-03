@@ -5,7 +5,7 @@
 		<Project filename="uget.cbp" />
 		<Project filename="ui-gtk.cbp" />
 		<Project filename="ui-gtk-1to2.cbp" />
-		<Project filename="test-info.cbp" />
+		<Project filename="test-data.cbp" />
 		<Project filename="test-json.cbp" />
 		<Project filename="test-jsonrpc.cbp" />
 		<Project filename="test-plugin+app.cbp" />

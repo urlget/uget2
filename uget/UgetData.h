@@ -39,7 +39,7 @@
 
 #include <stdint.h>
 #include <UgUri.h>
-#include <UgData.h>
+#include <UgGroupData.h>
 #include <UgetFiles.h>
 #include <UgetPlugin.h>
 
@@ -57,22 +57,22 @@ typedef struct  UgetLog         UgetLog;
 typedef struct  UgetRelation    UgetRelation;
 typedef struct  UgetCategory    UgetCategory;
 
-extern const UgDataInfo*  UgetCommonInfo;
-extern const UgDataInfo*  UgetProgressInfo;
-extern const UgDataInfo*  UgetProxyInfo;
-extern const UgDataInfo*  UgetHttpInfo;
-extern const UgDataInfo*  UgetFtpInfo;
-extern const UgDataInfo*  UgetLogInfo;
-extern const UgDataInfo*  UgetRelationInfo;
-extern const UgDataInfo*  UgetCategoryInfo;
+extern const UgGroupDataInfo*   UgetCommonInfo;
+extern const UgGroupDataInfo*   UgetProgressInfo;
+extern const UgGroupDataInfo*   UgetProxyInfo;
+extern const UgGroupDataInfo*   UgetHttpInfo;
+extern const UgGroupDataInfo*   UgetFtpInfo;
+extern const UgGroupDataInfo*   UgetLogInfo;
+extern const UgGroupDataInfo*   UgetRelationInfo;
+extern const UgGroupDataInfo*   UgetCategoryInfo;
 
 // ----------------------------------------------------------------------------
-// UgetCommon: It derived from UgData and store in UgInfo.
+// UgetCommon: It derived from UgGroupData and store in UgData.
 
 struct UgetCommon
 {
-	UG_DATA_MEMBERS;           // It derived from UgData
-//	const UgDataInfo*  info;
+	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
+//	const UgGroupDataInfo*  info;
 
 	char*   name;
 	char*   uri;
@@ -99,7 +99,7 @@ struct UgetCommon
 	// debug
 	int           debug_level;
 
-	// keeping flags used by ug_data_assign ()
+	// keeping flags used by ug_group_data_assign ()
 	// They works like read-only
 	struct {
 		uint8_t   enable:1;
@@ -131,12 +131,12 @@ char* uget_name_from_uri(UgUri* uri);
 char* uget_name_from_uri_str(const char* uri);
 
 // ----------------------------------------------------------------------------
-// UgetProgress: It derived from UgData and store in UgInfo.
+// UgetProgress: It derived from UgGroupData and store in UgData.
 
 struct UgetProgress
 {
-	UG_DATA_MEMBERS;           // It derived from UgData
-//	const UgDataInfo*  info;
+	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
+//	const UgGroupDataInfo*  info;
 
 	int64_t      elapsed;     // consume time (seconds)
 	int64_t      left;        // remain time  (seconds)
@@ -152,7 +152,7 @@ struct UgetProgress
 };
 
 // ----------------------------------------------------------------------------
-// UgetProxy: It derived from UgData and store in UgInfo.
+// UgetProxy: It derived from UgGroupData and store in UgData.
 
 typedef enum
 {
@@ -170,8 +170,8 @@ typedef enum
 
 struct UgetProxy
 {
-	UG_DATA_MEMBERS;           // It derived from UgData
-//	const UgDataInfo*  info;
+	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
+//	const UgGroupDataInfo*  info;
 
 	char*          host;
 	unsigned int   port;
@@ -209,12 +209,12 @@ struct UgetProxy
 };
 
 // ----------------------------------------------------------------------------
-// UgetHttp: It derived from UgData and store in UgInfo.
+// UgetHttp: It derived from UgGroupData and store in UgData.
 
 struct UgetHttp
 {
-	UG_DATA_MEMBERS;           // It derived from UgData
-//	const UgDataInfo*  info;
+	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
+//	const UgGroupDataInfo*  info;
 
 	char*  user;
 	char*  password;
@@ -246,12 +246,12 @@ struct UgetHttp
 };
 
 // ----------------------------------------------------------------------------
-// UgetFtp: It derived from UgData and store in UgInfo.
+// UgetFtp: It derived from UgGroupData and store in UgData.
 
 struct UgetFtp
 {
-	UG_DATA_MEMBERS;           // It derived from UgData
-//	const UgDataInfo*  iface;
+	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
+//	const UgGroupDataInfo*  iface;
 
 	char*		 user;
 	char*		 password;
@@ -272,8 +272,8 @@ struct UgetFtp
 
 struct UgetLog
 {
-	UG_DATA_MEMBERS;           // It derived from UgData
-//	const UgDataInfo*  info;
+	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
+//	const UgGroupDataInfo*  info;
 
 	time_t  added_time;
 	time_t  completed_time;
@@ -282,7 +282,7 @@ struct UgetLog
 };
 
 // ----------------------------------------------------------------------------
-// UgetRelation: It derived from UgData and store in UgInfo.
+// UgetRelation: It derived from UgGroupData and store in UgData.
 
 typedef enum
 {
@@ -293,8 +293,8 @@ typedef enum
 
 struct UgetRelation
 {
-	UG_DATA_MEMBERS;           // It derived from UgData
-//	const UgDataInfo*  info;
+	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
+//	const UgGroupDataInfo*  info;
 
 	// used by UgetTask
 	struct UgetRelationTask {
@@ -323,12 +323,12 @@ struct UgetRelation
 };
 
 // ----------------------------------------------------------------------------
-// UgetCategory: It derived from UgData and store in UgInfo.
+// UgetCategory: It derived from UgGroupData and store in UgData.
 
 struct UgetCategory
 {
-	UG_DATA_MEMBERS;           // It derived from UgData
-//	const UgDataInfo*  info;
+	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
+//	const UgGroupDataInfo*  info;
 
 	// use these to classify download
 	UgArrayStr    hosts;
@@ -361,14 +361,14 @@ namespace Uget
 {
 
 // These are for directly use only. You can NOT derived it.
-struct Common : Ug::DataMethod, UgetCommon {};
-struct Progress : Ug::DataMethod, UgetProgress {};
-struct Proxy : Ug::DataMethod, UgetProxy {};
-struct Http : Ug::DataMethod, UgetHttp {};
-struct Ftp : Ug::DataMethod, UgetFtp {};
-struct Log : Ug::DataMethod, UgetLog {};
-struct Relation : Ug::DataMethod, UgetRelation {};
-struct Category : Ug::DataMethod, UgetCategory {};
+struct Common : Ug::GroupDataMethod, UgetCommon {};
+struct Progress : Ug::GroupDataMethod, UgetProgress {};
+struct Proxy : Ug::GroupDataMethod, UgetProxy {};
+struct Http : Ug::GroupDataMethod, UgetHttp {};
+struct Ftp : Ug::GroupDataMethod, UgetFtp {};
+struct Log : Ug::GroupDataMethod, UgetLog {};
+struct Relation : Ug::GroupDataMethod, UgetRelation {};
+struct Category : Ug::GroupDataMethod, UgetCategory {};
 
 };  // namespace Uget
 

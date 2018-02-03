@@ -154,14 +154,14 @@ void uget_plugin_agent_init(UgetPluginAgent* plugin)
 void uget_plugin_agent_final(UgetPluginAgent* plugin)
 {
 	// extent data and plug-in
-	if (plugin->target_info)
-		ug_info_unref(plugin->target_info);
+	if (plugin->target_data)
+		ug_data_unref(plugin->target_data);
 	if (plugin->target_plugin)
 		uget_plugin_unref(plugin->target_plugin);
 
-	// unlink node
-	if (plugin->node_info)
-		ug_info_unref(plugin->node_info);
+	// remove plugin->data
+	if (plugin->data)
+		ug_data_unref(plugin->data);
 
 	uget_plugin_agent_global_unref();
 }
@@ -200,12 +200,12 @@ int  uget_plugin_agent_ctrl_speed(UgetPluginAgent* plugin, int* speed)
 	if (plugin->limit[0] == speed[0] && plugin->limit[1] == speed[1])
 		return TRUE;
 	// decide speed limit by user specified data.
-	if (plugin->node_info == NULL) {
+	if (plugin->data == NULL) {
 		plugin->limit[0] = speed[0];
 		plugin->limit[1] = speed[1];
 	}
 	else {
-		common = ug_info_realloc(plugin->node_info, UgetCommonInfo);
+		common = ug_data_realloc(plugin->data, UgetCommonInfo);
 		// download
 		value = speed[0];
 		if (common->max_download_speed) {
@@ -234,9 +234,9 @@ void  uget_plugin_agent_sync_common(UgetPluginAgent* plugin,
                                     UgetCommon* target)
 {
 	if (common == NULL)
-		common = ug_info_realloc(plugin->node_info, UgetCommonInfo);
+		common = ug_data_realloc(plugin->data, UgetCommonInfo);
 	if (target == NULL)
-		target = ug_info_realloc(plugin->target_info, UgetCommonInfo);
+		target = ug_data_realloc(plugin->target_data, UgetCommonInfo);
 
 	// sync speed limit from common to target
 	if (target->max_upload_speed != common->max_upload_speed ||
@@ -256,9 +256,9 @@ void  uget_plugin_agent_sync_progress(UgetPluginAgent* plugin,
                                       UgetProgress* target)
 {
 	if (progress == NULL)
-		progress = ug_info_realloc(plugin->node_info, UgetProgressInfo);
+		progress = ug_data_realloc(plugin->data, UgetProgressInfo);
 	if (target == NULL)
-		target = ug_info_realloc(plugin->target_info, UgetProgressInfo);
+		target = ug_data_realloc(plugin->target_data, UgetProgressInfo);
 
 	// sync progress from target to common
 	progress->complete       = target->complete;
@@ -291,9 +291,9 @@ int   uget_plugin_agent_start_thread(UgetPluginAgent* plugin,
 		// failed to start thread -----------------
 		plugin->paused = TRUE;
 		plugin->stopped = TRUE;
-		// remove node_info
-		ug_info_unref(plugin->node_info);
-		plugin->node_info = NULL;
+		// remove plugin->data
+		ug_data_unref(plugin->data);
+		plugin->data = NULL;
 		// post error message and decreases the reference count
 		uget_plugin_post((UgetPlugin*) plugin,
 				uget_event_new_error(UGET_EVENT_ERROR_THREAD_CREATE_FAILED,

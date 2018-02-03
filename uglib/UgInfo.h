@@ -34,55 +34,55 @@
  *
  */
 
-#ifndef UG_INFO_H
-#define UG_INFO_H
+#ifndef UG_DATA_H
+#define UG_DATA_H
 
 #include <UgArray.h>
-#include <UgData.h>
 #include <UgRegistry.h>
+#include <UgGroupData.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct  UgInfo      UgInfo;
+typedef struct  UgData      UgData;
 
 // ----------------------------------------------------------------------------
-// This UgRegistry used by UgInfo.
-// User can only store UgDataInfo in this UgRegistry.
+// This UgRegistry used by UgData.
+// User can only store UgGroupDataInfo in this UgRegistry.
 // key-data pair:
-// const char*       key;   // UgDataInfo->name
-// const UgDataInfo* data;  // UgDataInfo
+// const char*            key;   // UgGroupDataInfo->name
+// const UgGroupDataInfo* data;  // UgGroupDataInfo
 
-UgRegistry*  ug_info_get_registry(void);
-void         ug_info_set_registry(UgRegistry* registry);
+UgRegistry*  ug_data_get_registry(void);
+void         ug_data_set_registry(UgRegistry* registry);
 
 // ----------------------------------------------------------------------------
-// UgInfo - UgDataInfo and it's instance collection
-//        - It uses UgDataInfo to get/alloc it's instance.
+// UgData - UgGroupDataInfo and it's instance collection
+//        - It uses UgGroupDataInfo to get/alloc it's instance.
 
-UgInfo* ug_info_new(int allocated_length, int cache_length);
-void    ug_info_ref(UgInfo* info);
-void    ug_info_unref(UgInfo* info);
+UgData* ug_data_new(int allocated_length, int cache_length);
+void    ug_data_ref(UgData* data);
+void    ug_data_unref(UgData* data);
 
-void    ug_info_init(UgInfo* info, int allocated_length, int cache_length);
-void    ug_info_final(UgInfo* info);
+void    ug_data_init(UgData* data, int allocated_length, int cache_length);
+void    ug_data_final(UgData* data);
 
-void*   ug_info_realloc(UgInfo* info, const UgDataInfo* key);
-void    ug_info_remove(UgInfo* info, const UgDataInfo* key);
-void*   ug_info_get(UgInfo* info, const UgDataInfo* key);
-UgPair* ug_info_find(UgInfo* info, const UgDataInfo* key, int* inserted_index);
+void*   ug_data_realloc(UgData* data, const UgGroupDataInfo* key);
+void    ug_data_remove(UgData* data, const UgGroupDataInfo* key);
+void*   ug_data_get(UgData* data, const UgGroupDataInfo* key);
+UgPair* ug_data_find(UgData* data, const UgGroupDataInfo* key, int* inserted_index);
 
-void    ug_info_assign(UgInfo* info, UgInfo* src, const UgDataInfo* exclude);
+void    ug_data_assign(UgData* data, UgData* src, const UgGroupDataInfo* exclude);
 
 // ----------------
 // JSON parser that used with UG_ENTRY_CUSTOM.
 // if (UgRegistry*)registry == NULL, use default registry.
-UgJsonError ug_json_parse_info_ptr(UgJson* json,
+UgJsonError ug_json_parse_data_ptr(UgJson* json,
                                const char* name, const char* value,
-                               void** info, void* registry);
+                               void** data, void* registry);
 // JSON writer that used with UG_ENTRY_CUSTOM.
-void        ug_json_write_info_ptr(UgJson* json, UgInfo** info);
+void        ug_json_write_data_ptr(UgJson* json, UgData** data);
 
 // JSON:
 //
@@ -100,7 +100,7 @@ void        ug_json_write_info_ptr(UgJson* json, UgInfo** info);
 }
 #endif
 
-struct UgInfo
+struct UgData
 {
 	UG_ARRAY_MEMBERS(UgPair);
 //	UgPair* at;
@@ -113,30 +113,30 @@ struct UgInfo
 
 #ifdef __cplusplus
 	// C++11 standard-layout
-	inline UgInfo(void) {}
-	inline UgInfo(int allocatedLength, int cacheLength)
-		{ ug_info_init(this, allocatedLength, cacheLength); }
+	inline UgData(void) {}
+	inline UgData(int allocatedLength, int cacheLength)
+		{ ug_data_init(this, allocatedLength, cacheLength); }
 
-	static inline UgInfo* create(int allocatedLength, int cacheLength)
-		{ return ug_info_new(allocatedLength, cacheLength); }
+	static inline UgData* create(int allocatedLength, int cacheLength)
+		{ return ug_data_new(allocatedLength, cacheLength); }
 
 	inline void  init(int allocatedLength, int cacheLength)
-		{ ug_info_init(this, allocatedLength, cacheLength); }
+		{ ug_data_init(this, allocatedLength, cacheLength); }
 	inline void  final(void)
-		{ ug_info_final(this); }
+		{ ug_data_final(this); }
 
-	inline void  remove(const UgDataInfo* key)
-		{ ug_info_remove(this, key); }
-	inline Ug::DataMethod* realloc(const UgDataInfo* key)
-		{ return (Ug::DataMethod*) ug_info_realloc(this, key); }
-	inline Ug::DataMethod* get(const UgDataInfo* key)
-		{ return (Ug::DataMethod*) ug_info_get(this, key); }
+	inline void  remove(const UgGroupDataInfo* key)
+		{ ug_data_remove(this, key); }
+	inline Ug::GroupDataMethod* realloc(const UgGroupDataInfo* key)
+		{ return (Ug::GroupDataMethod*) ug_data_realloc(this, key); }
+	inline Ug::GroupDataMethod* get(const UgGroupDataInfo* key)
+		{ return (Ug::GroupDataMethod*) ug_data_get(this, key); }
 
 	// static method
 	static inline UgRegistry* getRegistry(void)
-		{ return ug_info_get_registry(); }
+		{ return ug_data_get_registry(); }
 	static inline void        setRegistry(UgRegistry* registry)
-		{ ug_info_set_registry(registry); }
+		{ ug_data_set_registry(registry); }
 #endif  // __cplusplus
 };
 
@@ -148,10 +148,10 @@ struct UgInfo
 namespace Ug
 {
 // This one is for directly use only. You can NOT derived it.
-typedef struct UgInfo    Info;
+typedef struct UgData    Data;
 };  // namespace Ug
 
 #endif  // __cplusplus
 
-#endif  // UG_INFO_H
+#endif  // UG_DATA_H
 

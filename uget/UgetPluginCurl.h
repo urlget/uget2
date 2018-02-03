@@ -48,9 +48,9 @@
 extern "C" {
 #endif
 
-typedef struct UgetPluginCurl     UgetPluginCurl;
+typedef struct UgetPluginCurl    UgetPluginCurl;
 
-extern const UgetPluginInfo*  UgetPluginCurlInfo;
+extern const   UgetPluginInfo*   UgetPluginCurlInfo;
 
 // ----------------------------------------------------------------------------
 // UgetPluginCurl: libcurl plug-in that derived from UgetPlugin.
@@ -58,22 +58,25 @@ extern const UgetPluginInfo*  UgetPluginCurlInfo;
 struct UgetPluginCurl
 {
 	UGET_PLUGIN_MEMBERS;           // It derived from UgetPlugin
-//	const UgetPluginInfo*  info;
-//	UgetEvent*    messages;
-//	UgMutex       mutex;
-//	int           ref_count;
+/*
+	// ------ UgetPlugin members ------
+	const UgetPluginInfo*  info;
+	UgetEvent*    messages;
+	UgMutex       mutex;
+	int           ref_count;
+ */
 
-	// pointer to UgInfo that store in UgetApp
-	UgInfo*       node_info;
+	// pointer to UgData that store in UgetApp
+	UgData*       data;
 
-	// copy of UgetNode data
+	// copy these UgGroupData from plugin->data
 	UgetCommon*   common;
 	UgetFiles*    files;
 	UgetProxy*    proxy;
 	UgetHttp*     http;
 	UgetFtp*      ftp;
 
-	// run-time info
+	// run-time
 //	struct curl_slist*  ftp_command;
 
 	struct {

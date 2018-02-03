@@ -40,13 +40,13 @@
 #include <UgetPluginEmpty.h>
 
 // ----------------------------------------------------------------------------
-// UgetPluginInfo (derived from UgDataInfo)
+// UgetPluginInfo (derived from UgGroupDataInfo)
 
 static void plugin_init (UgetPluginEmpty* plugin);
 static void plugin_final(UgetPluginEmpty* plugin);
 static int  plugin_ctrl (UgetPluginEmpty* plugin, int code, void* data);
-static int  plugin_accept(UgetPluginEmpty* plugin, UgInfo* node_info);
-static int  plugin_sync  (UgetPluginEmpty* plugin, UgInfo* node_info);
+static int  plugin_accept(UgetPluginEmpty* plugin, UgData* data);
+static int  plugin_sync  (UgetPluginEmpty* plugin, UgData* data);
 static UgetResult  global_set(int code, void* parameter);
 static UgetResult  global_get(int code, void* parameter);
 
@@ -174,9 +174,9 @@ static void plugin_final(UgetPluginEmpty* plugin)
 	// your finalized code.
 	//
 
-	// clear UgInfo
-	if (plugin->node_info)
-		ug_info_unref(plugin->node_info);
+	// clear UgData
+	if (plugin->data)
+		ug_data_unref(plugin->data);
 
 	global_unref();
 }
@@ -192,7 +192,7 @@ static int  plugin_ctrl(UgetPluginEmpty* plugin, int code, void* data)
 {
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
-		if (plugin->node_info)
+		if (plugin->data)
 			return plugin_start(plugin);
 		break;
 
@@ -224,12 +224,12 @@ static int  plugin_ctrl_speed(UgetPluginEmpty* plugin, int* speed)
 	if (plugin->limit[0] == speed[0] && plugin->limit[1] == speed[1])
 		return TRUE;
 	// decide speed limit by user specified data.
-	if (plugin->node_info == NULL) {
+	if (plugin->data == NULL) {
 		plugin->limit[0] = speed[0];
 		plugin->limit[1] = speed[1];
 	}
 	else {
-		common = ug_info_realloc(plugin->node_info, UgetCommonInfo);
+		common = ug_data_realloc(plugin->data, UgetCommonInfo);
 		// download
 		value = speed[0];
 		if (common->max_download_speed) {
@@ -253,25 +253,25 @@ static int  plugin_ctrl_speed(UgetPluginEmpty* plugin, int* speed)
 // ----------------------------------------------------------------------------
 // plugin_accept/plugin_sync
 
-// return TRUE  if UgInfo was accepted by plug-in.
-// return FALSE if UgInfo is lack of necessary data.
-static int  plugin_accept(UgetPluginEmpty* plugin, UgInfo* node_info)
+// return TRUE  if UgData was accepted by plug-in.
+// return FALSE if UgData is lack of necessary data.
+static int  plugin_accept(UgetPluginEmpty* plugin, UgData* data)
 {
 	UgetCommon*  common;
 
-	common = ug_info_get(node_info, UgetCommonInfo);
+	common = ug_data_get(data, UgetCommonInfo);
 	if (common == NULL || common->uri == NULL)
 		return FALSE;
 
-	// assign UgInfo
-	ug_info_ref(node_info);
-	plugin->node_info = node_info;
+	// assign UgData
+	ug_data_ref(data);
+	plugin->data = data;
 	return TRUE;
 }
 
 // return TRUE  if plug-in is running or some data need to sync.
 // return FALSE if plug-in was stopped and no data need to sync.
-static int  plugin_sync(UgetPluginEmpty* plugin, UgInfo* node_info)
+static int  plugin_sync(UgetPluginEmpty* plugin, UgData* data)
 {
 	return FALSE;
 }

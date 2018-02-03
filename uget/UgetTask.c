@@ -71,12 +71,12 @@ int   uget_task_add(UgetTask* task, UgetNode* node, const UgetPluginInfo* info)
 	} temp;
 
 	// UgetRelation: check exist plug-in
-	relation = ug_info_realloc(node->info, UgetRelationInfo);
+	relation = ug_data_realloc(node->data, UgetRelationInfo);
 	if (relation->task.plugin)
 		return FALSE;
 
 	// UgetProgress: clear progress when it completed
-	temp.progress = ug_info_get(node->info, UgetProgressInfo);
+	temp.progress = ug_data_get(node->data, UgetProgressInfo);
 	if (temp.progress) {
 		// reset progress if it's percent is 100%.
 		if (temp.progress->percent == 100) {
@@ -90,13 +90,13 @@ int   uget_task_add(UgetTask* task, UgetNode* node, const UgetPluginInfo* info)
 	}
 
 	// UgetCommon: clear retry_count
-	temp.common = ug_info_get(node->info, UgetCommonInfo);
+	temp.common = ug_data_get(node->data, UgetCommonInfo);
 	if (temp.common)
 		temp.common->retry_count = 0;
 
 	// create plug-in and control it
 	relation->task.plugin = uget_plugin_new(info);
-	uget_plugin_accept(relation->task.plugin, node->info);
+	uget_plugin_accept(relation->task.plugin, node->data);
 	if (task->limit.download || task->limit.upload) {
 		// backup current speed limit
 		temp_int_array[0] = task->limit.download;
@@ -136,7 +136,7 @@ int  uget_task_remove(UgetTask* task, UgetNode* node)
 		ug_slinks_remove((UgSLinks*) task, node, prev);
 		node->group &= ~UGET_GROUP_ACTIVE;
 		// UgetRelation
-		relation = ug_info_get(node->info, UgetRelationInfo);
+		relation = ug_data_get(node->data, UgetRelationInfo);
 		if (relation) {
 //			uget_plugin_post(relation->task.plugin,
 //					uget_event_new_state(node, UGET_GROUP_QUEUING));
@@ -166,9 +166,9 @@ static int  uget_task_dispatch1(UgetTask* task, UgetNode* node, UgetPlugin* plug
 		UgetLog*      log;
 	} temp;
 
-	active = uget_plugin_sync(plugin, node->info);
+	active = uget_plugin_sync(plugin, node->data);
 	// update UgetFiles
-	files = ug_info_get(node->info, UgetFilesInfo);
+	files = ug_data_get(node->data, UgetFilesInfo);
 	if (files)
 		uget_files_erase_deleted(files);
 	// plug-in was paused by user (see function uget_app_pause_download)
@@ -197,7 +197,7 @@ static int  uget_task_dispatch1(UgetTask* task, UgetNode* node, UgetPlugin* plug
 			node->group |= UGET_GROUP_ERROR;  // don't break here
 		case UGET_EVENT_WARNING:
 		case UGET_EVENT_NORMAL:
-			temp.log = ug_info_realloc(node->info, UgetLogInfo);
+			temp.log = ug_data_realloc(node->data, UgetLogInfo);
 			ug_list_prepend(&temp.log->messages, (UgLink*) event);
 			break;
 
@@ -251,11 +251,11 @@ void  uget_task_dispatch(UgetTask* task)
 
 	for (link = task->used;  link;  link = link->next) {
 		node = link->data;
-		relation = ug_info_get(node->info, UgetRelationInfo);
+		relation = ug_data_get(node->data, UgetRelationInfo);
 		if (uget_task_dispatch1(task, node, relation->task.plugin) == FALSE)
 			continue;
 		// speed
-		progress = ug_info_get(node->info, UgetProgressInfo);
+		progress = ug_data_get(node->data, UgetProgressInfo);
 		if (progress) {
 			task->speed.download += progress->download_speed;
 			task->speed.upload   += progress->upload_speed;
@@ -326,7 +326,7 @@ static void uget_task_adjust_speed_index(UgetTask* task, int idx, int remain)
 		// increase speed by priority
 		for (link = task->used;  link;  link = link->next) {
 			node = (UgetNode*) link->data;
-			relation = ug_info_get(node->info, UgetRelationInfo);
+			relation = ug_data_get(node->data, UgetRelationInfo);
 			relation->task.prev = prev;
 			prev = relation;
 			n_piece += relation->task.priority + 1;
@@ -349,7 +349,7 @@ static void uget_task_adjust_speed_index(UgetTask* task, int idx, int remain)
 		remain = remain / task->n_links;
 		for (link = task->used;  link;  link = link->next) {
 			node = (UgetNode*) link->data;
-			relation = ug_info_get(node->info, UgetRelationInfo);
+			relation = ug_data_get(node->data, UgetRelationInfo);
 			relation->task.limit[idx] = relation->task.speed[idx] + remain;
 			if (relation->task.limit[idx] < SPEED_MIN)
 				relation->task.limit[idx] = SPEED_MIN;
@@ -367,7 +367,7 @@ static void uget_task_disable_limit_index(UgetTask* task, int idx)
 
 	for (link = task->used;  link;  link = link->next) {
 		node = (UgetNode*) link->data;
-		relation = ug_info_get(node->info, UgetRelationInfo);
+		relation = ug_data_get(node->data, UgetRelationInfo);
 		relation->task.limit[idx] = 0;
 		uget_plugin_ctrl_speed(relation->task.plugin,
 		                       relation->task.limit);

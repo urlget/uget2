@@ -222,7 +222,7 @@ static void on_sequencer_response (UgtkBatchDialog* bdialog)
 
 	for (link = result.head;  link;  link = link->next) {
 		dnode = uget_node_new (NULL);
-		common = ug_info_realloc (dnode->info, UgetCommonInfo);
+		common = ug_data_realloc (dnode->data, UgetCommonInfo);
 		ugtk_node_dialog_get ((UgtkNodeDialog*) bdialog, dnode);
 		common->uri = ug_strdup (link->data);
 		uget_app_add_download ((UgetApp*) app, dnode, cnode, FALSE);
@@ -250,7 +250,7 @@ static void on_selector_response (UgtkBatchDialog* bdialog)
 
 	for (link = uri_list;  link;  link = link->next) {
 		dnode = uget_node_new (NULL);
-		common = ug_info_realloc (dnode->info, UgetCommonInfo);
+		common = ug_data_realloc (dnode->data, UgetCommonInfo);
 		ugtk_node_dialog_get ((UgtkNodeDialog*) bdialog, dnode);
 #if 0
 		common->uri = link->data;

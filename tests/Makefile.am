@@ -1,5 +1,5 @@
 noinst_PROGRAMS = \
-	test-json  test-jsonrpc  test-plugin+app  test-info  \
+	test-json  test-jsonrpc  test-plugin+app  test-data  \
 	test-uglib  test-uget
 #	test-uglib-cxx  test-uget-cxx
 TESTS_LIBS = @PTHREAD_LIBS@  @CURL_LIBS@  @GLIB_LIBS@
@@ -25,9 +25,9 @@ test_plugin_app_CPPFLAGS = -I$(top_srcdir)/uglib -I$(top_srcdir)/uget  @LIBGCRYP
 test_plugin_app_LDADD    = $(top_builddir)/uget/libuget.a $(top_builddir)/uglib/libuglib.a  $(TESTS_LIBS)  @LIBGCRYPT_LIBS@  @LIBCRYPTO_LIBS@
 test_plugin_app_SOURCES  = test-plugin+app.c
 
-# test_info_CPPFLAGS   = -I$(top_srcdir)/uglib
-test_info_LDADD    = $(top_builddir)/uglib/libuglib.a  $(TESTS_LIBS)
-test_info_SOURCES  = test-info.c
+# test_data_CPPFLAGS   = -I$(top_srcdir)/uglib
+test_data_LDADD    = $(top_builddir)/uglib/libuglib.a  $(TESTS_LIBS)
+test_data_SOURCES  = test-data.c
 
 # test_uglib_CPPFLAGS = -I$(top_srcdir)/uglib
 test_uglib_LDADD    = $(top_builddir)/uglib/libuglib.a  $(TESTS_LIBS)
