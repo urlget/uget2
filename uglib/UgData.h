@@ -76,13 +76,18 @@ UgPair* ug_data_find(UgData* data, const UgGroupDataInfo* key, int* inserted_ind
 void    ug_data_assign(UgData* data, UgData* src, const UgGroupDataInfo* exclude);
 
 // ----------------
-// JSON parser that used with UG_ENTRY_CUSTOM.
+// JSON parser/writer that used with UG_ENTRY_CUSTOM.
 // if (UgRegistry*)registry == NULL, use default registry.
+
 UgJsonError ug_json_parse_data_ptr(UgJson* json,
                                const char* name, const char* value,
                                void** data, void* registry);
-// JSON writer that used with UG_ENTRY_CUSTOM.
 void        ug_json_write_data_ptr(UgJson* json, UgData** data);
+
+UgJsonError ug_json_parse_data(UgJson* json,
+                               const char* name, const char* value,
+                               void* data, void* registry);
+void        ug_json_write_data(UgJson* json, UgData* data);
 
 // JSON:
 //

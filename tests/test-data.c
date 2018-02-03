@@ -148,9 +148,9 @@ void  test3_init(Test3* t3)
 // ----------------------------------------------------------------------------
 // test UgData
 
-UgEntry	InfoCustomEntry[] = {
-	{NULL, 0, UG_ENTRY_CUSTOM, (UgJsonParseFunc) ug_json_parse_data_ptr,
-	                           (UgJsonWriteFunc) ug_json_write_data_ptr},
+UgEntry	DataCustomEntry[] = {
+	{NULL, 0, UG_ENTRY_CUSTOM, (UgJsonParseFunc) ug_json_parse_data,
+	                           (UgJsonWriteFunc) ug_json_write_data},
 	{NULL}
 };
 
@@ -199,10 +199,10 @@ void  parse_data(UgData* data)
 	ug_json_begin_parse(&json);
 #if 1
 	// method 1: use UgEntry to parse start of object
-	ug_json_push(&json, ug_json_parse_entry, &data, InfoCustomEntry);
+	ug_json_push(&json, ug_json_parse_entry, data, DataCustomEntry);
 #else
 	// method 2: push ug_json_parse_data() to parse start of object
-	ug_json_push(&json, ug_json_parse_data_ptr, &data, &registry);
+	ug_json_push(&json, ug_json_parse_data, data, &registry);
 #endif
 	code = ug_json_parse(&json, json_string, -1);
 	ug_json_end_parse(&json);
@@ -257,7 +257,7 @@ void  write_data_to_file(UgData* data, char* filename)
 	ug_json_begin_write(&json, UG_JSON_FORMAT_INDENT, &buffer);
 #if 1
 	// method 1: use UgEntry to write start of object
-	ug_json_write_entry(&json, data, InfoCustomEntry);
+	ug_json_write_entry(&json, data, DataCustomEntry);
 #else
 	// method 2: call ug_json_write_object_head() to write start of object
 	ug_json_write_object_head(&json);

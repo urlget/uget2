@@ -227,8 +227,9 @@ static UgJsonError ug_json_parse_data_reg(UgJson* json,
 }
 
 // ----------------
+// JSON parser/writer that used with UG_ENTRY_CUSTOM.
 
-// JSON parser for UgData.
+// JSON parser for UgData pointer.
 UgJsonError ug_json_parse_data_ptr(UgJson* json,
                                const char* name, const char* value,
                                void** data, void* none)
@@ -244,7 +245,7 @@ UgJsonError ug_json_parse_data_ptr(UgJson* json,
 	return UG_JSON_ERROR_NONE;
 }
 
-// JSON writer for UgData.
+// JSON writer for UgData pointer.
 void  ug_json_write_data_ptr(UgJson* json, UgData** pdata)
 {
 	UgData* data = *pdata;
@@ -263,5 +264,19 @@ void  ug_json_write_data_ptr(UgJson* json, UgData** pdata)
 		ug_json_write_object_tail(json);
 	}
 	ug_json_write_object_tail(json);
+}
+
+// JSON parser for UgData.
+UgJsonError ug_json_parse_data(UgJson* json,
+                               const char* name, const char* value,
+                               void* data, void* none)
+{
+	return ug_json_parse_data_ptr(json, name, value, &data, none);
+}
+
+// JSON writer for UgData.
+void  ug_json_write_data(UgJson* json, UgData* data)
+{
+	ug_json_write_data_ptr(json, &data);
 }
 
