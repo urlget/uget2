@@ -89,17 +89,17 @@ UgJsonError ug_json_parse_data(UgJson* json,
                                void* data, void* registry);
 void        ug_json_write_data(UgJson* json, UgData* data);
 
-// JSON:
-//
-// {
-//    "progress": {
-//    },
-//    "common": {
-//    },
-//    "log": {
-//    }
-// }
-//
+/*
+	// --- JSON output sample ---
+	{
+		"progress": {
+		},
+		"common": {
+		},
+		"log": {
+		}
+	}
+ */
 
 #ifdef __cplusplus
 }

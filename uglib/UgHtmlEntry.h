@@ -66,31 +66,31 @@ void  ug_html_start_element_entry (UgHtml*        uhtml,
                                    const char**   attribute_values,
                                    void*          dest,
                                    void*          entry);
+/*
+	UgHtmlEntry.name   = element_name
+	UgHtmlEntry.offset = offset of structure
 
-// UgHtmlEntry.name   = element_name
-// UgHtmlEntry.offset = offset of structure
+	if UgHtmlEntry.parser == NULL, this entry is null-terminated.
 
-// if UgHtmlEntry.parser == NULL, this entry is null-terminated.
+	if UgHtmlEntry.name == NULL, it can match any name.
+	it usually uses at first or last entry.
 
-// if UgHtmlEntry.name == NULL, it can match any name.
-// it usually uses at first or last entry.
+	if UgHtmlEntry.parser == ug_html_parser_custom
+	UgEntry.param1 = start element function (UgHtmlParserStartElementFunc)
+	UgEntry.param2 = custom writer function
 
-// if UgHtmlEntry.parser == ug_html_parser_custom
-// UgEntry.param1 = start element function (UgHtmlParserStartElementFunc)
-// UgEntry.param2 = custom writer function
+	UgHtmlEntry.parser == ug_html_parser_int, ug_html_parser_string...etc
+	UgHtmlEntry.param2 = UgHtmlEntry for attribute
 
-// UgHtmlEntry.parser == ug_html_parser_int, ug_html_parser_string...etc
-// UgHtmlEntry.param2 = UgHtmlEntry for attribute
+	UgHtmlEntry.parser == ug_html_parser_string
+	If you don't want to output anything when string value is NULL,
+	set NULL at UgHtmlEntry.param1.
+	UgHtmlEntry.param2 = UgHtmlEntry for attribute
 
-// UgHtmlEntry.parser == ug_html_parser_string
-// If you don't want to output anything when string value is NULL,
-// set UgHtmlEntry.param1 != NULL.
-// UgHtmlEntry.param2 = UgHtmlEntry for attribute
-
-// UgHtmlEntry.parser == ug_html_parser_entry
-// UgHtmlEntry.param1 = UgHtmlEntry
-// UgHtmlEntry.param2 = UgHtmlEntry for attribute
-
+	UgHtmlEntry.parser == ug_html_parser_entry
+	UgHtmlEntry.param1 = UgHtmlEntry
+	UgHtmlEntry.param2 = UgHtmlEntry for attribute
+ */
 // ------------------------------------
 // parser for unknown element
 

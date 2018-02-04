@@ -95,10 +95,12 @@ typedef UgetResult (*UgetPluginGlobalFunc)(int option, void* parameter);
 struct UgetPluginInfo
 {
 	UG_TYPE_INFO_MEMBERS;
-//	const char*     name;
-//	uintptr_t       size;
-//	UgInitFunc      init;
-//	UgFinalFunc     final;
+/*	// ------ UgTypeInfo members ------
+	const char*     name;
+	uintptr_t       size;
+	UgInitFunc      init;
+	UgFinalFunc     final;
+ */
 
 	UgetPluginSyncFunc  accept;  // pass data to plug-in.
 	UgetPluginSyncFunc  sync;    // call this to sync/exchange data.
@@ -168,11 +170,13 @@ int     uget_plugin_match(const UgetPluginInfo* info, UgUri* uuri);
 
 struct UgetPlugin
 {
-	UGET_PLUGIN_MEMBERS;               // It derived from UgType
-//	const UgetPluginInfo*  info;
-//	UgetEvent*    events;
-//	UgMutex       mutex;
-//	int           ref_count;
+	UGET_PLUGIN_MEMBERS;          // It derived from UgType
+/*	// ------ UgetPlugin members ------
+	const UgetPluginInfo*  info;
+	UgetEvent*    events;
+	UgMutex       mutex;
+	int           ref_count;
+ */
 };
 
 // UgetPlugin functions

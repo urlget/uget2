@@ -60,13 +60,15 @@ typedef struct	UgNode          UgNode;
 struct UgNode
 {
 	UG_NODE_MEMBERS (UgNode, void, data);
-//	void*    data;
-//	UgNode*  next;
-//	UgNode*  prev;
-//	UgNode*  parent;
-//	UgNode*  children;
-//	UgNode*  last;
-//	int      n_children;
+/*
+	void*    data;
+	UgNode*  next;
+	UgNode*  prev;
+	UgNode*  parent;
+	UgNode*  children;
+	UgNode*  last;
+	int      n_children;
+ */
 };
 
 UgNode* ug_node_new  (void);

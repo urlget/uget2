@@ -66,9 +66,12 @@ typedef enum {
 struct UgetRssItem
 {
 	UG_LINK_MEMBERS (UgetRssItem, UgetRssItem, self);
-//	UgetRssItem*  self;
-//	UgetRssItem*  next;
-//	UgetRssItem*  prev;
+/*	// ------ UgLink members ------
+	UgetRssItem*  self;
+	UgetRssItem*  next;
+	UgetRssItem*  prev;
+ */
+
 	char*   title;
 	char*   link;
 	time_t  updated;   // pubDate
@@ -84,9 +87,12 @@ extern const UgEntry  UgetRssFeedEntry[];
 struct UgetRssFeed
 {
 	UG_LINK_MEMBERS (UgetRssFeed, UgetRssFeed, self);
-//	UgetRssFeed*  self;
-//	UgetRssFeed*  next;
-//	UgetRssFeed*  prev;
+/*	// ------ UgLink members ------
+	UgetRssFeed*  self;
+	UgetRssFeed*  next;
+	UgetRssFeed*  prev;
+ */
+
 	char*   title;
 	char*   link;
 	time_t  updated;   // pubDate

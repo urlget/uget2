@@ -75,23 +75,25 @@ typedef struct  UgetApp          UgetApp;
 struct UgetApp
 {
 	UGET_APP_MEMBERS;
-//	UgetNode        real;           // real root node for real nodes
-//	UgetNode        split;          // virtual root
-//	UgetNode        sorted;         // virtual root
-//	UgetNode        sorted_split;   // virtual root
-//	UgetNode        mix;            // virtual root
-//	UgetNode        mix_split;      // virtual root
-//	UgRegistry      infos;
-//	UgRegistry      plugins;
-//	UgetPluginInfo* plugin;
-//	UgetTask        task;
-//	UgArrayPtr      nodes;
-//	void*           uri_hash;
-//	char*           config_dir;
-//	int             n_error;     // these n_xxxx increase by uget_app_grow()
-//	int             n_moved;
-//	int             n_deleted;
-//	int             n_completed;
+/*	// ------ UgetApp members ------
+	UgetNode        real;           // real root node for real nodes
+	UgetNode        split;          // virtual root
+	UgetNode        sorted;         // virtual root
+	UgetNode        sorted_split;   // virtual root
+	UgetNode        mix;            // virtual root
+	UgetNode        mix_split;      // virtual root
+	UgRegistry      infos;
+	UgRegistry      plugins;
+	UgetPluginInfo* plugin_default;
+	UgetTask        task;
+	UgArrayPtr      nodes;
+	void*           uri_hash;
+	char*           config_dir;
+	int             n_error;        // uget_app_grow() will count these value:
+	int             n_moved;        // n_error, n_moved, n_deleted, and
+	int             n_deleted;      // n_completed
+	int             n_completed;    //
+ */
 };
 
 void  uget_app_init (UgetApp* app);

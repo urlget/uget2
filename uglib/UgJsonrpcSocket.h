@@ -64,10 +64,12 @@ typedef struct UgSocketServer    UgSocketServer;
 struct  UgJsonrpcSocket
 {
 	UG_JSONRPC_SOCKET_MEMBERS;
-//	UgJson           json;
-//	UgJsonrpc        rpc;
-//	UgBuffer         buffer;
-//	int              socket;
+/*	// ------ UgJsonrpcSocket members ------
+	UgJson           json;
+	UgJsonrpc        rpc;
+	UgBuffer         buffer;
+	int              socket;
+ */
 };
 
 void  ug_jsonrpc_socket_init (UgJsonrpcSocket* jrsock);

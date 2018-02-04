@@ -78,13 +78,15 @@ void  uget_task_adjust_speed(UgetTask* task);
 struct UgetTask
 {
 	UG_SLINKS_MEMBERS;
-//	UgSLink*  at;
-//	int       length;
-//	int       allocated;
-//	int       element_size;
-//	int       n_links;
-//	UgSLink*  used;
-//	UgSLink*  freed;
+/*	// ------ UgSLinks members ------
+	UgSLink*  at;
+	int       length;
+	int       allocated;
+	int       element_size;
+	int       n_links;
+	UgSLink*  used;
+	UgSLink*  freed;
+ */
 
 	struct {
 		UgetWatchFunc   func;

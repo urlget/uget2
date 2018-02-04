@@ -69,13 +69,18 @@ struct UgSLink
 struct UgSLinks
 {
 	UG_SLINKS_MEMBERS;
-//	UgSLink*  at;
-//	int       length;
-//	int       allocated;
-//	int       element_size
-//	int       n_links;
-//	UgSLink*  used;
-//	UgSLink*  freed;
+/*
+	// ------ UgArray members ------
+	UgSLink*  at;
+	int       length;
+	int       allocated;
+	int       element_size
+
+	// ------ UgSLinks members ------
+	int       n_links;
+	UgSLink*  used;
+	UgSLink*  freed;
+ */
 };
 
 void  ug_slinks_init (UgSLinks* slinks, int allocated_len);

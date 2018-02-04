@@ -110,25 +110,26 @@ int  ug_socket_listen (SOCKET fd, const char* addr, const char* port_or_serv,
 int  ug_socket_listen_unix (SOCKET fd, const char* path, int path_len, int backlog);
 #endif // ! (_WIN32 || _WIN64)
 
+/*
 // ------------------------------------
 // UgSocketServer
 
-// sample code:
-//
-//	UgSocketServer*  server;
-//	SOCKET           server_fd;
-//
-//	server_fd = socket (AF_INET, SOCK_STREAM, 0);
-//	ug_socket_listen (server_fd, "127.0.0.1", "80", 5);
-//
-//	server = ug_socket_server_new (server_fd);
-//	ug_socket_server_set_receiver (server, callback, callback_data);
-//	ug_socket_server_start (server);
-//
-//  // --- now client can connect to server ---
-//
-//	ug_socket_server_stop (server);
-//	ug_socket_server_unref (server);
+	// sample code:
+	UgSocketServer*  server;
+	SOCKET           server_fd;
+
+	server_fd = socket (AF_INET, SOCK_STREAM, 0);
+	ug_socket_listen (server_fd, "127.0.0.1", "80", 5);
+
+	server = ug_socket_server_new (server_fd);
+	ug_socket_server_set_receiver (server, callback, callback_data);
+	ug_socket_server_start (server);
+
+	// --- now client can connect to server ---
+
+	ug_socket_server_stop (server);
+	ug_socket_server_unref (server);
+ */
 
 typedef struct UgSocketServer       UgSocketServer;
 typedef void (*UgSocketServerFunc) (UgSocketServer* server,

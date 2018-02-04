@@ -65,10 +65,12 @@ typedef int   (*UgAssignFunc) (void* instance, void* src);
 struct UgTypeInfo
 {
 	UG_TYPE_INFO_MEMBERS;
-//	const char*     name;
-//	uintptr_t       size;
-//	UgInitFunc      init;
-//	UgFinalFunc     final;
+/*	// ------ UgTypeInfo members ------
+	const char*     name;
+	uintptr_t       size;
+	UgInitFunc      init;
+	UgFinalFunc     final;
+ */
 };
 
 #define	UG_TYPE_MEMBERS  \
@@ -104,12 +106,14 @@ void       ug_type_final(void* type);
 struct UgGroupDataInfo
 {
 	UG_GROUP_DATA_INFO_MEMBERS;
-//	const char*     name;
-//	uintptr_t       size;
-//	UgInitFunc      init;
-//	UgFinalFunc     final;
-//	UgAssignFunc    assign;
-//	const UgEntry*	entry;
+/*	// ------ UgGroupDataInfo members ------
+	const char*     name;
+	uintptr_t       size;
+	UgInitFunc      init;
+	UgFinalFunc     final;
+	UgAssignFunc    assign;
+	const UgEntry*	entry;
+ */
 };
 
 // ----------------------------------------------------------------------------

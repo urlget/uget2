@@ -58,10 +58,12 @@ typedef struct UgetRpcCmd        UgetRpcCmd;
 
 struct UgetRpc {
 	UG_JSONRPC_SOCKET_MEMBERS;
-//	UgJson           json;
-//	UgJsonrpc        rpc;
-//	UgBuffer         buffer;
-//	int              socket;
+/*	// ------ UgJsonrpcSocket members ------
+	UgJson           json;
+	UgJsonrpc        rpc;
+	UgBuffer         buffer;
+	int              socket;
+ */
 
 	UgSocketServer*  server;
 	UgJsonrpcObject  jobject;
@@ -107,10 +109,12 @@ UgetRpcReq*  uget_rpc_get_request (UgetRpc* urpc);
 struct UgetRpcReq
 {
 	UGET_RPC_REQ_MEMBERS;    // UgLink
-//	intptr_t     method_id;
-//	UgetRpcReq*  next;
-//	UgetRpcReq*  prev;
-//	UgDeleteFunc free;
+/*	// ------ UgetRpcReq members ------
+	intptr_t     method_id;
+	UgetRpcReq*  next;
+	UgetRpcReq*  prev;
+	UgDeleteFunc free;
+ */
 };
 
 UgetRpcReq*  uget_rpc_req_new (void);
@@ -122,10 +126,12 @@ UgetRpcReq*  uget_rpc_req_new (void);
 struct UgetRpcCmd
 {
 	UGET_RPC_REQ_MEMBERS;    // UgLink
-//	intptr_t     method_id;
-//	UgetRpcReq*  next;
-//	UgetRpcReq*  prev;
-//	UgDeleteFunc free;
+/*	// ------ UgetRpcReq members ------
+	intptr_t     method_id;
+	UgetRpcReq*  next;
+	UgetRpcReq*  prev;
+	UgDeleteFunc free;
+ */
 
 	UgetOptionValue  value;
 	UgList           uris;

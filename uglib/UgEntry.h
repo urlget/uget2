@@ -74,57 +74,58 @@ typedef enum
 // ----------------------------------------------------------------------------
 // UgEntry: It can defines a object member and it's offset of data structure.
 
-// ------------------------------------
-// sample for JSON
+/*
+	// --- UgEntry sample for JSON ---
+	typedef struct
+	{
+		char*  user;
+		int    number;
+	} Foo;
 
-//	typedef struct
-//	{
-//		char*  user;
-//		int    number;
-//	} Foo;
-//
-//	static UgEntry FooEntry[] =
-//	{
-//		{ "user",   offsetof(Foo, user),   UG_ENTRY_STRING, NULL, NULL},
-//		{ "number", offsetof(Foo, number), UG_ENTRY_INT,    NULL, NULL},
-//		{ NULL }    // null-terminated
-//	};
-//
-//	JSON output:
-//	{
-//		"user": "guest3",
-//		"number": 2500,
-//	}
+	static UgEntry FooEntry[] =
+	{
+		{ "user",   offsetof(Foo, user),   UG_ENTRY_STRING, NULL, NULL},
+		{ "number", offsetof(Foo, number), UG_ENTRY_INT,    NULL, NULL},
+		{ NULL }    // null-terminated
+	};
 
-// if UgEntry.type == 0, this entry is null-terminated.
+	// --- JSON output: ---
+	{
+		"user": "guest3",
+		"number": 2500,
+	}
 
-// if UgEntry.name == NULL, it can match no name or any name.
-// it usually uses at first or last entry.
+	-------------------------------------------------------
+	if UgEntry.type == 0, this entry is null-terminated.
 
-// UgEntryType = UG_ENTRY_STRING
-// If you don't want to output anything when string value is NULL,
-// set UgEntry.param2 to UG_ENTRY_NO_NULL.
+	if UgEntry.name == NULL, it can match no name or any name.
+	it usually uses at first or last entry.
 
-// UgEntryType = UG_ENTRY_OBJECT
-// UgEntry.param1 pointer to UgEntry
-// UgEntry.param2 pointer to UgInitFunc
-// ---------
-// if (UgInitFunc)
-//     UgInitFunc(UserData);
+	UgEntryType = UG_ENTRY_STRING
+	If you don't want to output anything when string value is NULL,
+	set UG_ENTRY_NO_NULL at UgEntry.param2.
 
-// UgEntryType = UG_ENTRY_ARRAY
-// UgEntry.param1 = UgJsonParseFunc, how to parse JSON array elements.
-// UgEntry.param2 = UgJsonWriteFunc, how to write JSON array elements.
-// ---------
-// parser call UgEntry.param1 to parse JSON array.
-// writer call UgEntry.param2 to write JSON array.
+	UgEntryType = UG_ENTRY_OBJECT
+	UgEntry.param1 pointer to UgEntry
+	UgEntry.param2 pointer to UgInitFunc
+	---------
+	if (UgInitFunc)
+		UgInitFunc(UserData);
 
-// UgEntryType = UG_ENTRY_CUSTOM
-// UgEntry.param1 = UgJsonParseFunc, how to parse JSON value.
-// UgEntry.param2 = UgJsonWriteFunc, how to write JSON value.
-// ---------
-// parser call UgEntry.param1 to parse JSON value.
-// writer call UgEntry.param2 to write JSON value.
+	UgEntryType = UG_ENTRY_ARRAY
+	UgEntry.param1 = UgJsonParseFunc, how to parse JSON array elements.
+	UgEntry.param2 = UgJsonWriteFunc, how to write JSON array elements.
+	---------
+	parser call UgEntry.param1 to parse JSON array.
+	writer call UgEntry.param2 to write JSON array.
+
+	UgEntryType = UG_ENTRY_CUSTOM
+	UgEntry.param1 = UgJsonParseFunc, how to parse JSON value.
+	UgEntry.param2 = UgJsonWriteFunc, how to write JSON value.
+	---------
+	parser call UgEntry.param1 to parse JSON value.
+	writer call UgEntry.param2 to write JSON value.
+ */
 
 struct UgEntry
 {

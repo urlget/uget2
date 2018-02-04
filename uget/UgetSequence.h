@@ -64,10 +64,12 @@ struct UgetSeqRange
 struct UgetSequence
 {
 	UG_ARRAY_MEMBERS (UgetSeqRange);
-//	UgetSeqRange*  at;
-//	int    length;
-//	int    allocated;
-//	int    element_size;
+/*	// ------ UgArray members ------
+	UgetSeqRange*  at;
+	int    length;
+	int    allocated;
+	int    element_size;
+ */
 
 	UgetSeqRange*  range_last;    // used by uget_sequence_get_list()
 	UgBuffer       buf;
@@ -84,13 +86,13 @@ int  uget_sequence_count (UgetSequence* useq, const char* pattern);
 // call ug_list_foreach_link (result, (UgForeachFunc)ug_free, NULL) to free result list
 int  uget_sequence_get_list (UgetSequence* useq, const char* pattern, UgList* result);
 int  uget_sequence_get_preview (UgetSequence* useq, const char* pattern, UgList* result);
-
-// param: pattern is a string that contain wildcard character *.
-// e.g. Number-*.jpg
-//      Number-0.jpg, Number-1.jpg ...etc
-//      Number-a.jpg, Number-b.jpg ...etc
-//      Number-A.jpg, Number-B.jpg ...etc
-
+/*
+	param: pattern is a string that contain wildcard character *.
+	e.g. Number-*.jpg
+	     Number-0.jpg, Number-1.jpg ...etc
+	     Number-a.jpg, Number-b.jpg ...etc
+	     Number-A.jpg, Number-B.jpg ...etc
+ */
 
 #ifdef __cplusplus
 }

@@ -75,15 +75,17 @@ typedef struct UgUri              UgUri;
 struct UgUri
 {
 	UG_URI_MEMBERS;
-//	const char*  uri;
-//	int16_t  scheme_len;
-//	int16_t  authority;
-//	int16_t  host;
-//	int16_t  port;
-//	int16_t  path;
-//	int16_t  file;
-//	int16_t  query;
-//	int16_t  fragment;
+/*
+	const char*  uri;
+	int16_t  scheme_len;
+	int16_t  authority;
+	int16_t  host;
+	int16_t  port;
+	int16_t  path;
+	int16_t  file;
+	int16_t  query;
+	int16_t  fragment;
+ */
 };
 
 int  ug_uri_init (UgUri* uuri, const char* uri);
@@ -139,13 +141,13 @@ struct UgUriQuery {
 	char*  field_next;
 	char*  value_next;
 };
-
-// e.g.
-// while (ug_uri_query_part(&uuquery, field) > 0) {
-//     // your code here
-//     field = uuquery->field_next;
-// }
-//
+/*
+	// e.g.
+	while (ug_uri_query_part(&uuquery, field) > 0) {
+		// your code here
+		field = uuquery->field_next;
+	}
+ */
 // return 0: if param 'query_field' is NULL.
 // return 0: no field (end of query)
 // return 1: field only
