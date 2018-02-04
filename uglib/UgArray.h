@@ -72,6 +72,12 @@ void*   ug_array_find_sorted(void* array, const void* key,
 #define ug_array_length(array)  \
 		( ((UgArrayChar*)(array))->length )
 
+#define ug_array_allocated(array)  \
+		( ((UgArrayChar*)(array))->allocated )
+
+#define ug_array_element_size(array)  \
+		( ((UgArrayChar*)(array))->element_size )
+
 // Binary search:
 // int compareFunc(const void *s1, const void *s2);
 #define	ug_array_bsearch(array, key, compareFunc)  \
@@ -181,10 +187,12 @@ template<class Type>
 struct UgArray : UgArrayMethod<Type>
 {
 	UG_ARRAY_MEMBERS(Type);
-//	Type*  at;
-//	int    length;
-//	int    allocated;
-//	int    element_size;
+/*	// ------ UgArray members ------
+	Type*  at;
+	int    length;
+	int    allocated;
+	int    element_size;
+ */
 };
 #define	UG_ARRAY(Type)          struct UgArray<Type>
 #else
