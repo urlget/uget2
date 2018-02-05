@@ -37,42 +37,41 @@
 #ifndef UGET_NODE_H
 #define UGET_NODE_H
 
-// Uget Tree chart:
-//
-// Root -+- Category1 -+- Download1 (URI) -+- File
-//       |             |                   |
-//       |             |                   +  cookie or post file (attachment)
-//       |             |
-//       |             +- Download2 (URI) -+- File1
-//       |             |  (torrent path)   |
-//       |             |                   +- File2
-//       |             |                   |
-//       |             |                   +- torrent file (attachment)
-//       |             |
-//       |             +- Download3 (URI) -+- File
-//       |                (metalink path)  |
-//       |                                 +- metalink file (attachment)
-//       +-- Category2
-//
+/*
+	UgetNode Tree chart:
 
-// UgNode   is base node type.
-// UgetNode extend from UgNode and add pointers (real, fake, and peer).
-//
-//            prev   /               prev   /
-//              |  fake                |  fake
-//              |  /                   |  /
-//              | /                    | /
-//              |/                     |/
-// ... <---> parent <--------------> child <----> ...
-//             /|                     /|
-//            / |                    / |
-//           /  |                   /  |
-//        real  |                real  |
-//         /    |                 /    |
-//             next                   next
-//
+	Root --+-- Category1 --+-- Download1 (URI)
+	       |               |
+	       |               |
+	       |               |
+	       |               +-- Download2 (URI)
+	       |                   (torrent path)
+	       |
+	       |
+	       +-- Category2 --+-- Download3 (URI)
+	                       |   (metalink path)
+	                       |
+	                       |
+	                       +-- Download4 (URI)
 
-#include <stddef.h>    // offsetof ()
+	UgNode   is base node type.
+	UgetNode extend from UgNode and add pointers (real, fake, and peer).
+
+	           prev   /               prev   /
+	             |  fake                |  fake
+	             |  /                   |  /
+	             | /                    | /
+	             |/                     |/
+	... <---> parent <--------------> child <----> ...
+	            /|                     /|
+	           / |                    / |
+	          /  |                   /  |
+	       real  |                real  |
+	        /    |                 /    |
+	            next                   next
+ */
+
+#include <stddef.h>    // offsetof()
 #include <stdint.h>    // int16_t
 #include <UgNode.h>
 #include <UgData.h>
@@ -147,13 +146,15 @@ struct UgetNodeControl
 struct UgetNode
 {
 	UG_NODE_MEMBERS(UgetNode, UgetNode, base);
-//	UgetNode*     base;    // the realest UgetNode (real->real->real-> ...)
-//	UgetNode*     next;
-//	UgetNode*     prev;
-//	UgetNode*     parent;
-//	UgetNode*     children;
-//	UgetNode*     last;
-//	int           n_children;
+/*	// ------ UgNode members ------
+	UgetNode*     base;    // the realest UgetNode (real->real->real-> ...)
+	UgetNode*     next;
+	UgetNode*     prev;
+	UgetNode*     parent;
+	UgetNode*     children;
+	UgetNode*     last;
+	int           n_children;
+ */
 
 	UgetNode*     real;
 	UgetNode*     fake;
@@ -161,8 +162,8 @@ struct UgetNode
 
 	int           ref_count;
 
-	char*         name;    // fake node doesn't use this
-	int           group;   // UgetGroup
+	char*         name;       // deprecated, please use UgetCommon::name
+	int           group;      // UgetGroup
 
 	UgData*       data;
 	struct UgetNodeControl*  control;
