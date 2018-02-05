@@ -606,9 +606,11 @@ static void  plugin_decide_files(UgetPluginCurl* plugin)
 	// update UgetFiles
 	uget_plugin_lock(plugin);
 	// insert/replace file into files
-	uget_files_replace(plugin->files,
-	                   plugin->aria2.path,
-	                   UGET_FILE_TEMPORARY, 0);
+	if (plugin->aria2.path) {
+		uget_files_replace(plugin->files,
+		                   plugin->aria2.path,
+		                   UGET_FILE_TEMPORARY, 0);
+	}
 	uget_files_replace(plugin->files,
 	                   plugin->file.path,
 	                   UGET_FILE_REGULAR, 0);
