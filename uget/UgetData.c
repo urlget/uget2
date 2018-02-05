@@ -122,10 +122,13 @@ static void uget_common_final(UgetCommon* common)
 
 static int  uget_common_assign(UgetCommon* common, UgetCommon* src)
 {
+#if 0
+	// Program can NOT copy UgetCommon::name to other one.
 	if (common->keeping.enable == FALSE || common->keeping.name == FALSE) {
 		ug_free(common->name);
 		common->name = (src->name) ? ug_strdup(src->name) : NULL;
 	}
+#endif
 	if (common->keeping.enable == FALSE || common->keeping.uri == FALSE) {
 		ug_free(common->uri);
 		common->uri = (src->uri) ? ug_strdup(src->uri) : NULL;
