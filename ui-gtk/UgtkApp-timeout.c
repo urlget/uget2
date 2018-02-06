@@ -280,19 +280,20 @@ static gboolean  ugtk_app_timeout_queuing (UgtkApp* app)
 				app->task.speed.download, app->task.speed.upload);
 	}
 
-	if (app->n_moved > 0) {
-		// refresh other data & status
-		gtk_widget_queue_draw ((GtkWidget*) app->traveler.download.view);
-		gtk_widget_queue_draw ((GtkWidget*) app->traveler.category.view);
-		gtk_widget_queue_draw ((GtkWidget*) app->traveler.state.view);
-	}
-
 	// if current status is "All" or "Active"
 	if (app->traveler.state.cursor.pos == 0 ||
 	    app->traveler.state.cursor.pos == 1)
 	{
 		if (app->n_moved > 0)
 			ugtk_traveler_restore_selection (&app->traveler);
+	}
+
+	uget_app_trim((UgetApp*) app);
+	if (app->n_moved > 0) {
+		// refresh other data & status
+		gtk_widget_queue_draw ((GtkWidget*) app->traveler.download.view);
+		gtk_widget_queue_draw ((GtkWidget*) app->traveler.category.view);
+		gtk_widget_queue_draw ((GtkWidget*) app->traveler.state.view);
 	}
 
 	app->user_action = FALSE;

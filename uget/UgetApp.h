@@ -99,8 +99,13 @@ struct UgetApp
 void  uget_app_init (UgetApp* app);
 void  uget_app_final (UgetApp* app);
 
-// uget_app_grow() return number of active download
+// uget_app_grow() activate queue download
+//                 return number of active download
 int   uget_app_grow (UgetApp* app, int no_queuing);
+// uget_app_trim() remove finished/recycled download that over capacity
+//                 return number of trimmed download
+int   uget_app_trim (UgetApp* app);
+
 void  uget_app_set_config_dir (UgetApp* app, const char* dir);
 void  uget_app_set_sorting (UgetApp* app, UgCompareFunc func, int reversed);
 void  uget_app_set_notification (UgetApp* app, void* data,
