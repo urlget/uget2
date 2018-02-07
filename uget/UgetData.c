@@ -630,6 +630,7 @@ void  ug_json_write_list_message(UgJson* json, UgList* list)
 // UgetRelation
 
 static void uget_relation_init(UgetRelation* relation);
+static void uget_relation_final(UgetRelation* relation);
 
 static const UgEntry  UgetRelationTaskEntry[] =
 {
@@ -657,7 +658,7 @@ static const UgGroupDataInfo  UgetRelationInfoStatic =
 	"relation",            // name
 	sizeof(UgetRelation),  // size
 	(UgInitFunc)   uget_relation_init,
-	(UgFinalFunc)  NULL,
+	(UgFinalFunc)  uget_relation_final,
 	(UgAssignFunc) NULL,
 	UgetRelationEntry,
 };
@@ -667,6 +668,11 @@ const UgGroupDataInfo*  UgetRelationInfo = &UgetRelationInfoStatic;
 static void uget_relation_init(UgetRelation* relation)
 {
 	relation->task.priority = UGET_PRIORITY_NORMAL;
+}
+
+static void uget_relation_final(UgetRelation* relation)
+{
+	ug_free(relation->task.plugin_name);
 }
 
 // ----------------------------------------------------------------------------
@@ -685,11 +691,11 @@ static const UgEntry  UgetCategoryEntry[] =
 			ug_json_parse_array_string, ug_json_write_array_string},
 	{"file-exts",      offsetof(UgetCategory, file_exts),      UG_ENTRY_ARRAY,
 			ug_json_parse_array_string, ug_json_write_array_string},
-	{"active-limit",   offsetof(UgetCategory, active_limit),   UG_ENTRY_UINT,
+	{"active-limit",   offsetof(UgetCategory, active_limit),   UG_ENTRY_INT,
 			NULL, NULL},
-	{"finished-limit", offsetof(UgetCategory, finished_limit), UG_ENTRY_UINT,
+	{"finished-limit", offsetof(UgetCategory, finished_limit), UG_ENTRY_INT,
 			NULL, NULL},
-	{"recycled-limit", offsetof(UgetCategory, recycled_limit), UG_ENTRY_UINT,
+	{"recycled-limit", offsetof(UgetCategory, recycled_limit), UG_ENTRY_INT,
 			NULL, NULL},
 	{NULL}		// null-terminated
 };
