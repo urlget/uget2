@@ -80,6 +80,7 @@ static void col_set_icon (GtkTreeViewColumn *tree_column,
                           gpointer           data)
 {
 	UgetNode*      node;
+	UgetRelation*  relation;
 	const gchar*   icon_name;
 	int            key, index;
 
@@ -98,7 +99,8 @@ static void col_set_icon (GtkTreeViewColumn *tree_column,
 	// select icon_name
 	for (index = 0;  index < state_icon_pair_len;  index++) {
 		key = (intptr_t)state_icon_pair[index].key;
-		if ((key & node->group) == key) {
+		relation = ug_data_realloc(node->data, UgetRelationInfo);
+		if ((key & relation->group) == key) {
 			icon_name = state_icon_pair[index].data;
 			break;
 		}
@@ -627,12 +629,12 @@ static void col_set_icon_c (GtkTreeViewColumn *tree_column,
 
 	node = iter->user_data;
 #if GTK_MAJOR_VERSION >= 3 && GTK_MINOR_VERSION >= 10
-	if (node->group & UGET_GROUP_PAUSED)
+	if (uget_node_get_group(node) & UGET_GROUP_PAUSED)
 		g_object_set (cell, "icon-name", "media-playback-pause", NULL);
 	else
 		g_object_set (cell, "icon-name", "gtk-dnd-multiple", NULL);
 #else
-	if (node->group & UGET_GROUP_PAUSED)
+	if (uget_node_get_group(node) & UGET_GROUP_PAUSED)
 		g_object_set (cell, "stock-id", GTK_STOCK_MEDIA_PAUSE, NULL);
 	else
 		g_object_set (cell, "stock-id", GTK_STOCK_DND_MULTIPLE, NULL);
@@ -665,6 +667,7 @@ static void col_set_name_s (GtkTreeViewColumn *tree_column,
 	char*         name;
 	int           key;
 	int           index;
+	int           group;
 
 //	gtk_tree_model_get (model, iter, 0, &node, -1);
 	node = iter->user_data;
@@ -674,9 +677,10 @@ static void col_set_name_s (GtkTreeViewColumn *tree_column,
 
 	name = _("All Status");
 	if (node->real) {
+		group = uget_node_get_group(node);
 		for (index = 0;  index < state_name_pair_len;  index++) {
 			key = (intptr_t)state_name_pair[index].key;
-			if ((key & node->group) == key) {
+			if ((key & group) == key) {
 				name = gettext (state_name_pair[index].data);
 				break;
 			}
@@ -694,6 +698,7 @@ static void col_set_icon_s (GtkTreeViewColumn *tree_column,
 	UgetNode*      node;
 	const gchar*   icon_name;
 	int            key, index;
+	int            group;
 
 //	gtk_tree_model_get (model, iter, 0, &node, -1);
 	node = iter->user_data;
@@ -708,9 +713,10 @@ static void col_set_icon_s (GtkTreeViewColumn *tree_column,
 	icon_name = GTK_STOCK_DND_MULTIPLE;
 #endif
 	if (node->real) {
+		group = uget_node_get_group(node);
 		for (index = 0;  index < state_icon_pair_len;  index++) {
 			key = (intptr_t)state_icon_pair[index].key;
-			if ((key & node->group) == key) {
+			if ((key & group) == key) {
 				icon_name = state_icon_pair[index].data;
 				break;
 			}

@@ -93,6 +93,7 @@ extern const UgEntry  UgetNodeEntry[];
 
 
 typedef enum {
+	UGET_GROUP_NULL       = 0,
 	UGET_GROUP_QUEUING    = 1 << 0,
 
 	UGET_GROUP_PAUSED     = 1 << 1,
@@ -161,9 +162,7 @@ struct UgetNode
 	UgetNode*     peer;
 
 	int           ref_count;
-
 	char*         name;       // deprecated, please use UgetCommon::name
-	int           group;      // UgetGroup
 
 	UgData*       data;
 	struct UgetNodeControl*  control;
@@ -196,7 +195,6 @@ void  uget_node_make_fake (UgetNode* node);
 #define uget_node_child_position(node,child)  \
 		ug_node_child_position((UgNode*)node, (UgNode*)child)
 UgetNode* uget_node_nth_fake (UgetNode* node, int nth);
-UgetNode* uget_node_fake_from_group (UgetNode* node, int group);
 int       uget_node_fake_position (UgetNode* node, UgetNode* fake);
 
 // ----------------------------------------------------------------------------
@@ -239,6 +237,11 @@ void  uget_node_filter_mix (UgetNode* node, UgetNode* sibling, UgetNode* child_r
 void  uget_node_filter_split (UgetNode* node, UgetNode* sibling, UgetNode* child_real);
 void  uget_node_filter_mix_split (UgetNode* node, UgetNode* sibling, UgetNode* child_real);
 void  uget_node_filter_sorted (UgetNode* node, UgetNode* sibling, UgetNode* child_real);
+
+// ----------------------------------------------------------------------------
+// helper functions for uget_node_filter_split(), uget_node_filter_mix_split()
+UgetNode* uget_node_get_splited(UgetNode* node, int group);
+int       uget_node_get_group(UgetNode* node);
 
 
 #ifdef __cplusplus

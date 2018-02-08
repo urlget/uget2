@@ -296,6 +296,8 @@ struct UgetRelation
 	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
 //	const UgGroupDataInfo*  info;
 
+	int   group;     // UgetGroup
+
 	// used by UgetTask
 	struct UgetRelationTask {
 		UgetRelation*  prev;
@@ -337,10 +339,10 @@ struct UgetCategory
 
 	// limit
 	int        active_limit;
-	int        finished_limit; // finished: completed and paused
+	int        finished_limit;   // finished: completed and stopped
 	int        recycled_limit;
 
-	// 4 fake sub-category tree
+	// subcategory in UgetNode::fake
 	UgetNode*  active;
 	UgetNode*  queuing;
 	UgetNode*  finished;

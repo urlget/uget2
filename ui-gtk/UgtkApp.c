@@ -1084,6 +1084,7 @@ void  ugtk_app_edit_download (UgtkApp* app)
 
 void  ugtk_app_queue_download (UgtkApp* app, gboolean keep_active)
 {
+	UgetRelation* relation;
 	UgetNode*  node;
 	UgetNode*  cursor;
 	GList*     list;
@@ -1098,7 +1099,8 @@ void  ugtk_app_queue_download (UgtkApp* app, gboolean keep_active)
 		node = link->data;
 		node = node->base;
 		link->data = node;
-		if (keep_active && node->group & UGET_GROUP_ACTIVE)
+		relation = ug_data_realloc(node->data, UgetRelationInfo);
+		if (keep_active && relation->group & UGET_GROUP_ACTIVE)
 			continue;
 		uget_app_queue_download ((UgetApp*) app, node);
 	}
@@ -1148,6 +1150,7 @@ void  ugtk_app_pause_download (UgtkApp* app)
 
 void  ugtk_app_switch_download_state (UgtkApp* app)
 {
+	UgetRelation* relation;
 	UgetNode*  node;
 	UgetNode*  cursor;
 	GList*     list;
@@ -1162,9 +1165,10 @@ void  ugtk_app_switch_download_state (UgtkApp* app)
 		node = link->data;
 		node = node->base;
 		link->data = node;
-		if (node->group & UGET_GROUP_PAUSED)
+		relation = ug_data_realloc(node->data, UgetRelationInfo);
+		if (relation->group & UGET_GROUP_PAUSED)
 			uget_app_queue_download ((UgetApp*) app, node);
-		else if (node->group & UGET_GROUP_ACTIVE)
+		else if (relation->group & UGET_GROUP_ACTIVE)
 			uget_app_pause_download ((UgetApp*) app, node);
 	}
 	if (app->traveler.state.cursor.pos == 0) {

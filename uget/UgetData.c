@@ -647,7 +647,9 @@ static const UgEntry  UgetRelationTaskEntry[] =
 
 static const UgEntry  UgetRelationEntry[] =
 {
-	{"task", offsetof(UgetRelation, task), UG_ENTRY_OBJECT,
+	{"group", offsetof(UgetRelation, group), UG_ENTRY_INT,
+			NULL, NULL},
+	{"task",  offsetof(UgetRelation, task),  UG_ENTRY_OBJECT,
 			(void*) UgetRelationTaskEntry,
 			(UgInitFunc) NULL},
 	{NULL}		// null-terminated

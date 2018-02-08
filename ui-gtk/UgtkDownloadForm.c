@@ -449,69 +449,72 @@ static void ugtk_download_form_init_page2 (UgtkDownloadForm* dform)
 
 void  ugtk_download_form_get (UgtkDownloadForm* dform, UgetNode* node)
 {
-	UgetCommon*   common;
-	UgetHttp*     http;
 	UgUri         uuri;
 	const gchar*  text;
 	gint          number;
+	union {
+		UgetRelation* relation;
+		UgetCommon*   common;
+		UgetHttp*     http;
+	} temp;
 
 	// ------------------------------------------
 	// UgetCommon
-	common = ug_data_realloc (node->data, UgetCommonInfo);
+	temp.common = ug_data_realloc (node->data, UgetCommonInfo);
 	// folder
 	text = gtk_entry_get_text ((GtkEntry*)dform->folder_entry);
-	ug_free (common->folder);
-	common->folder = (*text) ? ug_strdup (text) : NULL;
-	ug_str_remove_crlf (common->folder, common->folder);
+	ug_free (temp.common->folder);
+	temp.common->folder = (*text) ? ug_strdup (text) : NULL;
+	ug_str_remove_crlf (temp.common->folder, temp.common->folder);
 	// user
 	text = gtk_entry_get_text ((GtkEntry*)dform->username_entry);
-	ug_free (common->user);
-	common->user = (*text) ? ug_strdup (text) : NULL;
-	ug_str_remove_crlf (common->user, common->user);
+	ug_free (temp.common->user);
+	temp.common->user = (*text) ? ug_strdup (text) : NULL;
+	ug_str_remove_crlf (temp.common->user, temp.common->user);
 	// password
 	text = gtk_entry_get_text ((GtkEntry*)dform->password_entry);
-	ug_free (common->password);
-	common->password = (*text) ? ug_strdup (text) : NULL;
-	ug_str_remove_crlf (common->password, common->password);
+	ug_free (temp.common->password);
+	temp.common->password = (*text) ? ug_strdup (text) : NULL;
+	ug_str_remove_crlf (temp.common->password, temp.common->password);
 	// retry_limit
 	number = gtk_spin_button_get_value_as_int ((GtkSpinButton*) dform->spin_retry);
-	common->retry_limit = number;
+	temp.common->retry_limit = number;
 	// retry_delay
 	number = gtk_spin_button_get_value_as_int ((GtkSpinButton*) dform->spin_delay);
-	common->retry_delay = number;
+	temp.common->retry_delay = number;
 
 	// max_upload_speed
 	number = gtk_spin_button_get_value_as_int ((GtkSpinButton*) dform->spin_upload_speed) * 1024;
-	common->max_upload_speed = number;
+	temp.common->max_upload_speed = number;
 	// max_download_speed
 	number = gtk_spin_button_get_value_as_int ((GtkSpinButton*) dform->spin_download_speed) * 1024;
-	common->max_download_speed = number;
+	temp.common->max_download_speed = number;
 
 	// max_connections
 	number = gtk_spin_button_get_value_as_int ((GtkSpinButton*) dform->spin_connections);
-	common->max_connections = number;
+	temp.common->max_connections = number;
 	// timestamp
-	common->timestamp = gtk_toggle_button_get_active (dform->timestamp);
+	temp.common->timestamp = gtk_toggle_button_get_active (dform->timestamp);
 
 	// URI
 	if (gtk_widget_is_sensitive (dform->uri_entry) == TRUE) {
 		text = gtk_entry_get_text ((GtkEntry*)dform->uri_entry);
-		ug_free (common->uri);
-		common->uri = (*text) ? ug_strdup (text) : NULL;
-		ug_str_remove_crlf (common->uri, common->uri);
-		if (common->uri) {
-			ug_uri_init (&uuri, common->uri);
+		ug_free (temp.common->uri);
+		temp.common->uri = (*text) ? ug_strdup (text) : NULL;
+		ug_str_remove_crlf (temp.common->uri, temp.common->uri);
+		if (temp.common->uri) {
+			ug_uri_init (&uuri, temp.common->uri);
 			// set user
 			number = ug_uri_user (&uuri, &text);
 			if (number > 0) {
-				ug_free (common->user);
-				common->user = ug_strndup (text, number);
+				ug_free (temp.common->user);
+				temp.common->user = ug_strndup (text, number);
 			}
 			// set password
 			number = ug_uri_password (&uuri, &text);
 			if (number > 0) {
-				ug_free (common->password);
-				common->password = ug_strndup (text, number);
+				ug_free (temp.common->password);
+				temp.common->password = ug_strndup (text, number);
 			}
 			// Remove user & password from URL
 			if (uuri.authority != uuri.host) {
@@ -523,54 +526,56 @@ void  ugtk_download_form_get (UgtkDownloadForm* dform, UgetNode* node)
 	// mirrors
 	if (gtk_widget_is_sensitive (dform->mirrors_entry) == TRUE) {
 		text = gtk_entry_get_text ((GtkEntry*)dform->mirrors_entry);
-		ug_free (common->mirrors);
-		common->mirrors = (*text) ? ug_strdup (text) : NULL;
-		ug_str_remove_crlf (common->mirrors, common->mirrors);
+		ug_free (temp.common->mirrors);
+		temp.common->mirrors = (*text) ? ug_strdup (text) : NULL;
+		ug_str_remove_crlf (temp.common->mirrors, temp.common->mirrors);
 	}
 	// file
 	if (gtk_widget_is_sensitive (dform->file_entry) == TRUE) {
 		text = gtk_entry_get_text ((GtkEntry*)dform->file_entry);
-		ug_free (common->file);
-		common->file = (*text) ? ug_strdup (text) : NULL;
-		ug_str_remove_crlf (common->file, common->file);
+		ug_free (temp.common->file);
+		temp.common->file = (*text) ? ug_strdup (text) : NULL;
+		ug_str_remove_crlf (temp.common->file, temp.common->file);
 	}
 
 	// ------------------------------------------
 	// UgetHttp
-	http = ug_data_realloc (node->data, UgetHttpInfo);
+	temp.http = ug_data_realloc (node->data, UgetHttpInfo);
 	// referrer
 	text = gtk_entry_get_text ((GtkEntry*) dform->referrer_entry);
-	ug_free (http->referrer);
-	http->referrer = (*text) ? ug_strdup (text) : NULL;
-	ug_str_remove_crlf (http->referrer, http->referrer);
+	ug_free (temp.http->referrer);
+	temp.http->referrer = (*text) ? ug_strdup (text) : NULL;
+	ug_str_remove_crlf (temp.http->referrer, temp.http->referrer);
 	// cookie_file
 	text = gtk_entry_get_text ((GtkEntry*) dform->cookie_entry);
-	ug_free (http->cookie_file);
-	http->cookie_file = (*text) ? ug_strdup (text) : NULL;
-	ug_str_remove_crlf (http->cookie_file, http->cookie_file);
+	ug_free (temp.http->cookie_file);
+	temp.http->cookie_file = (*text) ? ug_strdup (text) : NULL;
+	ug_str_remove_crlf (temp.http->cookie_file, temp.http->cookie_file);
 	// post_file
 	text = gtk_entry_get_text ((GtkEntry*) dform->post_entry);
-	ug_free (http->post_file);
-	http->post_file = (*text) ? ug_strdup (text) : NULL;
-	ug_str_remove_crlf (http->post_file, http->post_file);
+	ug_free (temp.http->post_file);
+	temp.http->post_file = (*text) ? ug_strdup (text) : NULL;
+	ug_str_remove_crlf (temp.http->post_file, temp.http->post_file);
 	// user_agent
 	text = gtk_entry_get_text ((GtkEntry*) dform->agent_entry);
-	ug_free (http->user_agent);
-	http->user_agent = (*text) ? ug_strdup (text) : NULL;
-	ug_str_remove_crlf (http->user_agent, http->user_agent);
+	ug_free (temp.http->user_agent);
+	temp.http->user_agent = (*text) ? ug_strdup (text) : NULL;
+	ug_str_remove_crlf (temp.http->user_agent, temp.http->user_agent);
 
 	// ------------------------------------------
-	// UgetNode
+	// UgetRelation
 	if (gtk_widget_get_sensitive (dform->radio_pause)) {
+		temp.relation = ug_data_realloc(node->data, UgetRelationInfo);
 		if (gtk_toggle_button_get_active ((GtkToggleButton*) dform->radio_pause))
-			node->group |= UGET_GROUP_PAUSED;
+			temp.relation->group |= UGET_GROUP_PAUSED;
 		else
-			node->group &= ~UGET_GROUP_PAUSED;
+			temp.relation->group &= ~UGET_GROUP_PAUSED;
 	}
 }
 
 void  ugtk_download_form_set (UgtkDownloadForm* dform, UgetNode* node, gboolean keep_changed)
 {
+	UgetRelation* relation;
 	UgetCommon*   common;
 	UgetHttp*     http;
 
@@ -686,9 +691,10 @@ void  ugtk_download_form_set (UgtkDownloadForm* dform, UgetNode* node, gboolean 
 	}
 
 	// ------------------------------------------
-	// UgetNode
+	// UgetRelation
 	if (gtk_widget_get_sensitive (dform->radio_pause)) {
-		if (node->group & UGET_GROUP_PAUSED)
+		relation = ug_data_realloc(node->data, UgetRelationInfo);
+		if (relation->group & UGET_GROUP_PAUSED)
 			gtk_toggle_button_set_active ((GtkToggleButton*) dform->radio_pause, TRUE);
 		else
 			gtk_toggle_button_set_active ((GtkToggleButton*) dform->radio_runnable, TRUE);

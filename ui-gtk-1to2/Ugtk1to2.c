@@ -194,6 +194,7 @@ static void uget_node_set_by_dataset (UgetNode* node, UgDataset* dataset)
 
 	union {
 		UgetProgress* progress;
+		UgetRelation* relation;
 		UgetCommon*   common;
 		UgetProxy*    proxy;
 		UgetHttp*     http;
@@ -202,19 +203,20 @@ static void uget_node_set_by_dataset (UgetNode* node, UgDataset* dataset)
 
 	old.relation = ug_dataset_get (dataset, UgRelationInfo, 0);
 	if (old.relation) {
+		new.relation = ug_data_realloc (node->data, UgetRelationInfo);
 		if (old.relation->hints & UG_HINT_PAUSED)
-			node->group |= UGET_GROUP_PAUSED;
+			new.relation->group |= UGET_GROUP_PAUSED;
 		if (old.relation->hints & UG_HINT_ERROR)
-			node->group |= UGET_GROUP_ERROR;
+			new.relation->group |= UGET_GROUP_ERROR;
 		if (old.relation->hints & UG_HINT_COMPLETED)
-			node->group |= UGET_GROUP_COMPLETED;
+			new.relation->group |= UGET_GROUP_COMPLETED;
 
 		if (old.relation->hints & UG_HINT_FINISHED)
-			node->group |= UGET_GROUP_FINISHED;
+			new.relation->group |= UGET_GROUP_FINISHED;
 		else if (old.relation->hints & UG_HINT_RECYCLED)
-			node->group |= UGET_GROUP_RECYCLED;
+			new.relation->group |= UGET_GROUP_RECYCLED;
 		else
-			node->group |= UGET_GROUP_QUEUING;
+			new.relation->group |= UGET_GROUP_QUEUING;
 	}
 
 	old.common = ug_dataset_get (dataset, UgCommonInfo, 0);

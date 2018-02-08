@@ -134,7 +134,6 @@ int  uget_task_remove(UgetTask* task, UgetNode* node)
 
 	if (ug_slinks_find((UgSLinks*) task, node, &prev)) {
 		ug_slinks_remove((UgSLinks*) task, node, prev);
-		node->group &= ~UGET_GROUP_ACTIVE;
 		// UgetRelation
 		relation = ug_data_get(node->data, UgetRelationInfo);
 		if (relation) {
@@ -143,6 +142,7 @@ int  uget_task_remove(UgetTask* task, UgetNode* node)
 			uget_plugin_stop(relation->task.plugin);
 			uget_plugin_unref(relation->task.plugin);
 			relation->task.plugin = NULL;
+			relation->group &= ~UGET_GROUP_ACTIVE;
 		}
 		return TRUE;
 	}
@@ -157,26 +157,28 @@ void  uget_task_remove_all(UgetTask* task)
 
 static int  uget_task_dispatch1(UgetTask* task, UgetNode* node, UgetPlugin* plugin)
 {
-	UgetFiles*  files;
+	UgetRelation* relation;
 	UgetEvent*  event;
 	UgetEvent*  next;
 	int         active;
 	union {
 		int           count;
 		UgetLog*      log;
+		UgetFiles*    files;
 	} temp;
 
 	active = uget_plugin_sync(plugin, node->data);
 	// update UgetFiles
-	files = ug_data_get(node->data, UgetFilesInfo);
-	if (files)
-		uget_files_erase_deleted(files);
+	temp.files = ug_data_get(node->data, UgetFilesInfo);
+	if (temp.files)
+		uget_files_erase_deleted(temp.files);
 	// plug-in was paused by user (see function uget_app_pause_download)
-	if (node->group & UGET_GROUP_PAUSED)
+	relation = ug_data_realloc(node->data, UgetRelationInfo);
+	if (relation->group & UGET_GROUP_PAUSED)
 		active = FALSE;
 	// plug-in has stopped if uget_plugin_sync() return FALSE.
 	if (active == FALSE)
-		node->group &= ~UGET_GROUP_ACTIVE;
+		relation->group &= ~UGET_GROUP_ACTIVE;
 
 	event = uget_plugin_pop(plugin);
 	for (;  event;  event = next) {
@@ -194,7 +196,7 @@ static int  uget_task_dispatch1(UgetTask* task, UgetNode* node, UgetPlugin* plug
 
 		switch (event->type) {
 		case UGET_EVENT_ERROR:
-			node->group |= UGET_GROUP_ERROR;  // don't break here
+			relation->group |= UGET_GROUP_ERROR;  // don't break here
 		case UGET_EVENT_WARNING:
 		case UGET_EVENT_NORMAL:
 			temp.log = ug_data_realloc(node->data, UgetLogInfo);
@@ -202,28 +204,28 @@ static int  uget_task_dispatch1(UgetTask* task, UgetNode* node, UgetPlugin* plug
 			break;
 
 		case UGET_EVENT_START:
-			node->group |= UGET_GROUP_ACTIVE;
+			relation->group |= UGET_GROUP_ACTIVE;
 			uget_event_free(event);
 			break;
 
 		case UGET_EVENT_STOP:
-			node->group &= ~UGET_GROUP_ACTIVE;
+			relation->group &= ~UGET_GROUP_ACTIVE;
 			uget_event_free(event);
 			active = FALSE;
 			break;
 
 		case UGET_EVENT_COMPLETED:
-			node->group |= UGET_GROUP_COMPLETED;
+			relation->group |= UGET_GROUP_COMPLETED;
 			uget_event_free(event);
 			break;
 
 		case UGET_EVENT_UPLOADING:
-			node->group |= UGET_GROUP_UPLOADING;
+			relation->group |= UGET_GROUP_UPLOADING;
 			uget_event_free(event);
 			break;
 
 		case UGET_EVENT_STOP_UPLOADING:
-			node->group &= ~UGET_GROUP_UPLOADING;
+			relation->group &= ~UGET_GROUP_UPLOADING;
 			uget_event_free(event);
 			break;
 

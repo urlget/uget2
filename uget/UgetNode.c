@@ -53,7 +53,9 @@
 #endif
 
 static void  uget_node_call_fake_filter (UgetNode* parent, UgetNode* sibling, UgetNode* child);
-
+static UgJsonError  ug_json_parse_state2group (UgJson* json,
+                                const char* name, const char* value,
+                                void* node, void* none);
 // ----------------------------------------------------------------------------
 // UgetNode
 
@@ -69,15 +71,14 @@ const UgEntry  UgetNodeEntry[] =
 {
 	{"name",     offsetof (UgetNode, name),  UG_ENTRY_STRING,
 			NULL, UG_ENTRY_NO_NULL},
-	{"group",    offsetof (UgetNode, group), UG_ENTRY_INT,
-			NULL, NULL},
 	{"data",     offsetof (UgetNode, data),  UG_ENTRY_CUSTOM,
 			ug_json_parse_data_ptr,   ug_json_write_data_ptr},
 	{"children", 0,                          UG_ENTRY_ARRAY,
 			ug_json_parse_uget_node_children, ug_json_write_uget_node_children},
 
 	// deprecated
-	{"state",    offsetof (UgetNode, group), UG_ENTRY_INT,    NULL, NULL},
+	{"state",    0,                          UG_ENTRY_CUSTOM,
+			ug_json_parse_state2group, NULL},
 	{"info",     offsetof (UgetNode, data),  UG_ENTRY_CUSTOM,
 			ug_json_parse_data_ptr,   NULL},
 	{NULL}    // null-terminated
@@ -449,15 +450,6 @@ UgetNode* uget_node_nth_fake (UgetNode* node, int nth)
 	return NULL;
 }
 
-UgetNode* uget_node_fake_from_group (UgetNode* node, int group)
-{
-	for (node = node->fake;  node;  node = node->peer) {
-		if (node->group & group)
-			return node;
-	}
-	return NULL;
-}
-
 int  uget_node_fake_position (UgetNode* node, UgetNode* fake)
 {
 	int  position = 0;
@@ -514,6 +506,26 @@ void  ug_json_write_uget_node_children (UgJson* json, const UgetNode* node)
 	}
 }
 
+static UgJsonError  ug_json_parse_state2group (UgJson* json,
+                                const char* name, const char* value,
+                                void* nodev, void* none)
+{
+	UgetRelation* relation;
+	UgetNode*     node = nodev;
+	int           group;
+
+	if (json->type != UG_JSON_NUMBER)
+		return UG_JSON_ERROR_TYPE_NOT_MATCH;
+	else {
+		group = strtol(value, NULL, 10);
+		if (group != 0) {
+			relation = ug_data_realloc(node->data, UgetRelationInfo);
+			relation->group = group;
+		}
+	}
+	return UG_JSON_ERROR_NONE;
+}
+
 // ----------------------------------------------------------------------------
 // callback functions for UgetNode.control.filter
 // These functions used by UgetApp
@@ -521,34 +533,33 @@ void  ug_json_write_uget_node_children (UgJson* json, const UgetNode* node)
 // sibling_real, child_real
 void  uget_node_filter_split (UgetNode* node, UgetNode* sibling, UgetNode* child_real)
 {
-	UgetNode*  child;
+	UgetRelation* relation;
+	UgetNode*     child;
+	int           group;
 
 	if (node->parent == NULL) {
 		// node is root. child_real is category
 		//
 		child = uget_node_new (child_real);
-		child->group = UGET_GROUP_RECYCLED;
 		uget_node_prepend (node, child);
 		//
 		child = uget_node_new (child_real);
-		child->group = UGET_GROUP_FINISHED;
 		uget_node_prepend (node, child);
 		//
 		child = uget_node_new (child_real);
-		child->group = UGET_GROUP_QUEUING;
 		uget_node_prepend (node, child);
 		//
 		child = uget_node_new (child_real);
-		child->group = UGET_GROUP_ACTIVE;
 		uget_node_prepend (node, child);
 	}
 	else if (node->parent->parent == NULL) {
 		// node is category. child_real is download
 		child = child_real->base;
-		if ((node->group & child->group) ||
-		    ( (child->group & UGET_GROUP_MAJOR) == 0 &&
-		      (node->group & UGET_GROUP_QUEUING) ) )
-		{
+		relation = ug_data_realloc(child->data, UgetRelationInfo);
+		group = uget_node_get_group(node);
+		if ((relation->group & UGET_GROUP_MAJOR) == 0)
+			relation->group |= UGET_GROUP_QUEUING;
+		if (group & relation->group) {
 			// insert sorted
 			if (node->control->sort.compare) {
 				uget_node_insert_sorted (node, uget_node_new (child_real));
@@ -595,11 +606,12 @@ void  uget_node_filter_sorted (UgetNode* node, UgetNode* sibling, UgetNode* chil
 	}
 }
 
-// This one is not the same with uget_node_filter_sorted()
 // sibling_real, child_real
 void  uget_node_filter_mix (UgetNode* node, UgetNode* sibling, UgetNode* child)
 {
-	UgetNode*  fake;
+	UgetNode*     fake;
+	UgetRelation* relation_child;
+	UgetRelation* relation_sibling;
 
 	child = uget_node_new (child);
 
@@ -618,37 +630,42 @@ void  uget_node_filter_mix (UgetNode* node, UgetNode* sibling, UgetNode* child)
 		}
 
 		// reorder by group
-		if ( sibling &&
-		    ((sibling->base->group & UGET_GROUP_MAJOR) !=
-		     (child->base->group   & UGET_GROUP_MAJOR)) )
-		{
-			sibling = NULL;
+		relation_child = ug_data_realloc(child->data, UgetRelationInfo);
+		if (sibling) {
+			relation_sibling = ug_data_realloc(sibling->data, UgetRelationInfo);
+			if ((relation_sibling->group & UGET_GROUP_MAJOR) !=
+			    (relation_child->group   & UGET_GROUP_MAJOR))
+			{
+				sibling = NULL;
+			}
 		}
+		// get inserting position by group
 		if (node->fake && sibling == NULL) {
-			switch (child->base->group & UGET_GROUP_MAJOR) {
+			switch (relation_child->group & UGET_GROUP_MAJOR) {
 			case UGET_GROUP_ACTIVE:
-				fake = uget_node_fake_from_group (node, UGET_GROUP_QUEUING);
+				fake = uget_node_get_splited(node, UGET_GROUP_QUEUING);
 				if (fake == NULL || fake->children == NULL)
-					fake = uget_node_fake_from_group (node, UGET_GROUP_FINISHED);
+					fake = uget_node_get_splited(node, UGET_GROUP_FINISHED);
 				if (fake == NULL || fake->children == NULL)
-					fake = uget_node_fake_from_group (node, UGET_GROUP_RECYCLED);
+					fake = uget_node_get_splited(node, UGET_GROUP_RECYCLED);
 				break;
 
 			case UGET_GROUP_QUEUING:
 			default:
-				fake = uget_node_fake_from_group (node, UGET_GROUP_FINISHED);
+				fake = uget_node_get_splited(node, UGET_GROUP_FINISHED);
 				if (fake == NULL || fake->children == NULL)
-					fake = uget_node_fake_from_group (node, UGET_GROUP_RECYCLED);
+					fake = uget_node_get_splited(node, UGET_GROUP_RECYCLED);
 				break;
 
 			case UGET_GROUP_FINISHED:
-				fake = uget_node_fake_from_group (node, UGET_GROUP_RECYCLED);
+				fake = uget_node_get_splited(node, UGET_GROUP_RECYCLED);
 				break;
 
 			case UGET_GROUP_RECYCLED:
 				fake = NULL;
 				break;
 			}
+			// insert into specified position by group
 			if (fake && fake->children) {
 				uget_node_insert (node, fake->children->real, child);
 				return;
@@ -658,7 +675,6 @@ void  uget_node_filter_mix (UgetNode* node, UgetNode* sibling, UgetNode* child)
 		// original order
 		if (sibling) {
 			for (sibling = sibling->fake;  sibling;  sibling = sibling->peer) {
-//				if (sibling->parent == node)
 				if (sibling->parent == node)
 					break;
 			}
@@ -677,4 +693,55 @@ void  uget_node_filter_mix_split (UgetNode* node, UgetNode* sibling, UgetNode* c
 	if (real->parent == NULL && real->children != child_real)
 		return;
 	uget_node_filter_split (node, sibling, child_real);
+}
+
+// ----------------------------------------------------------------------------
+// helper functions for uget_node_filter_split(), uget_node_filter_mix_split()
+#define UGET_NODE_N_GROUP    4
+
+static int   nth2group[UGET_NODE_N_GROUP] =
+{
+	UGET_GROUP_ACTIVE,
+	UGET_GROUP_QUEUING,
+	UGET_GROUP_FINISHED,
+	UGET_GROUP_RECYCLED,
+};
+
+UgetNode* uget_node_get_splited(UgetNode* node, int group)
+{
+	UgetNodeFunc  filter;
+	int           nth;
+
+	for (nth = 0, node = node->fake;  node;  node = node->peer) {
+		filter = node->control->filter;
+		if (filter == uget_node_filter_split ||
+		    filter == uget_node_filter_mix_split)
+		{
+			if (nth2group[nth] & group)
+				return node;
+			nth++;  // must place here
+		}
+	}
+	return NULL;
+}
+
+int   uget_node_get_group(UgetNode* node)
+{
+	UgetNodeFunc  filter;
+	UgetNode*     fake;
+	int           nth;
+
+	if (node->real == NULL)
+		return UGET_GROUP_NULL;
+	for (nth = 0, fake = node->real->fake;  fake;  fake = fake->peer) {
+		filter = fake->control->filter;
+		if (filter == uget_node_filter_split ||
+		    filter == uget_node_filter_mix_split)
+		{
+			if (fake == node)
+				return nth2group[nth];
+			nth++;  // must place here
+		}
+	}
+	return UGET_GROUP_NULL;
 }
