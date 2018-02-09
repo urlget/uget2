@@ -70,6 +70,7 @@ void    ug_data_final(UgData* data);
 
 void*   ug_data_realloc(UgData* data, const UgGroupDataInfo* key);
 void    ug_data_remove(UgData* data, const UgGroupDataInfo* key);
+void*   ug_data_set(UgData* data, const UgGroupDataInfo* key, void* grouped_data);
 void*   ug_data_get(UgData* data, const UgGroupDataInfo* key);
 UgPair* ug_data_find(UgData* data, const UgGroupDataInfo* key, int* inserted_index);
 

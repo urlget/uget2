@@ -166,6 +166,23 @@ void  ug_data_remove(UgData* data, const UgGroupDataInfo* key)
 	}
 }
 
+void*   ug_data_set(UgData* data, const UgGroupDataInfo* key, void* grouped_data)
+{
+	UgPair* cur;
+	int     index;
+	void*   result;
+
+	cur = ug_data_find(data, key, &index);
+	if (cur == NULL) {
+		cur = ug_array_insert(data, index, 1);
+		cur->key = (void*) key;
+		cur->data = NULL;
+	}
+	result = cur->data;
+	cur->data = grouped_data;
+	return result;
+}
+
 void* ug_data_get(UgData* data, const UgGroupDataInfo* key)
 {
 	UgPair* cur;
