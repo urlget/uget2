@@ -866,50 +866,6 @@ int   uget_app_move_download_to (UgetApp* app, UgetNode* dnode, UgetNode* cnode)
 }
 
 // used by uget_app_delete_download()
-static int  delete_files_dnode (UgetNode* dnode, int  has_aria2_file)
-{
-	UgetNode*  fnode;   // filenode
-	UgetNode*  fnode_next;
-	int        error;
-	int        error_count = 0;
-
-	if (has_aria2_file == TRUE) {
-		// move first aria2 to tail
-		for (fnode = dnode->children;  fnode;  fnode = fnode_next) {
-			fnode_next = fnode->next;
-			if (strstr (fnode->name, ".aria2")) {
-				uget_node_move (dnode, NULL, fnode);
-				break;
-			}
-		}
-	}
-
-	for (fnode = dnode->children;  fnode;  fnode = fnode_next) {
-		fnode_next = fnode->next;
-
-		if (fnode->name == NULL) {
-			uget_node_remove (dnode, fnode);
-			continue;
-		}
-		if (ug_file_is_exist (fnode->name) == FALSE) {
-			uget_node_remove (dnode, fnode);
-			continue;
-		}
-
-		error = ug_remove (fnode->name);
-		if (error != 0)
-			error_count++;
-		else if (error_count == 0 || strstr (fnode->name, ".aria2") == NULL)
-			uget_node_remove (dnode, fnode);
-	}
-
-	if (dnode->children == NULL)
-		return TRUE;
-	else
-		return FALSE;
-}
-
-// used by uget_app_delete_download()
 static void  delete_file1(UgetFile* file, int* error_count)
 {
 	if (!(file->state & UGET_FILE_STATE_DELETED)) {
@@ -936,8 +892,7 @@ static int  delete_files(UgetNode* dnode, int has_temp_file)
 		                 &error_count);
 		return (error_count == 0) ? TRUE : FALSE;
 	}
-	else
-		return delete_files_dnode(dnode, has_temp_file);
+	return TRUE;
 }
 
 // used by uget_app_delete_download()
@@ -1375,6 +1330,17 @@ UgetPluginInfo*  uget_app_match_plugin (UgetApp* app,
 // ----------------------------------------------------------------------------
 // save/load categories
 
+// convert old format to new
+static void remove_file_node(UgetNode* cnode)
+{
+	UgetNode*  dnode;
+
+	for (dnode = cnode->children;  dnode;  dnode = dnode->next) {
+		while (dnode->children)
+			uget_node_unref(dnode->children);
+	}
+}
+
 int   uget_app_save_category (UgetApp* app, UgetNode* cnode, const char* filename, void* jsonfile)
 {
 	int  fd;
@@ -1459,6 +1425,8 @@ UgetNode* uget_app_load_category_fd (UgetApp* app, int fd, void* jsonfile)
 		uget_node_make_fake (cnode);
 		// move all downloads from active to queuing in this category
 		uget_app_stop_category (app, cnode);
+		// convert old format to new
+		remove_file_node(cnode);
 		return cnode;
 	}
 	else {

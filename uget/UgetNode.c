@@ -56,6 +56,9 @@ static void  uget_node_call_fake_filter (UgetNode* parent, UgetNode* sibling, Ug
 static UgJsonError  ug_json_parse_state2group (UgJson* json,
                                 const char* name, const char* value,
                                 void* node, void* none);
+static UgJsonError  ug_json_parse_name2data (UgJson* json,
+                                const char* name, const char* value,
+                                void* node, void* none);
 // ----------------------------------------------------------------------------
 // UgetNode
 
@@ -69,14 +72,14 @@ static struct UgetNodeControl  control = {
 
 const UgEntry  UgetNodeEntry[] =
 {
-	{"name",     offsetof (UgetNode, name),  UG_ENTRY_STRING,
-			NULL, UG_ENTRY_NO_NULL},
 	{"data",     offsetof (UgetNode, data),  UG_ENTRY_CUSTOM,
 			ug_json_parse_data_ptr,   ug_json_write_data_ptr},
 	{"children", 0,                          UG_ENTRY_ARRAY,
 			ug_json_parse_uget_node_children, ug_json_write_uget_node_children},
 
 	// deprecated
+	{"name",     0,                          UG_ENTRY_CUSTOM,
+			ug_json_parse_name2data,  NULL},
 	{"state",    0,                          UG_ENTRY_CUSTOM,
 			ug_json_parse_state2group, NULL},
 	{"info",     offsetof (UgetNode, data),  UG_ENTRY_CUSTOM,
@@ -139,7 +142,6 @@ void  uget_node_unref (UgetNode* node)
 		uget_node_unref_children (node);
 //		ug_node_unlink ((UgNode*)node);
 		ug_data_unref(node->data);
-		ug_free(node->name);
 
 #ifdef HAVE_GLIB
 		g_slice_free1 (sizeof (UgetNode), node);
@@ -506,6 +508,35 @@ void  ug_json_write_uget_node_children (UgJson* json, const UgetNode* node)
 	}
 }
 
+// convert old format to new
+static UgJsonError  ug_json_parse_name2data (UgJson* json,
+                                const char* name, const char* value,
+                                void* nodev, void* none)
+{
+	UgetNode*     node = nodev;
+	union {
+		UgetCommon*   common;
+		UgetFiles*    files;
+	} temp;
+
+	if (json->type != UG_JSON_STRING)
+		return UG_JSON_ERROR_TYPE_NOT_MATCH;
+
+	// Now root node is category node
+	if (node->parent == NULL || node->parent->parent == NULL) {
+		// category or download node
+		temp.common = ug_data_realloc(node->data, UgetCommonInfo);
+		temp.common->name = ug_strdup(value);
+	}
+	else if (node->parent->parent->parent == NULL) {
+		// file node
+		temp.files = ug_data_realloc(node->parent->data, UgetFilesInfo);
+		uget_files_realloc(temp.files, value);
+	}
+	return UG_JSON_ERROR_NONE;
+}
+
+// convert old format to new
 static UgJsonError  ug_json_parse_state2group (UgJson* json,
                                 const char* name, const char* value,
                                 void* nodev, void* none)

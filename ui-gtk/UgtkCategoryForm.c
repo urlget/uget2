@@ -198,14 +198,8 @@ void  ugtk_category_form_set  (UgtkCategoryForm*  cform, UgetNode* cnode)
 	category = ug_data_realloc(cnode->data, UgetCategoryInfo);
 	common   = ug_data_get(cnode->data, UgetCommonInfo);
 	if (gtk_widget_is_sensitive (cform->name_entry) == TRUE) {
-		if (common && common->name) {
-			gtk_entry_set_text ((GtkEntry*) cform->name_entry,
-					(common->name) ? common->name : "");
-		}
-		else {
-			gtk_entry_set_text ((GtkEntry*) cform->name_entry,
-					(cnode->name) ? cnode->name : "");
-		}
+		gtk_entry_set_text ((GtkEntry*) cform->name_entry,
+				(common->name) ? common->name : "");
 	}
 	gtk_spin_button_set_value ((GtkSpinButton*) cform->spin_active,
 			(gdouble) category->active_limit);

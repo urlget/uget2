@@ -91,7 +91,6 @@ typedef void (*UgetNodeFunc)(UgetNode* node, UgetNode* sibling, UgetNode* child)
 
 extern const UgEntry  UgetNodeEntry[];
 
-
 typedef enum {
 	UGET_GROUP_NULL       = 0,
 	UGET_GROUP_QUEUING    = 1 << 0,
@@ -162,7 +161,6 @@ struct UgetNode
 	UgetNode*     peer;
 
 	int           ref_count;
-	char*         name;       // deprecated, please use UgetCommon::name
 
 	UgData*       data;
 	struct UgetNodeControl*  control;

@@ -44,20 +44,23 @@
 
 int   uget_node_compare_name (UgetNode* node1, UgetNode* node2)
 {
-	node1 = node1->base;
-	node2 = node2->base;
+	UgetCommon* common1;
+	UgetCommon* common2;
 
-	if (node1->name) {
-		if (node2->name == NULL)
+	common1 = ug_data_get(node1->data, UgetCommonInfo);
+	common2 = ug_data_get(node2->data, UgetCommonInfo);
+
+	if (common1 && common1->name) {
+		if (common2->name == NULL)
 			return 1;
 	}
 	else {
-		if (node2->name == NULL)
-			return 0;
-		else
+		if (common2 && common2->name)
 			return -1;
+		else
+			return 0;
 	}
-	return strcmp (node1->name, node2->name);
+	return strcmp (common1->name, common2->name);
 }
 
 int   uget_node_compare_complete (UgetNode* node1, UgetNode* node2)
@@ -342,20 +345,7 @@ int   uget_node_compare_retry (UgetNode* node1, UgetNode* node2)
 
 int   uget_node_compare_parent_name (UgetNode* node1, UgetNode* node2)
 {
-	node1 = node1->base->parent;
-	node2 = node2->base->parent;
-
-	if (node1->name) {
-		if (node2->name == NULL)
-			return 1;
-	}
-	else {
-		if (node2->name == NULL)
-			return 0;
-		else
-			return -1;
-	}
-	return strcmp (node1->name, node2->name);
+	return uget_node_compare_name(node1->base->parent, node2->base->parent);
 }
 
 int   uget_node_compare_uri (UgetNode* node1, UgetNode* node2)

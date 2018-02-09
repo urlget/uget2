@@ -147,8 +147,6 @@ static void col_set_name (GtkTreeViewColumn *tree_column,
 
 	if (common && common->name)
 		name = common->name;
-	else if (node->name)
-		name = node->name;
 	else {
 		common = ug_data_get (node->data, UgetCommonInfo);
 		if (common) {
@@ -457,6 +455,7 @@ static void col_set_category (GtkTreeViewColumn *tree_column,
                               GtkTreeIter       *iter,
                               gpointer           data)
 {
+	UgetCommon*   common;
 	UgetNode*     node;
 	char*         string;
 
@@ -467,8 +466,13 @@ static void col_set_category (GtkTreeViewColumn *tree_column,
 		return;
 	node = node->base;
 
-	if (node->parent)
-		string = node->parent->name;
+	if (node->parent) {
+		common = ug_data_get(node->parent->data, UgetCommonInfo);
+		if (common)
+			string = common->name;
+		else
+			string = NULL;
+	}
 	else
 		string = NULL;
 
@@ -611,8 +615,6 @@ static void col_set_name_c (GtkTreeViewColumn *tree_column,
 	common = ug_data_get(node->data, UgetCommonInfo);
 	if (common && common->name)
 		name = common->name;
-	else if (node->name)
-		name = node->name;
 	else
 		name = _("unnamed");
 

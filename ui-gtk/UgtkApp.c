@@ -893,14 +893,9 @@ void  ugtk_app_create_category (UgtkApp* app)
 	cnode = uget_node_new (NULL);
 	common = ug_data_realloc(cnode->data, UgetCommonInfo);
 	ug_data_assign (cnode->data, cnode_src->data, NULL);
-	if (common_src && common_src->name) {
-		ug_free(common->name);
-		common->name = ug_strdup_printf ("%s%s", _("Copy - "), common_src->name);
-	}
-	else if (cnode_src->name) {
-		ug_free(common->name);
-		common->name = ug_strdup_printf ("%s%s", _("Copy - "), cnode_src->name);
-	}
+	ug_free(common->name);
+	common->name = ug_strdup_printf("%s%s", _("Copy - "),
+						(common_src->name) ? common_src->name : NULL);
 
 	ugtk_node_dialog_set (ndialog, cnode);
 	ugtk_node_dialog_run (ndialog, UGTK_NODE_DIALOG_NEW_CATEGORY, cnode);

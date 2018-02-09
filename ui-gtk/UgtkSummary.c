@@ -99,10 +99,6 @@ void  ugtk_summary_show (UgtkSummary* summary, UgetNode* node)
 			name = g_strconcat (_("Name"), ":", NULL);
 			value = temp.common->name;
 		}
-		else if (node->name) {
-			name = g_strconcat (_("Name"), ":", NULL);
-			value = node->name;
-		}
 		else {
 			name = g_strconcat (_("File"), ":", NULL);
 			value = (temp.common) ? temp.common->file : NULL;
@@ -132,7 +128,13 @@ void  ugtk_summary_show (UgtkSummary* summary, UgetNode* node)
 	// Summary Category
 	if (summary->visible.category) {
 		name = g_strconcat (_("Category"), ":", NULL);
-		value = (node->parent) ? node->parent->name : NULL;
+		if (node->parent) {
+			temp.common = ug_data_get (node->parent->data, UgetCommonInfo);
+			value = (temp.common) ? temp.common->name : NULL;
+			temp.common = ug_data_get (node->data, UgetCommonInfo);
+		}
+		else
+			value = NULL;
 		ugtk_summary_store_realloc_next (summary->store, &iter);
 		gtk_list_store_set (summary->store, &iter,
 				UGTK_SUMMARY_COLUMN_ICON , GTK_STOCK_DND_MULTIPLE,

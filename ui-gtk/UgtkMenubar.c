@@ -909,8 +909,6 @@ void  ugtk_menubar_sync_category (UgtkMenubar* menubar, UgtkApp* app, gboolean r
 			common = ug_data_get(cnode->data, UgetCommonInfo);
 			if (common && common->name)
 				menu_item = gtk_image_menu_item_new_with_label (common->name);
-			else if (cnode->name)
-				menu_item = gtk_image_menu_item_new_with_label (cnode->name);
 			else
 				menu_item = gtk_image_menu_item_new_with_label ("");
 			image = gtk_image_new_from_stock (GTK_STOCK_DND_MULTIPLE,
