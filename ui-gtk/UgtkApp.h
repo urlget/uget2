@@ -97,7 +97,7 @@ struct UgtkApp
 
 	// recent download settings
 	struct {
-		UgetNode*   infonode;
+		UgData*     data;
 		int         category_index;
 		int         saved;
 	} recent;

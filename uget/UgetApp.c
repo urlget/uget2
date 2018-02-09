@@ -167,11 +167,11 @@ void  uget_app_final (UgetApp* app)
 	uget_task_final (&app->task);
 	uget_app_clear_plugins (app);
 
-	uget_node_unref_children (&app->mix_split);
-	uget_node_unref_children (&app->mix);
-	uget_node_unref_children (&app->sorted);
-	uget_node_unref_children (&app->split);
-	uget_node_unref_children (&app->real);
+	uget_node_clear_children (&app->mix_split);
+	uget_node_clear_children (&app->mix);
+	uget_node_clear_children (&app->sorted);
+	uget_node_clear_children (&app->split);
+	uget_node_clear_children (&app->real);
 
 	ug_registry_final (&app->plugins);
 	ug_registry_final (&app->infos);
@@ -222,7 +222,7 @@ static int  uget_app_activate (UgetApp* app, UgetNode* cnode, UgetCategory* cate
 			if (app->mix.control->sort.compare) {
 				sibling = dnode->next;
 				uget_node_remove (cnode, dnode);
-				uget_node_unref_fake (dnode);
+				uget_node_clear_fake (dnode);
 				uget_node_insert (cnode, sibling, dnode);
 				app->n_moved++;
 			}
@@ -231,7 +231,7 @@ static int  uget_app_activate (UgetApp* app, UgetNode* cnode, UgetCategory* cate
 
 		uget_task_remove (&app->task, dnode);
 		uget_node_remove (cnode, dnode);
-		uget_node_unref_fake (dnode);
+		uget_node_clear_fake (dnode);
 		if (relation->group & UGET_GROUP_COMPLETED) {
 			relation->group |= UGET_GROUP_FINISHED;
 			sibling = category->finished->children;
@@ -323,16 +323,16 @@ int   uget_app_trim(UgetApp* app)
 			continue;
 		while (category->finished->n_children > category->finished_limit) {
 			dnode = category->finished->last->real;
-			uget_uri_hash_remove_download(app->uri_hash, dnode);
+			uget_uri_hash_remove_download(app->uri_hash, dnode->data);
 			uget_node_remove(cnode, dnode);
-			uget_node_unref(dnode);
+			uget_node_free(dnode);
 			app->n_deleted++;
 		}
 		while (category->recycled->n_children > category->recycled_limit) {
 			dnode = category->recycled->last->real;
-			uget_uri_hash_remove_download(app->uri_hash, dnode);
+			uget_uri_hash_remove_download(app->uri_hash, dnode->data);
 			uget_node_remove(cnode, dnode);
-			uget_node_unref(dnode);
+			uget_node_free(dnode);
 			app->n_deleted++;
 		}
 	}
@@ -554,7 +554,7 @@ void  uget_app_delete_category (UgetApp* app, UgetNode* cnode)
 	uget_app_stop_category (app, cnode);
 	uget_uri_hash_remove_category (app->uri_hash, cnode);
 	uget_node_remove (&app->real, cnode);
-	uget_node_unref (cnode);
+	uget_node_free (cnode);
 
 	if (app->config_dir == NULL)
 		path_base = ug_strdup ("category");
@@ -801,7 +801,7 @@ int  uget_app_add_download (UgetApp* app, UgetNode* dnode, UgetNode* cnode, int 
 		if (sibling)
 			sibling = sibling->real;
 		uget_node_insert (cnode, sibling, dnode);
-		uget_uri_hash_add_download (app->uri_hash, dnode);
+		uget_uri_hash_add_download(app->uri_hash, dnode->data);
 		return TRUE;
 	}
 	return FALSE;
@@ -860,83 +860,77 @@ int   uget_app_move_download_to (UgetApp* app, UgetNode* dnode, UgetNode* cnode)
 		sibling = sibling->real;
 
 	uget_node_remove (dnode->parent, dnode);
-	uget_node_unref_fake (dnode);
+	uget_node_clear_fake (dnode);
 	uget_node_insert (cnode, sibling, dnode);
 	return TRUE;
 }
 
 // used by uget_app_delete_download()
-static void  delete_file1(UgetFile* file, int* error_count)
+static int  delete_files(UgetFiles* files, int has_temp_file)
 {
-	if (!(file->state & UGET_FILE_STATE_DELETED)) {
-		if (ug_file_is_exist(file->path) == FALSE)
-			file->state |= UGET_FILE_STATE_DELETED;
-		else if (ug_remove(file->path) != 0)
-			error_count[0]++;
-		else if (file->type != UGET_FILE_TEMPORARY)
-			file->state |= UGET_FILE_STATE_DELETED;
+	UgetFile* file1;
+	int  n_error;
+	int  index;
+
+	for (n_error = 0, index = 0;  index < files->collection.length;  index++) {
+		file1 = files->collection.at + index;
+		if (file1->state & UGET_FILE_STATE_DELETED)
+			continue;
+
+		if (ug_file_is_exist(file1->path) == FALSE)
+			file1->state |= UGET_FILE_STATE_DELETED;
+		else if (ug_remove(file1->path) != 0)
+			n_error++;
+		else if (file1->type != UGET_FILE_TEMPORARY)
+			file1->state |= UGET_FILE_STATE_DELETED;
 	}
+
+	return (n_error == 0) ? TRUE : FALSE;
 }
 
 // used by uget_app_delete_download()
-static int  delete_files(UgetNode* dnode, int has_temp_file)
-{
-	UgetFiles* files;
-	int  error_count;
-
-	files = ug_data_get(dnode->data, UgetFilesInfo);
-	if (files) {
-		error_count = 0;
-		ug_array_foreach(&files->collection,
-		                 (UgForeachFunc)delete_file1,
-		                 &error_count);
-		return (error_count == 0) ? TRUE : FALSE;
-	}
-	return TRUE;
-}
-
-// used by uget_app_delete_download()
-static UG_THREAD_RETURN_TYPE  delete_files_thread (UgetNode* dnode)
+static UG_THREAD_RETURN_TYPE  delete_files_thread(UgetFiles* files)
 {
 	int  count;
 
 #ifdef USE__ANDROID__SAF
-	if (delete_files (dnode, TRUE) == FALSE)
+	if (delete_files(files, TRUE) == FALSE)
 #endif
 	for (count = 0;  count < 3;  count++) {
-		ug_sleep (2 * 1000);    // sleep 2 seconds
-		if (delete_files (dnode, FALSE))
+		ug_sleep(2 * 1000);    // sleep 2 seconds
+		if (delete_files(files, FALSE))
 			break;
 	}
 
-	uget_node_unref (dnode);
+	ug_group_data_free(files);
 	return UG_THREAD_RETURN_VALUE;
 }
 
 int  uget_app_delete_download (UgetApp* app, UgetNode* dnode, int delete_file)
 {
-	UgetNode*  cnode;
 	UgThread   thread;
+	UgetFiles* files;
 	int        is_active;
 
-	cnode = dnode->parent;
-	is_active = uget_task_remove (&app->task, dnode);
-	uget_node_remove (cnode, dnode);
-	uget_node_unref_fake (dnode);
-	uget_uri_hash_remove_download (app->uri_hash, dnode);
-
-	if (delete_file == TRUE) {
+	is_active = uget_task_remove(&app->task, dnode);
 #ifdef USE__ANDROID__SAF
-		is_active = TRUE;  // delete files in thread if program use Android SAF
+	is_active = TRUE;  // delete files in thread if program use Android SAF
 #endif
-		if (is_active == TRUE || delete_files (dnode, TRUE) == FALSE) {
-			ug_thread_create (&thread, (UgThreadFunc) delete_files_thread, dnode);
-			ug_thread_unjoin (&thread);
+	uget_uri_hash_remove_download(app->uri_hash, dnode->data);
+	files = ug_data_set(dnode->data, UgetFilesInfo, NULL);
+	uget_node_free(dnode);
+
+	if (delete_file == TRUE && files) {
+		if (is_active == TRUE || delete_files(files, TRUE) == FALSE) {
+			// delete files and free 'files' in thread
+			ug_thread_create(&thread, (UgThreadFunc) delete_files_thread, files);
+			ug_thread_unjoin(&thread);
 			return FALSE;
 		}
 	}
 
-	uget_node_unref (dnode);
+	if (files)
+		ug_group_data_free(files);
 	return TRUE;
 }
 
@@ -953,13 +947,13 @@ int  uget_app_recycle_download (UgetApp* app, UgetNode* dnode)
 
 	relation = ug_data_realloc(dnode->data, UgetRelationInfo);
 	if (relation->group & UGET_GROUP_RECYCLED) {
-		uget_node_unref (dnode);
+		uget_node_free (dnode);
 		return FALSE;
 	}
 	else {
 		relation->group &= ~UGET_GROUP_MAJOR;
 		relation->group |=  UGET_GROUP_RECYCLED;
-		uget_node_unref_fake (dnode);
+		uget_node_clear_fake (dnode);
 		category = ug_data_realloc (cnode->data, UgetCategoryInfo);
 		// try to insert download before recycled
 		sibling = category->recycled->children;
@@ -1020,7 +1014,7 @@ int   uget_app_activate_download (UgetApp* app, UgetNode* dnode)
 	}
 	// change node state and move node position
 	uget_node_remove (cnode, dnode);
-	uget_node_unref_fake (dnode);
+	uget_node_clear_fake (dnode);
 	relation->group =  UGET_GROUP_ACTIVE;
 	temp.category = ug_data_realloc (cnode->data, UgetCategoryInfo);
 	// try to insert download before queuing, finished, and recycled
@@ -1056,7 +1050,7 @@ int   uget_app_pause_download (UgetApp* app, UgetNode* dnode)
 	for (fake = dnode->fake;  fake;  fake = fake->peer) {
 		if (fake->parent == category->active) {
 			uget_node_remove (cnode, dnode);
-			uget_node_unref_fake (dnode);
+			uget_node_clear_fake (dnode);
 
 			relation->group |= UGET_GROUP_QUEUING;
 			// try to insert download before queuing, finished, and recycled
@@ -1106,7 +1100,7 @@ int   uget_app_queue_download (UgetApp* app, UgetNode* dnode)
 	else {
 		cnode = dnode->parent;
 		uget_node_remove (cnode, dnode);
-		uget_node_unref_fake (dnode);
+		uget_node_clear_fake (dnode);
 
 		// --- decide sibling position & insert before it ---
 		// if current download is in active, insert it before queuing,
@@ -1156,7 +1150,7 @@ void  uget_app_reset_download_name (UgetApp* app, UgetNode* dnode)
 //		cnode   = dnode->parent;
 		sibling = dnode->next;
 		uget_node_remove(cnode, dnode);
-		uget_node_unref_fake(dnode);
+		uget_node_clear_fake(dnode);
 		uget_node_insert(cnode, sibling, dnode);
 	}
 }
@@ -1337,7 +1331,7 @@ static void remove_file_node(UgetNode* cnode)
 
 	for (dnode = cnode->children;  dnode;  dnode = dnode->next) {
 		while (dnode->children)
-			uget_node_unref(dnode->children);
+			uget_node_free(dnode->children);
 	}
 }
 
@@ -1430,7 +1424,7 @@ UgetNode* uget_app_load_category_fd (UgetApp* app, int fd, void* jsonfile)
 		return cnode;
 	}
 	else {
-		uget_node_unref (cnode);
+		uget_node_free (cnode);
 		return NULL;
 	}
 }

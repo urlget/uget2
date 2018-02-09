@@ -67,8 +67,8 @@ struct UgtkCategoryForm
 };
 
 void  ugtk_category_form_init (UgtkCategoryForm* cform);
-void  ugtk_category_form_get  (UgtkCategoryForm* cform, UgetNode* cnode);
-void  ugtk_category_form_set  (UgtkCategoryForm* cform, UgetNode* cnode);
+void  ugtk_category_form_get  (UgtkCategoryForm* cform, UgData* cnode_data);
+void  ugtk_category_form_set  (UgtkCategoryForm* cform, UgData* cnode_data);
 
 void  ugtk_category_form_set_multiple (UgtkCategoryForm* cform, gboolean multiple_mode);
 

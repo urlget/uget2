@@ -104,7 +104,6 @@ void  uget_node_init  (UgetNode* node, UgetNode* node_real)
 {
 	memset (node, 0, sizeof (UgetNode));
 
-	node->ref_count = 1;
 	node->control = &control;
 
 	if (node_real == NULL) {
@@ -125,55 +124,48 @@ void  uget_node_init  (UgetNode* node, UgetNode* node_real)
 	}
 }
 
-void  uget_node_ref (UgetNode* node)
+void  uget_node_free (UgetNode* node)
 {
-	node->ref_count++;
-}
+	if (node->parent)
+		uget_node_remove (node->parent, node);
+	if (node->real)
+		uget_node_remove_fake (node->real, node);
 
-void  uget_node_unref (UgetNode* node)
-{
-	if (--node->ref_count == 0) {
-		if (node->parent)
-			uget_node_remove (node->parent, node);
-		if (node->real)
-			uget_node_remove_fake (node->real, node);
-
-		uget_node_unref_fake (node);
-		uget_node_unref_children (node);
-//		ug_node_unlink ((UgNode*)node);
-		ug_data_unref(node->data);
+	uget_node_clear_fake (node);
+	uget_node_clear_children (node);
+//	ug_node_unlink ((UgNode*)node);
+	ug_data_unref(node->data);
 
 #ifdef HAVE_GLIB
-		g_slice_free1 (sizeof (UgetNode), node);
+	g_slice_free1 (sizeof (UgetNode), node);
 #else
-		ug_free (node);
+	ug_free (node);
 #endif // HAVE_GLIB
-	}
 }
 
-void  uget_node_unref_children (UgetNode* node)
+void  uget_node_clear_children (UgetNode* node)
 {
 	UgetNode*  next;
 	UgetNode*  children;
 
 	for (children = node->children;  children;  children = next) {
 		next = children->next;
-		uget_node_unref (children);
+		uget_node_free(children);
 	}
 	node->children = NULL;
 }
 
-void  uget_node_unref_fake (UgetNode* node)
+void  uget_node_clear_fake (UgetNode* node)
 {
 	UgetNode*  peer;
 	UgetNode*  fake;
 
 	for (fake = node->fake;  fake;  fake = peer) {
 		peer = fake->peer;
-		fake->real = NULL;   // speed up uget_node_unref()
-		uget_node_unref (fake);
+		fake->real = NULL;   // speed up uget_node_free()
+		uget_node_free(fake);
 	}
-	node->fake = NULL;       // speed up uget_node_unref()
+	node->fake = NULL;       // speed up uget_node_free()
 }
 
 void  uget_node_move (UgetNode* node, UgetNode* sibling, UgetNode* child)

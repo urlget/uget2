@@ -227,23 +227,14 @@ GList*  ugtk_traveler_reserve_selection (UgtkTraveler* traveler)
 	GList*    list;
 	GList*    link;
 
-	g_list_free_full (traveler->reserved.list,
-	                  (GDestroyNotify) uget_node_unref);
-	if (traveler->reserved.node)
-		uget_node_unref (traveler->reserved.node);
-
 	list = ugtk_traveler_get_selected (traveler);
-	for (link = list;  link;  link = link->next) {
+	for (link = list;  link;  link = link->next)
 		link->data = ((UgetNode*)link->data)->base;
-		uget_node_ref (link->data);
-	}
 
 	traveler->reserved.list = list;
 	traveler->reserved.node = traveler->download.cursor.node;
-	if (traveler->reserved.node) {
+	if (traveler->reserved.node)
 		traveler->reserved.node = traveler->reserved.node->base;
-		uget_node_ref (traveler->reserved.node);
-	}
 	return list;
 }
 
@@ -256,9 +247,6 @@ void  ugtk_traveler_restore_selection (UgtkTraveler* traveler)
 	node = traveler->reserved.node;
 	ugtk_traveler_set_cursor (traveler, node);
 	ugtk_traveler_set_selected (traveler, list);
-	if (node)
-		uget_node_unref (node);
-	g_list_free_full (list, (GDestroyNotify) uget_node_unref);
 	traveler->reserved.list = NULL;
 	traveler->reserved.node = NULL;
 }

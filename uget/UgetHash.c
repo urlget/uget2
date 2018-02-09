@@ -571,28 +571,28 @@ void  uget_uri_hash_remove (void* uuhash, const char* uri)
 	}
 }
 
-void  uget_uri_hash_add_download (void* uuhash, UgetNode* dnode)
+void  uget_uri_hash_add_download (void* uuhash, UgData* dnode_data)
 {
 	UgetCommon* common;
 	uintptr_t   counts;
 
 	if (uuhash == NULL)
 		return;
-	common = ug_data_get (dnode->data, UgetCommonInfo);
+	common = ug_data_get(dnode_data, UgetCommonInfo);
 	if (common && common->uri) {
 		counts = (uintptr_t) ug_hash_table_lookup (uuhash, common->uri);
 		ug_hash_table_insert (uuhash, ug_strdup (common->uri), (void*) (++counts));
 	}
 }
 
-void  uget_uri_hash_remove_download (void* uuhash, UgetNode* dnode)
+void  uget_uri_hash_remove_download (void* uuhash, UgData* dnode_data)
 {
 	UgetCommon* common;
 	uintptr_t   counts;
 
 	if (uuhash == NULL)
 		return;
-	common = ug_data_get (dnode->data, UgetCommonInfo);
+	common = ug_data_get(dnode_data, UgetCommonInfo);
 	if (common && common->uri) {
 		counts = (uintptr_t) ug_hash_table_lookup (uuhash, common->uri);
 		if (counts > 1)

@@ -447,7 +447,7 @@ static void ugtk_download_form_init_page2 (UgtkDownloadForm* dform)
 	dform->timestamp = (GtkToggleButton*) widget;
 }
 
-void  ugtk_download_form_get (UgtkDownloadForm* dform, UgetNode* node)
+void  ugtk_download_form_get (UgtkDownloadForm* dform, UgData* node_data)
 {
 	UgUri         uuri;
 	const gchar*  text;
@@ -460,7 +460,7 @@ void  ugtk_download_form_get (UgtkDownloadForm* dform, UgetNode* node)
 
 	// ------------------------------------------
 	// UgetCommon
-	temp.common = ug_data_realloc (node->data, UgetCommonInfo);
+	temp.common = ug_data_realloc(node_data, UgetCommonInfo);
 	// folder
 	text = gtk_entry_get_text ((GtkEntry*)dform->folder_entry);
 	ug_free (temp.common->folder);
@@ -540,7 +540,7 @@ void  ugtk_download_form_get (UgtkDownloadForm* dform, UgetNode* node)
 
 	// ------------------------------------------
 	// UgetHttp
-	temp.http = ug_data_realloc (node->data, UgetHttpInfo);
+	temp.http = ug_data_realloc(node_data, UgetHttpInfo);
 	// referrer
 	text = gtk_entry_get_text ((GtkEntry*) dform->referrer_entry);
 	ug_free (temp.http->referrer);
@@ -565,7 +565,7 @@ void  ugtk_download_form_get (UgtkDownloadForm* dform, UgetNode* node)
 	// ------------------------------------------
 	// UgetRelation
 	if (gtk_widget_get_sensitive (dform->radio_pause)) {
-		temp.relation = ug_data_realloc(node->data, UgetRelationInfo);
+		temp.relation = ug_data_realloc(node_data, UgetRelationInfo);
 		if (gtk_toggle_button_get_active ((GtkToggleButton*) dform->radio_pause))
 			temp.relation->group |= UGET_GROUP_PAUSED;
 		else
@@ -573,14 +573,14 @@ void  ugtk_download_form_get (UgtkDownloadForm* dform, UgetNode* node)
 	}
 }
 
-void  ugtk_download_form_set (UgtkDownloadForm* dform, UgetNode* node, gboolean keep_changed)
+void  ugtk_download_form_set (UgtkDownloadForm* dform, UgData* node_data, gboolean keep_changed)
 {
 	UgetRelation* relation;
 	UgetCommon*   common;
 	UgetHttp*     http;
 
-	common = ug_data_realloc (node->data, UgetCommonInfo);
-	http   = ug_data_get (node->data, UgetHttpInfo);
+	common = ug_data_realloc(node_data, UgetCommonInfo);
+	http   = ug_data_get(node_data, UgetHttpInfo);
 
 	// disable changed flags
 	dform->changed.enable = FALSE;
@@ -693,7 +693,7 @@ void  ugtk_download_form_set (UgtkDownloadForm* dform, UgetNode* node, gboolean 
 	// ------------------------------------------
 	// UgetRelation
 	if (gtk_widget_get_sensitive (dform->radio_pause)) {
-		relation = ug_data_realloc(node->data, UgetRelationInfo);
+		relation = ug_data_realloc(node_data, UgetRelationInfo);
 		if (relation->group & UGET_GROUP_PAUSED)
 			gtk_toggle_button_set_active ((GtkToggleButton*) dform->radio_pause, TRUE);
 		else

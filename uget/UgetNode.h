@@ -160,19 +160,16 @@ struct UgetNode
 	UgetNode*     fake;
 	UgetNode*     peer;
 
-	int           ref_count;
-
 	UgData*       data;
 	struct UgetNodeControl*  control;
 };
 
 UgetNode*  uget_node_new (UgetNode* node_real);
-void  uget_node_init  (UgetNode* node, UgetNode* node_real);
+void  uget_node_init (UgetNode* node, UgetNode* node_real);
+void  uget_node_free (UgetNode* node);
 
-void  uget_node_ref   (UgetNode* node);
-void  uget_node_unref (UgetNode* node);
-void  uget_node_unref_fake (UgetNode* node);
-void  uget_node_unref_children (UgetNode* node);
+void  uget_node_clear_fake (UgetNode* node);
+void  uget_node_clear_children (UgetNode* node);
 
 void  uget_node_move (UgetNode* node, UgetNode* sibling, UgetNode* child);
 void  uget_node_insert (UgetNode* node, UgetNode* sibling, UgetNode* child);

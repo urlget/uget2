@@ -135,7 +135,7 @@ void test_fake_path ()
 
 	print_fake_path (node);
 
-	uget_node_unref (node);
+	uget_node_free (node);
 }
 
 void parse_node (UgetNode* parent)

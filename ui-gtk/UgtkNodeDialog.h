@@ -66,6 +66,7 @@ typedef enum {
 	gulong        handler_id[3];  \
 	UgtkApp*      app;            \
 	UgetNode*     node;           \
+	UgData*       node_data;      \
 	UgtkProxyForm     proxy;      \
 	UgtkDownloadForm  download;   \
 	UgtkCategoryForm  category
@@ -73,17 +74,20 @@ typedef enum {
 struct UgtkNodeDialog
 {
 	UGTK_NODE_DIALOG_MEMBERS;
-//	GtkDialog*    self;
-//	GtkBox*       hbox;
-//	GtkWidget*    notebook;
-//	GtkTreeView*  node_view;
-//	UgtkNodeTree* node_tree;
-//	gulong        handler_id[3];
-//	UgtkApp*      app;
-//	UgetNode*     node;
-//	UgtkProxyForm     proxy;
-//	UgtkDownloadForm  download;
-//	UgtkCategoryForm  category;
+/*	// ------ UgtkNodeDialog members ------
+	GtkDialog*    self;
+	GtkBox*       hbox;
+	GtkWidget*    notebook;
+	GtkTreeView*  node_view;
+	UgtkNodeTree* node_tree;
+	gulong        handler_id[3];
+	UgtkApp*      app;
+	UgetNode*     note;
+	UgData*       node_data;
+	UgtkProxyForm     proxy;
+	UgtkDownloadForm  download;
+	UgtkCategoryForm  category;
+ */
 
 	// handler_id[0] : "row-changed"
 	// handler_id[1] : "row-deleted"
@@ -101,9 +105,9 @@ void             ugtk_node_dialog_free (UgtkNodeDialog* ndialog);
 int   ugtk_node_dialog_get_category (UgtkNodeDialog* ndialog, UgetNode** cnode);
 void  ugtk_node_dialog_set_category (UgtkNodeDialog* ndialog, UgetNode* cnode);
 
-// set/get node's info to/from UgtkNodeDialog
-void  ugtk_node_dialog_get (UgtkNodeDialog* ndialog, UgetNode* node);
-void  ugtk_node_dialog_set (UgtkNodeDialog* ndialog, UgetNode* node);
+// set/get node's data to/from UgtkNodeDialog
+void  ugtk_node_dialog_get (UgtkNodeDialog* ndialog, UgData* node_data);
+void  ugtk_node_dialog_set (UgtkNodeDialog* ndialog, UgData* node_data);
 
 void  ugtk_node_dialog_run (UgtkNodeDialog* ndialog,
                             UgtkNodeDialogMode mode,

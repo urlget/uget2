@@ -198,7 +198,7 @@ static void on_no_batch_response (UgtkBatchDialog* bdialog)
 	uri = gtk_entry_get_text ((GtkEntry*)bdialog->download.uri_entry);
 	if (ugtk_node_dialog_confirm_existing((UgtkNodeDialog*) bdialog, uri)) {
 		dnode = uget_node_new (NULL);
-		ugtk_node_dialog_get ((UgtkNodeDialog*) bdialog, dnode);
+		ugtk_node_dialog_get ((UgtkNodeDialog*) bdialog, dnode->data);
 		uget_app_add_download ((UgetApp*) app, dnode, cnode, FALSE);
 	}
 }
@@ -223,7 +223,7 @@ static void on_sequencer_response (UgtkBatchDialog* bdialog)
 	for (link = result.head;  link;  link = link->next) {
 		dnode = uget_node_new (NULL);
 		common = ug_data_realloc (dnode->data, UgetCommonInfo);
-		ugtk_node_dialog_get ((UgtkNodeDialog*) bdialog, dnode);
+		ugtk_node_dialog_get ((UgtkNodeDialog*) bdialog, dnode->data);
 		common->uri = ug_strdup (link->data);
 		uget_app_add_download ((UgetApp*) app, dnode, cnode, FALSE);
 	}
@@ -251,7 +251,7 @@ static void on_selector_response (UgtkBatchDialog* bdialog)
 	for (link = uri_list;  link;  link = link->next) {
 		dnode = uget_node_new (NULL);
 		common = ug_data_realloc (dnode->data, UgetCommonInfo);
-		ugtk_node_dialog_get ((UgtkNodeDialog*) bdialog, dnode);
+		ugtk_node_dialog_get ((UgtkNodeDialog*) bdialog, dnode->data);
 #if 0
 		common->uri = link->data;
 		link->data = NULL;

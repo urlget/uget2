@@ -158,7 +158,7 @@ void  test_node_download (void)
 //	download_node (node, UgetPluginAria2Info);
 //	download_node (node, UgetPluginMediaInfo);
 	download_node (node, UgetPluginMegaInfo);
-	uget_node_unref (node);
+	uget_node_free (node);
 }
 
 // ----------------------------------------------------------------------------
@@ -243,7 +243,7 @@ void  test_task (void)
 	free (task);
 
 	for (count = 0;  count < 7;  count++)
-		uget_node_unref (dnode[count]);
+		uget_node_free (dnode[count]);
 }
 
 // ----------------------------------------------------------------------------
