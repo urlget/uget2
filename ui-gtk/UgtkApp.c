@@ -517,19 +517,18 @@ void  ugtk_app_set_plugin_setting (UgtkApp* app, UgtkSetting* setting)
 
 	// set default plug-in
 	uget_app_set_default_plugin ((UgetApp*) app, default_plugin);
+	// set agent plug-in (used by media and MEGA plug-in)
+	uget_plugin_agent_global_set(UGET_PLUGIN_AGENT_DEFAULT_PLUGIN,
+	                 (void*) default_plugin);
 	// set media plug-in
 	uget_app_add_plugin ((UgetApp*) app, UgetPluginMediaInfo);
-	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_DEFAULT_PLUGIN,
-	                 (void*) default_plugin);
 	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_MATCH_MODE,
 	                 (void*)(intptr_t) setting->media.match_mode);
 	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_QUALITY,
 	                 (void*)(intptr_t) setting->media.quality);
 	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_TYPE,
 	                 (void*)(intptr_t) setting->media.type);
-	// set agent plug-in (used by MEGA)
-	uget_plugin_agent_global_set (UGET_PLUGIN_AGENT_DEFAULT_PLUGIN,
-	                 (void*) default_plugin);
+	// set MEGA plug-in
 	uget_app_add_plugin ((UgetApp*) app, UgetPluginMegaInfo);
 	// set aria2 plug-in
 	if (setting->plugin_order >= UGTK_PLUGIN_ORDER_ARIA2) {

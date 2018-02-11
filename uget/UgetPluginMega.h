@@ -64,32 +64,29 @@ extern const    UgetPluginInfo*  UgetPluginMegaInfo;
 struct UgetPluginMega
 {
 	UGET_PLUGIN_AGENT_MEMBERS;
-/*
-	// ------ UgetPlugin members ------
+/*	// ------ UgetPlugin members ------
 	const UgetPluginInfo*  info;
 	UgetEvent*    messages;
 	UgMutex       mutex;
 	int           ref_count;
 
 	// ------ UgetPluginAgent members ------
-	// pointer to UgData that store in UgetApp
-	UgData*       data;
-
 	// This plug-in use other plug-in to download files,
 	// so we need extra UgetPlugin and UgData.
-	//
-	// plugin->target_data is a copy of plugin->data
+
+	// plugin->target_data is a copy of UgData that store in UgetApp
 	UgData*       target_data;
 	// target_plugin use target_data to download
 	UgetPlugin*   target_plugin;
 
-	// control flags
 	// speed limit control
 	// limit[0] = download speed limit
 	// limit[1] = upload speed limit
 	int           limit[2];
-	uint8_t       limit_changed:1;  // speed limit changed by user
-	uint8_t       paused:1;         // paused by user
+	uint8_t       limit_changed:1;  // speed limit changed by user or program
+
+	// control flags
+	uint8_t       paused:1;         // paused by user or program
 	uint8_t       stopped:1;        // all downloading thread are stopped
  */
 

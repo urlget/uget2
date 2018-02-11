@@ -239,9 +239,6 @@ static void plugin_final(UgetPluginCurl* plugin)
 	ug_free(plugin->folder.path);
 	ug_free(plugin->file.path);
 	ug_free(plugin->aria2.path);
-	// clear UgData
-	if (plugin->data)
-		ug_data_unref(plugin->data);
 
 	global_unref();
 }
@@ -256,7 +253,7 @@ static int  plugin_ctrl(UgetPluginCurl* plugin, int code, void* data)
 {
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
-		if (plugin->data)
+		if (plugin->common)
 			return plugin_start(plugin);
 		break;
 
@@ -285,36 +282,36 @@ static int  plugin_ctrl_speed(UgetPluginCurl* plugin, int* speed)
 	UgetCommon*  common;
 	int          value;
 
-	// Don't do anything if speed limit keep no change.
-	if (plugin->limit.download == speed[0] && plugin->limit.upload == speed[1])
-		if (plugin->limit_by_user == FALSE)
-			return TRUE;
-	plugin->limit_by_user = FALSE;
+	// notify plug-in that speed limit has been changed
+	if (plugin->limit.download != speed[0] || plugin->limit.upload != speed[1])
+		plugin->limit_changed = TRUE;
 	// decide speed limit by user specified data.
-	if (plugin->data == NULL) {
+	common = plugin->common;
+	if (common == NULL) {
 		plugin->limit.download = speed[0];
-		plugin->limit.upload = speed[1];
+		plugin->limit.upload   = speed[1];
 	}
 	else {
-		common = plugin->common;
 		// download
 		value = speed[0];
 		if (common->max_download_speed) {
-			if (value > common->max_download_speed || value == 0)
+			if (value > common->max_download_speed || value == 0) {
 				value = common->max_download_speed;
+				plugin->limit_changed = TRUE;
+			}
 		}
 		plugin->limit.download = value;
 		// upload
 		value = speed[1];
 		if (common->max_upload_speed) {
-			if (value > common->max_upload_speed || value == 0)
+			if (value > common->max_upload_speed || value == 0) {
 				value = common->max_upload_speed;
+				plugin->limit_changed = TRUE;
+			}
 		}
 		plugin->limit.upload = value;
 	}
-	// notify plug-in that speed limit has been changed
-	plugin->limit_changed = TRUE;
-	return TRUE;
+	return plugin->limit_changed;
 }
 
 // ----------------------------------------------------------------------------
@@ -326,6 +323,7 @@ static int  plugin_sync(UgetPluginCurl* plugin, UgData* data)
 	UgetFiles*     files;
 	UgetProgress*  progress;
 	char*          name;
+	int            speed[2];
 
 	if (plugin->stopped) {
 		if (plugin->synced)
@@ -333,20 +331,21 @@ static int  plugin_sync(UgetPluginCurl* plugin, UgData* data)
 		plugin->synced = TRUE;
 	}
 	// avoid crash if plug-in failed to start.
-	if (plugin->data == NULL)
+	if (plugin->common == NULL)
 		return FALSE;
-	if (data == NULL)
-		data = plugin->data;
+
 	// sync data between plug-in and foreign UgData
 	common = ug_data_realloc(data, UgetCommonInfo);
 	common->retry_count = plugin->common->retry_count;
 	// sync changed limit from data
-	if (plugin->common->max_upload_speed != common->max_upload_speed ||
+	if (plugin->common->max_upload_speed   != common->max_upload_speed ||
 		plugin->common->max_download_speed != common->max_download_speed)
 	{
-		plugin->common->max_upload_speed = common->max_upload_speed;
+		plugin->common->max_upload_speed   = common->max_upload_speed;
 		plugin->common->max_download_speed = common->max_download_speed;
-		plugin->limit_by_user = TRUE;
+		speed[1] = common->max_upload_speed;
+		speed[0] = common->max_download_speed;
+		plugin_ctrl_speed(plugin, speed);
 	}
 	plugin->common->max_connections = common->max_connections;
 	plugin->common->retry_limit = common->retry_limit;
@@ -469,27 +468,15 @@ static int  plugin_accept(UgetPluginCurl* plugin, UgData* data)
 	if (temp.ftp)
 		plugin->ftp = ug_group_data_copy(temp.ftp);
 
-	// assign UgData
-	ug_data_ref(data);
-	plugin->data = data;
-
 	return TRUE;
 }
 
 static int  plugin_start(UgetPluginCurl* plugin)
 {
 	UgThread    thread;
-	int         speed[2];
 	int         ok;
 
 	plugin->start_time = time(NULL);
-	// speed control
-	speed[0] = plugin->limit.download;
-	speed[1] = plugin->limit.upload;
-	plugin_ctrl_speed(plugin, speed);
-	// Don't notify speed limit changed if user set it before plug-in start.
-	plugin->limit_changed = FALSE;
-
 	// try to start thread
 	plugin->paused = FALSE;
 	plugin->stopped = FALSE;
@@ -501,9 +488,6 @@ static int  plugin_start(UgetPluginCurl* plugin)
 		// failed to start thread -----------------
 		plugin->paused = TRUE;
 		plugin->stopped = TRUE;
-		// remove plugin->data
-		ug_data_unref(plugin->data);
-		plugin->data = NULL;
 		// post error message and decreases the reference count
 		uget_plugin_post((UgetPlugin*) plugin,
 				uget_event_new_error(UGET_EVENT_ERROR_THREAD_CREATE_FAILED,

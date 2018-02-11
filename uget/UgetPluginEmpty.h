@@ -66,7 +66,7 @@ struct UgetPluginEmpty
 	int           ref_count;
  */
 
-	UgData*       data;
+	UgetCommon*   common;
 
 	// speed limit control
 	// limit[0] = download speed limit

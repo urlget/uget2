@@ -103,7 +103,6 @@ static int  mega_decrypt_file(UgetPluginMega* plugin, int preset_progress);
 
 static void plugin_init (UgetPluginMega* plugin);
 static void plugin_final(UgetPluginMega* plugin);
-static int  plugin_start(UgetPluginMega* plugin);
 static int  plugin_accept(UgetPluginMega* plugin, UgData* data);
 static int  plugin_sync  (UgetPluginMega* plugin, UgData* data);
 static int  plugin_ctrl  (UgetPluginMega* plugin, int code, void* data);
@@ -185,35 +184,22 @@ static int  plugin_accept(UgetPluginMega* plugin, UgData* data)
 	plugin->target_common = ug_data_get(plugin->target_data, UgetCommonInfo);
 	plugin->target_progress = ug_data_realloc(plugin->target_data, UgetProgressInfo);
 
-	// assign UgData
-	ug_data_ref(data);
-	plugin->data = data;
-
 	return TRUE;
-}
-
-static int  plugin_start(UgetPluginMega* plugin)
-{
-	return uget_plugin_agent_start_thread((UgetPluginAgent*)plugin,
-	                                      (UgThreadFunc)plugin_thread);
 }
 
 int   plugin_ctrl(UgetPluginMega* plugin, int code, void* data)
 {
-	// call parent's plugin_ctrl()
-	if (uget_plugin_agent_ctrl((UgetPluginAgent*)plugin, code, data))
-		return TRUE;
-
-	// handle other control code
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
-		// assign a UgData to UgetPlugin to start download
-		if (plugin->data)
-			return plugin_start(plugin);
+		if (plugin->target_data) {
+			return uget_plugin_agent_start((UgetPluginAgent*)plugin,
+			                               (UgThreadFunc)plugin_thread);
+		}
 		break;
 
 	default:
-		break;
+		// call parent's plugin_ctrl()
+		return uget_plugin_agent_ctrl((UgetPluginAgent*)plugin, code, data);
 	}
 	return FALSE;
 }
@@ -256,8 +242,8 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMega* plugin)
 		goto exit;
 	}
 
-	uget_plugin_agent_global_get(UGET_PLUGIN_AGENT_DEFAULT_PLUGIN, &plugin_info);
-
+	uget_plugin_agent_global_get(UGET_PLUGIN_AGENT_DEFAULT_PLUGIN,
+	                             &plugin_info);
 	// create target_plugin to download
 	plugin->target_plugin = uget_plugin_new(plugin_info);
 	uget_plugin_accept(plugin->target_plugin, plugin->target_data);
@@ -347,10 +333,8 @@ static int  plugin_sync(UgetPluginMega* plugin, UgData* data)
 		plugin->synced = TRUE;
 	}
 	// avoid crash if plug-in failed to start.
-	if (plugin->data == NULL)
+	if (plugin->target_common == NULL)
 		return FALSE;
-	if (data == NULL)
-		data = plugin->data;
 
 	// sync common data (include speed limit) between foreign data and target_data
 	common = ug_data_realloc(data, UgetCommonInfo);

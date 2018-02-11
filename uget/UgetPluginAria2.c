@@ -50,7 +50,7 @@
 
 #ifdef HAVE_LIBPWMD
 #include "pwmd.h"
-static gboolean	uget_plugin_aria2_set_proxy_pwmd (UgetPluginAria2 *plugin, UgValue* options);
+static gboolean	uget_plugin_aria2_set_proxy_pwmd (UgetPluginAria2 *plugin, UgData* data, UgValue* options);
 #endif
 
 #if defined _WIN32 || defined _WIN64
@@ -336,9 +336,6 @@ static void  plugin_final(UgetPluginAria2* plugin)
 		ug_value_foreach(&plugin->start_request->params, ug_value_set_name, NULL);
 		uget_aria2_recycle(global.data, plugin->start_request);
 	}
-	// clear UgData
-	if (plugin->data)
-		ug_data_unref(plugin->data);
 
 	global_unref();
 }
@@ -353,7 +350,7 @@ static int  plugin_ctrl(UgetPluginAria2* plugin, int code, void* data)
 {
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
-		if (plugin->data)
+		if (plugin->start_request)
 			return plugin_start(plugin);
 		break;
 
@@ -379,39 +376,31 @@ static int  plugin_ctrl(UgetPluginAria2* plugin, int code, void* data)
 
 static int  plugin_ctrl_speed(UgetPluginAria2* plugin, int* speed)
 {
-	UgetCommon*  common;
-	int          value;
+	int   value;
 
-	// Don't do anything if speed limit keep no change.
-	if (plugin->limit[0] == speed[0] && plugin->limit[1] == speed[1])
-		if (plugin->limit_by_user == FALSE)
-			return TRUE;
-	plugin->limit_by_user = FALSE;
-	// decide speed limit by user specified data.
-	if (plugin->data == NULL) {
-		plugin->limit[0] = speed[0];
-		plugin->limit[1] = speed[1];
-	}
-	else {
-		common = ug_data_realloc(plugin->data, UgetCommonInfo);
-		// download
-		value = speed[0];
-		if (common->max_download_speed) {
-			if (value > common->max_download_speed || value == 0)
-				value = common->max_download_speed;
-		}
-		plugin->limit[0] = value;
-		// upload
-		value = speed[1];
-		if (common->max_upload_speed) {
-			if (value > common->max_upload_speed || value == 0)
-				value = common->max_upload_speed;
-		}
-		plugin->limit[1] = value;
-	}
 	// notify plug-in that speed limit has been changed
-	plugin->limit_changed = TRUE;
-	return TRUE;
+	if (plugin->limit[0] != speed[0] || plugin->limit[1] != speed[1])
+		plugin->limit_changed = TRUE;
+	// decide speed limit by user specified data.
+	value = speed[0];
+	if (plugin->limit_upper[0] > 0) {
+		if (value > plugin->limit_upper[0] || value == 0) {
+			value = plugin->limit_upper[0];
+			plugin->limit_changed = TRUE;
+		}
+	}
+	plugin->limit[0] = value;
+
+	value = speed[1];
+	if (plugin->limit_upper[1] > 0) {
+		if (value > plugin->limit_upper[1] || value == 0) {
+			value = plugin->limit_upper[1];
+			plugin->limit_changed = TRUE;
+		}
+	}
+	plugin->limit[1] = value;
+
+	return plugin->limit_changed;
 }
 
 // ----------------------------------------------------------------------------
@@ -433,13 +422,11 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgData* data)
 			return FALSE;
 		plugin->synced = TRUE;
 	}
-	else if (plugin->synced == TRUE)
+	else if (plugin->synced == TRUE)    // maybe thread is accessing plugin->gids
 		return TRUE;
 	// avoid crash if plug-in failed to start.
-	if (plugin->data == NULL)
+	if (plugin->start_request == NULL)
 		return FALSE;
-	if (data == NULL)
-		data = plugin->data;
 	// sync data between plug-in and foreign UgData
 	// ------------------------------------------------
 	// update progress
@@ -467,10 +454,12 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgData* data)
 	temp.common = ug_data_realloc(data, UgetCommonInfo);
 	// ------------------------------------------------
 	// sync changed limit from foreign UgData
-	if (plugin->limit[1] != temp.common->max_upload_speed ||
-		plugin->limit[0] != temp.common->max_download_speed)
+	if (plugin->limit_upper[1] != temp.common->max_upload_speed ||
+		plugin->limit_upper[0] != temp.common->max_download_speed)
 	{
-		plugin->limit_by_user = TRUE;
+		plugin->limit_upper[1] = temp.common->max_upload_speed;
+		plugin->limit_upper[0] = temp.common->max_download_speed;
+		plugin_ctrl_speed(plugin, plugin->limit_upper);
 	}
 
 	// update UgetFiles
@@ -523,17 +512,11 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgData* data)
 		// clear uploading state
 		event = uget_event_new(UGET_EVENT_STOP_UPLOADING);
 		uget_plugin_post((UgetPlugin*) plugin, event);
-#if 0
 		// remove completed gid
-		ug_free(plugin->gids.at[0]);
-		ug_array_erase(&plugin->gids, 0, 1);
-#else
-		// remove completed gid
-		plugin->gids.length -= 1;
-		ug_free(plugin->gids.at[0]);
-		memmove(plugin->gids.at, plugin->gids.at + 1,
-		        sizeof(char*) *  plugin->gids.length);
-#endif
+		if (plugin->gids.length > 0) {
+			ug_free(plugin->gids.at[0]);
+			ug_array_erase(&plugin->gids, 0, 1);
+		}
 		// If there is only one followed gid and file, change uri.
 		if (plugin->gids.length == 1 && plugin->files_per_gid == 1) {
 			// If URI scheme is not "magnet" and aria2 runs in local device
@@ -963,6 +946,10 @@ static int  plugin_accept(UgetPluginAria2* plugin, UgData* data)
 	else if (plugin->uri_part.scheme_len == 6 && strncmp(uri, "magnet", 6) == 0)
 		plugin->uri_type = URI_MAGNET;
 
+	// speed limit control
+	plugin->limit_upper[1] = temp.common->max_upload_speed;
+	plugin->limit_upper[0] = temp.common->max_download_speed;
+
 	request = uget_aria2_alloc(global.data, TRUE, TRUE);
 	if (request->params.type == UG_VALUE_NONE)
 		ug_value_init_array(&request->params, 3);
@@ -1091,7 +1078,7 @@ static int  plugin_accept(UgetPluginAria2* plugin, UgData* data)
 	temp.proxy = ug_data_get(data, UgetProxyInfo);
 #ifdef HAVE_LIBPWMD
 	if (temp.proxy && temp.proxy->type == UGET_PROXY_PWMD) {
-		if (uget_plugin_aria2_set_proxy_pwmd(plugin, member) == FALSE)
+		if (uget_plugin_aria2_set_proxy_pwmd(plugin, data, member) == FALSE)
 			return FALSE;
 	}
 	else
@@ -1191,10 +1178,6 @@ static int  plugin_accept(UgetPluginAria2* plugin, UgData* data)
 	plugin->start_time = time(NULL);
 	plugin->start_request = request;
 
-	// assign UgData
-	ug_data_ref(data);
-	plugin->data = data;
-
 	return TRUE;
 }
 
@@ -1202,9 +1185,6 @@ static int  plugin_start(UgetPluginAria2* plugin)
 {
 	UgThread  thread;
 	int       ok;
-
-	// speed control
-	plugin_ctrl_speed(plugin, plugin->limit);
 
 	// try to start thread
 	plugin->paused = FALSE;
@@ -1217,9 +1197,6 @@ static int  plugin_start(UgetPluginAria2* plugin)
 		// failed to start thread -----------------
 		plugin->paused = TRUE;
 		plugin->stopped = TRUE;
-		// remove plugin->data
-		ug_data_unref(plugin->data);
-		plugin->data = NULL;
 		// post error message and decreases the reference count
 		uget_plugin_post((UgetPlugin*) plugin,
 				uget_event_new_error(UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
@@ -1429,7 +1406,7 @@ static void  add_uri_mirrors(UgValue* varray, const char* mirrors)
 // PWMD
 //
 #ifdef HAVE_LIBPWMD
-static gboolean	uget_plugin_aria2_set_proxy_pwmd(UgetPluginAria2 *plugin, UgValue* options)
+static gboolean	uget_plugin_aria2_set_proxy_pwmd(UgetPluginAria2 *plugin, UgData* data, UgValue* options)
 {
        struct pwmd_proxy_s pwmd;
        gpg_error_t rc;
@@ -1437,7 +1414,7 @@ static gboolean	uget_plugin_aria2_set_proxy_pwmd(UgetPluginAria2 *plugin, UgValu
        UgetProxy *proxy;
 
        memset(&pwmd, 0, sizeof(pwmd));
-       proxy = ug_data_get(&plugin->data, UgetProxyInfo);
+       proxy = ug_data_get(data, UgetProxyInfo);
        rc = ug_set_pwmd_proxy_options(&pwmd, proxy);
 
        if (rc)

@@ -106,73 +106,14 @@ const UgetPluginInfo* UgetPluginMediaInfo = &UgetPluginMediaInfoStatic;
 
 static struct
 {
-	const UgetPluginInfo* plugin_info;
 	UgetMediaMatchMode    match_mode;
 	UgetMediaQuality      quality;
 	UgetMediaType         type;
-	int   ref_count;
-} global = {NULL, 0, 0, 0, 0};
-
-static UgetResult  global_init(void)
-{
-	if (global.plugin_info == NULL) {
-#if defined _WIN32 || defined _WIN64
-		WSADATA  WSAData;
-		WSAStartup(MAKEWORD(2, 2), &WSAData);
-#endif // _WIN32 || _WIN64
-
-		if (curl_global_init(CURL_GLOBAL_ALL) != CURLE_OK) {
-#if defined _WIN32 || defined _WIN64
-			WSACleanup();
-#endif
-			return UGET_RESULT_ERROR;
-		}
-		global.plugin_info = UgetPluginCurlInfo;
-//		global.plugin_info = UgetPluginAria2Info;
-		// matching mode: UGET_MEDIA_MATCH_1 or UGET_MEDIA_MATCH_NEAR
-		global.match_mode = UGET_MEDIA_MATCH_NEAR;
-		global.quality = UGET_MEDIA_QUALITY_360P;
-		global.type = UGET_MEDIA_TYPE_MP4;
-	}
-	global.ref_count++;
-	return UGET_RESULT_OK;
-}
-
-static void  global_ref(void)
-{
-	global.ref_count++;
-}
-
-static void  global_unref(void)
-{
-	if (global.plugin_info == NULL)
-		return;
-
-	global.ref_count--;
-	if (global.ref_count == 0) {
-		global.plugin_info = NULL;
-		curl_global_cleanup();
-#if defined _WIN32 || defined _WIN64
-		WSACleanup();
-#endif
-	}
-}
+} global = {UGET_MEDIA_MATCH_NEAR, UGET_MEDIA_QUALITY_360P, UGET_MEDIA_TYPE_MP4};
 
 static UgetResult  global_set(int option, void* parameter)
 {
 	switch (option) {
-	case UGET_PLUGIN_INIT:
-		// do global initialize/uninitialize here
-		if (parameter)
-			return global_init();
-		else
-			global_unref();
-		break;
-
-	case UGET_PLUGIN_MEDIA_DEFAULT_PLUGIN:
-		global.plugin_info = parameter;
-		break;
-
 	case UGET_PLUGIN_MEDIA_MATCH_MODE:
 		global.match_mode = (intptr_t) parameter;
 		break;
@@ -186,7 +127,8 @@ static UgetResult  global_set(int option, void* parameter)
 		break;
 
 	default:
-		return UGET_RESULT_UNSUPPORT;
+		// call parent's global_set()
+		return uget_plugin_agent_global_set(option, parameter);
 	}
 
 	return UGET_RESULT_OK;
@@ -195,23 +137,14 @@ static UgetResult  global_set(int option, void* parameter)
 static UgetResult  global_get(int option, void* parameter)
 {
 	switch (option) {
-	case UGET_PLUGIN_INIT:
-		if (parameter)
-			*(int*)parameter = (global.plugin_info) ? TRUE : FALSE;
-		break;
-
-	case UGET_PLUGIN_ERROR_CODE:
-		if (parameter)
-			*(int*)parameter = 0;
-		break;
-
 	case UGET_PLUGIN_MATCH:
 		if (uget_site_get_id(parameter) < UGET_SITE_MEDIA)
 			return UGET_RESULT_FAILED;
-		return UGET_RESULT_OK;
+		break;
 
 	default:
-		return UGET_RESULT_UNSUPPORT;
+		// call parent's global_get()
+		return uget_plugin_agent_global_get(option, parameter);
 	}
 
 	return UGET_RESULT_OK;
@@ -222,94 +155,36 @@ static UgetResult  global_get(int option, void* parameter)
 
 static void plugin_init(UgetPluginMedia* plugin)
 {
-	if (global.plugin_info == NULL)
-		global_init();
-	else
-		global_ref();
+	// initialize UgetPluginAgent
+	uget_plugin_agent_init((UgetPluginAgent*) plugin);
 }
 
 static void plugin_final(UgetPluginMedia* plugin)
 {
-	// extent data and plug-in
-	if (plugin->target_data)
-		ug_data_unref(plugin->target_data);
-	if (plugin->target_plugin)
-		uget_plugin_unref(plugin->target_plugin);
-	// other data
 	ug_free(plugin->title);
-	// clear UgData
-	if (plugin->data)
-		ug_data_unref(plugin->data);
-
-	global_unref();
+	uget_plugin_agent_final((UgetPluginAgent*) plugin);
 }
 
 // ----------------------------------------------------------------------------
 // plugin_ctrl
 
-static int  plugin_ctrl_speed(UgetPluginMedia* plugin, int* speed);
-static int  plugin_start(UgetPluginMedia* plugin);
+static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin);
 
 static int  plugin_ctrl(UgetPluginMedia* plugin, int code, void* data)
 {
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
-		if (plugin->data)
-			return plugin_start(plugin);
+		if (plugin->target_data) {
+			return uget_plugin_agent_start((UgetPluginAgent*)plugin,
+			                               (UgThreadFunc)plugin_thread);
+		}
 		break;
-
-	case UGET_PLUGIN_CTRL_STOP:
-		plugin->paused = TRUE;
-		return TRUE;
-
-	case UGET_PLUGIN_CTRL_SPEED:
-		// speed control
-		return plugin_ctrl_speed(plugin, data);
-
-	// state ----------------
-	case UGET_PLUGIN_GET_STATE:
-		*(int*)data = (plugin->stopped) ? FALSE : TRUE;
-		return TRUE;
 
 	default:
-		break;
+		// call parent's plugin_ctrl()
+		return uget_plugin_agent_ctrl((UgetPluginAgent*)plugin, code, data);
 	}
 	return FALSE;
-}
-
-static int  plugin_ctrl_speed(UgetPluginMedia* plugin, int* speed)
-{
-	UgetCommon*  common;
-	int          value;
-
-	// Don't do anything if speed limit keep no change.
-	if (plugin->limit[0] == speed[0] && plugin->limit[1] == speed[1])
-		return TRUE;
-	// decide speed limit by user specified data.
-	if (plugin->data == NULL) {
-		plugin->limit[0] = speed[0];
-		plugin->limit[1] = speed[1];
-	}
-	else {
-		common = ug_data_realloc(plugin->data, UgetCommonInfo);
-		// download
-		value = speed[0];
-		if (common->max_download_speed) {
-			if (value > common->max_download_speed || value == 0)
-				value = common->max_download_speed;
-		}
-		plugin->limit[0] = value;
-		// upload
-		value = speed[1];
-		if (common->max_upload_speed) {
-			if (value > common->max_upload_speed || value == 0)
-				value = common->max_upload_speed;
-		}
-		plugin->limit[1] = value;
-	}
-	// notify plug-in that speed limit has been changed
-	plugin->limit_changed = TRUE;
-	return TRUE;
 }
 
 // ----------------------------------------------------------------------------
@@ -327,10 +202,8 @@ static int  plugin_sync(UgetPluginMedia* plugin, UgData* data)
 		plugin->synced = TRUE;
 	}
 	// avoid crash if plug-in failed to start.
-	if (plugin->data == NULL)
+	if (plugin->target_data == NULL)
 		return FALSE;
-	if (data == NULL)
-		data = plugin->data;
 	// sync data between plug-in and foreign UgData
 	common = ug_data_realloc(data, UgetCommonInfo);
 	// sum retry count
@@ -351,50 +224,27 @@ static int  plugin_sync(UgetPluginMedia* plugin, UgData* data)
 			common->name = ug_strdup(plugin->title);
 	}
 
-	// sync changed limit from foreign UgData
-	if (plugin->target_common->max_upload_speed != common->max_upload_speed ||
-		plugin->target_common->max_download_speed != common->max_download_speed)
-	{
-		plugin->target_common->max_upload_speed = common->max_upload_speed;
-		plugin->target_common->max_download_speed = common->max_download_speed;
-	}
-	plugin->target_common->max_connections = common->max_connections;
-	plugin->target_common->retry_limit = common->retry_limit;
-
+	// sync common data (include speed limit) between foreign data and target_data
+	uget_plugin_agent_sync_common((UgetPluginAgent*) plugin,
+	                              common, plugin->target_common);
 	// downloading file name changed
 	if (plugin->file_renamed == TRUE) {
 		plugin->file_renamed = FALSE;
-		ug_mutex_lock(&plugin->mutex);
+		uget_plugin_lock(plugin);
 		ug_free(common->file);
 		common->file = ug_strdup(plugin->target_common->file);
-		ug_mutex_unlock(&plugin->mutex);
+		uget_plugin_unlock(plugin);
 	}
 	// update UgetFiles
 	files = ug_data_realloc(data, UgetFilesInfo);
 	uget_plugin_lock(plugin);
     uget_files_sync(files, plugin->target_files);
     uget_plugin_unlock(plugin);
-	// sync changed limit from foreign UgData to plug-in
-	if (plugin->target_common->max_upload_speed != common->max_upload_speed ||
-		plugin->target_common->max_download_speed != common->max_download_speed)
-	{
-		plugin->target_common->max_upload_speed = common->max_upload_speed;
-		plugin->target_common->max_download_speed = common->max_download_speed;
-		plugin->limit_changed = TRUE;
-	}
-	plugin->target_common->max_connections = common->max_connections;
-	plugin->target_common->retry_limit = common->retry_limit;
 
-	// update progress
+	// sync progress data from target_data to foreign data
 	progress = ug_data_realloc(data, UgetProgressInfo);
-	progress->complete       = plugin->target_progress->complete;
-	progress->total          = plugin->target_progress->total;
-	progress->download_speed = plugin->target_progress->download_speed;
-	progress->upload_speed   = plugin->target_progress->upload_speed;
-	progress->uploaded       = plugin->target_progress->uploaded;
-	progress->elapsed        = plugin->target_progress->elapsed;
-	progress->percent        = plugin->target_progress->percent;
-	progress->left           = plugin->target_progress->left;
+	uget_plugin_agent_sync_progress((UgetPluginAgent*) plugin,
+	                                progress, plugin->target_progress);
 	// recount progress if plug-in download multiple files
 	if (plugin->item_total > 1) {
 		// recount percent
@@ -418,8 +268,6 @@ static int  plugin_sync(UgetPluginMedia* plugin, UgData* data)
 
 // ----------------------------------------------------------------------------
 
-static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin);
-
 static int  plugin_accept(UgetPluginMedia* plugin, UgData* data)
 {
 	UgetCommon*  common;
@@ -428,46 +276,12 @@ static int  plugin_accept(UgetPluginMedia* plugin, UgData* data)
 	if (common == NULL || common->uri == NULL)
 		return FALSE;
 
-	plugin->target_data = ug_data_new(8, 2);
+	plugin->target_data = ug_data_new(8, 0);
 	ug_data_assign(plugin->target_data, data, NULL);
 	plugin->target_files  = ug_data_realloc(plugin->target_data, UgetFilesInfo);
 	plugin->target_common = ug_data_get(plugin->target_data, UgetCommonInfo);
 	plugin->target_proxy  = ug_data_get(plugin->target_data, UgetProxyInfo);
 	plugin->target_progress = ug_data_realloc(plugin->target_data, UgetProgressInfo);
-
-	// assign UgData
-	ug_data_ref(data);
-	plugin->data = data;
-
-	return TRUE;
-}
-
-static int  plugin_start(UgetPluginMedia* plugin)
-{
-	int          ok;
-	UgThread     thread;
-
-	// try to start thread
-	plugin->paused = FALSE;
-	plugin->stopped = FALSE;
-	uget_plugin_ref((UgetPlugin*) plugin);
-	ok = ug_thread_create(&thread, (UgThreadFunc) plugin_thread, plugin);
-	if (ok == UG_THREAD_OK)
-		ug_thread_unjoin(&thread);
-	else {
-		// failed to start thread -----------------
-		plugin->paused = TRUE;
-		plugin->stopped = TRUE;
-		// remove plugin->data
-		ug_data_unref(plugin->data);
-		plugin->data = NULL;
-		// post error message and decreases the reference count
-		uget_plugin_post((UgetPlugin*) plugin,
-				uget_event_new_error(UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
-				                     NULL));
-		uget_plugin_unref((UgetPlugin*) plugin);
-		return FALSE;
-	}
 
 	return TRUE;
 }
@@ -476,6 +290,7 @@ static int   is_file_completed(const char* file, const char* folder);
 
 static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin)
 {
+	UgetPluginInfo*  plugin_info;
 	UgetMedia*     umedia;
 	UgetMediaItem* umitem;
 	UgetCommon*    common;
@@ -578,13 +393,13 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin)
 		}
 
 		// generate file name by title, quality, and type.
-		ug_mutex_lock(&plugin->mutex);
+		uget_plugin_lock(plugin);
 		ug_free(common->file);
 		common->file = ug_strdup_printf("%s_%s.%s",
 				(plugin->title) ? plugin->title : "unknown",
 				quality, type);
 		ug_str_replace_chars(common->file, "\\/:*?\"<>|", '_');
-		ug_mutex_unlock(&plugin->mutex);
+		uget_plugin_unlock(plugin);
 		plugin->file_renamed = TRUE;
 
 		// skip completed file
@@ -603,8 +418,10 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin)
 		plugin->elapsed += plugin->target_progress->elapsed;
 		plugin->target_progress->elapsed = 0;
 
+		uget_plugin_agent_global_get(UGET_PLUGIN_AGENT_DEFAULT_PLUGIN,
+		                             &plugin_info);
 		// create target_plugin to download
-		plugin->target_plugin = uget_plugin_new(global.plugin_info);
+		plugin->target_plugin = uget_plugin_new(plugin_info);
 		uget_plugin_accept(plugin->target_plugin, plugin->target_data);
 		uget_plugin_ctrl_speed(plugin->target_plugin, plugin->limit);
 		if (uget_plugin_start(plugin->target_plugin) == FALSE) {

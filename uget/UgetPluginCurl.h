@@ -58,18 +58,14 @@ extern const   UgetPluginInfo*   UgetPluginCurlInfo;
 struct UgetPluginCurl
 {
 	UGET_PLUGIN_MEMBERS;           // It derived from UgetPlugin
-/*
-	// ------ UgetPlugin members ------
+/*	// ------ UgetPlugin members ------
 	const UgetPluginInfo*  info;
 	UgetEvent*    messages;
 	UgMutex       mutex;
 	int           ref_count;
  */
 
-	// pointer to UgData that store in UgetApp
-	UgData*       data;
-
-	// copy these UgGroupData from plugin->data
+	// copy these UgGroupData from UgData that store in UgetApp
 	UgetCommon*   common;
 	UgetFiles*    files;
 	UgetProxy*    proxy;
@@ -127,8 +123,7 @@ struct UgetPluginCurl
 	} base, size, speed, limit;
 
 	// flags
-	uint8_t       limit_by_user:1; // speed limit changed by user
-	uint8_t       limit_changed:1; // speed limit changed
+	uint8_t       limit_changed:1; // speed limit changed by user or program
 	uint8_t       file_renamed:1;  // has file path?
 	uint8_t       synced:1;
 	uint8_t       paused:1;        // paused by user or program

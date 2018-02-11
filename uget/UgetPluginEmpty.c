@@ -175,8 +175,8 @@ static void plugin_final(UgetPluginEmpty* plugin)
 	//
 
 	// clear UgData
-	if (plugin->data)
-		ug_data_unref(plugin->data);
+	if (plugin->common)
+		ug_group_data_free(plugin->common);
 
 	global_unref();
 }
@@ -192,7 +192,7 @@ static int  plugin_ctrl(UgetPluginEmpty* plugin, int code, void* data)
 {
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
-		if (plugin->data)
+		if (plugin->common)
 			return plugin_start(plugin);
 		break;
 
@@ -220,34 +220,36 @@ static int  plugin_ctrl_speed(UgetPluginEmpty* plugin, int* speed)
 	UgetCommon*  common;
 	int          value;
 
-	// Don't do anything if speed limit keep no change.
-	if (plugin->limit[0] == speed[0] && plugin->limit[1] == speed[1])
-		return TRUE;
+	// notify plug-in that speed limit has been changed
+	if (plugin->limit[0] != speed[0] || plugin->limit[1] != speed[1])
+		plugin->limit_changed = TRUE;
 	// decide speed limit by user specified data.
-	if (plugin->data == NULL) {
+	if (plugin->common == NULL) {
 		plugin->limit[0] = speed[0];
 		plugin->limit[1] = speed[1];
 	}
 	else {
-		common = ug_data_realloc(plugin->data, UgetCommonInfo);
+		common = plugin->common;
 		// download
 		value = speed[0];
 		if (common->max_download_speed) {
-			if (value > common->max_download_speed || value == 0)
+			if (value > common->max_download_speed || value == 0) {
 				value = common->max_download_speed;
+				plugin->limit_changed = TRUE;
+			}
 		}
 		plugin->limit[0] = value;
 		// upload
 		value = speed[1];
 		if (common->max_upload_speed) {
-			if (value > common->max_upload_speed || value == 0)
+			if (value > common->max_upload_speed || value == 0) {
 				value = common->max_upload_speed;
+				plugin->limit_changed = TRUE;
+			}
 		}
 		plugin->limit[1] = value;
 	}
-	// notify plug-in that speed limit has been changed
-	plugin->limit_changed = TRUE;
-	return TRUE;
+	return plugin->limit_changed;
 }
 
 // ----------------------------------------------------------------------------
@@ -263,9 +265,7 @@ static int  plugin_accept(UgetPluginEmpty* plugin, UgData* data)
 	if (common == NULL || common->uri == NULL)
 		return FALSE;
 
-	// assign UgData
-	ug_data_ref(data);
-	plugin->data = data;
+	plugin->common = ug_group_data_copy(plugin->common);
 	return TRUE;
 }
 

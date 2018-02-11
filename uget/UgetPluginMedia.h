@@ -37,7 +37,7 @@
 #ifndef UGET_PLUGIN_MEDIA_H
 #define UGET_PLUGIN_MEDIA_H
 
-#include <UgetPlugin.h>
+#include <UgetPluginAgent.h>
 #include <UgetMedia.h>
 
 #ifdef __cplusplus
@@ -49,37 +49,55 @@ typedef struct	UgetPluginMedia   UgetPluginMedia;
 extern const    UgetPluginInfo*   UgetPluginMediaInfo;
 
 typedef enum {
-	UGET_PLUGIN_MEDIA_BEGIN = UGET_PLUGIN_OPTION_DERIVED,    // begin
+	UGET_PLUGIN_MEDIA_BEGIN = UGET_PLUGIN_AGENT_OPTION_DERIVED,    // begin
 
-	UGET_PLUGIN_MEDIA_DEFAULT_PLUGIN,   // set parameter = (UgetPluginInfo*)
 	UGET_PLUGIN_MEDIA_MATCH_MODE,       // set parameter = (UgetMediaMatchMode)
 	UGET_PLUGIN_MEDIA_QUALITY,          // set parameter = (UgetMediaQuality)
 	UGET_PLUGIN_MEDIA_TYPE,             // set parameter = (UgetMediaType)
 } UgetPluginMediaCode;
 
 // ----------------------------------------------------------------------------
-// UgetPluginMedia: It derived from UgetPlugin.
+// UgetPluginMedia: It derived from UgetPluginAgent.
+/*
+   UgetPlugin
+   |
+   `--- UgetPluginAgent
+        |
+        `--- UgetPluginMedia
+ */
 
 struct UgetPluginMedia
 {
-	UGET_PLUGIN_MEMBERS;               // It derived from UgetPlugin
-/*
-	// ------ UgetPlugin members ------
+	UGET_PLUGIN_AGENT_MEMBERS;
+/*	// ------ UgetPlugin members ------
 	const UgetPluginInfo*  info;
 	UgetEvent*    messages;
 	UgMutex       mutex;
 	int           ref_count;
- */
 
-	// pointer to UgData that store in UgetApp
-	UgData*       data;
-
-	// This plug-in use other plug-in to download media files,
+	// ------ UgetPluginAgent members ------
+	// This plug-in use other plug-in to download files,
 	// so we need extra UgetPlugin and UgData.
-	// plugin->target_data is a copy of plugin->data
+
+	// plugin->target_data is a copy of UgData that store in UgetApp
 	UgData*       target_data;
 	// target_plugin use target_data to download
 	UgetPlugin*   target_plugin;
+
+	// speed limit control
+	// limit[0] = download speed limit
+	// limit[1] = upload speed limit
+	int           limit[2];
+	uint8_t       limit_changed:1;  // speed limit changed by user or program
+
+	// control flags
+	uint8_t       paused:1;         // paused by user or program
+	uint8_t       stopped:1;        // all downloading thread are stopped
+ */
+
+	uint8_t       synced:1;         // used by plugin_sync()
+	uint8_t       named:1;          // change UgetCommon::name by title
+	uint8_t       file_renamed:1;   // downloading filename changed
 
 	// These UgGroupData store in plugin->target_data
 	UgetFiles*    target_files;
@@ -95,17 +113,6 @@ struct UgetPluginMedia
 	int           retry_count;
 	int           item_index;      // downloading nth files
 	int           item_total;      // number of files to download
-
-	// speed limit control
-	// limit[0] = download speed limit
-	// limit[1] = upload speed limit
-	int           limit[2];
-	uint8_t       limit_changed:1;
-	uint8_t       paused:1;        // paused by user or program
-	uint8_t       stopped:1;       // all of downloading thread are stopped
-	uint8_t       synced:1;        // used by plugin_sync()
-	uint8_t       named:1;         // change UgetCommon::name by title
-	uint8_t       file_renamed:1;  // downloading filename changed
 };
 
 

@@ -75,16 +75,12 @@ typedef enum {
 struct UgetPluginAria2
 {
 	UGET_PLUGIN_MEMBERS;               // It derived from UgetPlugin
-/*
-	// ------ UgetPlugin members ------
+/*	// ------ UgetPlugin members ------
 	const UgetPluginInfo*  info;
 	UgetEvent*    messages;
 	UgMutex       mutex;
 	int           ref_count;
  */
-
-	// pointer to UgData that store in UgetApp
-	UgData*       data;
 
 	// aria2.addUri, aria2.addTorrent, aria2.addMetalink
 	UgJsonrpcObject*  start_request;
@@ -109,9 +105,9 @@ struct UgetPluginAria2
 	// speed limit control
 	// limit[0] = download speed limit
 	// limit[1] = upload speed limit
-	int               limit[2];
-	uint8_t           limit_changed:1;
-	uint8_t           limit_by_user:1; // speed limit changed by user
+	int        limit[2];
+	int        limit_upper[2];
+	uint8_t    limit_changed:1;  // speed limit changed by user or program
 
 	// flags
 	uint8_t    synced:1;

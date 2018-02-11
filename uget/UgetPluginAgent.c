@@ -159,10 +159,6 @@ void uget_plugin_agent_final(UgetPluginAgent* plugin)
 	if (plugin->target_plugin)
 		uget_plugin_unref(plugin->target_plugin);
 
-	// remove plugin->data
-	if (plugin->data)
-		ug_data_unref(plugin->data);
-
 	uget_plugin_agent_global_unref();
 }
 
@@ -193,37 +189,43 @@ int   uget_plugin_agent_ctrl(UgetPluginAgent* plugin, int code, void* data)
 
 int  uget_plugin_agent_ctrl_speed(UgetPluginAgent* plugin, int* speed)
 {
-	UgetCommon*  common;
-	int          value;
+	UgetCommon* common;
+	int         value;
 
-	// Don't do anything if speed limit keep no change.
-	if (plugin->limit[0] == speed[0] && plugin->limit[1] == speed[1])
-		return TRUE;
+	// notify plug-in that speed limit has been changed
+	if (plugin->limit[0] != speed[0] || plugin->limit[1] != speed[1])
+		plugin->limit_changed = TRUE;
 	// decide speed limit by user specified data.
-	if (plugin->data == NULL) {
+	if (plugin->target_data)
+		common = ug_data_get(plugin->target_data, UgetCommonInfo);
+	else
+		common = NULL;
+
+	if (common == NULL) {
 		plugin->limit[0] = speed[0];
 		plugin->limit[1] = speed[1];
 	}
 	else {
-		common = ug_data_realloc(plugin->data, UgetCommonInfo);
 		// download
 		value = speed[0];
 		if (common->max_download_speed) {
-			if (value > common->max_download_speed || value == 0)
+			if (value > common->max_download_speed || value == 0) {
 				value = common->max_download_speed;
+				plugin->limit_changed = TRUE;
+			}
 		}
 		plugin->limit[0] = value;
 		// upload
 		value = speed[1];
 		if (common->max_upload_speed) {
-			if (value > common->max_upload_speed || value == 0)
+			if (value > common->max_upload_speed || value == 0) {
 				value = common->max_upload_speed;
+				plugin->limit_changed = TRUE;
+			}
 		}
 		plugin->limit[1] = value;
 	}
-	// notify plug-in that speed limit has been changed
-	plugin->limit_changed = TRUE;
-	return TRUE;
+	return plugin->limit_changed;
 }
 
 // ----------------------------------------------------------------------------
@@ -233,17 +235,18 @@ void  uget_plugin_agent_sync_common(UgetPluginAgent* plugin,
                                     UgetCommon* common,
                                     UgetCommon* target)
 {
-	if (common == NULL)
-		common = ug_data_realloc(plugin->data, UgetCommonInfo);
 	if (target == NULL)
 		target = ug_data_realloc(plugin->target_data, UgetCommonInfo);
 
 	// sync speed limit from common to target
-	if (target->max_upload_speed != common->max_upload_speed ||
+	if (target->max_upload_speed   != common->max_upload_speed ||
 		target->max_download_speed != common->max_download_speed)
 	{
-		target->max_upload_speed = common->max_upload_speed;
+		target->max_upload_speed   = common->max_upload_speed;
 		target->max_download_speed = common->max_download_speed;
+		plugin->limit[1] = common->max_upload_speed;
+		plugin->limit[0] = common->max_download_speed;
+		uget_plugin_agent_ctrl_speed(plugin, plugin->limit);
 	}
 	target->max_connections = common->max_connections;
 
@@ -255,12 +258,10 @@ void  uget_plugin_agent_sync_progress(UgetPluginAgent* plugin,
                                       UgetProgress* progress,
                                       UgetProgress* target)
 {
-	if (progress == NULL)
-		progress = ug_data_realloc(plugin->data, UgetProgressInfo);
 	if (target == NULL)
 		target = ug_data_realloc(plugin->target_data, UgetProgressInfo);
 
-	// sync progress from target to common
+	// sync progress from target to progress
 	progress->complete       = target->complete;
 	progress->total          = target->total;
 	progress->download_speed = target->download_speed;
@@ -274,8 +275,8 @@ void  uget_plugin_agent_sync_progress(UgetPluginAgent* plugin,
 // ----------------------------------------------------------------------------
 // other functions
 
-int   uget_plugin_agent_start_thread(UgetPluginAgent* plugin,
-                                     UgThreadFunc thread_func)
+int   uget_plugin_agent_start(UgetPluginAgent* plugin,
+                              UgThreadFunc thread_func)
 {
 	UgThread     thread;
 	int          ok;
@@ -291,9 +292,6 @@ int   uget_plugin_agent_start_thread(UgetPluginAgent* plugin,
 		// failed to start thread -----------------
 		plugin->paused = TRUE;
 		plugin->stopped = TRUE;
-		// remove plugin->data
-		ug_data_unref(plugin->data);
-		plugin->data = NULL;
 		// post error message and decreases the reference count
 		uget_plugin_post((UgetPlugin*) plugin,
 				uget_event_new_error(UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
