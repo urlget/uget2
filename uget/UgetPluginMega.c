@@ -656,7 +656,7 @@ int  mega_decrypt_file(UgetPluginMega* plugin, int preset_progress)
 	if (preset_progress == TRUE) {
 		fseek(file_in, 0L, SEEK_END);
 		plugin->target_progress->percent = 96;
-		plugin->target_progress->complete = ftell(file_in);
+		plugin->target_progress->complete = ug_ftell(file_in);
 		plugin->target_progress->total = plugin->target_progress->complete;
 		fseek(file_in, 0L, SEEK_SET);    // rewind(file_in);
 	}
@@ -701,7 +701,7 @@ int  mega_decrypt_file(UgetPluginMega* plugin, int preset_progress)
 			fwrite(data_out, 1, length, file_out);
 
 			// decrypting progress
-			plugin->target_progress->complete = ftell(file_out);
+			plugin->target_progress->complete = ug_ftell(file_out);
 			plugin->target_progress->percent = 96 +
 					plugin->target_progress->complete * 4 / plugin->target_progress->total;
 			plugin->synced = FALSE;
@@ -732,7 +732,7 @@ int  mega_decrypt_file(UgetPluginMega* plugin, int preset_progress)
 			gcry_cipher_encrypt(gchd, buffer, length, NULL, 0);
 			fwrite(buffer, 1, length, file_out);
 			// decrypting progress
-			plugin->target_progress->complete = ftell(file_out);
+			plugin->target_progress->complete = ug_ftell(file_out);
 			plugin->target_progress->percent = 96 +
 					plugin->target_progress->complete * 4 / plugin->target_progress->total;
 			plugin->synced = FALSE;
