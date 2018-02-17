@@ -52,9 +52,9 @@
 #endif // _WIN32 || _WIN64
 
 // ----------------------------------------------------------------------------
-// test_node
+// test_download
 
-void  download_node(UgetNode* node, const UgetPluginInfo* pinfo)
+void  download_by_plugin(UgData* data, const UgetPluginInfo* pinfo)
 {
 	UgetCommon*   common;
 	UgetFiles*    files;
@@ -63,22 +63,23 @@ void  download_node(UgetNode* node, const UgetPluginInfo* pinfo)
 	UgetEvent*    cur;
 	UgetEvent*    next;
 	UgetProgress* progress;
-	int           integer[2];
+	int           index;
+	int           speed_limit[2];
 	char*         string[5];
 
-	plugin = uget_plugin_new(pinfo);
-//	integer[0] = 1000000;
-//	integer[1] = 1000000;
-//	uget_plugin_ctrl(plugin, UGET_PLUGIN_CTRL_SPEED, integer);
+	speed_limit[0] = 1000000;
+	speed_limit[1] = 1000000;
 
-	uget_plugin_accept(plugin, node->data);
+	plugin = uget_plugin_new(pinfo);
+	uget_plugin_accept(plugin, data);
+	uget_plugin_ctrl(plugin, UGET_PLUGIN_CTRL_SPEED, speed_limit);
 	if (uget_plugin_start(plugin) == FALSE) {
 		uget_plugin_unref(plugin);
 		puts("plug-in failed to start.");
 		return;
 	}
 
-	while (uget_plugin_sync(plugin, node->data)) {
+	while (uget_plugin_sync(plugin, data)) {
 		ug_sleep(1000);
 		// event
 		events = uget_plugin_pop(plugin);
@@ -88,7 +89,7 @@ void  download_node(UgetNode* node, const UgetPluginInfo* pinfo)
 			uget_event_free(cur);
 		}
 		// progress
-		progress = ug_data_get(node->data, UgetProgressInfo);
+		progress = ug_data_get(data, UgetProgressInfo);
 		if (progress == NULL)
 			continue;
 		string[0] = ug_str_from_int_unit(progress->complete, NULL);
@@ -99,30 +100,30 @@ void  download_node(UgetNode* node, const UgetPluginInfo* pinfo)
 		printf("\r" "DL: %s / %s, %d%%, %s | UL: %s, %s" "      ",
 		       string[0], string[1], progress->percent,
 		       string[3], string[2], string[4]);
-		for (integer[0] = 0;  integer[0] < 5;  integer[0]++)
-			ug_free(string[integer[0]]);
+		for (index = 0;  index < 5;  index++)
+			ug_free(string[index]);
 	}
 	// these data may changed, print them.
-	common = ug_data_get(node->data, UgetCommonInfo);
+	common = ug_data_get(data, UgetCommonInfo);
 	printf("\n"
 	       "common->name : %s\n"
 	       "common->uri : %s\n"
 	       "common->file : %s\n",
 	       common->name, common->uri, common->file);
 	// print children
-	files = ug_data_realloc(node->data, UgetFilesInfo);
-	for (integer[0]=0; integer[0] < files->collection.length; integer[0]++) {
-		printf("file name : %s\n", files->collection.at[integer[0]].path);
+	files = ug_data_realloc(data, UgetFilesInfo);
+	for (index=0; index < files->collection.length; index++) {
+		printf("file name : %s\n", files->collection.at[index].path);
 	}
 
 	uget_plugin_unref(plugin);
 }
 
-void  test_node_download (void)
+void  test_download(void)
 {
 	UgetCommon*  common;
 	UgetHttp*    http;
-	UgetNode*    node;
+	UgData*      data;
 	char*        referrer;
 	char*        uri;
 	char*        mirrors;
@@ -137,12 +138,12 @@ void  test_node_download (void)
 //	referrer = "http://code.google.com/p/tortoisegit/wiki/Download?tm=2";
 	referrer = NULL;
 
-	node = uget_node_new (NULL);
+	data = ug_data_new(8, 0);
 	// commom options
-	common = ug_data_realloc (node->data, UgetCommonInfo);
-	common->uri = ug_strdup (uri);
+	common = ug_data_realloc(data, UgetCommonInfo);
+	common->uri = ug_strdup(uri);
 	if (mirrors)
-		common->mirrors = ug_strdup (mirrors);
+		common->mirrors = ug_strdup(mirrors);
 //	common->folder = ug_strdup ("D:\\Downloads");
 //	common->max_connections = 2;
 	common->debug_level = 1;
@@ -150,15 +151,15 @@ void  test_node_download (void)
 	common->connect_timeout = 30;
 
 	// http options
-	http = ug_data_realloc (node->data, UgetHttpInfo);
+	http = ug_data_realloc(data, UgetHttpInfo);
 	if (referrer)
-		http->referrer = ug_strdup (referrer);
+		http->referrer = ug_strdup(referrer);
 
-//	download_node (node, UgetPluginCurlInfo);
-//	download_node (node, UgetPluginAria2Info);
-//	download_node (node, UgetPluginMediaInfo);
-	download_node (node, UgetPluginMegaInfo);
-	uget_node_free (node);
+//	download_by_plugin(data, UgetPluginCurlInfo);
+//	download_by_plugin(data, UgetPluginAria2Info);
+//	download_by_plugin(data, UgetPluginMediaInfo);
+	download_by_plugin(data, UgetPluginMegaInfo);
+	ug_data_unref(data);
 }
 
 // ----------------------------------------------------------------------------
@@ -188,7 +189,7 @@ void  test_setup_plugin_aria2 (void)
 // ----------------------------------------------------------------------------
 // test_task
 
-void  print_node_speed_limit (UgetNode** dnode, int count)
+void  print_speed_limit (UgetNode** dnode, int count)
 {
 	int           total[2] = {0,0};
 	UgetRelation* relation;
@@ -233,10 +234,10 @@ void  test_task (void)
 	relation->task.limit[1] = 0;
 
 	uget_task_set_speed (task, 12000, 8000);
-	print_node_speed_limit(dnode, 7);
+	print_speed_limit(dnode, 7);
 	puts ("---");
 	uget_task_adjust_speed (task);
-	print_node_speed_limit(dnode, 7);
+	print_speed_limit(dnode, 7);
 
 	uget_task_remove_all (task);
 	uget_task_final (task);
@@ -376,7 +377,7 @@ int   main (void)
 	uget_plugin_set (UgetPluginMegaInfo, UGET_PLUGIN_INIT, (void*) TRUE);
 //	test_setup_plugin_aria2 ();
 
-	test_node_download ();
+	test_download ();
 //	test_task ();
 //	test_app ();
 
