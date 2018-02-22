@@ -34,10 +34,6 @@
  *
  */
 
-// UgetPluginAgent
-
-#include <stdarg.h>
-
 #include <curl/curl.h>
 #include <UgString.h>
 #include <UgetPluginCurl.h>
@@ -273,7 +269,7 @@ void  uget_plugin_agent_sync_progress(UgetPluginAgent* plugin,
 }
 
 // ----------------------------------------------------------------------------
-// other functions
+// thread functions
 
 int   uget_plugin_agent_start(UgetPluginAgent* plugin,
                               UgThreadFunc thread_func)
@@ -302,55 +298,3 @@ int   uget_plugin_agent_start(UgetPluginAgent* plugin,
 
 	return TRUE;
 }
-
-// handle events from target_plugin by default action.
-// return remain events
-UgetEvent* uget_plugin_agent_handle_message(UgetPluginAgent* plugin, ...)
-{
-	int         type;
-	va_list     arg_list;
-	UgetEvent*  msg_head;
-	UgetEvent*  msg_next;
-	UgetEvent*  msg;
-
-	// move event from target_plugin to plug-in
-	msg_head = uget_plugin_pop((UgetPlugin*) plugin->target_plugin);
-	for (msg = msg_head;  msg;  msg = msg_next) {
-		msg_next = msg->next;
-
-		// filter message
-		va_start(arg_list, plugin);
-		do {
-			type = va_arg(arg_list, int);
-			if (msg->type == type || type == -1)
-				break;
-		} while (type != 0);
-		va_end(arg_list);
-		if (type == 0)
-			continue;
-
-		// remove message from list
-		if (msg->prev)
-			msg->prev->next = msg->next;
-		else
-			msg_head = msg->next;
-		if (msg->next)
-			msg->next->prev = msg->prev;
-		msg->prev = NULL;
-		msg->next = NULL;
-
-		// handle or discard some message
-		switch (msg->type) {
-		case UGET_EVENT_STOP:
-		case UGET_EVENT_ERROR:
-			// stop downloading if error occurred
-			plugin->paused = TRUE;
-			break;
-		}
-		// post event to plug-in
-		uget_plugin_post((UgetPlugin*) plugin, msg);
-	}
-
-	return msg_head;
-}
-

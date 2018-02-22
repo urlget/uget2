@@ -53,8 +53,13 @@ typedef enum {
 	UGET_PLUGIN_AGENT_OPTION_DERIVED,
 } UgetPluginAgentCode;
 
-// ----------------------------------------------------------------------------
-// UgetPluginAgent: It derived from UgetPlugin.
+/* ----------------------------------------------------------------------------
+   UgetPluginAgent: It derived from UgetPlugin.
+
+   UgetPlugin
+   |
+   `--- UgetPluginAgent
+ */
 
 #define UGET_PLUGIN_AGENT_MEMBERS  \
 	UGET_PLUGIN_MEMBERS;           \
@@ -131,10 +136,6 @@ void  uget_plugin_agent_sync_progress (UgetPluginAgent* plugin,
 // thread functions -------------------
 int   uget_plugin_agent_start (UgetPluginAgent* plugin,
                                UgThreadFunc thread_func);
-
-// handle events from target_plugin by default action.
-// return remain events
-UgetEvent* uget_plugin_agent_handle_message (UgetPluginAgent* plugin, ...);
 
 // ----------------------------------------------------------------------------
 // C++11 standard-layout
