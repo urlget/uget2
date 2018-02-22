@@ -52,8 +52,13 @@ typedef struct UgetPluginCurl    UgetPluginCurl;
 
 extern const   UgetPluginInfo*   UgetPluginCurlInfo;
 
-// ----------------------------------------------------------------------------
-// UgetPluginCurl: libcurl plug-in that derived from UgetPlugin.
+/* ----------------------------------------------------------------------------
+   UgetPluginCurl: libcurl plug-in that derived from UgetPlugin.
+
+   UgetPlugin
+   |
+   `--- UgetPluginCurl
+ */
 
 struct UgetPluginCurl
 {

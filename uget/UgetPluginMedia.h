@@ -56,9 +56,11 @@ typedef enum {
 	UGET_PLUGIN_MEDIA_TYPE,             // set parameter = (UgetMediaType)
 } UgetPluginMediaCode;
 
-// ----------------------------------------------------------------------------
-// UgetPluginMedia: It derived from UgetPluginAgent.
-/*
+/* ----------------------------------------------------------------------------
+   UgetPluginMedia: It derived from UgetPluginAgent.
+                    It use libcurl to get video info.
+                    IT use curl/aria2 plug-in to download media file.
+
    UgetPlugin
    |
    `--- UgetPluginAgent

@@ -126,11 +126,10 @@ UgetResult  uget_plugin_get(const UgetPluginInfo* info, int option, void* parame
 // return 3 if URI can be matched hosts, schemes, and file_exts.
 int     uget_plugin_match(const UgetPluginInfo* info, UgUri* uuri);
 
-// ----------------------------------------------------------------------------
-// UgetPlugin: It is base class/struct that used by plug-ins.
-//             It derived from UgType.
+/* ----------------------------------------------------------------------------
+   UgetPlugin: It is base class/struct that used by plug-ins.
+               It derived from UgType.
 
-/*
                  accept(data)                 accept(data)
   ,----------. -------------> ,-----------. -------------> ,-----------.
   |          |                |           |                |           |

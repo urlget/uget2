@@ -69,8 +69,13 @@ typedef enum {
 	UGET_PLUGIN_ARIA2_ERROR_LAUNCH,
 } UgetPluginAria2Error;
 
-// ----------------------------------------------------------------------------
-// UgetPluginAria2: It derived from UgetPlugin.
+/* ----------------------------------------------------------------------------
+   UgetPluginAria2: aria2 plug-in that derived from UgetPlugin.
+
+   UgetPlugin
+   |
+   `--- UgetPluginAria2
+ */
 
 struct UgetPluginAria2
 {

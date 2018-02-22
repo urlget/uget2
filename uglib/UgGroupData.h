@@ -52,9 +52,7 @@ typedef struct	UgGroupDataInfo  UgGroupDataInfo;
 typedef int   (*UgAssignFunc) (void* instance, void* src);
 
 // ----------------------------------------------------------------------------
-// UgTypeInfo
-// |
-// `-- UgGroupDataInfo
+// UgType & UgTypeInfo
 
 #define	UG_TYPE_INFO_MEMBERS  \
 	const char*     name;     \
@@ -88,12 +86,13 @@ void       ug_type_free(void* type);
 void       ug_type_init(void* type);
 void       ug_type_final(void* type);
 
-// ----------------------------------------------------------------------------
-// UgGroupDataInfo
-//
-// UgTypeInfo
-// |
-// `-- UgGroupDataInfo
+/* ----------------------------------------------------------------------------
+   UgGroupDataInfo
+
+   UgTypeInfo
+   |
+   `-- UgGroupDataInfo
+ */
 
 #define	UG_GROUP_DATA_INFO_MEMBERS  \
 	const char*     name;     \
@@ -116,12 +115,13 @@ struct UgGroupDataInfo
  */
 };
 
-// ----------------------------------------------------------------------------
-// UgGroupData
-//
-// UgType
-// |
-// `-- UgGroupData
+/* ----------------------------------------------------------------------------
+   UgGroupData
+
+   UgType
+   |
+   `-- UgGroupData
+ */
 
 #define	UG_GROUP_DATA_MEMBERS  \
 	const UgGroupDataInfo*  info

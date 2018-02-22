@@ -51,9 +51,11 @@ typedef struct	UgetPluginMega   UgetPluginMega;
 
 extern const    UgetPluginInfo*  UgetPluginMegaInfo;
 
-// ----------------------------------------------------------------------------
-// UgetPluginMega: It derived from UgetPluginAgent.
-/*
+/* ----------------------------------------------------------------------------
+   UgetPluginMega: It derived from UgetPluginAgent.
+                   It use libcurl to get download URL.
+                   It use curl/aria2 plug-in to download file.
+
    UgetPlugin
    |
    `--- UgetPluginAgent

@@ -34,10 +34,6 @@
  *
  */
 
-// UgetPluginMedia
-// use libcurl to get video info
-// use curl plug-in to download media file.
-
 #include <stdio.h>
 #include <stdint.h>
 #include <UgUtil.h>
