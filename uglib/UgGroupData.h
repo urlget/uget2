@@ -95,21 +95,20 @@ void       ug_type_final(void* type);
  */
 
 #define	UG_GROUP_DATA_INFO_MEMBERS  \
-	const char*     name;     \
-	uintptr_t       size;     \
-	UgInitFunc      init;     \
-	UgFinalFunc     final;    \
+	UG_TYPE_INFO_MEMBERS;     \
 	UgAssignFunc    assign;   \
 	const UgEntry*  entry
 
 struct UgGroupDataInfo
 {
 	UG_GROUP_DATA_INFO_MEMBERS;
-/*	// ------ UgGroupDataInfo members ------
+/*	// ------ UgTypeInfo members ------
 	const char*     name;
 	uintptr_t       size;
 	UgInitFunc      init;
 	UgFinalFunc     final;
+
+	// ------ UgGroupDataInfo members ------
 	UgAssignFunc    assign;
 	const UgEntry*	entry;
  */
@@ -129,7 +128,7 @@ struct UgGroupDataInfo
 struct UgGroupData
 {
 	UG_GROUP_DATA_MEMBERS;
-//	const UgGroupDataInfo*  info;
+//	const UgGroupDataInfo*  info;    // UgType member
 };
 
 // UgGroupData* ug_group_data_new(const UgGroupDataInfo* dinfo);

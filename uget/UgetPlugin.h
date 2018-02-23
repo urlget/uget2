@@ -89,8 +89,13 @@ typedef int        (*UgetPluginCtrlFunc)(UgetPlugin* plugin, int, void* data);
 // global_set/global_get
 typedef UgetResult (*UgetPluginGlobalFunc)(int option, void* parameter);
 
-// ----------------------------------------------------------------------------
-// UgetPluginInfo
+/* ----------------------------------------------------------------------------
+   UgetPluginInfo
+
+   UgTypeInfo
+   |
+   `-- UgetPluginInfo
+ */
 
 struct UgetPluginInfo
 {
@@ -129,6 +134,10 @@ int     uget_plugin_match(const UgetPluginInfo* info, UgUri* uuri);
 /* ----------------------------------------------------------------------------
    UgetPlugin: It is base class/struct that used by plug-ins.
                It derived from UgType.
+
+   UgType
+   |
+   `-- UgetPlugin
 
                  accept(data)                 accept(data)
   ,----------. -------------> ,-----------. -------------> ,-----------.
@@ -169,9 +178,11 @@ int     uget_plugin_match(const UgetPluginInfo* info, UgUri* uuri);
 
 struct UgetPlugin
 {
-	UGET_PLUGIN_MEMBERS;          // It derived from UgType
-/*	// ------ UgetPlugin members ------
+	UGET_PLUGIN_MEMBERS;
+/*	// ------ UgType members ------
 	const UgetPluginInfo*  info;
+
+	// ------ UgetPlugin members ------
 	UgetEvent*    events;
 	UgMutex       mutex;
 	int           ref_count;

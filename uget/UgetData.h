@@ -66,13 +66,20 @@ extern const UgGroupDataInfo*   UgetLogInfo;
 extern const UgGroupDataInfo*   UgetRelationInfo;
 extern const UgGroupDataInfo*   UgetCategoryInfo;
 
-// ----------------------------------------------------------------------------
-// UgetCommon: It derived from UgGroupData and store in UgData.
+/* ----------------------------------------------------------------------------
+   UgetCommon: It derived from UgGroupData and store in UgData.
+
+   UgType
+   |
+   `-- UgGroupData
+       |
+       `-- UgetCommon
+ */
 
 struct UgetCommon
 {
-	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
-//	const UgGroupDataInfo*  info;
+	UG_GROUP_DATA_MEMBERS;
+//	const UgGroupDataInfo*  info;    // UgGroupData(UgType) member
 
 	char*   name;
 	char*   uri;
@@ -130,13 +137,20 @@ struct UgetCommon
 char* uget_name_from_uri(UgUri* uri);
 char* uget_name_from_uri_str(const char* uri);
 
-// ----------------------------------------------------------------------------
-// UgetProgress: It derived from UgGroupData and store in UgData.
+/* ----------------------------------------------------------------------------
+   UgetProgress: It derived from UgGroupData and store in UgData.
+
+   UgType
+   |
+   `-- UgGroupData
+       |
+       `-- UgetProgress
+ */
 
 struct UgetProgress
 {
-	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
-//	const UgGroupDataInfo*  info;
+	UG_GROUP_DATA_MEMBERS;
+//	const UgGroupDataInfo*  info;    // UgGroupData(UgType) member
 
 	int64_t      elapsed;     // consume time (seconds)
 	int64_t      left;        // remain time  (seconds)
@@ -151,8 +165,15 @@ struct UgetProgress
 	int          percent;
 };
 
-// ----------------------------------------------------------------------------
-// UgetProxy: It derived from UgGroupData and store in UgData.
+/* ----------------------------------------------------------------------------
+   UgetProxy: It derived from UgGroupData and store in UgData.
+
+   UgType
+   |
+   `-- UgGroupData
+       |
+       `-- UgetProxy
+ */
 
 typedef enum
 {
@@ -170,8 +191,8 @@ typedef enum
 
 struct UgetProxy
 {
-	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
-//	const UgGroupDataInfo*  info;
+	UG_GROUP_DATA_MEMBERS;
+//	const UgGroupDataInfo*  info;    // UgGroupData(UgType) member
 
 	char*          host;
 	unsigned int   port;
@@ -208,13 +229,20 @@ struct UgetProxy
 #endif	// HAVE_LIBPWMD
 };
 
-// ----------------------------------------------------------------------------
-// UgetHttp: It derived from UgGroupData and store in UgData.
+/* ----------------------------------------------------------------------------
+   UgetHttp: It derived from UgGroupData and store in UgData.
+
+   UgType
+   |
+   `-- UgGroupData
+       |
+       `-- UgetHttp
+ */
 
 struct UgetHttp
 {
-	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
-//	const UgGroupDataInfo*  info;
+	UG_GROUP_DATA_MEMBERS;
+//	const UgGroupDataInfo*  info;    // UgGroupData(UgType) member
 
 	char*  user;
 	char*  password;
@@ -245,13 +273,20 @@ struct UgetHttp
 	} keeping;
 };
 
-// ----------------------------------------------------------------------------
-// UgetFtp: It derived from UgGroupData and store in UgData.
+/* ----------------------------------------------------------------------------
+   UgetFtp: It derived from UgGroupData and store in UgData.
+
+   UgType
+   |
+   `-- UgGroupData
+       |
+       `-- UgetFtp
+ */
 
 struct UgetFtp
 {
-	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
-//	const UgGroupDataInfo*  iface;
+	UG_GROUP_DATA_MEMBERS;
+//	const UgGroupDataInfo*  info;    // UgGroupData(UgType) member
 
 	char*		 user;
 	char*		 password;
@@ -267,13 +302,20 @@ struct UgetFtp
 	} keeping;
 };
 
-// ---------------------------------------------------------------------------
-// UgetLog
+/* ---------------------------------------------------------------------------
+   UgetLog
+
+   UgType
+   |
+   `-- UgGroupData
+       |
+       `-- UgetLog
+ */
 
 struct UgetLog
 {
-	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
-//	const UgGroupDataInfo*  info;
+	UG_GROUP_DATA_MEMBERS;
+//	const UgGroupDataInfo*  info;    // UgGroupData(UgType) member
 
 	time_t  added_time;
 	time_t  completed_time;
@@ -281,8 +323,15 @@ struct UgetLog
 	UgList  messages;          // List for UgetEvent
 };
 
-// ----------------------------------------------------------------------------
-// UgetRelation: It derived from UgGroupData and store in UgData.
+/* ----------------------------------------------------------------------------
+   UgetRelation: It derived from UgGroupData and store in UgData.
+
+   UgType
+   |
+   `-- UgGroupData
+       |
+       `-- UgetRelation
+ */
 
 typedef enum
 {
@@ -293,8 +342,8 @@ typedef enum
 
 struct UgetRelation
 {
-	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
-//	const UgGroupDataInfo*  info;
+	UG_GROUP_DATA_MEMBERS;
+//	const UgGroupDataInfo*  info;    // UgGroupData(UgType) member
 
 	int   group;     // UgetGroup
 
@@ -324,13 +373,20 @@ struct UgetRelation
 	} user;
 };
 
-// ----------------------------------------------------------------------------
-// UgetCategory: It derived from UgGroupData and store in UgData.
+/* ----------------------------------------------------------------------------
+   UgetCategory: It derived from UgGroupData and store in UgData.
+
+   UgType
+   |
+   `-- UgGroupData
+       |
+       `-- UgetCategory
+ */
 
 struct UgetCategory
 {
-	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
-//	const UgGroupDataInfo*  info;
+	UG_GROUP_DATA_MEMBERS;
+//	const UgGroupDataInfo*  info;    // UgGroupData(UgType) member
 
 	// use these to classify download
 	UgArrayStr    hosts;

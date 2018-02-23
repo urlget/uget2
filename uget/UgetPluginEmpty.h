@@ -52,15 +52,23 @@ typedef enum {
 	// your setting ID...
 } UgetPluginEmptyCode;
 
-// ----------------------------------------------------------------------------
-// UgetPluginEmpty: an empty plug-in. It derived from UgetPlugin.
+/* ----------------------------------------------------------------------------
+   UgetPluginEmpty: an empty plug-in. It derived from UgetPlugin.
+
+   UgType
+   |
+   `--- UgetPlugin
+        |
+        `--- UgetPluginEmpty
+ */
 
 struct UgetPluginEmpty
 {
-	UGET_PLUGIN_MEMBERS;               // It derived from UgetPlugin
-/*
-	// ------ UgetPlugin members ------
+	UGET_PLUGIN_MEMBERS;
+/*	// ------ UgType members ------
 	const UgetPluginInfo*  info;
+
+	// ------ UgetPlugin members ------
 	UgetEvent*    messages;
 	UgMutex       mutex;
 	int           ref_count;

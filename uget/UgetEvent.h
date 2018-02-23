@@ -120,9 +120,11 @@ extern const UgEntry  UgetEventEntry[];
 struct UgetEvent
 {
 	UG_LINK_MEMBERS (UgetEvent, UgetEvent, self);
-//	UgetEvent*      self;
-//	UgetEvent*      next;
-//	UgetEvent*      prev;
+/*	// ------ UgLink members ------
+	UgetEvent*      self;
+	UgetEvent*      next;
+	UgetEvent*      prev;
+ */
 
 	int     type;   // UgetEventType
 	time_t  time;   // date & time (seconds)

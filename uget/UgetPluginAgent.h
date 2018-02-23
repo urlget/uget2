@@ -56,9 +56,11 @@ typedef enum {
 /* ----------------------------------------------------------------------------
    UgetPluginAgent: It derived from UgetPlugin.
 
-   UgetPlugin
+   UgType
    |
-   `--- UgetPluginAgent
+   `--- UgetPlugin
+        |
+        `--- UgetPluginAgent
  */
 
 #define UGET_PLUGIN_AGENT_MEMBERS  \
@@ -73,8 +75,10 @@ typedef enum {
 struct UgetPluginAgent
 {
 	UGET_PLUGIN_AGENT_MEMBERS;
-/*	// ------ UgetPlugin members ------
+/*	// ------ UgType members ------
 	const UgetPluginInfo*  info;
+
+	// ------ UgetPlugin members ------
 	UgetEvent*    messages;
 	UgMutex       mutex;
 	int           ref_count;

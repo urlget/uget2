@@ -56,18 +56,22 @@ extern const    UgetPluginInfo*  UgetPluginMegaInfo;
                    It use libcurl to get download URL.
                    It use curl/aria2 plug-in to download file.
 
-   UgetPlugin
+   UgType
    |
-   `--- UgetPluginAgent
+   `--- UgetPlugin
         |
-        `--- UgetPluginMega
+        `--- UgetPluginAgent
+             |
+             `--- UgetPluginMega
  */
 
 struct UgetPluginMega
 {
 	UGET_PLUGIN_AGENT_MEMBERS;
-/*	// ------ UgetPlugin members ------
+/*	// ------ UgType members ------
 	const UgetPluginInfo*  info;
+
+	// ------ UgetPlugin members ------
 	UgetEvent*    messages;
 	UgMutex       mutex;
 	int           ref_count;

@@ -75,7 +75,7 @@ enum UgetFileState
 };
 
 // ----------------------------------------------------------------------------
-// UgetFile: Element
+// UgetFile: Element of UgetFileCollection
 
 struct UgetFile
 {
@@ -92,14 +92,20 @@ struct UgetFile
 	int64_t complete;
 };
 
-// ----------------------------------------------------------------------------
-// UgetFiles: UgetFile collection
+/* ----------------------------------------------------------------------------
+   UgetFiles: It derived from UgGroupData and store in UgData.
 
-// UgetFiles is derived from UgArray
+   UgType
+   |
+   `-- UgGroupData
+       |
+       `-- UgetFiles
+ */
+
 struct UgetFiles
 {
-	UG_GROUP_DATA_MEMBERS;           // It derived from UgGroupData
-//	const UgGroupDataInfo*  info;
+	UG_GROUP_DATA_MEMBERS;
+//	const UgGroupDataInfo*  info;    // UgGroupData(UgType) member
 
 	UgetFileCollection collection;
 

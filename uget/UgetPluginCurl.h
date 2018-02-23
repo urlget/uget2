@@ -55,16 +55,20 @@ extern const   UgetPluginInfo*   UgetPluginCurlInfo;
 /* ----------------------------------------------------------------------------
    UgetPluginCurl: libcurl plug-in that derived from UgetPlugin.
 
-   UgetPlugin
+   UgType
    |
-   `--- UgetPluginCurl
+   `---UgetPlugin
+       |
+       `--- UgetPluginCurl
  */
 
 struct UgetPluginCurl
 {
-	UGET_PLUGIN_MEMBERS;           // It derived from UgetPlugin
-/*	// ------ UgetPlugin members ------
+	UGET_PLUGIN_MEMBERS;
+/*	// ------ UgType members ------
 	const UgetPluginInfo*  info;
+
+	// ------ UgetPlugin members ------
 	UgetEvent*    messages;
 	UgMutex       mutex;
 	int           ref_count;

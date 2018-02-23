@@ -61,18 +61,22 @@ typedef enum {
                     It use libcurl to get video info.
                     IT use curl/aria2 plug-in to download media file.
 
-   UgetPlugin
+   UgType
    |
-   `--- UgetPluginAgent
+   `--- UgetPlugin
         |
-        `--- UgetPluginMedia
+        `--- UgetPluginAgent
+             |
+             `--- UgetPluginMedia
  */
 
 struct UgetPluginMedia
 {
 	UGET_PLUGIN_AGENT_MEMBERS;
-/*	// ------ UgetPlugin members ------
+/*	// ------ UgType members ------
 	const UgetPluginInfo*  info;
+
+	// ------ UgetPlugin members ------
 	UgetEvent*    messages;
 	UgMutex       mutex;
 	int           ref_count;

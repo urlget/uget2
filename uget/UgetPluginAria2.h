@@ -72,16 +72,20 @@ typedef enum {
 /* ----------------------------------------------------------------------------
    UgetPluginAria2: aria2 plug-in that derived from UgetPlugin.
 
-   UgetPlugin
+   UgType
    |
-   `--- UgetPluginAria2
+   `--- UgetPlugin
+        |
+        `--- UgetPluginAria2
  */
 
 struct UgetPluginAria2
 {
-	UGET_PLUGIN_MEMBERS;               // It derived from UgetPlugin
-/*	// ------ UgetPlugin members ------
+	UGET_PLUGIN_MEMBERS;
+/*	// ------ UgType members ------
 	const UgetPluginInfo*  info;
+
+	// ------ UgetPlugin members ------
 	UgetEvent*    messages;
 	UgMutex       mutex;
 	int           ref_count;
