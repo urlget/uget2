@@ -71,10 +71,10 @@ void  ugtk_app_init (UgtkApp* app, UgetRpc* rpc)
 	// clipboard
 	ugtk_clipboard_init (&app->clipboard, app->setting.clipboard.pattern);
 	// plug-in initialize
-	uget_plugin_global_set(UgetPluginCurlInfo,  UGET_PLUGIN_INIT, (void*) TRUE);
-	uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) TRUE);
-	uget_plugin_global_set(UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) TRUE);
-	uget_plugin_global_set(UgetPluginMegaInfo,  UGET_PLUGIN_INIT, (void*) TRUE);
+	uget_plugin_global_set(UgetPluginCurlInfo,  UGET_PLUGIN_GLOBAL_INIT, (void*) TRUE);
+	uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_GLOBAL_INIT, (void*) TRUE);
+	uget_plugin_global_set(UgetPluginMediaInfo, UGET_PLUGIN_GLOBAL_INIT, (void*) TRUE);
+	uget_plugin_global_set(UgetPluginMegaInfo,  UGET_PLUGIN_GLOBAL_INIT, (void*) TRUE);
 	// apply UgtkSetting
 	ugtk_app_set_plugin_setting (app, &app->setting);
 	ugtk_app_set_window_setting (app, &app->setting);
@@ -121,12 +121,12 @@ void  ugtk_app_final (UgtkApp* app)
 	uget_rss_unref (app->rss_builtin);
 	uget_app_final ((UgetApp*) app);
 	// plug-in finalize
-	uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_ARIA2_SHUTDOWN_NOW,
+	uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_ARIA2_GLOBAL_SHUTDOWN_NOW,
 			(void*)(intptr_t) shutdown_now);
-	uget_plugin_global_set(UgetPluginCurlInfo,  UGET_PLUGIN_INIT, (void*) FALSE);
-	uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) FALSE);
-	uget_plugin_global_set(UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) FALSE);
-	uget_plugin_global_set(UgetPluginMegaInfo,  UGET_PLUGIN_INIT, (void*) FALSE);
+	uget_plugin_global_set(UgetPluginCurlInfo,  UGET_PLUGIN_GLOBAL_INIT, (void*) FALSE);
+	uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_GLOBAL_INIT, (void*) FALSE);
+	uget_plugin_global_set(UgetPluginMediaInfo, UGET_PLUGIN_GLOBAL_INIT, (void*) FALSE);
+	uget_plugin_global_set(UgetPluginMegaInfo,  UGET_PLUGIN_GLOBAL_INIT, (void*) FALSE);
 }
 
 void  ugtk_app_save (UgtkApp* app)
@@ -518,35 +518,35 @@ void  ugtk_app_set_plugin_setting (UgtkApp* app, UgtkSetting* setting)
 	// set default plug-in
 	uget_app_set_default_plugin ((UgetApp*) app, default_plugin);
 	// set agent plug-in (used by media and MEGA plug-in)
-	uget_plugin_agent_global_set(UGET_PLUGIN_AGENT_DEFAULT_PLUGIN,
+	uget_plugin_agent_global_set(UGET_PLUGIN_AGENT_GLOBAL_PLUGIN,
 	                 (void*) default_plugin);
 	// set media plug-in
 	uget_app_add_plugin ((UgetApp*) app, UgetPluginMediaInfo);
-	uget_plugin_global_set(UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_MATCH_MODE,
+	uget_plugin_global_set(UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_GLOBAL_MATCH_MODE,
 	                 (void*)(intptr_t) setting->media.match_mode);
-	uget_plugin_global_set(UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_QUALITY,
+	uget_plugin_global_set(UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_GLOBAL_QUALITY,
 	                 (void*)(intptr_t) setting->media.quality);
-	uget_plugin_global_set(UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_TYPE,
+	uget_plugin_global_set(UgetPluginMediaInfo, UGET_PLUGIN_MEDIA_GLOBAL_TYPE,
 	                 (void*)(intptr_t) setting->media.type);
 	// set MEGA plug-in
 	uget_app_add_plugin ((UgetApp*) app, UgetPluginMegaInfo);
 	// set aria2 plug-in
 	if (setting->plugin_order >= UGTK_PLUGIN_ORDER_ARIA2) {
-		uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_ARIA2_URI,
+		uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_ARIA2_GLOBAL_URI,
 		                 setting->aria2.uri);
-		uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_ARIA2_PATH,
+		uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_ARIA2_GLOBAL_PATH,
 		                 setting->aria2.path);
-		uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_ARIA2_ARGUMENT,
+		uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_ARIA2_GLOBAL_ARGUMENT,
 		                 setting->aria2.args);
-		uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_ARIA2_TOKEN,
+		uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_ARIA2_GLOBAL_TOKEN,
 		                 setting->aria2.token);
-		uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_ARIA2_LAUNCH,
+		uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_ARIA2_GLOBAL_LAUNCH,
 		                 (void*)(intptr_t) setting->aria2.launch);
-		uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_ARIA2_SHUTDOWN,
+		uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_ARIA2_GLOBAL_SHUTDOWN,
 		                 (void*)(intptr_t) setting->aria2.shutdown);
 		limit[0] = setting->aria2.limit.download * 1024;
 		limit[1] = setting->aria2.limit.upload * 1024;
-		uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_SPEED_LIMIT, limit);
+		uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_GLOBAL_SPEED_LIMIT, limit);
 	}
 
 //	app->aria2.remote_updated = FALSE;

@@ -175,7 +175,7 @@ static UgetResult  global_set(int option, void* parameter)
 	UgetPluginAria2Setting*  setting;
 
 	switch (option) {
-	case UGET_PLUGIN_INIT:
+	case UGET_PLUGIN_GLOBAL_INIT:
 		// do global initialize/uninitialize here
 		if (parameter)
 			return global_init();
@@ -183,49 +183,49 @@ static UgetResult  global_set(int option, void* parameter)
 			global_unref();
 		break;
 
-	case UGET_PLUGIN_SPEED_LIMIT:
+	case UGET_PLUGIN_GLOBAL_SPEED_LIMIT:
 		if (global.data) {
 			uget_aria2_set_speed(global.data,
 					((int*)parameter)[0], ((int*)parameter)[1]);
 		}
 		break;
 
-	case UGET_PLUGIN_ARIA2_URI:
+	case UGET_PLUGIN_ARIA2_GLOBAL_URI:
 		if (parameter)
 			uget_aria2_set_uri(global.data, (char*) parameter);
 		break;
 
-	case UGET_PLUGIN_ARIA2_PATH:
+	case UGET_PLUGIN_ARIA2_GLOBAL_PATH:
 		uget_aria2_set_path(global.data, (char*) parameter);
 		break;
 
-	case UGET_PLUGIN_ARIA2_ARGUMENT:
+	case UGET_PLUGIN_ARIA2_GLOBAL_ARGUMENT:
 		uget_aria2_set_args(global.data, (char*) parameter);
 		break;
 
-	case UGET_PLUGIN_ARIA2_TOKEN:
+	case UGET_PLUGIN_ARIA2_GLOBAL_TOKEN:
 		uget_aria2_set_token(global.data, (char*) parameter);
 		break;
 
-	case UGET_PLUGIN_ARIA2_LAUNCH:
+	case UGET_PLUGIN_ARIA2_GLOBAL_LAUNCH:
 		if (parameter != NULL)
 			if (uget_aria2_launch(global.data) == FALSE)
 				return UGET_RESULT_ERROR;
 		break;
 
-	case UGET_PLUGIN_ARIA2_SHUTDOWN:
+	case UGET_PLUGIN_ARIA2_GLOBAL_SHUTDOWN:
 		if (parameter)
 			global.data->shutdown = TRUE;
 		else
 			global.data->shutdown = FALSE;
 		break;
 
-	case UGET_PLUGIN_ARIA2_SHUTDOWN_NOW:
+	case UGET_PLUGIN_ARIA2_GLOBAL_SHUTDOWN_NOW:
 		if (parameter && global.data)
 			uget_aria2_shutdown(global.data);
 		break;
 
-	case UGET_PLUGIN_SETTING:
+	case UGET_PLUGIN_GLOBAL_SETTING:
 		setting = parameter;
 		global.data->polling_interval = setting->polling_interval;
 		global.data->shutdown = setting->shutdown;
@@ -246,17 +246,17 @@ static UgetResult  global_set(int option, void* parameter)
 static UgetResult  global_get(int option, void* parameter)
 {
 	switch (option) {
-	case UGET_PLUGIN_INIT:
+	case UGET_PLUGIN_GLOBAL_INIT:
 		if (parameter)
 			*(int*)parameter = global.data ? TRUE : FALSE;
 		break;
 
-	case UGET_PLUGIN_ERROR_CODE:
+	case UGET_PLUGIN_GLOBAL_ERROR_CODE:
 		if (parameter)
 			*(int*)parameter = global.data->error;
 		break;
 
-	case UGET_PLUGIN_ARIA2_LAUNCH:
+	case UGET_PLUGIN_ARIA2_GLOBAL_LAUNCH:
 		if (parameter)
 			*(int*)parameter = global.data->launched;
 		break;

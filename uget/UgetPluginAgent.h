@@ -46,12 +46,12 @@ extern "C" {
 typedef struct	UgetPluginAgent          UgetPluginAgent;
 
 typedef enum {
-	UGET_PLUGIN_AGENT_BEGIN = UGET_PLUGIN_OPTION_DERIVED,    // begin
+	UGET_PLUGIN_AGENT_GLOBAL = UGET_PLUGIN_GLOBAL_DERIVED,    // begin
 
-	UGET_PLUGIN_AGENT_DEFAULT_PLUGIN,   // set parameter = (UgetPluginInfo*)
+	UGET_PLUGIN_AGENT_GLOBAL_PLUGIN,   // set parameter = (UgetPluginInfo*)
 
-	UGET_PLUGIN_AGENT_OPTION_DERIVED,
-} UgetPluginAgentCode;
+	UGET_PLUGIN_AGENT_GLOBAL_DERIVED,
+} UgetPluginAgentGlobalCode;
 
 /* ----------------------------------------------------------------------------
    UgetPluginAgent: It derived from UgetPlugin.

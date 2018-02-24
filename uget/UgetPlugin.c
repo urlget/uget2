@@ -87,7 +87,8 @@ int  uget_plugin_match(const UgetPluginInfo* info, UgUri* uuri)
 		if (ug_uri_match_hosts(uuri, (char**)info->hosts) >= 0) {
 			matched_count++;
 			// Don't match this plug-in if it is for specify host.
-			res = uget_plugin_global_get(info, UGET_PLUGIN_MATCH, (void*) uuri->uri);
+			res = uget_plugin_global_get(info, UGET_PLUGIN_GLOBAL_MATCH,
+			                             (void*) uuri->uri);
 			if (res == UGET_RESULT_FAILED)
 				matched_count = -1;
 			else if (res == UGET_RESULT_OK)

@@ -49,12 +49,12 @@ typedef struct	UgetPluginMedia   UgetPluginMedia;
 extern const    UgetPluginInfo*   UgetPluginMediaInfo;
 
 typedef enum {
-	UGET_PLUGIN_MEDIA_BEGIN = UGET_PLUGIN_AGENT_OPTION_DERIVED,    // begin
+	UGET_PLUGIN_MEDIA_GLOBAL = UGET_PLUGIN_AGENT_GLOBAL_DERIVED,    // begin
 
-	UGET_PLUGIN_MEDIA_MATCH_MODE,       // set parameter = (UgetMediaMatchMode)
-	UGET_PLUGIN_MEDIA_QUALITY,          // set parameter = (UgetMediaQuality)
-	UGET_PLUGIN_MEDIA_TYPE,             // set parameter = (UgetMediaType)
-} UgetPluginMediaCode;
+	UGET_PLUGIN_MEDIA_GLOBAL_MATCH_MODE,       // set parameter = (UgetMediaMatchMode)
+	UGET_PLUGIN_MEDIA_GLOBAL_QUALITY,          // set parameter = (UgetMediaQuality)
+	UGET_PLUGIN_MEDIA_GLOBAL_TYPE,             // set parameter = (UgetMediaType)
+} UgetPluginMediaGlobalCode;
 
 /* ----------------------------------------------------------------------------
    UgetPluginMedia: It derived from UgetPluginAgent.

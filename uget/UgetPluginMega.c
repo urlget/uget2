@@ -242,7 +242,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMega* plugin)
 		goto exit;
 	}
 
-	uget_plugin_agent_global_get(UGET_PLUGIN_AGENT_DEFAULT_PLUGIN,
+	uget_plugin_agent_global_get(UGET_PLUGIN_AGENT_GLOBAL_PLUGIN,
 	                             &plugin_info);
 	// create target_plugin to download
 	plugin->target_plugin = uget_plugin_new(plugin_info);

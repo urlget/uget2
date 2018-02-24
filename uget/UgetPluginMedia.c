@@ -110,15 +110,15 @@ static struct
 static UgetResult  global_set(int option, void* parameter)
 {
 	switch (option) {
-	case UGET_PLUGIN_MEDIA_MATCH_MODE:
+	case UGET_PLUGIN_MEDIA_GLOBAL_MATCH_MODE:
 		global.match_mode = (intptr_t) parameter;
 		break;
 
-	case UGET_PLUGIN_MEDIA_QUALITY:
+	case UGET_PLUGIN_MEDIA_GLOBAL_QUALITY:
 		global.quality = (intptr_t) parameter;
 		break;
 
-	case UGET_PLUGIN_MEDIA_TYPE:
+	case UGET_PLUGIN_MEDIA_GLOBAL_TYPE:
 		global.type = (intptr_t) parameter;
 		break;
 
@@ -133,7 +133,7 @@ static UgetResult  global_set(int option, void* parameter)
 static UgetResult  global_get(int option, void* parameter)
 {
 	switch (option) {
-	case UGET_PLUGIN_MATCH:
+	case UGET_PLUGIN_GLOBAL_MATCH:
 		if (uget_site_get_id(parameter) < UGET_SITE_MEDIA)
 			return UGET_RESULT_FAILED;
 		break;
@@ -414,7 +414,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin)
 		plugin->elapsed += plugin->target_progress->elapsed;
 		plugin->target_progress->elapsed = 0;
 
-		uget_plugin_agent_global_get(UGET_PLUGIN_AGENT_DEFAULT_PLUGIN,
+		uget_plugin_agent_global_get(UGET_PLUGIN_AGENT_GLOBAL_PLUGIN,
 		                             &plugin_info);
 		// create target_plugin to download
 		plugin->target_plugin = uget_plugin_new(plugin_info);

@@ -98,7 +98,7 @@ void  uget_plugin_agent_global_unref(void)
 UgetResult  uget_plugin_agent_global_set(int option, void* parameter)
 {
 	switch (option) {
-	case UGET_PLUGIN_INIT:
+	case UGET_PLUGIN_GLOBAL_INIT:
 		// do global initialize/finalize here
 		if (parameter)
 			return uget_plugin_agent_global_init();
@@ -106,7 +106,7 @@ UgetResult  uget_plugin_agent_global_set(int option, void* parameter)
 			uget_plugin_agent_global_unref();
 		break;
 
-	case UGET_PLUGIN_AGENT_DEFAULT_PLUGIN:
+	case UGET_PLUGIN_AGENT_GLOBAL_PLUGIN:
 		global.default_plugin = parameter;
 		break;
 
@@ -120,12 +120,12 @@ UgetResult  uget_plugin_agent_global_set(int option, void* parameter)
 UgetResult  uget_plugin_agent_global_get(int option, void* parameter)
 {
 	switch (option) {
-	case UGET_PLUGIN_INIT:
+	case UGET_PLUGIN_GLOBAL_INIT:
 		if (parameter)
 			*(int*)parameter = global.ref_count;
 		break;
 
-	case UGET_PLUGIN_AGENT_DEFAULT_PLUGIN:
+	case UGET_PLUGIN_AGENT_GLOBAL_PLUGIN:
 		*(void**)parameter = (void*)global.default_plugin;
 		break;
 

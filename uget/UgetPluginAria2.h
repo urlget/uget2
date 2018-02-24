@@ -52,16 +52,16 @@ typedef struct UgetPluginAria2Setting    UgetPluginAria2Setting;
 extern  const  UgetPluginInfo*           UgetPluginAria2Info;
 
 typedef enum {
-	UGET_PLUGIN_ARIA2_OPTION = UGET_PLUGIN_OPTION_DERIVED,
-	UGET_PLUGIN_ARIA2_URI,       // set parameter = (char* )
-//	UGET_PLUGIN_ARIA2_LOCAL,     // set parameter = (intptr_t)
-	UGET_PLUGIN_ARIA2_PATH,      // set parameter = (char* )
-	UGET_PLUGIN_ARIA2_ARGUMENT,  // set parameter = (char* )
-	UGET_PLUGIN_ARIA2_TOKEN,     // set parameter = (char* )
-	UGET_PLUGIN_ARIA2_LAUNCH,    // get/set parameter = (intptr_t)
-	UGET_PLUGIN_ARIA2_SHUTDOWN,  // set parameter = (intptr_t)
-	UGET_PLUGIN_ARIA2_SHUTDOWN_NOW,  // set parameter = (intptr_t)
-} UgetPluginAria2Code;
+	UGET_PLUGIN_ARIA2_GLOBAL = UGET_PLUGIN_GLOBAL_DERIVED,
+	UGET_PLUGIN_ARIA2_GLOBAL_URI,       // set parameter = (char* )
+//	UGET_PLUGIN_ARIA2_GLOBAL_LOCAL,     // set parameter = (intptr_t)
+	UGET_PLUGIN_ARIA2_GLOBAL_PATH,      // set parameter = (char* )
+	UGET_PLUGIN_ARIA2_GLOBAL_ARGUMENT,  // set parameter = (char* )
+	UGET_PLUGIN_ARIA2_GLOBAL_TOKEN,     // set parameter = (char* )
+	UGET_PLUGIN_ARIA2_GLOBAL_LAUNCH,    // get/set parameter = (intptr_t)
+	UGET_PLUGIN_ARIA2_GLOBAL_SHUTDOWN,  // set parameter = (intptr_t)
+	UGET_PLUGIN_ARIA2_GLOBAL_SHUTDOWN_NOW,  // set parameter = (intptr_t)
+} UgetPluginAria2GlobalCode;
 
 typedef enum {
 	UGET_PLUGIN_ARIA2_ERROR_NONE,

@@ -64,15 +64,15 @@ typedef enum {
 
 // global
 typedef enum {
-	UGET_PLUGIN_INIT,            // get/set, parameter = (intptr_t = FALSE or TRUE)
-	UGET_PLUGIN_SETTING,         // get/set, parameter = (void* custom_struct)
-	UGET_PLUGIN_SPEED_LIMIT,     // get/set, parameter = (int  speed[2])
-	UGET_PLUGIN_SPEED,           // get, parameter = (int  speed[2])
-	UGET_PLUGIN_ERROR_CODE,      // get, parameter = (int* error_code)
-	UGET_PLUGIN_ERROR_STRING,    // get, parameter = (char** error_string)
-	UGET_PLUGIN_MATCH,           // get, parameter = (char*  url)
+	UGET_PLUGIN_GLOBAL_INIT,            // get/set, parameter = (intptr_t = FALSE or TRUE)
+	UGET_PLUGIN_GLOBAL_SETTING,         // get/set, parameter = (void* custom_struct)
+	UGET_PLUGIN_GLOBAL_SPEED_LIMIT,     // get/set, parameter = (int  speed[2])
+	UGET_PLUGIN_GLOBAL_SPEED,           // get, parameter = (int  speed[2])
+	UGET_PLUGIN_GLOBAL_ERROR_CODE,      // get, parameter = (int* error_code)
+	UGET_PLUGIN_GLOBAL_ERROR_STRING,    // get, parameter = (char** error_string)
+	UGET_PLUGIN_GLOBAL_MATCH,           // get, parameter = (char*  url)
 
-	UGET_PLUGIN_OPTION_DERIVED = 10000,  // for derived plug-ins
+	UGET_PLUGIN_GLOBAL_DERIVED = 10000,  // for derived plug-ins
 } UgetPluginGlobalOption;
 
 typedef enum {

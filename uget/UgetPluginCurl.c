@@ -173,7 +173,7 @@ static void  global_unref(void)
 static UgetResult  global_set(int option, void* parameter)
 {
 	switch (option) {
-	case UGET_PLUGIN_INIT:
+	case UGET_PLUGIN_GLOBAL_INIT:
 		// do global initialize/uninitialize here
 		if (parameter)
 			return global_init();
@@ -191,7 +191,7 @@ static UgetResult  global_set(int option, void* parameter)
 static UgetResult  global_get(int option, void* parameter)
 {
 	switch (option) {
-	case UGET_PLUGIN_INIT:
+	case UGET_PLUGIN_GLOBAL_INIT:
 		if (parameter)
 			*(int*)parameter = global.initialized;
 		break;
