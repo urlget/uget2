@@ -209,7 +209,7 @@ struct UgJsonrpcSocketThread
 	UgThread         thread;
 };
 
-static UG_THREAD_RETURN_TYPE jrpc_thread (struct UgJsonrpcSocketThread* jrst)
+static UgThreadResult jrpc_thread (struct UgJsonrpcSocketThread* jrst)
 {
 	UgSocketServer*  server;
 	UgJsonrpcServerFunc  callback;
@@ -221,7 +221,7 @@ static UG_THREAD_RETURN_TYPE jrpc_thread (struct UgJsonrpcSocketThread* jrst)
 	ug_free (jrst);
 	ug_socket_server_unref (server);  // ref() on on_accepted()
 
-	return UG_THREAD_RETURN_VALUE;
+	return UG_THREAD_RESULT;
 }
 
 static void on_receiving (UgSocketServer* server, SOCKET client_fd, void* data)

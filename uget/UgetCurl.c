@@ -104,7 +104,7 @@ void  uget_curl_free (UgetCurl* ugcurl)
 	ug_free (ugcurl);
 }
 
-static UG_THREAD_RETURN_TYPE  uget_curl_thread (UgetCurl* ugcurl)
+static UgThreadResult  uget_curl_thread (UgetCurl* ugcurl)
 {
 	char*     tempstr;
 	CURLcode  code;
@@ -237,7 +237,7 @@ exit:
 	if (ugcurl->state == UGET_CURL_ERROR)
 		ugcurl->test_ok = FALSE;
 	ugcurl->stopped = TRUE;
-	return UG_THREAD_RETURN_VALUE;
+	return UG_THREAD_RESULT;
 }
 
 void  uget_curl_run (UgetCurl* ugcurl, int joinable)

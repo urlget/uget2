@@ -46,25 +46,27 @@ extern "C" {
 
 #if defined _WIN32 || defined _WIN64
 
-typedef uintptr_t    UgThread;
-typedef void*        UgMutex;
+typedef uintptr_t          UgThread;
+typedef void*              UgMutex;
+typedef unsigned           UgThreadResult;
 
-typedef unsigned (*UgThreadFunc)(void*);
+// This function must return UG_THREAD_RESULT
+typedef UgThreadResult (*UgThreadFunc)(void*);
 
-#define UG_THREAD_RETURN_TYPE      unsigned
-#define UG_THREAD_RETURN_VALUE     0
-#define UG_THREAD_OK               0
+#define UG_THREAD_RESULT   0
+#define UG_THREAD_OK       0
 
-int   ug_thread_create (UgThread* thread, UgThreadFunc func, void* data);
-int   ug_thread_join   (UgThread* thread);
-void  ug_thread_unjoin (UgThread* thread);
-UgThread  ug_thread_self (void);
+// ug_thread_create() and ug_thread_join() return UG_THREAD_OK if successful
+int       ug_thread_create(UgThread* thread, UgThreadFunc func, void* data);
+int       ug_thread_join  (UgThread* thread);
+void      ug_thread_unjoin(UgThread* thread);
+UgThread  ug_thread_self  (void);
 
 // mutex ------
-void  ug_mutex_init (UgMutex* mutex);
+void  ug_mutex_init  (UgMutex* mutex);
 void  ug_mutex_clear (UgMutex* mutex);
-void  ug_mutex_lock (UgMutex* mutex);
-void  ug_mutex_unlock (UgMutex* mutex);
+void  ug_mutex_lock  (UgMutex* mutex);
+void  ug_mutex_unlock(UgMutex* mutex);
 
 //#elif defined(HAVE_PTHREAD)
 #else
@@ -72,13 +74,15 @@ void  ug_mutex_unlock (UgMutex* mutex);
 
 typedef pthread_t          UgThread;
 typedef pthread_mutex_t    UgMutex;
+typedef void*              UgThreadResult;
 
-typedef void* (*UgThreadFunc)(void*);
+// This function must return UG_THREAD_RESULT
+typedef UgThreadResult (*UgThreadFunc)(void*);
 
-#define UG_THREAD_RETURN_TYPE      void*
-#define UG_THREAD_RETURN_VALUE     NULL
-#define UG_THREAD_OK               0
+#define UG_THREAD_RESULT   NULL
+#define UG_THREAD_OK       0
 
+// ug_thread_create() and ug_thread_join() return UG_THREAD_OK if successful
 #define ug_thread_create(thread, func, data)    \
 		pthread_create(thread, NULL, func, data)
 
@@ -88,20 +92,20 @@ typedef void* (*UgThreadFunc)(void*);
 #define ug_thread_unjoin(thread)    \
 		pthread_detach(*(thread))
 
-#define ug_thread_self()    pthread_self()
+#define ug_thread_self          pthread_self
 
 // mutex ------
-// void  ug_mutex_init (UgMutex* mutex);
-#define  ug_mutex_init(mutex)    pthread_mutex_init (mutex, NULL)
+// void ug_mutex_init(UgMutex* mutex);
+#define ug_mutex_init(mutex)    pthread_mutex_init(mutex, NULL)
 
-// void  ug_mutex_clear (UgMutex* mutex);
-#define  ug_mutex_clear(mutex)   pthread_mutex_destroy (mutex)
+// void ug_mutex_clear(UgMutex* mutex);
+#define ug_mutex_clear(mutex)   pthread_mutex_destroy(mutex)
 
-// void  ug_mutex_lock (UgMutex* mutex);
-#define  ug_mutex_lock(mutex)    pthread_mutex_lock (mutex)
+// void ug_mutex_lock(UgMutex* mutex);
+#define ug_mutex_lock(mutex)    pthread_mutex_lock(mutex)
 
-// void  ug_mutex_unlock (UgMutex* mutex);
-#define  ug_mutex_unlock(mutex)  pthread_mutex_unlock (mutex)
+// void ug_mutex_unlock(UgMutex* mutex);
+#define ug_mutex_unlock(mutex)  pthread_mutex_unlock(mutex)
 
 #endif  // _WIN32 || _WIN64
 

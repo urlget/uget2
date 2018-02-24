@@ -81,7 +81,7 @@ struct UgetAria2Thread
 	int              finalized;
 };
 
-static UG_THREAD_RETURN_TYPE  uget_aria2_thread (UgetAria2Thread* uathread);
+static UgThreadResult  uget_aria2_thread (UgetAria2Thread* uathread);
 
 static UgetAria2Thread* uget_aria2_thread_new (UgetAria2* uaria2)
 {
@@ -285,7 +285,7 @@ static void  recycle_speed_request (UgetAria2* uaria2, UgJsonrpcObject* jreq)
 	uget_aria2_recycle (uaria2, jres);
 }
 
-static UG_THREAD_RETURN_TYPE  uget_aria2_thread (UgetAria2Thread* uathread)
+static UgThreadResult  uget_aria2_thread (UgetAria2Thread* uathread)
 {
 	UgetAria2*       uaria2;
 	UgJsonrpcObject* jreq = NULL;
@@ -359,7 +359,7 @@ static UG_THREAD_RETURN_TYPE  uget_aria2_thread (UgetAria2Thread* uathread)
 
 	uget_aria2_thread_free (uathread);
 	uget_aria2_unref (uaria2);
-	return UG_THREAD_RETURN_VALUE;
+	return UG_THREAD_RESULT;
 }
 
 // ----------------------------------------------------------------------------
@@ -546,7 +546,7 @@ typedef struct {
 	char       cmd[1];
 } Aria2LaunchData;
 
-static UG_THREAD_RETURN_TYPE  aria2_launch_thread (Aria2LaunchData* uald)
+static UgThreadResult  aria2_launch_thread (Aria2LaunchData* uald)
 {
 	int  result;
 
@@ -556,7 +556,7 @@ static UG_THREAD_RETURN_TYPE  aria2_launch_thread (Aria2LaunchData* uald)
 	else
 		uald->uaria2->launched = TRUE;
 	ug_free (uald);
-	return UG_THREAD_RETURN_VALUE;
+	return UG_THREAD_RESULT;
 }
 
 int  uget_aria2_launch (UgetAria2* uaria2)

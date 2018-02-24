@@ -369,7 +369,7 @@ static size_t  uget_rss_curl_write (void *ptr, size_t size, size_t nmemb, UgHtml
 	return nmemb;
 }
 
-static UG_THREAD_RETURN_TYPE  uget_rss_thread (UgetRss* urss)
+static UgThreadResult  uget_rss_thread (UgetRss* urss)
 {
 	CURL*		  curl;
 	CURLcode	  res;
@@ -415,7 +415,7 @@ static UG_THREAD_RETURN_TYPE  uget_rss_thread (UgetRss* urss)
 
 	urss->updating = FALSE;
 	uget_rss_unref (urss);
-	return UG_THREAD_RETURN_VALUE;
+	return UG_THREAD_RESULT;
 }
 
 void  uget_rss_update (UgetRss* urss, int joinable)

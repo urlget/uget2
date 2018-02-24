@@ -412,7 +412,7 @@ static int  plugin_sync(UgetPluginCurl* plugin, UgData* data)
 static void  plugin_decide_uris(UgetPluginCurl* plugin);
 static void  plugin_decide_folder(UgetPluginCurl* plugin);
 static void  plugin_decide_files(UgetPluginCurl* plugin);
-static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginCurl* plugin);
+static UgThreadResult  plugin_thread(UgetPluginCurl* plugin);
 
 static int  plugin_accept(UgetPluginCurl* plugin, UgData* data)
 {
@@ -617,7 +617,7 @@ static int  split_download(UgetPluginCurl* plugin, UgetCurl* ugcurl);
 static void adjust_speed_limit(UgetPluginCurl* plugin);
 static UgetCurl* create_segment(UgetPluginCurl* plugin);
 
-static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginCurl* plugin)
+static UgThreadResult  plugin_thread(UgetPluginCurl* plugin)
 {
 	UgetCommon* common;
 	UgetCurl*   ugcurl;
@@ -939,7 +939,7 @@ static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginCurl* plugin)
 	uget_a2cf_clear(&plugin->aria2.ctrl);
 	plugin->stopped = TRUE;
 	uget_plugin_unref((UgetPlugin*) plugin);
-	return UG_THREAD_RETURN_VALUE;
+	return UG_THREAD_RESULT;
 }
 
 static int prepare_existed(UgetCurl* ugcurl, UgetPluginCurl* plugin)

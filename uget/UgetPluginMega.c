@@ -159,7 +159,7 @@ static void plugin_final(UgetPluginMega* plugin)
 
 // ----------------------------------------------------------------------------
 
-static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMega* plugin);
+static UgThreadResult  plugin_thread(UgetPluginMega* plugin);
 
 static int  plugin_accept(UgetPluginMega* plugin, UgData* data)
 {
@@ -206,7 +206,7 @@ int   plugin_ctrl(UgetPluginMega* plugin, int code, void* data)
 
 static int  is_downloaded(UgetPluginMega* plugin, UgetCommon* target_common);
 
-static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMega* plugin)
+static UgThreadResult  plugin_thread(UgetPluginMega* plugin)
 {
 	UgetPluginInfo*  plugin_info;
 	UgetCommon* target_common;
@@ -318,7 +318,7 @@ exit:
 	uget_plugin_post((UgetPlugin*) plugin,
 	                 uget_event_new(UGET_EVENT_STOP));
 	uget_plugin_unref((UgetPlugin*) plugin);
-	return UG_THREAD_RETURN_VALUE;
+	return UG_THREAD_RESULT;
 }
 
 static int  plugin_sync(UgetPluginMega* plugin, UgData* data)

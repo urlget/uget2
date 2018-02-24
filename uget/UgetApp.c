@@ -889,7 +889,7 @@ static int  delete_files(UgetFiles* files, int has_temp_file)
 }
 
 // used by uget_app_delete_download()
-static UG_THREAD_RETURN_TYPE  delete_files_thread(UgetFiles* files)
+static UgThreadResult  delete_files_thread(UgetFiles* files)
 {
 	int  count;
 
@@ -903,7 +903,7 @@ static UG_THREAD_RETURN_TYPE  delete_files_thread(UgetFiles* files)
 	}
 
 	ug_group_data_free(files);
-	return UG_THREAD_RETURN_VALUE;
+	return UG_THREAD_RESULT;
 }
 
 int  uget_app_delete_download (UgetApp* app, UgetNode* dnode, int delete_file)

@@ -164,7 +164,7 @@ static void plugin_final(UgetPluginMedia* plugin)
 // ----------------------------------------------------------------------------
 // plugin_ctrl
 
-static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin);
+static UgThreadResult  plugin_thread(UgetPluginMedia* plugin);
 
 static int  plugin_ctrl(UgetPluginMedia* plugin, int code, void* data)
 {
@@ -284,7 +284,7 @@ static int  plugin_accept(UgetPluginMedia* plugin, UgData* data)
 
 static int   is_file_completed(const char* file, const char* folder);
 
-static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginMedia* plugin)
+static UgThreadResult  plugin_thread(UgetPluginMedia* plugin)
 {
 	UgetPluginInfo*  plugin_info;
 	UgetMedia*     umedia;
@@ -493,7 +493,7 @@ exit:
 	plugin->stopped = TRUE;
 	uget_media_free(umedia);
 	uget_plugin_unref((UgetPlugin*) plugin);
-	return UG_THREAD_RETURN_VALUE;
+	return UG_THREAD_RESULT;
 }
 
 static int   is_file_completed(const char* file, const char* folder)

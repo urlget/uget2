@@ -704,7 +704,7 @@ static int  plugin_delay(UgetPluginAria2* plugin)
 	return TRUE;
 }
 
-static UG_THREAD_RETURN_TYPE  plugin_thread(UgetPluginAria2* plugin)
+static UgThreadResult  plugin_thread(UgetPluginAria2* plugin)
 {
 	UgJsonrpcObject*  req;
 	UgJsonrpcObject*  res;
@@ -890,7 +890,7 @@ exit:
 	recycle_status_request(status_req);
 	plugin->stopped = TRUE;
 	uget_plugin_unref((UgetPlugin*)plugin);
-	return UG_THREAD_RETURN_VALUE;
+	return UG_THREAD_RESULT;
 }
 
 // ----------------------------------------------------------------------------

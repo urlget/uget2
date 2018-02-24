@@ -241,7 +241,7 @@ SOCKET ug_socket_listen_unix (SOCKET fd, const char* path, int path_len, int bac
 // ------------------------------------
 // UgSocketServer
 
-static UG_THREAD_RETURN_TYPE server_thread (UgSocketServer* server);
+static UgThreadResult server_thread (UgSocketServer* server);
 
 UgSocketServer* ug_socket_server_new (SOCKET server_fd)
 {
@@ -348,7 +348,7 @@ void  ug_socket_server_stop (UgSocketServer* server)
 	}
 }
 
-static UG_THREAD_RETURN_TYPE server_thread (UgSocketServer* server)
+static UgThreadResult server_thread (UgSocketServer* server)
 {
 	struct    timeval  timeout;
 	int       client_fd;
@@ -383,5 +383,5 @@ static UG_THREAD_RETURN_TYPE server_thread (UgSocketServer* server)
 	server->stopping = FALSE;
 	server->stopped = TRUE;
 	ug_socket_server_unref (server);
-	return UG_THREAD_RETURN_VALUE;
+	return UG_THREAD_RESULT;
 }
