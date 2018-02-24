@@ -1226,7 +1226,7 @@ void  uget_app_clear_plugins (UgetApp* app)
 	pend = app->plugins.at + app->plugins.length;
 	for (pair = app->plugins.at;  pair < pend;  pair++) {
 		if (pair->data) {
-			uget_plugin_set (pair->data, UGET_PLUGIN_INIT, (void*) FALSE);
+			uget_plugin_global_set(pair->data, UGET_PLUGIN_INIT, (void*) FALSE);
 			pair->data = NULL;
 		}
 	}
@@ -1239,7 +1239,7 @@ void  uget_app_add_plugin (UgetApp* app, const UgetPluginInfo* pinfo)
 
 	pair = ug_registry_find (&app->plugins, pinfo->name, NULL);
 	if (pair == NULL || pair->data == NULL)
-		uget_plugin_set (pinfo, UGET_PLUGIN_INIT, (void*) TRUE);
+		uget_plugin_global_set(pinfo, UGET_PLUGIN_INIT, (void*) TRUE);
 	if (pair == NULL)
 		ug_registry_add (&app->plugins, (const UgTypeInfo*)pinfo);
 }
@@ -1250,7 +1250,7 @@ void  uget_app_remove_plugin (UgetApp* app, const UgetPluginInfo* pinfo)
 
 	pair = ug_registry_find (&app->plugins, pinfo->name, NULL);
 	if (pair && pair->data) {
-		uget_plugin_set (pair->data, UGET_PLUGIN_INIT, (void*) FALSE);
+		uget_plugin_global_set(pair->data, UGET_PLUGIN_INIT, (void*) FALSE);
 		pair->data = NULL;
 	}
 }

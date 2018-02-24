@@ -73,7 +73,7 @@ typedef enum {
 	UGET_PLUGIN_MATCH,           // get, parameter = (char*  url)
 
 	UGET_PLUGIN_OPTION_DERIVED = 10000,  // for derived plug-ins
-} UgetPluginOption;
+} UgetPluginGlobalOption;
 
 typedef enum {
 	UGET_RESULT_OK = 0,
@@ -120,12 +120,14 @@ struct UgetPluginInfo
 	const char**    file_exts;
 
 	// global set/get function for plug-in special setting.
-	UgetPluginGlobalFunc  set;
-	UgetPluginGlobalFunc  get;
+	UgetPluginGlobalFunc  global_set;
+	UgetPluginGlobalFunc  global_get;
 };
 
-UgetResult  uget_plugin_set(const UgetPluginInfo* info, int option, void* parameter);
-UgetResult  uget_plugin_get(const UgetPluginInfo* info, int option, void* parameter);
+UgetResult  uget_plugin_global_set(const UgetPluginInfo* info,
+                                   int option, void* parameter);
+UgetResult  uget_plugin_global_get(const UgetPluginInfo* info,
+                                   int option, void* parameter);
 
 // return matched count.
 // return 3 if URI can be matched hosts, schemes, and file_exts.
@@ -239,10 +241,10 @@ namespace Uget
 // Your derived struct/class must be C++11 standard-layout
 struct PluginInfoMethod
 {
-	inline UgetResult  set(int option, void* parameter)
-		{ return uget_plugin_set((UgetPluginInfo*)this, option, parameter); }
-	inline UgetResult  get(int option, void* parameter)
-		{ return uget_plugin_get((UgetPluginInfo*)this, option, parameter); }
+	inline UgetResult  globalSet(int option, void* parameter)
+		{ return uget_plugin_global_set((UgetPluginInfo*)this, option, parameter); }
+	inline UgetResult  globalGet(int option, void* parameter)
+		{ return uget_plugin_global_get((UgetPluginInfo*)this, option, parameter); }
 
 	inline int  match(UgUri* uuri)
 		{ return uget_plugin_match((UgetPluginInfo*)this, uuri); }

@@ -53,23 +53,23 @@ UgetPlugin*  uget_plugin_new(const UgetPluginInfo* info)
 	return plugin;
 }
 
-UgetResult  uget_plugin_set(const UgetPluginInfo* info, int option, void* parameter)
+UgetResult  uget_plugin_global_set(const UgetPluginInfo* info, int option, void* parameter)
 {
-	UgetPluginGlobalFunc  set;
+	UgetPluginGlobalFunc  global_set;
 
-	set = info->set;
-	if (set)
-		return set(option, parameter);
+	global_set = info->global_set;
+	if (global_set)
+		return global_set(option, parameter);
 	return UGET_RESULT_UNSUPPORT;
 }
 
-UgetResult  uget_plugin_get(const UgetPluginInfo* info, int option, void* parameter)
+UgetResult  uget_plugin_global_get(const UgetPluginInfo* info, int option, void* parameter)
 {
-	UgetPluginGlobalFunc  get;
+	UgetPluginGlobalFunc  global_get;
 
-	get = info->get;
-	if (get)
-		return get(option, parameter);
+	global_get = info->global_get;
+	if (global_get)
+		return global_get(option, parameter);
 	return UGET_RESULT_UNSUPPORT;
 }
 
@@ -87,7 +87,7 @@ int  uget_plugin_match(const UgetPluginInfo* info, UgUri* uuri)
 		if (ug_uri_match_hosts(uuri, (char**)info->hosts) >= 0) {
 			matched_count++;
 			// Don't match this plug-in if it is for specify host.
-			res = uget_plugin_get(info, UGET_PLUGIN_MATCH, (void*) uuri->uri);
+			res = uget_plugin_global_get(info, UGET_PLUGIN_MATCH, (void*) uuri->uri);
 			if (res == UGET_RESULT_FAILED)
 				matched_count = -1;
 			else if (res == UGET_RESULT_OK)

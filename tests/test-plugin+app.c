@@ -170,19 +170,19 @@ void  test_setup_plugin_aria2 (void)
 	const UgetPluginInfo* pinfo;
 
 	pinfo = UgetPluginAria2Info;
-	uget_plugin_set (pinfo, UGET_PLUGIN_INIT, (void*) TRUE);
-	uget_plugin_set (pinfo, UGET_PLUGIN_ARIA2_URI,
+	uget_plugin_global_set(pinfo, UGET_PLUGIN_INIT, (void*) TRUE);
+	uget_plugin_global_set(pinfo, UGET_PLUGIN_ARIA2_URI,
 			"http://localhost/jsonrpc");
 #if defined _WIN32 || defined _WIN64
-	uget_plugin_set (pinfo, UGET_PLUGIN_ARIA2_PATH,
+	uget_plugin_global_set(pinfo, UGET_PLUGIN_ARIA2_PATH,
 			"C:\\Program Files\\uGet\\bin\\aria2c.exe");
 #endif
-	uget_plugin_set (pinfo, UGET_PLUGIN_ARIA2_ARGUMENT,
+	uget_plugin_global_set(pinfo, UGET_PLUGIN_ARIA2_ARGUMENT,
 			"--enable-rpc=true -D --check-certificate=false");
-	uget_plugin_set (pinfo, UGET_PLUGIN_ARIA2_LAUNCH, (void*) TRUE);
-	uget_plugin_set (pinfo, UGET_PLUGIN_ARIA2_SHUTDOWN, (void*) TRUE);
+	uget_plugin_global_set(pinfo, UGET_PLUGIN_ARIA2_LAUNCH, (void*) TRUE);
+	uget_plugin_global_set(pinfo, UGET_PLUGIN_ARIA2_SHUTDOWN, (void*) TRUE);
 	ug_sleep (1000);
-	uget_plugin_set (pinfo, UGET_PLUGIN_INIT, (void*) FALSE);
+	uget_plugin_global_set(pinfo, UGET_PLUGIN_INIT, (void*) FALSE);
 	ug_sleep (1000);
 }
 
@@ -371,22 +371,22 @@ void  test_app (void)
 int   main (void)
 {
 	// initialize plug-in
-	uget_plugin_set (UgetPluginCurlInfo, UGET_PLUGIN_INIT, (void*) TRUE);
-	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) TRUE);
-	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) TRUE);
-	uget_plugin_set (UgetPluginMegaInfo, UGET_PLUGIN_INIT, (void*) TRUE);
-//	test_setup_plugin_aria2 ();
+	uget_plugin_global_set(UgetPluginCurlInfo, UGET_PLUGIN_INIT, (void*) TRUE);
+	uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) TRUE);
+	uget_plugin_global_set(UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) TRUE);
+	uget_plugin_global_set(UgetPluginMegaInfo, UGET_PLUGIN_INIT, (void*) TRUE);
+//	test_setup_plugin_aria2();
 
-	test_download ();
-//	test_task ();
-//	test_app ();
+	test_download();
+//	test_task();
+//	test_app();
 
-//	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_ARIA2_SHUTDOWN_NOW, (void*) TRUE);
+//	uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_ARIA2_SHUTDOWN_NOW, (void*) TRUE);
 	// finalize plug-in
-	uget_plugin_set (UgetPluginCurlInfo, UGET_PLUGIN_INIT, (void*) FALSE);
-	uget_plugin_set (UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) FALSE);
-	uget_plugin_set (UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) FALSE);
-	uget_plugin_set (UgetPluginMegaInfo, UGET_PLUGIN_INIT, (void*) FALSE);
+	uget_plugin_global_set(UgetPluginCurlInfo, UGET_PLUGIN_INIT, (void*) FALSE);
+	uget_plugin_global_set(UgetPluginAria2Info, UGET_PLUGIN_INIT, (void*) FALSE);
+	uget_plugin_global_set(UgetPluginMediaInfo, UGET_PLUGIN_INIT, (void*) FALSE);
+	uget_plugin_global_set(UgetPluginMegaInfo, UGET_PLUGIN_INIT, (void*) FALSE);
 	ug_sleep(1000);
 
 	return 0;
