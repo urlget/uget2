@@ -84,8 +84,12 @@ extern "C" {
 // ----------------------------------------------------------------------------
 // UgetNode
 
-typedef struct UgetTree         UgetTree;
-typedef struct UgetNode         UgetNode;
+typedef struct UgetNode          UgetNode;
+/*
+typedef struct UgetNodeControl   UgetNodeControl;
+typedef struct UgetNodeNotifier  UgetNodeNotifier;
+typedef struct UgetNodeSort      UgetNodeSort;
+ */
 
 typedef void (*UgetNodeFunc)(UgetNode* node, UgetNode* sibling, UgetNode* child);
 
@@ -192,12 +196,11 @@ void  uget_node_make_fake (UgetNode* node);
 UgetNode* uget_node_nth_fake (UgetNode* node, int nth);
 int       uget_node_fake_position (UgetNode* node, UgetNode* fake);
 
-// ----------------------------------------------------------------------------
-
 // notify
 void  uget_node_updated (UgetNode* node);
 
-// for UgetNode.children
+// ----------------------------------------------------------------------------
+
 // JSON parser used with UG_ENTRY_ARRAY.
 UgJsonError ug_json_parse_uget_node_children (UgJson* json,
                                 const char* name, const char* value,
@@ -205,10 +208,10 @@ UgJsonError ug_json_parse_uget_node_children (UgJson* json,
 // JSON writer used with UG_ENTRY_ARRAY.
 void        ug_json_write_uget_node_children (UgJson* json, const UgetNode* node);
 
-// ----------------------------------------------------------------------------
-// compare functions for uget_node_sort()
-// UgetNode-compare.c
-
+/* ----------------------------------------------------------------------------
+   compare functions for UgetNode.control.sort.compare and uget_node_sort()
+   these function implemented in UgetNode-compare.c
+ */
 int   uget_node_compare_name         (UgetNode* node1, UgetNode* node2);
 int   uget_node_compare_complete     (UgetNode* node1, UgetNode* node2);
 int   uget_node_compare_size         (UgetNode* node1, UgetNode* node2);
@@ -225,17 +228,17 @@ int   uget_node_compare_uri          (UgetNode* node1, UgetNode* node2);
 int   uget_node_compare_added_time   (UgetNode* node1, UgetNode* node2);
 int   uget_node_compare_completed_time (UgetNode* node1, UgetNode* node2);
 
-// ----------------------------------------------------------------------------
-// callback functions for UgetNode.control.filter
-// These functions used by UgetApp
+/* ----------------------------------------------------------------------------
+   callback functions for UgetNode.control.filter (they are used by UgetApp)
+   these function implemented in UgetNode-filter.c
+ */
 void  uget_node_filter_mix (UgetNode* node, UgetNode* sibling, UgetNode* child_real);
 void  uget_node_filter_split (UgetNode* node, UgetNode* sibling, UgetNode* child_real);
 void  uget_node_filter_mix_split (UgetNode* node, UgetNode* sibling, UgetNode* child_real);
 void  uget_node_filter_sorted (UgetNode* node, UgetNode* sibling, UgetNode* child_real);
 
-// ----------------------------------------------------------------------------
 // helper functions for uget_node_filter_split(), uget_node_filter_mix_split()
-UgetNode* uget_node_get_splited(UgetNode* node, int group);
+UgetNode* uget_node_get_splited(UgetNode* node, int group_id);
 int       uget_node_get_group(UgetNode* node);
 
 
@@ -250,8 +253,6 @@ int       uget_node_get_group(UgetNode* node);
 
 namespace Uget
 {
-
-struct TreeMethod {};
 
 struct Node : Ug::NodeMethod, UgetNode
 {

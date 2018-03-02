@@ -41,6 +41,7 @@
     <ClCompile Include="..\..\uget\UgetFiles.c" />
     <ClCompile Include="..\..\uget\UgetNode.c" />
     <ClCompile Include="..\..\uget\UgetNode-compare.c" />
+    <ClCompile Include="..\..\uget\UgetNode-filter.c" />
     <ClCompile Include="..\..\uget\UgetOption.c" />
     <ClCompile Include="..\..\uget\UgetPlugin.c" />
     <ClCompile Include="..\..\uget\UgetRpc.c" />

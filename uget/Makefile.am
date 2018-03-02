@@ -19,6 +19,7 @@ libuget_a_SOURCES = \
 	UgetFiles.c   \
 	UgetNode.c    \
 	UgetNode-compare.c  \
+	UgetNode-filter.c   \
 	UgetTask.c    \
 	UgetHash.c    \
 	UgetSite.c    \

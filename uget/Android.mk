@@ -15,6 +15,7 @@ LOCAL_SRC_FILES  := \
 	UgetFiles.c   \
 	UgetNode.c    \
 	UgetNode-compare.c  \
+	UgetNode-filter.c   \
 	UgetTask.c    \
 	UgetHash.c    \
 	UgetSite.c    \
