@@ -59,7 +59,7 @@ typedef enum {
 /* ----------------------------------------------------------------------------
    UgetPluginMedia: It derived from UgetPluginAgent.
                     It use libcurl to get video info.
-                    IT use curl/aria2 plug-in to download media file.
+                    It use curl/aria2 plug-in to download media file.
 
    UgType
    |

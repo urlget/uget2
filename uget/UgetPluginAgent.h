@@ -55,6 +55,7 @@ typedef enum {
 
 /* ----------------------------------------------------------------------------
    UgetPluginAgent: It derived from UgetPlugin.
+                    It use other(curl/aria2) plug-in to download file.
 
    UgType
    |
@@ -125,14 +126,14 @@ int   uget_plugin_agent_ctrl (UgetPluginAgent* plugin, int code, void* data);
 int   uget_plugin_agent_ctrl_speed (UgetPluginAgent* plugin, int* speed);
 
 // sync functions ---------------------
-// sync common data (include speed limit) between plugin->data and plugin->target_data
-// parameter common and target can be NULL.
+// sync common data (include speed limit) between 'common' and 'target'
+// if parameter 'target' is NULL, it get/alloc 'target' from plugin->target_data
 void  uget_plugin_agent_sync_common (UgetPluginAgent* plugin,
                                      UgetCommon* common,
                                      UgetCommon* target);
 
-// sync progress data from plugin->target_data to plugin->data
-// parameter progress and target can be NULL.
+// sync progress data from 'target' to 'progress'
+// if parameter 'target' is NULL, it get/alloc 'target' from plugin->target_data
 void  uget_plugin_agent_sync_progress (UgetPluginAgent* plugin,
                                        UgetProgress* progress,
                                        UgetProgress* target);

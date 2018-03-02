@@ -198,7 +198,7 @@ void    uget_plugin_ref(UgetPlugin* plugin);
 void    uget_plugin_unref(UgetPlugin* plugin);
 
 // return TRUE  if UgData was accepted by plug-in.
-// return FALSE if UgData is lack of necessary data.
+// return FALSE if UgData lacks necessary data.
 int     uget_plugin_accept(UgetPlugin* plugin, UgData* data);
 
 // return TRUE  if plug-in is running or some data need to sync.
