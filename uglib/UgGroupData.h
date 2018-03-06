@@ -52,7 +52,7 @@ typedef struct	UgGroupDataInfo  UgGroupDataInfo;
 typedef int   (*UgAssignFunc) (void* instance, void* src);
 
 // ----------------------------------------------------------------------------
-// UgType & UgTypeInfo
+// UgTypeInfo: a base type info for UgGroupDataInfo and UgetPluginInfo
 
 #define	UG_TYPE_INFO_MEMBERS  \
 	const char*     name;     \
@@ -71,13 +71,16 @@ struct UgTypeInfo
  */
 };
 
+// ----------------------------------------------------------------------------
+// UgType: a base type for UgGroupData and UgetPlugin
+
 #define	UG_TYPE_MEMBERS  \
 	const UgTypeInfo*  info
 
 struct UgType
 {
 	UG_TYPE_MEMBERS;
-//	const UgTypeInfo*  info;
+//	const UgTypeInfo*  info;    // UgType member
 };
 
 // void*   ug_type_new(const UgTypeInfo* typeinfo);
@@ -115,7 +118,7 @@ struct UgGroupDataInfo
 };
 
 /* ----------------------------------------------------------------------------
-   UgGroupData
+   UgGroupData: a group of data that store in UgData.
 
    UgType
    |

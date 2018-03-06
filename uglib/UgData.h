@@ -47,19 +47,22 @@ extern "C" {
 
 typedef struct  UgData      UgData;
 
-// ----------------------------------------------------------------------------
-// This UgRegistry used by UgData.
-// User can only store UgGroupDataInfo in this UgRegistry.
-// key-data pair:
-// const char*            key;   // UgGroupDataInfo->name
-// const UgGroupDataInfo* data;  // UgGroupDataInfo
+/* ----------------------------------------------------------------------------
+   This UgRegistry used by UgData.
+   User can only store UgGroupDataInfo in this UgRegistry.
+     key  pointer to UgGroupDataInfo.name
+     data pointer to UgGroupDataInfo
+ */
 
 UgRegistry*  ug_data_get_registry(void);
 void         ug_data_set_registry(UgRegistry* registry);
 
-// ----------------------------------------------------------------------------
-// UgData - UgGroupDataInfo and it's instance collection
-//        - It uses UgGroupDataInfo to get/alloc it's instance.
+/* ----------------------------------------------------------------------------
+   UgData - collection of UgGroupDataInfo and UgGroupData
+          - It uses UgGroupDataInfo to get/alloc UgGroupData.
+     key  pointer to UgGroupDataInfo
+     data pointer to UgGroupData
+ */
 
 UgData* ug_data_new(int allocated_length, int cache_length);
 void    ug_data_ref(UgData* data);
@@ -68,17 +71,19 @@ void    ug_data_unref(UgData* data);
 void    ug_data_init(UgData* data, int allocated_length, int cache_length);
 void    ug_data_final(UgData* data);
 
+// ug_data_get() and ug_data_realloc() return UgGroupData
+// ug_data_set() replace old data by new one. It return old UgGroupData
 void*   ug_data_realloc(UgData* data, const UgGroupDataInfo* key);
 void    ug_data_remove(UgData* data, const UgGroupDataInfo* key);
-void*   ug_data_set(UgData* data, const UgGroupDataInfo* key, void* grouped_data);
 void*   ug_data_get(UgData* data, const UgGroupDataInfo* key);
+void*   ug_data_set(UgData* data, const UgGroupDataInfo* key, void* new_group_data);
 UgPair* ug_data_find(UgData* data, const UgGroupDataInfo* key, int* inserted_index);
 
 void    ug_data_assign(UgData* data, UgData* src, const UgGroupDataInfo* exclude);
 
 // ----------------
 // JSON parser/writer that used with UG_ENTRY_CUSTOM.
-// if (UgRegistry*)registry == NULL, use default registry.
+// if 'registry' is NULL, use default registry.
 
 UgJsonError ug_json_parse_data_ptr(UgJson* json,
                                const char* name, const char* value,
@@ -109,10 +114,12 @@ void        ug_json_write_data(UgJson* json, UgData* data);
 struct UgData
 {
 	UG_ARRAY_MEMBERS(UgPair);
-//	UgPair* at;
-//	int     length;
-//	int     allocated;
-//	int     element_size;
+/*	// ------ UgArray members ------
+	UgPair* at;
+	int     length;
+	int     allocated;
+	int     element_size;
+ */
 
 	int     cache_length;
 	int     ref_count;

@@ -166,7 +166,7 @@ void  ug_data_remove(UgData* data, const UgGroupDataInfo* key)
 	}
 }
 
-void*   ug_data_set(UgData* data, const UgGroupDataInfo* key, void* grouped_data)
+void*   ug_data_set(UgData* data, const UgGroupDataInfo* key, void* group_data)
 {
 	UgPair* cur;
 	int     index;
@@ -179,7 +179,7 @@ void*   ug_data_set(UgData* data, const UgGroupDataInfo* key, void* grouped_data
 		cur->data = NULL;
 	}
 	result = cur->data;
-	cur->data = grouped_data;
+	cur->data = group_data;
 	return result;
 }
 

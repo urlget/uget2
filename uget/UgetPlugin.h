@@ -164,12 +164,13 @@ int     uget_plugin_match(const UgetPluginInfo* info, UgUri* uuri);
 	}
 
 	// Running loop sample 2: use uget_plugin_get_state()
-	while (uget_plugin_get_state(plugin)) {
+	do {
 		// sleep();
 		// do something here
-		// You can call or not to call uget_plugin_sync() at last.
-		// uget_plugin_sync(plugin, data);
-	}
+		// If you don't want to exchange data (e.g. progress) with plug-in,
+		// you do not need to call uget_plugin_sync() at last.
+		uget_plugin_sync(plugin, data);
+	} while (uget_plugin_get_state(plugin));
  */
 
 #define UGET_PLUGIN_MEMBERS       \
@@ -201,8 +202,8 @@ void    uget_plugin_unref(UgetPlugin* plugin);
 // return FALSE if UgData lacks necessary data.
 int     uget_plugin_accept(UgetPlugin* plugin, UgData* data);
 
-// return TRUE  if plug-in is running or some data need to sync.
-// return FALSE if plug-in was stopped and no data need to sync.
+// return TRUE  if plug-in is running or some data need to exchange/sync.
+// return FALSE if plug-in was stopped and no data need to exchange/sync.
 int     uget_plugin_sync(UgetPlugin* plugin, UgData* data);
 
 // return TRUE or FALSE.

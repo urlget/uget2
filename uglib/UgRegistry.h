@@ -48,7 +48,7 @@ typedef struct  UgPair        UgPair;
 typedef struct  UgRegistry    UgRegistry;
 
 // ----------------------------------------------------------------------------
-// UgPair
+// UgPair: key-data pair that is used by UgRegistry and UgData 
 
 struct UgPair
 {
@@ -56,11 +56,11 @@ struct UgPair
 	void*  data;
 };
 
-// ----------------------------------------------------------------------------
-// UgRegistry store UgTypeInfo and it's name and search UgTypeInfo by name.
-// key-data pair:
-// const char*       key;   // UgTypeInfo->name
-// const UgTypeInfo* data;  // UgTypeInfo
+/* ----------------------------------------------------------------------------
+   UgRegistry: store UgTypeInfo and it's name and search UgTypeInfo by name.
+     key  pointer to UgTypeInfo.name
+     data pointer to UgTypeInfo
+ */
 
 void	ug_registry_init(UgRegistry* reg);
 void	ug_registry_final(UgRegistry* reg);
@@ -78,10 +78,12 @@ void    ug_registry_sort(UgRegistry* reg);
 struct UgRegistry
 {
 	UG_ARRAY_MEMBERS(UgPair);
-//	UgPair**  at;
-//	int       length;
-//	int       allocated;
-//	int       element_size;
+/*	// ------ UgArray members ------
+	UgPair* at;
+	int     length;
+	int     allocated;
+	int     element_size;
+ */
 
 	int       sorted;
 
