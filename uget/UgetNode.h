@@ -37,8 +37,20 @@
 #ifndef UGET_NODE_H
 #define UGET_NODE_H
 
-/*
-	UgetNode Tree chart:
+#include <stddef.h>    // offsetof()
+#include <stdint.h>    // int16_t
+#include <UgNode.h>
+#include <UgData.h>
+#include <UgUri.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* ----------------------------------------------------------------------------
+   UgetNode: extend from UgNode and add pointers (real, fake, and peer).
+
+	* Tree chart 1: (parent and child nodes)
 
 	Root --+-- Category1 --+-- Download1 (URI)
 	       |               |
@@ -54,11 +66,12 @@
 	                       |
 	                       +-- Download4 (URI)
 
-	UgNode   is base node type.
-	UgetNode extend from UgNode and add pointers (real, fake, and peer).
+	* Tree chart 2:
 
+	                  fake ----- peer -----> fake
+	                   /                      /
 	           prev   /               prev   /
-	             |  fake                |  fake
+	             |   /                  |   /
 	             |  /                   |  /
 	             | /                    | /
 	             |/                     |/
@@ -66,23 +79,12 @@
 	            /|                     /|
 	           / |                    / |
 	          /  |                   /  |
-	       real  |                real  |
+	         /   |                  /   |
 	        /    |                 /    |
-	            next                   next
+	       /    next              /    next
+	      /                      /
+	    real                   real
  */
-
-#include <stddef.h>    // offsetof()
-#include <stdint.h>    // int16_t
-#include <UgNode.h>
-#include <UgData.h>
-#include <UgUri.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-// ----------------------------------------------------------------------------
-// UgetNode
 
 typedef struct UgetNode          UgetNode;
 /*
@@ -140,7 +142,7 @@ struct UgetNodeControl
 	struct UgetNodeNotifier  notifier;
 	struct UgetNodeSort      sort;
 
-	// fake filter node from real.
+	// filter child of real node and decide how to insert child of fake node.
 	// If real node inserted a child node, all fake nodes call this to filter.
 	UgetNodeFunc             filter;
 
@@ -237,8 +239,30 @@ void  uget_node_filter_split (UgetNode* node, UgetNode* sibling, UgetNode* child
 void  uget_node_filter_mix_split (UgetNode* node, UgetNode* sibling, UgetNode* child_real);
 void  uget_node_filter_sorted (UgetNode* node, UgetNode* sibling, UgetNode* child_real);
 
-// helper functions for uget_node_filter_split(), uget_node_filter_mix_split()
-UgetNode* uget_node_get_splited(UgetNode* node, int group_id);
+/*
+               uget_node_filter_split()
+                         v
+  ,-----------.      ,--------.         ,-------------------------------.
+  | real node | ---> | filter | --+---> | fake node (UGET_GROUP_ACTIVE) |
+  `-----------'      `--------'   |     `-------------------------------'
+                                  |
+                                  |     ,--------------------------------.
+                                  +---> | fake node (UGET_GROUP_QUEUING) |
+                                  |     `--------------------------------'
+                                  |
+                                  |     ,---------------------------------.
+                                  +---> | fake node (UGET_GROUP_FINISHED) |
+                                  |     `---------------------------------'
+                                  |
+                                  |     ,---------------------------------.
+                                  `---> | fake node (UGET_GROUP_RECYCLED) |
+                                        `---------------------------------'
+
+ * helper functions for uget_node_filter_split(), uget_node_filter_mix_split()
+   uget_node_get_split() use 'group' (UgetGroup) to find fake node.
+   uget_node_get_group() return UgetGroup if it is split fake node.
+ */
+UgetNode* uget_node_get_split(UgetNode* node, int group);
 int       uget_node_get_group(UgetNode* node);
 
 

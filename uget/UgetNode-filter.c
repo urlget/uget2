@@ -153,22 +153,22 @@ void  uget_node_filter_mix (UgetNode* node, UgetNode* sibling, UgetNode* child)
 		if (node->fake && sibling == NULL) {
 			switch (relation_child->group & UGET_GROUP_MAJOR) {
 			case UGET_GROUP_ACTIVE:
-				fake = uget_node_get_splited(node, UGET_GROUP_QUEUING);
+				fake = uget_node_get_split(node, UGET_GROUP_QUEUING);
 				if (fake == NULL || fake->children == NULL)
-					fake = uget_node_get_splited(node, UGET_GROUP_FINISHED);
+					fake = uget_node_get_split(node, UGET_GROUP_FINISHED);
 				if (fake == NULL || fake->children == NULL)
-					fake = uget_node_get_splited(node, UGET_GROUP_RECYCLED);
+					fake = uget_node_get_split(node, UGET_GROUP_RECYCLED);
 				break;
 
 			case UGET_GROUP_QUEUING:
 			default:
-				fake = uget_node_get_splited(node, UGET_GROUP_FINISHED);
+				fake = uget_node_get_split(node, UGET_GROUP_FINISHED);
 				if (fake == NULL || fake->children == NULL)
-					fake = uget_node_get_splited(node, UGET_GROUP_RECYCLED);
+					fake = uget_node_get_split(node, UGET_GROUP_RECYCLED);
 				break;
 
 			case UGET_GROUP_FINISHED:
-				fake = uget_node_get_splited(node, UGET_GROUP_RECYCLED);
+				fake = uget_node_get_split(node, UGET_GROUP_RECYCLED);
 				break;
 
 			case UGET_GROUP_RECYCLED:
@@ -217,7 +217,7 @@ static int   nth2group[UGET_NODE_N_GROUP] =
 	UGET_GROUP_RECYCLED,
 };
 
-UgetNode* uget_node_get_splited(UgetNode* node, int group)
+UgetNode* uget_node_get_split(UgetNode* node, int group)
 {
 	UgetNodeFunc  filter;
 	int           nth;
