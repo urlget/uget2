@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Balzamon, 2016-2017
+# Balzamon, 2016-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-03 03:10+0800\n"
-"PO-Revision-Date: 2017-10-11 14:43+0000\n"
+"PO-Revision-Date: 2018-02-06 10:03+0000\n"
 "Last-Translator: Balzamon\n"
 "Language-Team: Hungarian (http://www.transifex.com/uget/uget/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -136,7 +136,7 @@ msgstr "Nem támogatott fájl."
 #. UGET_EVENT_ERROR_UNSUPPORTED_FILE
 #: ../../po/../uget/UgetEvent.c:93
 msgid "post file not found."
-msgstr ""
+msgstr "post fájl nem található"
 
 #. UGET_EVENT_ERROR_POST_FILE_NOT_FOUND
 #: ../../po/../uget/UgetEvent.c:94
@@ -149,11 +149,11 @@ msgstr "A videót törölték."
 
 #: ../../po/../uget/UgetMedia-youtube.c:288
 msgid "Error occurred during getting video info."
-msgstr ""
+msgstr "Hiba történt a video info beszerzésekor."
 
 #: ../../po/../uget/UgetMedia-youtube.c:534
 msgid "Error occurred during getting video web page."
-msgstr ""
+msgstr "Hiba történt a videó weboldalának betöltésekor."
 
 #: ../../po/../uget/UgetMedia-youtube.c:606
 msgid "No video_id found in URL of YouTube."
@@ -289,7 +289,7 @@ msgstr "aria2: a csoportazonosító eltávolítva."
 
 #: ../../po/../uget/UgetPluginMedia.c:489
 msgid "Failed to get media link."
-msgstr ""
+msgstr "A media link nem nyitható meg."
 
 #: ../../po/../uget/UgetPluginMedia.c:505
 msgid "No matched media."

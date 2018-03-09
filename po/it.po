@@ -5,14 +5,15 @@
 # Translators:
 # bovirus <roberto.boriotti@canon-europe.com>, 2013
 # Giuseppe Pignataro (Fasbyte01) <rogepix@gmail.com>, 2017
+# Martino Mensio <martinomensio@outlook.it>, 2018
 # tomberry <tomberro@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: uGet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-03 03:10+0800\n"
-"PO-Revision-Date: 2017-09-22 23:51+0000\n"
-"Last-Translator: Giuseppe Pignataro (Fasbyte01) <rogepix@gmail.com>\n"
+"PO-Revision-Date: 2018-01-15 22:05+0000\n"
+"Last-Translator: Martino Mensio <martinomensio@outlook.it>\n"
 "Language-Team: Italian (http://www.transifex.com/uget/uget/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,7 +29,7 @@ msgid ""
 "While attempting an SSH connection to %s there was a problem verifying it's hostkey against the known and trusted hosts file because it's hostkey was not found.\n"
 "\n"
 "Would you like to treat this connection as trusted for this and future connections by adding %s's hostkey to the known hosts file?"
-msgstr ""
+msgstr "Demone di gestione delle password: uget\n\nNel tentativo di connessione SSH a %s c'è stato un problema nella verifica della chiave del rispettivo host considerando il file degli host conosciuti e fidati perché la sua chiave host non è stata trovata.\n\nVuoi considerare questa connessione come fidata per questa e le future connessioni aggiungendo la chiave host di %s al file di host conosciuti?"
 
 #: ../../po/../uget/UgetApp.c:103
 msgid "All Category"
@@ -537,7 +538,7 @@ msgstr "Importa URL da file di testo"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1600
 msgid "Plain text file"
-msgstr ""
+msgstr "File di solo testo"
 
 #: ../../po/../ui-gtk/UgtkApp.c:1612
 msgid "Export URLs to text file"
@@ -649,7 +650,7 @@ msgstr "Vuoi veramente eliminare i file?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:70
 msgid "Are you sure you want to delete files?"
-msgstr "Confermi la cancellazione deii file?"
+msgstr "Confermi la cancellazione dei file?"
 
 #: ../../po/../ui-gtk/UgtkConfirmDialog.c:74
 msgid "Really delete category?"

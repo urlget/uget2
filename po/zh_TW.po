@@ -676,6 +676,10 @@ msgstr "網址(_U)"
 msgid "Mirrors:"
 msgstr "鏡像:"
 
+#: ../ui-gtk/UgtkDownloadForm.c:141
+msgid "Leave blank to use default filename ..."
+msgstr "保持空白以使用預設檔名 ..."
+
 #. File - label
 #: ../ui-gtk/UgtkDownloadForm.c:146 ../ui-gtk/UgtkProxyForm.c:393
 msgid "File:"
