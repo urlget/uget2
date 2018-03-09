@@ -1,3 +1,10 @@
+uGet 2.2.1: (2018-03-08)
+1. reduce memory usage.
+2. mega plug-in: completed size should not be '-1' if file size > 2G on a 32-bit system.
+3. adjust speed limit independently without enabling global speed limit.
+4. Fix: Can't get 1080p video from YouTube.
+5. update translation files.
+
 uGet 2.2.0: (2018-01-06)
 1. mega plug-in: create new plug-in for MEGA site.
 2. all plug-in: avoid crash if plug-in failed to start.
