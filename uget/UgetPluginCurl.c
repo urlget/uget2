@@ -341,6 +341,7 @@ static int  plugin_sync(UgetPluginCurl* plugin, UgData* data)
 	if (plugin->common->max_upload_speed   != common->max_upload_speed ||
 		plugin->common->max_download_speed != common->max_download_speed)
 	{
+		// speed control
 		plugin->common->max_upload_speed   = common->max_upload_speed;
 		plugin->common->max_download_speed = common->max_download_speed;
 		speed[1] = common->max_upload_speed;
@@ -423,6 +424,7 @@ static int  plugin_accept(UgetPluginCurl* plugin, UgData* data)
 		UgetHttp*    http;
 		UgetFtp*     ftp;
 	} temp;
+	int  speed[2];
 
 	temp.common = ug_data_get(data, UgetCommonInfo);
 	if (temp.common == NULL || temp.common->uri == NULL)
@@ -430,6 +432,10 @@ static int  plugin_accept(UgetPluginCurl* plugin, UgData* data)
 	plugin->common = ug_group_data_copy(temp.common);
 	plugin_decide_uris(plugin);
 	plugin_decide_folder(plugin);
+	// speed control: decide speed limit before starting plug-in
+	speed[0] = plugin->limit.download;
+	speed[1] = plugin->limit.upload;
+	plugin_ctrl_speed(plugin, speed);
 
 	temp.files = ug_data_get(data, UgetFilesInfo);
 	if (temp.files)
