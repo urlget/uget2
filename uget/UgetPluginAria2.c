@@ -457,6 +457,7 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgData* data)
 	if (plugin->limit_upper[1] != temp.common->max_upload_speed ||
 		plugin->limit_upper[0] != temp.common->max_download_speed)
 	{
+		// speed control
 		plugin->limit_upper[1] = temp.common->max_upload_speed;
 		plugin->limit_upper[0] = temp.common->max_download_speed;
 		plugin_ctrl_speed(plugin, plugin->limit_upper);
@@ -946,10 +947,6 @@ static int  plugin_accept(UgetPluginAria2* plugin, UgData* data)
 	else if (plugin->uri_part.scheme_len == 6 && strncmp(uri, "magnet", 6) == 0)
 		plugin->uri_type = URI_MAGNET;
 
-	// speed limit control
-	plugin->limit_upper[1] = temp.common->max_upload_speed;
-	plugin->limit_upper[0] = temp.common->max_download_speed;
-
 	request = uget_aria2_alloc(global.data, TRUE, TRUE);
 	if (request->params.type == UG_VALUE_NONE)
 		ug_value_init_array(&request->params, 3);
@@ -1034,6 +1031,11 @@ static int  plugin_accept(UgetPluginAria2* plugin, UgData* data)
 	member->name = "max-tries";
 	member->type = UG_VALUE_STRING;
 	member->c.string = ug_strdup_printf("%u", temp.common->retry_limit);
+
+	// speed control: decide speed limit before starting plug-in
+	plugin->limit_upper[1] = temp.common->max_upload_speed;
+	plugin->limit_upper[0] = temp.common->max_download_speed;
+	plugin_ctrl_speed(plugin, plugin->limit);
 
 	member = ug_value_alloc(value, 1);
 	member->name = "max-download-limit";
