@@ -225,6 +225,10 @@ void  ug_json_write_entry(UgJson* json, void* src, const UgEntry* entry)
 			break;
 
 		case UG_ENTRY_ARRAY:
+			// Don't output if no UgJsonWriteFunc in entry->param2.
+			if (entry->param2 == NULL)
+				break;
+
 			if (entry->name)
 				ug_json_write_string(json, entry->name);
 			ug_json_write_array_head(json);
