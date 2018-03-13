@@ -365,12 +365,14 @@ struct UgetRelation
 	} destroy;
 
 	// used by user application
+	/*
 	struct {
 		void*  pointer;
 		void*  storage;
 		void*  position;
 		void*  data[4];
 	} user;
+	*/
 };
 
 /* ----------------------------------------------------------------------------
