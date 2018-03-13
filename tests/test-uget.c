@@ -532,6 +532,7 @@ void test_files(void)
 	element = uget_files_realloc(files, "0.mp4");
 	element = uget_files_realloc(files, "1.mp4");
 	element = uget_files_realloc(files, "2.mp4");
+	element = uget_files_realloc(files, "xyz.mp4");
 
 	test_files_json(files);
 

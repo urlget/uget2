@@ -870,10 +870,8 @@ static int  delete_files(UgetFiles* files, int has_temp_file)
 {
 	UgetFile* file1;
 	int  n_error;
-	int  index;
 
-	for (n_error = 0, index = 0;  index < files->collection.length;  index++) {
-		file1 = files->collection.at + index;
+	for (n_error = 0, file1 = (UgetFile*)files->list.head;  file1;  file1 = file1->next) {
 		if (file1->state & UGET_FILE_STATE_DELETED)
 			continue;
 

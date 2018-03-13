@@ -38,8 +38,8 @@
 #define UGET_FILES_H
 
 #include <stdint.h>
+#include <UgList.h>
 #include <UgGroupData.h>
-#include <UgArray.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,7 +47,6 @@ extern "C" {
 
 typedef struct  UgetFile       UgetFile;
 typedef struct  UgetFiles      UgetFiles;
-typedef UG_ARRAY(UgetFile)     UgetFileCollection;
 
 extern const UgGroupDataInfo*  UgetFilesInfo;
 
@@ -75,11 +74,16 @@ enum UgetFileState
 };
 
 // ----------------------------------------------------------------------------
-// UgetFile: Element of UgetFileCollection
+// UgetFile: file information with list link
 
 struct UgetFile
 {
-	char*   path;    // relative file path, It must be first member.
+	UG_LINK_MEMBERS(UgetFile, char, path);
+/*	// ------ UgLink members ------
+	char*       path;    // absolute file path
+	UgetFile*   next;
+	UgetFile*   prev;
+ */
 
 	int16_t type;    // UgetFileType
 	int16_t state;   // UgetFileState
@@ -91,6 +95,9 @@ struct UgetFile
 	int64_t total;
 	int64_t complete;
 };
+
+UgetFile*  uget_file_new(void);
+void       uget_file_free(UgetFile* file);
 
 /* ----------------------------------------------------------------------------
    UgetFiles: It derived from UgGroupData and store in UgData.
@@ -107,9 +114,9 @@ struct UgetFiles
 	UG_GROUP_DATA_MEMBERS;
 //	const UgGroupDataInfo*  info;    // UgGroupData(UgType) member
 
-	UgetFileCollection collection;
+	UgList  list;
 
-	int   sync_count;
+	int     sync_count;
 };
 
 int   uget_files_assign(UgetFiles* files, UgetFiles* src);
@@ -122,11 +129,13 @@ void  uget_files_clear(UgetFiles* files);
 // return TRUE if 'files' have added or removed elements.
 int   uget_files_sync(UgetFiles* files, UgetFiles* src);
 
+UgetFile* uget_files_find(UgetFiles* files, const char* path,
+                          UgetFile** sibling);
+
 // realloc struct UgetFile by 'path' in array.
 UgetFile* uget_files_realloc(UgetFiles* files, const char* path);
 
-UgetFile* uget_files_replace(UgetFiles*  files,
-                             const char* path,
+UgetFile* uget_files_replace(UgetFiles* files, const char* path,
                              int type, int state);
 
 // apply state to element if type is matched.

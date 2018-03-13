@@ -58,6 +58,7 @@ void  download_by_plugin(UgData* data, const UgetPluginInfo* pinfo)
 {
 	UgetCommon*   common;
 	UgetFiles*    files;
+	UgetFile*     file1;
 	UgetPlugin*   plugin;
 	UgetEvent*    events;
 	UgetEvent*    cur;
@@ -112,9 +113,8 @@ void  download_by_plugin(UgData* data, const UgetPluginInfo* pinfo)
 	       common->name, common->uri, common->file);
 	// print children
 	files = ug_data_realloc(data, UgetFilesInfo);
-	for (index=0; index < files->collection.length; index++) {
-		printf("file name : %s\n", files->collection.at[index].path);
-	}
+	for (file1 = (UgetFile*)files->list.head;  file1;  file1 = file1->next)
+		printf("file name : %s\n", file1->path);
 
 	uget_plugin_unref(plugin);
 }

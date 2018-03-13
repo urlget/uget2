@@ -412,6 +412,7 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgData* data)
 	int          index;
 	UgetEvent*   event;
 	UgetFiles*   files;
+	UgetFile*    file1;
 	struct {
 		UgetCommon*      common;
 		UgetProgress*    progress;
@@ -470,13 +471,14 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgData* data)
 	uget_plugin_unlock(plugin);
 
 	// change name.
-	if (files->collection.length > 0 &&
+	if (files->list.size > 0 &&
 	    plugin->named == FALSE && plugin->files_per_gid > 0)
 	{
 		plugin->named  = TRUE;
 		if (plugin->uri_type == URI_NET && temp.common->file == NULL) {
 			uget_plugin_lock(plugin);
-			ug_uri_init(&plugin->uri_part, files->collection.at[0].path);
+			file1 = (UgetFile*) plugin->files->list.head;
+			ug_uri_init(&plugin->uri_part, file1->path);
 			uget_plugin_unlock(plugin);
 			index = plugin->uri_part.file;
 			if (index != -1) {
@@ -528,7 +530,8 @@ static int  plugin_sync(UgetPluginAria2* plugin, UgData* data)
 				ug_free(temp.common->uri);
 				ug_free(temp.common->name);
 				ug_free(temp.common->file);
-				temp.common->uri  = ug_strdup(plugin->files->collection.at[0].path);
+				file1 = (UgetFile*) plugin->files->list.head;
+				temp.common->uri  = ug_strdup(file1->path);
 				temp.common->name = uget_name_from_uri_str(temp.common->uri);
 				temp.common->file = NULL;
 #ifndef NDEBUG
