@@ -357,22 +357,6 @@ struct UgetRelation
 		int          speed[2];   // current speed
 		int          limit[2];   // current speed limit
 	} task;
-
-	// call destroy.func(destroy.data) when destroying.
-	struct {
-		UgNotifyFunc func;
-		void*        data;
-	} destroy;
-
-	// used by user application
-	/*
-	struct {
-		void*  pointer;
-		void*  storage;
-		void*  position;
-		void*  data[4];
-	} user;
-	*/
 };
 
 /* ----------------------------------------------------------------------------
