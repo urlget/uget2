@@ -242,21 +242,14 @@ void  uget_node_filter_sorted (UgetNode* node, UgetNode* sibling, UgetNode* chil
 /*
                uget_node_filter_split()
                          v
-  ,-----------.      ,--------.         ,-------------------------------.
-  | real node | ---> | filter | --+---> | fake node (UGET_GROUP_ACTIVE) |
-  `-----------'      `--------'   |     `-------------------------------'
+  ,-----------.      ,--------.
+  | real node | ---> | filter | --+---> fake node (UGET_GROUP_ACTIVE)
+  `-----------'      `--------'   |
+                                  +---> fake node (UGET_GROUP_QUEUING)
                                   |
-                                  |     ,--------------------------------.
-                                  +---> | fake node (UGET_GROUP_QUEUING) |
-                                  |     `--------------------------------'
+                                  +---> fake node (UGET_GROUP_FINISHED)
                                   |
-                                  |     ,---------------------------------.
-                                  +---> | fake node (UGET_GROUP_FINISHED) |
-                                  |     `---------------------------------'
-                                  |
-                                  |     ,---------------------------------.
-                                  `---> | fake node (UGET_GROUP_RECYCLED) |
-                                        `---------------------------------'
+                                  `---> fake node (UGET_GROUP_RECYCLED)
 
  * helper functions for uget_node_filter_split(), uget_node_filter_mix_split()
    uget_node_get_split() use 'group' (UgetGroup) to find fake node.

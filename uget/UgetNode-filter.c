@@ -37,6 +37,16 @@
 #include <UgetNode.h>
 #include <UgetData.h>
 
+#define N_SPLIT_GROUPS      4
+
+static int   split_groups[N_SPLIT_GROUPS] =
+{
+	UGET_GROUP_ACTIVE,
+	UGET_GROUP_QUEUING,
+	UGET_GROUP_FINISHED,
+	UGET_GROUP_RECYCLED,
+};
+
 // ----------------------------------------------------------------------------
 // callback functions for UgetNode.control.filter
 
@@ -49,18 +59,10 @@ void  uget_node_filter_split (UgetNode* node, UgetNode* sibling, UgetNode* child
 
 	if (node->parent == NULL) {
 		// node is root. child_real is category
-		//
-		child = uget_node_new (child_real);
-		uget_node_prepend (node, child);
-		//
-		child = uget_node_new (child_real);
-		uget_node_prepend (node, child);
-		//
-		child = uget_node_new (child_real);
-		uget_node_prepend (node, child);
-		//
-		child = uget_node_new (child_real);
-		uget_node_prepend (node, child);
+		for (group=0;  group < N_SPLIT_GROUPS;  group++) {
+			child = uget_node_new (child_real);
+			uget_node_prepend (node, child);
+		}
 	}
 	else if (node->parent->parent == NULL) {
 		// node is category. child_real is download
@@ -207,15 +209,6 @@ void  uget_node_filter_mix_split (UgetNode* node, UgetNode* sibling, UgetNode* c
 
 // ----------------------------------------------------------------------------
 // helper functions for uget_node_filter_split(), uget_node_filter_mix_split()
-#define UGET_NODE_N_GROUP    4
-
-static int   nth2group[UGET_NODE_N_GROUP] =
-{
-	UGET_GROUP_ACTIVE,
-	UGET_GROUP_QUEUING,
-	UGET_GROUP_FINISHED,
-	UGET_GROUP_RECYCLED,
-};
 
 UgetNode* uget_node_get_split(UgetNode* node, int group)
 {
@@ -227,7 +220,7 @@ UgetNode* uget_node_get_split(UgetNode* node, int group)
 		if (filter == uget_node_filter_split ||
 		    filter == uget_node_filter_mix_split)
 		{
-			if (nth2group[nth] & group)
+			if (split_groups[nth] & group)
 				return node;
 			nth++;  // must place here
 		}
@@ -249,7 +242,7 @@ int   uget_node_get_group(UgetNode* node)
 		    filter == uget_node_filter_mix_split)
 		{
 			if (fake == node)
-				return nth2group[nth];
+				return split_groups[nth];
 			nth++;  // must place here
 		}
 	}
