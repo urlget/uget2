@@ -56,12 +56,21 @@ static UgJsonError  ug_json_parse_name2data (UgJson* json,
 // ----------------------------------------------------------------------------
 // UgetNode
 
-static struct UgetNodeControl  control = {
-	NULL,                   // struct UgetNodeControl*  children;
-	{NULL, NULL, NULL},     // struct UgetNodeNotifier  notifier;
-	{NULL, FALSE},          // struct UgetNodeSort      sort;
-	NULL,                   // UgetNodeFunc             filter;
-	NULL                    // void*                    data;
+struct UgetNodeNotifier  uget_node_default_notifier =
+{
+	NULL,   // UgetNodeFunc    inserted;
+	NULL,   // UgetNodeFunc    removed;
+	NULL,   // UgNotifyFunc    updated;
+	NULL,   // void*           data;      // extra data for user
+};
+
+static struct UgetNodeControl  control =
+{
+	NULL,                           // struct UgetNodeControl*  children;
+	&uget_node_default_notifier,    // struct UgetNodeNotifier  notifier;
+	{NULL, FALSE},                  // struct UgetNodeSort      sort;
+	NULL,                           // UgetNodeFunc             filter;
+	NULL                            // void*                    data;
 };
 
 const UgEntry  UgetNodeEntry[] =
@@ -196,7 +205,7 @@ void  uget_node_insert (UgetNode* node, UgetNode* sibling, UgetNode* child)
 	ug_node_insert ((UgNode*) node, (UgNode*) sibling, (UgNode*) child);
 	child->control = node->control;
 
-	inserted = node->control->notifier.inserted;
+	inserted = node->control->notifier->inserted;
 	if (inserted)
 		inserted (node, sibling, child);
 
@@ -226,7 +235,7 @@ static void  uget_node_unlink_fake_parent (UgetNode* child)
 		sibling = child->next;
 		ug_node_remove ((UgNode*) parent, (UgNode*) child);
 		// notify
-		removed = parent->control->notifier.removed;
+		removed = parent->control->notifier->removed;
 		if (removed)
 			removed (parent, sibling, child);
 	}
@@ -242,7 +251,7 @@ void  uget_node_remove (UgetNode* node, UgetNode* child)
 	uget_node_unlink_fake_parent (child);
 	uget_node_unlink_children_real (child);
 
-	removed = node->control->notifier.removed;
+	removed = node->control->notifier->removed;
 	if (removed)
 		removed (node, sibling, child);
 }
@@ -254,7 +263,7 @@ void  uget_node_append (UgetNode* node, UgetNode* child)
 	ug_node_append ((UgNode*) node, (UgNode*) child);
 	child->control = node->control;
 
-	inserted = node->control->notifier.inserted;
+	inserted = node->control->notifier->inserted;
 	if (inserted)
 		inserted (node, NULL, child);
 
@@ -270,7 +279,7 @@ void  uget_node_prepend (UgetNode* node, UgetNode* child)
 	ug_node_prepend ((UgNode*) node, (UgNode*) child);
 	child->control = node->control;
 
-	inserted = node->control->notifier.inserted;
+	inserted = node->control->notifier->inserted;
 	if (inserted)
 		inserted (node, sibling, child);
 
@@ -456,7 +465,7 @@ void  uget_node_updated (UgetNode* node)
 {
 	UgNotifyFunc updated;
 
-	updated = node->control->notifier.updated;
+	updated = node->control->notifier->updated;
 	if (updated)
 		updated (node);
 	// update fake node

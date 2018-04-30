@@ -128,6 +128,8 @@ struct UgetNodeNotifier
 	UgNotifyFunc    updated;
 
 //	UgNotifyFunc    destroy;
+
+	void*           data;      // extra data for user
 };
 
 struct UgetNodeSort
@@ -139,15 +141,16 @@ struct UgetNodeSort
 struct UgetNodeControl
 {
 	struct UgetNodeControl*  children;  // control of children node
-	struct UgetNodeNotifier  notifier;
+	struct UgetNodeNotifier* notifier;
 	struct UgetNodeSort      sort;
 
 	// filter child of real node and decide how to insert child of fake node.
 	// If real node inserted a child node, all fake nodes call this to filter.
 	UgetNodeFunc             filter;
-
-	void*                    data;      // extra data for user
 };
+
+extern struct UgetNodeNotifier  uget_node_default_notifier;
+
 
 struct UgetNode
 {

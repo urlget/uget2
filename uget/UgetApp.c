@@ -63,56 +63,56 @@
 
 static struct UgetNodeControl  control_real =
 {
-	NULL,                       // struct UgetNodeControl*  children;
-	{NULL, NULL, NULL},         // struct UgetNodeNotifier  notifier;
-	{NULL, FALSE},              // struct UgetNodeSort      sort;
-	NULL,                       // UgetNodeFunc             filter;
-	NULL                        // void*                    data;
+	NULL,                           // struct UgetNodeControl*  children;
+	&uget_node_default_notifier,    // struct UgetNodeNotifier  notifier;
+	{NULL, FALSE},                  // struct UgetNodeSort      sort;
+	NULL,                           // UgetNodeFunc             filter;
+	NULL                            // void*                    data;
 };
 
 static struct UgetNodeControl  control_split =
 {
-	NULL,                       // struct UgetNodeControl*  children;
-	{NULL, NULL, NULL},         // struct UgetNodeNotifier  notifier;
-	{NULL, FALSE},              // struct UgetNodeSort      sort;
-	uget_node_filter_split,     // UgetNodeFunc             filter;
-	NULL                        // void*                    data;
+	NULL,                           // struct UgetNodeControl*  children;
+	&uget_node_default_notifier,    // struct UgetNodeNotifier  notifier;
+	{NULL, FALSE},                  // struct UgetNodeSort      sort;
+	uget_node_filter_split,         // UgetNodeFunc             filter;
+	NULL                            // void*                    data;
 };
 
 static struct UgetNodeControl  control_sorted =
 {
-	NULL,                       // struct UgetNodeControl*  children;
-	{NULL, NULL, NULL},         // struct UgetNodeNotifier  notifier;
-	{NULL, FALSE},              // struct UgetNodeSort      sort;
-	uget_node_filter_sorted,    // UgetNodeFunc             filter;
-	NULL                        // void*                    data;
+	NULL,                           // struct UgetNodeControl*  children;
+	&uget_node_default_notifier,    // struct UgetNodeNotifier  notifier;
+	{NULL, FALSE},                  // struct UgetNodeSort      sort;
+	uget_node_filter_sorted,        // UgetNodeFunc             filter;
+	NULL                            // void*                    data;
 };
 
 static struct UgetNodeControl  control_sorted_split =
 {
-	NULL,                       // struct UgetNodeControl*  children;
-	{NULL, NULL, NULL},         // struct UgetNodeNotifier  notifier;
-	{NULL, FALSE},              // struct UgetNodeSort      sort;
-	uget_node_filter_split,     // UgetNodeFunc             filter;
-	NULL                        // void*                    data;
+	NULL,                           // struct UgetNodeControl*  children;
+	&uget_node_default_notifier,    // struct UgetNodeNotifier  notifier;
+	{NULL, FALSE},                  // struct UgetNodeSort      sort;
+	uget_node_filter_split,         // UgetNodeFunc             filter;
+	NULL                            // void*                    data;
 };
 
 static struct UgetNodeControl  control_mix =
 {
-	NULL,                       // struct UgetNodeControl*  children;
-	{NULL, NULL, NULL},         // struct UgetNodeNotifier  notifier;
-	{NULL, FALSE},              // struct UgetNodeSort      sort;
-	uget_node_filter_mix,       // UgetNodeFunc             filter;
-	NULL                        // void*                    data;
+	NULL,                           // struct UgetNodeControl*  children;
+	&uget_node_default_notifier,    // struct UgetNodeNotifier  notifier;
+	{NULL, FALSE},                  // struct UgetNodeSort      sort;
+	uget_node_filter_mix,           // UgetNodeFunc             filter;
+	NULL                            // void*                    data;
 };
 
 static struct UgetNodeControl  control_mix_split =
 {
-	NULL,                       // struct UgetNodeControl*  children;
-	{NULL, NULL, NULL},         // struct UgetNodeNotifier  notifier;
-	{NULL, FALSE},              // struct UgetNodeSort      sort;
-	uget_node_filter_mix_split, // UgetNodeFunc             filter;
-	NULL                        // void*                    data;
+	NULL,                           // struct UgetNodeControl*  children;
+	&uget_node_default_notifier,    // struct UgetNodeNotifier  notifier;
+	{NULL, FALSE},                  // struct UgetNodeSort      sort;
+	uget_node_filter_mix_split,     // UgetNodeFunc             filter;
+	NULL                            // void*                    data;
 };
 
 
@@ -415,35 +415,10 @@ void  uget_app_set_notification (UgetApp* app, void* data,
                                  UgetNodeFunc removed,
                                  UgNotifyFunc updated)
 {
-	control_real.notifier.inserted = inserted;
-	control_real.notifier.removed  = removed;
-	control_real.notifier.updated  = updated;
-	control_real.data              = data;
-
-	control_split.notifier.inserted = inserted;
-	control_split.notifier.removed  = removed;
-	control_split.notifier.updated  = updated;
-	control_split.data              = data;
-
-	control_sorted.notifier.inserted = inserted;
-	control_sorted.notifier.removed  = removed;
-	control_sorted.notifier.updated  = updated;
-	control_sorted.data              = data;
-
-	control_sorted_split.notifier.inserted = inserted;
-	control_sorted_split.notifier.removed  = removed;
-	control_sorted_split.notifier.updated  = updated;
-	control_sorted_split.data              = data;
-
-	control_mix.notifier.inserted = inserted;
-	control_mix.notifier.removed  = removed;
-	control_mix.notifier.updated  = updated;
-	control_mix.data              = data;
-
-	control_mix_split.notifier.inserted = inserted;
-	control_mix_split.notifier.removed  = removed;
-	control_mix_split.notifier.updated  = updated;
-	control_mix_split.data              = data;
+	uget_node_default_notifier.inserted = inserted;
+	uget_node_default_notifier.removed  = removed;
+	uget_node_default_notifier.updated  = updated;
+	uget_node_default_notifier.data     = data;
 }
 
 void  uget_app_add_category (UgetApp* app, UgetNode* cnode, int save_file)

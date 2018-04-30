@@ -482,7 +482,7 @@ static void node_inserted (UgetNode* node, UgetNode* sibling, UgetNode* child)
 	GtkTreeIter  iter;
 	UgtkApp*     app;
 
-	app = node->control->data;
+	app = node->control->notifier->data;
 	if (node == (UgetNode*) app->traveler.category.model->root) {
 		// category inserted
 		path = gtk_tree_path_new_from_indices (
@@ -513,7 +513,7 @@ static void node_removed (UgetNode* node, UgetNode* sibling, UgetNode* child)
 	UgtkApp*     app;
 	int          pos;
 
-	app = node->control->data;
+	app = node->control->notifier->data;
 	if (node == (UgetNode*) app->traveler.category.model->root) {
 		// category removed
 		if (sibling)
@@ -549,7 +549,7 @@ static void node_updated (UgetNode* child)
 	UgtkApp*     app;
 
 	node = child->parent;
-	app = node->control->data;
+	app = node->control->notifier->data;
 	if (node == (UgetNode*) app->traveler.category.model->root) {
 		// category changed
 		path = gtk_tree_path_new_from_indices (
