@@ -66,7 +66,7 @@ struct UgetNodeNotifier  uget_node_default_notifier =
 
 struct UgetNodeControl   uget_node_default_control =
 {
-	NULL,                           // struct UgetNodeControl*  children;
+//	NULL,                           // struct UgetNodeControl*  children;
 	&uget_node_default_notifier,    // struct UgetNodeNotifier  notifier;
 	{NULL, FALSE},                  // struct UgetNodeSort      sort;
 	NULL,                           // UgetNodeFunc             filter;
@@ -204,6 +204,7 @@ void  uget_node_insert (UgetNode* node, UgetNode* sibling, UgetNode* child)
 
 	ug_node_insert ((UgNode*) node, (UgNode*) sibling, (UgNode*) child);
 	child->control = node->control;
+//	child->control = node->control->children;
 
 	inserted = node->control->notifier->inserted;
 	if (inserted)
@@ -262,6 +263,7 @@ void  uget_node_append (UgetNode* node, UgetNode* child)
 
 	ug_node_append ((UgNode*) node, (UgNode*) child);
 	child->control = node->control;
+//	child->control = node->control->children;
 
 	inserted = node->control->notifier->inserted;
 	if (inserted)
@@ -278,6 +280,7 @@ void  uget_node_prepend (UgetNode* node, UgetNode* child)
 	sibling = node->children;
 	ug_node_prepend ((UgNode*) node, (UgNode*) child);
 	child->control = node->control;
+//	child->control = node->control->children;
 
 	inserted = node->control->notifier->inserted;
 	if (inserted)

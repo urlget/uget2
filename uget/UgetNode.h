@@ -140,7 +140,7 @@ struct UgetNodeSort
 
 struct UgetNodeControl
 {
-	struct UgetNodeControl*  children;  // control of children node
+//	struct UgetNodeControl*  children;  // control of children node
 	struct UgetNodeNotifier* notifier;
 	struct UgetNodeSort      sort;
 
