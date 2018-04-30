@@ -64,7 +64,7 @@ struct UgetNodeNotifier  uget_node_default_notifier =
 	NULL,   // void*           data;      // extra data for user
 };
 
-static struct UgetNodeControl  control =
+struct UgetNodeControl   uget_node_default_control =
 {
 	NULL,                           // struct UgetNodeControl*  children;
 	&uget_node_default_notifier,    // struct UgetNodeNotifier  notifier;
@@ -107,7 +107,7 @@ void  uget_node_init  (UgetNode* node, UgetNode* node_real)
 {
 	memset (node, 0, sizeof (UgetNode));
 
-	node->control = &control;
+	node->control = &uget_node_default_control;
 
 	if (node_real == NULL) {
 		node->base = node;    // pointer to self

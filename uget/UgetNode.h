@@ -149,6 +149,7 @@ struct UgetNodeControl
 	UgetNodeFunc             filter;
 };
 
+extern struct UgetNodeControl   uget_node_default_control;
 extern struct UgetNodeNotifier  uget_node_default_notifier;
 
 
