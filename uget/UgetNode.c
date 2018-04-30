@@ -67,10 +67,9 @@ struct UgetNodeNotifier  uget_node_default_notifier =
 struct UgetNodeControl   uget_node_default_control =
 {
 //	NULL,                           // struct UgetNodeControl*  children;
-	&uget_node_default_notifier,    // struct UgetNodeNotifier  notifier;
+	&uget_node_default_notifier,    // struct UgetNodeNotifier* notifier;
 	{NULL, FALSE},                  // struct UgetNodeSort      sort;
 	NULL,                           // UgetNodeFunc             filter;
-	NULL                            // void*                    data;
 };
 
 const UgEntry  UgetNodeEntry[] =
