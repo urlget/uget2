@@ -313,6 +313,7 @@ int   ug_file_is_dir (const char* dir)
 
 #endif // _WIN32 || _WIN64
 
+#ifndef USE__ANDROID__SAF
 int  ug_create_dir_all (const char* dir, int len)
 {
 	const char*   dir_end;
@@ -363,6 +364,7 @@ int  ug_create_dir_all (const char* dir, int len)
 	}
 	return -1;
 }
+#endif  // USE__ANDROID__SAF
 
 // ----------------------------------------------------------------------------
 // File I/O
