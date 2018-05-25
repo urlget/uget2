@@ -1,4 +1,4 @@
-AUTOMAKE_OPTIONS = subdir-objects
+AUTOMAKE_OPTIONS = subdir-objects no-dependencies
 
 bin_PROGRAMS = uget-gtk-1to2
 

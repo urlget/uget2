@@ -2,6 +2,8 @@
 ## add `getconf LFS_CFLAGS`  to CFLAGS
 ## add `getconf LFS_LDFLAGS` to LDFLAGS
 
+AUTOMAKE_OPTIONS = no-dependencies
+
 ## static library ---
 
 #  lib_LIBRARIES = libuglib.a
