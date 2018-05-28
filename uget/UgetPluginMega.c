@@ -87,7 +87,7 @@
 
 enum
 {
-	MEGA_UNKNOWN,
+	MEGA_INVALID,
 	MEGA_FOLDER,
 	MEGA_FILE,
 };
@@ -394,7 +394,7 @@ static int  is_downloaded(UgetPluginMega* plugin, UgetCommon* target_common)
 // ----------------------------------------------------------------------------
 // MEGA site
 
-static void xor_(uint8_t* dest, uint8_t* src1, uint8_t* src2, int length)
+static void xor_n(uint8_t* dest, uint8_t* src1, uint8_t* src2, int length)
 {
 	for (; length > 0;  length--)
 		*dest++ = *src1++ ^ *src2++;
@@ -404,23 +404,27 @@ static int  mega_parse_url(UgetPluginMega* plugin, const char* url)
 {
 	uint8_t* binary_key;
 	int      length;
+	int      result;
 
 	plugin->id = strchr(url, '!');
-	if (plugin->id != NULL) {
-		// folder
+	if (plugin->id == NULL)
+		return MEGA_INVALID;
+	else {
+		// folder or file
 		if (plugin->id != url && *(plugin->id-1) == 'F')
-			return MEGA_FOLDER;
-		// file
+			result = MEGA_FOLDER;
+		else
+			result = MEGA_FILE;
 		plugin->id++;
-		if (plugin->id[0] == 0)
-			return MEGA_UNKNOWN;
 	}
 
 	plugin->key = strchr(plugin->id, '!');
-	if (plugin->key != NULL) {
+	if (plugin->key == NULL)
+		return MEGA_INVALID;
+	else {
 		plugin->key++;
 		if (plugin->key[0] == 0)
-			return MEGA_UNKNOWN;
+			return MEGA_INVALID;
 	}
 
 	// copy string from URL
@@ -432,19 +436,21 @@ static int  mega_parse_url(UgetPluginMega* plugin, const char* url)
 	ug_str_remove_chars(plugin->key, plugin->key, "\n");
 
 	binary_key = ug_base64_decode(plugin->key, strlen(plugin->key), &length);
-	if (length < 32) {
-		ug_free(binary_key);
-		return MEGA_UNKNOWN;
-	}
-
 	plugin->key = ug_realloc(plugin->key, 16);
-	xor_((uint8_t*)plugin->key+0, binary_key+0, binary_key+16, 8);
-	xor_((uint8_t*)plugin->key+8, binary_key+8, binary_key+24, 8);
+	if (length == 16)
+		memcpy(plugin->key, binary_key, 16);
+	else if (length == 32)
+		xor_n((uint8_t*)plugin->key, binary_key, binary_key+16, 16);
+	else {
+		// "Invalid key, please verify your MEGA URL."
+		ug_free(binary_key);
+		return MEGA_INVALID;
+	}
 
 	plugin->iv = ug_malloc(16);
 	memcpy(plugin->iv, binary_key+16, 8);
 	memset(plugin->iv+8, 0, 8);
-	return MEGA_FILE;
+	return result;
 }
 
 // ------------------------------------
@@ -536,7 +542,7 @@ static int  mega_parse_attributes(UgetPluginMega* plugin, char* attributes)
 }
 
 // ------------------------------------
-// MEGA result
+// MEGA file info result
 
 // [-9] = doesn't exist?
 //
