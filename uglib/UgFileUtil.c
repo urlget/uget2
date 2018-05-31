@@ -354,8 +354,8 @@ int  ug_create_dir_all (const char* dir, int len)
 
 		if (element_os == NULL)
 			break;
-		if (ug_create_dir (element_os) == -1) {
-			if (ug_file_is_exist (element_os) == FALSE) {
+		if (ug_file_is_exist (element_os) == FALSE) {
+			if (ug_create_dir (element_os) == -1) {
 				ug_free (element_os);
 				return -1;
 			}
