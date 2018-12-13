@@ -18,8 +18,8 @@ LOCAL_SRC_FILES  := \
 	UgOption.c  \
 	UgUri.c  \
 	UgNode.c  \
-	UgGroupData.c  \
 	UgData.c  \
+	UgInfo.c  \
 	UgRegistry.c  \
 	UgValue.c  \
 	UgEntry.c  \

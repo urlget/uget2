@@ -151,14 +151,14 @@ void  ugtk_category_form_init (UgtkCategoryForm* cform)
 	gtk_widget_show_all (GTK_WIDGET (top_grid));
 }
 
-void  ugtk_category_form_get (UgtkCategoryForm* cform, UgData* cnode_data)
+void  ugtk_category_form_get (UgtkCategoryForm* cform, UgInfo* cnode_info)
 {
 	UgetCategory*  category;
 	UgetCommon*    common;
 	const gchar*   text;
 
-	category = ug_data_realloc(cnode_data, UgetCategoryInfo);
-	common   = ug_data_realloc(cnode_data, UgetCommonInfo);
+	category = ug_info_realloc(cnode_info, UgetCategoryInfo);
+	common   = ug_info_realloc(cnode_info, UgetCommonInfo);
 	if (gtk_widget_is_sensitive (cform->name_entry) == TRUE) {
 		text = gtk_entry_get_text ((GtkEntry*) cform->name_entry);
 		ug_free(common->name);
@@ -189,14 +189,14 @@ void  ugtk_category_form_get (UgtkCategoryForm* cform, UgData* cnode_data)
 			&category->file_exts);
 }
 
-void  ugtk_category_form_set (UgtkCategoryForm* cform, UgData* cnode_data)
+void  ugtk_category_form_set (UgtkCategoryForm* cform, UgInfo* cnode_info)
 {
 	UgetCommon*    common;
 	UgetCategory*  category;
 	gchar*  str;
 
-	category = ug_data_realloc(cnode_data, UgetCategoryInfo);
-	common   = ug_data_get(cnode_data, UgetCommonInfo);
+	category = ug_info_realloc(cnode_info, UgetCategoryInfo);
+	common   = ug_info_get(cnode_info, UgetCommonInfo);
 	if (gtk_widget_is_sensitive (cform->name_entry) == TRUE) {
 		gtk_entry_set_text ((GtkEntry*) cform->name_entry,
 				(common->name) ? common->name : "");

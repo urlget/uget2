@@ -445,7 +445,7 @@ static void on_open_download_file (GtkWidget* widget, UgtkApp* app)
 	node = app->traveler.download.cursor.node;
 	if (node == NULL)
 		return;
-	common = ug_data_get (node->data, UgetCommonInfo);
+	common = ug_info_get (node->info, UgetCommonInfo);
 	if (common == NULL || common->folder == NULL || common->file == NULL)
 		return;
 
@@ -474,7 +474,7 @@ static void on_open_download_folder (GtkWidget* widget, UgtkApp* app)
 	node = app->traveler.download.cursor.node;
 	if (node == NULL)
 		return;
-	common = ug_data_get (node->data, UgetCommonInfo);
+	common = ug_info_get (node->info, UgetCommonInfo);
 	if (common == NULL || common->folder == NULL)
 		return;
 
@@ -638,7 +638,7 @@ static void on_set_download_prioriy (GtkWidget* widget, UgtkApp* app)
 	for (link = list;  link;  link = link->next) {
 		node = link->data;
 		node = node->base;
-		relation = ug_data_realloc (node->data, UgetRelationInfo);
+		relation = ug_info_realloc (node->info, UgetRelationInfo);
 		relation->task.priority = priority;
 	}
 	g_list_free (list);
@@ -906,7 +906,7 @@ void  ugtk_menubar_sync_category (UgtkMenubar* menubar, UgtkApp* app, gboolean r
 		// add new item
 		for (cnode = app->real.children;  cnode;  cnode = cnode->next) {
 			// create menu item
-			common = ug_data_get(cnode->data, UgetCommonInfo);
+			common = ug_info_get(cnode->info, UgetCommonInfo);
 			if (common && common->name)
 				menu_item = gtk_image_menu_item_new_with_label (common->name);
 			else

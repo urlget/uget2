@@ -143,8 +143,8 @@ struct UgtkDownloadForm
 
 void  ugtk_download_form_init (UgtkDownloadForm* dform, UgtkProxyForm* proxy, GtkWindow* parent);
 
-void  ugtk_download_form_get (UgtkDownloadForm* dform, UgData* data);
-void  ugtk_download_form_set (UgtkDownloadForm* dform, UgData* data, gboolean keep_changed);
+void  ugtk_download_form_get (UgtkDownloadForm* dform, UgInfo* info);
+void  ugtk_download_form_set (UgtkDownloadForm* dform, UgInfo* info, gboolean keep_changed);
 
 void  ugtk_download_form_set_multiple (UgtkDownloadForm* dform, gboolean multiple_mode);
 void  ugtk_download_form_set_folders (UgtkDownloadForm* dform, UgtkSetting* setting);

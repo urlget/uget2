@@ -70,8 +70,8 @@ int   uget_uri_hash_find (void* uuhash, const char* uri);
 void  uget_uri_hash_add (void* uuhash, const char* uri);
 void  uget_uri_hash_remove (void* uuhash, const char* uri);
 
-void  uget_uri_hash_add_download (void* uuhash, UgData* dnode_data);
-void  uget_uri_hash_remove_download (void* uuhash, UgData* dnode_data);
+void  uget_uri_hash_add_download (void* uuhash, UgInfo* dnode_info);
+void  uget_uri_hash_remove_download (void* uuhash, UgInfo* dnode_info);
 
 void  uget_uri_hash_add_category (void* uuhash, UgetNode* cnode);
 void  uget_uri_hash_remove_category (void* uuhash, UgetNode* cnode);

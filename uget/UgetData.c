@@ -84,7 +84,7 @@ static const UgEntry  UgetCommonEntry[] =
 	{NULL}    // null-terminated
 };
 
-static const UgGroupDataInfo  UgetCommonInfoStatic =
+static const UgDataInfo  UgetCommonInfoStatic =
 {
 	"common",              // name
 	sizeof(UgetCommon),    // size
@@ -94,7 +94,7 @@ static const UgGroupDataInfo  UgetCommonInfoStatic =
 	UgetCommonEntry,
 };
 // extern
-const UgGroupDataInfo*  UgetCommonInfo = &UgetCommonInfoStatic;
+const UgDataInfo*  UgetCommonInfo = &UgetCommonInfoStatic;
 
 static void uget_common_init(UgetCommon* common)
 {
@@ -259,7 +259,7 @@ static const UgEntry  UgetProgressEntry[] =
 	{NULL}		// null-terminated
 };
 
-static const UgGroupDataInfo  UgetProgressInfoStatic =
+static const UgDataInfo  UgetProgressInfoStatic =
 {
 	"progress",            // name
 	sizeof(UgetProgress),  // size
@@ -269,7 +269,7 @@ static const UgGroupDataInfo  UgetProgressInfoStatic =
 	UgetProgressEntry,
 };
 // extern
-const UgGroupDataInfo*  UgetProgressInfo = &UgetProgressInfoStatic;
+const UgDataInfo*  UgetProgressInfo = &UgetProgressInfoStatic;
 
 // ----------------------------------------------------------------------------
 // UgetProxy
@@ -310,7 +310,7 @@ static const UgEntry  UgetProxyEntry[] =
 	{NULL},	    // null-terminated
 };
 
-static const UgGroupDataInfo  UgetProxyInfoStatic =
+static const UgDataInfo  UgetProxyInfoStatic =
 {
 	"proxy",            // name
 	sizeof(UgetProxy),  // size
@@ -320,7 +320,7 @@ static const UgGroupDataInfo  UgetProxyInfoStatic =
 	UgetProxyEntry,     // entry
 };
 // extern
-const UgGroupDataInfo*  UgetProxyInfo = &UgetProxyInfoStatic;
+const UgDataInfo*  UgetProxyInfo = &UgetProxyInfoStatic;
 
 static void  uget_proxy_final(UgetProxy* proxy)
 {
@@ -422,7 +422,7 @@ static const UgEntry  UgetHttpEntry[] =
 	{NULL},    // null-terminated
 };
 
-static const UgGroupDataInfo  UgetHttpInfoStatic =
+static const UgDataInfo  UgetHttpInfoStatic =
 {
 	"http",             // name
 	sizeof(UgetHttp),   // size
@@ -432,7 +432,7 @@ static const UgGroupDataInfo  UgetHttpInfoStatic =
 	UgetHttpEntry,      // entry
 };
 // extern
-const UgGroupDataInfo*  UgetHttpInfo = &UgetHttpInfoStatic;
+const UgDataInfo*  UgetHttpInfo = &UgetHttpInfoStatic;
 
 static void  uget_http_init(UgetHttp* http)
 {
@@ -521,7 +521,7 @@ static const UgEntry  UgetFtpEntry[] =
 	{NULL},	    // null-terminated
 };
 
-static const UgGroupDataInfo  UgetFtpInfoStatic =
+static const UgDataInfo  UgetFtpInfoStatic =
 {
 	"ftp",              // name
 	sizeof(UgetFtp),    // size
@@ -531,7 +531,7 @@ static const UgGroupDataInfo  UgetFtpInfoStatic =
 	UgetFtpEntry,       // entry
 };
 // extern
-const UgGroupDataInfo*  UgetFtpInfo = &UgetFtpInfoStatic;
+const UgDataInfo*  UgetFtpInfo = &UgetFtpInfoStatic;
 
 static void  uget_ftp_final(UgetFtp* ftp)
 {
@@ -583,7 +583,7 @@ static const UgEntry  UgetLogEntry[] =
 	{NULL},    // null-terminated
 };
 
-static const UgGroupDataInfo  UgetLogInfoStatic =
+static const UgDataInfo  UgetLogInfoStatic =
 {
 	"log",             // name
 	sizeof(UgetLog),   // size
@@ -593,7 +593,7 @@ static const UgGroupDataInfo  UgetLogInfoStatic =
 	UgetLogEntry,      // entry
 };
 // extern
-const UgGroupDataInfo*  UgetLogInfo = &UgetLogInfoStatic;
+const UgDataInfo*  UgetLogInfo = &UgetLogInfoStatic;
 
 static void  uget_log_final(UgetLog* log)
 {
@@ -655,7 +655,7 @@ static const UgEntry  UgetRelationEntry[] =
 	{NULL}		// null-terminated
 };
 
-static const UgGroupDataInfo  UgetRelationInfoStatic =
+static const UgDataInfo  UgetRelationInfoStatic =
 {
 	"relation",            // name
 	sizeof(UgetRelation),  // size
@@ -665,7 +665,7 @@ static const UgGroupDataInfo  UgetRelationInfoStatic =
 	UgetRelationEntry,
 };
 // extern
-const UgGroupDataInfo*  UgetRelationInfo = &UgetRelationInfoStatic;
+const UgDataInfo*  UgetRelationInfo = &UgetRelationInfoStatic;
 
 static void uget_relation_init(UgetRelation* relation)
 {
@@ -702,7 +702,7 @@ static const UgEntry  UgetCategoryEntry[] =
 	{NULL}		// null-terminated
 };
 
-static const UgGroupDataInfo  UgetCategoryInfoStatic =
+static const UgDataInfo  UgetCategoryInfoStatic =
 {
 	"category",            // name
 	sizeof(UgetCategory),  // size
@@ -712,7 +712,7 @@ static const UgGroupDataInfo  UgetCategoryInfoStatic =
 	UgetCategoryEntry,
 };
 // extern
-const UgGroupDataInfo*  UgetCategoryInfo = &UgetCategoryInfoStatic;
+const UgDataInfo*  UgetCategoryInfo = &UgetCategoryInfoStatic;
 
 static void  uget_category_init(UgetCategory* category)
 {

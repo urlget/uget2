@@ -85,9 +85,9 @@ struct UgetPluginMedia
 	// This plug-in use other plug-in to download files,
 	// so we need extra UgetPlugin and UgData.
 
-	// plugin->target_data is a copy of UgData that store in UgetApp
-	UgData*       target_data;
-	// target_plugin use target_data to download
+	// plugin->target_info is a copy of UgData that store in UgetApp
+	UgInfo*       target_info;
+	// target_plugin use target_info to download
 	UgetPlugin*   target_plugin;
 
 	// speed limit control
@@ -105,7 +105,7 @@ struct UgetPluginMedia
 	uint8_t       named:1;          // change UgetCommon::name by title
 	uint8_t       file_renamed:1;   // downloading filename changed
 
-	// These UgGroupData store in plugin->target_data
+	// These UgData store in plugin->target_info
 	UgetFiles*    target_files;
 	UgetProxy*    target_proxy;
 	UgetCommon*   target_common;

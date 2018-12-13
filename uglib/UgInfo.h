@@ -34,66 +34,66 @@
  *
  */
 
-#ifndef UG_DATA_H
-#define UG_DATA_H
+#ifndef UG_INFO_H
+#define UG_INFO_H
 
 #include <UgArray.h>
+#include <UgData.h>
 #include <UgRegistry.h>
-#include <UgGroupData.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct  UgData      UgData;
+typedef struct  UgInfo      UgInfo;
 
 /* ----------------------------------------------------------------------------
-   This UgRegistry used by UgData.
-   User can only store UgGroupDataInfo in this UgRegistry.
-     key  pointer to UgGroupDataInfo.name
-     data pointer to UgGroupDataInfo
+   This UgRegistry used by UgInfo.
+   User can only store UgDataInfo in this UgRegistry.
+     key  pointer to UgDataInfo.name
+     data pointer to UgDataInfo
  */
 
-UgRegistry*  ug_data_get_registry(void);
-void         ug_data_set_registry(UgRegistry* registry);
+UgRegistry*  ug_info_get_registry(void);
+void         ug_info_set_registry(UgRegistry* registry);
 
 /* ----------------------------------------------------------------------------
-   UgData - collection of UgGroupDataInfo and UgGroupData
-          - It uses UgGroupDataInfo to get/alloc UgGroupData.
-     key  pointer to UgGroupDataInfo
-     data pointer to UgGroupData
+   UgInfo - collection of UgDataInfo and UgData
+          - It uses UgDataInfo to get/alloc UgData.
+     key  pointer to UgDataInfo
+     data pointer to UgData
  */
 
-UgData* ug_data_new(int allocated_length, int cache_length);
-void    ug_data_ref(UgData* data);
-void    ug_data_unref(UgData* data);
+UgInfo* ug_info_new(int allocated_length, int cache_length);
+void    ug_info_ref(UgInfo* info);
+void    ug_info_unref(UgInfo* info);
 
-void    ug_data_init(UgData* data, int allocated_length, int cache_length);
-void    ug_data_final(UgData* data);
+void    ug_info_init(UgInfo* info, int allocated_length, int cache_length);
+void    ug_info_final(UgInfo* info);
 
-// ug_data_get() and ug_data_realloc() return UgGroupData
-// ug_data_set() replace old data by new one. It return old UgGroupData
-void*   ug_data_realloc(UgData* data, const UgGroupDataInfo* key);
-void    ug_data_remove(UgData* data, const UgGroupDataInfo* key);
-void*   ug_data_get(UgData* data, const UgGroupDataInfo* key);
-void*   ug_data_set(UgData* data, const UgGroupDataInfo* key, void* new_group_data);
-UgPair* ug_data_find(UgData* data, const UgGroupDataInfo* key, int* inserted_index);
+// ug_info_get() and ug_info_realloc() return UgData
+// ug_info_set() replace old data by new one. It return old UgData
+void*   ug_info_realloc(UgInfo* info, const UgDataInfo* key);
+void    ug_info_remove(UgInfo* info, const UgDataInfo* key);
+void*   ug_info_get(UgInfo* info, const UgDataInfo* key);
+void*   ug_info_set(UgInfo* info, const UgDataInfo* key, void* new_data);
+UgPair* ug_info_find(UgInfo* info, const UgDataInfo* key, int* inserted_index);
 
-void    ug_data_assign(UgData* data, UgData* src, const UgGroupDataInfo* exclude);
+void    ug_info_assign(UgInfo* info, UgInfo* src, const UgDataInfo* exclude);
 
 // ----------------
 // JSON parser/writer that used with UG_ENTRY_CUSTOM.
 // if 'registry' is NULL, use default registry.
 
-UgJsonError ug_json_parse_data_ptr(UgJson* json,
+UgJsonError ug_json_parse_info_ptr(UgJson* json,
                                const char* name, const char* value,
-                               void** data, void* registry);
-void        ug_json_write_data_ptr(UgJson* json, UgData** data);
+                               void** info, void* registry);
+void        ug_json_write_info_ptr(UgJson* json, UgInfo** info);
 
-UgJsonError ug_json_parse_data(UgJson* json,
+UgJsonError ug_json_parse_info(UgJson* json,
                                const char* name, const char* value,
-                               void* data, void* registry);
-void        ug_json_write_data(UgJson* json, UgData* data);
+                               void* info, void* registry);
+void        ug_json_write_info(UgJson* json, UgInfo* info);
 
 /*
 	// --- JSON output sample ---
@@ -111,7 +111,7 @@ void        ug_json_write_data(UgJson* json, UgData* data);
 }
 #endif
 
-struct UgData
+struct UgInfo
 {
 	UG_ARRAY_MEMBERS(UgPair);
 /*	// ------ UgArray members ------
@@ -126,30 +126,30 @@ struct UgData
 
 #ifdef __cplusplus
 	// C++11 standard-layout
-	inline UgData(void) {}
-	inline UgData(int allocatedLength, int cacheLength)
-		{ ug_data_init(this, allocatedLength, cacheLength); }
+	inline UgInfo(void) {}
+	inline UgInfo(int allocatedLength, int cacheLength)
+		{ ug_info_init(this, allocatedLength, cacheLength); }
 
-	static inline UgData* create(int allocatedLength, int cacheLength)
-		{ return ug_data_new(allocatedLength, cacheLength); }
+	static inline UgInfo* create(int allocatedLength, int cacheLength)
+		{ return ug_info_new(allocatedLength, cacheLength); }
 
 	inline void  init(int allocatedLength, int cacheLength)
-		{ ug_data_init(this, allocatedLength, cacheLength); }
+		{ ug_info_init(this, allocatedLength, cacheLength); }
 	inline void  final(void)
-		{ ug_data_final(this); }
+		{ ug_info_final(this); }
 
-	inline void  remove(const UgGroupDataInfo* key)
-		{ ug_data_remove(this, key); }
-	inline Ug::GroupDataMethod* realloc(const UgGroupDataInfo* key)
-		{ return (Ug::GroupDataMethod*) ug_data_realloc(this, key); }
-	inline Ug::GroupDataMethod* get(const UgGroupDataInfo* key)
-		{ return (Ug::GroupDataMethod*) ug_data_get(this, key); }
+	inline void  remove(const UgDataInfo* key)
+		{ ug_info_remove(this, key); }
+	inline Ug::DataMethod* realloc(const UgDataInfo* key)
+		{ return (Ug::DataMethod*) ug_info_realloc(this, key); }
+	inline Ug::DataMethod* get(const UgDataInfo* key)
+		{ return (Ug::DataMethod*) ug_info_get(this, key); }
 
 	// static method
 	static inline UgRegistry* getRegistry(void)
-		{ return ug_data_get_registry(); }
+		{ return ug_info_get_registry(); }
 	static inline void        setRegistry(UgRegistry* registry)
-		{ ug_data_set_registry(registry); }
+		{ ug_info_set_registry(registry); }
 #endif  // __cplusplus
 };
 
@@ -161,10 +161,10 @@ struct UgData
 namespace Ug
 {
 // This one is for directly use only. You can NOT derived it.
-typedef struct UgData    Data;
+typedef struct UgInfo    Info;
 };  // namespace Ug
 
 #endif  // __cplusplus
 
-#endif  // UG_DATA_H
+#endif  // UG_INFO_H
 

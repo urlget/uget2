@@ -84,9 +84,9 @@
     <ClCompile Include="..\..\uglib\UgJsonrpc.c" />
     <ClCompile Include="..\..\uglib\UgJsonrpcCurl.c" />
     <ClCompile Include="..\..\uglib\UgList.c" />
-    <ClCompile Include="..\..\uglib\UgGroupData.c" />
-    <ClCompile Include="..\..\uglib\UgRegistry.c" />
     <ClCompile Include="..\..\uglib\UgData.c" />
+    <ClCompile Include="..\..\uglib\UgRegistry.c" />
+    <ClCompile Include="..\..\uglib\UgInfo.c" />
     <ClCompile Include="..\..\uglib\UgNode.c" />
     <ClCompile Include="..\..\uglib\UgSocket.c" />
     <ClCompile Include="..\..\uglib\UgStdio.c" />
@@ -114,9 +114,9 @@
     <ClInclude Include="..\..\uglib\UgJsonrpc.h" />
     <ClInclude Include="..\..\uglib\UgJsonrpcCurl.h" />
     <ClInclude Include="..\..\uglib\UgList.h" />
-    <ClInclude Include="..\..\uglib\UgGroupData.h" />
-    <ClInclude Include="..\..\uglib\UgRegistry.h" />
     <ClInclude Include="..\..\uglib\UgData.h" />
+    <ClInclude Include="..\..\uglib\UgRegistry.h" />
+    <ClInclude Include="..\..\uglib\UgInfo.h" />
     <ClInclude Include="..\..\uglib\UgNode.h" />
     <ClInclude Include="..\..\uglib\UgSocket.h" />
     <ClInclude Include="..\..\uglib\UgStdio.h" />

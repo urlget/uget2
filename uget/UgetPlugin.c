@@ -141,23 +141,23 @@ void  uget_plugin_unref(UgetPlugin* plugin)
 	}
 }
 
-int  uget_plugin_accept(UgetPlugin* plugin, UgData* data)
+int  uget_plugin_accept(UgetPlugin* plugin, UgInfo* info)
 {
 	UgetPluginSyncFunc  accept;
 
 	accept = plugin->info->accept;
 	if (accept)
-		return accept(plugin, data);
+		return accept(plugin, info);
 	return FALSE;
 }
 
-int  uget_plugin_sync(UgetPlugin* plugin, UgData* data)
+int  uget_plugin_sync(UgetPlugin* plugin, UgInfo* info)
 {
 	UgetPluginSyncFunc  sync;
 
 	sync = plugin->info->sync;
 	if (sync)
-		return sync(plugin, data);
+		return sync(plugin, info);
 	return FALSE;
 }
 

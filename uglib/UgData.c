@@ -43,13 +43,13 @@
 #endif
 
 #include <stdlib.h>
-#include <UgGroupData.h>
+#include <UgData.h>
 #include <UgJson-custom.h>
 
 // ----------------------------------------------------------------------------
 // UgTypeInfo
 // |
-// +-- UgGroupDataInfo
+// +-- UgDataInfo
 
 void* ug_type_new(const void* typeinfo)
 {
@@ -103,18 +103,18 @@ void  ug_type_final(void* type)
 }
 
 // ----------------------------------------------------------------------------
-// UgGroupData
+// UgData
 
-// UgGroupData* ug_group_data_copy(UgGroupData* data)
-void* ug_group_data_copy(void* data)
+// UgData* ug_data_copy(UgData* data)
+void* ug_data_copy(void* data)
 {
-	const UgGroupDataInfo* info;
+	const UgDataInfo* info;
 	UgInitFunc    init;
 	UgAssignFunc  assign;
 	void*         newone;
 
 	if (data) {
-		info = ((UgGroupData*)data)->info;
+		info = ((UgData*)data)->info;
 		init   = info->init;
 		assign = info->assign;
 		if (assign) {
@@ -123,7 +123,7 @@ void* ug_group_data_copy(void* data)
 #else
 			newone = ug_malloc0(info->size);
 #endif
-			((UgGroupData*)newone)->info = info;
+			((UgData*)newone)->info = info;
 			if (init)
 				init(newone);
 			assign(newone, data);
@@ -133,13 +133,13 @@ void* ug_group_data_copy(void* data)
 	return NULL;
 }
 
-//void	ug_group_data_assign(UgGroupData* dest, UgGroupData* src)
-int   ug_group_data_assign(void* data, void* src)
+//void	ug_data_assign(UgData* dest, UgData* src)
+int   ug_data_assign(void* data, void* src)
 {
 	UgAssignFunc assign;
 
 	if (data) {
-		assign = ((UgGroupData*)data)->info->assign;
+		assign = ((UgData*)data)->info->assign;
 		if(assign)
 			return assign(data, src);
 	}
@@ -147,14 +147,14 @@ int   ug_group_data_assign(void* data, void* src)
 	return FALSE;
 }
 
-// UgJsonParseFunc for UgGroupData, used by UgEntry with UG_ENTRY_CUSTOM
-UgJsonError ug_json_parse_group_data(UgJson* json,
+// UgJsonParseFunc for UgData, used by UgEntry with UG_ENTRY_CUSTOM
+UgJsonError ug_json_parse_data(UgJson* json,
                                const char* name, const char* value,
-                               void* group_data, void* none)
+                               void* data, void* none)
 {
-	UgGroupData*  ugdata = (UgGroupData*)group_data;
+	UgData*  ugdata = (UgData*)data;
 
-	// UgGroupData's type is UG_JSON_OBJECT
+	// UgData's type is UG_JSON_OBJECT
 	if (json->type != UG_JSON_OBJECT) {
 //		if (json->type == UG_JSON_ARRAY)
 //			ug_json_push(json, ug_json_parse_unknown, NULL, NULL);
@@ -163,15 +163,13 @@ UgJsonError ug_json_parse_group_data(UgJson* json,
 
 	if (ugdata->info->entry == NULL)
 		ug_json_push(json, ug_json_parse_unknown, NULL, NULL);
-	else {
-		ug_json_push(json, ug_json_parse_entry,
-		             group_data, (void*)ugdata->info->entry);
-	}
+	else
+		ug_json_push(json, ug_json_parse_entry, data, (void*)ugdata->info->entry);
 	return UG_JSON_ERROR_NONE;
 }
 
-// write UgGroupData, used by UgEntry with UG_ENTRY_CUSTOM
-void        ug_json_write_group_data(UgJson* json, const UgGroupData* data)
+// write UgData, used by UgEntry with UG_ENTRY_CUSTOM
+void        ug_json_write_data(UgJson* json, const UgData* data)
 {
 	ug_json_write_object_head(json);
 	if (data->info->entry)

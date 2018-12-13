@@ -50,10 +50,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../uglib/UgBuffer.h" />
-		<Unit filename="../../uglib/UgGroupData.c">
+		<Unit filename="../../uglib/UgData.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../uglib/UgGroupData.h" />
+		<Unit filename="../../uglib/UgData.h" />
 		<Unit filename="../../uglib/UgDefine.h" />
 		<Unit filename="../../uglib/UgEntry.c">
 			<Option compilerVar="CC" />
@@ -75,10 +75,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../uglib/UgHtmlFilter.h" />
-		<Unit filename="../../uglib/UgData.c">
+		<Unit filename="../../uglib/UgInfo.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../uglib/UgData.h" />
+		<Unit filename="../../uglib/UgInfo.h" />
 		<Unit filename="../../uglib/UgJson-custom.c">
 			<Option compilerVar="CC" />
 		</Unit>

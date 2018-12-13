@@ -54,7 +54,7 @@
 // ----------------------------------------------------------------------------
 // test_download
 
-void  download_by_plugin(UgData* data, const UgetPluginInfo* pinfo)
+void  download_by_plugin(UgInfo* info, const UgetPluginInfo* pinfo)
 {
 	UgetCommon*   common;
 	UgetFiles*    files;
@@ -72,7 +72,7 @@ void  download_by_plugin(UgData* data, const UgetPluginInfo* pinfo)
 	speed_limit[1] = 1000000;
 
 	plugin = uget_plugin_new(pinfo);
-	uget_plugin_accept(plugin, data);
+	uget_plugin_accept(plugin, info);
 	uget_plugin_ctrl(plugin, UGET_PLUGIN_CTRL_SPEED, speed_limit);
 	if (uget_plugin_start(plugin) == FALSE) {
 		uget_plugin_unref(plugin);
@@ -80,7 +80,7 @@ void  download_by_plugin(UgData* data, const UgetPluginInfo* pinfo)
 		return;
 	}
 
-	while (uget_plugin_sync(plugin, data)) {
+	while (uget_plugin_sync(plugin, info)) {
 		ug_sleep(1000);
 		// event
 		events = uget_plugin_pop(plugin);
@@ -90,7 +90,7 @@ void  download_by_plugin(UgData* data, const UgetPluginInfo* pinfo)
 			uget_event_free(cur);
 		}
 		// progress
-		progress = ug_data_get(data, UgetProgressInfo);
+		progress = ug_info_get(info, UgetProgressInfo);
 		if (progress == NULL)
 			continue;
 		string[0] = ug_str_from_int_unit(progress->complete, NULL);
@@ -105,14 +105,14 @@ void  download_by_plugin(UgData* data, const UgetPluginInfo* pinfo)
 			ug_free(string[index]);
 	}
 	// these data may changed, print them.
-	common = ug_data_get(data, UgetCommonInfo);
+	common = ug_info_get(info, UgetCommonInfo);
 	printf("\n"
 	       "common->name : %s\n"
 	       "common->uri : %s\n"
 	       "common->file : %s\n",
 	       common->name, common->uri, common->file);
 	// print children
-	files = ug_data_realloc(data, UgetFilesInfo);
+	files = ug_info_realloc(info, UgetFilesInfo);
 	for (file1 = (UgetFile*)files->list.head;  file1;  file1 = file1->next)
 		printf("file name : %s\n", file1->path);
 
@@ -123,7 +123,7 @@ void  test_download(void)
 {
 	UgetCommon*  common;
 	UgetHttp*    http;
-	UgData*      data;
+	UgInfo*      info;
 	char*        referrer;
 	char*        uri;
 	char*        mirrors;
@@ -139,9 +139,9 @@ void  test_download(void)
 //	referrer = "http://code.google.com/p/tortoisegit/wiki/Download?tm=2";
 	referrer = NULL;
 
-	data = ug_data_new(8, 0);
+	info = ug_info_new(8, 0);
 	// commom options
-	common = ug_data_realloc(data, UgetCommonInfo);
+	common = ug_info_realloc(info, UgetCommonInfo);
 	common->uri = ug_strdup(uri);
 	if (mirrors)
 		common->mirrors = ug_strdup(mirrors);
@@ -152,15 +152,15 @@ void  test_download(void)
 	common->connect_timeout = 30;
 
 	// http options
-	http = ug_data_realloc(data, UgetHttpInfo);
+	http = ug_info_realloc(info, UgetHttpInfo);
 	if (referrer)
 		http->referrer = ug_strdup(referrer);
 
-//	download_by_plugin(data, UgetPluginCurlInfo);
-//	download_by_plugin(data, UgetPluginAria2Info);
-//	download_by_plugin(data, UgetPluginMediaInfo);
-	download_by_plugin(data, UgetPluginMegaInfo);
-	ug_data_unref(data);
+//	download_by_plugin(info, UgetPluginCurlInfo);
+//	download_by_plugin(info, UgetPluginAria2Info);
+//	download_by_plugin(info, UgetPluginMediaInfo);
+	download_by_plugin(info, UgetPluginMegaInfo);
+	ug_info_unref(info);
 }
 
 // ----------------------------------------------------------------------------
@@ -196,7 +196,7 @@ void  print_speed_limit (UgetNode** dnode, int count)
 	UgetRelation* relation;
 
 	for (count = 0;  count < 7;  count++) {
-		relation = ug_data_get (dnode[count]->data, UgetRelationInfo);
+		relation = ug_info_get (dnode[count]->info, UgetRelationInfo);
 		printf ("limit D: %d, U: %d | speed D: %d, U: %d\n",
 				relation->task.limit[0],
 				relation->task.limit[1],
@@ -224,7 +224,7 @@ void  test_task (void)
 	// task speed control -------------------
 	for (count = 0;  count < 7;  count++) {
 		dnode[count] = uget_node_new (NULL);
-		relation = ug_data_realloc (dnode[count]->data, UgetRelationInfo);
+		relation = ug_info_realloc (dnode[count]->info, UgetRelationInfo);
 		relation->task.limit[0] = 2000;
 		relation->task.limit[1] = 1500;
 		relation->task.speed[0] = 2000 - count * 200;
@@ -258,11 +258,11 @@ void  setup_app (UgetApp* app)
 	UgetCommon*    common;
 
 	cnode = uget_node_new (NULL);
-	category = ug_data_realloc (cnode->data, UgetCategoryInfo);
+	category = ug_info_realloc (cnode->info, UgetCategoryInfo);
 	*(char**)ug_array_alloc (&category->schemes, 1) = ug_strdup ("http");
 	*(char**)ug_array_alloc (&category->schemes, 1) = ug_strdup ("https");
 	*(char**)ug_array_alloc (&category->schemes, 1) = ug_strdup ("ftp");
-	common = ug_data_realloc (cnode->data, UgetCommonInfo);
+	common = ug_info_realloc (cnode->info, UgetCommonInfo);
 	common->name = ug_strdup ("Home Category");
 	common->max_connections = 2;
 	uget_app_add_category (app, cnode, TRUE);
@@ -280,7 +280,7 @@ void  start_app (UgetApp* app)
 	char*          string[2];
 
 	dnode = uget_node_new (NULL);
-	common = ug_data_realloc (dnode->data, UgetCommonInfo);
+	common = ug_info_realloc (dnode->info, UgetCommonInfo);
 	common->name = ug_strdup ("Download");
 	common->uri = ug_strdup ("http://www.utorrent.com/scripts/dl.php?track=stable&build=29812&client=utorrent");
 	common->folder = ug_strdup ("D:\\Downloads");
@@ -320,7 +320,7 @@ void  test_app_node (UgetApp* app)
 
 	for (count = 0;  count < 7;  count++) {
 		dnode[count] = uget_node_new (NULL);
-		common = ug_data_realloc (dnode[count]->data, UgetCommonInfo);
+		common = ug_info_realloc (dnode[count]->info, UgetCommonInfo);
 		common->uri = ug_strdup ("ftp://127.0.0.1/");
 		common->folder = ug_strdup ("D:\\Downloads");
 		common->keeping.enable = TRUE;

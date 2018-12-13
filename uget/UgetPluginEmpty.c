@@ -40,13 +40,13 @@
 #include <UgetPluginEmpty.h>
 
 // ----------------------------------------------------------------------------
-// UgetPluginInfo (derived from UgGroupDataInfo)
+// UgetPluginInfo (derived from UgDataInfo)
 
 static void plugin_init (UgetPluginEmpty* plugin);
 static void plugin_final(UgetPluginEmpty* plugin);
 static int  plugin_ctrl (UgetPluginEmpty* plugin, int code, void* data);
-static int  plugin_accept(UgetPluginEmpty* plugin, UgData* data);
-static int  plugin_sync  (UgetPluginEmpty* plugin, UgData* data);
+static int  plugin_accept(UgetPluginEmpty* plugin, UgInfo* node_info);
+static int  plugin_sync  (UgetPluginEmpty* plugin, UgInfo* node_info);
 static UgetResult  global_set(int code, void* parameter);
 static UgetResult  global_get(int code, void* parameter);
 
@@ -176,7 +176,7 @@ static void plugin_final(UgetPluginEmpty* plugin)
 
 	// clear UgData
 	if (plugin->common)
-		ug_group_data_free(plugin->common);
+		ug_data_free(plugin->common);
 
 	global_unref();
 }
@@ -255,23 +255,23 @@ static int  plugin_ctrl_speed(UgetPluginEmpty* plugin, int* speed)
 // ----------------------------------------------------------------------------
 // plugin_accept/plugin_sync
 
-// return TRUE  if UgData was accepted by plug-in.
-// return FALSE if UgData is lack of necessary data.
-static int  plugin_accept(UgetPluginEmpty* plugin, UgData* data)
+// return TRUE  if UgInfo was accepted by plug-in.
+// return FALSE if UgInfo is lack of necessary data.
+static int  plugin_accept(UgetPluginEmpty* plugin, UgInfo* node_info)
 {
 	UgetCommon*  common;
 
-	common = ug_data_get(data, UgetCommonInfo);
+	common = ug_info_get(node_info, UgetCommonInfo);
 	if (common == NULL || common->uri == NULL)
 		return FALSE;
 
-	plugin->common = ug_group_data_copy(plugin->common);
+	plugin->common = ug_data_copy(plugin->common);
 	return TRUE;
 }
 
 // return TRUE  if plug-in is running or some data need to sync.
 // return FALSE if plug-in was stopped and no data need to sync.
-static int  plugin_sync(UgetPluginEmpty* plugin, UgData* data)
+static int  plugin_sync(UgetPluginEmpty* plugin, UgInfo* node_info)
 {
 	return FALSE;
 }

@@ -49,7 +49,7 @@
 
 Category-Home.json
 {
-   "data": {
+   "info": {
       "category": {},
       "common": {
          "name": "Home"
@@ -60,7 +60,7 @@ Category-Home.json
    },
    "children": [
       {
-         "data": {
+         "info": {
             "common": {
                "name": "download-file1",
                "file": "download-file1.torrent"
@@ -81,7 +81,7 @@ Category-Home.json
          ]
       },
       {
-         "data": {
+         "info": {
             "common": {
                "name": "download-file3",
                "file": "download-file3.7z"

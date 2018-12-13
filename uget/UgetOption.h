@@ -37,7 +37,7 @@
 #ifndef UGET_OPTION_H
 #define UGET_OPTION_H
 
-#include <UgData.h>
+#include <UgInfo.h>
 #include <UgList.h>
 #include <UgOption.h>
 
@@ -101,7 +101,7 @@ void  uget_option_value_init (UgetOptionValue* value);
 void  uget_option_value_clear (UgetOptionValue* value);
 
 int   uget_option_value_has_ctrl (UgetOptionValue* value);
-int   uget_option_value_to_data (UgetOptionValue* ivalue, UgData* data);
+int   uget_option_value_to_info (UgetOptionValue* ivalue, UgInfo* info);
 
 #ifdef __cplusplus
 }

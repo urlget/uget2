@@ -39,7 +39,7 @@
 
 #include <stdint.h>
 #include <UgList.h>
-#include <UgGroupData.h>
+#include <UgData.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -48,7 +48,7 @@ extern "C" {
 typedef struct  UgetFile       UgetFile;
 typedef struct  UgetFiles      UgetFiles;
 
-extern const UgGroupDataInfo*  UgetFilesInfo;
+extern  const   UgDataInfo*    UgetFilesInfo;
 
 enum UgetFileType
 {
@@ -100,19 +100,19 @@ UgetFile*  uget_file_new(void);
 void       uget_file_free(UgetFile* file);
 
 /* ----------------------------------------------------------------------------
-   UgetFiles: It derived from UgGroupData and store in UgData.
+   UgetFiles: It derived from UgData and store in UgInfo.
 
    UgType
    |
-   `-- UgGroupData
+   `-- UgData
        |
        `-- UgetFiles
  */
 
 struct UgetFiles
 {
-	UG_GROUP_DATA_MEMBERS;
-//	const UgGroupDataInfo*  info;    // UgGroupData(UgType) member
+	UG_DATA_MEMBERS;
+//	const UgDataInfo*  info;    // UgData(UgType) member
 
 	UgList  list;
 
@@ -161,7 +161,7 @@ namespace Uget
 {
 
 // These are for directly use only. You can NOT derived it.
-struct Files : Ug::GroupDataMethod, UgetFiles {};
+struct Files : Ug::DataMethod, UgetFiles {};
 
 };  // namespace Uget
 

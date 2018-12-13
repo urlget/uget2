@@ -150,8 +150,8 @@ void uget_plugin_agent_init(UgetPluginAgent* plugin)
 void uget_plugin_agent_final(UgetPluginAgent* plugin)
 {
 	// extent data and plug-in
-	if (plugin->target_data)
-		ug_data_unref(plugin->target_data);
+	if (plugin->target_info)
+		ug_info_unref(plugin->target_info);
 	if (plugin->target_plugin)
 		uget_plugin_unref(plugin->target_plugin);
 
@@ -192,8 +192,8 @@ int  uget_plugin_agent_ctrl_speed(UgetPluginAgent* plugin, int* speed)
 	if (plugin->limit[0] != speed[0] || plugin->limit[1] != speed[1])
 		plugin->limit_changed = TRUE;
 	// decide speed limit by user specified data.
-	if (plugin->target_data)
-		common = ug_data_get(plugin->target_data, UgetCommonInfo);
+	if (plugin->target_info)
+		common = ug_info_get(plugin->target_info, UgetCommonInfo);
 	else
 		common = NULL;
 
@@ -232,7 +232,7 @@ void  uget_plugin_agent_sync_common(UgetPluginAgent* plugin,
                                     UgetCommon* target)
 {
 	if (target == NULL)
-		target = ug_data_realloc(plugin->target_data, UgetCommonInfo);
+		target = ug_info_realloc(plugin->target_info, UgetCommonInfo);
 
 	// sync speed limit from common to target
 	if (target->max_upload_speed   != common->max_upload_speed ||
@@ -255,7 +255,7 @@ void  uget_plugin_agent_sync_progress(UgetPluginAgent* plugin,
                                       UgetProgress* target)
 {
 	if (target == NULL)
-		target = ug_data_realloc(plugin->target_data, UgetProgressInfo);
+		target = ug_info_realloc(plugin->target_info, UgetProgressInfo);
 
 	// sync progress from target to progress
 	progress->complete       = target->complete;

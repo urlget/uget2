@@ -66,7 +66,7 @@ typedef enum {
 
 #define UGET_PLUGIN_AGENT_MEMBERS  \
 	UGET_PLUGIN_MEMBERS;           \
-	UgData*       target_data;     \
+	UgInfo*       target_info;     \
 	UgetPlugin*   target_plugin;   \
 	int           limit[2];        \
 	uint8_t       limit_changed:1; \
@@ -86,11 +86,11 @@ struct UgetPluginAgent
 
 	// ------ UgetPluginAgent members ------
 	// This plug-in use other plug-in to download files,
-	// so we need extra UgetPlugin and UgData.
+	// so we need extra UgetPlugin and UgInfo.
 
-	// plugin->target_data is a copy of UgData that store in UgetApp
-	UgData*       target_data;
-	// target_plugin use target_data to download
+	// plugin->target_info is a copy of UgInfo that store in UgetApp
+	UgInfo*       target_info;
+	// target_plugin use target_info to download
 	UgetPlugin*   target_plugin;
 
 	// speed limit control
@@ -127,13 +127,13 @@ int   uget_plugin_agent_ctrl_speed (UgetPluginAgent* plugin, int* speed);
 
 // sync functions ---------------------
 // sync common data (include speed limit) between 'common' and 'target'
-// if parameter 'target' is NULL, it get/alloc 'target' from plugin->target_data
+// if parameter 'target' is NULL, it get/alloc 'target' from plugin->target_info
 void  uget_plugin_agent_sync_common (UgetPluginAgent* plugin,
                                      UgetCommon* common,
                                      UgetCommon* target);
 
 // sync progress data from 'target' to 'progress'
-// if parameter 'target' is NULL, it get/alloc 'target' from plugin->target_data
+// if parameter 'target' is NULL, it get/alloc 'target' from plugin->target_info
 void  uget_plugin_agent_sync_progress (UgetPluginAgent* plugin,
                                        UgetProgress* progress,
                                        UgetProgress* target);

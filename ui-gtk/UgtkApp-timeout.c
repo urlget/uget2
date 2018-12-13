@@ -314,7 +314,7 @@ static void  on_keep_above_window_show (GtkWindow *window, gpointer  user_data)
 }
 
 static void  ugtk_app_add_uris_quietly (UgtkApp* app,       GList* list,
-                                        UgData*  node_data, int  nth_category)
+                                        UgInfo*  node_info, int  nth_category)
 {
 	GList*      link;
 	UgUri       uuri;
@@ -341,16 +341,16 @@ static void  ugtk_app_add_uris_quietly (UgtkApp* app,       GList* list,
 			ug_uri_init (&uuri, link->data);
 			cnode = uget_app_match_category ((UgetApp*) app, &uuri, NULL);
 		}
-		if (cnode == NULL && node_data) {
+		if (cnode == NULL && node_info) {
 			// match category by filename
-			common = ug_data_realloc(node_data, UgetCommonInfo);
+			common = ug_info_realloc(node_info, UgetCommonInfo);
 			if (common && common->file) {
 				ug_uri_init (&uuri, common->file);
 				cnode = uget_app_match_category ((UgetApp*) app, &uuri, NULL);
 			}
 		}
 		if (cnode == NULL) {
-			if (node_data == NULL) {
+			if (node_info == NULL) {
 				cnode = uget_node_nth_child (&app->real,
 						app->setting.clipboard.nth_category);
 			}
@@ -362,15 +362,15 @@ static void  ugtk_app_add_uris_quietly (UgtkApp* app,       GList* list,
 		if (cnode == NULL)
 			cnode = uget_node_nth_child (&app->real, 0);
 		// add download
-		if (node_data == NULL) {
+		if (node_info == NULL) {
 			// add and free URI
 			uget_app_add_download_uri ((UgetApp*) app, link->data, cnode, TRUE);
 			g_free (link->data);
 		}
 		else {
 			dnode = uget_node_new (NULL);
-			ug_data_assign(dnode->data, node_data, NULL);
-			common = ug_data_realloc (dnode->data, UgetCommonInfo);
+			ug_info_assign(dnode->info, node_info, NULL);
+			common = ug_info_realloc(dnode->info, UgetCommonInfo);
 			common->uri = link->data;
 			uget_app_add_download ((UgetApp*) app, dnode, cnode, TRUE);
 		}
@@ -379,7 +379,7 @@ static void  ugtk_app_add_uris_quietly (UgtkApp* app,       GList* list,
 }
 
 static void  ugtk_app_add_uris_selected (UgtkApp* app,       GList* list,
-                                         UgData*  node_data, int  nth_category)
+                                         UgInfo*  node_info, int  nth_category)
 {
 	UgtkBatchDialog*    bdialog;
 	UgtkSelectorPage*   page;
@@ -395,7 +395,7 @@ static void  ugtk_app_add_uris_selected (UgtkApp* app,       GList* list,
 	}
 
 	// choose title for clipboard or command-line
-	if (node_data == NULL)
+	if (node_info == NULL)
 		title = g_strconcat (UGTK_APP_NAME " - ", _("New from Clipboard"), NULL);
 	else
 		title = g_strconcat (UGTK_APP_NAME " - ", _("New Download"), NULL);
@@ -406,9 +406,9 @@ static void  ugtk_app_add_uris_selected (UgtkApp* app,       GList* list,
 	if (list->next == NULL)
 		ugtk_batch_dialog_disable_batch (bdialog);
 	// apply other setting
-	if (node_data) {
-		ugtk_download_form_set(&bdialog->download, node_data, FALSE);
-		ugtk_proxy_form_set(&bdialog->proxy, node_data, FALSE);
+	if (node_info) {
+		ugtk_download_form_set(&bdialog->download, node_info, FALSE);
+		ugtk_proxy_form_set(&bdialog->proxy, node_info, FALSE);
 	}
 	// add URIs
 	if (list->next == NULL) {
@@ -421,7 +421,7 @@ static void  ugtk_app_add_uris_selected (UgtkApp* app,       GList* list,
 		// all uris in list will be freed.
 		ugtk_batch_dialog_use_selector (bdialog);
 		ugtk_selector_hide_href (&bdialog->selector);
-		if (node_data == NULL)
+		if (node_info == NULL)
 			page = ugtk_selector_add_page (&bdialog->selector, _("Clipboard"));
 		else
 			page = ugtk_selector_add_page (&bdialog->selector, _("Command line"));
@@ -436,15 +436,15 @@ static void  ugtk_app_add_uris_selected (UgtkApp* app,       GList* list,
 	if (cnode == NULL && list->data) {
 		// match category by URI
 		ug_uri_init (&uuri, list->data);
-		if (node_data == NULL)
+		if (node_info == NULL)
 			cnode = uget_app_match_category ((UgetApp*) app, &uuri, NULL);
 		else {
-			common = ug_data_realloc(node_data, UgetCommonInfo);
+			common = ug_info_realloc(node_info, UgetCommonInfo);
 			cnode = uget_app_match_category ((UgetApp*) app, &uuri, common->file);
 		}
 	}
 	if (cnode == NULL) {
-		if (node_data == NULL) {
+		if (node_info == NULL) {
 			cnode = uget_node_nth_child (&app->real,
 					app->setting.clipboard.nth_category);
 		}
@@ -508,7 +508,7 @@ static gboolean  ugtk_app_timeout_rpc (UgtkApp* app)
 {
 	UgetRpcReq*  req;
 	UgetRpcCmd*  cmd;
-	UgData*      node_data;
+	UgInfo*      node_info;
 
 	for (;;) {
 		if (uget_rpc_has_request(app->rpc) == FALSE)
@@ -558,17 +558,17 @@ static gboolean  ugtk_app_timeout_rpc (UgtkApp* app)
 				break;
 
 			// add downloads
-			node_data = ug_data_new(8, 0);
-			uget_option_value_to_data(&cmd->value, node_data);
+			node_info = ug_info_new(8, 0);
+			uget_option_value_to_info(&cmd->value, node_info);
 			if (cmd->value.quiet) {
 				ugtk_app_add_uris_quietly (app, (GList*) cmd->uris.head,
-						node_data, cmd->value.category_index);
+						node_info, cmd->value.category_index);
 			}
 			else {
 				ugtk_app_add_uris_selected (app, (GList*) cmd->uris.head,
-						node_data, cmd->value.category_index);
+						node_info, cmd->value.category_index);
 			}
-			ug_data_unref(node_data);
+			ug_info_unref(node_info);
 			break;
 
 		default:

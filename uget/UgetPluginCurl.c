@@ -90,13 +90,13 @@ struct UriLink {
 };
 
 // ----------------------------------------------------------------------------
-// UgetPluginInfo (derived from UgGroupDataInfo)
+// UgetPluginInfo (derived from UgDataInfo)
 
 static void plugin_init (UgetPluginCurl* plugin);
 static void plugin_final(UgetPluginCurl* plugin);
 static int  plugin_ctrl (UgetPluginCurl* plugin, int code, void* data);
-static int  plugin_accept(UgetPluginCurl* plugin, UgData* data);
-static int  plugin_sync  (UgetPluginCurl* plugin, UgData* data);
+static int  plugin_accept(UgetPluginCurl* plugin, UgInfo* node_info);
+static int  plugin_sync  (UgetPluginCurl* plugin, UgInfo* node_info);
 static UgetResult  global_set(int code, void* parameter);
 static UgetResult  global_get(int code, void* parameter);
 
@@ -223,15 +223,15 @@ static void plugin_init(UgetPluginCurl* plugin)
 static void plugin_final(UgetPluginCurl* plugin)
 {
 	if (plugin->common)
-		ug_group_data_free(plugin->common);
+		ug_data_free(plugin->common);
 	if (plugin->files)
-		ug_group_data_free(plugin->files);
+		ug_data_free(plugin->files);
 	if (plugin->proxy)
-		ug_group_data_free(plugin->proxy);
+		ug_data_free(plugin->proxy);
 	if (plugin->http)
-		ug_group_data_free(plugin->http);
+		ug_data_free(plugin->http);
 	if (plugin->ftp)
-		ug_group_data_free(plugin->ftp);
+		ug_data_free(plugin->ftp);
 	// free uri.list (UriLink), all link will be freed.
 	ug_list_foreach(&plugin->uri.list, (UgForeachFunc) ug_free, NULL);
 
@@ -317,7 +317,7 @@ static int  plugin_ctrl_speed(UgetPluginCurl* plugin, int* speed)
 // ----------------------------------------------------------------------------
 // plugin_sync
 
-static int  plugin_sync(UgetPluginCurl* plugin, UgData* data)
+static int  plugin_sync(UgetPluginCurl* plugin, UgInfo* node_info)
 {
 	UgetCommon*    common;
 	UgetFiles*     files;
@@ -335,9 +335,9 @@ static int  plugin_sync(UgetPluginCurl* plugin, UgData* data)
 		return FALSE;
 
 	// sync data between plug-in and foreign UgData
-	common = ug_data_realloc(data, UgetCommonInfo);
+	common = ug_info_realloc(node_info, UgetCommonInfo);
 	common->retry_count = plugin->common->retry_count;
-	// sync changed limit from data
+	// sync changed limit from node_info
 	if (plugin->common->max_upload_speed   != common->max_upload_speed ||
 		plugin->common->max_download_speed != common->max_download_speed)
 	{
@@ -353,7 +353,7 @@ static int  plugin_sync(UgetPluginCurl* plugin, UgData* data)
 	if (common->max_connections > 0)
 		plugin->segment.n_max = common->max_connections;
 
-	progress = ug_data_realloc(data, UgetProgressInfo);
+	progress = ug_info_realloc(node_info, UgetProgressInfo);
 	progress->upload_speed   = plugin->speed.upload;
 	progress->download_speed = plugin->speed.download;
 
@@ -379,7 +379,7 @@ static int  plugin_sync(UgetPluginCurl* plugin, UgData* data)
 	progress->elapsed = time(NULL) - plugin->start_time;
 
 	// update UgetFiles
-	files = ug_data_realloc(data, UgetFilesInfo);
+	files = ug_info_realloc(node_info, UgetFilesInfo);
 	uget_plugin_lock(plugin);
 	uget_files_sync(files, plugin->files);
 	uget_plugin_unlock(plugin);
@@ -415,7 +415,7 @@ static void  plugin_decide_folder(UgetPluginCurl* plugin);
 static void  plugin_decide_files(UgetPluginCurl* plugin);
 static UgThreadResult  plugin_thread(UgetPluginCurl* plugin);
 
-static int  plugin_accept(UgetPluginCurl* plugin, UgData* data)
+static int  plugin_accept(UgetPluginCurl* plugin, UgInfo* node_info)
 {
 	union {
 		UgetCommon*  common;
@@ -426,10 +426,10 @@ static int  plugin_accept(UgetPluginCurl* plugin, UgData* data)
 	} temp;
 	int  speed[2];
 
-	temp.common = ug_data_get(data, UgetCommonInfo);
+	temp.common = ug_info_get(node_info, UgetCommonInfo);
 	if (temp.common == NULL || temp.common->uri == NULL)
 		return FALSE;
-	plugin->common = ug_group_data_copy(temp.common);
+	plugin->common = ug_data_copy(temp.common);
 	plugin_decide_uris(plugin);
 	plugin_decide_folder(plugin);
 	// speed control: decide speed limit before starting plug-in
@@ -437,19 +437,19 @@ static int  plugin_accept(UgetPluginCurl* plugin, UgData* data)
 	speed[1] = plugin->limit.upload;
 	plugin_ctrl_speed(plugin, speed);
 
-	temp.files = ug_data_get(data, UgetFilesInfo);
+	temp.files = ug_info_get(node_info, UgetFilesInfo);
 	if (temp.files)
-		plugin->files = ug_group_data_copy(temp.files);
+		plugin->files = ug_data_copy(temp.files);
 	else
-		plugin->files = ug_group_data_new(UgetFilesInfo);
+		plugin->files = ug_data_new(UgetFilesInfo);
 
-	temp.proxy = ug_data_get(data, UgetProxyInfo);
+	temp.proxy = ug_info_get(node_info, UgetProxyInfo);
 	if (temp.proxy)
-		plugin->proxy  = ug_group_data_copy(temp.proxy);
+		plugin->proxy  = ug_data_copy(temp.proxy);
 
-	temp.http = ug_data_get(data, UgetHttpInfo);
+	temp.http = ug_info_get(node_info, UgetHttpInfo);
 	if (temp.http) {
-		plugin->http = ug_group_data_copy(temp.http);
+		plugin->http = ug_data_copy(temp.http);
 		// check http->post_file
 		if (temp.http->post_file) {
 			if (ug_file_is_exist(temp.http->post_file) == FALSE) {
@@ -470,9 +470,9 @@ static int  plugin_accept(UgetPluginCurl* plugin, UgData* data)
 		}
 	}
 
-	temp.ftp = ug_data_get(data, UgetFtpInfo);
+	temp.ftp = ug_info_get(node_info, UgetFtpInfo);
 	if (temp.ftp)
-		plugin->ftp = ug_group_data_copy(temp.ftp);
+		plugin->ftp = ug_data_copy(temp.ftp);
 
 	return TRUE;
 }

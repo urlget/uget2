@@ -66,7 +66,7 @@ typedef enum {
 	gulong        handler_id[3];  \
 	UgtkApp*      app;            \
 	UgetNode*     node;           \
-	UgData*       node_data;      \
+	UgInfo*       node_info;      \
 	UgtkProxyForm     proxy;      \
 	UgtkDownloadForm  download;   \
 	UgtkCategoryForm  category
@@ -83,7 +83,7 @@ struct UgtkNodeDialog
 	gulong        handler_id[3];
 	UgtkApp*      app;
 	UgetNode*     note;
-	UgData*       node_data;
+	UgInfo*       node_info;
 	UgtkProxyForm     proxy;
 	UgtkDownloadForm  download;
 	UgtkCategoryForm  category;
@@ -106,8 +106,8 @@ int   ugtk_node_dialog_get_category (UgtkNodeDialog* ndialog, UgetNode** cnode);
 void  ugtk_node_dialog_set_category (UgtkNodeDialog* ndialog, UgetNode* cnode);
 
 // set/get node's data to/from UgtkNodeDialog
-void  ugtk_node_dialog_get (UgtkNodeDialog* ndialog, UgData* node_data);
-void  ugtk_node_dialog_set (UgtkNodeDialog* ndialog, UgData* node_data);
+void  ugtk_node_dialog_get (UgtkNodeDialog* ndialog, UgInfo* node_info);
+void  ugtk_node_dialog_set (UgtkNodeDialog* ndialog, UgInfo* node_info);
 
 void  ugtk_node_dialog_run (UgtkNodeDialog* ndialog,
                             UgtkNodeDialogMode mode,

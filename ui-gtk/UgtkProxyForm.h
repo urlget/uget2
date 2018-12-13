@@ -104,8 +104,8 @@ struct UgtkProxyForm
 };
 
 void  ugtk_proxy_form_init (UgtkProxyForm* pform);
-void  ugtk_proxy_form_get  (UgtkProxyForm* pform, UgData* data);
-void  ugtk_proxy_form_set  (UgtkProxyForm* pform, UgData* data, gboolean keep_changed);
+void  ugtk_proxy_form_get  (UgtkProxyForm* pform, UgInfo* info);
+void  ugtk_proxy_form_set  (UgtkProxyForm* pform, UgInfo* info, gboolean keep_changed);
 
 
 #ifdef __cplusplus

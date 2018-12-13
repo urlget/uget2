@@ -153,8 +153,8 @@ void  ugtk_node_dialog_run (UgtkNodeDialog* ndialog,
 {
 	if (node) {
 		ndialog->node = node;
-		ndialog->node_data = node->data;
-		ug_data_ref(node->data);
+		ndialog->node_info = node->info;
+		ug_info_ref(node->info);
 	}
 
 	switch (mode) {
@@ -245,7 +245,7 @@ void  ugtk_node_dialog_store_recent (UgtkNodeDialog* ndialog, UgtkApp* app)
 		app->recent.category_index = nth;
 		gtk_tree_path_free (path);
 	}
-	ugtk_download_form_get(&ndialog->download, app->recent.data);
+	ugtk_download_form_get(&ndialog->download, app->recent.info);
 }
 
 void  ugtk_node_dialog_apply_recent (UgtkNodeDialog* ndialog, UgtkApp* app)
@@ -258,7 +258,7 @@ void  ugtk_node_dialog_apply_recent (UgtkNodeDialog* ndialog, UgtkApp* app)
 		gtk_tree_path_free (path);
 		ndialog->download.changed.uri = TRUE;
 		ugtk_download_form_set(&ndialog->download,
-		                       app->recent.data, TRUE);
+		                       app->recent.info, TRUE);
 	}
 }
 
@@ -311,20 +311,20 @@ int  ugtk_node_dialog_get_category (UgtkNodeDialog* ndialog, UgetNode** cnode)
 	return nth;
 }
 
-void  ugtk_node_dialog_set (UgtkNodeDialog* ndialog, UgData* node_data)
+void  ugtk_node_dialog_set (UgtkNodeDialog* ndialog, UgInfo* node_info)
 {
-	ugtk_proxy_form_set(&ndialog->proxy, node_data, FALSE);
-	ugtk_download_form_set(&ndialog->download, node_data, FALSE);
+	ugtk_proxy_form_set(&ndialog->proxy, node_info, FALSE);
+	ugtk_download_form_set(&ndialog->download, node_info, FALSE);
 	if (ndialog->category.self)
-		ugtk_category_form_set(&ndialog->category, node_data);
+		ugtk_category_form_set(&ndialog->category, node_info);
 }
 
-void  ugtk_node_dialog_get (UgtkNodeDialog* ndialog, UgData* node_data)
+void  ugtk_node_dialog_get (UgtkNodeDialog* ndialog, UgInfo* node_info)
 {
-	ugtk_proxy_form_get(&ndialog->proxy, node_data);
-	ugtk_download_form_get(&ndialog->download, node_data);
+	ugtk_proxy_form_get(&ndialog->proxy, node_info);
+	ugtk_download_form_get(&ndialog->download, node_info);
 	if (ndialog->category.self)
-		ugtk_category_form_get(&ndialog->category, node_data);
+		ugtk_category_form_get(&ndialog->category, node_info);
 }
 
 // ----------------------------------------------------------------------------
@@ -440,8 +440,8 @@ static void on_cursor_changed (GtkTreeView* view, UgtkNodeDialog* ndialog)
 	gtk_tree_model_get_iter (model, &iter, path);
 	gtk_tree_path_free (path);
 	node = iter.user_data;
-	ugtk_proxy_form_set(&ndialog->proxy, node->data, TRUE);
-	ugtk_download_form_set(&ndialog->download, node->data, TRUE);
+	ugtk_proxy_form_set(&ndialog->proxy, node->info, TRUE);
+	ugtk_download_form_set(&ndialog->download, node->info, TRUE);
 }
 
 static void after_uri_entry_changed (GtkEditable *editable,
@@ -458,14 +458,14 @@ static void on_response_new_category (GtkDialog *dialog, gint response_id,
 
 	if (response_id == GTK_RESPONSE_OK) {
 		cnode = uget_node_new (NULL);
-		ugtk_node_dialog_get(ndialog, cnode->data);
+		ugtk_node_dialog_get(ndialog, cnode->info);
 		uget_app_add_category ((UgetApp*) ndialog->app, cnode, TRUE);
 		ugtk_app_decide_category_sensitive (ndialog->app);
 		ugtk_download_form_get_folders (&ndialog->download,
 		                                &ndialog->app->setting);
 	}
-	if (ndialog->node_data)
-		ug_data_unref(ndialog->node_data);
+	if (ndialog->node_info)
+		ug_info_unref(ndialog->node_info);
 	ugtk_node_dialog_free (ndialog);
 }
 
@@ -479,7 +479,7 @@ static void on_response_new_download (GtkDialog *dialog, gint response_id,
 	if (response_id == GTK_RESPONSE_OK) {
 		ugtk_node_dialog_store_recent (ndialog, ndialog->app);
 		dnode = uget_node_new (NULL);
-		ugtk_node_dialog_get(ndialog, dnode->data);
+		ugtk_node_dialog_get(ndialog, dnode->info);
 		ugtk_node_dialog_get_category (ndialog, &cnode);
 		uri = gtk_entry_get_text ((GtkEntry*) ndialog->download.uri_entry);
 		if (ugtk_node_dialog_confirm_existing (ndialog, uri)) {
@@ -488,8 +488,8 @@ static void on_response_new_download (GtkDialog *dialog, gint response_id,
 			                                &ndialog->app->setting);
 		}
 	}
-	if (ndialog->node_data)
-		ug_data_unref(ndialog->node_data);
+	if (ndialog->node_info)
+		ug_info_unref(ndialog->node_info);
 	ugtk_node_dialog_free (ndialog);
 }
 
@@ -498,13 +498,13 @@ static void on_response_edit_category (GtkDialog *dialog, gint response_id,
 {
 	UgtkApp* app;
 
-	if (response_id == GTK_RESPONSE_OK && ndialog->node_data) {
+	if (response_id == GTK_RESPONSE_OK && ndialog->node_info) {
 		app = ndialog->app;
-		ugtk_node_dialog_get(ndialog, ndialog->node_data);
-		// if ndialog->node_data->ref_count == 1, ndialog->node is freed by App
-		if (ndialog->node_data->ref_count > 1)
+		ugtk_node_dialog_get(ndialog, ndialog->node_info);
+		// if ndialog->node_info->ref_count == 1, ndialog->node is freed by App
+		if (ndialog->node_info->ref_count > 1)
 			ugtk_app_category_changed(app, ndialog->node);
-		ug_data_unref(ndialog->node_data);
+		ug_info_unref(ndialog->node_info);
 		ugtk_download_form_get_folders (&ndialog->download,
 		                                &app->setting);
 	}
@@ -516,18 +516,18 @@ static void on_response_edit_download (GtkDialog *dialog, gint response_id,
 {
 	UgtkApp*    app;
 
-	if (response_id == GTK_RESPONSE_OK && ndialog->node_data) {
+	if (response_id == GTK_RESPONSE_OK && ndialog->node_info) {
 		app = ndialog->app;
-		uget_uri_hash_remove_download(app->uri_hash, ndialog->node_data);
-		ugtk_node_dialog_get(ndialog, ndialog->node_data);
-		uget_uri_hash_add_download(app->uri_hash, ndialog->node_data);
-		// if ndialog->node_data->ref_count == 1, ndialog->node is freed by App
-		if (ndialog->node_data->ref_count > 1) {
+		uget_uri_hash_remove_download(app->uri_hash, ndialog->node_info);
+		ugtk_node_dialog_get(ndialog, ndialog->node_info);
+		uget_uri_hash_add_download(app->uri_hash, ndialog->node_info);
+		// if ndialog->node_info->ref_count == 1, ndialog->node is freed by App
+		if (ndialog->node_info->ref_count > 1) {
 			ugtk_traveler_reserve_selection (&app->traveler);
 			uget_app_reset_download_name((UgetApp*) app, ndialog->node);
 			ugtk_traveler_restore_selection (&app->traveler);
 		}
-		ug_data_unref(ndialog->node_data);
+		ug_info_unref(ndialog->node_info);
 		ugtk_download_form_get_folders (&ndialog->download,
 		                                &app->setting);
 	}

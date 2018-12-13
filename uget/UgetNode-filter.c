@@ -67,7 +67,7 @@ void  uget_node_filter_split (UgetNode* node, UgetNode* sibling, UgetNode* child
 	else if (node->parent->parent == NULL) {
 		// node is category. child_real is download
 		child = child_real->base;
-		relation = ug_data_realloc(child->data, UgetRelationInfo);
+		relation = ug_info_realloc(child->info, UgetRelationInfo);
 		group = uget_node_get_group(node);
 		if ((relation->group & UGET_GROUP_MAJOR) == 0)
 			relation->group |= UGET_GROUP_QUEUING;
@@ -142,9 +142,9 @@ void  uget_node_filter_mix (UgetNode* node, UgetNode* sibling, UgetNode* child)
 		}
 
 		// reorder by group
-		relation_child = ug_data_realloc(child->data, UgetRelationInfo);
+		relation_child = ug_info_realloc(child->info, UgetRelationInfo);
 		if (sibling) {
-			relation_sibling = ug_data_realloc(sibling->data, UgetRelationInfo);
+			relation_sibling = ug_info_realloc(sibling->info, UgetRelationInfo);
 			if ((relation_sibling->group & UGET_GROUP_MAJOR) !=
 			    (relation_child->group   & UGET_GROUP_MAJOR))
 			{

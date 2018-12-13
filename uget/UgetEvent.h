@@ -40,7 +40,7 @@
 #include <time.h>
 #include <stdint.h>
 #include <UgList.h>
-#include <UgGroupData.h>
+#include <UgData.h>
 #include <UgEntry.h>
 #include <UgetNode.h>
 

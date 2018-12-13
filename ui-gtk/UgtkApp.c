@@ -87,7 +87,7 @@ void  ugtk_app_init (UgtkApp* app, UgetRpc* rpc)
 	ugtk_menubar_sync_category (&app->menubar, app, TRUE);
 
 	app->recent.category_index = 0;
-	app->recent.data = ug_data_new(8, 0);
+	app->recent.info = ug_info_new(8, 0);
 	// RSS
 	uget_rss_add_builtin (app->rss_builtin, UGET_RSS_STABLE);
 	uget_rss_add_builtin (app->rss_builtin, UGET_RSS_NEWS);
@@ -117,7 +117,7 @@ void  ugtk_app_final (UgtkApp* app)
 		shutdown_now = app->setting.aria2.shutdown;
 	else
 		shutdown_now = FALSE;
-	ug_data_unref(app->recent.data);
+	ug_info_unref(app->recent.info);
 	uget_rss_unref (app->rss_builtin);
 	uget_app_final ((UgetApp*) app);
 	// plug-in finalize
@@ -889,15 +889,15 @@ void  ugtk_app_create_category (UgtkApp* app)
 	cnode_src = app->traveler.category.cursor.node->base;
 	if (cnode_src->parent != &app->real)
 		cnode_src = app->real.children;
-	common_src = ug_data_get(cnode_src->data, UgetCommonInfo);
+	common_src = ug_info_get(cnode_src->info, UgetCommonInfo);
 	cnode = uget_node_new (NULL);
-	common = ug_data_realloc(cnode->data, UgetCommonInfo);
-	ug_data_assign (cnode->data, cnode_src->data, NULL);
+	common = ug_info_realloc(cnode->info, UgetCommonInfo);
+	ug_info_assign (cnode->info, cnode_src->info, NULL);
 	ug_free(common->name);
 	common->name = ug_strdup_printf("%s%s", _("Copy - "),
 						(common_src->name) ? common_src->name : NULL);
 
-	ugtk_node_dialog_set (ndialog, cnode->data);
+	ugtk_node_dialog_set (ndialog, cnode->info);
 	ugtk_node_dialog_run (ndialog, UGTK_NODE_DIALOG_NEW_CATEGORY, cnode);
 }
 
@@ -1054,7 +1054,7 @@ void  ugtk_app_edit_category (UgtkApp* app)
 	ndialog = ugtk_node_dialog_new (title, app, TRUE);
 	g_free (title);
 	ugtk_download_form_set_folders (&ndialog->download, &app->setting);
-	ugtk_node_dialog_set (ndialog, node->base->data);
+	ugtk_node_dialog_set (ndialog, node->base->info);
 	ugtk_node_dialog_run (ndialog, UGTK_NODE_DIALOG_EDIT_CATEGORY, node->base);
 }
 
@@ -1070,7 +1070,7 @@ void  ugtk_app_edit_download (UgtkApp* app)
 	ugtk_download_form_set_folders (&ndialog->download, &app->setting);
 
 	node = app->traveler.download.cursor.node;
-	ugtk_node_dialog_set (ndialog, node->base->data);
+	ugtk_node_dialog_set (ndialog, node->base->info);
 	ugtk_node_dialog_run (ndialog, UGTK_NODE_DIALOG_EDIT_DOWNLOAD, node->base);
 }
 
@@ -1094,7 +1094,7 @@ void  ugtk_app_queue_download (UgtkApp* app, gboolean keep_active)
 		node = link->data;
 		node = node->base;
 		link->data = node;
-		relation = ug_data_realloc(node->data, UgetRelationInfo);
+		relation = ug_info_realloc(node->info, UgetRelationInfo);
 		if (keep_active && relation->group & UGET_GROUP_ACTIVE)
 			continue;
 		uget_app_queue_download ((UgetApp*) app, node);
@@ -1160,7 +1160,7 @@ void  ugtk_app_switch_download_state (UgtkApp* app)
 		node = link->data;
 		node = node->base;
 		link->data = node;
-		relation = ug_data_realloc(node->data, UgetRelationInfo);
+		relation = ug_info_realloc(node->info, UgetRelationInfo);
 		if (relation->group & UGET_GROUP_PAUSED)
 			uget_app_queue_download ((UgetApp*) app, node);
 		else if (relation->group & UGET_GROUP_ACTIVE)
@@ -1575,7 +1575,7 @@ static void  on_export_text_file_response (GtkWidget* dialog, gint response, Ugt
 
 	node = app->traveler.category.cursor.node->base;
 	for (node = node->children;  node;  node = node->next) {
-		common = ug_data_get (node->data, UgetCommonInfo);
+		common = ug_info_get (node->info, UgetCommonInfo);
 		if (common == NULL)
 			continue;
 		if (common->uri) {
@@ -1773,10 +1773,10 @@ void  ugtk_app_add_default_category (UgtkApp* app)
 	static int    counts = 0;
 
 	cnode = uget_node_new (NULL);
-	common = ug_data_realloc (cnode->data, UgetCommonInfo);
+	common = ug_info_realloc (cnode->info, UgetCommonInfo);
 	common->name = ug_strdup_printf ("%s %d", _("New"), counts++);
 	common->folder = ug_strdup (g_get_home_dir ());
-	category = ug_data_realloc (cnode->data, UgetCategoryInfo);
+	category = ug_info_realloc (cnode->info, UgetCategoryInfo);
 	*(char**)ug_array_alloc (&category->schemes, 1) = ug_strdup ("ftps");
 	*(char**)ug_array_alloc (&category->schemes, 1) = ug_strdup ("magnet");
 	*(char**)ug_array_alloc (&category->hosts, 1) = ug_strdup (".edu");

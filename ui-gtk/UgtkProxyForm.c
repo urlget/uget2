@@ -181,14 +181,14 @@ static void  ugtk_proxy_form_std_init (UgtkProxyForm* pform)
 	gtk_widget_show_all (pform->std);
 }
 
-void  ugtk_proxy_form_get (UgtkProxyForm* pform, UgData* node_data)
+void  ugtk_proxy_form_get (UgtkProxyForm* pform, UgInfo* node_info)
 {
 	UgetProxy*  proxy;
 	gint        index;
 	const gchar* text;
 
 	index = gtk_combo_box_get_active ((GtkComboBox*) pform->type);
-	proxy = ug_data_realloc (node_data, UgetProxyInfo);
+	proxy = ug_info_realloc (node_info, UgetProxyInfo);
 	proxy->type = index;
 	// user
 	text = gtk_entry_get_text ((GtkEntry*)pform->user);
@@ -221,11 +221,11 @@ void  ugtk_proxy_form_get (UgtkProxyForm* pform, UgData* node_data)
 #endif	// HAVE_LIBPWMD
 }
 
-void  ugtk_proxy_form_set (UgtkProxyForm* pform, UgData* node_data, gboolean keep_changed)
+void  ugtk_proxy_form_set (UgtkProxyForm* pform, UgInfo* node_info, gboolean keep_changed)
 {
 	UgetProxy*  proxy;
 
-	proxy = ug_data_get (node_data, UgetProxyInfo);
+	proxy = ug_info_get (node_info, UgetProxyInfo);
 	// if no proxy data
 	if (proxy == NULL) {
 		pform->changed.enable = FALSE;	// disable changed flags

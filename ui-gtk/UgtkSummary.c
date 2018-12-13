@@ -91,7 +91,7 @@ void  ugtk_summary_show (UgtkSummary* summary, UgetNode* node)
 	}
 
 	iter.stamp = 0;   // used by ugtk_summary_store_realloc_next()
-	temp.common = ug_data_get (node->data, UgetCommonInfo);
+	temp.common = ug_info_get (node->info, UgetCommonInfo);
 
 	// Summary Name
 	if (summary->visible.name) {
@@ -129,9 +129,9 @@ void  ugtk_summary_show (UgtkSummary* summary, UgetNode* node)
 	if (summary->visible.category) {
 		name = g_strconcat (_("Category"), ":", NULL);
 		if (node->parent) {
-			temp.common = ug_data_get (node->parent->data, UgetCommonInfo);
+			temp.common = ug_info_get (node->parent->info, UgetCommonInfo);
 			value = (temp.common) ? temp.common->name : NULL;
-			temp.common = ug_data_get (node->data, UgetCommonInfo);
+			temp.common = ug_info_get (node->info, UgetCommonInfo);
 		}
 		else
 			value = NULL;
@@ -156,7 +156,7 @@ void  ugtk_summary_show (UgtkSummary* summary, UgetNode* node)
 		g_free (name);
 	}
 	// Summary Message
-	temp.log = ug_data_get (node->data, UgetLogInfo);
+	temp.log = ug_info_get (node->info, UgetLogInfo);
 	if (temp.log)
 		temp.event = (UgetEvent*) temp.log->messages.head;
 	if (summary->visible.message) {

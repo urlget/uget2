@@ -74,8 +74,8 @@ struct UgetNodeControl   uget_node_default_control =
 
 const UgEntry  UgetNodeEntry[] =
 {
-	{"data",     offsetof (UgetNode, data),  UG_ENTRY_CUSTOM,
-			ug_json_parse_data_ptr,   ug_json_write_data_ptr},
+	{"info",     offsetof (UgetNode, info),  UG_ENTRY_CUSTOM,
+			ug_json_parse_info_ptr,   ug_json_write_info_ptr},
 	{"children", 0,                          UG_ENTRY_ARRAY,
 			ug_json_parse_uget_node_children, ug_json_write_uget_node_children},
 
@@ -84,8 +84,8 @@ const UgEntry  UgetNodeEntry[] =
 			ug_json_parse_name2data,  NULL},
 	{"state",    0,                          UG_ENTRY_CUSTOM,
 			ug_json_parse_state2group, NULL},
-	{"info",     offsetof (UgetNode, data),  UG_ENTRY_CUSTOM,
-			ug_json_parse_data_ptr,   NULL},
+	{"data",     offsetof (UgetNode, info),  UG_ENTRY_CUSTOM,
+			ug_json_parse_info_ptr,   ug_json_write_info_ptr},
 	{NULL}    // null-terminated
 };
 
@@ -110,9 +110,9 @@ void  uget_node_init  (UgetNode* node, UgetNode* node_real)
 
 	if (node_real == NULL) {
 		node->base = node;    // pointer to self
-		node->data = ug_data_new(8, 2);
-		node->data->at[0].key = (void*) UgetRelationInfo;
-		node->data->at[1].key = (void*) UgetProgressInfo;
+		node->info = ug_info_new(8, 2);
+		node->info->at[0].key = (void*) UgetRelationInfo;
+		node->info->at[1].key = (void*) UgetProgressInfo;
 	}
 	else {
 		// this is a fake node.
@@ -121,8 +121,8 @@ void  uget_node_init  (UgetNode* node, UgetNode* node_real)
 		node->real = node_real;
 		node->peer = node_real->fake;
 		node_real->fake = node;
-		node->data = node_real->data;
-		ug_data_ref(node->data);
+		node->info = node_real->info;
+		ug_info_ref(node->info);
 	}
 }
 
@@ -136,7 +136,7 @@ void  uget_node_free (UgetNode* node)
 	uget_node_clear_fake (node);
 	uget_node_clear_children (node);
 //	ug_node_unlink ((UgNode*)node);
-	ug_data_unref(node->data);
+	ug_info_unref(node->info);
 
 #ifdef HAVE_GLIB
 	g_slice_free1 (sizeof (UgetNode), node);
@@ -522,12 +522,12 @@ static UgJsonError  ug_json_parse_name2data (UgJson* json,
 	// Now root node is category node
 	if (node->parent == NULL || node->parent->parent == NULL) {
 		// category or download node
-		temp.common = ug_data_realloc(node->data, UgetCommonInfo);
+		temp.common = ug_info_realloc(node->info, UgetCommonInfo);
 		temp.common->name = ug_strdup(value);
 	}
 	else if (node->parent->parent->parent == NULL) {
 		// file node
-		temp.files = ug_data_realloc(node->parent->data, UgetFilesInfo);
+		temp.files = ug_info_realloc(node->parent->info, UgetFilesInfo);
 		uget_files_realloc(temp.files, value);
 	}
 	return UG_JSON_ERROR_NONE;
@@ -547,7 +547,7 @@ static UgJsonError  ug_json_parse_state2group (UgJson* json,
 	else {
 		group = strtol(value, NULL, 10);
 		if (group != 0) {
-			relation = ug_data_realloc(node->data, UgetRelationInfo);
+			relation = ug_info_realloc(node->info, UgetRelationInfo);
 			relation->group = group;
 		}
 	}

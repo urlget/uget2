@@ -92,7 +92,7 @@ static const UgEntry  UgetFilesEntry[] =
 	{NULL}    // null-terminated
 };
 
-static const UgGroupDataInfo  UgetFilesInfoStatic =
+static const UgDataInfo  UgetFilesInfoStatic =
 {
 	"files",               // name
 	sizeof(UgetFiles),     // size
@@ -102,7 +102,7 @@ static const UgGroupDataInfo  UgetFilesInfoStatic =
 	UgetFilesEntry,
 };
 // extern
-const UgGroupDataInfo*  UgetFilesInfo = &UgetFilesInfoStatic;
+const UgDataInfo*  UgetFilesInfo = &UgetFilesInfoStatic;
 
 static void uget_files_init(UgetFiles* files)
 {

@@ -99,12 +99,12 @@ static int  mega_request_info(UgetPluginMega* plugin, const char* id);
 static int  mega_decrypt_file(UgetPluginMega* plugin, int preset_progress);
 
 // ----------------------------------------------------------------------------
-// UgetPluginInfo (derived from UgGroupDataInfo)
+// UgetPluginInfo (derived from UgDataInfo)
 
 static void plugin_init (UgetPluginMega* plugin);
 static void plugin_final(UgetPluginMega* plugin);
-static int  plugin_accept(UgetPluginMega* plugin, UgData* data);
-static int  plugin_sync  (UgetPluginMega* plugin, UgData* data);
+static int  plugin_accept(UgetPluginMega* plugin, UgInfo* node_info);
+static int  plugin_sync  (UgetPluginMega* plugin, UgInfo* node_info);
 static int  plugin_ctrl  (UgetPluginMega* plugin, int code, void* data);
 
 static const char* schemes[] = {"https", NULL};
@@ -161,11 +161,11 @@ static void plugin_final(UgetPluginMega* plugin)
 
 static UgThreadResult  plugin_thread(UgetPluginMega* plugin);
 
-static int  plugin_accept(UgetPluginMega* plugin, UgData* data)
+static int  plugin_accept(UgetPluginMega* plugin, UgInfo* node_info)
 {
 	UgetCommon*  common;
 
-	common = ug_data_get(data, UgetCommonInfo);
+	common = ug_info_get(node_info, UgetCommonInfo);
 	if (common == NULL || common->uri == NULL)
 		return FALSE;
 
@@ -177,12 +177,12 @@ static int  plugin_accept(UgetPluginMega* plugin, UgData* data)
 		return FALSE;
 	}
 
-	plugin->target_data = ug_data_new(8, 2);
-	ug_data_assign(plugin->target_data, data, NULL);
-	plugin->target_files  = ug_data_realloc(plugin->target_data, UgetFilesInfo);
-	plugin->target_proxy  = ug_data_get(plugin->target_data, UgetProxyInfo);
-	plugin->target_common = ug_data_get(plugin->target_data, UgetCommonInfo);
-	plugin->target_progress = ug_data_realloc(plugin->target_data, UgetProgressInfo);
+	plugin->target_info = ug_info_new(8, 0);
+	ug_info_assign(plugin->target_info, node_info, NULL);
+	plugin->target_files  = ug_info_realloc(plugin->target_info, UgetFilesInfo);
+	plugin->target_proxy  = ug_info_get(plugin->target_info, UgetProxyInfo);
+	plugin->target_common = ug_info_get(plugin->target_info, UgetCommonInfo);
+	plugin->target_progress = ug_info_realloc(plugin->target_info, UgetProgressInfo);
 
 	return TRUE;
 }
@@ -191,7 +191,7 @@ int   plugin_ctrl(UgetPluginMega* plugin, int code, void* data)
 {
 	switch (code) {
 	case UGET_PLUGIN_CTRL_START:
-		if (plugin->target_data) {
+		if (plugin->target_info) {
 			return uget_plugin_agent_start((UgetPluginAgent*)plugin,
 			                               (UgThreadFunc)plugin_thread);
 		}
@@ -246,7 +246,7 @@ static UgThreadResult  plugin_thread(UgetPluginMega* plugin)
 	                             &plugin_info);
 	// create target_plugin to download
 	plugin->target_plugin = uget_plugin_new(plugin_info);
-	uget_plugin_accept(plugin->target_plugin, plugin->target_data);
+	uget_plugin_accept(plugin->target_plugin, plugin->target_info);
 	uget_plugin_ctrl_speed(plugin->target_plugin, plugin->limit);
 	if (uget_plugin_start(plugin->target_plugin) == FALSE) {
 		msg = uget_event_new_error(UGET_EVENT_ERROR_THREAD_CREATE_FAILED,
@@ -301,7 +301,7 @@ static UgThreadResult  plugin_thread(UgetPluginMega* plugin)
 		plugin->synced = FALSE;
 		uget_plugin_lock(plugin);
 		uget_plugin_sync(plugin->target_plugin,
-		                 plugin->target_data);
+		                 plugin->target_info);
 		uget_plugin_unlock(plugin);
 	} while (uget_plugin_get_state(plugin->target_plugin));
 
@@ -321,7 +321,7 @@ exit:
 	return UG_THREAD_RESULT;
 }
 
-static int  plugin_sync(UgetPluginMega* plugin, UgData* data)
+static int  plugin_sync(UgetPluginMega* plugin, UgInfo* node_info)
 {
 	UgetFiles*     files;
 	UgetCommon*    common;
@@ -336,20 +336,20 @@ static int  plugin_sync(UgetPluginMega* plugin, UgData* data)
 	if (plugin->target_common == NULL)
 		return FALSE;
 
-	// sync common data (include speed limit) between foreign data and target_data
-	common = ug_data_realloc(data, UgetCommonInfo);
+	// sync common data (include speed limit) between foreign info and target_info
+	common = ug_info_realloc(node_info, UgetCommonInfo);
 	uget_plugin_agent_sync_common((UgetPluginAgent*) plugin,
 	                              common, plugin->target_common);
 
-	// sync progress data from target_data to foreign data
-	progress = ug_data_realloc(data, UgetProgressInfo);
+	// sync progress data from target_info to foreign info
+	progress = ug_info_realloc(node_info, UgetProgressInfo);
 	uget_plugin_agent_sync_progress((UgetPluginAgent*) plugin,
 	                                progress, plugin->target_progress);
 	if (plugin->decrypting == FALSE)
 		progress->percent = progress->percent * 96 / 100;
 
 	// update UgetFiles
-	files = ug_data_realloc(data, UgetFilesInfo);
+	files = ug_info_realloc(node_info, UgetFilesInfo);
 	uget_plugin_lock(plugin);
 	uget_files_sync(files, plugin->target_files);
 	uget_plugin_unlock(plugin);

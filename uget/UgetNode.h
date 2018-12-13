@@ -40,7 +40,7 @@
 #include <stddef.h>    // offsetof()
 #include <stdint.h>    // int16_t
 #include <UgNode.h>
-#include <UgData.h>
+#include <UgInfo.h>
 #include <UgUri.h>
 
 #ifdef __cplusplus
@@ -170,7 +170,7 @@ struct UgetNode
 	UgetNode*     fake;
 	UgetNode*     peer;
 
-	UgData*       data;
+	UgInfo*       info;
 	struct UgetNodeControl*  control;
 };
 

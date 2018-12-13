@@ -47,8 +47,8 @@ int   uget_node_compare_name (UgetNode* node1, UgetNode* node2)
 	UgetCommon* common1;
 	UgetCommon* common2;
 
-	common1 = ug_data_get(node1->data, UgetCommonInfo);
-	common2 = ug_data_get(node2->data, UgetCommonInfo);
+	common1 = ug_info_get(node1->info, UgetCommonInfo);
+	common2 = ug_info_get(node2->info, UgetCommonInfo);
 
 	if (common1 && common1->name) {
 		if (common2->name == NULL)
@@ -70,8 +70,8 @@ int   uget_node_compare_complete (UgetNode* node1, UgetNode* node2)
 
 	node1 = node1->base;
 	node2 = node2->base;
-	progress1 = ug_data_get (node1->data, UgetProgressInfo);
-	progress2 = ug_data_get (node2->data, UgetProgressInfo);
+	progress1 = ug_info_get (node1->info, UgetProgressInfo);
+	progress2 = ug_info_get (node2->info, UgetProgressInfo);
 	if (progress1) {
 		if (progress2 == NULL)
 			return 1;
@@ -98,8 +98,8 @@ int   uget_node_compare_size (UgetNode* node1, UgetNode* node2)
 
 	node1 = node1->base;
 	node2 = node2->base;
-	progress1 = ug_data_get (node1->data, UgetProgressInfo);
-	progress2 = ug_data_get (node2->data, UgetProgressInfo);
+	progress1 = ug_info_get (node1->info, UgetProgressInfo);
+	progress2 = ug_info_get (node2->info, UgetProgressInfo);
 	if (progress1) {
 		if (progress2 == NULL)
 			return 1;
@@ -126,8 +126,8 @@ int   uget_node_compare_percent (UgetNode* node1, UgetNode* node2)
 
 	node1 = node1->base;
 	node2 = node2->base;
-	progress1 = ug_data_get (node1->data, UgetProgressInfo);
-	progress2 = ug_data_get (node2->data, UgetProgressInfo);
+	progress1 = ug_info_get (node1->info, UgetProgressInfo);
+	progress2 = ug_info_get (node2->info, UgetProgressInfo);
 	if (progress1) {
 		if (progress2 == NULL)
 			return 1;
@@ -154,8 +154,8 @@ int   uget_node_compare_elapsed (UgetNode* node1, UgetNode* node2)
 
 	node1 = node1->base;
 	node2 = node2->base;
-	progress1 = ug_data_get (node1->data, UgetProgressInfo);
-	progress2 = ug_data_get (node2->data, UgetProgressInfo);
+	progress1 = ug_info_get (node1->info, UgetProgressInfo);
+	progress2 = ug_info_get (node2->info, UgetProgressInfo);
 	if (progress1) {
 		if (progress2 == NULL)
 			return 1;
@@ -182,8 +182,8 @@ int   uget_node_compare_left (UgetNode* node1, UgetNode* node2)
 
 	node1 = node1->base;
 	node2 = node2->base;
-	progress1 = ug_data_get (node1->data, UgetProgressInfo);
-	progress2 = ug_data_get (node2->data, UgetProgressInfo);
+	progress1 = ug_info_get (node1->info, UgetProgressInfo);
+	progress2 = ug_info_get (node2->info, UgetProgressInfo);
 	if (progress1) {
 		if (progress2 == NULL)
 			return 1;
@@ -210,8 +210,8 @@ int   uget_node_compare_speed (UgetNode* node1, UgetNode* node2)
 
 	node1 = node1->base;
 	node2 = node2->base;
-	progress1 = ug_data_get (node1->data, UgetProgressInfo);
-	progress2 = ug_data_get (node2->data, UgetProgressInfo);
+	progress1 = ug_info_get (node1->info, UgetProgressInfo);
+	progress2 = ug_info_get (node2->info, UgetProgressInfo);
 	if (progress1) {
 		if (progress2 == NULL)
 			return 1;
@@ -238,8 +238,8 @@ int   uget_node_compare_upload_speed (UgetNode* node1, UgetNode* node2)
 
 	node1 = node1->base;
 	node2 = node2->base;
-	progress1 = ug_data_get (node1->data, UgetProgressInfo);
-	progress2 = ug_data_get (node2->data, UgetProgressInfo);
+	progress1 = ug_info_get (node1->info, UgetProgressInfo);
+	progress2 = ug_info_get (node2->info, UgetProgressInfo);
 	if (progress1) {
 		if (progress2 == NULL)
 			return 1;
@@ -266,8 +266,8 @@ int   uget_node_compare_uploaded (UgetNode* node1, UgetNode* node2)
 
 	node1 = node1->base;
 	node2 = node2->base;
-	progress1 = ug_data_get (node1->data, UgetProgressInfo);
-	progress2 = ug_data_get (node2->data, UgetProgressInfo);
+	progress1 = ug_info_get (node1->info, UgetProgressInfo);
+	progress2 = ug_info_get (node2->info, UgetProgressInfo);
 	if (progress1) {
 		if (progress2 == NULL)
 			return 1;
@@ -294,8 +294,8 @@ int   uget_node_compare_ratio (UgetNode* node1, UgetNode* node2)
 
 	node1 = node1->base;
 	node2 = node2->base;
-	progress1 = ug_data_get (node1->data, UgetProgressInfo);
-	progress2 = ug_data_get (node2->data, UgetProgressInfo);
+	progress1 = ug_info_get (node1->info, UgetProgressInfo);
+	progress2 = ug_info_get (node2->info, UgetProgressInfo);
 	if (progress1) {
 		if (progress2 == NULL)
 			return 1;
@@ -322,8 +322,8 @@ int   uget_node_compare_retry (UgetNode* node1, UgetNode* node2)
 
 	node1 = node1->base;
 	node2 = node2->base;
-	common1 = ug_data_get (node1->data, UgetCommonInfo);
-	common2 = ug_data_get (node2->data, UgetCommonInfo);
+	common1 = ug_info_get (node1->info, UgetCommonInfo);
+	common2 = ug_info_get (node2->info, UgetCommonInfo);
 	if (common1) {
 		if (common2 == NULL)
 			return 1;
@@ -355,8 +355,8 @@ int   uget_node_compare_uri (UgetNode* node1, UgetNode* node2)
 
 	node1 = node1->base;
 	node2 = node2->base;
-	common1 = ug_data_get (node1->data, UgetCommonInfo);
-	common2 = ug_data_get (node2->data, UgetCommonInfo);
+	common1 = ug_info_get (node1->info, UgetCommonInfo);
+	common2 = ug_info_get (node2->info, UgetCommonInfo);
 	if (common1) {
 		if (common2 == NULL)
 			return 1;
@@ -377,8 +377,8 @@ int   uget_node_compare_added_time (UgetNode* node1, UgetNode* node2)
 
 	node1 = node1->base;
 	node2 = node2->base;
-	log1 = ug_data_get (node1->data, UgetLogInfo);
-	log2 = ug_data_get (node2->data, UgetLogInfo);
+	log1 = ug_info_get (node1->info, UgetLogInfo);
+	log2 = ug_info_get (node2->info, UgetLogInfo);
 	if (log1) {
 		if (log2 == NULL)
 			return 1;
@@ -405,8 +405,8 @@ int   uget_node_compare_completed_time (UgetNode* node1, UgetNode* node2)
 
 	node1 = node1->base;
 	node2 = node2->base;
-	log1 = ug_data_get (node1->data, UgetLogInfo);
-	log2 = ug_data_get (node2->data, UgetLogInfo);
+	log1 = ug_info_get (node1->info, UgetLogInfo);
+	log2 = ug_info_get (node2->info, UgetLogInfo);
 	if (log1) {
 		if (log2 == NULL)
 			return 1;
