@@ -128,7 +128,8 @@ void  test_download(void)
 	char*        uri;
 	char*        mirrors;
 
-	uri = "https://mega.nz/#!MSpjBRhZ!nZBsUQCAnf71842wXuals_ftSkga3fIQypzBsKEZbmk";
+	uri = "https://mega.nz/#F!i5FXiSoD!TObpvqxETCq8TbEhFevzpg";
+//	uri = "https://mega.nz/#!MSpjBRhZ!nZBsUQCAnf71842wXuals_ftSkga3fIQypzBsKEZbmk";
 //	uri = "https://www.youtube.com/watch?v=y2004Xaz2HU";
 //	uri = "http://download.tuxfamily.org/notepadplus/6.5.3/npp.6.5.3.Installer.exe";
 //	uri = "http://ftp.gimp.org/pub/gimp/v2.8/windows/gimp-2.8.10-setup.exe";
