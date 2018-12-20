@@ -632,26 +632,20 @@ void  ug_json_write_list_message(UgJson* json, UgList* list)
 static void uget_relation_init(UgetRelation* relation);
 static void uget_relation_final(UgetRelation* relation);
 
-static const UgEntry  UgetRelationTaskEntry[] =
-{
-	{"plugin-name",
-			offsetof(struct UgetRelationTask, plugin_name), UG_ENTRY_STRING,
-			NULL,
-			UG_ENTRY_NO_NULL},
-	{"priority",
-			offsetof(struct UgetRelationTask, priority), UG_ENTRY_INT,
-			NULL,
-			NULL},
-	{NULL}		// null-terminated
-};
+// deprecated
+static UgJsonError  ug_json_parse_task_priority (UgJson* json,
+                                const char* name, const char* value,
+                                void* prelation, void* none);
 
 static const UgEntry  UgetRelationEntry[] =
 {
-	{"group", offsetof(UgetRelation, group), UG_ENTRY_INT,
+	{"group",    offsetof(UgetRelation, group),    UG_ENTRY_INT,
 			NULL, NULL},
-	{"task",  offsetof(UgetRelation, task),  UG_ENTRY_OBJECT,
-			(void*) UgetRelationTaskEntry,
-			(UgInitFunc) NULL},
+	{"priority", offsetof(UgetRelation, priority), UG_ENTRY_INT,
+			NULL, NULL},
+
+	// deprecated
+	{"task",     0, UG_ENTRY_CUSTOM, ug_json_parse_task_priority, NULL},
 	{NULL}		// null-terminated
 };
 
@@ -669,12 +663,27 @@ const UgDataInfo*  UgetRelationInfo = &UgetRelationInfoStatic;
 
 static void uget_relation_init(UgetRelation* relation)
 {
-	relation->task.priority = UGET_PRIORITY_NORMAL;
+	relation->priority = UGET_PRIORITY_NORMAL;
 }
 
 static void uget_relation_final(UgetRelation* relation)
 {
-	ug_free(relation->task.plugin_name);
+	ug_free(relation->task);
+}
+
+// deprecated - convert old format to new
+static UgJsonError  ug_json_parse_task_priority (UgJson* json,
+                                const char* name, const char* value,
+                                void* prelation, void* none)
+{
+	UgetRelation*     relation = prelation;
+
+	if (strcmp(name, "task") == 0 && json->type == UG_JSON_OBJECT)
+		ug_json_push(json, ug_json_parse_task_priority, relation, none);
+	else if (strcmp(name, "priority") == 0 && json->type == UG_JSON_NUMBER)
+		relation->priority = strtol(value, NULL, 10);
+
+	return UG_JSON_ERROR_NONE;
 }
 
 // ----------------------------------------------------------------------------

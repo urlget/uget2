@@ -1039,8 +1039,8 @@ int   uget_app_pause_download (UgetApp* app, UgetNode* dnode)
 	relation = ug_info_realloc(dnode->info, UgetRelationInfo);
 	if (relation->group & UGET_GROUP_ACTIVE) {
 //		uget_task_remove (&app->task, dnode);
-		if (relation && relation->task.plugin)
-			uget_plugin_stop (relation->task.plugin);
+		if (relation && relation->task)
+			uget_plugin_stop (relation->task->plugin);
 		relation->group &= ~UGET_GROUP_ACTIVE;
 	}
 	else if (relation->group & UGET_GROUP_UNRUNNABLE)

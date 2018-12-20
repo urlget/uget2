@@ -639,7 +639,7 @@ static void on_set_download_prioriy (GtkWidget* widget, UgtkApp* app)
 		node = link->data;
 		node = node->base;
 		relation = ug_info_realloc (node->info, UgetRelationInfo);
-		relation->task.priority = priority;
+		relation->priority = priority;
 	}
 	g_list_free (list);
 }

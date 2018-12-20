@@ -197,13 +197,15 @@ void  print_speed_limit (UgetNode** dnode, int count)
 
 	for (count = 0;  count < 7;  count++) {
 		relation = ug_info_get (dnode[count]->info, UgetRelationInfo);
-		printf ("limit D: %d, U: %d | speed D: %d, U: %d\n",
-				relation->task.limit[0],
-				relation->task.limit[1],
-				relation->task.speed[0],
-				relation->task.speed[1]);
-		total[0] += relation->task.limit[0];
-		total[1] += relation->task.limit[1];
+		if (relation->task) {
+			printf ("limit D: %d, U: %d | speed D: %d, U: %d\n",
+					relation->task->limit[0],
+					relation->task->limit[1],
+					relation->task->speed[0],
+					relation->task->speed[1]);
+			total[0] += relation->task->limit[0];
+			total[1] += relation->task->limit[1];
+		}
 	}
 
 	printf ("total limit D: %d, U: %d\n",
@@ -225,14 +227,18 @@ void  test_task (void)
 	for (count = 0;  count < 7;  count++) {
 		dnode[count] = uget_node_new (NULL);
 		relation = ug_info_realloc (dnode[count]->info, UgetRelationInfo);
-		relation->task.limit[0] = 2000;
-		relation->task.limit[1] = 1500;
-		relation->task.speed[0] = 2000 - count * 200;
-		relation->task.speed[1] = 1500 - count * 200;
 		uget_task_add (task, dnode[count], UgetPluginEmptyInfo);
+		if (relation->task) {
+			relation->task->limit[0] = 2000;
+			relation->task->limit[1] = 1500;
+			relation->task->speed[0] = 2000 - count * 200;
+			relation->task->speed[1] = 1500 - count * 200;
+		}
 	}
-	relation->task.limit[0] = 0;
-	relation->task.limit[1] = 0;
+	if (relation->task) {
+		relation->task->limit[0] = 0;
+		relation->task->limit[1] = 0;
+	}
 
 	uget_task_set_speed (task, 12000, 8000);
 	print_speed_limit(dnode, 7);

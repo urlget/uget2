@@ -345,18 +345,17 @@ struct UgetRelation
 	UG_DATA_MEMBERS;
 //	const UgDataInfo*  info;    // UgData(UgType) member
 
-	int   group;     // UgetGroup
+	int    group;      // UgetGroup
+	int    priority;   // UgetPriority
 
 	// used by UgetTask
 	struct UgetRelationTask {
 		UgetRelation*  prev;
 		UgetPlugin*  plugin;
-		char*        plugin_name;
-		int          priority;   // UgetPriority
 		// speed control
 		int          speed[2];   // current speed
 		int          limit[2];   // current speed limit
-	} task;
+	}* task;
 };
 
 /* ----------------------------------------------------------------------------

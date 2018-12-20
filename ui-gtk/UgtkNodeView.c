@@ -295,7 +295,7 @@ static void col_set_left (GtkTreeViewColumn *tree_column,
 	progress = ug_info_get (node->info, UgetProgressInfo);
 	relation = ug_info_get (node->info, UgetRelationInfo);
 
-	if (progress && relation && relation->task.plugin)
+	if (progress && relation && relation->task)
 		string = ug_str_from_seconds ((int) progress->left, TRUE);
 	else
 		string = NULL;
@@ -325,7 +325,7 @@ static void col_set_speed (GtkTreeViewColumn *tree_column,
 	progress = ug_info_get (node->info, UgetProgressInfo);
 	relation = ug_info_get (node->info, UgetRelationInfo);
 
-	if (progress && relation && relation->task.plugin)
+	if (progress && relation && relation->task)
 		string = ug_str_from_int_unit (progress->download_speed, "/s");
 	else
 		string = NULL;
@@ -355,7 +355,7 @@ static void col_set_upload_speed (GtkTreeViewColumn *tree_column,
 	progress = ug_info_get (node->info, UgetProgressInfo);
 	relation = ug_info_get (node->info, UgetRelationInfo);
 
-	if (progress && relation && relation->task.plugin && progress->upload_speed)
+	if (progress && relation && relation->task && progress->upload_speed)
 		string = ug_str_from_int_unit (progress->upload_speed, "/s");
 	else
 		string = NULL;

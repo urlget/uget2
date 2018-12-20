@@ -72,7 +72,7 @@ int   uget_task_add(UgetTask* task, UgetNode* node, const UgetPluginInfo* info)
 
 	// UgetRelation: check exist plug-in
 	relation = ug_info_realloc(node->info, UgetRelationInfo);
-	if (relation->task.plugin)
+	if (relation->task)
 		return FALSE;
 
 	// UgetProgress: clear progress when it completed
@@ -95,8 +95,9 @@ int   uget_task_add(UgetTask* task, UgetNode* node, const UgetPluginInfo* info)
 		temp.common->retry_count = 0;
 
 	// create plug-in and control it
-	relation->task.plugin = uget_plugin_new(info);
-	uget_plugin_accept(relation->task.plugin, node->info);
+	relation->task = ug_malloc0(sizeof(struct UgetRelationTask));
+	relation->task->plugin = uget_plugin_new(info);
+	uget_plugin_accept(relation->task->plugin, node->info);
 	if (task->limit.download || task->limit.upload) {
 		// backup current speed limit
 		temp_int_array[0] = task->limit.download;
@@ -108,20 +109,21 @@ int   uget_task_add(UgetTask* task, UgetNode* node, const UgetPluginInfo* info)
 		                    temp_int_array[0] - dlul_int_array[0],
 		                    temp_int_array[1] - dlul_int_array[1]);
 		// set speed limit for new task
-		uget_plugin_ctrl_speed(relation->task.plugin, dlul_int_array);
+		uget_plugin_ctrl_speed(relation->task->plugin, dlul_int_array);
 		// restore current speed limit
 		task->limit.download = temp_int_array[0];
 		task->limit.upload   = temp_int_array[1];
 	}
-	if (uget_plugin_start(relation->task.plugin) == FALSE) {
+	if (uget_plugin_start(relation->task->plugin) == FALSE) {
 		// dispatch error message from plug-in
-		uget_task_dispatch1(task, node, relation->task.plugin);
+		uget_task_dispatch1(task, node, relation->task->plugin);
 		// release plug-in
-		uget_plugin_unref(relation->task.plugin);
-		relation->task.plugin = NULL;
+		uget_plugin_unref(relation->task->plugin);
+		// free task runtime data
+		ug_free(relation->task);
+		relation->task = NULL;
 		return FALSE;
 	}
-	relation->task.plugin_name = ug_strdup(info->name);
 
 	ug_slinks_add((UgSLinks*) task, node);
 	return TRUE;
@@ -137,12 +139,14 @@ int  uget_task_remove(UgetTask* task, UgetNode* node)
 		// UgetRelation
 		relation = ug_info_get(node->info, UgetRelationInfo);
 		if (relation) {
-//			uget_plugin_post(relation->task.plugin,
+//			uget_plugin_post(relation->task->plugin,
 //					uget_event_new_state(node, UGET_GROUP_QUEUING));
-			uget_plugin_stop(relation->task.plugin);
-			uget_plugin_unref(relation->task.plugin);
-			relation->task.plugin = NULL;
+			uget_plugin_stop(relation->task->plugin);
+			uget_plugin_unref(relation->task->plugin);
 			relation->group &= ~UGET_GROUP_ACTIVE;
+			// free task runtime data
+			ug_free(relation->task);
+			relation->task = NULL;
 		}
 		return TRUE;
 	}
@@ -251,15 +255,15 @@ void  uget_task_dispatch(UgetTask* task)
 	for (link = task->used;  link;  link = link->next) {
 		node = link->data;
 		relation = ug_info_get(node->info, UgetRelationInfo);
-		if (uget_task_dispatch1(task, node, relation->task.plugin) == FALSE)
+		if (uget_task_dispatch1(task, node, relation->task->plugin) == FALSE)
 			continue;
 		// speed
 		progress = ug_info_get(node->info, UgetProgressInfo);
 		if (progress) {
 			task->speed.download += progress->download_speed;
 			task->speed.upload   += progress->upload_speed;
-			relation->task.speed[0] = progress->download_speed;
-			relation->task.speed[1] = progress->upload_speed;
+			relation->task->speed[0] = progress->download_speed;
+			relation->task->speed[1] = progress->upload_speed;
 		}
 	}
 }
@@ -326,21 +330,21 @@ static void uget_task_adjust_speed_index(UgetTask* task, int idx, int remain)
 		for (link = task->used;  link;  link = link->next) {
 			node = (UgetNode*) link->data;
 			relation = ug_info_get(node->info, UgetRelationInfo);
-			relation->task.prev = prev;
+			relation->task->prev = prev;
 			prev = relation;
-			n_piece += relation->task.priority + 1;
+			n_piece += relation->priority + 1;
 		}
 
 		remain = remain / n_piece;
 		for (;  relation;  relation = prev) {
-			relation->task.limit[idx] = relation->task.speed[idx] +
-			                            remain * (relation->task.priority+1);
-			if (relation->task.limit[idx] < SPEED_MIN)
-				relation->task.limit[idx] = SPEED_MIN;
-			uget_plugin_ctrl_speed(relation->task.plugin,
-			                       relation->task.limit);
-			prev = relation->task.prev;
-			relation->task.prev = NULL;
+			relation->task->limit[idx] = relation->task->speed[idx] +
+			                            remain * (relation->priority+1);
+			if (relation->task->limit[idx] < SPEED_MIN)
+				relation->task->limit[idx] = SPEED_MIN;
+			uget_plugin_ctrl_speed(relation->task->plugin,
+			                       relation->task->limit);
+			prev = relation->task->prev;
+			relation->task->prev = NULL;
 		}
 	}
 	else {
@@ -349,11 +353,11 @@ static void uget_task_adjust_speed_index(UgetTask* task, int idx, int remain)
 		for (link = task->used;  link;  link = link->next) {
 			node = (UgetNode*) link->data;
 			relation = ug_info_get(node->info, UgetRelationInfo);
-			relation->task.limit[idx] = relation->task.speed[idx] + remain;
-			if (relation->task.limit[idx] < SPEED_MIN)
-				relation->task.limit[idx] = SPEED_MIN;
-			uget_plugin_ctrl_speed(relation->task.plugin,
-			                       relation->task.limit);
+			relation->task->limit[idx] = relation->task->speed[idx] + remain;
+			if (relation->task->limit[idx] < SPEED_MIN)
+				relation->task->limit[idx] = SPEED_MIN;
+			uget_plugin_ctrl_speed(relation->task->plugin,
+			                       relation->task->limit);
 		}
 	}
 }
@@ -367,8 +371,8 @@ static void uget_task_disable_limit_index(UgetTask* task, int idx)
 	for (link = task->used;  link;  link = link->next) {
 		node = (UgetNode*) link->data;
 		relation = ug_info_get(node->info, UgetRelationInfo);
-		relation->task.limit[idx] = 0;
-		uget_plugin_ctrl_speed(relation->task.plugin,
-		                       relation->task.limit);
+		relation->task->limit[idx] = 0;
+		uget_plugin_ctrl_speed(relation->task->plugin,
+		                       relation->task->limit);
 	}
 }
