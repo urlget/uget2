@@ -251,6 +251,8 @@ UgJsonError ug_json_parse_info_ptr(UgJson* json,
                                const char* name, const char* value,
                                void** pinfo, void* none)
 {
+	UgInfo* info = *pinfo;
+
 	// UgInfo's type is UG_JSON_OBJECT
 	if (json->type != UG_JSON_OBJECT) {
 //		if (json->type == UG_JSON_ARRAY)
@@ -258,7 +260,9 @@ UgJsonError ug_json_parse_info_ptr(UgJson* json,
 		return UG_JSON_ERROR_TYPE_NOT_MATCH;
 	}
 
-	ug_json_push(json, ug_json_parse_info_reg, *pinfo, NULL);
+	// confirm that target UgInfo is empty. This can avoid parsing UgInfo repeatedly.
+	if (info->length == info->cache_length)
+		ug_json_push(json, ug_json_parse_info_reg, info, NULL);
 	return UG_JSON_ERROR_NONE;
 }
 
