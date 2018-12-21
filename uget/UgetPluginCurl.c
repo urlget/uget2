@@ -90,7 +90,7 @@ struct UriLink {
 };
 
 // ----------------------------------------------------------------------------
-// UgetPluginInfo (derived from UgDataInfo)
+// UgetPluginInfo (derived from UgTypeInfo)
 
 static void plugin_init (UgetPluginCurl* plugin);
 static void plugin_final(UgetPluginCurl* plugin);

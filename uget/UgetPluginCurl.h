@@ -50,7 +50,7 @@ extern "C" {
 
 typedef struct UgetPluginCurl    UgetPluginCurl;
 
-extern const   UgetPluginInfo*   UgetPluginCurlInfo;
+extern  const  UgetPluginInfo*   UgetPluginCurlInfo;
 
 /* ----------------------------------------------------------------------------
    UgetPluginCurl: libcurl plug-in that derived from UgetPlugin.
@@ -74,14 +74,14 @@ struct UgetPluginCurl
 	int           ref_count;
  */
 
-	// copy these UgGroupData from UgData that store in UgetApp
+	// copy these UgData from UgInfo that store in UgetApp
 	UgetCommon*   common;
 	UgetFiles*    files;
 	UgetProxy*    proxy;
 	UgetHttp*     http;
 	UgetFtp*      ftp;
 
-	// run-time
+	// run-time data
 //	struct curl_slist*  ftp_command;
 
 	struct {

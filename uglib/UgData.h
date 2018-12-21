@@ -118,7 +118,7 @@ struct UgDataInfo
 };
 
 /* ----------------------------------------------------------------------------
-   UgData: a group of data that store in UgData.
+   UgData: a group of data that store in UgInfo.
 
    UgType
    |
@@ -131,7 +131,7 @@ struct UgDataInfo
 struct UgData
 {
 	UG_DATA_MEMBERS;
-//	const UgDataInfo*  info;
+//	const UgDataInfo*  info;    // UgType member
 };
 
 // UgData* ug_data_new(const UgDataInfo* dinfo);

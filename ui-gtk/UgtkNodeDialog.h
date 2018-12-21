@@ -105,7 +105,7 @@ void             ugtk_node_dialog_free (UgtkNodeDialog* ndialog);
 int   ugtk_node_dialog_get_category (UgtkNodeDialog* ndialog, UgetNode** cnode);
 void  ugtk_node_dialog_set_category (UgtkNodeDialog* ndialog, UgetNode* cnode);
 
-// set/get node's data to/from UgtkNodeDialog
+// set/get node's info to/from UgtkNodeDialog
 void  ugtk_node_dialog_get (UgtkNodeDialog* ndialog, UgInfo* node_info);
 void  ugtk_node_dialog_set (UgtkNodeDialog* ndialog, UgInfo* node_info);
 

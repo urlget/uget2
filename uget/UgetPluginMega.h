@@ -47,9 +47,9 @@
 extern "C" {
 #endif
 
-typedef struct	UgetPluginMega   UgetPluginMega;
+typedef struct UgetPluginMega     UgetPluginMega;
 
-extern const    UgetPluginInfo*  UgetPluginMegaInfo;
+extern  const  UgetPluginInfo*    UgetPluginMegaInfo;
 
 /* ----------------------------------------------------------------------------
    UgetPluginMega: It derived from UgetPluginAgent.
@@ -100,7 +100,7 @@ struct UgetPluginMega
 	uint8_t       synced:1;         // used by plugin_sync()
 	uint8_t       decrypting:1;     // decrypting downloaded file
 
-	// These UgGroupData store in target_info
+	// These UgData store in target_info
 	UgetFiles*    target_files;
 	UgetProxy*    target_proxy;
 	UgetCommon*   target_common;

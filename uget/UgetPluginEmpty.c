@@ -40,7 +40,7 @@
 #include <UgetPluginEmpty.h>
 
 // ----------------------------------------------------------------------------
-// UgetPluginInfo (derived from UgDataInfo)
+// UgetPluginInfo (derived from UgTypeInfo)
 
 static void plugin_init (UgetPluginEmpty* plugin);
 static void plugin_final(UgetPluginEmpty* plugin);
@@ -174,7 +174,7 @@ static void plugin_final(UgetPluginEmpty* plugin)
 	// your finalized code.
 	//
 
-	// clear UgData
+	// clear UgetCommon
 	if (plugin->common)
 		ug_data_free(plugin->common);
 

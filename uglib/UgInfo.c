@@ -246,10 +246,10 @@ static UgJsonError ug_json_parse_info_reg(UgJson* json,
 // ----------------
 // JSON parser/writer that used with UG_ENTRY_CUSTOM.
 
-// JSON parser for UgInfo.
+// JSON parser for UgInfo pointer.
 UgJsonError ug_json_parse_info_ptr(UgJson* json,
                                const char* name, const char* value,
-                               void** info, void* none)
+                               void** pinfo, void* none)
 {
 	// UgInfo's type is UG_JSON_OBJECT
 	if (json->type != UG_JSON_OBJECT) {
@@ -258,11 +258,11 @@ UgJsonError ug_json_parse_info_ptr(UgJson* json,
 		return UG_JSON_ERROR_TYPE_NOT_MATCH;
 	}
 
-	ug_json_push(json, ug_json_parse_info_reg, *info, NULL);
+	ug_json_push(json, ug_json_parse_info_reg, *pinfo, NULL);
 	return UG_JSON_ERROR_NONE;
 }
 
-// JSON writer for UgInfo.
+// JSON writer for UgInfo pointer.
 void  ug_json_write_info_ptr(UgJson* json, UgInfo** pinfo)
 {
 	UgInfo* info = *pinfo;
@@ -291,7 +291,7 @@ UgJsonError ug_json_parse_info(UgJson* json,
 	return ug_json_parse_info_ptr(json, name, value, &info, none);
 }
 
-// JSON writer for UgData.
+// JSON writer for UgInfo.
 void  ug_json_write_info(UgJson* json, UgInfo* info)
 {
 	ug_json_write_info_ptr(json, &info);

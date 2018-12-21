@@ -87,8 +87,8 @@ void    ug_info_assign(UgInfo* info, UgInfo* src, const UgDataInfo* exclude);
 
 UgJsonError ug_json_parse_info_ptr(UgJson* json,
                                const char* name, const char* value,
-                               void** info, void* registry);
-void        ug_json_write_info_ptr(UgJson* json, UgInfo** info);
+                               void** pinfo, void* registry);
+void        ug_json_write_info_ptr(UgJson* json, UgInfo** pinfo);
 
 UgJsonError ug_json_parse_info(UgJson* json,
                                const char* name, const char* value,

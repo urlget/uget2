@@ -43,9 +43,9 @@
 extern "C" {
 #endif
 
-typedef struct	UgetPluginEmpty   UgetPluginEmpty;
+typedef struct UgetPluginEmpty          UgetPluginEmpty;
 
-extern const    UgetPluginInfo*   UgetPluginEmptyInfo;
+extern  const  UgetPluginInfo*          UgetPluginEmptyInfo;
 
 typedef enum {
 	UGET_PLUGIN_EMPTY_GLOBAL = UGET_PLUGIN_GLOBAL_DERIVED,    // begin

@@ -99,7 +99,7 @@ static int  mega_request_info(UgetPluginMega* plugin, const char* id);
 static int  mega_decrypt_file(UgetPluginMega* plugin, int preset_progress);
 
 // ----------------------------------------------------------------------------
-// UgetPluginInfo (derived from UgDataInfo)
+// UgetPluginInfo (derived from UgTypeInfo)
 
 static void plugin_init (UgetPluginMega* plugin);
 static void plugin_final(UgetPluginMega* plugin);

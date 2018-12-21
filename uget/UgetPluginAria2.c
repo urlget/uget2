@@ -50,7 +50,7 @@
 
 #ifdef HAVE_LIBPWMD
 #include "pwmd.h"
-static gboolean	uget_plugin_aria2_set_proxy_pwmd (UgetPluginAria2 *plugin, UgData* data, UgValue* options);
+static gboolean	uget_plugin_aria2_set_proxy_pwmd (UgetPluginAria2 *plugin, UgInfo* info, UgValue* options);
 #endif
 
 #if defined _WIN32 || defined _WIN64
@@ -100,7 +100,7 @@ typedef enum Aria2Status {
 } Aria2Status;
 
 // ----------------------------------------------------------------------------
-// UgetPluginInfo (derived from UgDataInfo)
+// UgetPluginInfo (derived from UgTypeInfo)
 
 static void plugin_init (UgetPluginAria2* plugin);
 static void plugin_final(UgetPluginAria2* plugin);
@@ -1419,7 +1419,7 @@ static gboolean	uget_plugin_aria2_set_proxy_pwmd(UgetPluginAria2 *plugin, UgInfo
        UgetProxy *proxy;
 
        memset(&pwmd, 0, sizeof(pwmd));
-       proxy = ug_data_get(info, UgetProxyInfo);
+       proxy = ug_info_get(info, UgetProxyInfo);
        rc = ug_set_pwmd_proxy_options(&pwmd, proxy);
 
        if (rc)

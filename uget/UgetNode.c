@@ -85,7 +85,7 @@ const UgEntry  UgetNodeEntry[] =
 	{"state",    0,                          UG_ENTRY_CUSTOM,
 			ug_json_parse_state2group, NULL},
 	{"data",     offsetof (UgetNode, info),  UG_ENTRY_CUSTOM,
-			ug_json_parse_info_ptr,   ug_json_write_info_ptr},
+			ug_json_parse_info_ptr,   NULL},
 	{NULL}    // null-terminated
 };
 

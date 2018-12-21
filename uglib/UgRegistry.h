@@ -48,7 +48,7 @@ typedef struct  UgPair        UgPair;
 typedef struct  UgRegistry    UgRegistry;
 
 // ----------------------------------------------------------------------------
-// UgPair: key-data pair that is used by UgRegistry and UgData 
+// UgPair: key-data pair that is used by UgRegistry and UgInfo 
 
 struct UgPair
 {

@@ -44,9 +44,9 @@
 extern "C" {
 #endif
 
-typedef struct	UgetPluginMedia   UgetPluginMedia;
+typedef struct UgetPluginMedia          UgetPluginMedia;
 
-extern const    UgetPluginInfo*   UgetPluginMediaInfo;
+extern  const  UgetPluginInfo*          UgetPluginMediaInfo;
 
 typedef enum {
 	UGET_PLUGIN_MEDIA_GLOBAL = UGET_PLUGIN_AGENT_GLOBAL_DERIVED,    // begin
@@ -83,9 +83,9 @@ struct UgetPluginMedia
 
 	// ------ UgetPluginAgent members ------
 	// This plug-in use other plug-in to download files,
-	// so we need extra UgetPlugin and UgData.
+	// so we need extra UgetPlugin and UgInfo.
 
-	// plugin->target_info is a copy of UgData that store in UgetApp
+	// plugin->target_info is a copy of UgInfo that store in UgetApp
 	UgInfo*       target_info;
 	// target_plugin use target_info to download
 	UgetPlugin*   target_plugin;

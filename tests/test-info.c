@@ -149,8 +149,8 @@ void  test3_init(Test3* t3)
 // test UgInfo
 
 UgEntry	InfoCustomEntry[] = {
-	{NULL, 0, UG_ENTRY_CUSTOM, (UgJsonParseFunc) ug_json_parse_info_ptr,
-	                           (UgJsonWriteFunc) ug_json_write_info_ptr},
+	{NULL, 0, UG_ENTRY_CUSTOM, (UgJsonParseFunc) ug_json_parse_info,
+	                           (UgJsonWriteFunc) ug_json_write_info},
 	{NULL}
 };
 
@@ -199,10 +199,10 @@ void  parse_info(UgInfo* info)
 	ug_json_begin_parse(&json);
 #if 1
 	// method 1: use UgEntry to parse start of object
-	ug_json_push(&json, ug_json_parse_entry, &info, InfoCustomEntry);
+	ug_json_push(&json, ug_json_parse_entry, info, InfoCustomEntry);
 #else
 	// method 2: push ug_json_parse_info() to parse start of object
-	ug_json_push(&json, ug_json_parse_info_ptr, &info, &registry);
+	ug_json_push(&json, ug_json_parse_info, info, &registry);
 #endif
 	code = ug_json_parse(&json, json_string, -1);
 	ug_json_end_parse(&json);

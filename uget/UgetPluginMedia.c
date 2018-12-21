@@ -65,7 +65,7 @@
 #endif
 
 // ----------------------------------------------------------------------------
-// UgetPluginInfo (derived from UgDataInfo)
+// UgetPluginInfo (derived from UgTypeInfo)
 
 static void plugin_init (UgetPluginMedia* plugin);
 static void plugin_final(UgetPluginMedia* plugin);
