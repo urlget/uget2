@@ -42,6 +42,7 @@
 #include <UgSocket.h>
 #include <UgFileUtil.h>
 #include <UgetRpc.h>
+#include <UgStdio.h>
 
 #define UGET_RPC_PORT      "14777"
 #define UGET_RPC_ADDR      "127.0.0.1"
@@ -315,7 +316,7 @@ int   uget_rpc_start_server (UgetRpc* urpc, int detect_server)
 	int     result;
 	int     in_progress = FALSE;
 	int     opt_value;
-	int     opt_length;
+	socklen_t     opt_length;
 	fd_set  fdset;
 	struct timeval timeout;
 
