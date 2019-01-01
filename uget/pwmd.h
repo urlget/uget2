@@ -22,15 +22,15 @@
 #include "UgetData.h"
 
 struct pwmd_proxy_s {
-       gchar *hostname;
-       gchar *username;
-       gchar *password;
-       gchar *type;
-       gchar *path;
+       gchar* hostname;
+       gchar* username;
+       gchar* password;
+       gchar* type;
+       gchar* path;
        gint port;
 };
 
-gpg_error_t ug_set_pwmd_proxy_options(struct pwmd_proxy_s *, UgetProxy *);
-void ug_close_pwmd(struct pwmd_proxy_s *);
+gpg_error_t ug_set_pwmd_proxy_options(struct pwmd_proxy_s*, UgetProxy*);
+void ug_close_pwmd(struct pwmd_proxy_s*);
 
 #endif

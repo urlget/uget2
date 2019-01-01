@@ -940,7 +940,6 @@ fail:
        ugcurl->state = UGET_CURL_ERROR;
        gchar *e = ug_strdup_printf("Pwmd ERR %u: %s", rc, gpg_strerror(rc));
        ugcurl->event = uget_event_new_error (UGET_EVENT_ERROR_CUSTOM, e);
-       fprintf(stderr, "%s\n", e);
        g_free(e);
        return FALSE;
 }

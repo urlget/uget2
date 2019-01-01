@@ -1083,7 +1083,7 @@ static int  plugin_accept(UgetPluginAria2* plugin, UgInfo* node_info)
 	temp.proxy = ug_info_get(node_info, UgetProxyInfo);
 #ifdef HAVE_LIBPWMD
 	if (temp.proxy && temp.proxy->type == UGET_PROXY_PWMD) {
-		if (uget_plugin_aria2_set_proxy_pwmd(plugin, data, member) == FALSE)
+		if (uget_plugin_aria2_set_proxy_pwmd(plugin, node_info, member) == FALSE)
 			return FALSE;
 	}
 	else
@@ -1458,7 +1458,6 @@ fail:
        gchar *e = g_strdup_printf("Pwmd ERR %i: %s", rc, gpg_strerror(rc));
        message = uget_event_new_error(UGET_EVENT_ERROR_CUSTOM, e);
        uget_plugin_post((UgetPlugin*) plugin, message);
-       fprintf(stderr, "%s\n", e);
        g_free(e);
        return FALSE;
 }
