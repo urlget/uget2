@@ -67,7 +67,7 @@ gpg_error_t ug_set_pwmd_proxy_options(struct pwmd_proxy_s* pwmd,
 {
 	char *bulk = NULL;
         const gchar *bresult = NULL;
-        gchar *result;
+        gchar *result = NULL;
         size_t brlen, len;
         size_t offset = 0;
         char *str;
