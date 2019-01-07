@@ -63,14 +63,15 @@ void uget_is_standard_layout (void)
 
 void test_uget_node_cxx (void)
 {
-	Uget::Node    node;
+	Uget::Node*   node;
 	Uget::Common* common;
 
 	cout << " --- test_uget_node_cxx()" << endl;
-	uget_node_init(&node, NULL);
-	common = (Uget::Common*) node.info->realloc (UgetCommonInfo);
+	node = new Uget::Node;
+	common = (Uget::Common*) node->info->realloc(UgetCommonInfo);
 	common->retry_limit = 10;
-	node.info->remove (UgetCommonInfo);
+	node->info->remove(UgetCommonInfo);
+	delete node;
 }
 
 // ----------------------------------------------------------------------------

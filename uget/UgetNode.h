@@ -152,31 +152,15 @@ struct UgetNodeControl
 extern struct UgetNodeControl   uget_node_default_control;
 extern struct UgetNodeNotifier  uget_node_default_notifier;
 
-
-struct UgetNode
-{
-	UG_NODE_MEMBERS(UgetNode, UgetNode, base);
-/*	// ------ UgNode members ------
-	UgetNode*     base;    // the realest UgetNode (real->real->real-> ...)
-	UgetNode*     next;
-	UgetNode*     prev;
-	UgetNode*     parent;
-	UgetNode*     children;
-	UgetNode*     last;
-	int           n_children;
+/* ----------------------------------------------------------------------------
+   UgetNode
  */
 
-	UgetNode*     real;
-	UgetNode*     fake;
-	UgetNode*     peer;
-
-	UgInfo*       info;
-	struct UgetNodeControl*  control;
-};
-
 UgetNode*  uget_node_new (UgetNode* node_real);
-void  uget_node_init (UgetNode* node, UgetNode* node_real);
 void  uget_node_free (UgetNode* node);
+
+void  uget_node_init (UgetNode* node, UgetNode* node_real);
+void  uget_node_final (UgetNode* node);
 
 void  uget_node_clear_fake (UgetNode* node);
 void  uget_node_clear_children (UgetNode* node);
@@ -267,6 +251,70 @@ int       uget_node_get_group(UgetNode* node);
 }
 #endif
 
+struct UgetNode
+{
+	UG_NODE_MEMBERS(UgetNode, UgetNode, base);
+/*	// ------ UgNode members ------
+	UgetNode*     base;    // the realest UgetNode (real->real->real-> ...)
+	UgetNode*     next;
+	UgetNode*     prev;
+	UgetNode*     parent;
+	UgetNode*     children;
+	UgetNode*     last;
+	int           n_children;
+ */
+
+	UgetNode*     real;
+	UgetNode*     fake;
+	UgetNode*     peer;
+
+	UgInfo*       info;
+	struct UgetNodeControl*  control;
+
+#ifdef __cplusplus
+	inline void* operator new(size_t size, UgetNode* node_real = NULL)
+		{ return uget_node_new(node_real); }
+	inline void  operator delete(void* p)
+		{ uget_node_free((UgetNode*)p); }
+
+	inline void init(UgetNode* node_real = NULL)
+		{ uget_node_init(this, node_real); }
+	inline void final()
+		{ uget_node_final(this); }
+
+	inline void clearFake(void)
+		{ uget_node_clear_fake(this); }
+	inline void clearChildren(void)
+		{ uget_node_clear_children(this); }
+
+	inline void move(UgetNode* sibling, UgetNode* child)
+		{ uget_node_move(this, sibling, child); }
+	inline void insert(UgetNode* sibling, UgetNode* child)
+		{ uget_node_insert(this, sibling, child); }
+	inline void remove(UgetNode* child)
+		{ uget_node_remove(this, child); }
+	inline void append(UgetNode* child)
+		{ uget_node_append(this, child); }
+	inline void prepend(UgetNode* child)
+		{ uget_node_prepend(this, child); }
+
+	inline UgetNode* nthChild(int nth)
+		{ return uget_node_nth_child(this, nth); }
+	inline int  childPosition(UgetNode* child)
+		{ return uget_node_child_position(this, child); }
+
+	inline UgetNode* nthFake(int nth)
+		{ return uget_node_nth_fake(this, nth); }
+	inline int  fakePosition(UgetNode* fake)
+		{ return uget_node_fake_position(this, fake); }
+
+	inline UgetNode* getSplit(int group)
+		{ return uget_node_get_split(this, group); }
+	inline int  getGroup()
+		{ return uget_node_get_group(this); }
+#endif  // __cplusplus
+};
+
 // ----------------------------------------------------------------------------
 // C++11 standard-layout
 
@@ -274,11 +322,8 @@ int       uget_node_get_group(UgetNode* node);
 
 namespace Uget
 {
-
-struct Node : Ug::NodeMethod, UgetNode
-{
-};
-
+// This one is for directly use only. You can NOT derived it.
+typedef struct UgetNode    Node;
 };  // namespace Uget
 
 #endif  // __cplusplus

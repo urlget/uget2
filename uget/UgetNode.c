@@ -102,6 +102,16 @@ UgetNode*  uget_node_new (UgetNode* node_real)
 	return node;
 }
 
+void  uget_node_free(UgetNode* node)
+{
+	uget_node_final(node);
+#ifdef HAVE_GLIB
+	g_slice_free1(sizeof(UgetNode), node);
+#else
+	ug_free(node);
+#endif // HAVE_GLIB
+}
+
 void  uget_node_init  (UgetNode* node, UgetNode* node_real)
 {
 	memset (node, 0, sizeof (UgetNode));
@@ -126,23 +136,17 @@ void  uget_node_init  (UgetNode* node, UgetNode* node_real)
 	}
 }
 
-void  uget_node_free (UgetNode* node)
+void  uget_node_final(UgetNode* node)
 {
 	if (node->parent)
-		uget_node_remove (node->parent, node);
+		uget_node_remove(node->parent, node);
 	if (node->real)
-		uget_node_remove_fake (node->real, node);
+		uget_node_remove_fake(node->real, node);
 
-	uget_node_clear_fake (node);
-	uget_node_clear_children (node);
-//	ug_node_unlink ((UgNode*)node);
+	uget_node_clear_fake(node);
+	uget_node_clear_children(node);
+//	ug_node_unlink((UgNode*)node);
 	ug_info_unref(node->info);
-
-#ifdef HAVE_GLIB
-	g_slice_free1 (sizeof (UgetNode), node);
-#else
-	ug_free (node);
-#endif // HAVE_GLIB
 }
 
 void  uget_node_clear_children (UgetNode* node)
