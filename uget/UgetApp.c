@@ -163,6 +163,7 @@ void  uget_app_final (UgetApp* app)
 
 	uget_node_clear_children (&app->mix_split);
 	uget_node_clear_children (&app->mix);
+	uget_node_clear_children (&app->sorted_split);
 	uget_node_clear_children (&app->sorted);
 	uget_node_clear_children (&app->split);
 	uget_node_clear_children (&app->real);
