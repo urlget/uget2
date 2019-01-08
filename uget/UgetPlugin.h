@@ -259,9 +259,10 @@ struct PluginInfo : Uget::PluginInfoMethod, UgetPluginInfo {};
 // Your derived struct/class must be C++11 standard-layout
 struct PluginMethod
 {
-	// static method
-	static inline UgetPlugin* create(UgetPluginInfo* pinfo)
+	inline void* operator new(size_t size, UgetPluginInfo* pinfo)
 		{ return uget_plugin_new(pinfo); }
+	inline void  operator delete(void* p)
+		{ uget_plugin_unref((UgetPlugin*)p); }
 
 	inline void  ref(void)
 		{ uget_plugin_ref((UgetPlugin*) this); }

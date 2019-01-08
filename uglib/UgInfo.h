@@ -126,12 +126,15 @@ struct UgInfo
 
 #ifdef __cplusplus
 	// C++11 standard-layout
-	inline UgInfo(void) {}
-	inline UgInfo(int allocatedLength, int cacheLength)
-		{ ug_info_init(this, allocatedLength, cacheLength); }
+	inline void* operator new(size_t size, int allocated_length, int cache_length)
+		{ return ug_info_new(allocated_length, cache_length); }
+	inline void  operator delete(void* p)
+		{ ug_info_unref((UgInfo*)p); }
 
-	static inline UgInfo* create(int allocatedLength, int cacheLength)
-		{ return ug_info_new(allocatedLength, cacheLength); }
+	inline void ref()
+		{ ug_info_ref(this); }
+	inline void unref()
+		{ ug_info_unref(this); }
 
 	inline void  init(int allocatedLength, int cacheLength)
 		{ ug_info_init(this, allocatedLength, cacheLength); }
@@ -144,6 +147,11 @@ struct UgInfo
 		{ return (Ug::DataMethod*) ug_info_realloc(this, key); }
 	inline Ug::DataMethod* get(const UgDataInfo* key)
 		{ return (Ug::DataMethod*) ug_info_get(this, key); }
+	inline Ug::DataMethod* set(const UgDataInfo* key, void* new_data)
+		{ return (Ug::DataMethod*) ug_info_set(this, key, new_data); }
+
+	inline void  assign(UgInfo* src, const UgDataInfo* exclude)
+		{ ug_info_assign(this, src, exclude); }
 
 	// static method
 	static inline UgRegistry* getRegistry(void)
