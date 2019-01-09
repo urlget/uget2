@@ -136,6 +136,8 @@ void  uget_app_init (UgetApp* app)
 
 	uget_task_init (&app->task);
 	ug_array_init (&app->nodes, sizeof (void*), 32);
+	app->uri_hash = NULL;
+	app->config_dir = NULL;
 
 	// plug-in registry
 	app->plugin_default = NULL;
@@ -159,7 +161,7 @@ void  uget_app_final (UgetApp* app)
 {
 	ug_array_clear (&app->nodes);
 	uget_task_final (&app->task);
-	uget_app_clear_plugins (app);
+	uget_app_clear_plugins (app);    // clear app->plugins
 
 	uget_node_clear_children (&app->mix_split);
 	uget_node_clear_children (&app->mix);
@@ -173,6 +175,8 @@ void  uget_app_final (UgetApp* app)
 
 	uget_uri_hash_free (app->uri_hash);
 	app->uri_hash = NULL;
+	ug_free(app->config_dir);
+	app->config_dir = NULL;
 }
 
 static UgArrayPtr* uget_app_store_nodes (UgetApp* app, UgetNode* parent)
