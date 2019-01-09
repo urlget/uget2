@@ -112,6 +112,10 @@ struct UgetTask
 	inline void dispatch(void)
 		{ uget_task_dispatch((UgetTask*) this); }
 
+	inline void setSpeed(int dl_speed, int ul_speed)
+		{ uget_task_set_speed(this, dl_speed, ul_speed); }
+	inline void adjustSpeed(void)
+		{ uget_task_adjust_speed(this); }
 #endif  // __cplusplus
 };
 
