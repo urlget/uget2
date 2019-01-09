@@ -413,6 +413,15 @@ struct Log : Ug::DataMethod, UgetLog {};
 struct Relation : Ug::DataMethod, UgetRelation {};
 struct Category : Ug::DataMethod, UgetCategory {};
 
+const UgDataInfo* const CommonInfo   = UgetCommonInfo;
+const UgDataInfo* const ProgressInfo = UgetProgressInfo;
+const UgDataInfo* const ProxyInfo    = UgetProxyInfo;
+const UgDataInfo* const HttpInfo     = UgetHttpInfo;
+const UgDataInfo* const FtpInfo      = UgetFtpInfo;
+const UgDataInfo* const LogInfo      = UgetLogInfo;
+const UgDataInfo* const RelationInfo = UgetRelationInfo;
+const UgDataInfo* const CategoryInfo = UgetCategoryInfo;
+
 };  // namespace Uget
 
 #endif  // __cplusplus
