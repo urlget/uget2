@@ -1,6 +1,6 @@
 /*
  *
- *   Copyright (C) 2012-2018 by C.H. Huang
+ *   Copyright (C) 2012-2019 by C.H. Huang
  *   plushuang.tw@gmail.com
  *
  *  This library is free software; you can redistribute it and/or
@@ -48,7 +48,7 @@ typedef struct  UgPair        UgPair;
 typedef struct  UgRegistry    UgRegistry;
 
 // ----------------------------------------------------------------------------
-// UgPair: key-data pair that is used by UgRegistry and UgInfo 
+// UgPair: key-data pair that is used by UgRegistry and UgInfo
 
 struct UgPair
 {
