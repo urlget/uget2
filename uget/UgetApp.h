@@ -72,30 +72,6 @@ typedef struct  UgetApp          UgetApp;
 	int             n_deleted;      \
 	int             n_completed
 
-struct UgetApp
-{
-	UGET_APP_MEMBERS;
-/*	// ------ UgetApp members ------
-	UgetNode        real;           // real root node for real nodes
-	UgetNode        split;          // virtual root
-	UgetNode        sorted;         // virtual root
-	UgetNode        sorted_split;   // virtual root
-	UgetNode        mix;            // virtual root
-	UgetNode        mix_split;      // virtual root
-	UgRegistry      infos;
-	UgRegistry      plugins;
-	UgetPluginInfo* plugin_default;
-	UgetTask        task;
-	UgArrayPtr      nodes;
-	void*           uri_hash;
-	char*           config_dir;
-	int             n_error;        // uget_app_grow() will count these value:
-	int             n_moved;        // n_error, n_moved, n_deleted, and
-	int             n_deleted;      // n_completed
-	int             n_completed;    //
- */
-};
-
 void  uget_app_init (UgetApp* app);
 void  uget_app_final (UgetApp* app);
 
@@ -175,6 +151,113 @@ void  uget_node_set_keeping (UgetNode* node, int enable);
 }
 #endif
 
+struct UgetApp
+{
+	UGET_APP_MEMBERS;
+/*	// ------ UgetApp members ------
+	UgetNode        real;           // real root node for real nodes
+	UgetNode        split;          // virtual root
+	UgetNode        sorted;         // virtual root
+	UgetNode        sorted_split;   // virtual root
+	UgetNode        mix;            // virtual root
+	UgetNode        mix_split;      // virtual root
+	UgRegistry      infos;
+	UgRegistry      plugins;
+	UgetPluginInfo* plugin_default;
+	UgetTask        task;
+	UgArrayPtr      nodes;
+	void*           uri_hash;
+	char*           config_dir;
+	int             n_error;        // uget_app_grow() will count these value:
+	int             n_moved;        // n_error, n_moved, n_deleted, and
+	int             n_deleted;      // n_completed
+	int             n_completed;    //
+ */
+
+#ifdef __cplusplus
+	inline void  init(void)
+		{ uget_app_init(this); }
+	inline void  final(void)
+		{ uget_app_final(this); }
+
+	inline void  grow(int noQueuing)
+		{ uget_app_grow(this, noQueuing); }
+	inline void  trim(void)
+		{ uget_app_trim(this); }
+
+	inline void  setConfigDir(const char* dir)
+		{ uget_app_set_config_dir(this, dir); }
+	inline void  setSorting(UgCompareFunc func, int reversed)
+		{ uget_app_set_sorting(this, func, reversed); }
+	inline void  setNotification(void* data, UgetNodeFunc inserted, UgetNodeFunc removed, UgNotifyFunc updated)
+		{ uget_app_set_notification(this, data, inserted, removed, updated); }
+
+	inline void  addCategory(UgetNode* cnode, int saveFile)
+		{ uget_app_add_category(this, cnode, saveFile); }
+	inline void  moveCategory(UgetNode* cnode, UgetNode* position)
+		{ uget_app_move_category(this, cnode, position); }
+	inline void  deleteCategory(UgetNode* cnode)
+		{ uget_app_delete_category(this, cnode); }
+	inline void  stopCategory(UgetNode* cnode)
+		{ uget_app_stop_category(this, cnode); }
+	inline void  pauseCategory(UgetNode* cnode)
+		{ uget_app_pause_category(this, cnode); }
+	inline void  resumeCategory(UgetNode* cnode)
+		{ uget_app_resume_category(this, cnode); }
+	inline UgetNode*  matchCategory(UgUri* uuri, const char* file)
+		{ return uget_app_match_category(this, uuri, file); }
+
+	inline int   addDownload(const char* uri, UgetNode* cnode, int apply)
+		{ return uget_app_add_download_uri(this, uri, cnode, apply); }
+	inline int   addDownload(UgetNode* dnode, UgetNode* cnode, int apply)
+		{ return uget_app_add_download(this, dnode, cnode, apply); }
+	inline int   moveDownload(UgetNode* dnode, UgetNode* dnode_position)
+		{ return uget_app_move_download(this, dnode, dnode_position); }
+	inline int   moveDownloadTo(UgetNode* dnode, UgetNode* cnode)
+		{ return uget_app_move_download_to(this, dnode, cnode); }
+	inline int   deleteDownload(UgetNode* dnode, int deleteFile)
+		{ return uget_app_delete_download(this, dnode, deleteFile); }
+	inline int   recycleDownload(UgetNode* dnode)
+		{ return uget_app_recycle_download(this, dnode); }
+	inline int   activateDownload(UgetNode* dnode)
+		{ return uget_app_activate_download(this, dnode); }
+	inline int   pauseDownload(UgetNode* dnode)
+		{ return uget_app_pause_download(this, dnode); }
+	inline int   queueDownload(UgetNode* dnode)
+		{ return uget_app_queue_download(this, dnode); }
+	inline void  resetDownloadName(UgetNode* dnode)
+		{ uget_app_reset_download_name(this, dnode); }
+
+	inline void  useUriHash(void)
+		{ uget_app_use_uri_hash(this); }
+	inline void  clearAttachment(void)
+		{ uget_app_clear_attachment(this); }
+
+	inline void  clearPlugins(void)
+		{ uget_app_clear_plugins(this); }
+	inline void  addPlugin(const UgetPluginInfo* pinfo)
+		{ uget_app_add_plugin(this, pinfo); }
+	inline void  removePlugin(const UgetPluginInfo* pinfo)
+		{ uget_app_remove_plugin(this, pinfo); }
+	inline int   findPlugin(const char* name, const UgetPluginInfo** pinfo)
+		{ return uget_app_find_plugin(this, name, pinfo); }
+	inline void  setDefaultPlugin(const UgetPluginInfo* pinfo)
+		{ return uget_app_set_default_plugin(this, pinfo); }
+	inline UgetPluginInfo*  matchPlugin(const char* uri, const UgetPluginInfo* exclude)
+		{ return uget_app_match_plugin(this, uri, exclude); }
+
+	inline int   saveCategory(UgetNode* cnode, const char* filename, void* jsonfile)
+		{ return uget_app_save_category(this, cnode, filename, jsonfile); }
+	inline UgetNode*  loadCategory(const char* filename, void* jsonfile)
+		{ return uget_app_load_category(this, filename, jsonfile); }
+	// return number of category save/load
+	inline int   saveCategories(const char* folder)
+		{ return uget_app_save_categories(this, folder); }
+	inline int   loadCategories(const char* folder)
+		{ return uget_app_load_categories(this, folder); }
+#endif
+};
+
 // ----------------------------------------------------------------------------
 // C++11 standard-layout
 
@@ -182,11 +265,7 @@ void  uget_node_set_keeping (UgetNode* node, int enable);
 
 namespace Uget
 {
-
-struct AppMethod
-{
-};
-
+typedef struct UgetApp    App;
 };  // namespace Uget
 
 #endif  // __cplusplus

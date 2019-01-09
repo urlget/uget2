@@ -38,7 +38,7 @@
 #include <UgetNode.h>
 #include <UgetData.h>
 #include <UgetPlugin.h>
-#include <UgetTask.h>
+#include <UgetApp.h>
 
 using namespace std;
 
@@ -47,7 +47,7 @@ using namespace std;
 // ----------------------------------------------------------------------------
 // test C++ standard-layout
 
-void uget_is_standard_layout (void)
+void uget_is_standard_layout(void)
 {
 #if CHECK_CXX_STANDARD_LAYOUT
 	cout << "Uget::Node : is_standard_layout = " << is_standard_layout<Uget::Node>::value << endl
@@ -61,7 +61,7 @@ void uget_is_standard_layout (void)
 // ----------------------------------------------------------------------------
 // test Uget::Node
 
-void test_uget_node_cxx (void)
+void test_uget_node_cxx(void)
 {
 	Uget::Node*   node;
 	Uget::Common* common;
@@ -75,13 +75,27 @@ void test_uget_node_cxx (void)
 }
 
 // ----------------------------------------------------------------------------
+// test Uget::App
+
+void test_uget_app_cxx(void)
+{
+	Uget::App*  app;
+
+	app = new Uget::App;
+	app->init();
+	app->final();
+	delete app;
+}
+
+// ----------------------------------------------------------------------------
 // main
 
 int   main (void)
 {
-	uget_is_standard_layout ();
+	uget_is_standard_layout();
 
-	test_uget_node_cxx ();
+	test_uget_node_cxx();
+	test_uget_app_cxx();
 
 	return 0;
 }
