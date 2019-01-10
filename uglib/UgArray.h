@@ -101,19 +101,22 @@ int  ug_array_compare_pointer(const void *s1, const void *s2);
 #endif
 
 // ----------------------------------------------------------------------------
-// UgArrayMethod : a template C++ struct is used by UgArray and it's children.
+// ArrayInterface : a template C++ struct is used by UgArray and it's children.
 
 #ifdef __cplusplus
 
-// These definitions are used by UgArrayMethod
+// These definitions are used by Ug::ArrayInterface
 inline void* ug_array_insert(void* array, int index, int length);
 inline void  ug_array_erase(void* array, int index, int length);
 inline void  ug_array_sort(void* array, UgCompareFunc func);
 
+namespace Ug
+{
+
 // This one is for derived use only, no data members here.
 // This one is NOT for directly use only, it must has UgArray data members.
 // Your derived struct/class must be C++11 standard-layout.
-template<class Type> struct UgArrayMethod
+template<class Type> struct ArrayInterface
 {
 	inline void  init(int allocated_len)
 		{ ug_array_init(this, sizeof(Type), allocated_len); }
@@ -140,36 +143,39 @@ template<class Type> struct UgArrayMethod
 };
 
 // template specialization
-template<> inline void UgArrayMethod<int>::sort()
+template<> inline void ArrayInterface<int>::sort()
 {
 	ug_array_sort(this, ug_array_compare_int);
 };
 
-template<> inline int* UgArrayMethod<int>::findSorted(int key, int* index)
+template<> inline int* ArrayInterface<int>::findSorted(int key, int* index)
 {
 	int value = key;
 	return (int*) ug_array_find_sorted(this, &value, ug_array_compare_int, index);
 };
 
-template<> inline void UgArrayMethod<char*>::sort()
+template<> inline void ArrayInterface<char*>::sort()
 {
 	ug_array_sort(this, ug_array_compare_string);
 };
 
-template<> inline char** UgArrayMethod<char*>::findSorted(char* key, int* index)
+template<> inline char** ArrayInterface<char*>::findSorted(char* key, int* index)
 {
 	return (char**) ug_array_find_sorted(this, &key, ug_array_compare_string, index);
 };
 
-template<> inline void UgArrayMethod<void*>::sort()
+template<> inline void ArrayInterface<void*>::sort()
 {
 	ug_array_sort(this, ug_array_compare_pointer);
 };
 
-template<> inline void** UgArrayMethod<void*>::findSorted(void* key, int* index)
+template<> inline void** ArrayInterface<void*>::findSorted(void* key, int* index)
 {
 	return (void**) ug_array_find_sorted(this, &key, ug_array_compare_pointer, index);
 };
+
+};  // namespace Ug
+
 #endif // __cplusplus
 
 // ----------------------------------------------------------------------------
@@ -184,7 +190,7 @@ template<> inline void** UgArrayMethod<void*>::findSorted(void* key, int* index)
 #ifdef __cplusplus
 // C++ template works with C macro
 template<class Type>
-struct UgArray : UgArrayMethod<Type>
+struct UgArray : Ug::ArrayInterface<Type>
 {
 	UG_ARRAY_MEMBERS(Type);
 /*	// ------ UgArray members ------
@@ -298,9 +304,9 @@ void  ug_json_write_array_string(UgJson* json, UgArrayStr* array);
 
 namespace Ug
 {
-// Your derived struct/class must be C++11 standard-layout.
-template<class Type> struct ArrayMethod : UgArrayMethod<Type> {};
-template<class Type> struct Array       : UgArray<Type>
+
+// This one is for directly use only. You can NOT derived it.
+template<class Type> struct Array : UgArray<Type>
 {
 //	inline Array<Type>(int allocated_len = 0)
 //		{ ug_array_init(this, sizeof(Type), allocated_len); }
