@@ -403,16 +403,6 @@ struct UgetCategory
 namespace Uget
 {
 
-// These are for directly use only. You can NOT derived it.
-struct Common : Ug::DataMethod, UgetCommon {};
-struct Progress : Ug::DataMethod, UgetProgress {};
-struct Proxy : Ug::DataMethod, UgetProxy {};
-struct Http : Ug::DataMethod, UgetHttp {};
-struct Ftp : Ug::DataMethod, UgetFtp {};
-struct Log : Ug::DataMethod, UgetLog {};
-struct Relation : Ug::DataMethod, UgetRelation {};
-struct Category : Ug::DataMethod, UgetCategory {};
-
 const UgDataInfo* const CommonInfo   = UgetCommonInfo;
 const UgDataInfo* const ProgressInfo = UgetProgressInfo;
 const UgDataInfo* const ProxyInfo    = UgetProxyInfo;
@@ -421,6 +411,55 @@ const UgDataInfo* const FtpInfo      = UgetFtpInfo;
 const UgDataInfo* const LogInfo      = UgetLogInfo;
 const UgDataInfo* const RelationInfo = UgetRelationInfo;
 const UgDataInfo* const CategoryInfo = UgetCategoryInfo;
+
+// These are for directly use only. You can NOT derived it.
+struct Common   : Ug::DataInterface<Common>, UgetCommon
+{
+	inline void* operator new(size_t size)
+		{ return ug_data_new(UgetCommonInfo); }
+};
+
+struct Progress : Ug::DataInterface<Progress>, UgetProgress
+{
+	inline void* operator new(size_t size)
+		{ return ug_data_new(UgetProgressInfo); }
+};
+
+struct Proxy    : Ug::DataInterface<Proxy>, UgetProxy
+{
+	inline void* operator new(size_t size)
+		{ return ug_data_new(UgetProxyInfo); }
+};
+
+struct Http     : Ug::DataInterface<Http>, UgetHttp
+{
+	inline void* operator new(size_t size)
+		{ return ug_data_new(UgetHttpInfo); }
+};
+
+struct Ftp      : Ug::DataInterface<Ftp>, UgetFtp
+{
+	inline void* operator new(size_t size)
+		{ return ug_data_new(UgetFtpInfo); }
+};
+
+struct Log      : Ug::DataInterface<Log>, UgetLog
+{
+	inline void* operator new(size_t size)
+		{ return ug_data_new(UgetLogInfo); }
+};
+
+struct Relation : Ug::DataInterface<Relation>, UgetRelation
+{
+	inline void* operator new(size_t size)
+		{ return ug_data_new(UgetRelationInfo); }
+};
+
+struct Category : Ug::DataInterface<Category>, UgetCategory
+{
+	inline void* operator new(size_t size)
+		{ return ug_data_new(UgetCategoryInfo); }
+};
 
 };  // namespace Uget
 

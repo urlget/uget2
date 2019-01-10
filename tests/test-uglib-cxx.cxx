@@ -168,49 +168,70 @@ void test_node_cxx(void)
 }
 
 // ----------------------------------------------------------------------------
-// test Ug::DataMethod
+// test Ug::DataInterface
 
-struct UgCxxData : public Ug::DataMethod
+struct UgCxxData : public Ug::DataInterface<UgCxxData>
 {
 	UG_DATA_MEMBERS;
-//	const UgDataInfo*	info;
+//	const UgDataInfo*  info;    // UgData(UgType) member
 
 	int   value;
+	char* string;
 
-	UgCxxData(void);
+	void* operator new(size_t size);
+	static void  init(UgCxxData* data);
+	static void  final(UgCxxData* data);
+	static int   assign(UgCxxData* data, UgCxxData* src);
 };
 
 Ug::DataInfo UgCxxInfo =
 {
 	"UgCxxData",
 	sizeof(UgCxxData),
-	(UgInitFunc)   NULL,
-	(UgFinalFunc)  NULL,
-	(UgAssignFunc) NULL,
+	(UgInitFunc)   UgCxxData::init,
+	(UgFinalFunc)  UgCxxData::final,
+	(UgAssignFunc) UgCxxData::assign,
 	(UgEntry*)     NULL,
 };
 
-UgCxxData::UgCxxData(void)
+void* UgCxxData::operator new(size_t size)
 {
-	// init method 1
-//	info = &UgCxxInfo;
-//	init ();
+	return ug_data_new(&UgCxxInfo);
+}
 
-	// init method 2
-	init(&UgCxxInfo);
+void UgCxxData::init(UgCxxData* data)
+{
+	data->value = 1;
+	data->string = NULL;
+}
 
-	value = 1;
+void UgCxxData::final(UgCxxData* data)
+{
+	free(data->string);
+}
+
+int  UgCxxData::assign(UgCxxData* data, UgCxxData* src)
+{
+	data->value = src->value;
+	free(data->string);
+	data->string = strdup(src->string);
+	return TRUE;
 }
 
 void test_data_cxx (void)
 {
-	UgCxxData  cxxdata;
+	UgCxxData*  cxxdata;
 
 #if CHECK_CXX_STANDARD_LAYOUT
+	cout << "Ug::Data : is_standard_layout = " << is_standard_layout<Ug::Data>::value << endl;
 	cout << "UgCxxData : is_standard_layout = " << is_standard_layout<UgCxxData>::value << endl;
 #endif
 
-	cout << "cxxdata.value : " << cxxdata.value << endl;
+	cxxdata = new UgCxxData;
+	cxxdata->string = strdup("This is a string.");
+	cout << "cxxdata->value : " << cxxdata->value << endl
+	     << "cxxdata->string: " << cxxdata->string << endl;
+	delete cxxdata;
 }
 
 // ----------------------------------------------------------------------------

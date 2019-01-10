@@ -37,6 +37,7 @@
 #include <iostream>
 #include <UgetNode.h>
 #include <UgetData.h>
+#include <UgetFiles.h>
 #include <UgetPlugin.h>
 #include <UgetApp.h>
 
@@ -53,9 +54,30 @@ void uget_is_standard_layout(void)
 	cout << "Uget::Node : is_standard_layout = " << is_standard_layout<Uget::Node>::value << endl
 	     << "Uget::Common : is_standard_layout = " << std::is_standard_layout<Uget::Common>::value << endl
 	     << "Uget::Progress : is_standard_layout = " << std::is_standard_layout<Uget::Progress>::value << endl
+	     << "Uget::Files : is_standard_layout = " << std::is_standard_layout<Uget::Files>::value << endl
 	     << "Uget::Plugin : is_standard_layout = " << std::is_standard_layout<Uget::Plugin>::value << endl
 	     << endl;
 #endif  // CHECK_CXX_STANDARD_LAYOUT
+}
+
+// ----------------------------------------------------------------------------
+// test UgetCommon, UgetFiles...etc
+
+void test_uget_data_cxx(void)
+{
+	Uget::Common *common, *common2;
+	Uget::Files  *files,  *files2;
+
+	common = new Uget::Common;
+	common2 = common->copy();
+	delete common;
+	delete common2;
+
+	files = new Uget::Files;
+	files2 = new Uget::Files;
+	files2->assign(files);
+	delete files;
+	delete files2;
 }
 
 // ----------------------------------------------------------------------------
@@ -94,6 +116,7 @@ int   main (void)
 {
 	uget_is_standard_layout();
 
+	test_uget_data_cxx();
 	test_uget_node_cxx();
 	test_uget_app_cxx();
 

@@ -74,27 +74,7 @@ enum UgetFileState
 };
 
 // ----------------------------------------------------------------------------
-// UgetFile: file information with list link
-
-struct UgetFile
-{
-	UG_LINK_MEMBERS(UgetFile, char, path);
-/*	// ------ UgLink members ------
-	char*       path;    // absolute file path
-	UgetFile*   next;
-	UgetFile*   prev;
- */
-
-	int16_t type;    // UgetFileType
-	int16_t state;   // UgetFileState
-
-	// save original index in torrent and metalink file.
-//	int32_t order;
-
-	// progress
-	int64_t total;
-	int64_t complete;
-};
+// UgetFile functions
 
 UgetFile*  uget_file_new(void);
 void       uget_file_free(UgetFile* file);
@@ -153,6 +133,36 @@ void  uget_files_erase(UgetFiles* files, int type, int state);
 #endif
 
 // ----------------------------------------------------------------------------
+// UgetFile: file information with list link
+
+struct UgetFile
+{
+	UG_LINK_MEMBERS(UgetFile, char, path);
+/*	// ------ UgLink members ------
+	char*       path;    // absolute file path
+	UgetFile*   next;
+	UgetFile*   prev;
+ */
+
+	int16_t type;    // UgetFileType
+	int16_t state;   // UgetFileState
+
+	// save original index in torrent and metalink file.
+//	int32_t order;
+
+	// progress
+	int64_t total;
+	int64_t complete;
+
+#ifdef __cplusplus
+	inline void* operator new(size_t size)
+		{ return uget_file_new(); }
+	inline void  operator delete(void* p)
+		{ uget_file_free((UgetFile*)p); }
+#endif  // __cplusplus
+};
+
+// ----------------------------------------------------------------------------
 // C++11 standard-layout
 
 #ifdef __cplusplus
@@ -160,8 +170,36 @@ void  uget_files_erase(UgetFiles* files, int type, int state);
 namespace Uget
 {
 
+const UgDataInfo* const FilesInfo = UgetFilesInfo;
+
 // These are for directly use only. You can NOT derived it.
-struct Files : Ug::DataMethod, UgetFiles {};
+typedef struct UgetFile    File;
+
+struct Files : Ug::DataInterface<Files>, UgetFiles
+{
+	inline void* operator new(size_t size)
+		{ return ug_data_new(UgetFilesInfo); }
+
+	inline int    sync(UgetFiles* src)
+		{ return uget_files_sync(this, src); }
+	inline UgetFile* find(const char* path, UgetFile** sibling)
+		{ return uget_files_find(this, path, sibling); }
+
+	inline UgetFile* realloc(const char* path)
+		{ return uget_files_realloc(this, path); }
+	inline UgetFile* replace(const char* path,int type, int state)
+		{ return uget_files_replace(this, path, type, state); }
+
+	inline void   apply(int type, int state)
+		{ uget_files_apply(this, type, state); }
+	inline void   erase(int type, int state)
+		{ uget_files_erase(this, type, state); }
+
+	inline void   apply_deleted(void)
+		{ uget_files_apply(this, UGET_FILE_ALL, UGET_FILE_STATE_DELETED); }
+	inline void   erase_deleted(void)
+		{ uget_files_erase(this, UGET_FILE_ALL, UGET_FILE_STATE_DELETED); }
+};
 
 };  // namespace Uget
 

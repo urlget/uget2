@@ -143,12 +143,12 @@ struct UgInfo
 
 	inline void  remove(const UgDataInfo* key)
 		{ ug_info_remove(this, key); }
-	inline Ug::DataMethod* realloc(const UgDataInfo* key)
-		{ return (Ug::DataMethod*) ug_info_realloc(this, key); }
-	inline Ug::DataMethod* get(const UgDataInfo* key)
-		{ return (Ug::DataMethod*) ug_info_get(this, key); }
-	inline Ug::DataMethod* set(const UgDataInfo* key, void* new_data)
-		{ return (Ug::DataMethod*) ug_info_set(this, key, new_data); }
+	inline void* realloc(const UgDataInfo* key)
+		{ return ug_info_realloc(this, key); }
+	inline void* get(const UgDataInfo* key)
+		{ return ug_info_get(this, key); }
+	inline void* set(const UgDataInfo* key, void* new_data)
+		{ return ug_info_set(this, key, new_data); }
 
 	inline void  assign(UgInfo* src, const UgDataInfo* exclude)
 		{ ug_info_assign(this, src, exclude); }
