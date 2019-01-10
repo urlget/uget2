@@ -134,12 +134,18 @@ struct UgetPluginMedia
 namespace Uget
 {
 
+const PluginInfo* const PluginMediaInfo = (const PluginInfo*) UgetPluginMediaInfo;
+
 // This one is for derived use only. No data members here.
 // Your derived struct/class must be C++11 standard-layout
-struct PluginMediaMethod : Uget::PluginMethod {};
+struct PluginMediaInterface : PluginAgentInterface {};
 
 // This one is for directly use only. You can NOT derived it.
-struct PluginMedia : Uget::PluginMediaMethod, UgetPluginMedia {};
+struct PluginMedia : PluginMediaInterface, UgetPluginMedia
+{
+	inline void* operator new(size_t size)
+		{ return uget_plugin_new(PluginMediaInfo); }
+};
 
 };  // namespace Uget
 

@@ -56,6 +56,7 @@ void uget_is_standard_layout(void)
 	     << "Uget::Progress : is_standard_layout = " << std::is_standard_layout<Uget::Progress>::value << endl
 	     << "Uget::Files : is_standard_layout = " << std::is_standard_layout<Uget::Files>::value << endl
 	     << "Uget::Plugin : is_standard_layout = " << std::is_standard_layout<Uget::Plugin>::value << endl
+	     << "Uget::PluginInfo : is_standard_layout = " << std::is_standard_layout<Uget::PluginInfo>::value << endl
 	     << endl;
 #endif  // CHECK_CXX_STANDARD_LAYOUT
 }

@@ -152,12 +152,18 @@ struct UgetPluginCurl
 namespace Uget
 {
 
+const PluginInfo* const PluginCurlInfo = (const PluginInfo*) UgetPluginCurlInfo;
+
 // This one is for derived use only. No data members here.
 // Your derived struct/class must be C++11 standard-layout
-struct PluginCurlMethod : Uget::PluginMethod {};
+struct PluginCurlInterface : PluginInterface {};
 
 // This one is for directly use only. You can NOT derived it.
-struct PluginCurl : Uget::PluginCurlMethod, UgetPluginCurl {};
+struct PluginCurl : PluginCurlInterface, UgetPluginCurl
+{
+	inline void* operator new(size_t size)
+		{ return uget_plugin_new(PluginCurlInfo); }
+};
 
 };  // namespace Uget
 

@@ -240,7 +240,7 @@ namespace Uget
 
 // This one is for derived use only. No data members here.
 // Your derived struct/class must be C++11 standard-layout
-struct PluginInfoMethod
+struct PluginInfoInterface
 {
 	inline UgetResult  globalSet(int option, void* parameter)
 		{ return uget_plugin_global_set((UgetPluginInfo*)this, option, parameter); }
@@ -252,46 +252,53 @@ struct PluginInfoMethod
 };
 
 // This one is for directly use only. You can NOT derived it.
-struct PluginInfo : Uget::PluginInfoMethod, UgetPluginInfo {};
+struct PluginInfo : PluginInfoInterface, UgetPluginInfo {};
 
 
 // This one is for derived use only. No data members here.
 // Your derived struct/class must be C++11 standard-layout
-struct PluginMethod
+struct PluginInterface
 {
-	inline void* operator new(size_t size, UgetPluginInfo* pinfo)
+	inline void* operator new(size_t size, const UgetPluginInfo* pinfo)
 		{ return uget_plugin_new(pinfo); }
 	inline void  operator delete(void* p)
 		{ uget_plugin_unref((UgetPlugin*)p); }
 
 	inline void  ref(void)
-		{ uget_plugin_ref((UgetPlugin*) this); }
+		{ uget_plugin_ref((UgetPlugin*)this); }
 	inline void  unref(void)
-		{ uget_plugin_unref((UgetPlugin*) this); }
+		{ uget_plugin_unref((UgetPlugin*)this); }
 
 	inline int   accept(UgInfo* info)
-		{ return uget_plugin_accept((UgetPlugin*) this, info); }
-
+		{ return uget_plugin_accept((UgetPlugin*)this, info); }
 	inline int   sync(UgInfo* info)
-		{ return uget_plugin_sync((UgetPlugin*) this, info); }
+		{ return uget_plugin_sync((UgetPlugin*)this, info); }
 
-	inline void  start(UgInfo* info)
-		{ uget_plugin_start((UgetPlugin*) this); }
+	inline int   ctrl(int code, void* data)
+		{ return uget_plugin_ctrl((UgetPlugin*)this, code, data); }
+	inline int   ctrlSpeed(int* DL_UL_array)
+		{ return uget_plugin_ctrl((UgetPlugin*)this, UGET_PLUGIN_CTRL_SPEED, DL_UL_array); }
+	inline int   ctrlSpeed(int dlspeed, int ulspeed) {
+		int  DL_UL_array[2] = {dlspeed, ulspeed};
+		return uget_plugin_ctrl((UgetPlugin*)this, UGET_PLUGIN_CTRL_SPEED, DL_UL_array);
+	}
 
-	inline void  stop(void)
-		{ uget_plugin_stop((UgetPlugin*) this); }
+	inline int   start(void)
+		{ return uget_plugin_start((UgetPlugin*)this); }
+	inline int   stop(void)
+		{ return uget_plugin_stop((UgetPlugin*)this); }
 
 	inline int   getState(void)
-		{ return uget_plugin_get_state((UgetPlugin*) this); }
+		{ return uget_plugin_get_state((UgetPlugin*)this); }
 
 	inline void  post(UgetEvent* message)
-		{ uget_plugin_post((UgetPlugin*) this, message); }
+		{ uget_plugin_post((UgetPlugin*)this, message); }
 	inline UgetEvent* pop(void)
-		{ return uget_plugin_pop((UgetPlugin*) this); }
+		{ return uget_plugin_pop((UgetPlugin*)this); }
 };
 
 // This one is for directly use only. You can NOT derived it.
-struct Plugin : Uget::PluginMethod, UgetPlugin {};
+struct Plugin : PluginInterface, UgetPlugin {};
 
 };  // namespace Uget
 

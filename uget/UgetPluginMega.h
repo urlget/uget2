@@ -120,9 +120,35 @@ struct UgetPluginMega
 	UgValue  value;
 };
 
-
 #ifdef __cplusplus
 }
 #endif
+
+// ----------------------------------------------------------------------------
+// C++11 standard-layout
+
+#ifdef __cplusplus
+
+namespace Uget
+{
+
+const PluginInfo* const PluginMegaInfo = (const PluginInfo*) UgetPluginMegaInfo;
+
+// This one is for derived use only. No data members here.
+// Your derived struct/class must be C++11 standard-layout
+struct PluginMegaInterface : PluginAgentInterface {};
+
+// This one is for directly use only. You can NOT derived it.
+struct PluginMega : PluginMegaInterface, UgetPluginMega
+{
+	inline void* operator new(size_t size)
+		{ return uget_plugin_new(PluginMegaInfo); }
+};
+
+
+};  // namespace Uget
+
+#endif  // __cplusplus
+
 
 #endif  // End of UGET_PLUGIN_MEGA_H
