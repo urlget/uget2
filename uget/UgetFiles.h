@@ -133,7 +133,7 @@ void  uget_files_erase(UgetFiles* files, int type, int state);
 #endif
 
 // ----------------------------------------------------------------------------
-// UgetFile: file information with list link
+// UgetFile structure: file information with list link
 
 struct UgetFile
 {
@@ -175,7 +175,7 @@ const UgDataInfo* const FilesInfo = UgetFilesInfo;
 // These are for directly use only. You can NOT derived it.
 typedef struct UgetFile    File;
 
-struct Files : Ug::DataInterface<Files>, UgetFiles
+struct Files : Ug::DataMethod<Files>, UgetFiles
 {
 	inline void* operator new(size_t size)
 		{ return ug_data_new(UgetFilesInfo); }

@@ -57,15 +57,15 @@ using namespace std;
 void uglib_is_standard_layout(void)
 {
 #if CHECK_CXX_STANDARD_LAYOUT
-	cout << "Ug::DataInfo : is_standard_layout = " << is_standard_layout<Ug::DataInfo>::value << endl
-	     << "Ug::Data : is_standard_layout = " << std::is_standard_layout<Ug::Data>::value << endl
-	     << "Ug::Array<int> : is_standard_layout = " << std::is_standard_layout<Ug::Array<int>>::value << endl
-	     << "Ug::Buffer : is_standard_layout = " << std::is_standard_layout<Ug::Buffer>::value << endl
-	     << "Ug::Node : is_standard_layout = " << std::is_standard_layout<Ug::Node>::value << endl
-	     << "Ug::List : is_standard_layout = " << std::is_standard_layout<Ug::List>::value << endl
-	     << "Ug::Info : is_standard_layout = " << std::is_standard_layout<Ug::Info>::value << endl
-	     << "Ug::Json : is_standard_layout = " << std::is_standard_layout<Ug::Json>::value << endl
-	     << "Ug::Uri : is_standard_layout = " << std::is_standard_layout<Ug::Uri>::value << endl
+	cout << "is_standard_layout<Ug::DataInfo> = " << is_standard_layout<Ug::DataInfo>::value << endl
+	     << "is_standard_layout<Ug::Data> = " << std::is_standard_layout<Ug::Data>::value << endl
+	     << "is_standard_layout<Ug::Array<int>> = " << std::is_standard_layout<Ug::Array<int>>::value << endl
+	     << "is_standard_layout<Ug::Buffer> = " << std::is_standard_layout<Ug::Buffer>::value << endl
+	     << "is_standard_layout<Ug::Node> = " << std::is_standard_layout<Ug::Node>::value << endl
+	     << "is_standard_layout<Ug::List> = " << std::is_standard_layout<Ug::List>::value << endl
+	     << "is_standard_layout<Ug::Info> = " << std::is_standard_layout<Ug::Info>::value << endl
+	     << "is_standard_layout<Ug::Json> = " << std::is_standard_layout<Ug::Json>::value << endl
+	     << "is_standard_layout<Ug::Uri> = " << std::is_standard_layout<Ug::Uri>::value << endl
 	     << endl;
 #endif  // CHECK_CXX_STANDARD_LAYOUT
 }
@@ -168,13 +168,14 @@ void test_node_cxx(void)
 }
 
 // ----------------------------------------------------------------------------
-// test Ug::DataInterface
+// test Ug::Data & Ug::DataMethod
 
-struct UgCxxData : public Ug::DataInterface<UgCxxData>
+struct UgCxxData : public Ug::DataMethod<UgCxxData>
 {
+	// ------ Ug::Data members ------
 	UG_DATA_MEMBERS;
-//	const UgDataInfo*  info;    // UgData(UgType) member
 
+	// ------ UgCxxData members ------
 	int   value;
 	char* string;
 
@@ -221,16 +222,20 @@ int  UgCxxData::assign(UgCxxData* data, UgCxxData* src)
 void test_data_cxx (void)
 {
 	UgCxxData*  cxxdata;
+	UgCxxData*  cxxdata2;
 
 #if CHECK_CXX_STANDARD_LAYOUT
-	cout << "Ug::Data : is_standard_layout = " << is_standard_layout<Ug::Data>::value << endl;
-	cout << "UgCxxData : is_standard_layout = " << is_standard_layout<UgCxxData>::value << endl;
+	cout << "is_standard_layout<Ug::Data> = " << is_standard_layout<Ug::Data>::value << endl;
+	cout << "is_standard_layout<UgCxxData> = " << is_standard_layout<UgCxxData>::value << endl;
 #endif
 
 	cxxdata = new UgCxxData;
 	cxxdata->string = strdup("This is a string.");
 	cout << "cxxdata->value : " << cxxdata->value << endl
 	     << "cxxdata->string: " << cxxdata->string << endl;
+	cxxdata2 = cxxdata->copy();
+
+	delete cxxdata2;
 	delete cxxdata;
 }
 

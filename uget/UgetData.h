@@ -413,49 +413,49 @@ const UgDataInfo* const RelationInfo = UgetRelationInfo;
 const UgDataInfo* const CategoryInfo = UgetCategoryInfo;
 
 // These are for directly use only. You can NOT derived it.
-struct Common   : Ug::DataInterface<Common>, UgetCommon
+struct Common   : Ug::DataMethod<Common>, UgetCommon
 {
 	inline void* operator new(size_t size)
 		{ return ug_data_new(UgetCommonInfo); }
 };
 
-struct Progress : Ug::DataInterface<Progress>, UgetProgress
+struct Progress : Ug::DataMethod<Progress>, UgetProgress
 {
 	inline void* operator new(size_t size)
 		{ return ug_data_new(UgetProgressInfo); }
 };
 
-struct Proxy    : Ug::DataInterface<Proxy>, UgetProxy
+struct Proxy    : Ug::DataMethod<Proxy>, UgetProxy
 {
 	inline void* operator new(size_t size)
 		{ return ug_data_new(UgetProxyInfo); }
 };
 
-struct Http     : Ug::DataInterface<Http>, UgetHttp
+struct Http     : Ug::DataMethod<Http>, UgetHttp
 {
 	inline void* operator new(size_t size)
 		{ return ug_data_new(UgetHttpInfo); }
 };
 
-struct Ftp      : Ug::DataInterface<Ftp>, UgetFtp
+struct Ftp      : Ug::DataMethod<Ftp>, UgetFtp
 {
 	inline void* operator new(size_t size)
 		{ return ug_data_new(UgetFtpInfo); }
 };
 
-struct Log      : Ug::DataInterface<Log>, UgetLog
+struct Log      : Ug::DataMethod<Log>, UgetLog
 {
 	inline void* operator new(size_t size)
 		{ return ug_data_new(UgetLogInfo); }
 };
 
-struct Relation : Ug::DataInterface<Relation>, UgetRelation
+struct Relation : Ug::DataMethod<Relation>, UgetRelation
 {
 	inline void* operator new(size_t size)
 		{ return ug_data_new(UgetRelationInfo); }
 };
 
-struct Category : Ug::DataInterface<Category>, UgetCategory
+struct Category : Ug::DataMethod<Category>, UgetCategory
 {
 	inline void* operator new(size_t size)
 		{ return ug_data_new(UgetCategoryInfo); }

@@ -174,7 +174,7 @@ typedef struct UgDataInfo    DataInfo;
 // This one is for derived use only. No data members here.
 // Your derived struct/class must be C++11 standard-layout
 template <class DataType>
-struct DataInterface
+struct DataMethod
 {
 	inline void* operator new(size_t size, const UgDataInfo* dinfo)
 		{ return ug_data_new(dinfo); }
@@ -195,7 +195,7 @@ struct DataInterface
 };
 
 // This one is for directly use only. You can NOT derived it.
-struct Data : DataInterface<Data>, UgData {};
+struct Data : DataMethod<Data>, UgData {};
 
 };  // namespace Ug
 
