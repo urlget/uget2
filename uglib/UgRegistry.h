@@ -62,6 +62,9 @@ struct UgPair
      data pointer to UgTypeInfo
  */
 
+// ----------------------------------------------------------------------------
+// UgRegistry functions
+
 void	ug_registry_init(UgRegistry* reg);
 void	ug_registry_final(UgRegistry* reg);
 
@@ -74,6 +77,9 @@ void    ug_registry_sort(UgRegistry* reg);
 #ifdef __cplusplus
 }
 #endif
+
+// ----------------------------------------------------------------------------
+// UgRegistry structure
 
 struct UgRegistry
 {

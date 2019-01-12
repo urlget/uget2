@@ -64,6 +64,9 @@ void         ug_info_set_registry(UgRegistry* registry);
      data pointer to UgData
  */
 
+// ----------------------------------------------------------------------------
+// UgInfo functions
+
 UgInfo* ug_info_new(int allocated_length, int cache_length);
 void    ug_info_ref(UgInfo* info);
 void    ug_info_unref(UgInfo* info);
@@ -110,6 +113,9 @@ void        ug_json_write_info(UgJson* json, UgInfo* info);
 #ifdef __cplusplus
 }
 #endif
+
+// ----------------------------------------------------------------------------
+// UgInfo structure
 
 struct UgInfo
 {

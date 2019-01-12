@@ -203,6 +203,9 @@ void    ug_json_write_string (UgJson* json, const char* Cstring);
 }
 #endif
 
+// ----------------------------------------------------------------------------
+// UgJson structure
+
 struct UgJson
 {
 	// buffer is used by parser & writer
@@ -298,7 +301,6 @@ struct UgJson
 		{ ug_json_write_double (this, value); }
 #endif // __cplusplus
 };
-
 
 // ----------------------------------------------------------------------------
 // C++11 standard-layout

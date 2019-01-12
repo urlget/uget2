@@ -152,9 +152,8 @@ struct UgetNodeControl
 extern struct UgetNodeControl   uget_node_default_control;
 extern struct UgetNodeNotifier  uget_node_default_notifier;
 
-/* ----------------------------------------------------------------------------
-   UgetNode
- */
+// ----------------------------------------------------------------------------
+// UgetNode functions
 
 UgetNode*  uget_node_new (UgetNode* node_real);
 void  uget_node_free (UgetNode* node);
@@ -250,6 +249,9 @@ int       uget_node_get_group(UgetNode* node);
 #ifdef __cplusplus
 }
 #endif
+
+// ----------------------------------------------------------------------------
+// UgetNode structure
 
 struct UgetNode
 {

@@ -91,7 +91,7 @@ union  UgValueC
 };
 
 // ----------------------------------------------------------------------------
-// UgValue
+// UgValue functions
 
 void  ug_value_init(UgValue* value);
 void  ug_value_clear(UgValue* value);
@@ -161,6 +161,9 @@ void        ug_json_write_value(UgJson* json, UgValue* value);
 #ifdef __cplusplus
 }
 #endif
+
+// ----------------------------------------------------------------------------
+// UgValue structure
 
 struct UgValue
 {

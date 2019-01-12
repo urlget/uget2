@@ -83,7 +83,7 @@ inline void  ug_buffer_write_char(UgBuffer* buffer, char ch);
 #endif
 
 // ----------------------------------------------------------------------------
-// UgBuffer
+// UgBuffer structure
 
 struct UgBuffer
 {

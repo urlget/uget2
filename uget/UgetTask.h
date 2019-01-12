@@ -51,13 +51,17 @@
 extern "C" {
 #endif
 
+/* UgetTask - match/manage UgetNode and UgetPlugin
+            - adjust/limit speed
+ */
+
 typedef struct  UgetTask        UgetTask;
 
 typedef int (*UgetWatchFunc) (void* instance, UgetEvent* msg,
                               UgetNode* node, void* data);
 
 // ----------------------------------------------------------------------------
-// UgetTask : match UgetNode and UgetPlugin
+// UgetTask functions
 
 void  uget_task_init(UgetTask* task);
 void  uget_task_final(UgetTask* task);
@@ -74,6 +78,9 @@ void  uget_task_adjust_speed(UgetTask* task);
 #ifdef __cplusplus
 }
 #endif
+
+// ----------------------------------------------------------------------------
+// UgetTask structure
 
 struct UgetTask
 {
@@ -118,7 +125,6 @@ struct UgetTask
 		{ uget_task_adjust_speed(this); }
 #endif  // __cplusplus
 };
-
 
 // ----------------------------------------------------------------------------
 // C++11 standard-layout
