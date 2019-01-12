@@ -100,10 +100,10 @@ const PluginInfo* const PluginEmptyInfo = (const PluginInfo*) UgetPluginEmptyInf
 
 // This one is for derived use only. No data members here.
 // Your derived struct/class must be C++11 standard-layout
-struct PluginEmptyInterface : PluginInterface {};
+struct PluginEmptyMethod : PluginMethod {};
 
 // This one is for directly use only. You can NOT derived it.
-struct PluginEmpty : PluginEmptyInterface, UgetPluginEmpty
+struct PluginEmpty : PluginEmptyMethod, UgetPluginEmpty
 {
 	inline void* operator new(size_t size)
 		{ return uget_plugin_new(PluginEmptyInfo); }

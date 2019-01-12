@@ -152,7 +152,7 @@ namespace Uget
 
 // This one is for derived use only. No data members here.
 // Your derived struct/class must be C++11 standard-layout
-struct PluginAgentInterface : Uget::PluginInterface
+struct PluginAgentMethod : Uget::PluginMethod
 {
 	inline void syncCommon(UgetCommon* common, UgetCommon* target)
 		{ uget_plugin_agent_sync_common((UgetPluginAgent*)this, common, target); }
@@ -161,7 +161,7 @@ struct PluginAgentInterface : Uget::PluginInterface
 };
 
 // This one is for directly use only. You can NOT derived it.
-struct PluginAgent : Uget::PluginAgentInterface, UgetPluginAgent {};
+struct PluginAgent : Uget::PluginAgentMethod, UgetPluginAgent {};
 
 };  // namespace Uget
 

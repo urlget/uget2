@@ -138,10 +138,10 @@ const PluginInfo* const PluginMediaInfo = (const PluginInfo*) UgetPluginMediaInf
 
 // This one is for derived use only. No data members here.
 // Your derived struct/class must be C++11 standard-layout
-struct PluginMediaInterface : PluginAgentInterface {};
+struct PluginMediaMethod : PluginAgentMethod {};
 
 // This one is for directly use only. You can NOT derived it.
-struct PluginMedia : PluginMediaInterface, UgetPluginMedia
+struct PluginMedia : PluginMediaMethod, UgetPluginMedia
 {
 	inline void* operator new(size_t size)
 		{ return uget_plugin_new(PluginMediaInfo); }

@@ -158,10 +158,10 @@ const PluginInfo* const PluginAria2Info = (PluginInfo*) UgetPluginAria2Info;
 
 // This one is for derived use only. No data members here.
 // Your derived struct/class must be C++11 standard-layout
-struct PluginAria2Interface : PluginInterface {};
+struct PluginAria2Method : PluginMethod {};
 
 // This one is for directly use only. You can NOT derived it.
-struct PluginAria2 : PluginAria2Interface, UgetPluginAria2
+struct PluginAria2 : PluginAria2Method, UgetPluginAria2
 {
 	inline void* operator new(size_t size)
 		{ return uget_plugin_new(PluginAria2Info); }

@@ -156,10 +156,10 @@ const PluginInfo* const PluginCurlInfo = (const PluginInfo*) UgetPluginCurlInfo;
 
 // This one is for derived use only. No data members here.
 // Your derived struct/class must be C++11 standard-layout
-struct PluginCurlInterface : PluginInterface {};
+struct PluginCurlMethod : PluginMethod {};
 
 // This one is for directly use only. You can NOT derived it.
-struct PluginCurl : PluginCurlInterface, UgetPluginCurl
+struct PluginCurl : PluginCurlMethod, UgetPluginCurl
 {
 	inline void* operator new(size_t size)
 		{ return uget_plugin_new(PluginCurlInfo); }

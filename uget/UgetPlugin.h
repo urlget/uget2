@@ -240,7 +240,7 @@ namespace Uget
 
 // This one is for derived use only. No data members here.
 // Your derived struct/class must be C++11 standard-layout
-struct PluginInfoInterface
+struct PluginInfoMethod
 {
 	inline UgetResult  globalSet(int option, void* parameter)
 		{ return uget_plugin_global_set((UgetPluginInfo*)this, option, parameter); }
@@ -252,12 +252,12 @@ struct PluginInfoInterface
 };
 
 // This one is for directly use only. You can NOT derived it.
-struct PluginInfo : PluginInfoInterface, UgetPluginInfo {};
+struct PluginInfo : PluginInfoMethod, UgetPluginInfo {};
 
 
 // This one is for derived use only. No data members here.
 // Your derived struct/class must be C++11 standard-layout
-struct PluginInterface
+struct PluginMethod
 {
 	inline void* operator new(size_t size, const UgetPluginInfo* pinfo)
 		{ return uget_plugin_new(pinfo); }
@@ -298,7 +298,7 @@ struct PluginInterface
 };
 
 // This one is for directly use only. You can NOT derived it.
-struct Plugin : PluginInterface, UgetPlugin {};
+struct Plugin : PluginMethod, UgetPlugin {};
 
 };  // namespace Uget
 
