@@ -39,6 +39,7 @@
 #include <UgetData.h>
 #include <UgetFiles.h>
 #include <UgetPlugin.h>
+#include <UgetPluginCurl.h>
 #include <UgetApp.h>
 
 using namespace std;
@@ -51,12 +52,12 @@ using namespace std;
 void uget_is_standard_layout(void)
 {
 #if CHECK_CXX_STANDARD_LAYOUT
-	cout << "Uget::Node : is_standard_layout = " << is_standard_layout<Uget::Node>::value << endl
-	     << "Uget::Common : is_standard_layout = " << std::is_standard_layout<Uget::Common>::value << endl
-	     << "Uget::Progress : is_standard_layout = " << std::is_standard_layout<Uget::Progress>::value << endl
-	     << "Uget::Files : is_standard_layout = " << std::is_standard_layout<Uget::Files>::value << endl
-	     << "Uget::Plugin : is_standard_layout = " << std::is_standard_layout<Uget::Plugin>::value << endl
-	     << "Uget::PluginInfo : is_standard_layout = " << std::is_standard_layout<Uget::PluginInfo>::value << endl
+	cout << "is_standard_layout<Uget::Node> = " << is_standard_layout<Uget::Node>::value << endl
+	     << "is_standard_layout<Uget::Common> = " << std::is_standard_layout<Uget::Common>::value << endl
+	     << "is_standard_layout<Uget::Progress> = " << std::is_standard_layout<Uget::Progress>::value << endl
+	     << "is_standard_layout<Uget::Files> = " << std::is_standard_layout<Uget::Files>::value << endl
+	     << "is_standard_layout<Uget::Plugin> = " << std::is_standard_layout<Uget::Plugin>::value << endl
+	     << "is_standard_layout<Uget::PluginInfo> = " << std::is_standard_layout<Uget::PluginInfo>::value << endl
 	     << endl;
 #endif  // CHECK_CXX_STANDARD_LAYOUT
 }
@@ -98,15 +99,49 @@ void test_uget_node_cxx(void)
 }
 
 // ----------------------------------------------------------------------------
-// test Uget::App
+// test Uget::App & Uget::AppMethod
+
+/*
+   Uget::App
+   |
+   `--- UserApp
+ */
+
+struct UserApp : Uget::AppMethod
+{
+	// ------ Uget::App members ------
+	UGET_APP_MEMBERS;
+
+	// ------ UserApp members ------
+	int   value;
+	char* text;
+
+	inline UserApp(void) {
+		init();
+		value = 10;
+		text  = strdup("This is UserApp's text");
+	}
+
+	inline ~UserApp(void) {
+		free(text);
+		value = 0;
+		final();
+	}
+};
 
 void test_uget_app_cxx(void)
 {
-	Uget::App*  app;
+	UserApp*  app;
 
-	app = new Uget::App;
-	app->init();
-	app->final();
+	cout << " --- test_uget_app_cxx()" << endl;
+#if CHECK_CXX_STANDARD_LAYOUT
+	cout << "is_standard_layout<Uget::App> = " << is_standard_layout<Uget::App>::value << endl;
+	cout << "is_standard_layout<UserApp> = " << is_standard_layout<UserApp>::value << endl;
+#endif // CHECK_CXX_STANDARD_LAYOUT
+
+	app = new UserApp;
+	cout << "app->text = " << app->text << endl;
+	app->setDefaultPlugin(Uget::PluginCurlInfo);
 	delete app;
 }
 

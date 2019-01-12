@@ -35,8 +35,8 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-std=c++11" />
 			<Add option="-Wall" />
+			<Add option="-std=c++11" />
 			<Add option="-DHAVE_GLIB" />
 			<Add directory="../../uglib" />
 			<Add directory="../../uget" />
@@ -46,6 +46,7 @@
 		<Linker>
 			<Add library="libuget.a" />
 			<Add library="libuglib.a" />
+			<Add library="ws2_32" />
 			<Add library="curl.dll" />
 			<Add library="glib-2.0.dll" />
 			<Add library="intl.dll" />
