@@ -101,11 +101,11 @@ int  ug_array_compare_pointer(const void *s1, const void *s2);
 #endif
 
 // ----------------------------------------------------------------------------
-// ArrayInterface : a template C++ struct is used by UgArray and it's children.
+// ArrayMethod : a template C++ struct is used by UgArray and it's children.
 
 #ifdef __cplusplus
 
-// These definitions are used by Ug::ArrayInterface
+// These definitions are used by Ug::ArrayMethod
 inline void* ug_array_insert(void* array, int index, int length);
 inline void  ug_array_erase(void* array, int index, int length);
 inline void  ug_array_sort(void* array, UgCompareFunc func);
@@ -116,7 +116,7 @@ namespace Ug
 // This one is for derived use only, no data members here.
 // This one is NOT for directly use only, it must has UgArray data members.
 // Your derived struct/class must be C++11 standard-layout.
-template<class Type> struct ArrayInterface
+template<class Type> struct ArrayMethod
 {
 	inline void  init(int allocated_len)
 		{ ug_array_init(this, sizeof(Type), allocated_len); }
@@ -143,33 +143,33 @@ template<class Type> struct ArrayInterface
 };
 
 // template specialization
-template<> inline void ArrayInterface<int>::sort()
+template<> inline void ArrayMethod<int>::sort()
 {
 	ug_array_sort(this, ug_array_compare_int);
 };
 
-template<> inline int* ArrayInterface<int>::findSorted(int key, int* index)
+template<> inline int* ArrayMethod<int>::findSorted(int key, int* index)
 {
 	int value = key;
 	return (int*) ug_array_find_sorted(this, &value, ug_array_compare_int, index);
 };
 
-template<> inline void ArrayInterface<char*>::sort()
+template<> inline void ArrayMethod<char*>::sort()
 {
 	ug_array_sort(this, ug_array_compare_string);
 };
 
-template<> inline char** ArrayInterface<char*>::findSorted(char* key, int* index)
+template<> inline char** ArrayMethod<char*>::findSorted(char* key, int* index)
 {
 	return (char**) ug_array_find_sorted(this, &key, ug_array_compare_string, index);
 };
 
-template<> inline void ArrayInterface<void*>::sort()
+template<> inline void ArrayMethod<void*>::sort()
 {
 	ug_array_sort(this, ug_array_compare_pointer);
 };
 
-template<> inline void** ArrayInterface<void*>::findSorted(void* key, int* index)
+template<> inline void** ArrayMethod<void*>::findSorted(void* key, int* index)
 {
 	return (void**) ug_array_find_sorted(this, &key, ug_array_compare_pointer, index);
 };
@@ -190,7 +190,7 @@ template<> inline void** ArrayInterface<void*>::findSorted(void* key, int* index
 #ifdef __cplusplus
 // C++ template works with C macro
 template<class Type>
-struct UgArray : Ug::ArrayInterface<Type>
+struct UgArray : Ug::ArrayMethod<Type>
 {
 	UG_ARRAY_MEMBERS(Type);
 /*	// ------ UgArray members ------
@@ -268,6 +268,12 @@ void    ug_array_sort(void* array, UgCompareFunc func);  // Quick sort
 #endif  // __STDC_VERSION__ || __cplusplus
 
 // ----------------------------------------------------------------------------
+// JSON parser/writer
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // UgJsonParseFunc for JSON array elements
 UgJsonError ug_json_parse_array_bool(UgJson* json,
                                      const char* name, const char* value,
@@ -288,7 +294,6 @@ UgJsonError ug_json_parse_array_string(UgJson* json,
                                        const char* name, const char* value,
                                        void* array, void* none);
 
-// ----------------------------------------------------------------------------
 // write JSON array elements
 void  ug_json_write_array_bool(UgJson* json, UgArrayInt* array);
 void  ug_json_write_array_int(UgJson* json, UgArrayInt* array);
@@ -296,6 +301,10 @@ void  ug_json_write_array_uint(UgJson* json, UgArrayUint* array);
 void  ug_json_write_array_int64(UgJson* json, UgArrayInt64* array);
 void  ug_json_write_array_double(UgJson* json, UgArrayDouble* array);
 void  ug_json_write_array_string(UgJson* json, UgArrayStr* array);
+
+#ifdef __cplusplus
+}
+#endif
 
 // ----------------------------------------------------------------------------
 // C++11 standard-layout
