@@ -155,6 +155,11 @@ void  uget_app_init (UgetApp* app)
 	ug_registry_add (&app->infos, UgetCategoryInfo);
 	ug_registry_sort (&app->infos);
 	ug_info_set_registry (&app->infos);
+	// counter
+	app->n_error = 0;
+	app->n_moved = 0;
+	app->n_deleted = 0;
+	app->n_completed = 0;
 }
 
 void  uget_app_final (UgetApp* app)

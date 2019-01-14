@@ -101,8 +101,8 @@ struct UgetTask
 	} watch[UGET_TASK_N_WATCH];
 
 	struct {
-		int  upload;
-		int  download;
+		int   upload;
+		int   download;
 	} speed, limit;
 
 #ifdef __cplusplus

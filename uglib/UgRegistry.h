@@ -91,7 +91,7 @@ struct UgRegistry
 	int     element_size;
  */
 
-	int       sorted;
+	int     sorted;
 
 #ifdef __cplusplus
 	inline void  init(void)

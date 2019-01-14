@@ -51,6 +51,11 @@ void  uget_task_init(UgetTask* task)
 		task->watch[count].func = NULL;
 		task->watch[count].data = NULL;
 	}
+	// current speed & speed limit
+	task->speed.download = 0;
+	task->speed.upload   = 0;
+	task->limit.download = 0;
+	task->limit.upload   = 0;
 }
 
 void  uget_task_final(UgetTask* task)

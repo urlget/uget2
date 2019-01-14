@@ -142,6 +142,8 @@ void test_uget_app_cxx(void)
 	app = new UserApp;
 	cout << "app->text = " << app->text << endl;
 	app->setDefaultPlugin(Uget::PluginCurlInfo);
+	app->addPlugin(Uget::PluginCurlInfo);
+	app->task.setSpeed(0, 0);
 	delete app;
 }
 
