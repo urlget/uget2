@@ -615,6 +615,7 @@ static void  plugin_decide_files(UgetPluginCurl* plugin)
 static void delay_ms(UgetPluginCurl* plugin, int  milliseconds);
 static int  switch_uri(UgetPluginCurl* plugin, UgetCurl* ugcurl, int is_resumable);
 static int  prepare_file(UgetCurl* ugcurl, UgetPluginCurl* plugin);
+static int  fix_position_of_repeating(char* filename, int* length, int* counts);
 static void complete_file(UgetPluginCurl* plugin);
 static int  load_file_info(UgetPluginCurl* plugin);
 static void clear_file_info(UgetPluginCurl* plugin);
@@ -995,6 +996,7 @@ static int prepare_file(UgetCurl* ugcurl, UgetPluginCurl* plugin)
 	int    length;
 	int    counts;
 	int    value;
+	int    fixed_repeating = FALSE;
 	union {
 		long     ftime;
 		double   fsize;
@@ -1126,6 +1128,10 @@ static int prepare_file(UgetCurl* ugcurl, UgetPluginCurl* plugin)
 		}
 
 		// filename repeat
+		if (fixed_repeating == FALSE) {
+			fixed_repeating = TRUE;
+			fix_position_of_repeating(plugin->file.path, &length, &counts);
+		}
 		sprintf(plugin->file.path + length, ".%d", counts);
 	}
 
@@ -1204,6 +1210,24 @@ static int prepare_file(UgetCurl* ugcurl, UgetPluginCurl* plugin)
 			ugcurl->restart = TRUE;
 		return FALSE;
 	}
+}
+
+static int  fix_position_of_repeating(char* filename, int* length, int* counts)
+{
+	char* cur;
+
+	for(cur = filename +length[0] -1;  cur > filename;  cur--) {
+		if(cur[0] < '0' || cur[0] > '9')
+            break;
+	}
+
+	if(cur[0] == '.') {
+		length[0] = cur - filename;
+		counts[0] = strtol(cur+1, NULL, 10);
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 static int  load_file_info(UgetPluginCurl* plugin)
