@@ -192,13 +192,14 @@ static int  uget_sequence_generate (UgetSequence* useq, const char* pattern, Uge
 	UgLink*         link;
 	int             count;
 
-	for (count = 0;  range->cur <= range->last;  range->cur++, count++) {
+	for (count = 0;  range->cur <= range->last;  range->cur++) {
 		if (range+1 <= useq->range_last)
 			count += uget_sequence_generate (useq, pattern, range+1, result);
 		else {
 			uget_sequence_generate1 (useq, pattern);
 			link = ug_link_string_new (useq->buf.beg, ug_buffer_length (&useq->buf));
 			ug_list_append (result, link);
+			count++;
 		}
 	}
 
