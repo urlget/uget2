@@ -314,7 +314,7 @@ int  uget_app_grow (UgetApp* app, int no_queuing)
 	return n_active;
 }
 
-int   uget_app_trim(UgetApp* app)
+int   uget_app_trim(UgetApp* app, UgArrayPtr* deleted_nodes)
 {
 	UgetCategory*  category;
 	UgetNode*      cnode;
@@ -331,6 +331,9 @@ int   uget_app_trim(UgetApp* app)
 			uget_node_remove(cnode, dnode);
 			uget_node_free(dnode);
 			app->n_deleted++;
+			// add deleted nodes to array
+			if (deleted_nodes)
+				*(void**)ug_array_alloc(deleted_nodes, 1) = dnode;
 		}
 		while (category->recycled->n_children > category->recycled_limit) {
 			dnode = category->recycled->last->real;
@@ -338,6 +341,9 @@ int   uget_app_trim(UgetApp* app)
 			uget_node_remove(cnode, dnode);
 			uget_node_free(dnode);
 			app->n_deleted++;
+			// add deleted nodes to array
+			if (deleted_nodes)
+				*(void**)ug_array_alloc(deleted_nodes, 1) = dnode;
 		}
 	}
 	return app->n_deleted - n_deleted_prev;

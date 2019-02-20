@@ -288,7 +288,7 @@ static gboolean  ugtk_app_timeout_queuing (UgtkApp* app)
 			ugtk_traveler_restore_selection (&app->traveler);
 	}
 
-	uget_app_trim((UgetApp*) app);
+	uget_app_trim((UgetApp*) app, NULL);
 	if (app->n_moved > 0) {
 		// refresh other data & status
 		gtk_widget_queue_draw ((GtkWidget*) app->traveler.download.view);
