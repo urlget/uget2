@@ -323,8 +323,7 @@ void  ugtk_sequence_show_preview (UgtkSequence* seq)
 		gtk_list_store_append (seq->preview.store, &iter);
 		gtk_list_store_set (seq->preview.store, &iter, 0, link->data, -1);
 	}
-	ug_list_foreach_link (&result, (UgForeachFunc)ug_free, NULL);
-	ug_list_clear (&result, FALSE);
+	uget_sequence_clear_result(&result);
 	// notify
 	if (seq->notify.func)
 		seq->notify.func (seq->notify.data, TRUE);

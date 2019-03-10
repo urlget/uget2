@@ -228,8 +228,7 @@ static void on_sequencer_response (UgtkBatchDialog* bdialog)
 		uget_app_add_download ((UgetApp*) app, dnode, cnode, FALSE);
 	}
 
-	ug_list_foreach_link (&result, (UgForeachFunc)ug_free, NULL);
-	ug_list_clear (&result, FALSE);
+	uget_sequence_clear_result(&result);
 }
 
 static void on_selector_response (UgtkBatchDialog* bdialog)

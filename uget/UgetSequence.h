@@ -83,9 +83,10 @@ void uget_sequence_clear (UgetSequence* useq);
 
 int  uget_sequence_count (UgetSequence* useq, const char* pattern);
 
-// call ug_list_foreach_link (result, (UgForeachFunc)ug_free, NULL) to free result list
+// call uget_sequence_clear_result() to clear result list
 int  uget_sequence_get_list (UgetSequence* useq, const char* pattern, UgList* result);
 int  uget_sequence_get_preview (UgetSequence* useq, const char* pattern, UgList* result);
+void uget_sequence_clear_result (UgList* result);
 /*
 	param: pattern is a string that contain wildcard character *.
 	e.g. Number-*.jpg

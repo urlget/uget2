@@ -460,15 +460,13 @@ void test_seq (void)
 	uget_sequence_get_list (&useq, "http://sample/*-*-*.mp4", &list);
 	for (link = list.head;  link;  link = link->next)
 		puts (link->data);
-	ug_list_foreach_link (&list, (UgForeachFunc)ug_free, NULL);
-	ug_list_clear (&list, FALSE);
+	uget_sequence_clear_result(&list);
 
 	puts (" --- preview ---");
 	uget_sequence_get_preview (&useq, "http://sample/*-*.mp4", &list);
 	for (link = list.head;  link;  link = link->next)
 		puts (link->data);
-	ug_list_foreach_link (&list, (UgForeachFunc)ug_free, NULL);
-	ug_list_clear (&list, FALSE);
+	uget_sequence_clear_result(&list);
 
 	uget_sequence_final (&useq);
 }

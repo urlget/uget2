@@ -292,3 +292,8 @@ int  uget_sequence_get_preview (UgetSequence* useq, const char* pattern, UgList*
 	return 5;
 }
 
+void uget_sequence_clear_result (UgList* result)
+{
+	ug_list_foreach_link(result, (UgForeachFunc)ug_free, NULL);
+	ug_list_clear(result, FALSE);
+}
