@@ -194,8 +194,8 @@ struct AppMethod
 
 	inline void  grow(int noQueuing)
 		{ uget_app_grow((UgetApp*)this, noQueuing); }
-	inline void  trim(void)
-		{ uget_app_trim((UgetApp*)this); }
+	inline void  trim(UgArrayPtr* deleted_nodes = NULL)
+		{ uget_app_trim((UgetApp*)this, deleted_nodes); }
 
 	inline void  setConfigDir(const char* dir)
 		{ uget_app_set_config_dir((UgetApp*)this, dir); }
