@@ -90,6 +90,7 @@ struct UgetPluginCurl
 	} folder;
 
 	struct {
+		char*     name_fmt;    // printf() format string
 		char*     path;        // folder + filename
 		time_t    time;        // date and time
 		int64_t   size;        // total size (0 if size unknown)

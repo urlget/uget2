@@ -237,6 +237,7 @@ static void plugin_final(UgetPluginCurl* plugin)
 
 //	curl_slist_free_all(plugin->ftp_command);
 	ug_free(plugin->folder.path);
+	ug_free(plugin->file.name_fmt);
 	ug_free(plugin->file.path);
 	ug_free(plugin->aria2.path);
 
@@ -615,7 +616,7 @@ static void  plugin_decide_files(UgetPluginCurl* plugin)
 static void delay_ms(UgetPluginCurl* plugin, int  milliseconds);
 static int  switch_uri(UgetPluginCurl* plugin, UgetCurl* ugcurl, int is_resumable);
 static int  prepare_file(UgetCurl* ugcurl, UgetPluginCurl* plugin);
-static int  fix_position_of_repeating(char* filename, int* length, int* counts);
+static char* get_repeating_fmt_string(char* filename);
 static void complete_file(UgetPluginCurl* plugin);
 static int  load_file_info(UgetPluginCurl* plugin);
 static void clear_file_info(UgetPluginCurl* plugin);
@@ -996,7 +997,6 @@ static int prepare_file(UgetCurl* ugcurl, UgetPluginCurl* plugin)
 	int    length;
 	int    counts;
 	int    value;
-	int    fixed_repeating = FALSE;
 	union {
 		long     ftime;
 		double   fsize;
@@ -1039,6 +1039,7 @@ static int prepare_file(UgetCurl* ugcurl, UgetPluginCurl* plugin)
 	if (plugin->folder.path)
 		strcpy(plugin->file.path, plugin->folder.path);
 	strcat(plugin->file.path, common->file);
+	plugin->file.name_fmt = get_repeating_fmt_string(common->file);
 
 	// create folder
 	if (ug_create_dir_all(plugin->file.path, plugin->folder.length) == -1) {
@@ -1127,12 +1128,8 @@ static int prepare_file(UgetCurl* ugcurl, UgetPluginCurl* plugin)
 			break;
 		}
 
-		// filename repeat
-		if (fixed_repeating == FALSE) {
-			fixed_repeating = TRUE;
-			fix_position_of_repeating(plugin->file.path, &length, &counts);
-		}
-		sprintf(plugin->file.path + length, ".%d", counts);
+		sprintf(plugin->file.path + plugin->folder.length,
+				plugin->file.name_fmt, counts);
 	}
 
 	if (counts == MAX_REPEAT_COUNTS) {
@@ -1212,22 +1209,51 @@ static int prepare_file(UgetCurl* ugcurl, UgetPluginCurl* plugin)
 	}
 }
 
-static int  fix_position_of_repeating(char* filename, int* length, int* counts)
+static char* find_repeating_dot(char* filename, char* end)
 {
-	char* cur;
+	char*  cur;
 
-	for(cur = filename +length[0] -1;  cur > filename;  cur--) {
+	for (cur = end-1;  cur >= filename;  cur--) {
 		if(cur[0] < '0' || cur[0] > '9')
-            break;
+			break;
 	}
+	if (cur == end-1 || cur < filename || cur[0] != '.')
+		return NULL;
+	return cur;
+}
 
-	if(cur[0] == '.') {
-		length[0] = cur - filename;
-		counts[0] = strtol(cur+1, NULL, 10);
-		return TRUE;
+static char* get_repeating_fmt_string(char* filename)
+{
+	char*  result;
+	char*  dotext;
+	char*  dot;
+	int    length;
+
+	length = strlen(filename);
+	result = ug_malloc(length + 3 + 1);  // + ".%d" + "\0"
+    dotext = strrchr(filename, '.');
+    if (dotext == NULL) {
+		strcpy(result, filename);
+		strcat(result, ".%d");
+    }
+    else if ((dot = find_repeating_dot(filename, filename+length))) {
+		// strncpy() doesn't always null-terminated
+		strncpy(result, filename, dot - filename);
+		result[dot - filename] = 0;
+		strcat(result, ".%d");
 	}
-
-	return FALSE;
+	else {
+		dot = find_repeating_dot(filename, dotext);
+		if (dot == NULL)
+			dot = dotext;
+		// strncpy() doesn't always null-terminated
+		strncpy(result, filename, dot - filename);
+		result[dot - filename] = 0;
+		strcat(result, ".%d");
+		strcat(result, dotext);
+	}
+    // return printf() format string
+    return result;
 }
 
 static int  load_file_info(UgetPluginCurl* plugin)
