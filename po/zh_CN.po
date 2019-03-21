@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Demon Smith <hyh19962008@hotmail.com>, 2018
 # Dz Chen <wsxy162@gmail.com>, 2015-2017
@@ -341,7 +341,7 @@ msgid "Error Occurred"
 msgstr "发生错误"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:781
-msgid "Error Occurred when downloading."
+msgid "Error Occurred during downloading."
 msgstr "下载时发生错误。"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:782

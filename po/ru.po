@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Anton Shcherbina <crevice@mail.ru>, 2016
 # Paul Zercy <box137288272451@unmail.ru>, 2013
@@ -342,7 +342,7 @@ msgid "Error Occurred"
 msgstr "Произошла ошибка"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:781
-msgid "Error Occurred when downloading."
+msgid "Error Occurred during downloading."
 msgstr "Произошла ошибка при загрузке."
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:782

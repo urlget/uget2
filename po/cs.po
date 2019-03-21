@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Alois Nešpor <info@aloisnespor.info>, 2014
 # Radoslav Klein <klein.radoslav@gmail.com>, 2017
@@ -342,7 +342,7 @@ msgid "Error Occurred"
 msgstr "Vyskytla se chyba"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:781
-msgid "Error Occurred when downloading."
+msgid "Error Occurred during downloading."
 msgstr "Vyskytla se chyba během stahování."
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:782

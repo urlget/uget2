@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Tran Thai Hoa <z.tinhte@gmail.com>, 2015
 msgid ""
@@ -338,7 +338,7 @@ msgid "Error Occurred"
 msgstr "Xảy ra lỗi"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:781
-msgid "Error Occurred when downloading."
+msgid "Error Occurred during downloading."
 msgstr "Lỗi trong khi tải"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:782

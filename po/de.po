@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Michael Tunnell <michael@ugetdm.com>, 2013
 # Tobias Bannert <tobannert@gmail.com>, 2016-2017
@@ -339,7 +339,7 @@ msgid "Error Occurred"
 msgstr "Fehler aufgetreten"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:781
-msgid "Error Occurred when downloading."
+msgid "Error Occurred during downloading."
 msgstr "Es ist ein Fehler beim Herunterladen aufgetreten."
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:782

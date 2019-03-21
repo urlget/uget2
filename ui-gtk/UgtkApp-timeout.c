@@ -778,7 +778,7 @@ static void ugtk_app_notify (UgtkApp* app, const gchar* title, const gchar* info
 #endif	// HAVE_LIBNOTIFY
 
 #define	NOTIFICATION_ERROR_TITLE       _("Error Occurred")
-#define	NOTIFICATION_ERROR_STRING      _("Error Occurred when downloading.")
+#define	NOTIFICATION_ERROR_STRING      _("Error Occurred during downloading.")
 #define	NOTIFICATION_STARTING_TITLE    _("Download Starting")
 #define	NOTIFICATION_STARTING_STRING   _("Starting download queue.")
 #define	NOTIFICATION_COMPLETED_TITLE   _("Download Completed")

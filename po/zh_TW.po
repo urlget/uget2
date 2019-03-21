@@ -347,8 +347,8 @@ msgid "Error Occurred"
 msgstr "發生錯誤"
 
 #: ../ui-gtk/UgtkApp-timeout.c:780
-msgid "Error Occurred when downloading."
-msgstr "下載時發生錯誤。"
+msgid "Error Occurred during downloading."
+msgstr "下載期間發生錯誤。"
 
 #: ../ui-gtk/UgtkApp-timeout.c:781
 msgid "Download Starting"

@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Ali 4129 <ali41296@gmail.com>, 2016
 # amin hosseinzadeh fardnia <fardnia@gmail.com>, 2015
@@ -342,7 +342,7 @@ msgid "Error Occurred"
 msgstr "ارور رخ داد"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:781
-msgid "Error Occurred when downloading."
+msgid "Error Occurred during downloading."
 msgstr "هنگام دانلود ارور رخ داد."
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:782

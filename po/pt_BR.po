@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # carlo giusepe tadei valente sasaki <carlo.gt.valente@gmail.com>, 2014,2016
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2013
@@ -339,7 +339,7 @@ msgid "Error Occurred"
 msgstr "Ocorreu um erro"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:781
-msgid "Error Occurred when downloading."
+msgid "Error Occurred during downloading."
 msgstr "Ocorreu um erro ao baixar."
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:782

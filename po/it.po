@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # bovirus <roberto.boriotti@canon-europe.com>, 2013
 # Giuseppe Pignataro (Fasbyte01) <rogepix@gmail.com>, 2017
@@ -341,7 +341,7 @@ msgid "Error Occurred"
 msgstr "Si è verificato un errroe"
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:781
-msgid "Error Occurred when downloading."
+msgid "Error Occurred during downloading."
 msgstr "Errore durante il download."
 
 #: ../../po/../ui-gtk/UgtkApp-timeout.c:782
