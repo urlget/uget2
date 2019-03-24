@@ -1209,51 +1209,92 @@ static int prepare_file(UgetCurl* ugcurl, UgetPluginCurl* plugin)
 	}
 }
 
-static char* find_repeating_dot(char* filename, char* end)
+// used by get_repeating_fmt_string()
+enum {
+	EXT_NUMBER = 0x01,
+	EXT_UPPER  = 0x02,
+	EXT_LOWER  = 0x04,
+
+	EXT_CAMEL  = EXT_UPPER | EXT_LOWER,
+	EXT_ALL    = EXT_UPPER | EXT_LOWER | EXT_NUMBER,
+};
+
+// used by get_repeating_fmt_string()
+static char* find_dot_ext(const char* filename, const char* end, uint8_t* status)
 {
-	char*  cur;
+	uint8_t     stat = 0;
+    const char* cur = NULL;
 
 	for (cur = end-1;  cur >= filename;  cur--) {
-		if(cur[0] < '0' || cur[0] > '9')
+		if (cur[0] == '.') {
+			if (cur == end-1 || cur == filename)
+				break;
+			if (status)
+				status[0] = stat;
+			return (char*)cur;
+		}
+		else if (cur[0] >= '0' && cur[0] <= '9')
+			stat |= EXT_NUMBER;
+		else if (cur[0] >= 'A' && cur[0] <= 'Z')
+			stat |= EXT_UPPER;
+		else if (cur[0] >= 'a' && cur[0] <= 'z')
+			stat |= EXT_LOWER;
+		else
 			break;
 	}
-	if (cur == end-1 || cur < filename || cur[0] != '.')
-		return NULL;
-	return cur;
+	return NULL;
 }
 
 static char* get_repeating_fmt_string(char* filename)
 {
-	char*  result;
-	char*  dotext;
-	char*  dot;
-	int    length;
+	char*   result;
+	char*   dot[3] = {NULL, NULL, NULL};
+	uint8_t stat[3] = {0, 0, 0};
+	int     index;
+	int     length;
 
 	length = strlen(filename);
 	result = ug_malloc(length + 3 + 1);  // + ".%d" + "\0"
-    dotext = strrchr(filename, '.');
-    if (dotext == NULL) {
-		strcpy(result, filename);
-		strcat(result, ".%d");
-    }
-    else if ((dot = find_repeating_dot(filename, filename+length))) {
+
+	// dot[0]
+	dot[0] = find_dot_ext(filename, filename + length, &stat[0]);
+	if (dot[0])
+		dot[1] = find_dot_ext(filename, dot[0], &stat[1]);
+	if (dot[1])
+		dot[2] = find_dot_ext(filename, dot[1], &stat[2]);
+
+	for (index = 2;  index >= 0;  index--) {
+		if (dot[index] == NULL)
+			continue;
+
+		// replace exist number
+		if (stat[index] == EXT_NUMBER) {
+			// strncpy() doesn't always null-terminated
+			strncpy(result, filename, dot[index] - filename);
+			result[dot[index] - filename] = 0;
+			strcat(result, ".%d");
+			if (index > 0)
+				strcat(result, dot[index-1]);
+			return result;
+		}
+
+		// insert number
+		if (index == 2)
+			continue;
 		// strncpy() doesn't always null-terminated
-		strncpy(result, filename, dot - filename);
-		result[dot - filename] = 0;
+		strncpy(result, filename, dot[index] - filename);
+		result[dot[index] - filename] = 0;
 		strcat(result, ".%d");
+		strcat(result, dot[index]);
+		return result;
 	}
-	else {
-		dot = find_repeating_dot(filename, dotext);
-		if (dot == NULL)
-			dot = dotext;
-		// strncpy() doesn't always null-terminated
-		strncpy(result, filename, dot - filename);
-		result[dot - filename] = 0;
-		strcat(result, ".%d");
-		strcat(result, dotext);
-	}
-    // return printf() format string
-    return result;
+
+	// append number
+	strcpy(result, filename);
+	strcat(result, ".%d");
+
+	// return printf() format string
+	return result;
 }
 
 static int  load_file_info(UgetPluginCurl* plugin)
