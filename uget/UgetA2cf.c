@@ -40,6 +40,8 @@
 #include <UgStdio.h>
 #include <UgetA2cf.h>
 
+#define INFO_HASH_LEN_MAX    8192
+
 enum {
 	ENDIAN_UNKNOWN,
 	ENDIAN_BE,
@@ -356,21 +358,29 @@ int  uget_a2cf_load (UgetA2cf* a2cf, const char* filename)
 	FILE*    file;
 	uint32_t index;
 	uint32_t n_pieces;
+	uint32_t bitfield_len;
 
 	init_endian_type ();
 
 	file = ug_fopen (filename, "rb");
 	if (file == NULL)
 		return FALSE;
+	// version
 	ug_fread (file, (char*)&a2cf->ver, 2);
 	ug_fread (file, (char*)&a2cf->ext, 4);
 	a2cf->ver = uint16_from_be (a2cf->ver);
 	a2cf->ext = uint32_from_be (a2cf->ext);
+	// check file version - uGet only support version 1
+	if (a2cf->ver != 1)
+		goto failed;
+
 	// info hash
 	a2cf->info_hash_len = 0;
 	ug_fread (file, (char*)&a2cf->info_hash_len, 4);
 	a2cf->info_hash_len = uint32_from_be (a2cf->info_hash_len);
-	if (a2cf->info_hash_len == 0)
+	if (a2cf->info_hash_len > INFO_HASH_LEN_MAX)
+		goto failed;
+	else if (a2cf->info_hash_len == 0)
 		a2cf->info_hash = NULL;
 	else {
 		a2cf->info_hash = ug_malloc (a2cf->info_hash_len);
@@ -383,33 +393,34 @@ int  uget_a2cf_load (UgetA2cf* a2cf, const char* filename)
 	a2cf->piece_len = uint32_from_be (a2cf->piece_len);
 	a2cf->total_len = uint64_from_be (a2cf->total_len);
 	a2cf->upload_len = uint64_from_be (a2cf->upload_len);
-	// bit field
-	if (ug_fread (file, (char*)&a2cf->bitfield_len, 4) != 4) {
-		fclose (file);
-		return FALSE;
-	}
+
+	// bitfield
+	if (ug_fread (file, (char*)&a2cf->bitfield_len, 4) != 4)
+		goto failed;
 	a2cf->bitfield_len = uint32_from_be (a2cf->bitfield_len);
-	if (a2cf->bitfield_len == 0) {
+	// check bitfield_len
+	bitfield_len  = (uint32_t)(a2cf->total_len / (8 * a2cf->piece_len));
+	bitfield_len += (uint32_t)(a2cf->total_len % (8 * a2cf->piece_len)) ? 1 : 0;
+	if (a2cf->bitfield_len == 0 || a2cf->bitfield_len != bitfield_len) {
 		a2cf->bitfield = NULL;
-		return FALSE;
+		goto failed;
 	}
 	else {
 		a2cf->bitfield = ug_malloc (a2cf->bitfield_len);
 		if (ug_fread (file, a2cf->bitfield, a2cf->bitfield_len) != a2cf->bitfield_len)
-		{
-			fclose (file);
-			return FALSE;
-		}
+			goto failed;
 	}
 
+	// The number of in-flight pieces.
 	n_pieces = 0;
 	ug_fread (file, (char*)&n_pieces, 4);
 	n_pieces = uint32_from_be (n_pieces);
 
-	// piece.index_end
+	// piece.index_end - calculate number of the last piece
 	a2cf->piece.index_end = (uint32_t) (a2cf->total_len / a2cf->piece_len) +
 			( (a2cf->total_len & (a2cf->piece_len-1)) ? 1 : 0 );
-	// load pieces
+
+	// load in-flight pieces
 	for (index = 0;  index < n_pieces;  index++) {
 		piece = a2cf_piece_new (a2cf->piece_len);
 		if (a2cf_piece_read (piece, file) == FALSE) {
@@ -421,6 +432,10 @@ int  uget_a2cf_load (UgetA2cf* a2cf, const char* filename)
 
 	fclose (file);
 	return TRUE;
+
+failed:
+	fclose(file);
+	return FALSE;
 }
 
 int   uget_a2cf_save (UgetA2cf* a2cf, const char* filename)
@@ -517,6 +532,7 @@ int   uget_a2cf_lack (UgetA2cf* a2cf, uint64_t* beg, uint64_t* end)
 			}
 		}
 		beg[0] = (uint64_t)index * a2cf->piece_len + piece_beg;
+		// if current piece is the last piece
 		if (index == a2cf->piece.index_end - 1) {
 			end[0] = a2cf->total_len;
 			return TRUE;
