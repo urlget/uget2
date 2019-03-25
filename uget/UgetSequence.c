@@ -57,6 +57,8 @@ static UgLink* ug_link_string_new (const char* string, int length)
 
 	link = ug_malloc (sizeof (UgLinkString) + length);
 	link->data = link->string;
+	link->prev = NULL;
+	link->next = NULL;
 	strcpy (link->string, string);
 	return (UgLink*) link;
 }
