@@ -56,6 +56,9 @@ static UgLink* ug_link_string_new (const char* string, int length)
 	UgLinkString*   link;
 
 	link = ug_malloc (sizeof (UgLinkString) + length);
+	if (link == NULL)
+		return NULL;
+
 	link->data = link->string;
 	link->prev = NULL;
 	link->next = NULL;
@@ -200,6 +203,8 @@ static int  uget_sequence_generate (UgetSequence* useq, const char* pattern, Uge
 		else {
 			uget_sequence_generate1 (useq, pattern);
 			link = ug_link_string_new (useq->buf.beg, ug_buffer_length (&useq->buf));
+			if (link == NULL)
+				break;
 			ug_list_append (result, link);
 			count++;
 		}
