@@ -138,7 +138,7 @@ static void  set_bit (uint8_t* bytes, uint32_t nth_bit);
 
 // ----------------------------------------------------------------------------
 
-#define A2CF_LAST_PIECE_LEN(a2cf)  ((a2cf)->total_size & ((a2cf)->piece_len-1))
+#define A2CF_LAST_PIECE_LEN(a2cf)  ((a2cf)->total_size % (a2cf)->piece_len)
 
 static UgetA2cfPiece*  a2cf_piece_new (uint32_t length)
 {
@@ -418,7 +418,7 @@ int  uget_a2cf_load (UgetA2cf* a2cf, const char* filename)
 
 	// piece.index_end - calculate number of the last piece
 	a2cf->piece.index_end = (uint32_t) (a2cf->total_len / a2cf->piece_len) +
-			( (a2cf->total_len & (a2cf->piece_len-1)) ? 1 : 0 );
+			( (a2cf->total_len % a2cf->piece_len) ? 1 : 0 );
 
 	// load in-flight pieces
 	for (index = 0;  index < n_pieces;  index++) {
@@ -506,7 +506,7 @@ int   uget_a2cf_lack (UgetA2cf* a2cf, uint64_t* beg, uint64_t* end)
 		return FALSE;
 
 	index     = (uint32_t) (beg[0] / a2cf->piece_len);
-	piece_beg = (uint32_t) (beg[0] & (a2cf->piece_len-1));
+	piece_beg = (uint32_t) (beg[0] % a2cf->piece_len);
 
 	// find begin
 	for (;  index < a2cf->piece.index_end;  index++) {
@@ -611,8 +611,8 @@ uint64_t  uget_a2cf_fill (UgetA2cf* a2cf, uint64_t beg, uint64_t end)
 
 	index_beg = (uint32_t) (beg / a2cf->piece_len);
 	index_end = (uint32_t) (end / a2cf->piece_len);
-	piece_beg = beg & (a2cf->piece_len-1);
-	piece_end = end & (a2cf->piece_len-1);
+	piece_beg = (uint32_t) (beg % a2cf->piece_len);
+	piece_end = (uint32_t) (end % a2cf->piece_len);
 
 	// first piece or only 1 piece
 	if (index_beg == index_end) {
@@ -662,7 +662,7 @@ uint64_t  uget_a2cf_completed (UgetA2cf* a2cf)
 	for (index = 0;  index < a2cf->piece.index_end;  index++) {
 		if (test_bit (a2cf->bitfield, index) == TRUE) {
 			if (index == a2cf->piece.index_end - 1) {
-				last_piece_len = a2cf->total_len & (a2cf->piece_len-1);
+				last_piece_len = a2cf->total_len % a2cf->piece_len;
 				if (last_piece_len) {
 					completed += last_piece_len;
 					break;
@@ -720,7 +720,7 @@ UgetA2cfPiece*  uget_a2cf_realloc (UgetA2cf* a2cf, uint32_t piece_index)
 		piece = a2cf_piece_new (a2cf->piece_len);
 		piece->index = piece_index;
 		if (piece_index == a2cf->piece.index_end - 1)
-			a2cf_piece_truncate (piece, a2cf->total_len & (a2cf->piece_len-1));
+			a2cf_piece_truncate (piece, a2cf->total_len % a2cf->piece_len);
 		uget_a2cf_insert (a2cf, piece);
 	}
 	return piece;
