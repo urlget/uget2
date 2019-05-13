@@ -292,6 +292,65 @@ void  uget_node_prepend (UgetNode* node, UgetNode* child)
 	uget_node_call_fake_filter (node, sibling, child);
 }
 
+// used by uget_node_sort()
+static void uget_node_qsort(UgetNode** array, int left, int right, UgCompareFunc compare)
+{
+	UgetNode* temp;
+	UgetNode* pivot = array[(left + right) / 2];
+	int i = left, j = right;
+
+	/* partition */
+	while (i <= j) {
+		while (compare(array[i], pivot) < 0)
+			i++;
+		while (compare(array[j], pivot) > 0)
+			j--;
+		if (i <= j) {
+			temp = array[i];
+			array[i] = array[j];
+			array[j] = temp;
+			i++;
+			j--;
+		}
+	};
+
+	/* recursion */
+	if (left < j)
+		uget_node_qsort(array, left, j, compare);
+	if (i < right)
+		uget_node_qsort(array, i, right, compare);
+}
+
+void  uget_node_sort(UgetNode* node, UgCompareFunc compare, int reversed)
+{
+	int        index;
+	UgetNode** array;
+	UgetNode*  cur;
+
+	if (node->n_children == 0)
+		return;
+	array = (UgetNode**) ug_malloc(sizeof(UgetNode*) * node->n_children);
+	for (index = 0, cur = node->children;  cur;  cur = cur->next, index++)
+		array[index] = cur;
+
+	uget_node_qsort(array, 0, node->n_children -1, compare);
+
+	if (reversed) {
+		for (index = node->n_children-1;  index >=0;  index--) {
+			uget_node_remove(node, array[index]);
+			uget_node_append(node, array[index]);
+		}
+	}
+	else {
+		for (index = 0;  index < node->n_children;  index++) {
+			uget_node_remove(node, array[index]);
+			uget_node_append(node, array[index]);
+		}
+	}
+	ug_free(array);
+}
+
+/*
 void  uget_node_sort (UgetNode* node, UgCompareFunc compare, int reversed)
 {
 	UgetNode* beg;
@@ -317,6 +376,7 @@ void  uget_node_sort (UgetNode* node, UgCompareFunc compare, int reversed)
 			uget_node_move (node, beg, unsorted);
 	}
 }
+ */
 
 void  uget_node_insert_sorted (UgetNode* node, UgetNode* child)
 {
