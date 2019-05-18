@@ -734,7 +734,8 @@ int  uget_app_add_download (UgetApp* app, UgetNode* dnode, UgetNode* cnode, int 
 	UgetRelation* relation_c;
 	UgetNode*     sibling;
 	UgetLog*      log;
-	UgUri         uuri;
+	UgUri*        uuri;
+	char*         fattch;
 	int           value;
 	struct {
 		UgetCommon*   common;
@@ -747,16 +748,29 @@ int  uget_app_add_download (UgetApp* app, UgetNode* dnode, UgetNode* cnode, int 
 		ug_str_replace_chars (temp.common->file, "\\/:*?\"<>|", '_');
 	// decode name, filename, and category
 	if (temp.common->uri) {
-		ug_uri_init (&uuri, temp.common->uri);
+		uuri = ug_malloc(sizeof (UgUri));
+		ug_uri_init(uuri, temp.common->uri);
 		// set UgetCommon::name if it's name is NULL
 		if (temp.common->name == NULL) {
 			if (temp.common->file)
 				temp.common->name = ug_strdup(temp.common->file);
 			else
-				temp.common->name = uget_name_from_uri(&uuri);
+				temp.common->name = uget_name_from_uri(uuri);
 		}
+		// backup file
+		if (ug_uri_is_file(uuri)) {
+			fattch = uget_app_save_attachment(app, dnode->info,
+			                                  temp.common->uri + uuri->path, NULL);
+			if (fattch) {
+				// uuri will failure
+				ug_free(temp.common->uri);
+				temp.common->uri = fattch;
+			}
+		}
+		ug_free(uuri);
+		//
 		if (cnode == NULL)
-			cnode = uget_app_match_category (app, &uuri, temp.common->file);
+			cnode = uget_app_match_category (app, uuri, temp.common->file);
 	}
 
 	if (cnode == NULL)
@@ -1149,10 +1163,112 @@ void  uget_app_use_uri_hash (UgetApp* app)
 		uget_uri_hash_add_category (app->uri_hash, cnode);
 }
 
+char* uget_app_save_attachment(UgetApp* app, UgInfo* info,
+                               const char* src_path, const char* rename)
+{
+	char*       dest_path;
+	int         count;
+	UgetFile*   file1;
+	UgetFiles*  files;
+
+	if (rename == NULL) {
+		rename = strrchr(src_path, UG_DIR_SEPARATOR);
+#if defined _WIN32 || defined _WIN64
+		if (rename == NULL)
+			rename = strrchr(src_path, '/');
+#endif
+		if (rename == NULL)
+			rename = src_path;
+		else
+			rename++;
+	}
+
+	dest_path = ug_strdup_printf(
+			"%s" UG_DIR_SEPARATOR_S "attachment" UG_DIR_SEPARATOR_S "%s",
+			app->config_dir, rename);
+
+	for (count = 0;  ug_file_is_exist(dest_path);  count++) {
+		ug_free(dest_path);
+		dest_path = ug_strdup_printf(
+				"%s" UG_DIR_SEPARATOR_S "attachment" UG_DIR_SEPARATOR_S "%d) %s",
+				app->config_dir, count, rename);
+	}
+
+	if (ug_file_copy(src_path, dest_path) == -1) {
+		ug_free(dest_path);
+		return NULL;
+	}
+	// add new path to UgetFiles
+	files = ug_info_realloc(info, UgetFilesInfo);
+	file1 = uget_files_realloc(files, dest_path);
+	file1->type = UGET_FILE_ATTACHMENT;
+
+	return dest_path;
+}
+
+/*
+void  uget_app_store_attachment(UgetApp* app, UgInfo* info)
+{
+	int    num;
+	char*  fname;
+	char*  fattch;
+	UgUri* uuri;
+	union {
+		UgetHttp*    http;
+		UgetCommon*  common;
+	} tmp;
+
+	tmp.common = ug_info_get(info, UgetCommonInfo);
+	if (tmp.common && tmp.common->uri) {
+		uuri = ug_malloc(sizeof(UgUri));
+		ug_uri_init(uuri, tmp.common->uri);
+		if (ug_uri_is_file(uuri)) {
+			fattch = uget_app_save_attachment(app, info,
+			                                  tmp.common->uri + uuri->path, NULL);
+			if (fattch) {
+				ug_free(tmp.common->uri);
+				tmp.common->uri = fattch;
+			}
+		}
+		ug_free(uuri);
+	}
+
+	srand((unsigned int) time(NULL));
+	num = rand();
+
+	tmp.http = ug_info_get(info, UgetHttpInfo);
+	// backup cookie file
+	if (tmp.http && tmp.http->cookie_file) {
+		fname = ug_strdup_printf("%X.cookie", num);
+		fattch = uget_app_save_attachment(app, info,
+		                                  tmp.http->cookie_file, fname);
+		ug_free(fname);
+		if (fattch) {
+			ug_free(tmp.http->cookie_file);
+			tmp.http->cookie_file = fattch;
+		}
+	}
+
+	// backup post file
+	if (tmp.http && tmp.http->post_file) {
+		fname = ug_strdup_printf("%X.post", num);
+		fattch = uget_app_save_attachment(app, info,
+		                                  tmp.http->post_file, fname);
+		ug_free(fname);
+		if (fattch) {
+			ug_free(tmp.http->post_file);
+			tmp.http->post_file = fattch;
+		}
+	}
+}
+ */
+
 void  uget_app_clear_attachment (UgetApp* app)
 {
 	UgetNode*   dnode;
 	UgetHttp*   http;
+	UgetFiles*  files;
+	UgetFile*   file1;
 	UgDir*      dir;
 	void*       hash;
 	const char* name;
@@ -1162,12 +1278,20 @@ void  uget_app_clear_attachment (UgetApp* app)
 	hash = uget_uri_hash_new ();
 	// add attachment
 	for (dnode = app->mix.children->children;  dnode;  dnode = dnode->next) {
-		if ((http = ug_info_get (dnode->info, UgetHttpInfo)) == NULL)
-			continue;
-		if (http->cookie_file)
-			uget_uri_hash_add (hash, http->cookie_file);
-		if (http->post_file)
-			uget_uri_hash_add (hash, http->post_file);
+		// UgetFiles
+		if ((files = ug_info_get(dnode->info, UgetFilesInfo)) != NULL ) {
+			for (file1 = (UgetFile*)files->list.head;  file1;  file1 = file1->next) {
+				if (file1->type == UGET_FILE_ATTACHMENT)
+					uget_uri_hash_add(hash, file1->path);
+			}
+		}
+		// UgetHttp
+		if ((http = ug_info_get(dnode->info, UgetHttpInfo)) != NULL) {
+			if (http->cookie_file)
+				uget_uri_hash_add(hash, http->cookie_file);
+			if (http->post_file)
+				uget_uri_hash_add(hash, http->post_file);
+		}
 	}
 
 	folder = ug_build_filename (app->config_dir, "attachment", NULL);

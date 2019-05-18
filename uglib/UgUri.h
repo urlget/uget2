@@ -113,6 +113,7 @@ int  ug_uri_part_port     (UgUri* uuri, const char** port);
 
 int   ug_uri_get_port (UgUri* uuri);
 char* ug_uri_get_file (UgUri* uuri);
+int   ug_uri_is_file  (UgUri* uuri);
 
 // ------------------------------------
 // match uri functions

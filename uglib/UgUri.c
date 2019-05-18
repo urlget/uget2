@@ -298,6 +298,17 @@ char* ug_uri_get_file (UgUri* uuri)
 	return ug_strndup (str, len);
 }
 
+int  ug_uri_is_file(UgUri* uuri)
+{
+	if (uuri->scheme_len == 4) {
+		if (strncmp(uuri->uri, "file", 4) != 0)
+			return FALSE;
+	}
+	else if (uuri->scheme_len != 0)
+		return FALSE;
+	return TRUE;
+}
+
 // ------------------------------------
 // match uri functions
 
