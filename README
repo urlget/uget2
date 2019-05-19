@@ -1,3 +1,8 @@
+uGet 2.2.2: (2019-05-20)
+1. use quicksort to sort downloads.
+2. backup torrent and metalink files.
+3. curl plug-in: handle duplicate files with double extensions.
+
 uGet 2.2.1: (2018-03-08)
 1. reduce memory usage.
 2. mega plug-in: completed size should not be '-1' if file size > 2G on a 32-bit system.
