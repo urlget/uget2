@@ -13,7 +13,6 @@ EXTRA_DIST = \
 	msvc/uglib.vcxproj     \
 	msvc/ui-gtk.vcxproj    \
 	CodeBlocks/mingw-config.txt     \
-	CodeBlocks/test-data.cbp        \
 	CodeBlocks/test-json.cbp        \
 	CodeBlocks/test-jsonrpc.cbp     \
 	CodeBlocks/test-plugin+app.cbp  \
