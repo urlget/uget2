@@ -44,7 +44,7 @@ static const char	uget_license[] =
 static const gchar*  uget_authors[] = { "C.H. Huang  (\xE9\xBB\x83\xE6\xAD\xA3\xE9\x9B\x84)", NULL };
 static const gchar*  uget_artists[] = { "Michael Tunnell (visuex.com)", NULL};
 static const gchar*  uget_comments  = N_("Download Manager");
-static const gchar*  uget_copyright = "Copyright (C) 2005-2018 C.H. Huang";
+static const gchar*  uget_copyright = "Copyright (C) 2005-2019 C.H. Huang";
 static const gchar*  translator_credits = N_("translator-credits");
 
 static void ugtk_about_dialog_on_response (GtkWidget* widget,
