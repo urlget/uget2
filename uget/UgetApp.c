@@ -1348,7 +1348,10 @@ void  uget_app_add_plugin (UgetApp* app, const UgetPluginInfo* pinfo)
 	pair = ug_registry_find (&app->plugins, pinfo->name, NULL);
 	if (pair == NULL || pair->data == NULL)
 		uget_plugin_global_set(pinfo, UGET_PLUGIN_GLOBAL_INIT, (void*) TRUE);
-	if (pair == NULL)
+
+	if (pair)
+        pair->data = (void*) pinfo;
+	else
 		ug_registry_add (&app->plugins, (const UgTypeInfo*)pinfo);
 }
 
@@ -1407,7 +1410,7 @@ UgetPluginInfo*  uget_app_match_plugin (UgetApp* app,
 	}
 	for (index = 0;  index < app->plugins.length;  index++) {
 		info = app->plugins.at[index].data;
-		if (info != exclude) {
+		if (info && info != exclude) {
 			count = uget_plugin_match (info, &uuri);
 			if (matched.count < count) {
 				matched.count = count;
