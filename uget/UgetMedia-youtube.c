@@ -62,6 +62,9 @@ struct UgetYouTube
 	UgUriQuery  query;
 	char*       video_id;
 
+	// common
+	UgJson      json;
+
 	// Method 1
 	UgBuffer    buffer;
 	char*       reason;    // VEVO
@@ -72,7 +75,6 @@ struct UgetYouTube
 
 	// method 2
 	UgHtml      html;
-	UgJson      json;
 	char*       js;        // JavaScript player URL
 };
 
@@ -263,6 +265,24 @@ static void  uget_youtube_parse_adaptive_fmts(UgetYouTube* uyoutube, UgetMedia* 
 // https://www.youtube.com/get_video_info?video_id=xxxxxxxxxxx
 // https://www.youtube.com/get_video_info?video_id=xxxxxxxxxxx&el=vevo&el=embedded&asv=3&sts=15902
 
+// ------------------------------------
+// JSON parser : for player_response
+
+static const UgEntry  video_details_entry[] =
+{
+	{"title",  offsetof(UgetMedia, title),
+			UG_ENTRY_STRING, NULL, NULL},
+	{NULL}    // null-terminated
+};
+
+static const UgEntry  player_response_entry[] =
+{
+	{"videoDetails",      0,
+			UG_ENTRY_OBJECT, (void*) video_details_entry, NULL},
+	{NULL}    // null-terminated
+};
+
+
 static void  uget_youtube_parse_query(UgetYouTube* uyoutube, UgetMedia* umedia)
 {
 	if (ug_uri_query_part(&uyoutube->query, uyoutube->buffer.beg) == 0)
@@ -283,12 +303,14 @@ static void  uget_youtube_parse_query(UgetYouTube* uyoutube, UgetMedia* umedia)
 		ug_decode_uri(uyoutube->query.value, uyoutube->query.value_len, uyoutube->query.value);
 		uget_youtube_parse_adaptive_fmts(uyoutube, umedia, uyoutube->query.value);
 	}
+	/*  // deprecated
 	else if (uyoutube->query.field_len == 5 &&
 	         strncmp(uyoutube->buffer.beg, "title", 5) == 0)
 	{
 		umedia->title = ug_strndup(uyoutube->query.value, uyoutube->query.value_len);
 		ug_decode_uri(umedia->title, uyoutube->query.value_len, umedia->title);
 	}
+	*/
 	else if (uyoutube->query.field_len == 6 &&
 	         strncmp(uyoutube->buffer.beg, "reason", 6) == 0)
 	{
@@ -305,6 +327,20 @@ static void  uget_youtube_parse_query(UgetYouTube* uyoutube, UgetMedia* umedia)
 	         strncmp(uyoutube->buffer.beg, "errorcode", 9) == 0)
 	{
 		uyoutube->error_code = strtol(uyoutube->query.value, NULL, 10);
+	}
+	else if (uyoutube->query.field_len == 15 &&
+	         strncmp(uyoutube->buffer.beg, "player_response", 9) == 0)
+	{
+		UgJson* json;
+		int     length;
+
+		length = ug_decode_uri(uyoutube->query.value, uyoutube->query.value_len, uyoutube->query.value);
+		json = &uyoutube->json;
+		ug_json_begin_parse(json);
+		ug_json_push(json, ug_json_parse_entry, umedia, (void*) player_response_entry);
+		ug_json_push(json, ug_json_parse_object, NULL, NULL);
+		ug_json_parse(json, uyoutube->query.value, length);
+		ug_json_end_parse(json);
 	}
 }
 
@@ -504,8 +540,19 @@ static void  youtube_start_element(UgHtml*        uhtml,
                                    void*          dest,
                                    void*          data)
 {
+	UgetMedia* umedia = dest;
+
 	if (strcmp(element_name, "script") == 0)
 		ug_html_push(uhtml, &youtube_script_parser, dest, data);
+	else if (strcmp(element_name, "meta") == 0) {
+		// <meta name="title" content="media title string">
+		if (attribute_names[0]  && strcmp(attribute_names[0],  "name")==0 &&
+		    attribute_values[0] && strcmp(attribute_values[0], "title")==0 &&
+			attribute_names[1]  && strcmp(attribute_names[1],  "content")==0)
+		{
+			umedia->title = ug_strdup(attribute_values[1]);
+		}
+	}
 }
 
 static void  youtube_end_element(UgHtml*        uhtml,
@@ -764,6 +811,7 @@ int  uget_media_grab_youtube(UgetMedia* umedia, UgetProxy* proxy)
 
 	n = uget_media_grab_youtube_method_1(umedia, proxy);
 	if (n == 0 && uyoutube->error_code != 100) {
+		// clear data before calling uget_media_grab_youtube_method_2()
 		ug_free(umedia->title);
 		umedia->title = NULL;
 		if (umedia->event) {
