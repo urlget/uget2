@@ -164,6 +164,9 @@ static int  ug_html_parse_tag (UgHtml* uhtml)
 	for (cur = uhtml->buf.at;  cur < end;  cur++) {
 		switch (cur[0]) {
 		case ' ':
+			if (quote_level > 0)
+				continue;
+			// end of attribute
 			cur[0] = 0;
 			if (cur == uhtml->buf.at + uhtml->name_beg_pos)
 				uhtml->name_beg_pos++;
@@ -181,6 +184,9 @@ static int  ug_html_parse_tag (UgHtml* uhtml)
 			continue;
 
 		case '=':
+			if (quote_level > 0)
+				continue;
+			// new attribute value
 			cur[0] = 0;
 			if (uhtml->equ || attr_name == NULL) {
 				uhtml->error = UG_HTML_ERROR_BAD_ATTRIBUTE;
