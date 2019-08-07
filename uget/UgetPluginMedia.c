@@ -320,6 +320,10 @@ static UgThreadResult  plugin_thread(UgetPluginMedia* plugin)
 	umitem = uget_media_match(umedia, global.match_mode,
 	                          global.quality, global.type);
 	if (umitem == NULL) {
+		umitem = uget_media_match(umedia, global.match_mode,
+		                          global.quality, global.type | UGET_MEDIA_TYPE_DEMUX);
+	}
+	if (umitem == NULL) {
 		uget_plugin_post((UgetPlugin*) plugin,
 				uget_event_new_error(UGET_EVENT_ERROR_CUSTOM,
 				                     _("No matched media.")));
@@ -349,7 +353,7 @@ static UgThreadResult  plugin_thread(UgetPluginMedia* plugin)
 		if (type)
 			plugin->item_index++;
 
-		switch (umitem->type) {
+		switch (umitem->type & UGET_MEDIA_TYPE_MUX) {
 		case UGET_MEDIA_TYPE_3GPP:
 			type = "3gpp";
 			break;
@@ -362,12 +366,16 @@ static UgThreadResult  plugin_thread(UgetPluginMedia* plugin)
 		case UGET_MEDIA_TYPE_WEBM:
 			type = "webm";
 			break;
+		case UGET_MEDIA_TYPE_UNKNOWN:
 		default:
 			type = "unknown";
 			break;
 		}
 
 		switch (umitem->quality) {
+		case UGET_MEDIA_QUALITY_144P:
+			quality = "144p";
+			break;
 		case UGET_MEDIA_QUALITY_240P:
 			quality = "240p";
 			break;
@@ -383,8 +391,13 @@ static UgThreadResult  plugin_thread(UgetPluginMedia* plugin)
 		case UGET_MEDIA_QUALITY_1080P:
 			quality = "1080p";
 			break;
+
+		case UGET_MEDIA_QUALITY_UNKNOWN:
 		default:
-			quality = "unknown";
+			if (umitem->type & UGET_MEDIA_TYPE_AUDIO)
+				quality = "audio";
+			else
+				quality = "unknown";
 			break;
 		}
 

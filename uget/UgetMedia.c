@@ -112,6 +112,7 @@ UgetMediaItem*  uget_media_match(UgetMedia*          umedia,
 	UgetMediaItem*  cur;
 	UgetMediaItem*  prev;
 	UgetMediaItem*  result = NULL;
+	UgetMediaItem*  result_audio = NULL;
 	int             abs_cur, abs_res;
 	int             count_cur, count_res;
 
@@ -123,8 +124,20 @@ UgetMediaItem*  uget_media_match(UgetMedia*          umedia,
 		count_cur = 0;
 		if (cur->quality == quality)
 			count_cur++;
-		if (cur->type == type)
-			count_cur++;
+		if ((type & UGET_MEDIA_TYPE_MUX) == (cur->type & UGET_MEDIA_TYPE_MUX)) {
+			if ((type & UGET_MEDIA_TYPE_DEMUX) == UGET_MEDIA_TYPE_DEMUX)
+				count_cur++;
+			if (cur->type & UGET_MEDIA_TYPE_AUDIO)
+				result_audio = cur;
+		}
+		else if ((type & UGET_MEDIA_TYPE_MUX) == UGET_MEDIA_TYPE_MUX) {
+			if ((cur->type & UGET_MEDIA_TYPE_MUX) != 0)
+				count_cur++;
+		}
+		else {
+			if (cur->type == type)
+				count_cur++;
+		}
 
 		if ((mode == UGET_MEDIA_MATCH_1 && count_cur >= 1) ||
 		    (mode == UGET_MEDIA_MATCH_2 && count_cur >= 2))
@@ -167,6 +180,22 @@ UgetMediaItem*  uget_media_match(UgetMedia*          umedia,
 		ug_list_append((UgList*) umedia, (UgLink*) result);
 	}
 
+	if (result_audio) {
+		for (cur = result;  cur;  cur = cur->next) {
+            if ( (cur->type & UGET_MEDIA_TYPE_AUDIO) ||
+			     (cur->type & UGET_MEDIA_TYPE_DEMUX) == 0)
+			{
+				result_audio = NULL;
+				break;
+			}
+		}
+	}
+	if (result_audio) {
+		ug_list_remove((UgList*) umedia, (UgLink*) result_audio);
+		ug_list_append((UgList*) umedia, (UgLink*) result_audio);
+		if (result == NULL)
+			result = result_audio;
+	}
 	return result;
 }
 

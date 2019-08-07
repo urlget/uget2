@@ -59,10 +59,12 @@ typedef enum UgetMediaMatchMode
 	UGET_MEDIA_N_MATCH_MODE,
 } UgetMediaMatchMode;
 
+// Video Quality
 typedef enum UgetMediaQuality
 {
-	UGET_MEDIA_QUALITY_UNKNOWN = -1,
+	UGET_MEDIA_QUALITY_UNKNOWN = 0,
 
+	UGET_MEDIA_QUALITY_144P,    // YouTube tiny
 	UGET_MEDIA_QUALITY_240P,    // YouTube small
 	UGET_MEDIA_QUALITY_360P,    // YouTube medium
 	UGET_MEDIA_QUALITY_480P,    // YouTube large
@@ -74,23 +76,37 @@ typedef enum UgetMediaQuality
 
 typedef enum UgetMediaType
 {
-	UGET_MEDIA_TYPE_UNKNOWN = -1,
+	UGET_MEDIA_TYPE_UNKNOWN = 0,
 
-	UGET_MEDIA_TYPE_MP4,
-	UGET_MEDIA_TYPE_WEBM,
-	UGET_MEDIA_TYPE_3GPP,
-	UGET_MEDIA_TYPE_FLV,
+	UGET_MEDIA_TYPE_VIDEO = 0x1000,
+	UGET_MEDIA_TYPE_AUDIO = 0x2000,
 
-	// YouTube MIME type:
-	// audio/mp4;+codecs="mp4a.40.2"
-	// audio/webm;+codecs="vorbis"
-	// audio/webm;+codecs="opus"
-	UGET_MEDIA_AUDIO_MP4,
-	UGET_MEDIA_AUDIO_WEBM,
-//	UGET_MEDIA_AUDIO_WEBM_VORBIS,  // YouTube - audio/webm;+codecs="vorbis"
-//	UGET_MEDIA_AUDIO_WEBM_OPUS,    // YouTube - audio/webm;+codecs="opus"
+	// used by uget_media_match()
+	UGET_MEDIA_TYPE_DEMUX = 0xF000,  // include demuxed audio and video
+	UGET_MEDIA_TYPE_MUX   = 0x0FFF,  // include files that mux audio and video
+
+	// video/mp4; codecs="avc1.42E01E, mp4a.40.2"
+	// video/webm; codecs="vp8.0, vorbis"
+	UGET_MEDIA_TYPE_MP4   = 0x0001,
+	UGET_MEDIA_TYPE_WEBM  = 0x0002,
+	UGET_MEDIA_TYPE_3GPP  = 0x0003,
+	UGET_MEDIA_TYPE_FLV   = 0x0004,
 
 	UGET_MEDIA_N_TYPE,
+
+	// --- Video only ---
+	// video/mp4; codecs="avc1.42E01E"
+	UGET_MEDIA_VIDEO_MP4  = UGET_MEDIA_TYPE_MP4  | UGET_MEDIA_TYPE_VIDEO,
+	// video/webm; codecs="vp8.0"
+	UGET_MEDIA_VIDEO_WEBM = UGET_MEDIA_TYPE_WEBM | UGET_MEDIA_TYPE_VIDEO,
+	UGET_MEDIA_VIDEO_3GPP = UGET_MEDIA_TYPE_3GPP | UGET_MEDIA_TYPE_VIDEO,
+	UGET_MEDIA_VIDEO_FLV  = UGET_MEDIA_TYPE_FLV  | UGET_MEDIA_TYPE_VIDEO,
+
+	// --- Audio only ---
+	// audio/mp4; codecs="mp4a.40.2"
+	UGET_MEDIA_AUDIO_MP4  = UGET_MEDIA_TYPE_MP4  | UGET_MEDIA_TYPE_AUDIO,
+	// audio/webm; codecs="opus"
+	UGET_MEDIA_AUDIO_WEBM = UGET_MEDIA_TYPE_WEBM | UGET_MEDIA_TYPE_AUDIO,
 } UgetMediaType;
 
 
@@ -142,12 +158,11 @@ struct UgetMediaItem
 //	UgetMediaItem* prev;
 
 	char* url;
-	int   quality;    // video - 480p, 720p
-	int   bitrate;    // audio
-	int   type;       // UgetMediaType
+	int   quality;     // video - 480p, 720p
+	int   sample_rate; // audio
+	int   type;        // UgetMediaType
 
 	// for internal use only
-	int   order;
 	union {
 		int   integer;
 		char* string;
@@ -159,6 +174,12 @@ struct UgetMediaItem
 		char* string;
 		void* pointer;
 	} data1;
+
+	union {
+		int   integer;
+		char* string;
+		void* pointer;
+	} data2;
 };
 
 UgetMediaItem*  uget_media_item_new(UgetMedia* umedia);

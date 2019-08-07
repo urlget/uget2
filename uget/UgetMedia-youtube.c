@@ -37,6 +37,7 @@
 #include <UgUri.h>
 #include <UgHtml.h>
 #include <UgJson.h>
+#include <UgJson-custom.h>
 #include <UgString.h>
 
 #include <UgetCurl.h>
@@ -67,15 +68,14 @@ struct UgetYouTube
 
 	// Method 1
 	UgBuffer    buffer;
-	char*       reason;    // VEVO
-	char*       status;    // VEVO
-	int         error_code;
-	// errorcode = 100, This video has been removed.
-	// errorcode = 101 or 150, The video requested does not allow playback in an embedded player.
+	char*       reason;     // error message
+	char*       status;     // "OK", "UNPLAYABLE"
+	char*       title;
+	int         use_cipher; // TRUE of FALSE
 
 	// method 2
 	UgHtml      html;
-	char*       js;        // JavaScript player URL
+	char*       js;         // JavaScript player URL
 };
 
 static UgetYouTube* uget_youtube_new(void)
@@ -87,6 +87,7 @@ static UgetYouTube* uget_youtube_new(void)
 	ug_buffer_init(&uyoutube->buffer, 4096);
 	uyoutube->reason = NULL;
 	uyoutube->status = NULL;
+	uyoutube->title  = NULL;
 
 	ug_html_init(&uyoutube->html);
 	ug_json_init(&uyoutube->json);
@@ -99,6 +100,7 @@ static void  uget_youtube_free(UgetYouTube* uyoutube)
 	ug_buffer_clear(&uyoutube->buffer, TRUE);
 	ug_free(uyoutube->reason);
 	ug_free(uyoutube->status);
+	ug_free(uyoutube->title);
 
 	ug_html_final(&uyoutube->html);
 	ug_json_final(&uyoutube->json);
@@ -106,6 +108,9 @@ static void  uget_youtube_free(UgetYouTube* uyoutube)
 
 	ug_free(uyoutube);
 }
+
+// ----------------------------------------------------------------------------
+// "url_encoded_fmt_stream_map" parser
 
 static void  uget_youtube_parse_map(UgetYouTube* uyoutube, UgetMedia* umedia, const char* field)
 {
@@ -126,11 +131,16 @@ static void  uget_youtube_parse_map(UgetYouTube* uyoutube, UgetMedia* umedia, co
 			              uyoutube->query.value);
 			umitem->url = ug_strdup(uyoutube->query.value);
 		}
-		else if (strncmp("sig", field, uyoutube->query.field_len) == 0) {
+		else if (strncmp("s", field, uyoutube->query.field_len) == 0 ||
+		         strncmp("sig", field, uyoutube->query.field_len) == 0 ||
+		         strncmp("signature", field, uyoutube->query.field_len) == 0)
+		{
 			// signature.
 			// If it exist, append "&signature=xxxx" to umitem->url
-			umitem->data.string = ug_strndup(uyoutube->query.value,
-			                                 uyoutube->query.value_len);
+			umitem->data1.integer = uyoutube->query.field_len;
+			umitem->data2.string = ug_strndup(uyoutube->query.value,
+			                                  uyoutube->query.value_len);
+			// TODO: decrypt signature
 		}
 		else if (strncmp("type", field, uyoutube->query.field_len) == 0) {
 			ug_decode_uri(uyoutube->query.value, uyoutube->query.value_len,
@@ -148,7 +158,9 @@ static void  uget_youtube_parse_map(UgetYouTube* uyoutube, UgetMedia* umedia, co
 		}
 		else if (strncmp(field, "quality", uyoutube->query.field_len) == 0) {
 //			ug_decode_uri(uyoutube->query.value, uyoutube->query.value_len, uyoutube->query.value);
-			if (strncmp("small", uyoutube->query.value, uyoutube->query.value_len) == 0)
+			if (strncmp("tiny", uyoutube->query.value, uyoutube->query.value_len) == 0)
+				umitem->quality = UGET_MEDIA_QUALITY_144P;
+			else if (strncmp("small", uyoutube->query.value, uyoutube->query.value_len) == 0)
 				umitem->quality = UGET_MEDIA_QUALITY_240P;
 			else if (strncmp("medium", uyoutube->query.value, uyoutube->query.value_len) == 0)
 				umitem->quality = UGET_MEDIA_QUALITY_360P;
@@ -164,15 +176,15 @@ static void  uget_youtube_parse_map(UgetYouTube* uyoutube, UgetMedia* umedia, co
 
 		if (uyoutube->query.value_next) {
 			// append "&signature=xxxx" to url
-			if (umitem->data.string) {
+			if (umitem->data1.integer) {
 				temp = ug_strdup_printf("%s" "&signature=%s",
-						umitem->url, umitem->data.string);
+						umitem->url, umitem->data2.string);
 				ug_free(umitem->url);
-				ug_free(umitem->data.string);
+				ug_free(umitem->data2.string);
 				umitem->url = temp;
-				umitem->data.string = NULL;
+				umitem->data1.integer = 0;
+				umitem->data2.string = NULL;
 			}
-			umitem->order = 1;
 			field = uyoutube->query.value_next;
 			umitem = NULL;
 		}
@@ -181,6 +193,9 @@ static void  uget_youtube_parse_map(UgetYouTube* uyoutube, UgetMedia* umedia, co
 	}
 }
 
+// ----------------------------------------------------------------------------
+// "adaptive_fmts" parser
+
 static void  uget_youtube_parse_adaptive_fmts(UgetYouTube* uyoutube, UgetMedia* umedia, const char* field)
 {
 	UgetMediaItem*  umitem = NULL;
@@ -188,9 +203,9 @@ static void  uget_youtube_parse_adaptive_fmts(UgetYouTube* uyoutube, UgetMedia* 
 
 	while (ug_uri_query_part(&uyoutube->query, field)) {
 		// debug
-		printf("    %.*s=%.*s\n",
-				uyoutube->query.field_len, field,
-				uyoutube->query.value_len, uyoutube->query.value);
+//		printf("    %.*s=%.*s\n",
+//				uyoutube->query.field_len, field,
+//				uyoutube->query.value_len, uyoutube->query.value);
 
 		if (umitem == NULL)
 			umitem = uget_media_item_new(umedia);
@@ -200,23 +215,28 @@ static void  uget_youtube_parse_adaptive_fmts(UgetYouTube* uyoutube, UgetMedia* 
 			              uyoutube->query.value);
 			umitem->url = ug_strdup(uyoutube->query.value);
 		}
-		else if (strncmp("sig", field, uyoutube->query.field_len) == 0) {
+		else if (strncmp("s", field, uyoutube->query.field_len) == 0 ||
+		         strncmp("sig", field, uyoutube->query.field_len) == 0 ||
+				 strncmp("signature", field, uyoutube->query.field_len) == 0)
+		{
 			// signature.
 			// If it exist, append "&signature=xxxx" to umitem->url
-			umitem->data.string = ug_strndup(uyoutube->query.value,
-			                                 uyoutube->query.value_len);
+			umitem->data1.integer = uyoutube->query.field_len;
+			umitem->data2.string = ug_strndup(uyoutube->query.value,
+			                                  uyoutube->query.value_len);
+			// TODO: decrypt signature
 		}
 		else if (strncmp("type", field, uyoutube->query.field_len) == 0) {
 			ug_decode_uri(uyoutube->query.value, uyoutube->query.value_len,
 			              uyoutube->query.value);
 			if (strncmp("video/webm", uyoutube->query.value, 10) == 0)
-				umitem->type = UGET_MEDIA_TYPE_WEBM;
+				umitem->type = UGET_MEDIA_VIDEO_WEBM;
 			else if (strncmp("video/mp4", uyoutube->query.value, 9) == 0)
-				umitem->type = UGET_MEDIA_TYPE_MP4;
+				umitem->type = UGET_MEDIA_VIDEO_MP4;
 			else if (strncmp("video/x-flv", uyoutube->query.value, 11) == 0)
-				umitem->type = UGET_MEDIA_TYPE_FLV;
+				umitem->type = UGET_MEDIA_VIDEO_FLV;
 			else if (strncmp("video/3gpp", uyoutube->query.value, 10) == 0)
-				umitem->type = UGET_MEDIA_TYPE_3GPP;
+				umitem->type = UGET_MEDIA_VIDEO_3GPP;
 			else if (strncmp("audio/mp4", uyoutube->query.value, 9) == 0)
 				umitem->type = UGET_MEDIA_AUDIO_MP4;
 			else if (strncmp("audio/webm", uyoutube->query.value, 10) == 0)
@@ -226,7 +246,9 @@ static void  uget_youtube_parse_adaptive_fmts(UgetYouTube* uyoutube, UgetMedia* 
 		}
 		else if (strncmp(field, "quality_label", uyoutube->query.field_len) == 0) {
 //			ug_decode_uri(uyoutube->query.value, uyoutube->query.value_len, uyoutube->query.value);
-			if (strncmp("240p", uyoutube->query.value, uyoutube->query.value_len) == 0)
+			if (strncmp("144p", uyoutube->query.value, uyoutube->query.value_len) == 0)
+				umitem->quality = UGET_MEDIA_QUALITY_144P;
+			else if (strncmp("240p", uyoutube->query.value, uyoutube->query.value_len) == 0)
 				umitem->quality = UGET_MEDIA_QUALITY_240P;
 			else if (strncmp("360p", uyoutube->query.value, uyoutube->query.value_len) == 0)
 				umitem->quality = UGET_MEDIA_QUALITY_360P;
@@ -239,18 +261,21 @@ static void  uget_youtube_parse_adaptive_fmts(UgetYouTube* uyoutube, UgetMedia* 
 			else
 				umitem->quality = UGET_MEDIA_QUALITY_UNKNOWN;
 		}
-		else if (strncmp(field, "bitrate", uyoutube->query.field_len) == 0) {
+		else if (strncmp(field, "audio_sample_rate", uyoutube->query.field_len) == 0) {
 //			ug_decode_uri(uyoutube->query.value, uyoutube->query.value_len, uyoutube->query.value);
-			umitem->bitrate = strtol(uyoutube->query.value, NULL, 10);
+			umitem->sample_rate = strtol(uyoutube->query.value, NULL, 10);
 		}
 
 		if (uyoutube->query.value_next) {
 			// append "&signature=xxxx" to url
-			if (umitem->data.string) {
+			if (umitem->data1.integer) {
 				temp = ug_strdup_printf("%s" "&signature=%s",
-						umitem->url, umitem->data.string);
+						umitem->url, umitem->data2.string);
+				ug_free(umitem->url);
+				ug_free(umitem->data2.string);
 				umitem->url = temp;
-				umitem->data.string = NULL;
+				umitem->data1.integer = 0;
+				umitem->data2.string = NULL;
 			}
 			field = uyoutube->query.value_next;
 			umitem = NULL;
@@ -261,27 +286,79 @@ static void  uget_youtube_parse_adaptive_fmts(UgetYouTube* uyoutube, UgetMedia* 
 }
 
 // ----------------------------------------------------------------------------
-// method 1
-// https://www.youtube.com/get_video_info?video_id=xxxxxxxxxxx
-// https://www.youtube.com/get_video_info?video_id=xxxxxxxxxxx&el=vevo&el=embedded&asv=3&sts=15902
+// "player_response" parser
 
-// ------------------------------------
-// JSON parser : for player_response
-
-static const UgEntry  video_details_entry[] =
+// ----------------------------------------------
+// "playabilityStatus" JSON parser
+static const UgEntry  playability_status_entry[] =
 {
-	{"title",  offsetof(UgetMedia, title),
+	{"status",  offsetof(UgetYouTube, status),
+			UG_ENTRY_STRING, NULL, NULL},
+	{"reason",  offsetof(UgetYouTube, reason),
 			UG_ENTRY_STRING, NULL, NULL},
 	{NULL}    // null-terminated
 };
 
-static const UgEntry  player_response_entry[] =
+static UgJsonError  ug_json_parse_playability_status(UgJson* json,
+                                        const char* name, const char* value,
+                                        void* umedia_ptr, void* data)
 {
-	{"videoDetails",      0,
-			UG_ENTRY_OBJECT, (void*) video_details_entry, NULL},
+	UgetMedia*     umedia = umedia_ptr;
+	UgetYouTube*   uyoutube = umedia->data;
+
+	if (json->type != UG_JSON_OBJECT) {
+//		if (json->type == UG_JSON_ARRAY)
+//			ug_json_push (json, ug_json_parse_unknown, NULL, NULL);
+		return UG_JSON_ERROR_TYPE_NOT_MATCH;
+	}
+
+	ug_json_push(json, ug_json_parse_entry, uyoutube, (void*) playability_status_entry);
+	return UG_JSON_ERROR_NONE;
+}
+
+// ----------------------------------------------
+// "videoDetails" parser JSON start
+static const UgEntry  video_details_entry[] =
+{
+	{"title",      offsetof(UgetYouTube, title),
+			UG_ENTRY_STRING, NULL, NULL},
+	{"useCipher",  offsetof(UgetYouTube, use_cipher),
+			UG_ENTRY_BOOL,   NULL, NULL},
 	{NULL}    // null-terminated
 };
 
+static UgJsonError  ug_json_parse_video_details(UgJson* json,
+                                                const char* name, const char* value,
+                                                void* umedia_ptr, void* data)
+{
+	UgetMedia*     umedia = umedia_ptr;
+	UgetYouTube*   uyoutube = umedia->data;
+
+	if (json->type != UG_JSON_OBJECT) {
+//		if (json->type == UG_JSON_ARRAY)
+//			ug_json_push (json, ug_json_parse_unknown, NULL, NULL);
+		return UG_JSON_ERROR_TYPE_NOT_MATCH;
+	}
+
+	ug_json_push(json, ug_json_parse_entry, uyoutube, (void*) video_details_entry);
+	return UG_JSON_ERROR_NONE;
+}
+
+// ----------------------------------------------
+// "player_response" JSON parser
+static const UgEntry  player_response_entry[] =
+{
+	{"videoDetails",      0,
+			UG_ENTRY_CUSTOM, (void*) ug_json_parse_video_details, NULL},
+	{"playabilityStatus", 0,
+			UG_ENTRY_CUSTOM, (void*) ug_json_parse_playability_status, NULL},
+	{NULL}    // null-terminated
+};
+
+// ----------------------------------------------------------------------------
+// method 1
+// https://www.youtube.com/get_video_info?video_id=xxxxxxxxxxx
+// https://www.youtube.com/get_video_info?video_id=xxxxxxxxxxx&el=vevo&el=embedded&asv=3&sts=15902
 
 static void  uget_youtube_parse_query(UgetYouTube* uyoutube, UgetMedia* umedia)
 {
@@ -303,7 +380,8 @@ static void  uget_youtube_parse_query(UgetYouTube* uyoutube, UgetMedia* umedia)
 		ug_decode_uri(uyoutube->query.value, uyoutube->query.value_len, uyoutube->query.value);
 		uget_youtube_parse_adaptive_fmts(uyoutube, umedia, uyoutube->query.value);
 	}
-	/*  // deprecated
+	/*
+	// deprecated
 	else if (uyoutube->query.field_len == 5 &&
 	         strncmp(uyoutube->buffer.beg, "title", 5) == 0)
 	{
@@ -323,24 +401,34 @@ static void  uget_youtube_parse_query(UgetYouTube* uyoutube, UgetMedia* umedia)
 		uyoutube->status = ug_strndup(uyoutube->query.value, uyoutube->query.value_len);
 		ug_decode_uri(uyoutube->status, uyoutube->query.value_len, uyoutube->status);
 	}
+	/*
+	// deprecated
 	else if (uyoutube->query.field_len == 9 &&
 	         strncmp(uyoutube->buffer.beg, "errorcode", 9) == 0)
 	{
 		uyoutube->error_code = strtol(uyoutube->query.value, NULL, 10);
 	}
+	*/
 	else if (uyoutube->query.field_len == 15 &&
 	         strncmp(uyoutube->buffer.beg, "player_response", 9) == 0)
 	{
 		UgJson* json;
 		int     length;
 
-		length = ug_decode_uri(uyoutube->query.value, uyoutube->query.value_len, uyoutube->query.value);
+		length = ug_decode_uri(uyoutube->query.value,
+		                       uyoutube->query.value_len,
+		                       uyoutube->query.value);
 		json = &uyoutube->json;
 		ug_json_begin_parse(json);
 		ug_json_push(json, ug_json_parse_entry, umedia, (void*) player_response_entry);
 		ug_json_push(json, ug_json_parse_object, NULL, NULL);
 		ug_json_parse(json, uyoutube->query.value, length);
 		ug_json_end_parse(json);
+		// decide title
+		if (umedia->title == NULL && ((UgetYouTube*)umedia->data)->title) {
+			umedia->title = ((UgetYouTube*)umedia->data)->title;
+			((UgetYouTube*)umedia->data)->title = NULL;
+		}
 	}
 }
 
@@ -407,10 +495,10 @@ int  uget_media_grab_youtube_method_1(UgetMedia* umedia, UgetProxy* proxy)
 				ug_buffer_write_char(&uyoutube->buffer, 0);
 				uget_youtube_parse_query(umedia->data, umedia);
 			}
-			if (uyoutube->error_code == 100) {
+			if (uyoutube->reason != NULL) {
 				umedia->event = uget_event_new_error(
 						UGET_EVENT_ERROR_CUSTOM,
-						_("This video has been removed."));
+						uyoutube->reason);
 				goto break_do_loop;
 			}
 			break;
@@ -458,8 +546,8 @@ break_do_loop:
 // method 2
 // get HTML and parse it
 
-// ------------------------------------
-// JSON parser
+// ----------------------------------------------
+// "ytplayer.config" JSON parser
 
 static UgJsonError  ug_json_parse_assets_js(UgJson* json,
                                             const char* name,
@@ -527,7 +615,7 @@ static const UgEntry  youtube_config_entry[] =
 	{NULL}    // null-terminated
 };
 
-// ------------------------------------
+// ----------------------------------------------
 // HTML parser
 
 static const UgHtmlParser  youtube_html_parser;
@@ -550,7 +638,8 @@ static void  youtube_start_element(UgHtml*        uhtml,
 		    attribute_values[0] && strcmp(attribute_values[0], "title")==0 &&
 			attribute_names[1]  && strcmp(attribute_names[1],  "content")==0)
 		{
-			umedia->title = ug_strdup(attribute_values[1]);
+			if (umedia->title == NULL)
+				umedia->title = ug_strdup(attribute_values[1]);
 		}
 	}
 }
@@ -730,43 +819,6 @@ int  uget_media_is_youtube(UgUri* uuri)
 	return FALSE;
 }
 
-int  uget_media_grab_youtube_method_1(UgetMedia* umedia, UgetProxy* proxy);
-int  uget_media_grab_youtube_method_2(UgetMedia* umedia, UgetProxy* proxy);
-
-static void  erase_duplicate(UgetMedia* umedia)
-{
-	UgList          list;
-	UgetMediaItem*  cur;
-	UgetMediaItem*  cur_next;
-	UgetMediaItem*  matched;
-	UgetMediaItem*  matched_next;
-
-	ug_list_init(&list);
-	// grab media from YouTube's 'url_encoded_fmt_stream_map'
-	for (cur = umedia->head;  cur;  cur = cur_next) {
-		cur_next = cur->next;
-		if (cur->order == 1) {
-			// move items to list
-			ug_list_remove((UgList*) umedia, (UgLink*) cur);
-			ug_list_append(&list, (UgLink*) cur);
-		}
-	}
-	// preserve media from YouTube's 'url_encoded_fmt_stream_map'
-	for (cur = (UgetMediaItem*)list.head;  cur;  cur = cur_next) {
-		cur_next = cur->next;
-		matched = uget_media_match(umedia, UGET_MEDIA_MATCH_2,
-		                           cur->quality, cur->type);
-		for (;  matched;  matched = matched_next) {
-			matched_next = matched->next;
-			ug_list_remove((UgList*) umedia, (UgLink*) matched);
-			uget_media_item_free(matched);
-		}
-		ug_list_remove(&list, (UgLink*) cur);
-		ug_list_prepend((UgList*) umedia, (UgLink*) cur);
-	}
-	ug_list_clear(&list, FALSE);
-}
-
 int  uget_media_grab_youtube(UgetMedia* umedia, UgetProxy* proxy)
 {
 	int    n;
@@ -810,7 +862,7 @@ int  uget_media_grab_youtube(UgetMedia* umedia, UgetProxy* proxy)
 	umedia->data = uyoutube;
 
 	n = uget_media_grab_youtube_method_1(umedia, proxy);
-	if (n == 0 && uyoutube->error_code != 100) {
+	if (n == 0 && uyoutube->reason != NULL) {
 		// clear data before calling uget_media_grab_youtube_method_2()
 		ug_free(umedia->title);
 		umedia->title = NULL;
@@ -822,7 +874,6 @@ int  uget_media_grab_youtube(UgetMedia* umedia, UgetProxy* proxy)
 	}
 
 	uget_youtube_free(uyoutube);
-	erase_duplicate(umedia);
 	umedia->data = NULL;
 
 	return n;
