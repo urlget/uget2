@@ -82,7 +82,7 @@ typedef enum UgetMediaType
 	UGET_MEDIA_TYPE_AUDIO = 0x2000,
 
 	// used by uget_media_match()
-	UGET_MEDIA_TYPE_DEMUX = 0xF000,  // include demuxed audio and video
+	UGET_MEDIA_TYPE_DEMUX = 0xF000,  // include demuxed audio or video
 	UGET_MEDIA_TYPE_MUX   = 0x0FFF,  // include files that mux audio and video
 
 	// video/mp4; codecs="avc1.42E01E, mp4a.40.2"

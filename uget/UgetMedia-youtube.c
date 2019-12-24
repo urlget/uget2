@@ -309,7 +309,7 @@ static UgJsonError  ug_json_parse_mime_type(UgJson* json,
 	else if (strncmp("video/webm", value, 10) == 0) {
 		umitem->type = UGET_MEDIA_TYPE_WEBM;
 		// if this media doesn't has 2 codec
-		if (strpbrk(value+9, ",") == NULL)
+		if (strpbrk(value+10, ",") == NULL)
 			umitem->type |= UGET_MEDIA_TYPE_VIDEO;
 	}
 	else if (strncmp("video/x-flv", value, 11) == 0)

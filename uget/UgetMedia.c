@@ -35,13 +35,10 @@
  */
 
 #include <string.h>
+#include <stdlib.h>    // abs()
 #include <UgUri.h>
 #include <UgString.h>
 #include <UgetMedia.h>
-
-#ifndef ABS
-#define ABS(a)	   (((a) < 0) ? -(a) : (a))
-#endif
 
 // ----------------------------------------------------------------------------
 // UgetMedia
@@ -124,18 +121,19 @@ UgetMediaItem*  uget_media_match(UgetMedia*          umedia,
 		count_cur = 0;
 		if (cur->quality == quality)
 			count_cur++;
-		if ((type & UGET_MEDIA_TYPE_MUX) == (cur->type & UGET_MEDIA_TYPE_MUX)) {
-			if ((type & UGET_MEDIA_TYPE_DEMUX) == UGET_MEDIA_TYPE_DEMUX)
+
+		if (cur->type == type)
+			count_cur++;
+		else if ((type & UGET_MEDIA_TYPE_DEMUX) == UGET_MEDIA_TYPE_DEMUX) {
+			// if type has UGET_MEDIA_TYPE_DEMUX
+			if ((type & UGET_MEDIA_TYPE_MUX) == (cur->type & UGET_MEDIA_TYPE_MUX))
 				count_cur++;
 			if (cur->type & UGET_MEDIA_TYPE_AUDIO)
 				result_audio = cur;
 		}
 		else if ((type & UGET_MEDIA_TYPE_MUX) == UGET_MEDIA_TYPE_MUX) {
+			// if type has UGET_MEDIA_TYPE_MUX
 			if ((cur->type & UGET_MEDIA_TYPE_MUX) != 0)
-				count_cur++;
-		}
-		else {
-			if (cur->type == type)
 				count_cur++;
 		}
 
@@ -154,8 +152,8 @@ UgetMediaItem*  uget_media_match(UgetMedia*          umedia,
 				count_res = count_cur;
 				continue;
 			}
-			abs_res = ABS(quality - result->quality);
-			abs_cur = ABS(quality - cur->quality);
+			abs_res = abs((int)quality - result->quality);
+			abs_cur = abs((int)quality - cur->quality);
 			if (abs_res == abs_cur) {
 				if (count_res < count_cur) {
 					result = cur;
