@@ -289,6 +289,145 @@ static void  uget_youtube_parse_adaptive_fmts(UgetYouTube* uyoutube, UgetMedia* 
 // "player_response" parser
 
 // ----------------------------------------------
+// "streamingData" JSON parser
+static UgJsonError  ug_json_parse_mime_type(UgJson* json,
+                                            const char* name, const char* value,
+                                            void* umitem_ptr, void* data)
+{
+	UgetMediaItem* umitem = umitem_ptr;
+
+	if (strncmp("audio/mp4", value, 9) == 0)
+		umitem->type = UGET_MEDIA_AUDIO_MP4;
+	else if (strncmp("audio/webm", value, 10) == 0)
+		umitem->type = UGET_MEDIA_AUDIO_WEBM;
+	else if (strncmp("video/mp4", value, 9) == 0) {
+		umitem->type = UGET_MEDIA_TYPE_MP4;
+		// if this media doesn't has 2 codec
+		if (strpbrk(value+9, ",") == NULL)
+			umitem->type |= UGET_MEDIA_TYPE_VIDEO;
+	}
+	else if (strncmp("video/webm", value, 10) == 0) {
+		umitem->type = UGET_MEDIA_TYPE_WEBM;
+		// if this media doesn't has 2 codec
+		if (strpbrk(value+9, ",") == NULL)
+			umitem->type |= UGET_MEDIA_TYPE_VIDEO;
+	}
+	else if (strncmp("video/x-flv", value, 11) == 0)
+		umitem->type = UGET_MEDIA_TYPE_FLV;
+	else if (strncmp("video/3gpp", value, 10) == 0)
+		umitem->type = UGET_MEDIA_TYPE_3GPP;
+	else
+		umitem->type = UGET_MEDIA_TYPE_UNKNOWN;
+
+	return UG_JSON_ERROR_NONE;
+}
+
+static UgJsonError  ug_json_parse_quality_label(UgJson* json,
+                                                const char* name, const char* value,
+                                                void* umitem_ptr, void* data)
+{
+	UgetMediaItem* umitem = umitem_ptr;
+
+	if (strncmp("144p", value, 4) == 0)
+		umitem->quality = UGET_MEDIA_QUALITY_144P;
+	else if (strncmp("240p", value, 4) == 0)
+		umitem->quality = UGET_MEDIA_QUALITY_240P;
+	else if (strncmp("360p", value, 4) == 0)
+		umitem->quality = UGET_MEDIA_QUALITY_360P;
+	else if (strncmp("480p", value, 4) == 0)
+		umitem->quality = UGET_MEDIA_QUALITY_480P;
+	else if (strncmp("720p", value, 4) == 0)
+		umitem->quality = UGET_MEDIA_QUALITY_720P;
+	else if (strncmp("1080p", value, 5) == 0)
+		umitem->quality = UGET_MEDIA_QUALITY_1080P;
+
+	return UG_JSON_ERROR_NONE;
+}
+
+static UgJsonError  ug_json_parse_cipher(UgJson* json,
+                                         const char* name, const char* value,
+                                         UgetMediaItem* umitem, void* data)
+{
+	UgUriQuery  uuquery;
+	char* field = (char*)value;
+
+	while (ug_uri_query_part(&uuquery, field)) {
+		if (strncmp(field, "url", uuquery.field_len) == 0) {
+			ug_free(umitem->url);
+			umitem->url = ug_strndup(uuquery.value, uuquery.value_len);
+		}
+		else if (strncmp("s", field, uuquery.field_len) == 0 ||
+		         strncmp("sig", field, uuquery.field_len) == 0 ||
+				 strncmp("signature", field, uuquery.field_len) == 0)
+		{
+			// TODO: decrypt signature and append "&signature=xxxx" to umitem->url
+		}
+
+//		if (uuquery.value_next)
+//			field = uuquery.value_next;
+//		else
+			field = uuquery.field_next;
+	}
+
+	return UG_JSON_ERROR_NONE;
+}
+
+static const UgEntry  media_item_entry[] =
+{
+	{"url",             offsetof(UgetMediaItem, url),
+			UG_ENTRY_STRING, NULL, NULL},
+	{"cipher",          0,
+			UG_ENTRY_CUSTOM, (void*) ug_json_parse_cipher, NULL},
+	{"mimeType",        0,
+			UG_ENTRY_CUSTOM, (void*) ug_json_parse_mime_type, NULL},
+	{"qualityLabel",    0,
+			UG_ENTRY_CUSTOM, (void*) ug_json_parse_quality_label, NULL},
+	{"audioSampleRate", offsetof(UgetMediaItem, sample_rate),
+			UG_ENTRY_CUSTOM, (void*) ug_json_parse_int_string, NULL},
+	{NULL}    // null-terminated
+};
+
+static UgJsonError  ug_json_parse_media_item(UgJson* json,
+                                             const char* name, const char* value,
+                                             void* umedia, void* data)
+{
+	UgetMediaItem* umitem;
+
+	if (json->type != UG_JSON_OBJECT) {
+//		if (json->type == UG_JSON_ARRAY)
+//			ug_json_push (json, ug_json_parse_unknown, NULL, NULL);
+		return UG_JSON_ERROR_TYPE_NOT_MATCH;
+	}
+
+	umitem = uget_media_item_new((UgetMedia*)umedia);
+	ug_json_push(json, ug_json_parse_entry, umitem, (void*) media_item_entry);
+	return UG_JSON_ERROR_NONE;
+}
+
+static UgJsonError  ug_json_parse_formats(UgJson* json,
+                                          const char* name, const char* value,
+                                          void* umedia, void* data)
+{
+	if (json->type != UG_JSON_ARRAY) {
+//		if (json->type == UG_JSON_OBJECT)
+//			ug_json_push (json, ug_json_parse_unknown, NULL, NULL);
+		return UG_JSON_ERROR_TYPE_NOT_MATCH;
+	}
+
+	ug_json_push(json, ug_json_parse_media_item, umedia, NULL);
+	return UG_JSON_ERROR_NONE;
+}
+
+static const UgEntry  streaming_data_entry[] =
+{
+	{"formats",          0,
+			UG_ENTRY_CUSTOM, (void*) ug_json_parse_formats, NULL},
+	{"adaptiveFormats",  0,
+			UG_ENTRY_CUSTOM, (void*) ug_json_parse_formats, NULL},
+	{NULL}    // null-terminated
+};
+
+// ----------------------------------------------
 // "playabilityStatus" JSON parser
 static const UgEntry  playability_status_entry[] =
 {
@@ -352,6 +491,8 @@ static const UgEntry  player_response_entry[] =
 			UG_ENTRY_CUSTOM, (void*) ug_json_parse_video_details, NULL},
 	{"playabilityStatus", 0,
 			UG_ENTRY_CUSTOM, (void*) ug_json_parse_playability_status, NULL},
+	{"streamingData",     0,
+			UG_ENTRY_OBJECT, (void*) streaming_data_entry, NULL},
 	{NULL}    // null-terminated
 };
 
@@ -365,8 +506,10 @@ static void  uget_youtube_parse_query(UgetYouTube* uyoutube, UgetMedia* umedia)
 	if (ug_uri_query_part(&uyoutube->query, uyoutube->buffer.beg) == 0)
 		return;
 
-	// debug
+	// debug - print field
 //	printf("%.*s\n", uyoutube->query.field_len, uyoutube->buffer.beg);
+    // debug - print value
+//	printf("%.*s\n", uyoutube->query.value_len, uyoutube->query.value);
 
 	if (uyoutube->query.field_len == 26 &&
 	    strncmp(uyoutube->buffer.beg, "url_encoded_fmt_stream_map", 26) == 0)
@@ -470,7 +613,7 @@ int  uget_media_grab_youtube_method_1(UgetMedia* umedia, UgetProxy* proxy)
 
  	uyoutube = umedia->data;
 	string = ug_strdup_printf(
-			"https://www.youtube.com/get_video_info?video_id=%s",
+			"https://www.youtube.com/get_video_info?video_id=%s&el=detailpage",
 			uyoutube->video_id);
 
 	curl = curl_easy_init();
