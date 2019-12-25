@@ -684,8 +684,8 @@ void  ugtk_setting_fix_data (UgtkSetting* setting)
 	// media plug-in settings
 	if (setting->media.match_mode < 0 || setting->media.match_mode > UGET_MEDIA_N_MATCH_MODE)
 		setting->media.match_mode = UGET_MEDIA_MATCH_NEAR;
-	if (setting->media.quality < 0 || setting->media.quality > UGET_MEDIA_N_QUALITY)
+	if (setting->media.quality <= 1 || setting->media.quality > UGET_MEDIA_N_QUALITY)
 		setting->media.quality = UGET_MEDIA_QUALITY_360P;
-	if (setting->media.type < 0 || setting->media.type > UGET_MEDIA_N_TYPE)
+	if (setting->media.type <= 0 || setting->media.type > UGET_MEDIA_N_TYPE)
 		setting->media.type = UGET_MEDIA_TYPE_MP4;
 }
