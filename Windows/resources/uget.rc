@@ -12,7 +12,7 @@ BEGIN
       VALUE "FileDescription", "uGet download manager"
       VALUE "FileVersion", "2.2.1"
       VALUE "InternalName", "uGet"
-      VALUE "LegalCopyright", "Copyright (C) 2005-2019 by C.H. Huang"
+      VALUE "LegalCopyright", "Copyright (C) 2005-2020 by C.H. Huang"
       VALUE "OriginalFilename", "uget.exe"
       VALUE "ProductName", "uGet"
       VALUE "ProductVersion", "2.2.1"
