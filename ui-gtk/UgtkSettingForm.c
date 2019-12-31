@@ -850,9 +850,14 @@ void  ugtk_media_website_form_init (struct UgtkMediaWebsiteForm* mwform)
 
 void  ugtk_media_website_form_set (struct UgtkMediaWebsiteForm* mwform, UgtkSetting* setting)
 {
+	int  nth_quality, nth_type;
+
+	nth_quality = setting->media.quality - UGET_MEDIA_QUALITY_240P;
+	nth_type = setting->media.type - UGET_MEDIA_TYPE_MP4;
+
 	gtk_combo_box_set_active ((GtkComboBox*) mwform->match_mode, setting->media.match_mode);
-	gtk_combo_box_set_active ((GtkComboBox*) mwform->quality, setting->media.quality);
-	gtk_combo_box_set_active ((GtkComboBox*) mwform->type, setting->media.type);
+	gtk_combo_box_set_active ((GtkComboBox*) mwform->quality, nth_quality);
+	gtk_combo_box_set_active ((GtkComboBox*) mwform->type, nth_type);
 }
 
 void  ugtk_media_website_form_get (struct UgtkMediaWebsiteForm* mwform, UgtkSetting* setting)
@@ -860,4 +865,7 @@ void  ugtk_media_website_form_get (struct UgtkMediaWebsiteForm* mwform, UgtkSett
 	setting->media.match_mode = gtk_combo_box_get_active ((GtkComboBox*) mwform->match_mode);
 	setting->media.quality = gtk_combo_box_get_active ((GtkComboBox*) mwform->quality);
 	setting->media.type = gtk_combo_box_get_active ((GtkComboBox*) mwform->type);
+
+	setting->media.quality += UGET_MEDIA_QUALITY_240P;
+	setting->media.type += UGET_MEDIA_TYPE_MP4;
 }
