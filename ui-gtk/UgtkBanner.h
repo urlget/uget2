@@ -64,7 +64,7 @@ struct UgtkBanner {
 		UgetRssFeed*    feed;
 		UgetRssItem*    item;
 	} rss;
-} banner;
+};
 
 void  ugtk_banner_init (UgtkBanner* banner);
 
