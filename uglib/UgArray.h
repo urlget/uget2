@@ -63,7 +63,7 @@ void*   ug_array_find_sorted(void* array, const void* key,
 
 #define ug_array_foreach_str    ug_array_foreach_ptr
 
-#define ug_array_count(array, length)  \
+#define ug_array_bytes(array, length)  \
 		( ((UgArrayChar*)(array))->element_size * (length) )
 
 #define ug_array_addr(array, index)  \
@@ -231,7 +231,7 @@ void* ug_array_insert(void* array, int index, int length)
 	ug_array_alloc(array, length);
 	memmove(ug_array_addr(array, index + length),
 	        addr = ug_array_addr(array, index),
-	        ug_array_count(array, ug_array_length(array) - index - 1));
+	        ug_array_bytes(array, ug_array_length(array) -length -index));
 	return (void*)addr;
 }
 
@@ -244,7 +244,7 @@ void  ug_array_erase(void* array, int index, int length)
 {
 	memmove(ug_array_addr(array, index),
 	        ug_array_addr(array, index + length),
-	        ug_array_count(array, ug_array_length(array) - index - 1));
+	        ug_array_bytes(array, ug_array_length(array) -length -index));
 	((UgArrayChar*)array)->length -= length;
 }
 
@@ -317,10 +317,10 @@ namespace Ug
 // This one is for directly use only. You can NOT derived it.
 template<class Type> struct Array : UgArray<Type>
 {
-//	inline Array<Type>(int allocated_len = 0)
-//		{ ug_array_init(this, sizeof(Type), allocated_len); }
-//	inline ~Array<Type>(void)
-//		{ ug_array_clear(this); }
+	inline Array<Type>(int allocated_len = 0)
+		{ ug_array_init(this, sizeof(Type), allocated_len); }
+	inline ~Array<Type>(void)
+		{ ug_array_clear(this); }
 };
 
 };  // namespace Ug

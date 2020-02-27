@@ -156,7 +156,7 @@ void* ug_array_insert(void* array, int index, int length)
 	ug_array_alloc(array, length);
 	memmove(ug_array_addr(array, index + length),
 	        addr = ug_array_addr(array, index),
-	        ug_array_count(array, ug_array_length(array) - index - 1));
+	        ug_array_bytes(array, ug_array_length(array) -length -index));
 	return (void*)addr;
 }
 
@@ -164,7 +164,7 @@ void  ug_array_erase(void* array, int index, int length)
 {
 	memmove(ug_array_addr(array, index),
 	        ug_array_addr(array, index + length),
-	        ug_array_count(array, ug_array_length(array) - index - 1));
+	        ug_array_bytes(array, ug_array_length(array) -length -index));
 	((UgArrayChar*)array)->length -= length;
 }
 
